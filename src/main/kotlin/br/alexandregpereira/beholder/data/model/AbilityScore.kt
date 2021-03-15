@@ -14,6 +14,22 @@ data class AbilityScore(
 )
 
 @Serializable
+data class SavingThrow(
+    @SerialName("type")
+    val type: AbilityScoreType,
+    @SerialName("modifier")
+    val modifier: Int
+)
+
+@Serializable
+data class Skill(
+    @SerialName("id")
+    val id: String,
+    @SerialName("modifier")
+    val modifier: Int
+)
+
+@Serializable
 enum class AbilityScoreType {
     @SerialName("STRENGTH")
     STRENGTH,

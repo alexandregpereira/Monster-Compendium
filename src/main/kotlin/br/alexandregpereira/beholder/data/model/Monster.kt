@@ -30,6 +30,10 @@ data class Monster(
     @SerialName("speed")
     val speed: Speed,
     @SerialName("ability_scores")
-    val abilityScores: List<AbilityScore>
+    val abilityScores: List<AbilityScore>,
+    @SerialName("saving_throws")
+    val savingThrows: List<SavingThrow>,
+    @SerialName("skills")
+    val skills: List<Skill>
 )
 

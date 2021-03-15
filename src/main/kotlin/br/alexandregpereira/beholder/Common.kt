@@ -1,17 +1,27 @@
 package br.alexandregpereira.beholder
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import retrofit2.Retrofit
 import java.io.File
 
 const val JSON_FILE_NAME = "json/dndapi-monsters.json"
+const val SKILL_JSON_FILE_NAME = "json/dndapi-skills.json"
 const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"
 
 val contentType: MediaType = MediaType.get("application/json")
 val json = Json { ignoreUnknownKeys = true }
+
+@ExperimentalSerializationApi
+val retrofit: Retrofit = Retrofit.Builder()
+    .baseUrl("https://www.dnd5eapi.co/api/")
+    .addConverterFactory(json.asConverterFactory(contentType))
+    .build()
 
 suspend fun start(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
     val startTime = System.currentTimeMillis()

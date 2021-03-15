@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-data class MonsterResponse(
+data class Response(
     @SerialName("count")
     val count: Int,
     @SerialName("results")

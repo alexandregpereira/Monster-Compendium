@@ -3,12 +3,14 @@ package br.alexandregpereira.beholder
 import br.alexandregpereira.beholder.data.model.*
 import br.alexandregpereira.beholder.dndapi.data.Monster
 import br.alexandregpereira.beholder.dndapi.data.MonsterType
+import br.alexandregpereira.beholder.dndapi.data.Proficiency
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.decodeFromString
 import okhttp3.*
 import java.io.IOException
+import java.lang.IllegalArgumentException
 import br.alexandregpereira.beholder.data.model.Monster as MonsterFormatted
 import br.alexandregpereira.beholder.data.model.MonsterType as MonsterTypeFormatted
 
@@ -50,7 +52,9 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterFormatted> {
             hitPoints = it.hitPoints,
             hitDice = it.hitDice,
             speed = it.asSpeedFormatted(),
-            abilityScores = it.asAbilityScoresFormatted()
+            abilityScores = it.asAbilityScoresFormatted(),
+            savingThrows = it.getSavingThrows(),
+            skills = it.getSkills()
         )
     }
 }
@@ -131,6 +135,36 @@ private fun Monster.asAbilityScoresFormatted(): List<AbilityScore> {
         modifier = calculateAbilityScoreModifier(charisma)
     )
     return listOf(strength, dexterity, constitution, intelligence, wisdom, charisma)
+}
+
+private fun Monster.getSavingThrows(): List<SavingThrow> {
+    return this.proficiencies.filter { it.proficiency.index.startsWith("saving-throw-") }.map {
+        SavingThrow(
+            type = it.proficiency.asSavingThrowType(),
+            modifier = it.value
+        )
+    }
+}
+
+private fun Proficiency.asSavingThrowType(): AbilityScoreType {
+    return when(val index = index.removePrefix("saving-throw-")) {
+        "str" -> AbilityScoreType.STRENGTH
+        "dex" -> AbilityScoreType.DEXTERITY
+        "con" -> AbilityScoreType.CONSTITUTION
+        "int" -> AbilityScoreType.INTELLIGENCE
+        "wis" -> AbilityScoreType.WISDOM
+        "cha" -> AbilityScoreType.CHARISMA
+        else -> throw IllegalArgumentException("Invalid Saving throw: $index")
+    }
+}
+
+private fun Monster.getSkills(): List<Skill> {
+    return this.proficiencies.filter { it.proficiency.index.startsWith("skill-") }.map {
+        Skill(
+            id = it.proficiency.index.removePrefix("skill-"),
+            modifier = it.value
+        )
+    }
 }
 
 private fun calculateAbilityScoreModifier(value: Int): Int {

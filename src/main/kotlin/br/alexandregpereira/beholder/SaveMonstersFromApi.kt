@@ -2,17 +2,9 @@ package br.alexandregpereira.beholder
 
 import br.alexandregpereira.beholder.dndapi.data.Monster
 import br.alexandregpereira.beholder.dndapi.data.MonsterApi
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
-import retrofit2.Retrofit
-
-@ExperimentalSerializationApi
-val retrofit: Retrofit = Retrofit.Builder()
-    .baseUrl("https://www.dnd5eapi.co/api/")
-    .addConverterFactory(json.asConverterFactory(contentType))
-    .build()
 
 @ExperimentalSerializationApi
 val monsterApi: MonsterApi = retrofit.create(MonsterApi::class.java)
@@ -28,7 +20,6 @@ suspend fun main() = start {
         }.toList().sortedBy { it.name }
 
     saveJsonFile(monsters, JSON_FILE_NAME)
-//    getMonster("ankheg")
 }
 
 @ExperimentalSerializationApi
