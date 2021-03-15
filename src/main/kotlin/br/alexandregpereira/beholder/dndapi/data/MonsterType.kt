@@ -32,5 +32,7 @@ enum class MonsterType {
     @SerialName("plant")
     PLANT,
     @SerialName("undead")
-    UNDEAD
+    UNDEAD,
+    @SerialName("swarm of Tiny beasts")
+    OTHER
 }

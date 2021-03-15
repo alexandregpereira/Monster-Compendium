@@ -52,13 +52,13 @@ data class Monster(
     @SerialName("languages")
     val languages: String,
     @SerialName("challenge_rating")
-    val challengeRating: Int,
+    val challengeRating: Float,
     @SerialName("xp")
     val xp: Int,
     @SerialName("special_abilities")
-    val specialAbilities: List<SpecialAbility>,
+    val specialAbilities: List<SpecialAbility> = emptyList(),
     @SerialName("actions")
-    val actions: List<Action>,
+    val actions: List<Action> = emptyList(),
     @SerialName("legendary_actions")
     val legendaryActions: List<LegendaryAction> = emptyList(),
     @SerialName("url")
@@ -126,9 +126,9 @@ data class Speed(
 @Serializable
 data class Damage(
     @SerialName("damage_dice")
-    val damageDice: String,
+    val damageDice: String? = null,
     @SerialName("damage_type")
-    val damageType: APIReference
+    val damageType: APIReference? = null
 )
 
 @Serializable
@@ -138,27 +138,17 @@ data class SpellCasting(
     @SerialName("components_required")
     val componentsRequired: List<String>,
     @SerialName("dc")
-    val dc: Int,
+    val dc: Int? = null,
     @SerialName("level")
-    val level: Int,
+    val level: Int? = null,
     @SerialName("modifier")
-    val modifier: Int,
+    val modifier: Int? = null,
     @SerialName("school")
-    val school: String,
+    val school: String? = null,
     @SerialName("slots")
-    val slots: Slots,
+    val slots: Slots? = null,
     @SerialName("spells")
     val spells: List<Spell>
-)
-
-@Serializable
-data class APIReference(
-    @SerialName("index")
-    val index: String,
-    @SerialName("name")
-    val name: String,
-    @SerialName("url")
-    val url: String
 )
 
 @Serializable
