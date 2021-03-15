@@ -6,15 +6,19 @@ import kotlinx.serialization.SerialName
 @Serializable
 data class Speed(
     @SerialName("type")
+    val hover: Boolean,
+    @SerialName("value")
+    val values: List<SpeedValue>,
+)
+
+@Serializable
+data class SpeedValue(
+    @SerialName("type")
     val type: SpeedType,
     @SerialName("measurement_unit")
     val measurementUnit: MeasurementUnit,
-    @SerialName("measurement_unit_abbreviation")
-    val measurementUnitAbbreviation: String,
-    @SerialName("value_formatted")
-    val valueFormatted: String,
     @SerialName("value")
-    val value: String,
+    val distance: Float,
 )
 
 @Serializable
@@ -34,9 +38,9 @@ enum class SpeedType {
 }
 
 @Serializable
-enum class MeasurementUnit {
+enum class MeasurementUnit(value: String) {
     @SerialName("FEET")
-    FEET,
+    FEET(value = "ft."),
     @SerialName("METER")
-    METER
+    METER(value = "m")
 }

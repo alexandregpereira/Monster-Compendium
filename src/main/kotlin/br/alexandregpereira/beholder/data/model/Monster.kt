@@ -2,7 +2,6 @@ package br.alexandregpereira.beholder.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.LinkedHashSet
 
 @Serializable
 data class Monster(
@@ -15,7 +14,7 @@ data class Monster(
     @SerialName("subtitle")
     val subtitle: String,
     @SerialName("image_url")
-    val imageUrl: String?,
+    val imageUrl: String,
     @SerialName("size")
     val size: String,
     @SerialName("alignment")
@@ -29,8 +28,8 @@ data class Monster(
     @SerialName("hit_dice")
     val hitDice: String,
     @SerialName("speed")
-    val speeds: LinkedHashSet<Speed>,
+    val speed: Speed,
     @SerialName("ability_scores")
-    val abilityScores: LinkedHashSet<AbilityScore>
+    val abilityScores: List<AbilityScore>
 )
 

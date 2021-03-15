@@ -116,7 +116,7 @@ data class Speed(
     @SerialName("fly")
     val fly: String? = null,
     @SerialName("hover")
-    val hover: Boolean? = null,
+    val hover: Boolean = false,
     @SerialName("walk")
     val walk: String? = null,
     @SerialName("swim")
