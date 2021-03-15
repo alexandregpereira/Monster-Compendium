@@ -1,10 +1,11 @@
 package br.alexandregpereira.beholder
 
-import br.alexandregpereira.beholder.dndapi.data.APIReference
 import br.alexandregpereira.beholder.dndapi.data.Monster
 import br.alexandregpereira.beholder.dndapi.data.MonsterApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -13,10 +14,11 @@ import retrofit2.Retrofit
 import java.io.File
 
 private const val JSON_FILE_NAME = "json/dndapi-monsters.json"
-private const val GITHUB_IMAGE_HOST = "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/"
+private const val GITHUB_IMAGE_HOST =
+    "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/"
 
 val contentType: MediaType = MediaType.get("application/json")
-val json = Json {  ignoreUnknownKeys = true }
+val json = Json { ignoreUnknownKeys = true }
 
 @ExperimentalSerializationApi
 val retrofit: Retrofit = Retrofit.Builder()
@@ -27,23 +29,35 @@ val retrofit: Retrofit = Retrofit.Builder()
 @ExperimentalSerializationApi
 val monsterApi: MonsterApi = retrofit.create(MonsterApi::class.java)
 
+@FlowPreview
 @ExperimentalSerializationApi
 suspend fun main() = coroutineScope {
+    val startTime = System.currentTimeMillis()
     println("Started\n")
-    val monsters = monsterApi.getMonsters().results.map {
-        getMonster(index = it.index)
-    }
+    val monsterResponse = monsterApi.getMonsters()
+
+    val monsters = monsterResponse.results.asFlow()
+        .flatMapMerge {
+            getMonsterFlow(it.index)
+        }.toList().sortedBy { it.name }
+
     println("\nSaving")
     val json = Json.encodeToString(monsters)
     saveJsonFile(json)
 
 //    getMonster("swarm-of-insects")
-    println("\nFinished")
+    println("\nFinished in ${System.currentTimeMillis() - startTime} ms")
 }
 
 fun saveJsonFile(json: String) {
     File(JSON_FILE_NAME).writeText(json)
     println(json)
+}
+
+
+@ExperimentalSerializationApi
+private suspend fun getMonsterFlow(index: String): Flow<Monster> = flow {
+    emit(getMonster(index))
 }
 
 @ExperimentalSerializationApi
