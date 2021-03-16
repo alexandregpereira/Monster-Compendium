@@ -4,8 +4,10 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
 }
 
-group 'br.alexandregpereira'
-version '1.0-SNAPSHOT'
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
