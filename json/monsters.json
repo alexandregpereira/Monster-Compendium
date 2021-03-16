@@ -12,17 +12,19 @@
         "hit_points": 135,
         "hit_dice": "18d10",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 10.0
+                    "value": 10,
+                    "value_formatted": "10 ft."
                 },
                 {
                     "type": "SWIM",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 }
             ]
         },
@@ -96,12 +98,13 @@
         "hit_points": 33,
         "hit_dice": "6d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 25.0
+                    "value": 25,
+                    "value_formatted": "25 ft."
                 }
             ]
         },
@@ -155,17 +158,19 @@
         "hit_points": 39,
         "hit_dice": "6d10",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "BURROW",
                     "measurement_unit": "FEET",
-                    "value": 10.0
+                    "value": 10,
+                    "value_formatted": "10 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },
@@ -219,12 +224,13 @@
         "hit_points": 39,
         "hit_dice": "6d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },
@@ -282,12 +288,13 @@
         "hit_points": 52,
         "hit_dice": "8d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 20.0
+                    "value": 20,
+                    "value_formatted": "20 ft."
                 }
             ]
         },
@@ -341,17 +348,19 @@
         "hit_points": 168,
         "hit_dice": "16d12",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "CLIMB",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 50.0
+                    "value": 50,
+                    "value_formatted": "50 ft."
                 }
             ]
         },
@@ -413,12 +422,13 @@
         "hit_points": 27,
         "hit_dice": "5d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },
@@ -480,17 +490,19 @@
         "hit_points": 93,
         "hit_dice": "11d10",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 },
                 {
                     "type": "SWIM",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },
@@ -548,17 +560,19 @@
         "hit_points": 27,
         "hit_dice": "6d6",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "FLY",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 20.0
+                    "value": 20,
+                    "value_formatted": "20 ft."
                 }
             ]
         },
@@ -612,17 +626,19 @@
         "hit_points": 97,
         "hit_dice": "13d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "FLY",
                     "measurement_unit": "FEET",
-                    "value": 90.0
+                    "value": 90,
+                    "value_formatted": "90 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },
@@ -688,17 +704,19 @@
         "hit_points": 262,
         "hit_dice": "21d12",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "FLY",
                     "measurement_unit": "FEET",
-                    "value": 80.0
+                    "value": 80,
+                    "value_formatted": "80 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 }
             ]
         },
@@ -768,12 +786,13 @@
         "hit_points": 18,
         "hit_dice": "4d6",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 20.0
+                    "value": 20,
+                    "value_formatted": "20 ft."
                 }
             ]
         },
@@ -827,22 +846,25 @@
         "hit_points": 385,
         "hit_dice": "22d20",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "FLY",
                     "measurement_unit": "FEET",
-                    "value": 80.0
+                    "value": 80,
+                    "value_formatted": "80 ft."
                 },
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 },
                 {
                     "type": "SWIM",
                     "measurement_unit": "FEET",
-                    "value": 40.0
+                    "value": 40,
+                    "value_formatted": "40 ft."
                 }
             ]
         },
@@ -932,12 +954,13 @@
         "hit_points": 135,
         "hit_dice": "18d8",
         "speed": {
-            "type": false,
+            "hover": false,
             "value": [
                 {
                     "type": "WALK",
                     "measurement_unit": "FEET",
-                    "value": 30.0
+                    "value": 30,
+                    "value_formatted": "30 ft."
                 }
             ]
         },

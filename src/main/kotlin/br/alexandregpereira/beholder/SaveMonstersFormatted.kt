@@ -96,10 +96,12 @@ private fun Monster.asSpeedFormatted(): Speed = speed.run {
 }
 
 private fun createSpeedValue(speedType: SpeedType, value: String?): SpeedValue? = value?.let {
+    val distance = it.split(" ").first().toInt()
     SpeedValue(
         type = speedType,
         measurementUnit = MeasurementUnit.FEET,
-        distance = it.split(" ").first().toFloat()
+        value = distance,
+        valueFormatted = "$distance ${MeasurementUnit.FEET.value}"
     )
 }
 
