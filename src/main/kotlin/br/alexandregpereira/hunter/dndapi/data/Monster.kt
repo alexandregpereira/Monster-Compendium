@@ -1,4 +1,4 @@
-package br.alexandregpereira.beholder.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName

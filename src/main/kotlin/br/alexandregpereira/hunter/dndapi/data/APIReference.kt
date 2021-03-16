@@ -1,16 +1,14 @@
-package br.alexandregpereira.beholder.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 @Serializable
-data class DamageType(
+data class APIReference(
     @SerialName("index")
     val index: String,
     @SerialName("name")
     val name: String,
-    @SerialName("desc")
-    val desc: List<String>,
     @SerialName("url")
     val url: String
 )

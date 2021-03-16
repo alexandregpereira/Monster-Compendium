@@ -1,4 +1,4 @@
-package br.alexandregpereira.beholder.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data
 
 import retrofit2.http.GET
 import retrofit2.http.Path

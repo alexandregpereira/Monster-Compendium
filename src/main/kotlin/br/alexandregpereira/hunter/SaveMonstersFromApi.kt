@@ -1,7 +1,7 @@
-package br.alexandregpereira.beholder
+package br.alexandregpereira.hunter
 
-import br.alexandregpereira.beholder.dndapi.data.Monster
-import br.alexandregpereira.beholder.dndapi.data.MonsterApi
+import br.alexandregpereira.hunter.dndapi.data.Monster
+import br.alexandregpereira.hunter.dndapi.data.MonsterApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi

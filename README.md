@@ -1,4 +1,4 @@
-# beholder
+# hunter
 
 ## Licence
     Copyright 2021 Alexandre Gomes Pereira

@@ -1,4 +1,4 @@
-package br.alexandregpereira.beholder
+package br.alexandregpereira.hunter
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope

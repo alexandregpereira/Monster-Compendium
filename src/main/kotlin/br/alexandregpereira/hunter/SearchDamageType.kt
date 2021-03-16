@@ -1,6 +1,6 @@
-package br.alexandregpereira.beholder
+package br.alexandregpereira.hunter
 
-import br.alexandregpereira.beholder.dndapi.data.Monster
+import br.alexandregpereira.hunter.dndapi.data.Monster
 import kotlinx.serialization.decodeFromString
 
 suspend fun main() = start {

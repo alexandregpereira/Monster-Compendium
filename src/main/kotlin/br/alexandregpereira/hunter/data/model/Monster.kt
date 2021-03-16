@@ -1,4 +1,4 @@
-package br.alexandregpereira.beholder.data.model
+package br.alexandregpereira.hunter.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,7 +1,7 @@
-package br.alexandregpereira.beholder
+package br.alexandregpereira.hunter
 
-import br.alexandregpereira.beholder.dndapi.data.DamageType
-import br.alexandregpereira.beholder.dndapi.data.DamageTypeApi
+import br.alexandregpereira.hunter.dndapi.data.DamageType
+import br.alexandregpereira.hunter.dndapi.data.DamageTypeApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi

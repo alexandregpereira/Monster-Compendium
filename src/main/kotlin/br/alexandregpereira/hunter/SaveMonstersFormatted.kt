@@ -1,9 +1,9 @@
-package br.alexandregpereira.beholder
+package br.alexandregpereira.hunter
 
-import br.alexandregpereira.beholder.data.model.*
-import br.alexandregpereira.beholder.dndapi.data.Monster
-import br.alexandregpereira.beholder.dndapi.data.MonsterType
-import br.alexandregpereira.beholder.dndapi.data.Proficiency
+import br.alexandregpereira.hunter.data.model.*
+import br.alexandregpereira.hunter.dndapi.data.Monster
+import br.alexandregpereira.hunter.dndapi.data.MonsterType
+import br.alexandregpereira.hunter.dndapi.data.Proficiency
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
@@ -11,8 +11,8 @@ import kotlinx.serialization.decodeFromString
 import okhttp3.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
-import br.alexandregpereira.beholder.data.model.Monster as MonsterFormatted
-import br.alexandregpereira.beholder.data.model.MonsterType as MonsterTypeFormatted
+import br.alexandregpereira.hunter.data.model.Monster as MonsterFormatted
+import br.alexandregpereira.hunter.data.model.MonsterType as MonsterTypeFormatted
 
 private const val GITHUB_IMAGE_HOST =
     "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images"
