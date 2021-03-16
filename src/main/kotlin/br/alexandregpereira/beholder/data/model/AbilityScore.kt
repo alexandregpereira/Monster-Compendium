@@ -23,8 +23,8 @@ data class SavingThrow(
 
 @Serializable
 data class Skill(
-    @SerialName("id")
-    val id: String,
+    @SerialName("index")
+    val index: String,
     @SerialName("modifier")
     val modifier: Int
 )

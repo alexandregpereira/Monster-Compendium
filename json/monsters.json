@@ -1,6 +1,6 @@
 [
     {
-        "id": "aboleth",
+        "index": "aboleth",
         "type": "ABERRATION",
         "name": "Aboleth",
         "subtitle": "Large aberration, lawful evil",
@@ -74,17 +74,17 @@
         ],
         "skills": [
             {
-                "id": "history",
+                "index": "history",
                 "modifier": 12
             },
             {
-                "id": "perception",
+                "index": "perception",
                 "modifier": 10
             }
         ]
     },
     {
-        "id": "animated-armor",
+        "index": "animated-armor",
         "type": "CONSTRUCT",
         "name": "Animated Armor",
         "subtitle": "Medium construct, unaligned",
@@ -143,7 +143,7 @@
         ]
     },
     {
-        "id": "ankheg",
+        "index": "ankheg",
         "type": "MONSTROSITY",
         "name": "Ankheg",
         "subtitle": "Large monstrosity, unaligned",
@@ -207,7 +207,7 @@
         ]
     },
     {
-        "id": "azer",
+        "index": "azer",
         "type": "ELEMENTAL",
         "name": "Azer",
         "subtitle": "Medium elemental, lawful neutral",
@@ -270,7 +270,7 @@
         ]
     },
     {
-        "id": "basilisk",
+        "index": "basilisk",
         "type": "MONSTROSITY",
         "name": "Basilisk",
         "subtitle": "Medium monstrosity, unaligned",
@@ -329,7 +329,7 @@
         ]
     },
     {
-        "id": "behir",
+        "index": "behir",
         "type": "MONSTROSITY",
         "name": "Behir",
         "subtitle": "Huge monstrosity, neutral evil",
@@ -391,17 +391,17 @@
         ],
         "skills": [
             {
-                "id": "perception",
+                "index": "perception",
                 "modifier": 6
             },
             {
-                "id": "stealth",
+                "index": "stealth",
                 "modifier": 7
             }
         ]
     },
     {
-        "id": "bugbear",
+        "index": "bugbear",
         "type": "HUMANOID",
         "name": "Bugbear",
         "subtitle": "Medium humanoid(goblinoid), chaotic evil",
@@ -458,17 +458,17 @@
         ],
         "skills": [
             {
-                "id": "stealth",
+                "index": "stealth",
                 "modifier": 6
             },
             {
-                "id": "survival",
+                "index": "survival",
                 "modifier": 2
             }
         ]
     },
     {
-        "id": "chuul",
+        "index": "chuul",
         "type": "ABERRATION",
         "name": "Chuul",
         "subtitle": "Large aberration, chaotic evil",
@@ -530,13 +530,13 @@
         ],
         "skills": [
             {
-                "id": "perception",
+                "index": "perception",
                 "modifier": 4
             }
         ]
     },
     {
-        "id": "cockatrice",
+        "index": "cockatrice",
         "type": "MONSTROSITY",
         "name": "Cockatrice",
         "subtitle": "Small monstrosity, unaligned",
@@ -600,7 +600,7 @@
         ]
     },
     {
-        "id": "couatl",
+        "index": "couatl",
         "type": "CELESTIAL",
         "name": "Couatl",
         "subtitle": "Medium celestial, lawful good",
@@ -676,7 +676,7 @@
         ]
     },
     {
-        "id": "demon-balor",
+        "index": "demon-balor",
         "type": "FIEND",
         "name": "Balor",
         "subtitle": "Huge fiend(demon), chaotic evil",
@@ -756,7 +756,7 @@
         ]
     },
     {
-        "id": "demon-dretch",
+        "index": "demon-dretch",
         "type": "FIEND",
         "name": "Dretch",
         "subtitle": "Small fiend(demon), chaotic evil",
@@ -815,7 +815,7 @@
         ]
     },
     {
-        "id": "dragon-ancient-green-dragon",
+        "index": "dragon-ancient-green-dragon",
         "type": "DRAGON",
         "name": "Ancient Green Dragon",
         "subtitle": "Gargantuan dragon, lawful evil",
@@ -898,29 +898,29 @@
         ],
         "skills": [
             {
-                "id": "deception",
+                "index": "deception",
                 "modifier": 11
             },
             {
-                "id": "insight",
+                "index": "insight",
                 "modifier": 10
             },
             {
-                "id": "perception",
+                "index": "perception",
                 "modifier": 17
             },
             {
-                "id": "persuasion",
+                "index": "persuasion",
                 "modifier": 11
             },
             {
-                "id": "stealth",
+                "index": "stealth",
                 "modifier": 8
             }
         ]
     },
     {
-        "id": "lich",
+        "index": "lich",
         "type": "UNDEAD",
         "name": "Lich",
         "subtitle": "Medium undead, any evil alignment",
@@ -989,19 +989,19 @@
         ],
         "skills": [
             {
-                "id": "arcana",
+                "index": "arcana",
                 "modifier": 18
             },
             {
-                "id": "history",
+                "index": "history",
                 "modifier": 12
             },
             {
-                "id": "insight",
+                "index": "insight",
                 "modifier": 9
             },
             {
-                "id": "perception",
+                "index": "perception",
                 "modifier": 9
             }
         ]

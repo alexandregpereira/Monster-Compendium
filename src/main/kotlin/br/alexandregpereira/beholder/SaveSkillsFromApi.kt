@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
-val skillApi: SkillApi = retrofit.create(SkillApi::class.java)
+private val skillApi: SkillApi = retrofit.create(SkillApi::class.java)
 
 @FlowPreview
 @ExperimentalSerializationApi

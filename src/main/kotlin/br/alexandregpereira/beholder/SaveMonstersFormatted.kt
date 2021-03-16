@@ -29,10 +29,10 @@ suspend fun main() = start {
         }
         .toList()
         .filterNotNull()
-        .sortedBy { it.id }
+        .sortedBy { it.index }
 
     println("\n${monsters.size} monsters formatted")
-    monsters.forEach { println("id: ${it.id}, name: ${it.name}") }
+    monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
 
     saveJsonFile(monsters, JSON_FORMATTED_FILE_NAME)
 }
@@ -40,7 +40,7 @@ suspend fun main() = start {
 private fun List<Monster>.asMonstersFormatted(): List<MonsterFormatted> {
     return this.filter { it.type != MonsterType.OTHER }.map {
         MonsterFormatted(
-            id = it.getId(),
+            index = it.getId(),
             type = MonsterTypeFormatted.valueOf(it.type.name),
             name = it.name,
             subtitle = it.formatSubtitle(),
@@ -161,7 +161,7 @@ private fun Proficiency.asSavingThrowType(): AbilityScoreType {
 private fun Monster.getSkills(): List<Skill> {
     return this.proficiencies.filter { it.proficiency.index.startsWith("skill-") }.map {
         Skill(
-            id = it.proficiency.index.removePrefix("skill-"),
+            index = it.proficiency.index.removePrefix("skill-"),
             modifier = it.value
         )
     }
@@ -198,7 +198,7 @@ private fun MonsterFormatted.downloadImage(): Flow<MonsterFormatted?> = callback
 
     client.newCall(request).enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
-            println("request failed: $id: " + e.message)
+            println("request failed: $index: " + e.message)
             channel.offer(null)
             channel.close()
         }
@@ -206,11 +206,11 @@ private fun MonsterFormatted.downloadImage(): Flow<MonsterFormatted?> = callback
         @Throws(IOException::class)
         override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
-                println("request success: $id")
+                println("request success: $index")
                 channel.offer(element = this@downloadImage)
 
             } else {
-                println("request failed: $id")
+                println("request failed: $index")
                 channel.offer(element = null)
             }
             channel.close()

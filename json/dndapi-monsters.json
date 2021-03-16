@@ -2253,7 +2253,9 @@
         "damage_resistances": [
             "lightning",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -4377,7 +4379,9 @@
         ],
         "damage_immunities": [
             "psychic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
             {
@@ -4889,8 +4893,10 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "damage from spells",
-            "non magical bludgeoning, piercing, and slashing (from stoneskin)"
+            "spells",
+            "bludgeoning when stoneskin",
+            "piercing when stoneskin",
+            "slashing when stoneskin"
         ],
         "damage_immunities": [
         ],
@@ -5693,7 +5699,9 @@
         "damage_resistances": [
             "cold",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "fire",
@@ -6072,7 +6080,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -6353,7 +6366,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -7357,7 +7375,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -8227,7 +8250,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -8523,7 +8551,12 @@
             "acid",
             "poison",
             "psychic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning silvered",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "condition_immunities": [
             {
@@ -9254,7 +9287,9 @@
         ],
         "damage_immunities": [
             "psychic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
         ],
@@ -10179,7 +10214,9 @@
         ],
         "damage_resistances": [
             "radiant",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -11832,7 +11869,9 @@
             "thunder"
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -12296,7 +12335,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -12644,7 +12688,9 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "fire",
@@ -12882,7 +12928,12 @@
         "damage_immunities": [
             "lightning",
             "poison",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning silvered",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "condition_immunities": [
             {
@@ -13361,7 +13412,12 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning silvered",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "damage_immunities": [
             "poison"
@@ -13669,7 +13725,9 @@
             "fire",
             "lightning",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "cold",
@@ -16165,7 +16223,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -17268,7 +17328,9 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -17853,7 +17915,9 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "psychic"
@@ -18422,7 +18486,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -18880,7 +18946,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -19250,7 +19321,12 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -19571,7 +19647,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical/nonsilver weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -19676,7 +19757,9 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -19794,7 +19877,12 @@
             "fire",
             "poison",
             "psychic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning silvered",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "condition_immunities": [
             {
@@ -20306,7 +20394,9 @@
         ],
         "damage_immunities": [
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
             {
@@ -20740,7 +20830,9 @@
         ],
         "damage_immunities": [
             "poison",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
             {
@@ -21633,7 +21725,9 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "fire"
@@ -21917,7 +22011,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -22771,7 +22867,9 @@
             "fire"
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "necrotic",
@@ -22927,7 +23025,9 @@
         "damage_immunities": [
             "necrotic",
             "poison",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
             {
@@ -23194,7 +23294,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -23334,7 +23436,12 @@
         "damage_resistances": [
             "cold",
             "fire",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
         ],
@@ -24809,7 +24916,12 @@
         ],
         "damage_resistances": [
             "cold",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "fire",
@@ -25015,7 +25127,9 @@
         ],
         "damage_resistances": [
             "radiant",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -25829,7 +25943,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -26001,7 +26117,9 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
         ],
@@ -27270,7 +27388,9 @@
             "cold"
         ],
         "damage_resistances": [
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "fire"
@@ -27790,7 +27910,9 @@
             "fire",
             "lightning",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "necrotic",
@@ -28389,7 +28511,9 @@
         ],
         "damage_resistances": [
             "radiant",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "necrotic",
@@ -28601,7 +28725,9 @@
             "fire",
             "lightning",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "necrotic",
@@ -29524,7 +29650,12 @@
         "damage_immunities": [
             "poison",
             "psychic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning silvered",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "condition_immunities": [
             {
@@ -29888,7 +30019,9 @@
             "fire",
             "lightning",
             "poison",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -31078,7 +31211,9 @@
         "damage_immunities": [
             "fire",
             "poison",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "condition_immunities": [
             {
@@ -32054,7 +32189,9 @@
         ],
         "damage_resistances": [
             "necrotic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -32227,7 +32364,9 @@
         ],
         "damage_resistances": [
             "necrotic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
         ],
@@ -32535,7 +32674,9 @@
             "cold",
             "fire",
             "lightning",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -32844,7 +32985,9 @@
         ],
         "damage_resistances": [
             "acid",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "poison"
@@ -33341,7 +33484,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33418,7 +33566,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33497,7 +33650,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33603,7 +33761,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33705,7 +33868,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33822,7 +33990,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -33904,7 +34077,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34007,7 +34185,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34144,7 +34327,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34237,7 +34425,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34310,7 +34503,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34404,7 +34602,12 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
-            "bludgeoning, piercing, and slashing damage from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "condition_immunities": [
         ],
@@ -34613,7 +34816,12 @@
         ],
         "damage_resistances": [
             "necrotic",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "poison"
@@ -34723,7 +34931,9 @@
             "fire",
             "necrotic",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons"
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "damage_immunities": [
             "lightning",
@@ -35104,7 +35314,12 @@
             "fire",
             "lightning",
             "thunder",
-            "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "bludgeoning adamantine",
+            "piercing adamantine",
+            "slashing adamantine"
         ],
         "damage_immunities": [
             "necrotic",
@@ -35335,7 +35550,10 @@
         "damage_vulnerabilities": [
         ],
         "damage_resistances": [
-            "piercing and slashing from nonmagical weapons that aren't adamantine"
+            "piercing",
+            "slashing",
+            "piercing silvered",
+            "slashing silvered"
         ],
         "damage_immunities": [
         ],

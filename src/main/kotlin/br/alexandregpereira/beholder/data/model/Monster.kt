@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Monster(
-    @SerialName("id")
-    val id: String,
+    @SerialName("index")
+    val index: String,
     @SerialName("type")
     val type: MonsterType,
     @SerialName("name")
