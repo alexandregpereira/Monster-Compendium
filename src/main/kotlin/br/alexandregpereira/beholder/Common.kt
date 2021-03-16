@@ -15,7 +15,10 @@ const val SKILL_JSON_FILE_NAME = "json/dndapi-skills.json"
 const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"
 
 val contentType: MediaType = MediaType.get("application/json")
-val json = Json { ignoreUnknownKeys = true }
+val json = Json {
+    ignoreUnknownKeys = true
+    prettyPrint = true
+}
 
 @ExperimentalSerializationApi
 val retrofit: Retrofit = Retrofit.Builder()
@@ -32,7 +35,7 @@ suspend fun start(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
 
 inline fun <reified T> saveJsonFile(monsters: List<T>, fileName: String) {
     println("\nSaving")
-    val json = Json.encodeToString(monsters)
+    val json = json.encodeToString(monsters)
     saveJsonFile(fileName, json)
     println()
     println("Json saved")
@@ -43,4 +46,4 @@ fun saveJsonFile(fileName: String, json: String) {
     println(json)
 }
 
-fun readJsonFile(fileName: String): String = File(fileName).readLines().first()
+fun readJsonFile(fileName: String): String = File(fileName).readText()
