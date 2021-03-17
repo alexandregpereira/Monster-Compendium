@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter
+package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterApi

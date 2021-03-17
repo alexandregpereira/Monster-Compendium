@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter
+package br.alexandregpereira.hunter.scripts
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope

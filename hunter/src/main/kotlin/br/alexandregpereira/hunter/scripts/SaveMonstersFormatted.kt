@@ -1,9 +1,10 @@
-package br.alexandregpereira.hunter
+package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.data.model.*
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.Proficiency
+import br.alexandregpereira.hunter.scripts.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
