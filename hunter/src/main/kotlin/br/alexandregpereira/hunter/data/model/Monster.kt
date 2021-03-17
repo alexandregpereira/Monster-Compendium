@@ -34,6 +34,12 @@ data class Monster(
     @SerialName("saving_throws")
     val savingThrows: List<SavingThrow>,
     @SerialName("skills")
-    val skills: List<Skill>
+    val skills: List<Skill>,
+    @SerialName("damage_vulnerabilities")
+    val damageVulnerabilities: List<Damage>,
+    @SerialName("damage_resistances")
+    val damageResistances: List<Damage>,
+    @SerialName("damage_immunities")
+    val damageImmunities: List<Damage>
 )
 

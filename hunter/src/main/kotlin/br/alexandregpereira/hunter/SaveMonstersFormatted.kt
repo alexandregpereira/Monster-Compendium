@@ -11,6 +11,7 @@ import kotlinx.serialization.decodeFromString
 import okhttp3.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
+import java.util.Locale
 import br.alexandregpereira.hunter.data.model.Monster as MonsterFormatted
 import br.alexandregpereira.hunter.data.model.MonsterType as MonsterTypeFormatted
 
@@ -54,14 +55,17 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterFormatted> {
             speed = it.asSpeedFormatted(),
             abilityScores = it.asAbilityScoresFormatted(),
             savingThrows = it.getSavingThrows(),
-            skills = it.getSkills()
+            skills = it.getSkills(),
+            damageVulnerabilities = it.damageVulnerabilities.getDamages(),
+            damageResistances = it.damageResistances.getDamages(),
+            damageImmunities = it.damageImmunities.getDamages(),
         )
     }
 }
 
 private fun Monster.formatSubtitle(): String {
     val subType = if (subtype.isNullOrEmpty()) "," else "($subtype),"
-    return "$size ${type.name.toLowerCase()}$subType $alignment"
+    return "$size ${type.name.toLowerCase(Locale.ROOT)}$subType $alignment"
 }
 
 private fun Monster.getImageUrl(): String {
@@ -165,6 +169,31 @@ private fun Monster.getSkills(): List<Skill> {
         Skill(
             index = it.proficiency.index.removePrefix("skill-"),
             modifier = it.value
+        )
+    }
+}
+
+private fun List<String>.getDamages(): List<Damage> {
+    return this.map {
+        val damageType = when {
+            it.startsWith("acid") -> DamageType.ACID
+            it.startsWith("bludgeoning") -> DamageType.BLUDGEONING
+            it.startsWith("cold") -> DamageType.COLD
+            it.startsWith("fire") -> DamageType.FIRE
+            it.startsWith("lightning") -> DamageType.LIGHTNING
+            it.startsWith("necrotic") -> DamageType.NECROTIC
+            it.startsWith("piercing") -> DamageType.PIERCING
+            it.startsWith("poison") -> DamageType.POISON
+            it.startsWith("psychic") -> DamageType.PSYCHIC
+            it.startsWith("radiant") -> DamageType.RADIANT
+            it.startsWith("slashing") -> DamageType.SLASHING
+            it.startsWith("thunder") -> DamageType.THUNDER
+            else -> DamageType.OTHER
+        }
+        Damage(
+            index = it.toLowerCase(Locale.ROOT),
+            type = damageType,
+            name = it.capitalize(Locale.ROOT)
         )
     }
 }

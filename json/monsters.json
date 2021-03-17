@@ -83,6 +83,12 @@
                 "index": "perception",
                 "modifier": 10
             }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
         ]
     },
     {
@@ -143,6 +149,22 @@
         "saving_throws": [
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
         ]
     },
     {
@@ -209,6 +231,12 @@
         "saving_throws": [
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
         ]
     },
     {
@@ -273,6 +301,22 @@
             }
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
         ]
     },
     {
@@ -333,6 +377,12 @@
         "saving_throws": [
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
         ]
     },
     {
@@ -407,6 +457,17 @@
                 "index": "stealth",
                 "modifier": 7
             }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
         ]
     },
     {
@@ -475,6 +536,12 @@
                 "index": "survival",
                 "modifier": 2
             }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
         ]
     },
     {
@@ -545,6 +612,17 @@
                 "index": "perception",
                 "modifier": 4
             }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
         ]
     },
     {
@@ -611,6 +689,12 @@
         "saving_throws": [
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
         ]
     },
     {
@@ -689,6 +773,42 @@
             }
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "radiant",
+                "type": "RADIANT",
+                "name": "Radiant"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
         ]
     },
     {
@@ -771,6 +891,52 @@
             }
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
         ]
     },
     {
@@ -831,6 +997,32 @@
         "saving_throws": [
         ],
         "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
         ]
     },
     {
@@ -939,6 +1131,17 @@
                 "index": "stealth",
                 "modifier": 8
             }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
         ]
     },
     {
@@ -1026,6 +1229,52 @@
             {
                 "index": "perception",
                 "modifier": 9
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
         ]
     }
