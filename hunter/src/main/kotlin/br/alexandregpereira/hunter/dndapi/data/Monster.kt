@@ -61,6 +61,7 @@ data class Monster(
     val actions: List<Action> = emptyList(),
     @SerialName("legendary_actions")
     val legendaryActions: List<LegendaryAction> = emptyList(),
+    val reactions: List<Reaction> = emptyList(),
     @SerialName("url")
     val url: String
 )
@@ -74,7 +75,15 @@ data class Action(
     @SerialName("desc")
     val desc: String,
     @SerialName("name")
-    val name: String
+    val name: String,
+    val options: Option? = null,
+    val dc: DifficultyClass? = null,
+    val usage: Usage? = null,
+    @SerialName("attack_options")
+    val attackOption: AttackOption? = null,
+    val attacks: List<Attack> = emptyList(),
+    @SerialName("damage_dice")
+    val damageDice: String? = null
 )
 
 @Serializable
@@ -84,13 +93,19 @@ data class LegendaryAction(
     @SerialName("desc")
     val desc: String,
     @SerialName("name")
-    val name: String
+    val name: String,
+    val dc: DifficultyClass? = null,
+    val damage: List<Damage> = emptyList()
 )
 
 @Serializable
 data class Senses(
+    @SerialName("blindsight")
+    val blindsight: String? = null,
     @SerialName("darkvision")
     val darkvision: String? = null,
+    val truesight: String? = null,
+    val tremorsense: String? = null,
     @SerialName("passive_perception")
     val passivePerception: Int? = null
 )
@@ -104,7 +119,12 @@ data class SpecialAbility(
     @SerialName("spellcasting")
     val spellCasting: SpellCasting? = null,
     @SerialName("dc")
-    val dc: DifficultyClass? = null
+    val dc: DifficultyClass? = null,
+    val usage: Usage? = null,
+    @SerialName("damage")
+    val damages: List<Damage> = emptyList(),
+    @SerialName("attack_bonus")
+    val attackBonus: Int? = null
 )
 
 @Serializable
@@ -128,7 +148,8 @@ data class Damage(
     @SerialName("damage_dice")
     val damageDice: String? = null,
     @SerialName("damage_type")
-    val damageType: APIReference? = null
+    val damageType: APIReference? = null,
+    val dc: DifficultyClass? = null
 )
 
 @Serializable
@@ -145,16 +166,9 @@ data class SpellCasting(
     val modifier: Int? = null,
     @SerialName("school")
     val school: String? = null,
-    @SerialName("slots")
-    val slots: Slots? = null,
+    val slots: Map<String, Int> = mapOf(),
     @SerialName("spells")
     val spells: List<Spell>
-)
-
-@Serializable
-data class Slots(
-    @SerialName("1")
-    val x1: Int
 )
 
 @Serializable
@@ -164,7 +178,9 @@ data class Spell(
     @SerialName("name")
     val name: String,
     @SerialName("url")
-    val url: String
+    val url: String,
+    val usage: Usage? = null,
+    val notes: String? = null
 )
 
 @Serializable
@@ -187,3 +203,47 @@ data class DcType(
     val url: String
 )
 
+@Serializable
+data class Option(
+    val choose: Int,
+    val from: List<List<From>>
+)
+
+@Serializable
+data class From(
+    val name: String,
+    val type: String,
+    val notes: String? = null
+)
+
+@Serializable
+data class Usage(
+    val type: String,
+    val dice: String? = null,
+    @SerialName("min_value")
+    val minValue: Int = 0,
+    val times: Int = 0,
+    @SerialName("rest_types")
+    val restTypes: List<String> = emptyList()
+)
+
+@Serializable
+data class AttackOption(
+    val choose: Int,
+    val type: String,
+    val from: List<Attack>
+)
+
+@Serializable
+data class Attack(
+    val name: String,
+    val dc: DifficultyClass,
+    val damage: List<Damage> = emptyList()
+)
+
+@Serializable
+data class Reaction(
+    val name: String,
+    val desc: String,
+    val dc: DifficultyClass? = null
+)

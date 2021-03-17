@@ -5,6 +5,7 @@ import br.alexandregpereira.hunter.dndapi.data.MonsterApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
+import java.lang.Exception
 
 @ExperimentalSerializationApi
 val monsterApi: MonsterApi = retrofit.create(MonsterApi::class.java)
@@ -93,7 +94,13 @@ private fun String.splitDamage(): List<String> {
 
 @ExperimentalSerializationApi
 private suspend fun getMonsterFlow(index: String): Flow<Monster> = flow {
-    emit(getMonster(index).formatDamages())
+    runCatching {
+        getMonster(index).formatDamages()
+    }.onFailure {
+        throw Exception("Error: $index", it)
+    }.onSuccess {
+        emit(it)
+    }
 }
 
 @ExperimentalSerializationApi
