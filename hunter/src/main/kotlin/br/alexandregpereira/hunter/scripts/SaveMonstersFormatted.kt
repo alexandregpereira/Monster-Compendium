@@ -1,6 +1,6 @@
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.data.di.remoteDataSourceModule
+import br.alexandregpereira.hunter.data.monster.di.remoteDataSourceModule
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.model.*
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterTypeDto

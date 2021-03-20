@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.data.di
+package br.alexandregpereira.hunter.data.monster.di
 
 import br.alexandregpereira.hunter.data.monster.remote.FileManager
 import br.alexandregpereira.hunter.data.monster.remote.FileManagerImpl
