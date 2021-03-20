@@ -1,15 +1,17 @@
 package br.alexandregpereira.hunter.data.monster.remote
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.File
 
 internal class MonsterRemoteDataSourceImpl(
-    private val file: File = File(JSON_FORMATTED_FILE_NAME)
+    private val fileManager: FileManager
 ) : MonsterRemoteDataSource {
 
     private val json = Json {
@@ -17,16 +19,14 @@ internal class MonsterRemoteDataSourceImpl(
         prettyPrint = true
     }
 
-    override fun getMonsters(): Flow<List<MonsterDto>> = flow {
-        val jsonValue = file.readText()
-        emit(json.decodeFromString<List<MonsterDto>>(jsonValue))
+    override fun getMonsters(): Flow<List<MonsterDto>> = fileManager.readText().map { jsonValue ->
+        json.decodeFromString(jsonValue)
     }
 
+    @ExperimentalCoroutinesApi
     override fun insertMonsters(monsters: List<MonsterDto>): Flow<Unit> = flow {
-        val json = json.encodeToString(monsters)
-        file.writeText(json)
-        emit(Unit)
+        emit(json.encodeToString(monsters))
+    }.flatMapLatest { json ->
+        fileManager.writeText(json)
     }
 }
-
-private const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"

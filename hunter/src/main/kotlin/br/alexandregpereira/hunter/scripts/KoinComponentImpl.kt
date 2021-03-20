@@ -1,12 +1,10 @@
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.remoteDataSourceModule
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 
 private class KoinComponentImpl(private val koinApplication: KoinApplication) : KoinComponent {
 
@@ -15,18 +13,9 @@ private class KoinComponentImpl(private val koinApplication: KoinApplication) : 
     }
 }
 
-fun <T> createKoinComponent(koinApplication: KoinApplication, block: KoinComponent.() -> T): T {
-    return KoinComponentImpl(koinApplication).run(block)
-}
-
-fun monsterRemoteDataSource(): Lazy<MonsterRemoteDataSource> {
+fun createKoinComponent(vararg modules: Module): KoinComponent {
     val app = startKoin {
-        modules(remoteDataSourceModule)
+        modules(*modules)
     }
-
-    return lazyOf(
-        createKoinComponent(app) {
-            get()
-        }
-    )
+    return KoinComponentImpl(app)
 }

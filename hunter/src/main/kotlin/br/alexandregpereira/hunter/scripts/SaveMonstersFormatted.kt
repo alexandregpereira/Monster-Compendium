@@ -1,6 +1,9 @@
 package br.alexandregpereira.hunter.scripts
 
+import br.alexandregpereira.hunter.data.di.remoteDataSourceModule
+import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.model.*
+import br.alexandregpereira.hunter.data.monster.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.Proficiency
@@ -10,21 +13,18 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.decodeFromString
 import okhttp3.*
+import org.koin.core.component.inject
 import java.io.IOException
-import java.lang.IllegalArgumentException
-import java.util.Locale
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterTypeDto
+import java.util.*
 
 private const val GITHUB_IMAGE_HOST =
     "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images"
 
-
-
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {
-    val monsterRemoteDataSource by monsterRemoteDataSource()
+    val koinComponent = createKoinComponent(remoteDataSourceModule)
+    val monsterRemoteDataSource by koinComponent.inject<MonsterRemoteDataSource>()
 
     val monsters = json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME))
         .asMonstersFormatted()
@@ -158,7 +158,7 @@ private fun Monster.getSavingThrows(): List<SavingThrowDto> {
 }
 
 private fun Proficiency.asSavingThrowType(): AbilityScoreTypeDto {
-    return when(val index = index.removePrefix("saving-throw-")) {
+    return when (val index = index.removePrefix("saving-throw-")) {
         "str" -> AbilityScoreTypeDto.STRENGTH
         "dex" -> AbilityScoreTypeDto.DEXTERITY
         "con" -> AbilityScoreTypeDto.CONSTITUTION
