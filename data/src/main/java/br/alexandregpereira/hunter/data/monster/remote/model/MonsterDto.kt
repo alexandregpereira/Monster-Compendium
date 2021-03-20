@@ -1,14 +1,14 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.monster.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Monster(
+data class MonsterDto(
     @SerialName("index")
     val index: String,
     @SerialName("type")
-    val type: MonsterType,
+    val type: MonsterTypeDto,
     @SerialName("name")
     val name: String,
     @SerialName("subtitle")
@@ -28,18 +28,18 @@ data class Monster(
     @SerialName("hit_dice")
     val hitDice: String,
     @SerialName("speed")
-    val speed: Speed,
+    val speed: SpeedDto,
     @SerialName("ability_scores")
-    val abilityScores: List<AbilityScore>,
+    val abilityScores: List<AbilityScoreDto>,
     @SerialName("saving_throws")
-    val savingThrows: List<SavingThrow>,
+    val savingThrows: List<SavingThrowDto>,
     @SerialName("skills")
-    val skills: List<Skill>,
+    val skills: List<SkillDto>,
     @SerialName("damage_vulnerabilities")
-    val damageVulnerabilities: List<Damage>,
+    val damageVulnerabilities: List<DamageDto>,
     @SerialName("damage_resistances")
-    val damageResistances: List<Damage>,
+    val damageResistances: List<DamageDto>,
     @SerialName("damage_immunities")
-    val damageImmunities: List<Damage>
+    val damageImmunities: List<DamageDto>
 )
 

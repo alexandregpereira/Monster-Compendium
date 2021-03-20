@@ -1,12 +1,12 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.monster.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AbilityScore(
+data class AbilityScoreDto(
     @SerialName("type")
-    val type: AbilityScoreType,
+    val type: AbilityScoreTypeDto,
     @SerialName("value")
     val value: Int,
     @SerialName("modifier")
@@ -14,15 +14,15 @@ data class AbilityScore(
 )
 
 @Serializable
-data class SavingThrow(
+data class SavingThrowDto(
     @SerialName("type")
-    val type: AbilityScoreType,
+    val type: AbilityScoreTypeDto,
     @SerialName("modifier")
     val modifier: Int
 )
 
 @Serializable
-data class Skill(
+data class SkillDto(
     @SerialName("index")
     val index: String,
     @SerialName("modifier")
@@ -30,7 +30,7 @@ data class Skill(
 )
 
 @Serializable
-enum class AbilityScoreType {
+enum class AbilityScoreTypeDto {
     @SerialName("STRENGTH")
     STRENGTH,
     @SerialName("DEXTERITY")

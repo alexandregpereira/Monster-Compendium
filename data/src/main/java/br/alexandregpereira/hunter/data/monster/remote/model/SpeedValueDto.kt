@@ -1,22 +1,22 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.monster.remote.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-data class Speed(
+data class SpeedDto(
     @SerialName("hover")
     val hover: Boolean,
     @SerialName("value")
-    val values: List<SpeedValue>,
+    val values: List<SpeedValueDto>,
 )
 
 @Serializable
-data class SpeedValue(
+data class SpeedValueDto(
     @SerialName("type")
-    val type: SpeedType,
+    val type: SpeedTypeDto,
     @SerialName("measurement_unit")
-    val measurementUnit: MeasurementUnit,
+    val measurementUnit: MeasurementUnitDto,
     @SerialName("value")
     val value: Int,
     @SerialName("value_formatted")
@@ -24,7 +24,7 @@ data class SpeedValue(
 )
 
 @Serializable
-enum class SpeedType {
+enum class SpeedTypeDto {
     @SerialName("BURROW")
     BURROW,
     @SerialName("CLIMB")
@@ -40,7 +40,7 @@ enum class SpeedType {
 }
 
 @Serializable
-enum class MeasurementUnit(val value: String) {
+enum class MeasurementUnitDto(val value: String) {
     @SerialName("FEET")
     FEET(value = "ft."),
     @SerialName("METER")

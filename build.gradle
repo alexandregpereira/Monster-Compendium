@@ -2,6 +2,8 @@ buildscript {
     ext {
         kotlin_version = '1.4.30'
         compose_version = '1.0.0-beta01'
+        koin_version = "3.0.1-beta-1"
+        mockk_version = "1.11.0"
     }
     repositories {
         google()

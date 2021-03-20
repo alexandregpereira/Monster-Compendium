@@ -1,19 +1,19 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.monster.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Damage(
+data class DamageDto(
     @SerialName("index")
     val index: String,
     @SerialName("type")
-    val type: DamageType,
+    val type: DamageTypeDto,
     @SerialName("name")
     val name: String
 )
 
-enum class DamageType {
+enum class DamageTypeDto {
     ACID,
     BLUDGEONING,
     COLD,

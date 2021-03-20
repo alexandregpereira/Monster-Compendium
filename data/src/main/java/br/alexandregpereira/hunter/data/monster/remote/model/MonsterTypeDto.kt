@@ -1,10 +1,10 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.monster.remote.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-enum class MonsterType {
+enum class MonsterTypeDto {
     @SerialName("ABERRATION")
     ABERRATION,
     @SerialName("BEAST")

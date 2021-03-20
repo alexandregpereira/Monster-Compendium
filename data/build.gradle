@@ -11,4 +11,14 @@ java {
 
 dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
+    implementation "io.insert-koin:koin-core:$koin_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation 'junit:junit:4.13.2'
+}
+
+configure([compileKotlin, compileTestKotlin]) {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
