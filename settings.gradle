@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = 'hunter'
 include ':app'
 include ':hunter'
+include ':data'
