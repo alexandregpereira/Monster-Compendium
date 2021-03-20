@@ -1,6 +1,6 @@
-package br.alexandregpereira.hunter.data.monster.remote
+package br.alexandregpereira.hunter.data.remote
 
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.flow.Flow
 
 interface MonsterRemoteDataSource {

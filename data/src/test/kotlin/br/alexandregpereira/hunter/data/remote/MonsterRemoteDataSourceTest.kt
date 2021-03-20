@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.data.monster.remote
+package br.alexandregpereira.hunter.data.remote
 
 import io.mockk.confirmVerified
 import io.mockk.every

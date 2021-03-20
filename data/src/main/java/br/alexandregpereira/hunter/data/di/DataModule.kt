@@ -1,9 +1,9 @@
-package br.alexandregpereira.hunter.data.monster.di
+package br.alexandregpereira.hunter.data.di
 
-import br.alexandregpereira.hunter.data.monster.remote.FileManager
-import br.alexandregpereira.hunter.data.monster.remote.FileManagerImpl
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceImpl
+import br.alexandregpereira.hunter.data.remote.FileManager
+import br.alexandregpereira.hunter.data.remote.FileManagerImpl
+import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
+import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 

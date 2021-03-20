@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.data.monster.remote
+package br.alexandregpereira.hunter.data.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
