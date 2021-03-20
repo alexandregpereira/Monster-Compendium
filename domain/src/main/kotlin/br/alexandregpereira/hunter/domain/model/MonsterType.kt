@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.domain.model
+
+enum class MonsterType {
+    ABERRATION,
+    BEAST,
+    CELESTIAL,
+    CONSTRUCT,
+    DRAGON,
+    ELEMENTAL,
+    FEY,
+    FIEND,
+    GIANT,
+    HUMANOID,
+    MONSTROSITY,
+    OOZE,
+    PLANT,
+    UNDEAD
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

@@ -14,15 +14,29 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.domain.model
+
+data class AbilityScore(
+    val type: AbilityScoreType,
+    val value: Int,
+    val modifier: Int
+)
+
+data class SavingThrow(
+    val type: AbilityScoreType,
+    val modifier: Int
+)
+
+data class Skill(
+    val index: String,
+    val modifier: Int
+)
+
+enum class AbilityScoreType {
+    STRENGTH,
+    DEXTERITY,
+    CONSTITUTION,
+    INTELLIGENCE,
+    WISDOM,
+    CHARISMA
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

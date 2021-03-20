@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
+package br.alexandregpereira.hunter.data.mapper
+
+import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
+import br.alexandregpereira.hunter.domain.model.SavingThrow
+
+internal fun List<SavingThrowDto>.toDomain(): List<SavingThrow> {
+    return this.map {
+        SavingThrow(type = it.type.toDomain(), modifier = it.modifier)
     }
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

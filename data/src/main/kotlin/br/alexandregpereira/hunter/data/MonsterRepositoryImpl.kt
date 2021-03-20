@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.di
+package br.alexandregpereira.hunter.data
 
-import br.alexandregpereira.hunter.data.remote.FileManager
-import br.alexandregpereira.hunter.data.remote.FileManagerImpl
+import br.alexandregpereira.hunter.data.mapper.toDomain
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
-import org.koin.core.qualifier.qualifier
-import org.koin.dsl.module
+import br.alexandregpereira.hunter.domain.MonsterRepository
+import br.alexandregpereira.hunter.domain.model.Monster
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-private const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"
+internal class MonsterRepositoryImpl(
+    private val remoteDataSource: MonsterRemoteDataSource
+) : MonsterRepository {
 
-val remoteDataSourceModule = module {
-    single<MonsterRemoteDataSource> {
-        MonsterRemoteDataSourceImpl(get(qualifier(JSON_FORMATTED_FILE_NAME)))
-    }
-    single<FileManager>(qualifier = qualifier(JSON_FORMATTED_FILE_NAME)) {
-        FileManagerImpl(JSON_FORMATTED_FILE_NAME)
+    override fun getMonsters(): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters().map { it.toDomain() }
     }
 }

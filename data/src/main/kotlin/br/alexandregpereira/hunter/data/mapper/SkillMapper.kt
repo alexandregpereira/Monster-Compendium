@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
+package br.alexandregpereira.hunter.data.mapper
+
+import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.domain.model.Skill
+
+internal fun List<SkillDto>.toDomain(): List<Skill> {
+    return this.map {
+        Skill(index = it.index, modifier = it.modifier)
     }
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

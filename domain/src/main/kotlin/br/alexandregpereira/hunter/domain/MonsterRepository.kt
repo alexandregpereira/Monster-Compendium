@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.domain
+
+import br.alexandregpereira.hunter.domain.model.Monster
+import kotlinx.coroutines.flow.Flow
+
+interface MonsterRepository {
+
+    fun getMonsters(): Flow<List<Monster>>
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

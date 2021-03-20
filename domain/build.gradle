@@ -17,7 +17,6 @@
 plugins {
     id 'java-library'
     id 'kotlin'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
 }
 
 java {
@@ -26,12 +25,8 @@ java {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
     implementation "io.insert-koin:koin-core:$koin_version"
-
-    implementation project(':domain')
-
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation 'junit:junit:4.13.2'
 }

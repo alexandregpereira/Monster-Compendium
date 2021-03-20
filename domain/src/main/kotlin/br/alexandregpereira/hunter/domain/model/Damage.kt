@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.domain.model
+
+data class Damage(
+    val index: String,
+    val type: DamageType,
+    val name: String
+)
+
+enum class DamageType {
+    ACID,
+    BLUDGEONING,
+    COLD,
+    FIRE,
+    LIGHTNING,
+    NECROTIC,
+    PIERCING,
+    POISON,
+    PSYCHIC,
+    RADIANT,
+    SLASHING,
+    THUNDER,
+    OTHER,
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'

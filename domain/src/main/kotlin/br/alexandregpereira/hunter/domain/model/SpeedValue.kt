@@ -14,15 +14,30 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.domain.model
+
+data class Speed(
+    val hover: Boolean,
+    val values: List<SpeedValue>,
+)
+
+data class SpeedValue(
+    val type: SpeedType,
+    val measurementUnit: MeasurementUnit,
+    val value: Int,
+    val valueFormatted: String
+)
+
+enum class SpeedType {
+    BURROW,
+    CLIMB,
+    FLY,
+    HOVER,
+    WALK,
+    SWIM,
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'
+
+enum class MeasurementUnit(val value: String) {
+    FEET(value = "ft."),
+    METER(value = "m")
+}
