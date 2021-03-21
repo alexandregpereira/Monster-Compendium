@@ -56,7 +56,6 @@ fun MonsterCard(
         contentDescription = contentDescription,
         challengeRating = challengeRating,
         challengeRatingFormatted = challengeRatingFormatted,
-        modifier = modifier.size(width = 156.dp, height = 208.dp)
     )
 }
 
