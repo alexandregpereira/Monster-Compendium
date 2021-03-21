@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.domain.model
 data class Monster(
     val index: String,
     val type: MonsterType,
+    val challengeRating: ChallengeRating,
     val name: String,
     val subtitle: String,
     val imageUrl: String,
@@ -36,4 +37,9 @@ data class Monster(
     val damageVulnerabilities: List<Damage>,
     val damageResistances: List<Damage>,
     val damageImmunities: List<Damage>
+)
+
+data class ChallengeRating(
+    val value: Float,
+    val valueFormatted: String
 )

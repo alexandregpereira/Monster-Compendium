@@ -2,6 +2,7 @@
     {
         "index": "aboleth",
         "type": "ABERRATION",
+        "challenge_rating": 10.0,
         "name": "Aboleth",
         "subtitle": "Large aberration, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/aboleth.png",
@@ -95,6 +96,7 @@
     {
         "index": "animated-armor",
         "type": "CONSTRUCT",
+        "challenge_rating": 1.0,
         "name": "Animated Armor",
         "subtitle": "Medium construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/animated-armor.png",
@@ -172,6 +174,7 @@
     {
         "index": "ankheg",
         "type": "MONSTROSITY",
+        "challenge_rating": 2.0,
         "name": "Ankheg",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/ankheg.png",
@@ -245,6 +248,7 @@
     {
         "index": "azer",
         "type": "ELEMENTAL",
+        "challenge_rating": 2.0,
         "name": "Azer",
         "subtitle": "Medium elemental, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/azer.png",
@@ -326,6 +330,7 @@
     {
         "index": "basilisk",
         "type": "MONSTROSITY",
+        "challenge_rating": 3.0,
         "name": "Basilisk",
         "subtitle": "Medium monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/basilisk.png",
@@ -393,6 +398,7 @@
     {
         "index": "behir",
         "type": "MONSTROSITY",
+        "challenge_rating": 11.0,
         "name": "Behir",
         "subtitle": "Huge monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/behir.png",
@@ -479,6 +485,7 @@
     {
         "index": "bugbear",
         "type": "HUMANOID",
+        "challenge_rating": 1.0,
         "name": "Bugbear",
         "subtitle": "Medium humanoid(goblinoid), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/bugbear.png",
@@ -554,6 +561,7 @@
     {
         "index": "chuul",
         "type": "ABERRATION",
+        "challenge_rating": 4.0,
         "name": "Chuul",
         "subtitle": "Large aberration, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/chuul.png",
@@ -636,6 +644,7 @@
     {
         "index": "cockatrice",
         "type": "MONSTROSITY",
+        "challenge_rating": 0.5,
         "name": "Cockatrice",
         "subtitle": "Small monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/cockatrice.png",
@@ -709,6 +718,7 @@
     {
         "index": "couatl",
         "type": "CELESTIAL",
+        "challenge_rating": 4.0,
         "name": "Couatl",
         "subtitle": "Medium celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/couatl.png",
@@ -824,6 +834,7 @@
     {
         "index": "demon-balor",
         "type": "FIEND",
+        "challenge_rating": 19.0,
         "name": "Balor",
         "subtitle": "Huge fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/demon-balor.png",
@@ -953,6 +964,7 @@
     {
         "index": "demon-dretch",
         "type": "FIEND",
+        "challenge_rating": 0.25,
         "name": "Dretch",
         "subtitle": "Small fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/demon-dretch.png",
@@ -1040,6 +1052,7 @@
     {
         "index": "dragon-ancient-green-dragon",
         "type": "DRAGON",
+        "challenge_rating": 22.0,
         "name": "Ancient Green Dragon",
         "subtitle": "Gargantuan dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/dragon-ancient-green-dragon.png",
@@ -1160,6 +1173,7 @@
     {
         "index": "lich",
         "type": "UNDEAD",
+        "challenge_rating": 21.0,
         "name": "Lich",
         "subtitle": "Medium undead, any evil alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/lich.png",

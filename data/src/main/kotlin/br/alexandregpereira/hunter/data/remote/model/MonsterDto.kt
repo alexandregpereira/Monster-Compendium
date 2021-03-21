@@ -25,6 +25,8 @@ data class MonsterDto(
     val index: String,
     @SerialName("type")
     val type: MonsterTypeDto,
+    @SerialName("challenge_rating")
+    val challengeRating: Float,
     @SerialName("name")
     val name: String,
     @SerialName("subtitle")

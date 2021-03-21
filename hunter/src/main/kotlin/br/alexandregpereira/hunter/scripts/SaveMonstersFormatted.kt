@@ -68,6 +68,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
         MonsterDto(
             index = it.getId(),
             type = MonsterTypeDto.valueOf(it.type.name),
+            challengeRating = it.challengeRating,
             name = it.name,
             subtitle = it.formatSubtitle(),
             imageUrl = it.getImageUrl(),
