@@ -54,6 +54,7 @@ fun MonsterCard(
         imageUrl = imageUrl,
         backgroundColor = backgroundColor,
         contentDescription = contentDescription,
+        challengeRating = challengeRating,
         challengeRatingFormatted = challengeRatingFormatted,
         modifier = modifier.size(width = 156.dp, height = 208.dp)
     )
@@ -64,6 +65,7 @@ fun MonsterImage(
     imageUrl: String,
     backgroundColor: String,
     contentDescription: String,
+    challengeRating: Float,
     challengeRatingFormatted: String,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(8.dp),
@@ -91,6 +93,7 @@ fun MonsterImage(
         )
 
         ChallengeRatingCircle(
+            challengeRating = challengeRating,
             modifier = Modifier.offset(x = -(53.dp), y = -(53.dp))
         )
 
@@ -100,20 +103,31 @@ fun MonsterImage(
             fontSize = 14.sp,
             color = Color.White,
             textAlign = TextAlign.Center,
-            modifier = Modifier.width(29.dp).offset(x = 0.dp, y = 4.dp)
+            modifier = Modifier
+                .width(29.dp)
+                .offset(x = 0.dp, y = 4.dp)
         )
     }
 }
 
 @Composable
 fun ChallengeRatingCircle(
+    challengeRating: Float,
     modifier: Modifier = Modifier
 ) {
+    val color = when (challengeRating) {
+        in 0f..0.99f -> Color(0xFF13BB10)
+        in 1f..4f -> Color.Blue
+        in 5f..9f -> Color(0xFFA7A700)
+        in 10f..14f -> Color(0xFFEE6902)
+        in 15f..19f -> Color(0xFFC20000)
+        else -> Color.Black
+    }
     Box(
         modifier = modifier
             .size(90.dp)
             .clip(CircleShape)
-            .background(Color.Red)
+            .background(color)
     )
 }
 
@@ -135,6 +149,6 @@ fun MonsterCardPreview() {
 @Composable
 fun ChallengeRatingPreview() {
     HunterTheme {
-        ChallengeRatingCircle()
+        ChallengeRatingCircle(10f)
     }
 }
