@@ -26,6 +26,7 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.IOException
 import java.io.InputStream
@@ -100,12 +101,14 @@ fun getMostCommonColour(inputStream: InputStream): String? {
 
 fun getMostCommonColour(map: Map<Int, Int>): String {
     val list: List<Map.Entry<Int, Int>> = LinkedList(map.entries).sortedBy { it.value }
-    val me = list[list.size - 1]
-    val rgb = getRGBArr(me.key)
+    val bestPixel = list.first().key
+    val rgb = getRGBArr(bestPixel)
+    val hsb = Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null)
+    val newRgbColor = Color(Color.HSBtoRGB(hsb[0], 0.4f, 1.0f))
     return "#" +
-            Integer.toHexString(rgb[0]).normalizeHex() +
-            Integer.toHexString(rgb[1]).normalizeHex() +
-            Integer.toHexString(rgb[2]).normalizeHex()
+            Integer.toHexString(newRgbColor.red).normalizeHex() +
+            Integer.toHexString(newRgbColor.green).normalizeHex() +
+            Integer.toHexString(newRgbColor.blue).normalizeHex()
 }
 
 private fun String.normalizeHex(): String {
