@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @ExperimentalFoundationApi
@@ -41,6 +42,7 @@ fun MonsterCompendium(monsters: List<MonsterCardItem>) {
                 backgroundColor = it.imageData.backgroundColor,
                 contentDescription = it.name,
                 challengeRating = it.challengeRating,
+                type = MonsterItemType.valueOf(it.type.name)
             )
         }
     }

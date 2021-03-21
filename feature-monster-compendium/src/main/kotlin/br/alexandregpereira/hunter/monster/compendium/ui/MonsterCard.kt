@@ -18,7 +18,8 @@ package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import br.alexandregpereira.hunter.ui.MonsterImage
+import br.alexandregpereira.hunter.ui.compose.MonsterImage
+import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -27,12 +28,14 @@ fun MonsterCard(
     backgroundColor: String,
     contentDescription: String,
     challengeRating: Float,
+    type: MonsterItemType
 ) {
     MonsterImage(
         imageUrl = imageUrl,
         backgroundColor = backgroundColor,
         contentDescription = contentDescription,
         challengeRating = challengeRating,
+        type = type
     )
 }
 
@@ -45,6 +48,7 @@ fun MonsterCardPreview() {
             "#80e3efef",
             "any",
             22f,
+            type = MonsterItemType.ABERRATION
         )
     }
 }
