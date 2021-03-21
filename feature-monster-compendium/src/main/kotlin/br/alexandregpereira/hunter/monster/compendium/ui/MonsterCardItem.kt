@@ -14,31 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.monster.compendium.ui
 
-data class Monster(
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterType
+
+data class MonsterCardItem(
     val index: String,
     val type: MonsterType,
     val challengeRating: Float,
     val name: String,
-    val subtitle: String,
-    val imageData: MonsterImageData,
-    val size: String,
-    val alignment: String,
-    val subtype: String?,
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
-    val speed: Speed,
-    val abilityScores: List<AbilityScore>,
-    val savingThrows: List<SavingThrow>,
-    val skills: List<Skill>,
-    val damageVulnerabilities: List<Damage>,
-    val damageResistances: List<Damage>,
-    val damageImmunities: List<Damage>
-)
-
-data class MonsterImageData(
-    val url: String,
-    val backgroundColor: String
+    val imageData: MonsterImageData
 )

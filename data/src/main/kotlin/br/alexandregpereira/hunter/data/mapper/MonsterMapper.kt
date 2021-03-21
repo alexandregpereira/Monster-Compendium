@@ -17,8 +17,8 @@
 package br.alexandregpereira.hunter.data.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
-import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
@@ -26,13 +26,10 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
         Monster(
             index = it.index,
             type = MonsterType.valueOf(it.type.name),
-            challengeRating = ChallengeRating(
-                value = it.challengeRating
-            ),
+            challengeRating = it.challengeRating,
             name = it.name,
             subtitle = it.subtitle,
-            imageUrl = it.imageUrl,
-            backgroundColor = it.backgroundColor,
+            imageData = MonsterImageData(url = it.imageUrl, backgroundColor = it.backgroundColor),
             size = it.size,
             alignment = it.alignment,
             subtype = it.subtype,

@@ -25,18 +25,14 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCard
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
+import br.alexandregpereira.hunter.monster.compendium.ui.toMonsterCardItem
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -84,20 +80,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun Window(state: MonsterCompendiumViewState) = HunterTheme {
     Surface {
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(state.monsters) {
-                MonsterCard(
-                    imageUrl = it.imageUrl,
-                    backgroundColor = it.backgroundColor,
-                    contentDescription = it.name,
-                    challengeRating = it.challengeRating.value,
-                    challengeRatingFormatted = it.challengeRating.valueFormatted
-                )
-            }
-        }
+        MonsterCompendium(monsters = state.monsters.toMonsterCardItem())
     }
 }
 
