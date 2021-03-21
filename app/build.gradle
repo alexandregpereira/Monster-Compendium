@@ -82,6 +82,7 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation project(':feature-monster-compendium')
+    implementation project(':ui')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

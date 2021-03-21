@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app.ui.theme
+package br.alexandregpereira.hunter.ui.theme
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Shapes
+import androidx.compose.ui.unit.dp
 
-val Green200 = Color(0xFF8BC34A)
-val Green500 = Color(0xFF4CAF50)
-val Green700 = Color(0xFF397A3C)
-val White = Color(0xFFFFFFFF)
-val GrayScale100 = Color(0xFFE4E4E4)
+val Shapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp)
+)
