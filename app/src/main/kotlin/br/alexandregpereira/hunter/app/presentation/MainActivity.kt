@@ -20,29 +20,34 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.app.ui.theme.Theme
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalAnimationApi
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: MonsterCompendiumViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Window()
+            Window(viewModel)
         }
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun Window() = Theme {
+fun Window(viewModel: MonsterCompendiumViewModel) = Theme {
+    val state = viewModel.stateLiveData.observeAsState().value ?: return@Theme
     Surface {
-        Text(text = "Hello World!")
+        Text(text = state.monsters.map { it.name }.reduce { acc, monster -> "$acc\n${monster}" })
     }
 }
 
@@ -50,5 +55,4 @@ fun Window() = Theme {
 @Preview
 @Composable
 fun DefaultPreview() {
-    Window()
 }

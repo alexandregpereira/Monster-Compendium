@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = 'hunter'
@@ -26,3 +27,4 @@ include ':app'
 include ':hunter'
 include ':data'
 include ':domain'
+include ':feature-monster-compendium'

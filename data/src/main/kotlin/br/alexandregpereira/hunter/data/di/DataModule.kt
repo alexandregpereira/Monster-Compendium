@@ -37,7 +37,7 @@ val remoteDataSourceModule = module {
     }
 }
 
-val repositoryModule = listOf(
+val dataModule = listOf(
     module {
         single<MonsterRepository> {
             MonsterRepositoryImpl(get())

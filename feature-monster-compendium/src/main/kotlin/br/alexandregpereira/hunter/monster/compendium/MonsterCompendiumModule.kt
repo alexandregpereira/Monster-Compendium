@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext {
-        kotlin_version = '1.4.30'
-        compose_version = '1.0.0-beta01'
-        koin_version = "3.0.1-beta-1"
-        mockk_version = "1.11.0"
-        lifecycle_version = "2.3.0"
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha10'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+package br.alexandregpereira.hunter.monster.compendium
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+
+val monsterCompendiumModule = module {
+    viewModel {
+        MonsterCompendiumViewModel(
+            get()
+        )
     }
 }
