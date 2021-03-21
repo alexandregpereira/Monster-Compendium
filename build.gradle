@@ -15,6 +15,11 @@
  */
 
 buildscript {
+    ext.buildConfig = [
+            'compileSdk': 30,
+            'minSdk'    : 23,
+            'targetSdk' : 30,
+    ]
     ext {
         kotlin_version = '1.4.30'
         compose_version = '1.0.0-beta01'

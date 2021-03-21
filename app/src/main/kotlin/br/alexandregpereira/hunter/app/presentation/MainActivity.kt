@@ -16,20 +16,22 @@
 
 package br.alexandregpereira.hunter.app.presentation
 
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
@@ -46,10 +48,33 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleDarkMode()
         viewModel.loadMonsters()
         setContent {
             val state = viewModel.stateLiveData.observeAsState().value ?: return@setContent
             Window(state)
+        }
+    }
+
+    private fun handleDarkMode() {
+        val isNightMode = this.resources.configuration.uiMode
+            .and(Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+
+        if (isNightMode) {
+            val view = window.decorView
+            view.systemUiVisibility =
+                view.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.setSystemBarsAppearance(
+                    APPEARANCE_LIGHT_STATUS_BARS,
+                    APPEARANCE_LIGHT_STATUS_BARS
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
         }
     }
 }

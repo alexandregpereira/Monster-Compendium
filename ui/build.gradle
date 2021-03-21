@@ -20,10 +20,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion buildConfig.compileSdk
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion buildConfig.minSdk
     }
 
     kotlinOptions {
