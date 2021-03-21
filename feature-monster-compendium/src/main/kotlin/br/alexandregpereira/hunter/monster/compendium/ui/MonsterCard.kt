@@ -16,26 +16,43 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.compose.MonsterImage
 import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun MonsterCard(
+    name: String,
     imageUrl: String,
     backgroundColor: String,
     contentDescription: String,
     challengeRating: Float,
-    type: MonsterItemType
-) {
+    type: MonsterItemType,
+    paddingValues: PaddingValues = PaddingValues(8.dp),
+) = Column(Modifier.padding(paddingValues)) {
     MonsterImage(
         imageUrl = imageUrl,
         backgroundColor = backgroundColor,
         contentDescription = contentDescription,
         challengeRating = challengeRating,
         type = type
+    )
+
+    Text(
+        text = name,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        modifier = Modifier.padding(4.dp)
     )
 }
 
@@ -44,6 +61,7 @@ fun MonsterCard(
 fun MonsterCardPreview() {
     HunterTheme {
         MonsterCard(
+            "Monster of the Monsters",
             "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/aboleth.png",
             "#80e3efef",
             "any",

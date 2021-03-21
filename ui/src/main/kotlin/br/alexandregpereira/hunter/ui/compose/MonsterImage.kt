@@ -52,10 +52,8 @@ fun MonsterImage(
     challengeRating: Float,
     type: MonsterItemType,
     modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(8.dp),
 ) = Box(
     modifier
-        .padding(paddingValues)
         .clip(Shapes.large)
 ) {
     CoilImage(

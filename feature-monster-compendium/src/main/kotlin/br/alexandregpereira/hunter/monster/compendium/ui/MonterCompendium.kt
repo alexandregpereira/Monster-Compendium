@@ -38,6 +38,7 @@ fun MonsterCompendium(monsters: List<MonsterCardItem>) {
     ) {
         items(monsters) {
             MonsterCard(
+                name = it.name,
                 imageUrl = it.imageData.url,
                 backgroundColor = it.imageData.backgroundColor,
                 contentDescription = it.name,
