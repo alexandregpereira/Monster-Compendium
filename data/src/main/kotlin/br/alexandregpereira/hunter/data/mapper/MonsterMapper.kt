@@ -27,7 +27,6 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             index = it.index,
             type = MonsterType.valueOf(it.type.name),
             challengeRating = ChallengeRating(
-                valueFormatted = it.challengeRating.toChallengeRatingString(),
                 value = it.challengeRating
             ),
             name = it.name,
@@ -48,13 +47,5 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             damageResistances = it.damageResistances.toDomain(),
             damageImmunities = it.damageImmunities.toDomain()
         )
-    }
-}
-
-internal fun Float.toChallengeRatingString(): String {
-    return if (this < 1) {
-        "1/${this.toString().split(".").last()}"
-    } else {
-        this.toString()
     }
 }

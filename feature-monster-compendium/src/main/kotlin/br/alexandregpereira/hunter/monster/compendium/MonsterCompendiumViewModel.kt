@@ -16,11 +16,13 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.GetMonstersUseCase
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -36,6 +38,9 @@ class MonsterCompendiumViewModel(
         getMonstersUseCase()
             .onStart {
                 _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
+            }
+            .catch {
+                Log.e("MonsterViewModel", it.message ?: "")
             }
             .collect {
                 _stateLiveData.value = MonsterCompendiumViewState(

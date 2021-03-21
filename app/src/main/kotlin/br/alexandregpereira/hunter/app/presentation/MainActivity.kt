@@ -68,7 +68,8 @@ fun Window(state: MonsterCompendiumViewState) = HunterTheme {
                     imageUrl = it.imageUrl,
                     backgroundColor = it.backgroundColor,
                     contentDescription = it.name,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+                    challengeRating = it.challengeRating.value,
+                    challengeRatingFormatted = it.challengeRating.valueFormatted
                 )
             }
         }

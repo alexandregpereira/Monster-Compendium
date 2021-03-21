@@ -40,6 +40,13 @@ data class Monster(
 )
 
 data class ChallengeRating(
-    val value: Float,
-    val valueFormatted: String
-)
+    val value: Float
+) {
+
+    val valueFormatted: String = if (value < 1) {
+        val value = 1 / value
+        "1/${value.toInt()}"
+    } else {
+        value.toInt().toString()
+    }
+}
