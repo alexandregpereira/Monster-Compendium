@@ -25,6 +25,10 @@ data class MonsterDto(
     val index: String,
     @SerialName("type")
     val type: MonsterTypeDto,
+    @SerialName("subtype")
+    val subtype: String?,
+    @SerialName("group")
+    val group: String?,
     @SerialName("challenge_rating")
     val challengeRating: Float,
     @SerialName("name")
@@ -39,8 +43,6 @@ data class MonsterDto(
     val size: String,
     @SerialName("alignment")
     val alignment: String,
-    @SerialName("subtype")
-    val subtype: String?,
     @SerialName("armor_class")
     val armorClass: Int,
     @SerialName("hit_points")

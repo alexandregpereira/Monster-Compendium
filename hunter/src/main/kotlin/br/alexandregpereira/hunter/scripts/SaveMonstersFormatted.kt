@@ -68,13 +68,14 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
         MonsterDto(
             index = it.getId(),
             type = MonsterTypeDto.valueOf(it.type.name),
+            subtype = it.subtype,
+            group = it.getGroup(),
             challengeRating = it.challengeRating,
             name = it.name,
             subtitle = it.formatSubtitle(),
             imageUrl = it.getImageUrl(),
             size = it.size,
             alignment = it.alignment,
-            subtype = it.subtype,
             armorClass = it.armorClass,
             hitPoints = it.hitPoints,
             hitDice = it.hitDice,
@@ -107,6 +108,20 @@ private fun Monster.getId(): String {
     } else {
         "$subtype-$index"
     }
+}
+
+private fun Monster.getGroup(): String? {
+    return getId().let { index ->
+        when {
+            index.startsWith(type.name.toLowerCase(Locale.ROOT)) -> {
+                type.name.toLowerCase(Locale.ROOT)
+            }
+            index.startsWith(subtype?.toLowerCase(Locale.ROOT) ?: "Any") -> {
+                subtype
+            }
+            else -> null
+        }
+    }?.capitalize(Locale.ROOT)?.let { "${it}s" }
 }
 
 private fun Monster.isDragon(): Boolean {
