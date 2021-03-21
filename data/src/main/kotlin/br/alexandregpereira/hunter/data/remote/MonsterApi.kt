@@ -16,11 +16,11 @@
 
 package br.alexandregpereira.hunter.data.remote
 
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import retrofit2.http.GET
 
-internal interface FileManager {
+internal interface MonsterApi {
 
-    fun readText(): Flow<String>
-
-    fun writeText(text: String): Flow<Unit>
+    @GET("monsters.json")
+    suspend fun getMonsters(): List<MonsterDto>
 }

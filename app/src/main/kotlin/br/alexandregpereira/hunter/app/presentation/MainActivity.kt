@@ -27,6 +27,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.app.ui.theme.Theme
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalAnimationApi
@@ -36,18 +37,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.loadMonsters()
         setContent {
-            Window(viewModel)
+            val state = viewModel.stateLiveData.observeAsState().value ?: return@setContent
+            Window(state)
         }
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun Window(viewModel: MonsterCompendiumViewModel) = Theme {
-    val state = viewModel.stateLiveData.observeAsState().value ?: return@Theme
+fun Window(state: MonsterCompendiumViewState) = Theme {
+    val text = if (state.isLoading) "Loading" else state.monsters.map { it.name }
+        .reduceOrNull { acc, monster -> "$acc\n${monster}" } ?: ""
     Surface {
-        Text(text = state.monsters.map { it.name }.reduce { acc, monster -> "$acc\n${monster}" })
+        Text(text)
     }
 }
 
@@ -55,4 +59,5 @@ fun Window(viewModel: MonsterCompendiumViewModel) = Theme {
 @Preview
 @Composable
 fun DefaultPreview() {
+    Window(MonsterCompendiumViewState())
 }

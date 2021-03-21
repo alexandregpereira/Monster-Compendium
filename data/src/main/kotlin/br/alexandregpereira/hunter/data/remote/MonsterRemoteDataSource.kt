@@ -22,6 +22,4 @@ import kotlinx.coroutines.flow.Flow
 interface MonsterRemoteDataSource {
 
     fun getMonsters(): Flow<List<MonsterDto>>
-
-    fun insertMonsters(monsters: List<MonsterDto>): Flow<Unit>
 }

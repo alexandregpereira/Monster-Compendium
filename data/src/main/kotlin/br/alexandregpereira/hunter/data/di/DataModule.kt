@@ -14,34 +14,40 @@
  * limitations under the License.
  */
 
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package br.alexandregpereira.hunter.data.di
 
 import br.alexandregpereira.hunter.data.MonsterRepositoryImpl
-import br.alexandregpereira.hunter.data.remote.FileManager
-import br.alexandregpereira.hunter.data.remote.FileManagerImpl
+import br.alexandregpereira.hunter.data.remote.MonsterApi
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.MonsterRepository
-import org.koin.core.module.Module
-import org.koin.core.qualifier.qualifier
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import org.koin.dsl.module
+import retrofit2.Retrofit
 
-private const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"
-
-val remoteDataSourceModule = module {
-    single<MonsterRemoteDataSource> {
-        MonsterRemoteDataSourceImpl(get(qualifier(JSON_FORMATTED_FILE_NAME)))
+val dataModule = module {
+    single {
+        val json = Json {
+            ignoreUnknownKeys = true
+            prettyPrint = true
+        }
+        Retrofit.Builder()
+            .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
+            .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
+            .build()
     }
-    single<FileManager>(qualifier = qualifier(JSON_FORMATTED_FILE_NAME)) {
-        FileManagerImpl(JSON_FORMATTED_FILE_NAME)
+
+    single<MonsterRemoteDataSource> {
+        MonsterRemoteDataSourceImpl(get())
+    }
+
+    single { get<Retrofit>().create(MonsterApi::class.java) }
+
+    single<MonsterRepository> {
+        MonsterRepositoryImpl(get())
     }
 }
-
-val dataModule = listOf(
-    module {
-        single<MonsterRepository> {
-            MonsterRepositoryImpl(get())
-        }
-    },
-    remoteDataSourceModule
-)

@@ -16,20 +16,21 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.data.di.remoteDataSourceModule
-import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.model.*
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.Proficiency
-import br.alexandregpereira.hunter.scripts.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.decodeFromString
 import okhttp3.*
-import org.koin.core.component.inject
 import java.io.IOException
 import java.util.*
 
@@ -39,9 +40,6 @@ private const val GITHUB_IMAGE_HOST =
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {
-    val koinComponent = createKoinComponent(remoteDataSourceModule)
-    val monsterRemoteDataSource by koinComponent.inject<MonsterRemoteDataSource>()
-
     val monsters = json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME))
         .asMonstersFormatted()
         .asSequence()
@@ -56,7 +54,7 @@ suspend fun main() = start {
     println("\n${monsters.size} monsters formatted")
     monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
 
-    monsterRemoteDataSource.insertMonsters(monsters).collect()
+    saveJsonFile(monsters, JSON_FORMATTED_FILE_NAME)
 }
 
 private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
