@@ -22,6 +22,7 @@ data class Monster(
     val name: String,
     val subtitle: String,
     val imageUrl: String,
+    val backgroundColor: String,
     val size: String,
     val alignment: String,
     val subtype: String?,

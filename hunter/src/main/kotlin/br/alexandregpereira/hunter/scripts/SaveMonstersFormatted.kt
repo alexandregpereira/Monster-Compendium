@@ -16,23 +16,29 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.data.remote.model.*
+import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
+import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.remote.model.DamageDto
+import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
+import br.alexandregpereira.hunter.data.remote.model.MeasurementUnitDto
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
+import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
+import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.data.remote.model.SpeedDto
+import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
+import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.Proficiency
+import br.alexandregpereira.hunter.image.downloadImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.decodeFromString
-import okhttp3.*
-import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 private const val GITHUB_IMAGE_HOST =
     "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images"
@@ -236,38 +242,6 @@ private fun calculateAbilityScoreModifier(value: Int): Int {
         in 28..29 -> 9
         else -> 10
     }
-}
-
-@ExperimentalCoroutinesApi
-private fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
-    val client = OkHttpClient()
-
-    val request: Request = Request.Builder()
-        .url(imageUrl)
-        .build()
-
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
-            println("request failed: $index: " + e.message)
-            channel.offer(null)
-            channel.close()
-        }
-
-        @Throws(IOException::class)
-        override fun onResponse(call: Call, response: Response) {
-            if (response.isSuccessful) {
-                println("request success: $index")
-                channel.offer(element = this@downloadImage)
-
-            } else {
-                println("request failed: $index")
-                channel.offer(element = null)
-            }
-            channel.close()
-        }
-    })
-
-    awaitClose()
 }
 
 private val subtypeBlackList = listOf(

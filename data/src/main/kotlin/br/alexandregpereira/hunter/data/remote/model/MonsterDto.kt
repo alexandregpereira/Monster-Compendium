@@ -31,6 +31,8 @@ data class MonsterDto(
     val subtitle: String,
     @SerialName("image_url")
     val imageUrl: String,
+    @SerialName("background_color")
+    val backgroundColor: String = "#00000000",
     @SerialName("size")
     val size: String,
     @SerialName("alignment")

@@ -28,6 +28,7 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             name = it.name,
             subtitle = it.subtitle,
             imageUrl = it.imageUrl,
+            backgroundColor = it.backgroundColor,
             size = it.size,
             alignment = it.alignment,
             subtype = it.subtype,
