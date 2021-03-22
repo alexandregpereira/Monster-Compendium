@@ -42,7 +42,8 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun MonsterCompendium(
-    monstersBySection: MonsterCardItemsBySection
+    monstersBySection: MonsterCardItemsBySection,
+    onItemCLick: (index: String) -> Unit = {},
 ) = LazyColumn {
 
     monstersBySection.entries.forEach { monsterSectionEntry ->
@@ -52,14 +53,21 @@ fun MonsterCompendium(
                     text = monsterSectionEntry.key.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .background(MaterialTheme.colors.surface)
-                        .padding(horizontal = 16.dp).padding(top = 24.dp, bottom = 8.dp)
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 24.dp, bottom = 8.dp)
                 )
             }
         } else {
             item {
-                Spacer(Modifier.fillMaxWidth().height(32.dp).background(MaterialTheme.colors.surface))
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(32.dp)
+                        .background(MaterialTheme.colors.surface)
+                )
             }
         }
         monsterSectionEntry.value.entries.forEachIndexed { index, monsterEntry ->
@@ -74,7 +82,8 @@ fun MonsterCompendium(
                 MonsterSection(
                     leftMonster = leftMonster,
                     rightMonster = rightMonster,
-                    modifier = Modifier.padding(bottom = paddingBottom)
+                    modifier = Modifier.padding(bottom = paddingBottom),
+                    onItemClick = onItemCLick
                 )
             }
         }
@@ -86,16 +95,23 @@ fun MonsterSection(
     leftMonster: MonsterCardItem,
     modifier: Modifier = Modifier,
     rightMonster: MonsterCardItem? = null,
-) = Row(modifier.background(MaterialTheme.colors.surface).padding(horizontal = 8.dp)) {
+    onItemClick: (index: String) -> Unit = {},
+) = Row(
+    modifier
+        .background(MaterialTheme.colors.surface)
+        .padding(horizontal = 8.dp)
+) {
 
     MonsterCard(
         monster = leftMonster,
-        modifier = Modifier.weight(1f)
+        modifier = Modifier.weight(1f),
+        onCLick = { onItemClick(leftMonster.index) }
     )
     rightMonster?.let {
         MonsterCard(
             monster = it,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            onCLick = { onItemClick(it.index) }
         )
     }
 }
@@ -103,7 +119,8 @@ fun MonsterSection(
 @Composable
 private fun MonsterCard(
     monster: MonsterCardItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCLick: () -> Unit = {},
 ) = MonsterCard(
     name = monster.name,
     imageUrl = monster.imageData.url,
@@ -111,7 +128,8 @@ private fun MonsterCard(
     contentDescription = monster.name,
     challengeRating = monster.challengeRating,
     type = MonsterItemType.valueOf(monster.type.name),
-    modifier = modifier
+    modifier = modifier,
+    onCLick = onCLick
 )
 
 @Preview

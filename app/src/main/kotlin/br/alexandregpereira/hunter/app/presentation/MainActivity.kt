@@ -79,7 +79,9 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun Window(state: MonsterCompendiumViewState) = HunterTheme {
     Surface {
-        MonsterCompendium(monstersBySection = state.monstersBySection)
+        MonsterCompendium(monstersBySection = state.monstersBySection) { index ->  
+            
+        }
     }
 }
 
