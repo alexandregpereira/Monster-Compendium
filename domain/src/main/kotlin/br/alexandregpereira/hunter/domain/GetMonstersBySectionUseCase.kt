@@ -40,20 +40,42 @@ class GetMonstersBySectionUseCase(
             }
         }.map {
             it.map { key, value ->
-                key to value.toMonsterPairList()
+                key to value.toMonsterPair()
             }
         }
     }
 
-    private fun List<Monster>.toMonsterPairList(): MonsterPair {
+    private fun List<Monster>.toMonsterPair(): MonsterPair {
         val map: LinkedHashMap<Monster, Monster?> = linkedMapOf()
-        this.forEachIndexed { index, monsterCardItem ->
-            if (index % 2 == 0) {
-                map[monsterCardItem] = null
+        var lastMonsterHorizontalIndex = -HORIZONTAL_IMAGE_INTERVAL
+        var mod = 0
+        this.forEachIndexed { index, monster ->
+            if ((index + mod) % 2 == 0) {
+                if (monster.imageData.isHorizontal &&
+                    isIndexEligibleToBeHorizontal(index, lastMonsterHorizontalIndex)
+                ) {
+                    lastMonsterHorizontalIndex = index
+                    ++mod
+                }
+                map[monster] = null
             } else {
-                map[this[index - 1]] = monsterCardItem
+                val lastIndex = index - 1
+                val lastMonster = this[lastIndex]
+                map[lastMonster] = monster
             }
         }
         return map
     }
+
+    private fun isIndexEligibleToBeHorizontal(
+        currentIndex: Int,
+        lastMonsterHorizontalIndex: Int
+    ): Boolean {
+        return when (lastMonsterHorizontalIndex + HORIZONTAL_IMAGE_INTERVAL) {
+            currentIndex -> true
+            else -> false
+        }
+    }
 }
+
+private const val HORIZONTAL_IMAGE_INTERVAL = 5

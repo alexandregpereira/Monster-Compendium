@@ -42,5 +42,5 @@ data class Monster(
 data class MonsterImageData(
     val url: String,
     val backgroundColor: String,
-    val isHorizontal: Boolean
+    val isHorizontal: Boolean = false
 )
