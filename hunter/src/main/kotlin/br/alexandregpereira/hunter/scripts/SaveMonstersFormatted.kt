@@ -74,6 +74,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             name = it.name,
             subtitle = it.formatSubtitle(),
             imageUrl = it.getImageUrl(),
+            isHorizontalImage = false,
             size = it.size,
             alignment = it.alignment,
             armorClass = it.armorClass,

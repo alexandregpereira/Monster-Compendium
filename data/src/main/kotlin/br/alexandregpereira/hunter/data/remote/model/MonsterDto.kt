@@ -39,6 +39,8 @@ data class MonsterDto(
     val imageUrl: String,
     @SerialName("background_color")
     val backgroundColor: String = "#00000000",
+    @SerialName("is_horizontal_image")
+    val isHorizontalImage: Boolean,
     @SerialName("size")
     val size: String,
     @SerialName("alignment")

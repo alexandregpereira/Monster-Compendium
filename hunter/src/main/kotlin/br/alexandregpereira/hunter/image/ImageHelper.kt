@@ -52,10 +52,16 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
         @Throws(IOException::class)
         override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
-                val color = getMostCommonColour(response.body()!!.byteStream())
-                    ?: this@downloadImage.backgroundColor
-                println("request success: $index; Color = $color")
-                channel.offer(element = this@downloadImage.copy(backgroundColor = color))
+                val imageData = getImageData(response.body()!!.byteStream())
+                print("request success: $index; ")
+                print("Color = ${imageData.backgroundColor}; ")
+                println("isHorizontal = ${imageData.isHorizontalImage}")
+                channel.offer(
+                    element = this@downloadImage.copy(
+                        backgroundColor = imageData.backgroundColor,
+                        isHorizontalImage = imageData.isHorizontalImage
+                    )
+                )
             } else {
                 println("request failed: $index")
                 channel.offer(element = null)
@@ -67,25 +73,37 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
     awaitClose()
 }
 
-fun getMostCommonColour(inputStream: InputStream): String? {
+fun getImageData(inputStream: InputStream): ImageData {
     val imageInputStream = ImageIO.createImageInputStream(inputStream)
     val iter: Iterator<*> = ImageIO.getImageReaders(imageInputStream)
 
     if (!iter.hasNext()) {
-        return null
+        return ImageData()
     }
     val imageReader: ImageReader = iter.next() as ImageReader
     imageReader.input = imageInputStream
-
     val image: BufferedImage = imageReader.read(0)
 
-    val height = image.height
-    val width = image.width
+    return ImageData(
+        image.getMostCommonColour(),
+        image.isHorizontalImage()
+    ).apply {
+        imageInputStream.close()
+    }
+}
+
+fun BufferedImage.isHorizontalImage(): Boolean {
+    return width >= height
+}
+
+fun BufferedImage.getMostCommonColour(): String {
+    val height = this.height
+    val width = this.width
 
     val m: MutableMap<Int, Int> = HashMap()
     for (i in 0 until width) {
         for (j in 0 until height) {
-            val rgb = image.getRGB(i, j)
+            val rgb = this.getRGB(i, j)
             val rgbArr = getRGBArr(rgb)
             // Filter out grays....
             if (!isGray(rgbArr)) {
@@ -96,7 +114,6 @@ fun getMostCommonColour(inputStream: InputStream): String? {
             }
         }
     }
-    imageInputStream.close()
     return getMostCommonColour(m)
 }
 

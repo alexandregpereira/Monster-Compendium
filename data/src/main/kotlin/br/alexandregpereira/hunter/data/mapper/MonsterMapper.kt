@@ -31,7 +31,11 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             challengeRating = it.challengeRating,
             name = it.name,
             subtitle = it.subtitle,
-            imageData = MonsterImageData(url = it.imageUrl, backgroundColor = it.backgroundColor),
+            imageData = MonsterImageData(
+                url = it.imageUrl,
+                backgroundColor = it.backgroundColor,
+                isHorizontal = it.isHorizontalImage
+            ),
             size = it.size,
             alignment = it.alignment,
             armorClass = it.armorClass,
