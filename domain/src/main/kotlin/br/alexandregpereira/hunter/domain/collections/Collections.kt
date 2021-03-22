@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.domain.collections
 
-import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterType
-
-data class MonsterCardItem(
-    val index: String,
-    val type: MonsterType,
-    val challengeRating: Float,
-    val name: String,
-    val imageData: MonsterImageData
-)
+fun <K, T, K1, T1> Map<K, T>.map(
+    transform: (key: K, value: T) -> Pair<K1, T1>
+): Map<K1, T1> {
+    return this.map { entry ->
+        transform(entry.key,  entry.value)
+    }.toMap()
+}

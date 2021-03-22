@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.domain.model.Monster
-import kotlinx.coroutines.flow.Flow
-
-class GetMonstersUseCase(
-    private val repository: MonsterRepository
-) {
-
-    operator fun invoke(): Flow<List<Monster>> {
-        return repository.getMonsters()
-    }
-}
+data class MonsterSection(
+    val title: String = "",
+    val showTitle: Boolean = title.isNotEmpty()
+)

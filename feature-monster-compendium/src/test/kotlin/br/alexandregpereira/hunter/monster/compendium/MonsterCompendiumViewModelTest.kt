@@ -18,8 +18,12 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import br.alexandregpereira.hunter.domain.GetMonstersUseCase
+import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterSection
+import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.Speed
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -40,7 +44,7 @@ class MonsterCompendiumViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private val getMonstersUseCase: GetMonstersUseCase = mockk()
+    private val getMonstersUseCase: GetMonstersBySectionUseCase = mockk()
     private val stateLiveDataObserver: Observer<MonsterCompendiumViewState> = mockk(
         relaxUnitFun = true
     )
@@ -54,8 +58,30 @@ class MonsterCompendiumViewModelTest {
     @Test
     fun loadMonsters() {
         // Given
-        val monsters = listOf<Monster>(mockk())
-        every { getMonstersUseCase() } returns flowOf(monsters)
+        val section = MonsterSection()
+        val monster = Monster(
+            index = "",
+            type = MonsterType.ABERRATION,
+            subtype = null,
+            group = null,
+            challengeRating = 0.0f,
+            name = "",
+            subtitle = "",
+            imageData = MonsterImageData(
+                url = "",
+                backgroundColor = ""
+            ),
+            size = "",
+            alignment = "",
+            armorClass = 0,
+            hitPoints = 0,
+            hitDice = "",
+            speed = Speed(hover = false, values = listOf())
+        )
+        val monstersBySection = mapOf(
+            section to mapOf(monster to null)
+        )
+        every { getMonstersUseCase() } returns flowOf(monstersBySection)
         createViewModel()
 
         // When
@@ -68,7 +94,21 @@ class MonsterCompendiumViewModelTest {
             stateLiveDataObserver.onChanged(
                 MonsterCompendiumViewState(
                     isLoading = false,
-                    monsters = monsters
+                    monstersBySection = mapOf(
+                        section to mapOf(
+                            MonsterCardItem(
+                                index = "",
+                                type = MonsterType.ABERRATION,
+                                challengeRating = 0.0f,
+                                name = "",
+                                imageData = MonsterImageData(
+                                    url = "",
+                                    backgroundColor = ""
+                                ),
+                                group = null
+                            ) to null
+                        )
+                    )
                 )
             )
         }
@@ -81,7 +121,7 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
-            getMonstersUseCase = getMonstersUseCase
+            getMonstersBySectionUseCase = getMonstersUseCase
         )
         viewModel.stateLiveData.observeForever(stateLiveDataObserver)
     }

@@ -16,9 +16,9 @@
 
 package br.alexandregpereira.hunter.domain.di
 
-import br.alexandregpereira.hunter.domain.GetMonstersUseCase
+import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { GetMonstersUseCase(get()) }
+    single { GetMonstersBySectionUseCase(get()) }
 }

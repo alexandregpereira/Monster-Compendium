@@ -38,8 +38,9 @@ fun MonsterCard(
     contentDescription: String,
     challengeRating: Float,
     type: MonsterItemType,
+    modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(8.dp),
-) = Column(Modifier.padding(paddingValues)) {
+) = Column(modifier.padding(paddingValues)) {
     MonsterImage(
         imageUrl = imageUrl,
         backgroundColor = backgroundColor,

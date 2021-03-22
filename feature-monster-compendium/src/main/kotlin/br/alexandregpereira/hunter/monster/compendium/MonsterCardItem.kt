@@ -16,9 +16,14 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import br.alexandregpereira.hunter.domain.model.MonsterSection
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterType
 
-data class MonsterCompendiumViewState(
-    val isLoading: Boolean = false,
-    val monstersBySection: Map<MonsterSection, Map<MonsterCardItem, MonsterCardItem?>> = emptyMap()
+data class MonsterCardItem(
+    val index: String,
+    val type: MonsterType,
+    val challengeRating: Float,
+    val name: String,
+    val imageData: MonsterImageData,
+    val group: String? = null
 )

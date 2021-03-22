@@ -16,57 +16,226 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.monster.compendium.MonsterCardItem
+import br.alexandregpereira.hunter.monster.compendium.MonsterCardItemsBySection
 import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
-@ExperimentalFoundationApi
 @Composable
-fun MonsterCompendium(monsters: List<MonsterCardItem>) {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
-        contentPadding = PaddingValues(8.dp)
-    ) {
-        items(monsters) {
-            MonsterCard(
-                name = it.name,
-                imageUrl = it.imageData.url,
-                backgroundColor = it.imageData.backgroundColor,
-                contentDescription = it.name,
-                challengeRating = it.challengeRating,
-                type = MonsterItemType.valueOf(it.type.name)
-            )
+fun MonsterCompendium(
+    monstersBySection: MonsterCardItemsBySection
+) = LazyColumn {
+
+    monstersBySection.entries.forEach { monsterSectionEntry ->
+        if (monsterSectionEntry.key.showTitle) {
+            item {
+                Text(
+                    text = monsterSectionEntry.key.title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    modifier = Modifier.fillMaxWidth()
+                        .background(MaterialTheme.colors.surface)
+                        .padding(horizontal = 16.dp).padding(top = 24.dp, bottom = 8.dp)
+                )
+            }
+        } else {
+            item {
+                Spacer(Modifier.fillMaxWidth().height(32.dp).background(MaterialTheme.colors.surface))
+            }
+        }
+        monsterSectionEntry.value.entries.forEachIndexed { index, monsterEntry ->
+            item {
+                val leftMonster = monsterEntry.key
+                val rightMonster = monsterEntry.value
+
+                val paddingBottom = if (index == monsterSectionEntry.value.entries.size - 1) {
+                    0.dp
+                } else 0.dp
+
+                MonsterSection(
+                    leftMonster = leftMonster,
+                    rightMonster = rightMonster,
+                    modifier = Modifier.padding(bottom = paddingBottom)
+                )
+            }
         }
     }
 }
 
-@ExperimentalFoundationApi
+@Composable
+fun MonsterSection(
+    leftMonster: MonsterCardItem,
+    modifier: Modifier = Modifier,
+    rightMonster: MonsterCardItem? = null,
+) = Row(modifier.background(MaterialTheme.colors.surface).padding(horizontal = 8.dp)) {
+
+    MonsterCard(
+        monster = leftMonster,
+        modifier = Modifier.weight(1f)
+    )
+    rightMonster?.let {
+        MonsterCard(
+            monster = it,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+private fun MonsterCard(
+    monster: MonsterCardItem,
+    modifier: Modifier = Modifier
+) = MonsterCard(
+    name = monster.name,
+    imageUrl = monster.imageData.url,
+    backgroundColor = monster.imageData.backgroundColor,
+    contentDescription = monster.name,
+    challengeRating = monster.challengeRating,
+    type = MonsterItemType.valueOf(monster.type.name),
+    modifier = modifier
+)
+
 @Preview
 @Composable
 fun MonsterCompendiumPreview() = HunterTheme {
     Surface {
         MonsterCompendium(
-            monsters = (0..10).map {
-                MonsterCardItem(
-                    index = "asdasdasd",
-                    type = MonsterType.ABERRATION,
-                    challengeRating = 8.0f,
-                    name = "Monster of monsters",
-                    imageData = br.alexandregpereira.hunter.domain.model.MonsterImageData(
-                        url = "sadasd",
-                        backgroundColor = "#ffe0e0"
+            monstersBySection = mapOf(
+                MonsterSection() to (0..10).map {
+                    val leftMonster = MonsterCardItem(
+                        index = "asdasdasd",
+                        type = MonsterType.ABERRATION,
+                        challengeRating = 8.0f,
+                        name = "Monster of monsters",
+                        group = if (it == 1 || it == 2) "Group" else null,
+                        imageData = MonsterImageData(
+                            url = "sadasd",
+                            backgroundColor = "#ffe0e0"
+                        ),
                     )
+                    val rightMonster = if (it == 1) {
+                        MonsterCardItem(
+                            index = "asdasdasd",
+                            type = MonsterType.ABERRATION,
+                            challengeRating = 8.0f,
+                            name = "Monster of monsters",
+                            imageData = MonsterImageData(
+                                url = "sadasd",
+                                backgroundColor = "#ffe0e0"
+                            ),
+                        )
+                    } else {
+                        null
+                    }
+                    leftMonster to rightMonster
+                }.toMap()
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
+    Surface {
+        MonsterCompendium(
+            monstersBySection = mapOf(
+                MonsterSection(title = "Title") to (0..10).map {
+                    val leftMonster = MonsterCardItem(
+                        index = "asdasdasd",
+                        type = MonsterType.ABERRATION,
+                        challengeRating = 8.0f,
+                        name = "Monster of monsters",
+                        group = if (it == 1 || it == 2) "Group" else null,
+                        imageData = MonsterImageData(
+                            url = "sadasd",
+                            backgroundColor = "#ffe0e0"
+                        ),
+                    )
+                    val rightMonster = if (it == 1) {
+                        MonsterCardItem(
+                            index = "asdasdasd",
+                            type = MonsterType.ABERRATION,
+                            challengeRating = 8.0f,
+                            name = "Monster of monsters",
+                            imageData = MonsterImageData(
+                                url = "sadasd",
+                                backgroundColor = "#ffe0e0"
+                            ),
+                        )
+                    } else {
+                        null
+                    }
+                    leftMonster to rightMonster
+                }.toMap()
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun MonsterSection2ItemsPreview() = HunterTheme {
+    Surface {
+        MonsterSection(
+            leftMonster = MonsterCardItem(
+                index = "asdasdasd",
+                type = MonsterType.ABERRATION,
+                challengeRating = 8.0f,
+                name = "Monster of monsters",
+                imageData = MonsterImageData(
+                    url = "sadasd",
+                    backgroundColor = "#ffe0e0"
                 )
-            }
+            ),
+            rightMonster = MonsterCardItem(
+                index = "asdasdasd",
+                type = MonsterType.ABERRATION,
+                challengeRating = 8.0f,
+                name = "Monster of monsters",
+                imageData = MonsterImageData(
+                    url = "sadasd",
+                    backgroundColor = "#ffe0e0"
+                )
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun MonsterSection1ItemPreview() = HunterTheme {
+    Surface {
+        MonsterSection(
+            leftMonster = MonsterCardItem(
+                index = "asdasdasd",
+                type = MonsterType.ABERRATION,
+                challengeRating = 8.0f,
+                name = "Monster of monsters",
+                imageData = MonsterImageData(
+                    url = "sadasd",
+                    backgroundColor = "#ffe0e0"
+                )
+            )
         )
     }
 }

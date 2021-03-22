@@ -21,31 +21,55 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.GetMonstersUseCase
+import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.MonsterPair
+import br.alexandregpereira.hunter.domain.MonstersBySection
+import br.alexandregpereira.hunter.domain.collections.map
+import br.alexandregpereira.hunter.domain.model.MonsterSection
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
+typealias MonsterRow = Map<MonsterCardItem, MonsterCardItem?>
+typealias MonsterCardItemsBySection = Map<MonsterSection, MonsterRow>
+
 class MonsterCompendiumViewModel(
-    private val getMonstersUseCase: GetMonstersUseCase
+    private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData<MonsterCompendiumViewState>()
     val stateLiveData: LiveData<MonsterCompendiumViewState> = _stateLiveData
 
     fun loadMonsters() = viewModelScope.launch {
-        getMonstersUseCase()
+        getMonstersBySectionUseCase()
             .onStart {
                 _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
             }
+            .toMonstersBySection()
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
             }
             .collect {
                 _stateLiveData.value = MonsterCompendiumViewState(
-                    monsters = it
+                    monstersBySection = it
                 )
             }
+    }
+
+    private fun Flow<MonstersBySection>.toMonstersBySection(): Flow<MonsterCardItemsBySection> {
+        return this.map {
+            it.map { key, value ->
+                key to value.toMonsterRow()
+            }
+        }
+    }
+
+    private fun MonsterPair.toMonsterRow(): MonsterRow {
+        return this.map { key, value ->
+            key.toMonsterCardItem() to value?.toMonsterCardItem()
+        }
     }
 }

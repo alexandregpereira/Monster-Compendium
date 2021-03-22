@@ -16,9 +16,6 @@
   -->
 
 <resources>
-    <color name="green_200">#FF8BC34A</color>
-    <color name="green_500">#FF4CAF50</color>
-    <color name="green_700">#FF397A3C</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

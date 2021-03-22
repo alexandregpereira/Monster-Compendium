@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
-import br.alexandregpereira.hunter.monster.compendium.ui.toMonsterCardItem
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun Window(state: MonsterCompendiumViewState) = HunterTheme {
     Surface {
-        MonsterCompendium(monsters = state.monsters.toMonsterCardItem())
+        MonsterCompendium(monstersBySection = state.monstersBySection)
     }
 }
 

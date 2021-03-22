@@ -31,12 +31,12 @@ data class Monster(
     val hitPoints: Int,
     val hitDice: String,
     val speed: Speed,
-    val abilityScores: List<AbilityScore>,
-    val savingThrows: List<SavingThrow>,
-    val skills: List<Skill>,
-    val damageVulnerabilities: List<Damage>,
-    val damageResistances: List<Damage>,
-    val damageImmunities: List<Damage>
+    val abilityScores: List<AbilityScore> = emptyList(),
+    val savingThrows: List<SavingThrow> = emptyList(),
+    val skills: List<Skill> = emptyList(),
+    val damageVulnerabilities: List<Damage> = emptyList(),
+    val damageResistances: List<Damage> = emptyList(),
+    val damageImmunities: List<Damage> = emptyList()
 )
 
 data class MonsterImageData(

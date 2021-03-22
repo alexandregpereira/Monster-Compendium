@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.monster.compendium
 
 import br.alexandregpereira.hunter.domain.model.Monster
 
-fun List<Monster>.toMonsterCardItem(): List<MonsterCardItem> {
-    return this.map {
-        MonsterCardItem(
-            index = it.index,
-            type = it.type,
-            challengeRating = it.challengeRating,
-            name = it.name,
-            imageData = it.imageData
-        )
-    }
+fun Monster.toMonsterCardItem(): MonsterCardItem {
+    return MonsterCardItem(
+        index = this.index,
+        type = this.type,
+        challengeRating = this.challengeRating,
+        name = this.name,
+        imageData = this.imageData
+    )
 }

@@ -96,6 +96,7 @@ fun getMostCommonColour(inputStream: InputStream): String? {
             }
         }
     }
+    imageInputStream.close()
     return getMostCommonColour(m)
 }
 
