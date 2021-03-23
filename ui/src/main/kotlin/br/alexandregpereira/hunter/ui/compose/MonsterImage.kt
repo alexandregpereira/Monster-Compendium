@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,26 +47,32 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 @Composable
 fun MonsterImage(
     imageUrl: String,
-    backgroundColor: String,
     contentDescription: String,
     challengeRating: Float,
     type: MonsterItemType,
     modifier: Modifier = Modifier,
+    backgroundColor: String? = null,
+    fullOpen: Boolean = false,
+    isHorizontalImage: Boolean = false,
 ) = Box(
     modifier
         .clip(Shapes.large)
 ) {
+    val height = if (fullOpen) {
+        if (isHorizontalImage) 360.dp else 420.dp
+    } else 208.dp
+
     CoilImage(
         data = imageUrl,
         contentDescription = contentDescription,
         fadeIn = true,
         modifier = Modifier
-            .height(208.dp)
+            .height(height)
             .fillMaxWidth()
             .background(
                 color = Color(
                     backgroundColor
-                        .runCatching { android.graphics.Color.parseColor(this) }
+                        .runCatching { parseColor(this) }
                         .getOrNull() ?: 0
                 ),
                 shape = Shapes.large
@@ -77,6 +84,7 @@ fun MonsterImage(
         modifier = Modifier.offset(x = -(53.dp), y = -(53.dp))
     )
 
+    val iconSize = if (fullOpen) 32.dp else 24.dp
     Box(
         contentAlignment = Alignment.TopEnd,
         modifier = Modifier
@@ -88,7 +96,7 @@ fun MonsterImage(
             contentDescription = type.name,
             tint = Color.Black,
             modifier = Modifier
-                .size(24.dp)
+                .size(iconSize)
                 .alpha(0.7f)
         )
     }
