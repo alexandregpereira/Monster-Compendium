@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.app
 
+import androidx.core.os.bundleOf
 import androidx.navigation.NavHostController
 import br.alexandregpereira.hunter.domain.Navigator
 
@@ -24,6 +25,9 @@ class NavigatorImpl(
 ): Navigator {
 
     override fun navigateToDetail(index: String) {
-        navController.navigate(R.id.action_monsterCompendiumFragment_to_monsterDetailFragment)
+        navController.navigate(
+            R.id.action_monsterCompendiumFragment_to_monsterDetailFragment,
+            bundleOf("index" to index)
+        )
     }
 }

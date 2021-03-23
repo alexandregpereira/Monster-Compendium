@@ -40,7 +40,6 @@ class MonsterCompendiumFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.loadMonsters()
         return ComposeView(requireContext()).apply {
             setContent {
                 MonsterCompendium(

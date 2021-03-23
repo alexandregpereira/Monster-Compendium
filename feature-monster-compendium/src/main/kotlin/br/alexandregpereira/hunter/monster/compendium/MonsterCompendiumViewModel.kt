@@ -38,7 +38,8 @@ typealias MonsterRow = Map<MonsterCardItem, MonsterCardItem?>
 typealias MonsterCardItemsBySection = Map<MonsterSection, MonsterRow>
 
 internal class MonsterCompendiumViewModel(
-    private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase
+    private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase,
+    loadOnInit: Boolean = true
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData<MonsterCompendiumViewState>()
@@ -46,6 +47,10 @@ internal class MonsterCompendiumViewModel(
 
     private val _actionLiveData = MutableLiveData<Event<MonsterCompendiumAction>>()
     val actionLiveData: LiveData<Event<MonsterCompendiumAction>> = _actionLiveData
+
+    init {
+        if (loadOnInit) loadMonsters()
+    }
 
     fun loadMonsters() = viewModelScope.launch {
         getMonstersBySectionUseCase()

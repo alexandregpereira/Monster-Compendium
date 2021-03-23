@@ -16,5 +16,30 @@
 
 package br.alexandregpereira.hunter.detail
 
-class MonsterDetailViewModel {
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.domain.GetMonsterByIndexUseCase
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
+internal class MonsterDetailViewModel(
+    private val getMonsterByIndexUseCase: GetMonsterByIndexUseCase
+) : ViewModel() {
+
+    private val _stateLiveData = MutableLiveData<MonsterDetailViewState>()
+    val stateLiveData: LiveData<MonsterDetailViewState> = _stateLiveData
+
+    fun getMonster(index: String) = viewModelScope.launch {
+        getMonsterByIndexUseCase(index)
+            .catch {
+                Log.e("MonsterDetailViewModel", it.message ?: "")
+            }
+            .collect {
+                _stateLiveData.value = MonsterDetailViewState(monster = it)
+            }
+    }
 }

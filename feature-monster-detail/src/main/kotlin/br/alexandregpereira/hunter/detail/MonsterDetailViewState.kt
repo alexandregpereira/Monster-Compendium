@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail.ui
+package br.alexandregpereira.hunter.detail
 
-import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.ui.compose.MonsterImage
-import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 
-@Composable
-fun MonsterDetail(monster: Monster) {
-    MonsterImage(
-        imageUrl = monster.imageData.url,
-        backgroundColor = monster.imageData.backgroundColor,
-        contentDescription = monster.name,
-        challengeRating = monster.challengeRating,
-        type = MonsterItemType.valueOf(monster.type.name)
-    )
-}
+data class MonsterDetailViewState(
+    val monster: Monster
+)

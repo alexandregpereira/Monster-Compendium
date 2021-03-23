@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail.ui
+package br.alexandregpereira.hunter.domain
 
-import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.ui.compose.MonsterImage
-import br.alexandregpereira.hunter.ui.compose.MonsterItemType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-@Composable
-fun MonsterDetail(monster: Monster) {
-    MonsterImage(
-        imageUrl = monster.imageData.url,
-        backgroundColor = monster.imageData.backgroundColor,
-        contentDescription = monster.name,
-        challengeRating = monster.challengeRating,
-        type = MonsterItemType.valueOf(monster.type.name)
-    )
+class GetMonsterByIndexUseCase(
+    private val repository: MonsterRepository
+) {
+
+    operator fun invoke(index: String): Flow<Monster> {
+        return repository.getMonsters().map {
+            it.find { monster -> monster.index == index }
+                ?: throw IllegalAccessError("Monster not found")
+        }
+    }
 }

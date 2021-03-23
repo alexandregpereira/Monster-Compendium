@@ -121,7 +121,8 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
-            getMonstersBySectionUseCase = getMonstersUseCase
+            getMonstersBySectionUseCase = getMonstersUseCase,
+            loadOnInit = false
         )
         viewModel.stateLiveData.observeForever(stateLiveDataObserver)
     }

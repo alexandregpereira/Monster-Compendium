@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.app
 
 import android.app.Application
 import br.alexandregpereira.hunter.data.di.dataModule
+import br.alexandregpereira.hunter.detail.monsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModule
 import br.alexandregpereira.hunter.monster.compendium.monsterCompendiumModule
 import org.koin.android.ext.koin.androidContext
@@ -30,7 +31,13 @@ class HunterApplication : Application() {
 
         startKoin {
             androidContext(this@HunterApplication)
-            modules(dataModule + domainModule + monsterCompendiumModule + navigationModule)
+            modules(
+                dataModule +
+                    domainModule +
+                    monsterCompendiumModule +
+                    monsterDetailModule +
+                    navigationModule
+            )
         }
     }
 }
