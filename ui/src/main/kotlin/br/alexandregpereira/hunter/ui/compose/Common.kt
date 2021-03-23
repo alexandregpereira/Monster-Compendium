@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-    }
+package br.alexandregpereira.hunter.ui.compose
+
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
+
+@Composable
+fun Window(
+    content: @Composable () -> Unit
+) = HunterTheme {
+    Surface(content = content)
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'
-include ':feature-monster-compendium'
-include ':ui'
-include ':feature-monster-detail'

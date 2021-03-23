@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.detail
 
-import android.app.Application
-import br.alexandregpereira.hunter.data.di.dataModule
-import br.alexandregpereira.hunter.domain.di.domainModule
-import br.alexandregpereira.hunter.monster.compendium.monsterCompendiumModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
+import br.alexandregpereira.hunter.detail.ui.MonsterDetail
 
-class HunterApplication : Application() {
+class MonsterDetailFragment : Fragment() {
 
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            androidContext(this@HunterApplication)
-            modules(dataModule + domainModule + monsterCompendiumModule + navigationModule)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                MonsterDetail()
+            }
         }
     }
 }

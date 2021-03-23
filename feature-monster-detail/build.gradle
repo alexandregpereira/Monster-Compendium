@@ -59,7 +59,6 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     implementation "io.insert-koin:koin-android:$koin_version"
-
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'

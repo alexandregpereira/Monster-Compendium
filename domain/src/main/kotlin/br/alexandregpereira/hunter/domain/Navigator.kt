@@ -14,19 +14,8 @@
  * limitations under the License.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-    }
+package br.alexandregpereira.hunter.domain
+
+interface Navigator {
+    fun navigateToDetail(index: String)
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':hunter'
-include ':data'
-include ':domain'
-include ':feature-monster-compendium'
-include ':ui'
-include ':feature-monster-detail'

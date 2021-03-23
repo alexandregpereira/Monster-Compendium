@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.domain.model
 
-import android.app.Application
-import br.alexandregpereira.hunter.data.di.dataModule
-import br.alexandregpereira.hunter.domain.di.domainModule
-import br.alexandregpereira.hunter.monster.compendium.monsterCompendiumModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+class Event<out T>(private val content: T) {
 
-class HunterApplication : Application() {
+    var hasBeenHandled = false
+        private set // Allow external read but not write
 
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            androidContext(this@HunterApplication)
-            modules(dataModule + domainModule + monsterCompendiumModule + navigationModule)
+    /**
+     * Returns the content and prevents its use again.
+     */
+    fun getContentIfNotHandled(): T? {
+        return if (hasBeenHandled) {
+            null
+        } else {
+            hasBeenHandled = true
+            content
         }
     }
+
+    /**
+     * Returns the content, even if it's already been handled.
+     */
+    fun peekContent(): T = content
 }

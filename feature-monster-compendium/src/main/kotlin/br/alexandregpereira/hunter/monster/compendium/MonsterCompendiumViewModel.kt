@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
 import br.alexandregpereira.hunter.domain.MonsterPair
 import br.alexandregpereira.hunter.domain.MonstersBySection
 import br.alexandregpereira.hunter.domain.collections.map
+import br.alexandregpereira.hunter.domain.model.Event
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -36,12 +37,15 @@ import kotlinx.coroutines.launch
 typealias MonsterRow = Map<MonsterCardItem, MonsterCardItem?>
 typealias MonsterCardItemsBySection = Map<MonsterSection, MonsterRow>
 
-class MonsterCompendiumViewModel(
+internal class MonsterCompendiumViewModel(
     private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData<MonsterCompendiumViewState>()
     val stateLiveData: LiveData<MonsterCompendiumViewState> = _stateLiveData
+
+    private val _actionLiveData = MutableLiveData<Event<MonsterCompendiumAction>>()
+    val actionLiveData: LiveData<Event<MonsterCompendiumAction>> = _actionLiveData
 
     fun loadMonsters() = viewModelScope.launch {
         getMonstersBySectionUseCase()
@@ -57,6 +61,10 @@ class MonsterCompendiumViewModel(
                     monstersBySection = it
                 )
             }
+    }
+
+    fun navigateToDetail(index: String) {
+        _actionLiveData.value = Event(MonsterCompendiumAction.NavigateToDetail(index))
     }
 
     private fun Flow<MonstersBySection>.toMonstersBySection(): Flow<MonsterCardItemsBySection> {

@@ -30,7 +30,7 @@
         android:theme="@style/Theme.Hunter">
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Hunter.NoActionBar">

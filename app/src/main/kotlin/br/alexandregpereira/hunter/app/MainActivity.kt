@@ -14,41 +14,27 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app.presentation
+package br.alexandregpereira.hunter.app
 
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.tooling.preview.Preview
-import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
-import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.navigation.fragment.findNavController
+import br.alexandregpereira.hunter.domain.Navigator
+import org.koin.android.ext.android.get
+import org.koin.core.parameter.parametersOf
 
-@ExperimentalAnimationApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private val viewModel: MonsterCompendiumViewModel by viewModel()
-
-    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val nav = fragment?.findNavController()
+        get<Navigator> { parametersOf(nav) }
         handleDarkMode()
-        viewModel.loadMonsters()
-        setContent {
-            val state = viewModel.stateLiveData.observeAsState().value ?: return@setContent
-            Window(state)
-        }
     }
 
     private fun handleDarkMode() {
@@ -72,23 +58,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-}
-
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
-@Composable
-fun Window(state: MonsterCompendiumViewState) = HunterTheme {
-    Surface {
-        MonsterCompendium(monstersBySection = state.monstersBySection) { index ->  
-            
-        }
-    }
-}
-
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
-@Preview
-@Composable
-fun DefaultPreview() {
-    Window(MonsterCompendiumViewState())
 }
