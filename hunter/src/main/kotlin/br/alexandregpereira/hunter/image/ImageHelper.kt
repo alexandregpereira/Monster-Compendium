@@ -21,6 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -35,7 +36,18 @@ import javax.imageio.ImageIO
 import javax.imageio.ImageReader
 
 @ExperimentalCoroutinesApi
-fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
+fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map { inputStream ->
+    val imageData = getImageData(inputStream)
+    print("Color = ${imageData.backgroundColor}; ")
+    println("isHorizontal = ${imageData.isHorizontalImage}")
+    this@downloadImage.copy(
+        backgroundColor = imageData.backgroundColor,
+        isHorizontalImage = imageData.isHorizontalImage
+    )
+}
+
+@ExperimentalCoroutinesApi
+fun downloadImage(imageUrl: String): Flow<InputStream> = callbackFlow {
     val client = OkHttpClient()
 
     val request: Request = Request.Builder()
@@ -44,7 +56,7 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
 
     client.newCall(request).enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
-            println("request failed: $index: " + e.message)
+            println("request failed: $imageUrl: " + e.message)
             channel.offer(null)
             channel.close()
         }
@@ -52,18 +64,12 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = callbackFlow {
         @Throws(IOException::class)
         override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
-                val imageData = getImageData(response.body()!!.byteStream())
-                print("request success: $index; ")
-                print("Color = ${imageData.backgroundColor}; ")
-                println("isHorizontal = ${imageData.isHorizontalImage}")
+                println("request success: $imageUrl; ")
                 channel.offer(
-                    element = this@downloadImage.copy(
-                        backgroundColor = imageData.backgroundColor,
-                        isHorizontalImage = imageData.isHorizontalImage
-                    )
+                    element = response.body()!!.byteStream()
                 )
             } else {
-                println("request failed: $index")
+                println("request failed: $imageUrl")
                 channel.offer(element = null)
             }
             channel.close()

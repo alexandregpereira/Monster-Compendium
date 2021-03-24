@@ -30,6 +30,7 @@ const val JSON_FILE_NAME = "json/dndapi-monsters.json"
 const val SKILL_JSON_FILE_NAME = "json/dndapi-skills.json"
 const val DAMAGE_TYPE_JSON_FILE_NAME = "json/dndapi-damage-types.json"
 const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"
+const val JSON_IMAGES_FILE_NAME = "json/monster-images.json"
 
 val contentType: MediaType = MediaType.get("application/json")
 val json = Json {
@@ -50,9 +51,9 @@ suspend fun start(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
     println("\nFinished in ${System.currentTimeMillis() - startTime} ms")
 }
 
-inline fun <reified T> saveJsonFile(monsters: List<T>, fileName: String) {
+inline fun <reified T> saveJsonFile(values: T, fileName: String) {
     println("\nSaving")
-    val json = json.encodeToString(monsters)
+    val json = json.encodeToString(values)
     saveJsonFile(fileName, json)
     println()
     println("Json saved")
