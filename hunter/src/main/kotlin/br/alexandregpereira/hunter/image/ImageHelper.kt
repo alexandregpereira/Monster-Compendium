@@ -130,7 +130,7 @@ fun BufferedImage.getMostCommonColour(): String {
 
 fun getMostCommonColour(map: Map<Int, Int>): String {
     val list: List<Map.Entry<Int, Int>> = LinkedList(map.entries).sortedBy { it.value }
-    val bestPixel = list[list.size / 2].key
+    val bestPixel = list[list.size / 4].key
     val rgb = getRGBArr(bestPixel)
     val hsb = Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null)
     val newRgbColor = Color(Color.HSBtoRGB(hsb[0], 0.4f, 1.0f))
