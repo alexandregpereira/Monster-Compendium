@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
@@ -35,7 +36,15 @@ fun MonsterDetail(monster: Monster) {
         Modifier
             .fillMaxHeight()
             .clip(Shapes.large)
-            .background(Color(parseColor(monster.imageData.backgroundColor)))
+            .background(
+                Color(
+                    parseColor(
+                        monster.imageData.backgroundColor.getColor(
+                            isSystemInDarkTheme()
+                        )
+                    )
+                )
+            )
     ) {
         MonsterImage(
             imageUrl = monster.imageData.url,

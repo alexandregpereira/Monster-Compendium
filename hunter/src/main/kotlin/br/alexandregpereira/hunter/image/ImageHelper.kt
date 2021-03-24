@@ -151,7 +151,7 @@ fun getMostCommonColours(map: Map<Int, Int>): Pair<String, String> {
         Color.HSBtoRGB(
             hsb[0],
             Random.nextDouble(0.91, 1.0).toFloat(),
-            Random.nextDouble(0.30, 0.40).toFloat()
+            Random.nextDouble(0.18, 0.30).toFloat()
         )
     )
     return lightColor.getHexColor() to darkColor.getHexColor()
