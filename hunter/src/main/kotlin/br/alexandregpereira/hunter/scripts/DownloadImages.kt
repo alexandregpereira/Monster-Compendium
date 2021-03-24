@@ -18,6 +18,8 @@ package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.image.downloadImage
+import br.alexandregpereira.hunter.image.getBufferedImage
+import br.alexandregpereira.hunter.image.removeWhiteBackgroundColor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
@@ -26,11 +28,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.io.InputStream
-import java.io.OutputStream
+import javax.imageio.ImageIO
 
 @FlowPreview
 @ExperimentalCoroutinesApi
