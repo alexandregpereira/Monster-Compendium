@@ -39,8 +39,7 @@ private const val FIRST_URL =
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() {
-//    flowOf(8)
-    (0..7).asSequence().asFlow()
+    (1..TOTAL_PAGES).asSequence().asFlow()
         .flatMapConcat { page ->
             getImages(page)
         }.map { pairs ->
@@ -67,7 +66,7 @@ suspend fun main() {
 private fun getImages(page: Int): Flow<List<Pair<String, String>>> {
     val url = if (page == 1) FIRST_URL else URL + page
     return flow {
-        delay(5000)
+        delay(1000 * 60 * 1)
         val referer = if (page == 1) "https://www.dndbeyond.com/monsters" else URL + (page - 1)
         println("Getting: $url")
         println("Referer: $referer")
