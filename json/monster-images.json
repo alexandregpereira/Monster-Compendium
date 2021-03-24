@@ -514,5 +514,393 @@
     {
         "name": "nightmare",
         "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/273/1000/1000/636252769493472144.jpeg"
+    },
+    {
+        "name": "sahuagin",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/177/1000/1000/636252761683746719.jpeg"
+    },
+    {
+        "name": "sahuagin-baron",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/100/1000/1000/636323496465469651.jpeg"
+    },
+    {
+        "name": "salamander",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/173/1000/1000/636252761197608364.jpeg"
+    },
+    {
+        "name": "satyr",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/169/1000/1000/636252760706340605.jpeg"
+    },
+    {
+        "name": "satyr-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9581/513/1000/1000/637215397642834924.jpeg"
+    },
+    {
+        "name": "scarecrow",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/104/1000/1000/636323506759235256.jpeg"
+    },
+    {
+        "name": "scout",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/163/1000/1000/636252759915100020.jpeg"
+    },
+    {
+        "name": "sea-hag",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/159/1000/1000/636252759356069260.jpeg"
+    },
+    {
+        "name": "sea-hag-coven-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5738/126/1000/1000/636898362624716539.jpeg"
+    },
+    {
+        "name": "shadow",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/155/1000/1000/636252758977032019.jpeg"
+    },
+    {
+        "name": "shadow-demon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/772/1000/1000/636318334844169327.jpeg"
+    },
+    {
+        "name": "shambling-mound",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/563/1000/1000/636376346968079714.jpeg"
+    },
+    {
+        "name": "shield-guardian",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/145/1000/1000/636252758362792494.jpeg"
+    },
+    {
+        "name": "shrieker",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/571/1000/1000/636376357634308010.jpeg"
+    },
+    {
+        "name": "silver-dragon-wyrmling",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/143/1000/1000/636252757538355953.jpeg"
+    },
+    {
+        "name": "skeleton",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/472/1000/1000/636376294573239565.jpeg"
+    },
+    {
+        "name": "smoke-mephit",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/609/1000/1000/636376386915665988.jpeg"
+    },
+    {
+        "name": "smoke-mephit-summoner-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5738/407/1000/1000/636898388905773989.jpeg"
+    },
+    {
+        "name": "solar",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/121/1000/1000/636252748079664097.jpeg"
+    },
+    {
+        "name": "spectator",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/14/485/1000/1000/636364324602733616.png"
+    },
+    {
+        "name": "specter",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/119/1000/1000/636252747399435720.jpeg"
+    },
+    {
+        "name": "spider",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/575/1000/1000/636376359864842950.jpeg"
+    },
+    {
+        "name": "spined-devil",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/120/1000/1000/636323629155099018.jpeg"
+    },
+    {
+        "name": "spirit-naga",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/117/1000/1000/636252746851035686.jpeg"
+    },
+    {
+        "name": "sprite",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/115/1000/1000/636252746444973630.jpeg"
+    },
+    {
+        "name": "steam-mephit",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/113/1000/1000/636252745841820724.jpeg"
+    },
+    {
+        "name": "steam-mephit-summoner-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5738/423/1000/1000/636898390006200877.jpeg"
+    },
+    {
+        "name": "steel-defender",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7774/607/1000/1000/637095984290192664.png"
+    },
+    {
+        "name": "stirge",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/111/1000/1000/636252745395103202.jpeg"
+    },
+    {
+        "name": "stone-giant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/109/1000/1000/636252744518731463.jpeg"
+    },
+    {
+        "name": "stone-golem",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/107/1000/1000/636252743780112834.jpeg"
+    },
+    {
+        "name": "storm-giant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/105/1000/1000/636252743254029469.jpeg"
+    },
+    {
+        "name": "succubus",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/103/1000/1000/636252742573312994.jpeg"
+    },
+    {
+        "name": "swarm-of-bats",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/906/1000/1000/636334289313689439.jpeg"
+    },
+    {
+        "name": "swarm-of-quippers",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/18/276/1000/1000/636379781035768521.jpeg"
+    },
+    {
+        "name": "swarm-of-rats",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/908/1000/1000/636334289541603972.jpeg"
+    },
+    {
+        "name": "swarm-of-ravens",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/555/1000/1000/636376341743427326.jpeg"
+    },
+    {
+        "name": "tarrasque",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/101/1000/1000/636252741877524077.jpeg"
+    },
+    {
+        "name": "thri-kreen",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/474/1000/1000/636376295932025106.jpeg"
+    },
+    {
+        "name": "thri-kreen-psionics-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5736/204/1000/1000/636898183055651658.jpeg"
+    },
+    {
+        "name": "thri-kreen-weapons-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5736/185/1000/1000/636898181517712639.jpeg"
+    },
+    {
+        "name": "thug",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/99/1000/1000/636252741335519081.jpeg"
+    },
+    {
+        "name": "treant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/97/1000/1000/636252740537990664.jpeg"
+    },
+    {
+        "name": "tridrone",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/508/1000/1000/636376314169981143.jpeg"
+    },
+    {
+        "name": "troglodyte",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/108/1000/1000/636323540010349971.jpeg"
+    },
+    {
+        "name": "troll",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/95/1000/1000/636252739682234623.jpeg"
+    },
+    {
+        "name": "troll-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5736/160/1000/1000/636898177206982749.jpeg"
+    },
+    {
+        "name": "twig-blight",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/464/1000/1000/636376286997771487.png"
+    },
+    {
+        "name": "tyrannosaurus-rex",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/594/1000/1000/636376369004412963.jpeg"
+    },
+    {
+        "name": "ultroloth",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/695/1000/1000/636315012644457530.jpeg"
+    },
+    {
+        "name": "ultroloth-summoner-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5735/986/1000/1000/636898155508573997.jpeg"
+    },
+    {
+        "name": "umber-hulk",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/590/1000/1000/636376367240991526.jpeg"
+    },
+    {
+        "name": "unicorn",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/93/1000/1000/636252739248798123.jpeg"
+    },
+    {
+        "name": "vampire",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/91/1000/1000/636252738665379794.jpeg"
+    },
+    {
+        "name": "vampire-spawn",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/89/1000/1000/636252738148839638.jpeg"
+    },
+    {
+        "name": "vine-blight",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/466/1000/1000/636376287271000215.png"
+    },
+    {
+        "name": "violet-fungus",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/573/1000/1000/636376357964412799.jpeg"
+    },
+    {
+        "name": "vrock",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/87/1000/1000/636252737538172594.jpeg"
+    },
+    {
+        "name": "vrock-summoner-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5737/374/1000/1000/636898300448303155.jpeg"
+    },
+    {
+        "name": "water-elemental",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/84/1000/1000/636252736680781387.jpeg"
+    },
+    {
+        "name": "water-weird",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/592/1000/1000/636376367494214976.jpeg"
+    },
+    {
+        "name": "werebear",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/82/1000/1000/636252736005297867.jpeg"
+    },
+    {
+        "name": "wereboar",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/80/1000/1000/636252735506840152.jpeg"
+    },
+    {
+        "name": "wererat",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/78/1000/1000/636252735121410517.jpeg"
+    },
+    {
+        "name": "weretiger",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/76/1000/1000/636252734783831163.jpeg"
+    },
+    {
+        "name": "werewolf",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/74/1000/1000/636252734224239957.jpeg"
+    },
+    {
+        "name": "white-dragon-wyrmling",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/415/1000/1000/636252789083357808.jpeg"
+    },
+    {
+        "name": "wight",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/56/1000/1000/636252726349692861.jpeg"
+    },
+    {
+        "name": "will-o-wisp",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/585/1000/1000/636376363763232290.jpeg"
+    },
+    {
+        "name": "winter-wolf",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/54/1000/1000/636252725270715296.jpeg"
+    },
+    {
+        "name": "wolf",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/482/1000/1000/636376300223855327.jpeg"
+    },
+    {
+        "name": "worg",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/52/1000/1000/636252724662073178.jpeg"
+    },
+    {
+        "name": "wraith",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/50/1000/1000/636252724191790008.jpeg"
+    },
+    {
+        "name": "wyvern",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/48/1000/1000/636252723695596000.jpeg"
+    },
+    {
+        "name": "xorn",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/46/1000/1000/636252723241554579.jpeg"
+    },
+    {
+        "name": "yeti",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/662/1000/1000/636313413410825930.jpeg"
+    },
+    {
+        "name": "yochlol",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/738/1000/1000/636317384308595748.jpeg"
+    },
+    {
+        "name": "yochlol-summoner-variant",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5737/414/1000/1000/636898303509738449.jpeg"
+    },
+    {
+        "name": "young-black-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/70/1000/1000/636252732861675698.jpeg"
+    },
+    {
+        "name": "young-blue-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/68/1000/1000/636252732434296782.jpeg"
+    },
+    {
+        "name": "young-brass-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/66/1000/1000/636252731911060874.jpeg"
+    },
+    {
+        "name": "young-bronze-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/64/1000/1000/636252731269768088.jpeg"
+    },
+    {
+        "name": "young-copper-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/62/1000/1000/636252729761648292.jpeg"
+    },
+    {
+        "name": "young-gold-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/60/1000/1000/636252729283446963.jpeg"
+    },
+    {
+        "name": "young-green-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/58/1000/1000/636252728834677623.jpeg"
+    },
+    {
+        "name": "young-red-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/399/1000/1000/636252784386259001.jpeg"
+    },
+    {
+        "name": "young-red-shadow-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/775/1000/1000/636318352193141440.jpeg"
+    },
+    {
+        "name": "young-remorhaz",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/9/60/1000/1000/636322797041471954.jpeg"
+    },
+    {
+        "name": "young-silver-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/401/1000/1000/636252784740667730.jpeg"
+    },
+    {
+        "name": "young-white-dragon",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/403/1000/1000/636252785358767533.jpeg"
+    },
+    {
+        "name": "yuan-ti-abomination",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/689/1000/1000/636314960370199473.jpeg"
+    },
+    {
+        "name": "yuan-ti-malison",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/8/691/1000/1000/636314970006849560.jpeg"
+    },
+    {
+        "name": "yuan-ti-malison-type-1",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5735/806/1000/1000/636898133299301654.jpeg"
+    },
+    {
+        "name": "yuan-ti-malison-type-2",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5735/829/1000/1000/636898136129581552.jpeg"
+    },
+    {
+        "name": "yuan-ti-malison-type-3",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/5735/837/1000/1000/636898137305067258.jpeg"
+    },
+    {
+        "name": "yuan-ti-pureblood",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/16/597/1000/1000/636376370047544718.jpeg"
+    },
+    {
+        "name": "zombie",
+        "url": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/71/1000/1000/636252733510786769.jpeg"
     }
 ]
