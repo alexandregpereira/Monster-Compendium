@@ -38,7 +38,7 @@ data class MonsterDto(
     @SerialName("image_url")
     val imageUrl: String,
     @SerialName("background_color")
-    val backgroundColor: String = "#00000000",
+    val backgroundColor: ColorDto = ColorDto(),
     @SerialName("is_horizontal_image")
     val isHorizontalImage: Boolean,
     @SerialName("size")
@@ -66,4 +66,3 @@ data class MonsterDto(
     @SerialName("damage_immunities")
     val damageImmunities: List<DamageDto>
 )
-

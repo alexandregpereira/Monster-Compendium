@@ -33,7 +33,7 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             subtitle = it.subtitle,
             imageData = MonsterImageData(
                 url = it.imageUrl,
-                backgroundColor = it.backgroundColor,
+                backgroundColor = it.backgroundColor.toDomain(),
                 isHorizontal = it.isHorizontalImage
             ),
             size = it.size,

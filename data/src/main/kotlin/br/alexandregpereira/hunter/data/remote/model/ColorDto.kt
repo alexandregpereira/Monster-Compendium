@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.image
+package br.alexandregpereira.hunter.data.remote.model
 
-data class ImageData(
-    val lightBackgroundColor: String = "#00000000",
-    val darkBackgroundColor: String = "#00000000",
-    val isHorizontalImage: Boolean = false
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+
+@Serializable
+data class ColorDto(
+    @SerialName("light")
+    val light: String = "#00000000",
+    @SerialName("dark")
+    val dark: String = "#00000000",
 )

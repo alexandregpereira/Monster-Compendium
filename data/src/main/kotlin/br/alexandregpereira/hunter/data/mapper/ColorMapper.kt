@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.image
+package br.alexandregpereira.hunter.data.mapper
 
-data class ImageData(
-    val lightBackgroundColor: String = "#00000000",
-    val darkBackgroundColor: String = "#00000000",
-    val isHorizontalImage: Boolean = false
-)
+import br.alexandregpereira.hunter.data.remote.model.ColorDto
+import br.alexandregpereira.hunter.domain.model.Color
+
+fun ColorDto.toDomain(): Color {
+    return Color(light = light, dark = dark)
+}

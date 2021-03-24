@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.image
 
+import br.alexandregpereira.hunter.data.remote.model.ColorDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -40,10 +41,13 @@ import kotlin.random.Random
 @ExperimentalCoroutinesApi
 fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map { inputStream ->
     val imageData = getImageData(inputStream)
-    print("Color = ${imageData.backgroundColor}; ")
+    print("Color = ${imageData.lightBackgroundColor}; ")
     println("isHorizontal = ${imageData.isHorizontalImage}")
     this@downloadImage.copy(
-        backgroundColor = imageData.backgroundColor,
+        backgroundColor = ColorDto(
+            light = imageData.lightBackgroundColor,
+            dark = imageData.darkBackgroundColor
+        ),
         isHorizontalImage = imageData.isHorizontalImage
     )
 }.catch {}
@@ -84,8 +88,10 @@ fun downloadImage(imageUrl: String): Flow<InputStream> = callbackFlow {
 fun getImageData(inputStream: InputStream): ImageData {
     val image: BufferedImage = inputStream.getBufferedImage() ?: return ImageData()
 
+    val colors = image.getMostCommonColours()
     return ImageData(
-        image.getMostCommonColour(),
+        lightBackgroundColor = colors.first,
+        darkBackgroundColor = colors.second,
         image.isHorizontalImage()
     ).apply {
         inputStream.close()
@@ -108,7 +114,7 @@ fun BufferedImage.isHorizontalImage(): Boolean {
     return width >= height
 }
 
-fun BufferedImage.getMostCommonColour(): String {
+fun BufferedImage.getMostCommonColours(): Pair<String, String> {
     val height = this.height
     val width = this.width
 
@@ -126,25 +132,36 @@ fun BufferedImage.getMostCommonColour(): String {
             }
         }
     }
-    return getMostCommonColour(m)
+    return getMostCommonColours(m)
 }
 
-fun getMostCommonColour(map: Map<Int, Int>): String {
+fun getMostCommonColours(map: Map<Int, Int>): Pair<String, String> {
     val list: List<Map.Entry<Int, Int>> = LinkedList(map.entries).sortedBy { it.value }
     val bestPixel = list[list.size / 4].key
     val rgb = getRGBArr(bestPixel)
     val hsb = Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null)
-    val newRgbColor = Color(
+    val lightColor = Color(
         Color.HSBtoRGB(
             hsb[0],
-            Random.nextDouble(0.2, 0.4).toFloat(),
+            Random.nextDouble(0.18, 0.30).toFloat(),
             Random.nextDouble(0.91, 1.0).toFloat()
         )
     )
+    val darkColor = Color(
+        Color.HSBtoRGB(
+            hsb[0],
+            Random.nextDouble(0.91, 1.0).toFloat(),
+            Random.nextDouble(0.30, 0.40).toFloat()
+        )
+    )
+    return lightColor.getHexColor() to darkColor.getHexColor()
+}
+
+private fun Color.getHexColor(): String {
     return "#" +
-            Integer.toHexString(newRgbColor.red).normalizeHex() +
-            Integer.toHexString(newRgbColor.green).normalizeHex() +
-            Integer.toHexString(newRgbColor.blue).normalizeHex()
+            Integer.toHexString(this.red).normalizeHex() +
+            Integer.toHexString(this.green).normalizeHex() +
+            Integer.toHexString(this.blue).normalizeHex()
 }
 
 private fun String.normalizeHex(): String {

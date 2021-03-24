@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
@@ -124,7 +126,7 @@ private fun MonsterCard(
 ) = MonsterCard(
     name = monster.name,
     imageUrl = monster.imageData.url,
-    backgroundColor = monster.imageData.backgroundColor,
+    backgroundColor = monster.imageData.backgroundColor.getColor(isSystemInDarkTheme()),
     contentDescription = monster.name,
     challengeRating = monster.challengeRating,
     type = MonsterItemType.valueOf(monster.type.name),
@@ -147,7 +149,10 @@ fun MonsterCompendiumPreview() = HunterTheme {
                         group = if (it == 1 || it == 2) "Group" else null,
                         imageData = MonsterImageData(
                             url = "sadasd",
-                            backgroundColor = "#ffe0e0"
+                            backgroundColor = Color(
+                                light = "#ffe0e0",
+                                dark = "#ffe0e0"
+                            )
                         ),
                     )
                     val rightMonster = if (it == 1) {
@@ -158,7 +163,10 @@ fun MonsterCompendiumPreview() = HunterTheme {
                             name = "Monster of monsters",
                             imageData = MonsterImageData(
                                 url = "sadasd",
-                                backgroundColor = "#ffe0e0"
+                                backgroundColor = Color(
+                                    light = "#ffe0e0",
+                                    dark = "#ffe0e0"
+                                )
                             ),
                         )
                     } else {
@@ -186,7 +194,10 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
                         group = if (it == 1 || it == 2) "Group" else null,
                         imageData = MonsterImageData(
                             url = "sadasd",
-                            backgroundColor = "#ffe0e0"
+                            backgroundColor = Color(
+                                light = "#ffe0e0",
+                                dark = "#ffe0e0"
+                            )
                         ),
                     )
                     val rightMonster = if (it == 1) {
@@ -197,7 +208,10 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
                             name = "Monster of monsters",
                             imageData = MonsterImageData(
                                 url = "sadasd",
-                                backgroundColor = "#ffe0e0"
+                                backgroundColor = Color(
+                                    light = "#ffe0e0",
+                                    dark = "#ffe0e0"
+                                )
                             ),
                         )
                     } else {
@@ -222,7 +236,10 @@ fun MonsterSection2ItemsPreview() = HunterTheme {
                 name = "Monster of monsters",
                 imageData = MonsterImageData(
                     url = "sadasd",
-                    backgroundColor = "#ffe0e0"
+                    backgroundColor = Color(
+                        light = "#ffe0e0",
+                        dark = "#ffe0e0"
+                    )
                 )
             ),
             rightMonster = MonsterCardItem(
@@ -232,7 +249,10 @@ fun MonsterSection2ItemsPreview() = HunterTheme {
                 name = "Monster of monsters",
                 imageData = MonsterImageData(
                     url = "sadasd",
-                    backgroundColor = "#ffe0e0"
+                    backgroundColor = Color(
+                        light = "#ffe0e0",
+                        dark = "#ffe0e0"
+                    )
                 )
             )
         )
@@ -251,7 +271,10 @@ fun MonsterSection1ItemPreview() = HunterTheme {
                 name = "Monster of monsters",
                 imageData = MonsterImageData(
                     url = "sadasd",
-                    backgroundColor = "#ffe0e0"
+                    backgroundColor = Color(
+                        light = "#ffe0e0",
+                        dark = "#ffe0e0"
+                    )
                 )
             )
         )
