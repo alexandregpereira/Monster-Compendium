@@ -154,18 +154,20 @@ fun getMostCommonColours(map: Map<Int, Int>): Pair<String, String> {
             Random.nextDouble(0.18, 0.30).toFloat()
         )
     )
-    return lightColor.getHexColor() to darkColor.getHexColor()
+    return lightColor.getHexColor(isDark = false) to darkColor.getHexColor(isDark = true)
 }
 
-private fun Color.getHexColor(): String {
+private fun Color.getHexColor(isDark: Boolean): String {
     return "#" +
-            Integer.toHexString(this.red).normalizeHex() +
+            Integer.toHexString(this.red).normalizeHex(isDark) +
             Integer.toHexString(this.green).normalizeHex() +
             Integer.toHexString(this.blue).normalizeHex()
 }
 
-private fun String.normalizeHex(): String {
-    return if (this.length == 1) "${this}0" else this
+private fun String.normalizeHex(isDark: Boolean = false): String {
+    return if (this.length == 1) {
+        if (isDark) "0${this}" else "${this}0"
+    } else this
 }
 
 fun getRGBArr(pixel: Int): IntArray {

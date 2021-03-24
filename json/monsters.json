@@ -9,8 +9,8 @@
         "subtitle": "Large aberration, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/aboleth.png",
         "background_color": {
-            "light": "#bff0e6",
-            "dark": "#205947"
+            "light": "#a9f0e2",
+            "dark": "#014436"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -108,8 +108,8 @@
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/air-elemental.png",
         "background_color": {
-            "light": "#bbcef6",
-            "dark": "#60215c"
+            "light": "#cddbfc",
+            "dark": "#041741"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -216,8 +216,8 @@
         "subtitle": "Large monstrosity, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/androsphinx.png",
         "background_color": {
-            "light": "#f0c0a9",
-            "dark": "#521d40"
+            "light": "#f8cbb5",
+            "dark": "#481a50"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -348,8 +348,8 @@
         "subtitle": "Medium construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/animated-armor.png",
         "background_color": {
-            "light": "#fbccd8",
-            "dark": "#58501b"
+            "light": "#ebbbc7",
+            "dark": "#2e20e0"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -431,8 +431,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ankheg.png",
         "background_color": {
-            "light": "#d9e9bb",
-            "dark": "#405e60"
+            "light": "#ebffc6",
+            "dark": "#2f4640"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -510,8 +510,8 @@
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/archmage.png",
         "background_color": {
-            "light": "#f2d7c5",
-            "dark": "#5d2600"
+            "light": "#fed7bc",
+            "dark": "#491e00"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -669,8 +669,8 @@
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/assassin.png",
         "background_color": {
-            "light": "#c9f4f6",
-            "dark": "#505256"
+            "light": "#bde8ea",
+            "dark": "#034043"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -771,8 +771,8 @@
         "subtitle": "Medium elemental, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/azer.png",
         "background_color": {
-            "light": "#f5e9c2",
-            "dark": "#544130"
+            "light": "#f2e5bb",
+            "dark": "#3d2f10"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -858,8 +858,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/badger.png",
         "background_color": {
-            "light": "#e9f2b1",
-            "dark": "#556320"
+            "light": "#ebf2c3",
+            "dark": "#3f4940"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -937,8 +937,8 @@
         "subtitle": "Medium humanoid(any race), any non-lawful alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bandit-captain.png",
         "background_color": {
-            "light": "#f9d4af",
-            "dark": "#623110"
+            "light": "#f2dbc5",
+            "dark": "#4a2510"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -1030,8 +1030,8 @@
         "subtitle": "Medium monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/basilisk.png",
         "background_color": {
-            "light": "#b2e9f9",
-            "dark": "#604a5e"
+            "light": "#bdeefc",
+            "dark": "#002732"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -1103,8 +1103,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bat.png",
         "background_color": {
-            "light": "#f7d7ad",
-            "dark": "#593430"
+            "light": "#ecd0aa",
+            "dark": "#311c10"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -1182,8 +1182,8 @@
         "subtitle": "Huge monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/behir.png",
         "background_color": {
-            "light": "#afdaf0",
-            "dark": "#103c5a"
+            "light": "#badff2",
+            "dark": "#022536"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -1274,8 +1274,8 @@
         "subtitle": "Medium dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/black-dragon-wyrmling.png",
         "background_color": {
-            "light": "#f1dbb9",
-            "dark": "#613c20"
+            "light": "#edd5af",
+            "dark": "#342010"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -1388,8 +1388,8 @@
         "subtitle": "Large ooze, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/black-pudding.png",
         "background_color": {
-            "light": "#f2d0c4",
-            "dark": "#501510"
+            "light": "#ecc6b9",
+            "dark": "#401110"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -1487,8 +1487,8 @@
         "subtitle": "Medium fey, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/blink-dog.png",
         "background_color": {
-            "light": "#b9ebee",
-            "dark": "#704a4e"
+            "light": "#b3f2f6",
+            "dark": "#053f42"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -1568,8 +1568,8 @@
         "subtitle": "Medium dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/blue-dragon-wyrmling.png",
         "background_color": {
-            "light": "#c3e0fd",
-            "dark": "#703664"
+            "light": "#b6d4f1",
+            "dark": "#021f3b"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -1682,8 +1682,8 @@
         "subtitle": "Medium dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/brass-dragon-wyrmling.png",
         "background_color": {
-            "light": "#ece2b1",
-            "dark": "#4d4020"
+            "light": "#e8e1bc",
+            "dark": "#362d50"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -1796,8 +1796,8 @@
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bronze-dragon-wyrmling.png",
         "background_color": {
-            "light": "#f6d6b1",
-            "dark": "#593240"
+            "light": "#fedfbb",
+            "dark": "#462860"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -1910,8 +1910,8 @@
         "subtitle": "Medium humanoid(goblinoid), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bugbear.png",
         "background_color": {
-            "light": "#fcd4b4",
-            "dark": "#512400"
+            "light": "#fbd1b0",
+            "dark": "#4a2340"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -1991,8 +1991,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bulette.png",
         "background_color": {
-            "light": "#eddbbd",
-            "dark": "#563860"
+            "light": "#fbe3bc",
+            "dark": "#372310"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -2074,8 +2074,8 @@
         "subtitle": "Large monstrosity, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/centaur.png",
         "background_color": {
-            "light": "#eecbab",
-            "dark": "#5a3080"
+            "light": "#f7dbc0",
+            "dark": "#412130"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -2159,8 +2159,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chimera.png",
         "background_color": {
-            "light": "#f5e1c7",
-            "dark": "#502f70"
+            "light": "#f6ddbc",
+            "dark": "#422510"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -2242,8 +2242,8 @@
         "subtitle": "Large aberration, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chuul.png",
         "background_color": {
-            "light": "#f8e4cb",
-            "dark": "#543050"
+            "light": "#efd7bb",
+            "dark": "#321c20"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -2330,8 +2330,8 @@
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/clay-golem.png",
         "background_color": {
-            "light": "#f3d9c1",
-            "dark": "#552b30"
+            "light": "#e8d3be",
+            "dark": "#4a2520"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -2438,8 +2438,8 @@
         "subtitle": "Large aberration, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cloaker.png",
         "background_color": {
-            "light": "#ebcbac",
-            "dark": "#532a30"
+            "light": "#fde2c8",
+            "dark": "#361c30"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -2521,8 +2521,8 @@
         "subtitle": "Huge giant, neutral good (50%) or neutral evil (50%)",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cloud-giant.png",
         "background_color": {
-            "light": "#f6d7bb",
-            "dark": "#5e2e20"
+            "light": "#eecdae",
+            "dark": "#381c30"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -2614,8 +2614,8 @@
         "subtitle": "Small monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cockatrice.png",
         "background_color": {
-            "light": "#ebdabe",
-            "dark": "#664380"
+            "light": "#efd7b0",
+            "dark": "#402a60"
         },
         "is_horizontal_image": true,
         "size": "Small",
@@ -2693,8 +2693,8 @@
         "subtitle": "Medium dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/copper-dragon-wyrmling.png",
         "background_color": {
-            "light": "#f2ddbe",
-            "dark": "#5b3810"
+            "light": "#f5e1c4",
+            "dark": "#332140"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -2807,8 +2807,8 @@
         "subtitle": "Medium celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/couatl.png",
         "background_color": {
-            "light": "#f2c5ab",
-            "dark": "#632520"
+            "light": "#f8d3be",
+            "dark": "#461b30"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -2928,8 +2928,8 @@
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cult-fanatic.png",
         "background_color": {
-            "light": "#f0cdc2",
-            "dark": "#621930"
+            "light": "#fdc8b9",
+            "dark": "#421350"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -3013,8 +3013,8 @@
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cultist.png",
         "background_color": {
-            "light": "#bfeaf5",
-            "dark": "#005064"
+            "light": "#c4e9f2",
+            "dark": "#05343f"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -3094,8 +3094,8 @@
         "subtitle": "Small monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/darkmantle.png",
         "background_color": {
-            "light": "#f5cdbe",
-            "dark": "#521940"
+            "light": "#fad1c2",
+            "dark": "#401320"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -3177,8 +3177,8 @@
         "subtitle": "Medium monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/death-dog.png",
         "background_color": {
-            "light": "#f2c9b5",
-            "dark": "#531d30"
+            "light": "#f1c1aa",
+            "dark": "#331110"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -3258,8 +3258,8 @@
         "subtitle": "Small humanoid(gnome), neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/deep-gnome-svirfneblin.png",
         "background_color": {
-            "light": "#f9cfb9",
-            "dark": "#4e1c30"
+            "light": "#f5d3c2",
+            "dark": "#3e1730"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -3343,8 +3343,8 @@
         "subtitle": "Huge fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/balor.png",
         "background_color": {
-            "light": "#f8dab8",
-            "dark": "#5c3210"
+            "light": "#efd1ae",
+            "dark": "#432530"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -3478,8 +3478,8 @@
         "subtitle": "Small fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dretch.png",
         "background_color": {
-            "light": "#f9c2ba",
-            "dark": "#59c000"
+            "light": "#f5c9c3",
+            "dark": "#40c040"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -3571,8 +3571,8 @@
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/glabrezu.png",
         "background_color": {
-            "light": "#f3cec6",
-            "dark": "#5d1780"
+            "light": "#f8cec6",
+            "dark": "#2f9010"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -3700,8 +3700,8 @@
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hezrou.png",
         "background_color": {
-            "light": "#b3e2f8",
-            "dark": "#203953"
+            "light": "#b9e4f8",
+            "dark": "#042535"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -3825,8 +3825,8 @@
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/marilith.png",
         "background_color": {
-            "light": "#caf7eb",
-            "dark": "#205b44"
+            "light": "#b6f7e6",
+            "dark": "#024735"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -3954,8 +3954,8 @@
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nalfeshnee.png",
         "background_color": {
-            "light": "#eac8ae",
-            "dark": "#542500"
+            "light": "#f6d6bd",
+            "dark": "#351930"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -4089,8 +4089,8 @@
         "subtitle": "Tiny fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/quasit.png",
         "background_color": {
-            "light": "#f7dbb7",
-            "dark": "#4d2f70"
+            "light": "#ead0ae",
+            "dark": "#442950"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -4206,8 +4206,8 @@
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vrock.png",
         "background_color": {
-            "light": "#baf6f6",
-            "dark": "#205959"
+            "light": "#bafafa",
+            "dark": "#033333"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -4337,8 +4337,8 @@
         "subtitle": "Medium celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/deva.png",
         "background_color": {
-            "light": "#f6ddb8",
-            "dark": "#573410"
+            "light": "#f7e1c1",
+            "dark": "#462b50"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -4457,8 +4457,8 @@
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/barbed-devil.png",
         "background_color": {
-            "light": "#f2d6aa",
-            "dark": "#533430"
+            "light": "#e8d8bd",
+            "dark": "#2e1e40"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -4593,8 +4593,8 @@
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bearded-devil.png",
         "background_color": {
-            "light": "#ece0c0",
-            "dark": "#503b20"
+            "light": "#fbebc0",
+            "dark": "#332630"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -4713,8 +4713,8 @@
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bone-devil.png",
         "background_color": {
-            "light": "#f7c9c5",
-            "dark": "#61b040"
+            "light": "#fbc8c4",
+            "dark": "#3d8040"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -4847,8 +4847,8 @@
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chain-devil.png",
         "background_color": {
-            "light": "#fcd2bc",
-            "dark": "#662880"
+            "light": "#efc7b2",
+            "dark": "#401720"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -4967,8 +4967,8 @@
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/erinyes.png",
         "background_color": {
-            "light": "#f2cbbd",
-            "dark": "#4f1610"
+            "light": "#fdc8b4",
+            "dark": "#301040"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -5097,8 +5097,8 @@
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/horned-devil.png",
         "background_color": {
-            "light": "#f9e2bc",
-            "dark": "#4f3450"
+            "light": "#f2e0c0",
+            "dark": "#4a3050"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -5227,8 +5227,8 @@
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ice-devil.png",
         "background_color": {
-            "light": "#ecbba6",
-            "dark": "#632150"
+            "light": "#f6d1c1",
+            "dark": "#301140"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -5346,8 +5346,8 @@
         "subtitle": "Tiny fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/imp.png",
         "background_color": {
-            "light": "#f6c7d0",
-            "dark": "#543013"
+            "light": "#ecadb9",
+            "dark": "#4310d0"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -5476,8 +5476,8 @@
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lemure.png",
         "background_color": {
-            "light": "#ffc5db",
-            "dark": "#551021"
+            "light": "#eeaec6",
+            "dark": "#323015"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -5564,8 +5564,8 @@
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pit-fiend.png",
         "background_color": {
-            "light": "#f9c5c5",
-            "dark": "#647060"
+            "light": "#f9c9c8",
+            "dark": "#445040"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -5690,8 +5690,8 @@
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dire-wolf.png",
         "background_color": {
-            "light": "#edc2b8",
-            "dark": "#5e1330"
+            "light": "#fabfb2",
+            "dark": "#43d020"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -5771,8 +5771,8 @@
         "subtitle": "Large elemental, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/djinni.png",
         "background_color": {
-            "light": "#f4cac0",
-            "dark": "#561780"
+            "light": "#f0b9ab",
+            "dark": "#43e010"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -5872,8 +5872,8 @@
         "subtitle": "Medium monstrosity(shapechanger), unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/doppelganger.png",
         "background_color": {
-            "light": "#aad7ea",
-            "dark": "#50374d"
+            "light": "#b6deef",
+            "dark": "#013046"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -5953,8 +5953,8 @@
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-black-dragon.png",
         "background_color": {
-            "light": "#ebd8a7",
-            "dark": "#533c10"
+            "light": "#ebdaac",
+            "dark": "#2e2220"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -6067,8 +6067,8 @@
         "subtitle": "Huge dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-blue-dragon.png",
         "background_color": {
-            "light": "#bfd7ea",
-            "dark": "#403256"
+            "light": "#b4dbf9",
+            "dark": "#022644"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -6181,8 +6181,8 @@
         "subtitle": "Huge dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-brass-dragon.png",
         "background_color": {
-            "light": "#facdb8",
-            "dark": "#582060"
+            "light": "#fcc9b1",
+            "dark": "#491920"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -6303,8 +6303,8 @@
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-bronze-dragon.png",
         "background_color": {
-            "light": "#fee7b4",
-            "dark": "#5b4020"
+            "light": "#f2e1bb",
+            "dark": "#422e20"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -6421,8 +6421,8 @@
         "subtitle": "Huge dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-copper-dragon.png",
         "background_color": {
-            "light": "#e8caa8",
-            "dark": "#633630"
+            "light": "#eed2b2",
+            "dark": "#482840"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -6539,8 +6539,8 @@
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-gold-dragon.png",
         "background_color": {
-            "light": "#fad9c3",
-            "dark": "#582520"
+            "light": "#fbd6bd",
+            "dark": "#401b30"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -6661,8 +6661,8 @@
         "subtitle": "Huge dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-green-dragon.png",
         "background_color": {
-            "light": "#eadfa4",
-            "dark": "#4d4130"
+            "light": "#f3ecc6",
+            "dark": "#493d20"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -6787,8 +6787,8 @@
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-red-dragon.png",
         "background_color": {
-            "light": "#efdac2",
-            "dark": "#633630"
+            "light": "#f4dbc0",
+            "dark": "#3b2010"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -6901,8 +6901,8 @@
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-silver-dragon.png",
         "background_color": {
-            "light": "#f8dbaf",
-            "dark": "#583760"
+            "light": "#e9d3b4",
+            "dark": "#3e2620"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -7017,8 +7017,8 @@
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-white-dragon.png",
         "background_color": {
-            "light": "#f8ddb1",
-            "dark": "#5f3e70"
+            "light": "#efd5a8",
+            "dark": "#3f2820"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -7137,8 +7137,8 @@
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-black-dragon.png",
         "background_color": {
-            "light": "#b6f6ec",
-            "dark": "#005043"
+            "light": "#b0f1e6",
+            "dark": "#013028"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -7251,8 +7251,8 @@
         "subtitle": "Gargantuan dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-blue-dragon.png",
         "background_color": {
-            "light": "#c7e1fb",
-            "dark": "#202e59"
+            "light": "#accbe8",
+            "dark": "#032546"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -7365,8 +7365,8 @@
         "subtitle": "Gargantuan dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-brass-dragon.png",
         "background_color": {
-            "light": "#eadea8",
-            "dark": "#564740"
+            "light": "#fcf4ce",
+            "dark": "#443800"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -7487,8 +7487,8 @@
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-bronze-dragon.png",
         "background_color": {
-            "light": "#eadebc",
-            "dark": "#4e3b40"
+            "light": "#fcebbb",
+            "dark": "#322630"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -7605,8 +7605,8 @@
         "subtitle": "Gargantuan dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-copper-dragon.png",
         "background_color": {
-            "light": "#f4debd",
-            "dark": "#643d10"
+            "light": "#ecd9bc",
+            "dark": "#442b50"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -7723,8 +7723,8 @@
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-gold-dragon.png",
         "background_color": {
-            "light": "#f0c8b0",
-            "dark": "#562470"
+            "light": "#eed0bf",
+            "dark": "#4b1e50"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -7845,8 +7845,8 @@
         "subtitle": "Gargantuan dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-green-dragon.png",
         "background_color": {
-            "light": "#effcc4",
-            "dark": "#3f5300"
+            "light": "#eef9ca",
+            "dark": "#293540"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -7971,8 +7971,8 @@
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-red-dragon.png",
         "background_color": {
-            "light": "#f5cdc4",
-            "dark": "#621430"
+            "light": "#f0b5a8",
+            "dark": "#42c010"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -8085,8 +8085,8 @@
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-silver-dragon.png",
         "background_color": {
-            "light": "#fde5c1",
-            "dark": "#583630"
+            "light": "#f8e6cb",
+            "dark": "#452b50"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -8201,8 +8201,8 @@
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-white-dragon.png",
         "background_color": {
-            "light": "#f7dfb7",
-            "dark": "#5d3d60"
+            "light": "#f7dbad",
+            "dark": "#3c2750"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -8321,8 +8321,8 @@
         "subtitle": "Gargantuan dragon, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dragon-turtle.png",
         "background_color": {
-            "light": "#ace3f0",
-            "dark": "#704b5b"
+            "light": "#b3dfea",
+            "dark": "#033946"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -8417,8 +8417,8 @@
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-black-dragon.png",
         "background_color": {
-            "light": "#bcf7ed",
-            "dark": "#106656"
+            "light": "#b1e8e0",
+            "dark": "#033e34"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -8531,8 +8531,8 @@
         "subtitle": "Large dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-blue-dragon.png",
         "background_color": {
-            "light": "#a6c8e9",
-            "dark": "#80335d"
+            "light": "#c1ddf8",
+            "dark": "#022140"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -8645,8 +8645,8 @@
         "subtitle": "Large dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-brass-dragon.png",
         "background_color": {
-            "light": "#ebe0af",
-            "dark": "#5a4a20"
+            "light": "#fdf4c9",
+            "dark": "#4b3e30"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -8763,8 +8763,8 @@
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-bronze-dragon.png",
         "background_color": {
-            "light": "#ead9a6",
-            "dark": "#4e3b60"
+            "light": "#eee2c2",
+            "dark": "#2f2320"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -8881,8 +8881,8 @@
         "subtitle": "Large dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-copper-dragon.png",
         "background_color": {
-            "light": "#f3e1c5",
-            "dark": "#623e70"
+            "light": "#f5dbb3",
+            "dark": "#342010"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -8999,8 +8999,8 @@
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-gold-dragon.png",
         "background_color": {
-            "light": "#e9ccbc",
-            "dark": "#5d2430"
+            "light": "#eac2ac",
+            "dark": "#411b50"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -9121,8 +9121,8 @@
         "subtitle": "Large dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-green-dragon.png",
         "background_color": {
-            "light": "#eefcc5",
-            "dark": "#4f6680"
+            "light": "#e0f0af",
+            "dark": "#263040"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -9239,8 +9239,8 @@
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-red-dragon.png",
         "background_color": {
-            "light": "#fdcabf",
-            "dark": "#651650"
+            "light": "#f3ccc4",
+            "dark": "#3ce050"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -9353,8 +9353,8 @@
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-silver-dragon.png",
         "background_color": {
-            "light": "#e9d7bd",
-            "dark": "#593750"
+            "light": "#ebd5b5",
+            "dark": "#422930"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -9469,8 +9469,8 @@
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-white-dragon.png",
         "background_color": {
-            "light": "#f4e1c0",
-            "dark": "#5b3a40"
+            "light": "#fae7c8",
+            "dark": "#392420"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -9589,8 +9589,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/drider.png",
         "background_color": {
-            "light": "#f6cebf",
-            "dark": "#632070"
+            "light": "#f9cbbb",
+            "dark": "#38f000"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -9676,8 +9676,8 @@
         "subtitle": "Medium humanoid(elf), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/drow.png",
         "background_color": {
-            "light": "#b1cced",
-            "dark": "#502f63"
+            "light": "#bad1ed",
+            "dark": "#031832"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -9757,8 +9757,8 @@
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/druid.png",
         "background_color": {
-            "light": "#feded0",
-            "dark": "#531b20"
+            "light": "#f6c7b1",
+            "dark": "#401860"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -9842,8 +9842,8 @@
         "subtitle": "Medium fey, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dryad.png",
         "background_color": {
-            "light": "#f4e4b4",
-            "dark": "#513d50"
+            "light": "#f8e9c0",
+            "dark": "#473530"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -9923,8 +9923,8 @@
         "subtitle": "Medium humanoid(dwarf), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/duergar.png",
         "background_color": {
-            "light": "#c7e2f5",
-            "dark": "#803f66"
+            "light": "#c2dcee",
+            "dark": "#042135"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -10001,8 +10001,8 @@
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dust-mephit.png",
         "background_color": {
-            "light": "#f0e1c2",
-            "dark": "#5b3f20"
+            "light": "#fbe7b9",
+            "dark": "#422f50"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -10098,8 +10098,8 @@
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/eagle.png",
         "background_color": {
-            "light": "#c4f1f1",
-            "dark": "#205959"
+            "light": "#b8f8f8",
+            "dark": "#013333"
         },
         "is_horizontal_image": true,
         "size": "Small",
@@ -10181,8 +10181,8 @@
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/earth-elemental.png",
         "background_color": {
-            "light": "#e8bca5",
-            "dark": "#511e40"
+            "light": "#f7d6c5",
+            "dark": "#391400"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -10290,8 +10290,8 @@
         "subtitle": "Large elemental, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/efreeti.png",
         "background_color": {
-            "light": "#f5aeb7",
-            "dark": "#5310b0"
+            "light": "#eeb1b8",
+            "dark": "#4240c0"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -10386,8 +10386,8 @@
         "subtitle": "Medium monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ettercap.png",
         "background_color": {
-            "light": "#fbb1b9",
-            "dark": "#5f60f0"
+            "light": "#fdc9ce",
+            "dark": "#450070"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -10477,8 +10477,8 @@
         "subtitle": "Large giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ettin.png",
         "background_color": {
-            "light": "#f4d4bc",
-            "dark": "#552870"
+            "light": "#e9c5a9",
+            "dark": "#482360"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -10554,8 +10554,8 @@
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/fire-elemental.png",
         "background_color": {
-            "light": "#efe0b8",
-            "dark": "#634910"
+            "light": "#f7e6b8",
+            "dark": "#4a3870"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -10657,8 +10657,8 @@
         "subtitle": "Huge giant, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/fire-giant.png",
         "background_color": {
-            "light": "#f7d0c1",
-            "dark": "#642060"
+            "light": "#fbc6b2",
+            "dark": "#2ee030"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -10755,8 +10755,8 @@
         "subtitle": "Medium construct, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flesh-golem.png",
         "background_color": {
-            "light": "#ffbfc6",
-            "dark": "#5040d0"
+            "light": "#efc0c5",
+            "dark": "#3a40a0"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -10858,8 +10858,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flying-snake.png",
         "background_color": {
-            "light": "#f6edca",
-            "dark": "#4e3f70"
+            "light": "#f2e5b2",
+            "dark": "#443700"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -10943,8 +10943,8 @@
         "subtitle": "Small construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flying-sword.png",
         "background_color": {
-            "light": "#f5d6c6",
-            "dark": "#642760"
+            "light": "#eec6b1",
+            "dark": "#471c40"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -11036,8 +11036,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/frog.png",
         "background_color": {
-            "light": "#d9f3ae",
-            "dark": "#355330"
+            "light": "#e8fdc4",
+            "dark": "#213500"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -11123,8 +11123,8 @@
         "subtitle": "Huge giant, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/frost-giant.png",
         "background_color": {
-            "light": "#ebd2b5",
-            "dark": "#542e10"
+            "light": "#f3dcbf",
+            "dark": "#402320"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -11221,8 +11221,8 @@
         "subtitle": "Medium elemental, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gargoyle.png",
         "background_color": {
-            "light": "#fecfcf",
-            "dark": "#5c3030"
+            "light": "#e9a9a9",
+            "dark": "#442020"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -11325,8 +11325,8 @@
         "subtitle": "Large ooze, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gelatinous-cube.png",
         "background_color": {
-            "light": "#b6dae8",
-            "dark": "#804a63"
+            "light": "#bedeeb",
+            "dark": "#052937"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -11398,8 +11398,8 @@
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghast.png",
         "background_color": {
-            "light": "#b5e5f6",
-            "dark": "#103b50"
+            "light": "#c3e6f2",
+            "dark": "#012430"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -11476,8 +11476,8 @@
         "subtitle": "Medium undead, any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghost.png",
         "background_color": {
-            "light": "#bceefa",
-            "dark": "#203f4d"
+            "light": "#b9eaf5",
+            "dark": "#05313c"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -11610,8 +11610,8 @@
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghoul.png",
         "background_color": {
-            "light": "#efbcc5",
-            "dark": "#577015"
+            "light": "#f7bec7",
+            "dark": "#2f2090"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -11683,8 +11683,8 @@
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-badger.png",
         "background_color": {
-            "light": "#dfe8a4",
-            "dark": "#455010"
+            "light": "#e2ebb0",
+            "dark": "#363f10"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -11762,8 +11762,8 @@
         "subtitle": "Large beast, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-eagle.png",
         "background_color": {
-            "light": "#d0ffff",
-            "dark": "#605353"
+            "light": "#c8fafa",
+            "dark": "#033535"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -11845,8 +11845,8 @@
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-fire-beetle.png",
         "background_color": {
-            "light": "#f9c4c1",
-            "dark": "#565000"
+            "light": "#f4bebb",
+            "dark": "#3b6030"
         },
         "is_horizontal_image": true,
         "size": "Small",
@@ -11918,8 +11918,8 @@
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-frog.png",
         "background_color": {
-            "light": "#daeeb8",
-            "dark": "#3d5f30"
+            "light": "#eaffc7",
+            "dark": "#314a60"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -12005,8 +12005,8 @@
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-octopus.png",
         "background_color": {
-            "light": "#ebbcb7",
-            "dark": "#58f070"
+            "light": "#f8d0cb",
+            "dark": "#389040"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -12092,8 +12092,8 @@
         "subtitle": "Large beast, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-owl.png",
         "background_color": {
-            "light": "#f7eab9",
-            "dark": "#4e3f20"
+            "light": "#fdf3cc",
+            "dark": "#2f2500"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -12179,8 +12179,8 @@
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-rat.png",
         "background_color": {
-            "light": "#e8d7ba",
-            "dark": "#5c3b30"
+            "light": "#f8ddb1",
+            "dark": "#301f40"
         },
         "is_horizontal_image": true,
         "size": "Small",
@@ -12252,8 +12252,8 @@
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-spider.png",
         "background_color": {
-            "light": "#f4bbd4",
-            "dark": "#517028"
+            "light": "#f5b5d2",
+            "dark": "#3c301c"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -12335,8 +12335,8 @@
         "subtitle": "Medium aberration, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gibbering-mouther.png",
         "background_color": {
-            "light": "#fdc9e5",
-            "dark": "#614036"
+            "light": "#ebb3d1",
+            "dark": "#36201e"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -12414,8 +12414,8 @@
         "subtitle": "Medium humanoid(gnoll), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gnoll.png",
         "background_color": {
-            "light": "#fbdab9",
-            "dark": "#663660"
+            "light": "#f1d4b6",
+            "dark": "#482520"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -12487,8 +12487,8 @@
         "subtitle": "Small humanoid(goblinoid), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/goblin.png",
         "background_color": {
-            "light": "#f0c2c9",
-            "dark": "#635014"
+            "light": "#ebbec6",
+            "dark": "#4a5010"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -12564,8 +12564,8 @@
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gold-dragon-wyrmling.png",
         "background_color": {
-            "light": "#f6cbb2",
-            "dark": "#532140"
+            "light": "#f3cbb4",
+            "dark": "#361630"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -12678,8 +12678,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gorgon.png",
         "background_color": {
-            "light": "#e6ebbe",
-            "dark": "#464f40"
+            "light": "#ecf4b0",
+            "dark": "#363d40"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -12755,8 +12755,8 @@
         "subtitle": "Medium dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/green-dragon-wyrmling.png",
         "background_color": {
-            "light": "#dceaae",
-            "dark": "#495e60"
+            "light": "#eefaca",
+            "dark": "#394950"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -12869,8 +12869,8 @@
         "subtitle": "Medium fey, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/green-hag.png",
         "background_color": {
-            "light": "#fdd1bb",
-            "dark": "#531d00"
+            "light": "#fed6c1",
+            "dark": "#4c1d50"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -12958,8 +12958,8 @@
         "subtitle": "Medium monstrosity, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/grick.png",
         "background_color": {
-            "light": "#f6cdb9",
-            "dark": "#5d2020"
+            "light": "#f9d9c9",
+            "dark": "#301340"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -13057,8 +13057,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/griffon.png",
         "background_color": {
-            "light": "#f6dcb7",
-            "dark": "#502f10"
+            "light": "#ecd7b9",
+            "dark": "#3e2640"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -13140,8 +13140,8 @@
         "subtitle": "Medium humanoid(grimlock), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/grimlock.png",
         "background_color": {
-            "light": "#fbc9b4",
-            "dark": "#591b10"
+            "light": "#f4d2c4",
+            "dark": "#331020"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -13225,8 +13225,8 @@
         "subtitle": "Large monstrosity, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/guardian-naga.png",
         "background_color": {
-            "light": "#f6d9ae",
-            "dark": "#613c60"
+            "light": "#f4e2c8",
+            "dark": "#4b2e30"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -13323,8 +13323,8 @@
         "subtitle": "Large monstrosity, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gynosphinx.png",
         "background_color": {
-            "light": "#f9d5bd",
-            "dark": "#5c2850"
+            "light": "#fbdac4",
+            "dark": "#3c1a30"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -13443,8 +13443,8 @@
         "subtitle": "Medium humanoid(human), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/half-red-dragon-veteran.png",
         "background_color": {
-            "light": "#fadab7",
-            "dark": "#633780"
+            "light": "#eccba6",
+            "dark": "#422440"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -13521,8 +13521,8 @@
         "subtitle": "Medium monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/harpy.png",
         "background_color": {
-            "light": "#d4c1f8",
-            "dark": "#1e1057"
+            "light": "#cebbf4",
+            "dark": "#15203a"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -13600,8 +13600,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hawk.png",
         "background_color": {
-            "light": "#f7b3b4",
-            "dark": "#531020"
+            "light": "#ecacad",
+            "dark": "#321020"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -13683,8 +13683,8 @@
         "subtitle": "Medium fiend, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hell-hound.png",
         "background_color": {
-            "light": "#eabfb6",
-            "dark": "#511470"
+            "light": "#f1bcb1",
+            "dark": "#37b020"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -13765,8 +13765,8 @@
         "subtitle": "Huge giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hill-giant.png",
         "background_color": {
-            "light": "#fad9b6",
-            "dark": "#532e60"
+            "light": "#fbd8b0",
+            "dark": "#3c1f00"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -13842,8 +13842,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hippogriff.png",
         "background_color": {
-            "light": "#f1d9ab",
-            "dark": "#563a00"
+            "light": "#fee5b2",
+            "dark": "#352550"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -13925,8 +13925,8 @@
         "subtitle": "Medium humanoid(goblinoid), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hobgoblin.png",
         "background_color": {
-            "light": "#f7c3d8",
-            "dark": "#4d3020"
+            "light": "#f6c0d5",
+            "dark": "#45201c"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -13998,8 +13998,8 @@
         "subtitle": "Tiny construct, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/homunculus.png",
         "background_color": {
-            "light": "#ecc4b4",
-            "dark": "#4e1a40"
+            "light": "#f9d0bf",
+            "dark": "#3a1440"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -14082,8 +14082,8 @@
         "subtitle": "Huge monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hydra.png",
         "background_color": {
-            "light": "#f0d3b8",
-            "dark": "#5f3180"
+            "light": "#e9cfb9",
+            "dark": "#321920"
         },
         "is_horizontal_image": true,
         "size": "Huge",
@@ -14165,8 +14165,8 @@
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hyena.png",
         "background_color": {
-            "light": "#aff7ea",
-            "dark": "#305143"
+            "light": "#aeefe4",
+            "dark": "#023f34"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -14242,8 +14242,8 @@
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ice-mephit.png",
         "background_color": {
-            "light": "#f4bbb4",
-            "dark": "#64d020"
+            "light": "#f5c0b9",
+            "dark": "#318020"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -14349,8 +14349,8 @@
         "subtitle": "Medium elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/invisible-stalker.png",
         "background_color": {
-            "light": "#eccac1",
-            "dark": "#4e1110"
+            "light": "#f3cabf",
+            "dark": "#481240"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -14461,8 +14461,8 @@
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/iron-golem.png",
         "background_color": {
-            "light": "#ffc9e0",
-            "dark": "#64302d"
+            "light": "#f7bcd6",
+            "dark": "#41101c"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -14569,8 +14569,8 @@
         "subtitle": "Small humanoid(kobold), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/kobold.png",
         "background_color": {
-            "light": "#fedecf",
-            "dark": "#622380"
+            "light": "#eec6b5",
+            "dark": "#411510"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -14642,8 +14642,8 @@
         "subtitle": "Gargantuan monstrosity(titan), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/kraken.png",
         "background_color": {
-            "light": "#f2cabc",
-            "dark": "#501710"
+            "light": "#f9cab9",
+            "dark": "#351010"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -14766,8 +14766,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lamia.png",
         "background_color": {
-            "light": "#edc2ba",
-            "dark": "#53e010"
+            "light": "#edc7c0",
+            "dark": "#49d010"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -14851,8 +14851,8 @@
         "subtitle": "Medium undead, any evil alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lich.png",
         "background_color": {
-            "light": "#f0cfbd",
-            "dark": "#5e2100"
+            "light": "#f5cbb5",
+            "dark": "#311220"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -14992,8 +14992,8 @@
         "subtitle": "Medium humanoid(lizardfolk), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lizardfolk.png",
         "background_color": {
-            "light": "#d2f2bf",
-            "dark": "#225530"
+            "light": "#cff0bb",
+            "dark": "#163340"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -15083,8 +15083,8 @@
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/magma-mephit.png",
         "background_color": {
-            "light": "#f7d4b5",
-            "dark": "#502960"
+            "light": "#f2d7bf",
+            "dark": "#311930"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -15181,8 +15181,8 @@
         "subtitle": "Small elemental, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/magmin.png",
         "background_color": {
-            "light": "#f6bdbb",
-            "dark": "#5c2000"
+            "light": "#fdcdcc",
+            "dark": "#406040"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -15279,8 +15279,8 @@
         "subtitle": "Large monstrosity, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/manticore.png",
         "background_color": {
-            "light": "#fee8cf",
-            "dark": "#5f3580"
+            "light": "#f1d5b6",
+            "dark": "#361d30"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -15358,8 +15358,8 @@
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mastiff.png",
         "background_color": {
-            "light": "#f3bdb7",
-            "dark": "#55f070"
+            "light": "#fdcac4",
+            "dark": "#3d9040"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -15435,8 +15435,8 @@
         "subtitle": "Medium monstrosity, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/medusa.png",
         "background_color": {
-            "light": "#f1abab",
-            "dark": "#603030"
+            "light": "#f6c1c1",
+            "dark": "#3a3030"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -15524,8 +15524,8 @@
         "subtitle": "Medium humanoid(merfolk), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/merfolk.png",
         "background_color": {
-            "light": "#c3ecf0",
-            "dark": "#20464e"
+            "light": "#b1ebf2",
+            "dark": "#01444b"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -15607,8 +15607,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/merrow.png",
         "background_color": {
-            "light": "#efd7b7",
-            "dark": "#633a10"
+            "light": "#efd1a8",
+            "dark": "#452800"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -15686,8 +15686,8 @@
         "subtitle": "Medium monstrosity(shapechanger), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mimic.png",
         "background_color": {
-            "light": "#f5b1c2",
-            "dark": "#571015"
+            "light": "#fdb8c8",
+            "dark": "#4b6016"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -15768,8 +15768,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/minotaur.png",
         "background_color": {
-            "light": "#f1bbaa",
-            "dark": "#5c1820"
+            "light": "#f8c0af",
+            "dark": "#451440"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -15845,8 +15845,8 @@
         "subtitle": "Large undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/minotaur-skeleton.png",
         "background_color": {
-            "light": "#eccfa9",
-            "dark": "#563480"
+            "light": "#f0d1a8",
+            "dark": "#402510"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -15928,8 +15928,8 @@
         "subtitle": "Medium undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mummy.png",
         "background_color": {
-            "light": "#eba5a5",
-            "dark": "#504040"
+            "light": "#efb7b7",
+            "dark": "#4a5050"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -16040,8 +16040,8 @@
         "subtitle": "Medium fiend, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/night-hag.png",
         "background_color": {
-            "light": "#cfc5f7",
-            "dark": "#18705f"
+            "light": "#c3b7f6",
+            "dark": "#0c1039"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -16159,8 +16159,8 @@
         "subtitle": "Large fiend, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nightmare.png",
         "background_color": {
-            "light": "#fbd4c9",
-            "dark": "#651940"
+            "light": "#f3c0b1",
+            "dark": "#431020"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -16243,8 +16243,8 @@
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/noble.png",
         "background_color": {
-            "light": "#f5d4c9",
-            "dark": "#5f1920"
+            "light": "#efc9bd",
+            "dark": "#371030"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -16328,8 +16328,8 @@
         "subtitle": "Large ooze, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ochre-jelly.png",
         "background_color": {
-            "light": "#f6c9b4",
-            "dark": "#541d30"
+            "light": "#f1c3ae",
+            "dark": "#441950"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -16422,8 +16422,8 @@
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/octopus.png",
         "background_color": {
-            "light": "#f5ccc7",
-            "dark": "#5d1180"
+            "light": "#eeb2ab",
+            "dark": "#2f6010"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -16509,8 +16509,8 @@
         "subtitle": "Large giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ogre.png",
         "background_color": {
-            "light": "#fee5b9",
-            "dark": "#503570"
+            "light": "#f2dbb3",
+            "dark": "#3e2940"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -16582,8 +16582,8 @@
         "subtitle": "Large undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ogre-zombie.png",
         "background_color": {
-            "light": "#f5d7be",
-            "dark": "#522850"
+            "light": "#fed7b7",
+            "dark": "#4c2430"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -16664,8 +16664,8 @@
         "subtitle": "Large giant, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/oni.png",
         "background_color": {
-            "light": "#cffafd",
-            "dark": "#505d64"
+            "light": "#bafaff",
+            "dark": "#022d30"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -16771,8 +16771,8 @@
         "subtitle": "Medium humanoid(orc), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/orc.png",
         "background_color": {
-            "light": "#f9ceb3",
-            "dark": "#612850"
+            "light": "#f6d7c4",
+            "dark": "#3a1940"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -16848,8 +16848,8 @@
         "subtitle": "Large aberration, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/otyugh.png",
         "background_color": {
-            "light": "#f2b4b7",
-            "dark": "#502060"
+            "light": "#f7b7bb",
+            "dark": "#312050"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -16925,8 +16925,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/owl.png",
         "background_color": {
-            "light": "#f1e6bc",
-            "dark": "#504150"
+            "light": "#e9ddb0",
+            "dark": "#392d10"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -17012,8 +17012,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/owlbear.png",
         "background_color": {
-            "light": "#ebacb5",
-            "dark": "#4d10b0"
+            "light": "#ecbdc4",
+            "dark": "#311080"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -17089,8 +17089,8 @@
         "subtitle": "Large celestial, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pegasus.png",
         "background_color": {
-            "light": "#b0e0f5",
-            "dark": "#103b55"
+            "light": "#b4e6fb",
+            "dark": "#02293a"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -17184,8 +17184,8 @@
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/phase-spider.png",
         "background_color": {
-            "light": "#b1dcf2",
-            "dark": "#204466"
+            "light": "#bde2f5",
+            "dark": "#04273a"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -17267,8 +17267,8 @@
         "subtitle": "Large celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/planetar.png",
         "background_color": {
-            "light": "#b5edda",
-            "dark": "#604e35"
+            "light": "#bcefde",
+            "dark": "#003825"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -17387,8 +17387,8 @@
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/plesiosaurus.png",
         "background_color": {
-            "light": "#bae0f5",
-            "dark": "#103450"
+            "light": "#aedbf4",
+            "dark": "#012133"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -17474,8 +17474,8 @@
         "subtitle": "Tiny dragon, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pseudodragon.png",
         "background_color": {
-            "light": "#edcca6",
-            "dark": "#563280"
+            "light": "#f3ddc3",
+            "dark": "#492a60"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -17561,8 +17561,8 @@
         "subtitle": "Gargantuan monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/purple-worm.png",
         "background_color": {
-            "light": "#f5e2b9",
-            "dark": "#634680"
+            "light": "#f9e2b0",
+            "dark": "#332300"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -17648,8 +17648,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/quipper.png",
         "background_color": {
-            "light": "#f2d1c1",
-            "dark": "#4d1e60"
+            "light": "#f8d2bf",
+            "dark": "#371430"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -17721,8 +17721,8 @@
         "subtitle": "Medium fiend, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rakshasa.png",
         "background_color": {
-            "light": "#e9bda7",
-            "dark": "#4d1d40"
+            "light": "#edcfc0",
+            "dark": "#2e1010"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -17832,8 +17832,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rat.png",
         "background_color": {
-            "light": "#f6e4c5",
-            "dark": "#563620"
+            "light": "#fae1b7",
+            "dark": "#402940"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -17905,8 +17905,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/raven.png",
         "background_color": {
-            "light": "#c2f5de",
-            "dark": "#605733"
+            "light": "#cffee9",
+            "dark": "#032f1b"
         },
         "is_horizontal_image": false,
         "size": "Tiny",
@@ -17988,8 +17988,8 @@
         "subtitle": "Medium dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/red-dragon-wyrmling.png",
         "background_color": {
-            "light": "#f1c1b7",
-            "dark": "#501370"
+            "light": "#fecfc5",
+            "dark": "#39c030"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -18102,8 +18102,8 @@
         "subtitle": "Huge monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/remorhaz.png",
         "background_color": {
-            "light": "#aeeaf3",
-            "dark": "#305763"
+            "light": "#bdf2fb",
+            "dark": "#043e47"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -18191,8 +18191,8 @@
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/riding-horse.png",
         "background_color": {
-            "light": "#bdf1e3",
-            "dark": "#20503c"
+            "light": "#c1f1e5",
+            "dark": "#042e23"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -18264,8 +18264,8 @@
         "subtitle": "Gargantuan monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/roc.png",
         "background_color": {
-            "light": "#f8c5b9",
-            "dark": "#611a90"
+            "light": "#f4cec5",
+            "dark": "#481030"
         },
         "is_horizontal_image": true,
         "size": "Gargantuan",
@@ -18363,8 +18363,8 @@
         "subtitle": "Large monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/roper.png",
         "background_color": {
-            "light": "#fac7bd",
-            "dark": "#541030"
+            "light": "#f5c5bc",
+            "dark": "#47e030"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -18450,8 +18450,8 @@
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rug-of-smothering.png",
         "background_color": {
-            "light": "#f6beb0",
-            "dark": "#4d1460"
+            "light": "#fac9bd",
+            "dark": "#43f020"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -18533,8 +18533,8 @@
         "subtitle": "Medium monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rust-monster.png",
         "background_color": {
-            "light": "#f2d0b0",
-            "dark": "#643110"
+            "light": "#e9c5a3",
+            "dark": "#321a40"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -18606,8 +18606,8 @@
         "subtitle": "Medium humanoid(sahuagin), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sahuagin.png",
         "background_color": {
-            "light": "#eabdda",
-            "dark": "#643040"
+            "light": "#fbcae9",
+            "dark": "#47402e"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -18689,8 +18689,8 @@
         "subtitle": "Large elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/salamander.png",
         "background_color": {
-            "light": "#edc2d0",
-            "dark": "#5b7023"
+            "light": "#efb3c7",
+            "dark": "#4b401b"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -18792,8 +18792,8 @@
         "subtitle": "Medium fey, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/satyr.png",
         "background_color": {
-            "light": "#ecd6bb",
-            "dark": "#663930"
+            "light": "#f4d5b0",
+            "dark": "#311b00"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -18877,8 +18877,8 @@
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/scout.png",
         "background_color": {
-            "light": "#f3d4bf",
-            "dark": "#5a2510"
+            "light": "#fbd2b6",
+            "dark": "#3a1940"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -18966,8 +18966,8 @@
         "subtitle": "Medium fey, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sea-hag.png",
         "background_color": {
-            "light": "#aaf1d1",
-            "dark": "#006035"
+            "light": "#afe9cf",
+            "dark": "#04482a"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19045,8 +19045,8 @@
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shadow.png",
         "background_color": {
-            "light": "#fdd7b9",
-            "dark": "#502650"
+            "light": "#eac7ac",
+            "dark": "#311720"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19182,8 +19182,8 @@
         "subtitle": "Large plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shambling-mound.png",
         "background_color": {
-            "light": "#c8fae0",
-            "dark": "#504e28"
+            "light": "#c4f4db",
+            "dark": "#02371b"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -19280,8 +19280,8 @@
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shield-guardian.png",
         "background_color": {
-            "light": "#e9b2ac",
-            "dark": "#51d050"
+            "light": "#fbc4be",
+            "dark": "#337020"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -19358,8 +19358,8 @@
         "subtitle": "Medium plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shrieker.png",
         "background_color": {
-            "light": "#c0e0f2",
-            "dark": "#503854"
+            "light": "#bee1f4",
+            "dark": "#022030"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19431,8 +19431,8 @@
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/silver-dragon-wyrmling.png",
         "background_color": {
-            "light": "#fde4bf",
-            "dark": "#603c60"
+            "light": "#f3dab5",
+            "dark": "#372120"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19539,8 +19539,8 @@
         "subtitle": "Medium undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/skeleton.png",
         "background_color": {
-            "light": "#efdcbf",
-            "dark": "#543220"
+            "light": "#f4dbb7",
+            "dark": "#422940"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19617,8 +19617,8 @@
         "subtitle": "Large celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/solar.png",
         "background_color": {
-            "light": "#edd4b4",
-            "dark": "#512e10"
+            "light": "#e9d5bc",
+            "dark": "#301b10"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -19747,8 +19747,8 @@
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/specter.png",
         "background_color": {
-            "light": "#ebc9f6",
-            "dark": "#45405b"
+            "light": "#dcabec",
+            "dark": "#251032"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -19881,8 +19881,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/spider.png",
         "background_color": {
-            "light": "#f6d0c6",
-            "dark": "#551540"
+            "light": "#fdd4c9",
+            "dark": "#411030"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -19964,8 +19964,8 @@
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/spirit-naga.png",
         "background_color": {
-            "light": "#f6b9bc",
-            "dark": "#5660a0"
+            "light": "#fdbbbe",
+            "dark": "#330030"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -20058,8 +20058,8 @@
         "subtitle": "Tiny fey, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sprite.png",
         "background_color": {
-            "light": "#f9cfc2",
-            "dark": "#581850"
+            "light": "#ebc5b9",
+            "dark": "#3c1140"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -20145,8 +20145,8 @@
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/steam-mephit.png",
         "background_color": {
-            "light": "#e9a8a4",
-            "dark": "#5ed080"
+            "light": "#fcc0bd",
+            "dark": "#4b6020"
         },
         "is_horizontal_image": false,
         "size": "Small",
@@ -20234,8 +20234,8 @@
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stirge.png",
         "background_color": {
-            "light": "#f6cabf",
-            "dark": "#4e1350"
+            "light": "#f3c7bd",
+            "dark": "#3cc010"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -20313,8 +20313,8 @@
         "subtitle": "Huge giant, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stone-giant.png",
         "background_color": {
-            "light": "#f3dcc6",
-            "dark": "#4e2610"
+            "light": "#fce4cd",
+            "dark": "#2f1830"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -20406,8 +20406,8 @@
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stone-golem.png",
         "background_color": {
-            "light": "#b6f3d0",
-            "dark": "#205324"
+            "light": "#b9f2d1",
+            "dark": "#053a1b"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -20509,8 +20509,8 @@
         "subtitle": "Huge giant, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/storm-giant.png",
         "background_color": {
-            "light": "#faebc4",
-            "dark": "#604660"
+            "light": "#f9ecca",
+            "dark": "#3a2a20"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -20635,8 +20635,8 @@
         "subtitle": "Gargantuan monstrosity(titan), unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tarrasque.png",
         "background_color": {
-            "light": "#f3d4c0",
-            "dark": "#562440"
+            "light": "#fcdbc6",
+            "dark": "#331400"
         },
         "is_horizontal_image": false,
         "size": "Gargantuan",
@@ -20750,8 +20750,8 @@
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/thug.png",
         "background_color": {
-            "light": "#f5ccba",
-            "dark": "#572070"
+            "light": "#f7cdbb",
+            "dark": "#4c1800"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -20827,8 +20827,8 @@
         "subtitle": "Huge plant, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/treant.png",
         "background_color": {
-            "light": "#eaf3bc",
-            "dark": "#505c70"
+            "light": "#eaf5ad",
+            "dark": "#3d4760"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -20915,8 +20915,8 @@
         "subtitle": "Large giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/troll.png",
         "background_color": {
-            "light": "#c8e5fc",
-            "dark": "#302d4e"
+            "light": "#c7e0f4",
+            "dark": "#062b47"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -20992,8 +20992,8 @@
         "subtitle": "Huge beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tyrannosaurus-rex.png",
         "background_color": {
-            "light": "#c2f9fc",
-            "dark": "#805a5f"
+            "light": "#cbf9fb",
+            "dark": "#023537"
         },
         "is_horizontal_image": false,
         "size": "Huge",
@@ -21069,8 +21069,8 @@
         "subtitle": "Large celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/unicorn.png",
         "background_color": {
-            "light": "#f5adaf",
-            "dark": "#582040"
+            "light": "#febbbd",
+            "dark": "#3f0020"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -21147,8 +21147,8 @@
         "subtitle": "Medium undead(shapechanger), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vampire.png",
         "background_color": {
-            "light": "#ecadbb",
-            "dark": "#580014"
+            "light": "#fbb2c2",
+            "dark": "#3800d0"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -21265,8 +21265,8 @@
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vampire-spawn.png",
         "background_color": {
-            "light": "#f5bfba",
-            "dark": "#58d060"
+            "light": "#ecb6b2",
+            "dark": "#378040"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -21379,8 +21379,8 @@
         "subtitle": "Medium plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/violet-fungus.png",
         "background_color": {
-            "light": "#f3e1c3",
-            "dark": "#634080"
+            "light": "#f4ddb7",
+            "dark": "#462c10"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -21452,8 +21452,8 @@
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/water-elemental.png",
         "background_color": {
-            "light": "#baf1fc",
-            "dark": "#50424e"
+            "light": "#c6eff7",
+            "dark": "#05404c"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -21561,8 +21561,8 @@
         "subtitle": "Medium dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/white-dragon-wyrmling.png",
         "background_color": {
-            "light": "#ecd9b9",
-            "dark": "#573960"
+            "light": "#eddbbd",
+            "dark": "#482f60"
         },
         "is_horizontal_image": true,
         "size": "Medium",
@@ -21681,8 +21681,8 @@
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wight.png",
         "background_color": {
-            "light": "#afe8f5",
-            "dark": "#304553"
+            "light": "#abdee9",
+            "dark": "#01333e"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -21792,8 +21792,8 @@
         "subtitle": "Tiny undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/will-o-wisp.png",
         "background_color": {
-            "light": "#b5fbe3",
-            "dark": "#604f36"
+            "light": "#bcebdb",
+            "dark": "#023222"
         },
         "is_horizontal_image": true,
         "size": "Tiny",
@@ -21926,8 +21926,8 @@
         "subtitle": "Large monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/winter-wolf.png",
         "background_color": {
-            "light": "#b0d3ed",
-            "dark": "#103358"
+            "light": "#b5defb",
+            "dark": "#031f34"
         },
         "is_horizontal_image": false,
         "size": "Large",
@@ -22012,8 +22012,8 @@
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wolf.png",
         "background_color": {
-            "light": "#f0c9c1",
-            "dark": "#5c1770"
+            "light": "#edb6a9",
+            "dark": "#40f040"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -22093,8 +22093,8 @@
         "subtitle": "Large monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/worg.png",
         "background_color": {
-            "light": "#f3bcb5",
-            "dark": "#5c1080"
+            "light": "#ebb4ad",
+            "dark": "#376000"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -22170,8 +22170,8 @@
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wraith.png",
         "background_color": {
-            "light": "#b2d8f6",
-            "dark": "#003056"
+            "light": "#bee1fc",
+            "dark": "#072d4c"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -22304,8 +22304,8 @@
         "subtitle": "Large dragon, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wyvern.png",
         "background_color": {
-            "light": "#e9cbba",
-            "dark": "#592250"
+            "light": "#f0cfbd",
+            "dark": "#3c1510"
         },
         "is_horizontal_image": true,
         "size": "Large",
@@ -22387,8 +22387,8 @@
         "subtitle": "Medium elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/xorn.png",
         "background_color": {
-            "light": "#eabcb3",
-            "dark": "#601240"
+            "light": "#ecc0b8",
+            "dark": "#40c030"
         },
         "is_horizontal_image": false,
         "size": "Medium",
@@ -22489,8 +22489,8 @@
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/zombie.png",
         "background_color": {
-            "light": "#efc3ba",
-            "dark": "#5d1570"
+            "light": "#f3c0b6",
+            "dark": "#3ad040"
         },
         "is_horizontal_image": false,
         "size": "Medium",
