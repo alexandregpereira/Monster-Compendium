@@ -21,6 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okhttp3.Call
 import okhttp3.Callback
@@ -44,7 +45,7 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map 
         backgroundColor = imageData.backgroundColor,
         isHorizontalImage = imageData.isHorizontalImage
     )
-}
+}.catch {}
 
 @ExperimentalCoroutinesApi
 fun downloadImage(imageUrl: String): Flow<InputStream> = callbackFlow {
