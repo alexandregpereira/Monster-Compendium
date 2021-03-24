@@ -53,21 +53,8 @@ suspend fun main() = start {
 }
 
 private fun saveImage(fileName: String, inputStream: InputStream) {
+    val bufferedImage = inputStream.getBufferedImage()?.removeWhiteBackgroundColor() ?: return
     println("File name: $fileName")
-
-    val out = ByteArrayOutputStream()
-    val buf = ByteArray(1024)
-    var n: Int
-    while (-1 != inputStream.read(buf).also { n = it }) {
-        out.write(buf, 0, n)
-    }
-    out.close()
-    inputStream.close()
-    val response: ByteArray = out.toByteArray()
-
     val targetFile = File("images/$fileName.png")
-    val outStream: OutputStream = FileOutputStream(targetFile)
-    outStream.write(response)
-    outStream.close()
-    inputStream.close()
+    ImageIO.write(bufferedImage, "PNG", targetFile)
 }

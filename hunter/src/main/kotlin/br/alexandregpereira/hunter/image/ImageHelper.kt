@@ -81,22 +81,26 @@ fun downloadImage(imageUrl: String): Flow<InputStream> = callbackFlow {
 }
 
 fun getImageData(inputStream: InputStream): ImageData {
-    val imageInputStream = ImageIO.createImageInputStream(inputStream)
-    val iter: Iterator<*> = ImageIO.getImageReaders(imageInputStream)
-
-    if (!iter.hasNext()) {
-        return ImageData()
-    }
-    val imageReader: ImageReader = iter.next() as ImageReader
-    imageReader.input = imageInputStream
-    val image: BufferedImage = imageReader.read(0)
+    val image: BufferedImage = inputStream.getBufferedImage() ?: return ImageData()
 
     return ImageData(
         image.getMostCommonColour(),
         image.isHorizontalImage()
     ).apply {
-        imageInputStream.close()
+        inputStream.close()
     }
+}
+
+fun InputStream.getBufferedImage(): BufferedImage? {
+    val imageInputStream = ImageIO.createImageInputStream(this)
+    val iter: Iterator<*> = ImageIO.getImageReaders(imageInputStream)
+
+    if (!iter.hasNext()) {
+        return null
+    }
+    val imageReader: ImageReader = iter.next() as ImageReader
+    imageReader.input = imageInputStream
+    return imageReader.read(0)
 }
 
 fun BufferedImage.isHorizontalImage(): Boolean {
@@ -152,8 +156,35 @@ fun isGray(rgbArr: IntArray): Boolean {
     val rbDiff = rgbArr[0] - rgbArr[2]
     // Filter out black, white and grays...... (tolerance within 10 pixels)
     val tolerance = 10
-    if (rgDiff > tolerance || rgDiff < -tolerance) if (rbDiff > tolerance || rbDiff < -tolerance) {
-        return false
+    if (rgDiff > tolerance || rgDiff < -tolerance) {
+        if (rbDiff > tolerance || rbDiff < -tolerance) {
+            return false
+        }
     }
     return true
+}
+
+fun isWhite(rgbArr: IntArray): Boolean {
+    return rgbArr[0] in 240..255 && rgbArr[1] in 240..255 && rgbArr[2] in 240..255
+}
+
+fun BufferedImage.removeWhiteBackgroundColor(): BufferedImage {
+    val color = Color(255, 255, 255, 255)
+    var count = 0
+    var countNot = 0
+    val bi = BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB)
+    for (x in 0 until this.width) {
+        for (y in 0 until this.height) {
+            val rgba = this.getRGB(x, y)
+            val rgbArr = getRGBArr(rgba)
+            if (isWhite(rgbArr)) {
+                bi.setRGB(x, y, color.rgb and 0x00ffffff)
+                count++
+            } else {
+                countNot++
+                bi.setRGB(x, y, rgba)
+            }
+        }
+    }
+    return bi
 }
