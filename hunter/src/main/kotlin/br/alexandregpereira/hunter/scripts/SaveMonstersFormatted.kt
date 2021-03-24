@@ -41,7 +41,7 @@ import kotlinx.serialization.decodeFromString
 import java.util.Locale
 
 private const val GITHUB_IMAGE_HOST =
-    "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images"
+    "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images"
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -97,8 +97,7 @@ private fun Monster.formatSubtitle(): String {
 }
 
 private fun Monster.getImageUrl(): String {
-    val imageName = getId()
-    return "$GITHUB_IMAGE_HOST/$imageName.png"
+    return "$GITHUB_IMAGE_HOST/$index.png"
 }
 
 private fun Monster.getId(): String {
