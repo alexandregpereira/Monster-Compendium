@@ -35,6 +35,7 @@ import java.io.InputStream
 import java.util.LinkedList
 import javax.imageio.ImageIO
 import javax.imageio.ImageReader
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map { inputStream ->
@@ -133,7 +134,13 @@ fun getMostCommonColour(map: Map<Int, Int>): String {
     val bestPixel = list[list.size / 4].key
     val rgb = getRGBArr(bestPixel)
     val hsb = Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null)
-    val newRgbColor = Color(Color.HSBtoRGB(hsb[0], 0.4f, 1.0f))
+    val newRgbColor = Color(
+        Color.HSBtoRGB(
+            hsb[0],
+            Random.nextDouble(0.2, 0.4).toFloat(),
+            Random.nextDouble(0.91, 1.0).toFloat()
+        )
+    )
     return "#" +
             Integer.toHexString(newRgbColor.red).normalizeHex() +
             Integer.toHexString(newRgbColor.green).normalizeHex() +

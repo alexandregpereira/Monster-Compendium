@@ -8,7 +8,7 @@
         "name": "Aboleth",
         "subtitle": "Large aberration, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/aboleth.png",
-        "background_color": "#99ffeb",
+        "background_color": "#bcf5ea",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -104,7 +104,7 @@
         "name": "Air Elemental",
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/air-elemental.png",
-        "background_color": "#99b9ff",
+        "background_color": "#b8cbf4",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral",
@@ -209,7 +209,7 @@
         "name": "Androsphinx",
         "subtitle": "Large monstrosity, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/androsphinx.png",
-        "background_color": "#ffb999",
+        "background_color": "#f0c0a9",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful neutral",
@@ -338,7 +338,7 @@
         "name": "Animated Armor",
         "subtitle": "Medium construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/animated-armor.png",
-        "background_color": "#ff99b3",
+        "background_color": "#fda1b9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -418,7 +418,7 @@
         "name": "Ankheg",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ankheg.png",
-        "background_color": "#dcff99",
+        "background_color": "#d3f09c",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -494,7 +494,7 @@
         "name": "Archmage",
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/archmage.png",
-        "background_color": "#ffc399",
+        "background_color": "#ebc6ad",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any alignment",
@@ -650,7 +650,7 @@
         "name": "Assassin",
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/assassin.png",
-        "background_color": "#99faff",
+        "background_color": "#aee5e8",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "any non-good alignment",
@@ -749,7 +749,7 @@
         "name": "Azer",
         "subtitle": "Medium elemental, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/azer.png",
-        "background_color": "#ffe799",
+        "background_color": "#ebd99e",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful neutral",
@@ -833,7 +833,7 @@
         "name": "Badger",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/badger.png",
-        "background_color": "#f0ff99",
+        "background_color": "#f3fcc0",
         "is_horizontal_image": false,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -909,7 +909,7 @@
         "name": "Bandit Captain",
         "subtitle": "Medium humanoid(any race), any non-lawful alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bandit-captain.png",
-        "background_color": "#ffcc99",
+        "background_color": "#fdddbd",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any non-lawful alignment",
@@ -999,7 +999,7 @@
         "name": "Basilisk",
         "subtitle": "Medium monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/basilisk.png",
-        "background_color": "#99e8ff",
+        "background_color": "#aae5f6",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "unaligned",
@@ -1069,7 +1069,7 @@
         "name": "Bat",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bat.png",
-        "background_color": "#ffd399",
+        "background_color": "#fbd4a0",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -1145,7 +1145,7 @@
         "name": "Behir",
         "subtitle": "Huge monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/behir.png",
-        "background_color": "#99ddff",
+        "background_color": "#bddff1",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "neutral evil",
@@ -1234,7 +1234,7 @@
         "name": "Black Dragon Wyrmling",
         "subtitle": "Medium dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/black-dragon-wyrmling.png",
-        "background_color": "#ffd799",
+        "background_color": "#feeaca",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -1345,7 +1345,7 @@
         "name": "Black Pudding",
         "subtitle": "Large ooze, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/black-pudding.png",
-        "background_color": "#ffb399",
+        "background_color": "#f2bdab",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -1441,7 +1441,7 @@
         "name": "Blink Dog",
         "subtitle": "Medium fey, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/blink-dog.png",
-        "background_color": "#99f9ff",
+        "background_color": "#aee7ea",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful good",
@@ -1519,7 +1519,7 @@
         "name": "Blue Dragon Wyrmling",
         "subtitle": "Medium dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/blue-dragon-wyrmling.png",
-        "background_color": "#99cdff",
+        "background_color": "#aad1f7",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -1630,7 +1630,7 @@
         "name": "Brass Dragon Wyrmling",
         "subtitle": "Medium dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/brass-dragon-wyrmling.png",
-        "background_color": "#ffed99",
+        "background_color": "#eee5b7",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "chaotic good",
@@ -1741,7 +1741,7 @@
         "name": "Bronze Dragon Wyrmling",
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bronze-dragon-wyrmling.png",
-        "background_color": "#ffd099",
+        "background_color": "#fbd9b1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful good",
@@ -1852,7 +1852,7 @@
         "name": "Bugbear",
         "subtitle": "Medium humanoid(goblinoid), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bugbear.png",
-        "background_color": "#ffc699",
+        "background_color": "#f3d5be",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -1930,7 +1930,7 @@
         "name": "Bulette",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bulette.png",
-        "background_color": "#ffd899",
+        "background_color": "#fde7c4",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "unaligned",
@@ -2010,7 +2010,7 @@
         "name": "Centaur",
         "subtitle": "Large monstrosity, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/centaur.png",
-        "background_color": "#ffca99",
+        "background_color": "#f4cfad",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "neutral good",
@@ -2092,7 +2092,7 @@
         "name": "Chimera",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chimera.png",
-        "background_color": "#ffd299",
+        "background_color": "#f3d5af",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -2172,7 +2172,7 @@
         "name": "Chuul",
         "subtitle": "Large aberration, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chuul.png",
-        "background_color": "#ffd199",
+        "background_color": "#f8d1a2",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -2257,7 +2257,7 @@
         "name": "Clay Golem",
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/clay-golem.png",
-        "background_color": "#ffcb99",
+        "background_color": "#faca9d",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -2362,7 +2362,7 @@
         "name": "Cloaker",
         "subtitle": "Large aberration, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cloaker.png",
-        "background_color": "#ffca99",
+        "background_color": "#fcd1a8",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic neutral",
@@ -2442,7 +2442,7 @@
         "name": "Cloud Giant",
         "subtitle": "Huge giant, neutral good (50%) or neutral evil (50%)",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cloud-giant.png",
-        "background_color": "#ffca99",
+        "background_color": "#e8ccb2",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "neutral good (50%) or neutral evil (50%)",
@@ -2532,7 +2532,7 @@
         "name": "Cockatrice",
         "subtitle": "Small monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cockatrice.png",
-        "background_color": "#ffd999",
+        "background_color": "#f0d9b2",
         "is_horizontal_image": true,
         "size": "Small",
         "alignment": "unaligned",
@@ -2608,7 +2608,7 @@
         "name": "Copper Dragon Wyrmling",
         "subtitle": "Medium dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/copper-dragon-wyrmling.png",
-        "background_color": "#ffd799",
+        "background_color": "#f8e1bd",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic good",
@@ -2719,7 +2719,7 @@
         "name": "Couatl",
         "subtitle": "Medium celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/couatl.png",
-        "background_color": "#ffbe99",
+        "background_color": "#efb493",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful good",
@@ -2837,7 +2837,7 @@
         "name": "Cult Fanatic",
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cult-fanatic.png",
-        "background_color": "#ffb199",
+        "background_color": "#f9d0c4",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any non-good alignment",
@@ -2919,7 +2919,7 @@
         "name": "Cultist",
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/cultist.png",
-        "background_color": "#99ebff",
+        "background_color": "#bbeaf5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any non-good alignment",
@@ -2997,7 +2997,7 @@
         "name": "Darkmantle",
         "subtitle": "Small monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/darkmantle.png",
-        "background_color": "#ffb599",
+        "background_color": "#f9cab8",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "unaligned",
@@ -3077,7 +3077,7 @@
         "name": "Death Dog",
         "subtitle": "Medium monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/death-dog.png",
-        "background_color": "#ffba99",
+        "background_color": "#f0c0a9",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -3155,7 +3155,7 @@
         "name": "Deep Gnome (Svirfneblin)",
         "subtitle": "Small humanoid(gnome), neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/deep-gnome-svirfneblin.png",
-        "background_color": "#ffbb99",
+        "background_color": "#ecbda6",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral good",
@@ -3237,7 +3237,7 @@
         "name": "Balor",
         "subtitle": "Huge fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/balor.png",
-        "background_color": "#ffd099",
+        "background_color": "#ebc9a3",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "chaotic evil",
@@ -3369,7 +3369,7 @@
         "name": "Dretch",
         "subtitle": "Small fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dretch.png",
-        "background_color": "#ffa699",
+        "background_color": "#f4beb6",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "chaotic evil",
@@ -3459,7 +3459,7 @@
         "name": "Glabrezu",
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/glabrezu.png",
-        "background_color": "#ffab99",
+        "background_color": "#f5c1b6",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -3585,7 +3585,7 @@
         "name": "Hezrou",
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hezrou.png",
-        "background_color": "#99dfff",
+        "background_color": "#c1e9fc",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -3707,7 +3707,7 @@
         "name": "Marilith",
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/marilith.png",
-        "background_color": "#99ffe4",
+        "background_color": "#b4feeb",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -3833,7 +3833,7 @@
         "name": "Nalfeshnee",
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nalfeshnee.png",
-        "background_color": "#ffc699",
+        "background_color": "#f3c097",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -3957,6 +3957,120 @@
         ]
     },
     {
+        "index": "demon-quasit",
+        "type": "FIEND",
+        "subtype": "demon",
+        "group": "Demons",
+        "challenge_rating": 1.0,
+        "name": "Quasit",
+        "subtitle": "Tiny fiend(demon), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/quasit.png",
+        "background_color": "#e8c08c",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "chaotic evil",
+        "armor_class": 13,
+        "hit_points": 7,
+        "hit_dice": "3d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "stealth",
+                "modifier": 5
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ]
+    },
+    {
         "index": "demon-vrock",
         "type": "FIEND",
         "subtype": "demon",
@@ -3965,7 +4079,7 @@
         "name": "Vrock",
         "subtitle": "Large fiend(demon), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vrock.png",
-        "background_color": "#99ffff",
+        "background_color": "#a9f2f2",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -4093,7 +4207,7 @@
         "name": "Deva",
         "subtitle": "Medium celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/deva.png",
-        "background_color": "#ffd599",
+        "background_color": "#efc993",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful good",
@@ -4210,7 +4324,7 @@
         "name": "Barbed Devil",
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/barbed-devil.png",
-        "background_color": "#ffd899",
+        "background_color": "#f4d5a3",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -4343,7 +4457,7 @@
         "name": "Bearded Devil",
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bearded-devil.png",
-        "background_color": "#ffe399",
+        "background_color": "#f0da9d",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -4460,7 +4574,7 @@
         "name": "Bone Devil",
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bone-devil.png",
-        "background_color": "#ffa199",
+        "background_color": "#efa6a0",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful evil",
@@ -4591,7 +4705,7 @@
         "name": "Chain Devil",
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chain-devil.png",
-        "background_color": "#ffbb99",
+        "background_color": "#fed3be",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -4700,6 +4814,133 @@
         ]
     },
     {
+        "index": "devil-erinyes",
+        "type": "FIEND",
+        "subtype": "devil",
+        "group": "Devils",
+        "challenge_rating": 12.0,
+        "name": "Erinyes",
+        "subtitle": "Medium fiend(devil), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/erinyes.png",
+        "background_color": "#f7bba5",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 18,
+        "hit_points": 153,
+        "hit_dice": "18d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 7
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 8
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 8
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ]
+    },
+    {
         "index": "devil-horned-devil",
         "type": "FIEND",
         "subtype": "devil",
@@ -4708,7 +4949,7 @@
         "name": "Horned Devil",
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/horned-devil.png",
-        "background_color": "#ffd999",
+        "background_color": "#fbd89e",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -4835,7 +5076,7 @@
         "name": "Ice Devil",
         "subtitle": "Large fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ice-devil.png",
-        "background_color": "#ffb899",
+        "background_color": "#f1c0ab",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -4951,7 +5192,7 @@
         "name": "Imp",
         "subtitle": "Tiny fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/imp.png",
-        "background_color": "#ff99ac",
+        "background_color": "#eaabb7",
         "is_horizontal_image": false,
         "size": "Tiny",
         "alignment": "lawful evil",
@@ -5078,7 +5319,7 @@
         "name": "Lemure",
         "subtitle": "Medium fiend(devil), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lemure.png",
-        "background_color": "#ff99c0",
+        "background_color": "#f5b1cb",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -5155,6 +5396,129 @@
         ]
     },
     {
+        "index": "devil-pit-fiend",
+        "type": "FIEND",
+        "subtype": "devil",
+        "group": "Devils",
+        "challenge_rating": 20.0,
+        "name": "Pit Fiend",
+        "subtitle": "Large fiend(devil), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pit-fiend.png",
+        "background_color": "#fca3a2",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 19,
+        "hit_points": 300,
+        "hit_dice": "24d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 26,
+                "modifier": 8
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 24,
+                "modifier": 7
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 8
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 13
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 10
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ]
+    },
+    {
         "index": "dire-wolf",
         "type": "BEAST",
         "subtype": null,
@@ -5163,7 +5527,7 @@
         "name": "Dire Wolf",
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dire-wolf.png",
-        "background_color": "#ffab99",
+        "background_color": "#eea99a",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -5241,7 +5605,7 @@
         "name": "Djinni",
         "subtitle": "Large elemental, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/djinni.png",
-        "background_color": "#ffad99",
+        "background_color": "#f8b6a6",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic good",
@@ -5339,7 +5703,7 @@
         "name": "Doppelganger",
         "subtitle": "Medium monstrosity(shapechanger), unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/doppelganger.png",
-        "background_color": "#99e0ff",
+        "background_color": "#a5d8ef",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -5417,7 +5781,7 @@
         "name": "Adult Black Dragon",
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-black-dragon.png",
-        "background_color": "#ffe399",
+        "background_color": "#f1d99c",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "chaotic evil",
@@ -5528,7 +5892,7 @@
         "name": "Adult Blue Dragon",
         "subtitle": "Huge dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-blue-dragon.png",
-        "background_color": "#99d2ff",
+        "background_color": "#9acff9",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "lawful evil",
@@ -5639,7 +6003,7 @@
         "name": "Adult Brass Dragon",
         "subtitle": "Huge dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-brass-dragon.png",
-        "background_color": "#ffba99",
+        "background_color": "#f1bea6",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "chaotic good",
@@ -5758,7 +6122,7 @@
         "name": "Adult Bronze Dragon",
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-bronze-dragon.png",
-        "background_color": "#ffe099",
+        "background_color": "#f8e0aa",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "lawful good",
@@ -5873,7 +6237,7 @@
         "name": "Adult Copper Dragon",
         "subtitle": "Huge dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-copper-dragon.png",
-        "background_color": "#ffcf99",
+        "background_color": "#ebc79e",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "chaotic good",
@@ -5988,7 +6352,7 @@
         "name": "Adult Gold Dragon",
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-gold-dragon.png",
-        "background_color": "#ffc299",
+        "background_color": "#f8c19b",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "lawful good",
@@ -6107,7 +6471,7 @@
         "name": "Adult Green Dragon",
         "subtitle": "Huge dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-green-dragon.png",
-        "background_color": "#ffef99",
+        "background_color": "#f2e49b",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "lawful evil",
@@ -6230,7 +6594,7 @@
         "name": "Adult Red Dragon",
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-red-dragon.png",
-        "background_color": "#ffcf99",
+        "background_color": "#ebcba7",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "chaotic evil",
@@ -6341,7 +6705,7 @@
         "name": "Adult Silver Dragon",
         "subtitle": "Huge dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-silver-dragon.png",
-        "background_color": "#ffd699",
+        "background_color": "#f8daae",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "lawful good",
@@ -6454,7 +6818,7 @@
         "name": "Adult White Dragon",
         "subtitle": "Huge dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-white-dragon.png",
-        "background_color": "#ffd999",
+        "background_color": "#f3d9ad",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "chaotic evil",
@@ -6571,7 +6935,7 @@
         "name": "Ancient Black Dragon",
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-black-dragon.png",
-        "background_color": "#99ffef",
+        "background_color": "#90efe0",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "chaotic evil",
@@ -6682,7 +7046,7 @@
         "name": "Ancient Blue Dragon",
         "subtitle": "Gargantuan dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-blue-dragon.png",
-        "background_color": "#99cdff",
+        "background_color": "#9dccf9",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "lawful evil",
@@ -6793,7 +7157,7 @@
         "name": "Ancient Brass Dragon",
         "subtitle": "Gargantuan dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-brass-dragon.png",
-        "background_color": "#ffed99",
+        "background_color": "#fef2ba",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "chaotic good",
@@ -6912,7 +7276,7 @@
         "name": "Ancient Bronze Dragon",
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-bronze-dragon.png",
-        "background_color": "#ffe599",
+        "background_color": "#fbe8af",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "lawful good",
@@ -7027,7 +7391,7 @@
         "name": "Ancient Copper Dragon",
         "subtitle": "Gargantuan dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-copper-dragon.png",
-        "background_color": "#ffd799",
+        "background_color": "#fcdaa7",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "chaotic good",
@@ -7142,7 +7506,7 @@
         "name": "Ancient Gold Dragon",
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-gold-dragon.png",
-        "background_color": "#ffbe99",
+        "background_color": "#fdd4bd",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "lawful good",
@@ -7261,7 +7625,7 @@
         "name": "Ancient Green Dragon",
         "subtitle": "Gargantuan dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-green-dragon.png",
-        "background_color": "#e6ff99",
+        "background_color": "#dfebb8",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "lawful evil",
@@ -7384,7 +7748,7 @@
         "name": "Ancient Red Dragon",
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-red-dragon.png",
-        "background_color": "#ffab99",
+        "background_color": "#eea697",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "chaotic evil",
@@ -7495,7 +7859,7 @@
         "name": "Ancient Silver Dragon",
         "subtitle": "Gargantuan dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-silver-dragon.png",
-        "background_color": "#ffd699",
+        "background_color": "#eecb97",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "lawful good",
@@ -7608,7 +7972,7 @@
         "name": "Ancient White Dragon",
         "subtitle": "Gargantuan dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ancient-white-dragon.png",
-        "background_color": "#ffd999",
+        "background_color": "#f1dab4",
         "is_horizontal_image": true,
         "size": "Gargantuan",
         "alignment": "chaotic evil",
@@ -7725,7 +8089,7 @@
         "name": "Dragon Turtle",
         "subtitle": "Gargantuan dragon, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dragon-turtle.png",
-        "background_color": "#99ebff",
+        "background_color": "#a6e4f4",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "neutral",
@@ -7818,7 +8182,7 @@
         "name": "Young Black Dragon",
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-black-dragon.png",
-        "background_color": "#99ffef",
+        "background_color": "#99faeb",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -7929,7 +8293,7 @@
         "name": "Young Blue Dragon",
         "subtitle": "Large dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-blue-dragon.png",
-        "background_color": "#99cdff",
+        "background_color": "#a8cbee",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -8040,7 +8404,7 @@
         "name": "Young Brass Dragon",
         "subtitle": "Large dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-brass-dragon.png",
-        "background_color": "#ffed99",
+        "background_color": "#fcf2c6",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic good",
@@ -8155,7 +8519,7 @@
         "name": "Young Bronze Dragon",
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-bronze-dragon.png",
-        "background_color": "#ffe599",
+        "background_color": "#f7e8bc",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful good",
@@ -8270,7 +8634,7 @@
         "name": "Young Copper Dragon",
         "subtitle": "Large dragon, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-copper-dragon.png",
-        "background_color": "#ffd799",
+        "background_color": "#edd1a7",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic good",
@@ -8385,7 +8749,7 @@
         "name": "Young Gold Dragon",
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-gold-dragon.png",
-        "background_color": "#ffbe99",
+        "background_color": "#eec3aa",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful good",
@@ -8504,7 +8868,7 @@
         "name": "Young Green Dragon",
         "subtitle": "Large dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-green-dragon.png",
-        "background_color": "#e6ff99",
+        "background_color": "#dbeca5",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -8619,7 +8983,7 @@
         "name": "Young Red Dragon",
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-red-dragon.png",
-        "background_color": "#ffab99",
+        "background_color": "#fab6a8",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -8730,7 +9094,7 @@
         "name": "Young Silver Dragon",
         "subtitle": "Large dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-silver-dragon.png",
-        "background_color": "#ffd699",
+        "background_color": "#f4cc92",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful good",
@@ -8843,7 +9207,7 @@
         "name": "Young White Dragon",
         "subtitle": "Large dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/young-white-dragon.png",
-        "background_color": "#ffd999",
+        "background_color": "#ecd1a5",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -8960,7 +9324,7 @@
         "name": "Drider",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/drider.png",
-        "background_color": "#ffb499",
+        "background_color": "#ecb39f",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -9044,7 +9408,7 @@
         "name": "Drow",
         "subtitle": "Medium humanoid(elf), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/drow.png",
-        "background_color": "#99c7ff",
+        "background_color": "#a3c8f5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -9122,7 +9486,7 @@
         "name": "Druid",
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/druid.png",
-        "background_color": "#ffb999",
+        "background_color": "#ebad91",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "any alignment",
@@ -9204,7 +9568,7 @@
         "name": "Dryad",
         "subtitle": "Medium fey, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dryad.png",
-        "background_color": "#ffe599",
+        "background_color": "#efe1b9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -9282,7 +9646,7 @@
         "name": "Duergar",
         "subtitle": "Medium humanoid(dwarf), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/duergar.png",
-        "background_color": "#99d5ff",
+        "background_color": "#99c8e9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -9357,7 +9721,7 @@
         "name": "Dust Mephit",
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dust-mephit.png",
-        "background_color": "#ffdf99",
+        "background_color": "#e8d3a2",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral evil",
@@ -9451,7 +9815,7 @@
         "name": "Eagle",
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/eagle.png",
-        "background_color": "#99ffff",
+        "background_color": "#92f0f0",
         "is_horizontal_image": true,
         "size": "Small",
         "alignment": "unaligned",
@@ -9531,7 +9895,7 @@
         "name": "Earth Elemental",
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/earth-elemental.png",
-        "background_color": "#ffbc99",
+        "background_color": "#f1b393",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral",
@@ -9637,7 +10001,7 @@
         "name": "Efreeti",
         "subtitle": "Large elemental, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/efreeti.png",
-        "background_color": "#ff99a6",
+        "background_color": "#efb5bc",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful evil",
@@ -9722,6 +10086,635 @@
         ]
     },
     {
+        "index": "ettercap",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Ettercap",
+        "subtitle": "Medium monstrosity, neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ettercap.png",
+        "background_color": "#fab3bb",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 13,
+        "hit_points": 44,
+        "hit_dice": "8d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 8,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            },
+            {
+                "index": "stealth",
+                "modifier": 4
+            },
+            {
+                "index": "survival",
+                "modifier": 3
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "ettin",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Ettin",
+        "subtitle": "Large giant, chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ettin.png",
+        "background_color": "#f9cba9",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "chaotic evil",
+        "armor_class": 12,
+        "hit_points": 85,
+        "hit_dice": "10d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 8,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "fire-elemental",
+        "type": "ELEMENTAL",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Fire Elemental",
+        "subtitle": "Large elemental, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/fire-elemental.png",
+        "background_color": "#fde5a5",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "neutral",
+        "armor_class": 13,
+        "hit_points": 102,
+        "hit_dice": "12d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ]
+    },
+    {
+        "index": "fire-giant",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 9.0,
+        "name": "Fire Giant",
+        "subtitle": "Huge giant, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/fire-giant.png",
+        "background_color": "#ffd4c5",
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "lawful evil",
+        "armor_class": 18,
+        "hit_points": 162,
+        "hit_dice": "13d12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 25,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 23,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 10
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "athletics",
+                "modifier": 11
+            },
+            {
+                "index": "perception",
+                "modifier": 6
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ]
+    },
+    {
+        "index": "flesh-golem",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Flesh Golem",
+        "subtitle": "Medium construct, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flesh-golem.png",
+        "background_color": "#fcbdc4",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 9,
+        "hit_points": 93,
+        "hit_dice": "11d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            }
+        ]
+    },
+    {
+        "index": "flying-snake",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.125,
+        "name": "Flying Snake",
+        "subtitle": "Tiny beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flying-snake.png",
+        "background_color": "#ecdfa9",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 14,
+        "hit_points": 5,
+        "hit_dice": "2d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "flying-sword",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.25,
+        "name": "Flying Sword",
+        "subtitle": "Small construct, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/flying-sword.png",
+        "background_color": "#ffd4bc",
+        "is_horizontal_image": false,
+        "size": "Small",
+        "alignment": "unaligned",
+        "armor_class": 17,
+        "hit_points": 17,
+        "hit_dice": "5d6",
+        "speed": {
+            "hover": true,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 0,
+                    "value_formatted": "0 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ]
+    },
+    {
         "index": "frog",
         "type": "BEAST",
         "subtype": null,
@@ -9730,7 +10723,7 @@
         "name": "Frog",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/frog.png",
-        "background_color": "#d9ff99",
+        "background_color": "#ddf7b0",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -9814,7 +10807,7 @@
         "name": "Frost Giant",
         "subtitle": "Huge giant, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/frost-giant.png",
-        "background_color": "#ffd099",
+        "background_color": "#fed29f",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "neutral evil",
@@ -9909,7 +10902,7 @@
         "name": "Gargoyle",
         "subtitle": "Medium elemental, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gargoyle.png",
-        "background_color": "#ff9999",
+        "background_color": "#f7b9b9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -10010,7 +11003,7 @@
         "name": "Gelatinous Cube",
         "subtitle": "Large ooze, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gelatinous-cube.png",
-        "background_color": "#99e3ff",
+        "background_color": "#91d2ea",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -10080,7 +11073,7 @@
         "name": "Ghast",
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghast.png",
-        "background_color": "#99e4ff",
+        "background_color": "#97d4e9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -10155,7 +11148,7 @@
         "name": "Ghost",
         "subtitle": "Medium undead, any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghost.png",
-        "background_color": "#99ecff",
+        "background_color": "#b6e2ec",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any alignment",
@@ -10286,7 +11279,7 @@
         "name": "Ghoul",
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghoul.png",
-        "background_color": "#ff99ab",
+        "background_color": "#ffc4ce",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -10356,7 +11349,7 @@
         "name": "Giant Badger",
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-badger.png",
-        "background_color": "#f0ff99",
+        "background_color": "#ebf5b1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -10432,7 +11425,7 @@
         "name": "Giant Eagle",
         "subtitle": "Large beast, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-eagle.png",
-        "background_color": "#99ffff",
+        "background_color": "#bbeeee",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "neutral good",
@@ -10512,7 +11505,7 @@
         "name": "Giant Fire Beetle",
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-fire-beetle.png",
-        "background_color": "#ff9e99",
+        "background_color": "#f3aba7",
         "is_horizontal_image": true,
         "size": "Small",
         "alignment": "unaligned",
@@ -10582,7 +11575,7 @@
         "name": "Giant Frog",
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-frog.png",
-        "background_color": "#d9ff99",
+        "background_color": "#dffeac",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "unaligned",
@@ -10666,7 +11659,7 @@
         "name": "Giant Octopus",
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-octopus.png",
-        "background_color": "#ffa499",
+        "background_color": "#feaea5",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -10750,7 +11743,7 @@
         "name": "Giant Owl",
         "subtitle": "Large beast, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-owl.png",
-        "background_color": "#ffea99",
+        "background_color": "#ecdfac",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral",
@@ -10834,7 +11827,7 @@
         "name": "Giant Rat",
         "subtitle": "Small beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-rat.png",
-        "background_color": "#ffd999",
+        "background_color": "#f3d29a",
         "is_horizontal_image": true,
         "size": "Small",
         "alignment": "unaligned",
@@ -10904,7 +11897,7 @@
         "name": "Giant Spider",
         "subtitle": "Large beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/giant-spider.png",
-        "background_color": "#ff99c6",
+        "background_color": "#fba3ca",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "unaligned",
@@ -10984,7 +11977,7 @@
         "name": "Gibbering Mouther",
         "subtitle": "Medium aberration, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gibbering-mouther.png",
-        "background_color": "#ff99d0",
+        "background_color": "#f5abd3",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -11060,7 +12053,7 @@
         "name": "Gnoll",
         "subtitle": "Medium humanoid(gnoll), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gnoll.png",
-        "background_color": "#ffcc99",
+        "background_color": "#f0c294",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -11130,7 +12123,7 @@
         "name": "Goblin",
         "subtitle": "Small humanoid(goblinoid), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/goblin.png",
-        "background_color": "#ff99a9",
+        "background_color": "#ef96a4",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral evil",
@@ -11204,7 +12197,7 @@
         "name": "Gold Dragon Wyrmling",
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gold-dragon-wyrmling.png",
-        "background_color": "#ffbe99",
+        "background_color": "#f0cdb8",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful good",
@@ -11315,7 +12308,7 @@
         "name": "Gorgon",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gorgon.png",
-        "background_color": "#f3ff99",
+        "background_color": "#f4fdb0",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "unaligned",
@@ -11389,7 +12382,7 @@
         "name": "Green Dragon Wyrmling",
         "subtitle": "Medium dragon, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/green-dragon-wyrmling.png",
-        "background_color": "#e6ff99",
+        "background_color": "#d8eb9b",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -11500,7 +12493,7 @@
         "name": "Green Hag",
         "subtitle": "Medium fey, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/green-hag.png",
-        "background_color": "#ffbc99",
+        "background_color": "#eeb89b",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -11586,7 +12579,7 @@
         "name": "Grick",
         "subtitle": "Medium monstrosity, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/grick.png",
-        "background_color": "#ffbb99",
+        "background_color": "#f0c1a9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -11682,7 +12675,7 @@
         "name": "Griffon",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/griffon.png",
-        "background_color": "#ffd499",
+        "background_color": "#eac99b",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -11762,7 +12755,7 @@
         "name": "Grimlock",
         "subtitle": "Medium humanoid(grimlock), neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/grimlock.png",
-        "background_color": "#ffb899",
+        "background_color": "#eeb69e",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -11844,7 +12837,7 @@
         "name": "Guardian Naga",
         "subtitle": "Large monstrosity, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/guardian-naga.png",
-        "background_color": "#ffd699",
+        "background_color": "#fedba7",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "lawful good",
@@ -11939,7 +12932,7 @@
         "name": "Gynosphinx",
         "subtitle": "Large monstrosity, lawful neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gynosphinx.png",
-        "background_color": "#ffc299",
+        "background_color": "#e9c0a5",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful neutral",
@@ -12056,7 +13049,7 @@
         "name": "Half-Red Dragon Veteran",
         "subtitle": "Medium humanoid(human), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/half-red-dragon-veteran.png",
-        "background_color": "#ffce99",
+        "background_color": "#fcd1a1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any alignment",
@@ -12131,7 +13124,7 @@
         "name": "Harpy",
         "subtitle": "Medium monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/harpy.png",
-        "background_color": "#bc99ff",
+        "background_color": "#c3a8f9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -12207,7 +13200,7 @@
         "name": "Hawk",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hawk.png",
-        "background_color": "#ff999b",
+        "background_color": "#e98c8e",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -12287,7 +13280,7 @@
         "name": "Hell Hound",
         "subtitle": "Medium fiend, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hell-hound.png",
-        "background_color": "#ffab99",
+        "background_color": "#fbc3b8",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -12366,7 +13359,7 @@
         "name": "Hill Giant",
         "subtitle": "Huge giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hill-giant.png",
-        "background_color": "#ffce99",
+        "background_color": "#edcfaf",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "chaotic evil",
@@ -12440,7 +13433,7 @@
         "name": "Hippogriff",
         "subtitle": "Large monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hippogriff.png",
-        "background_color": "#ffdd99",
+        "background_color": "#f7e4bd",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -12520,7 +13513,7 @@
         "name": "Hobgoblin",
         "subtitle": "Medium humanoid(goblinoid), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hobgoblin.png",
-        "background_color": "#ff99c1",
+        "background_color": "#ed96b9",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -12590,7 +13583,7 @@
         "name": "Homunculus",
         "subtitle": "Tiny construct, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/homunculus.png",
-        "background_color": "#ffb699",
+        "background_color": "#efb29a",
         "is_horizontal_image": false,
         "size": "Tiny",
         "alignment": "neutral",
@@ -12671,7 +13664,7 @@
         "name": "Hydra",
         "subtitle": "Huge monstrosity, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hydra.png",
-        "background_color": "#ffc999",
+        "background_color": "#f9d6b7",
         "is_horizontal_image": true,
         "size": "Huge",
         "alignment": "unaligned",
@@ -12751,7 +13744,7 @@
         "name": "Hyena",
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hyena.png",
-        "background_color": "#99ffed",
+        "background_color": "#93f1e1",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "unaligned",
@@ -12825,7 +13818,7 @@
         "name": "Ice Mephit",
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ice-mephit.png",
-        "background_color": "#ffa599",
+        "background_color": "#eaaea6",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral evil",
@@ -12929,7 +13922,7 @@
         "name": "Invisible Stalker",
         "subtitle": "Medium elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/invisible-stalker.png",
-        "background_color": "#ffae99",
+        "background_color": "#f2c1b5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -13038,7 +14031,7 @@
         "name": "Iron Golem",
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/iron-golem.png",
-        "background_color": "#ff99c5",
+        "background_color": "#f1acc9",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -13143,7 +14136,7 @@
         "name": "Kobold",
         "subtitle": "Small humanoid(kobold), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/kobold.png",
-        "background_color": "#ffb899",
+        "background_color": "#ebc5b4",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "lawful evil",
@@ -13213,7 +14206,7 @@
         "name": "Kraken",
         "subtitle": "Gargantuan monstrosity(titan), chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/kraken.png",
-        "background_color": "#ffb599",
+        "background_color": "#fad2c3",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "chaotic evil",
@@ -13334,7 +14327,7 @@
         "name": "Lamia",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lamia.png",
-        "background_color": "#ffa999",
+        "background_color": "#ffb2a4",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -13416,7 +14409,7 @@
         "name": "Lich",
         "subtitle": "Medium undead, any evil alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lich.png",
-        "background_color": "#ffbd99",
+        "background_color": "#e8b99f",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any evil alignment",
@@ -13554,7 +14547,7 @@
         "name": "Lizardfolk",
         "subtitle": "Medium humanoid(lizardfolk), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lizardfolk.png",
-        "background_color": "#bfff99",
+        "background_color": "#c7f3ac",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "neutral",
@@ -13642,7 +14635,7 @@
         "name": "Magma Mephit",
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/magma-mephit.png",
-        "background_color": "#ffca99",
+        "background_color": "#fcd9b9",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral evil",
@@ -13737,7 +14730,7 @@
         "name": "Magmin",
         "subtitle": "Small elemental, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/magmin.png",
-        "background_color": "#ff9b99",
+        "background_color": "#e99f9d",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "chaotic neutral",
@@ -13832,7 +14825,7 @@
         "name": "Manticore",
         "subtitle": "Large monstrosity, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/manticore.png",
-        "background_color": "#ffcf99",
+        "background_color": "#f3cea5",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -13908,7 +14901,7 @@
         "name": "Mastiff",
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mastiff.png",
-        "background_color": "#ffa399",
+        "background_color": "#f7c7c2",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "unaligned",
@@ -13982,7 +14975,7 @@
         "name": "Medusa",
         "subtitle": "Medium monstrosity, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/medusa.png",
-        "background_color": "#ff9999",
+        "background_color": "#ea8e8e",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -14068,7 +15061,7 @@
         "name": "Merfolk",
         "subtitle": "Medium humanoid(merfolk), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/merfolk.png",
-        "background_color": "#99f5ff",
+        "background_color": "#a6edf5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -14148,7 +15141,7 @@
         "name": "Merrow",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/merrow.png",
-        "background_color": "#ffd599",
+        "background_color": "#f9ddb7",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -14224,7 +15217,7 @@
         "name": "Mimic",
         "subtitle": "Medium monstrosity(shapechanger), neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mimic.png",
-        "background_color": "#ff99b1",
+        "background_color": "#f4c3cf",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "neutral",
@@ -14303,7 +15296,7 @@
         "name": "Minotaur",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/minotaur.png",
-        "background_color": "#ffb199",
+        "background_color": "#fbb8a3",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -14377,7 +15370,7 @@
         "name": "Minotaur Skeleton",
         "subtitle": "Large undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/minotaur-skeleton.png",
-        "background_color": "#ffd399",
+        "background_color": "#f0d9bc",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful evil",
@@ -14457,7 +15450,7 @@
         "name": "Mummy",
         "subtitle": "Medium undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mummy.png",
-        "background_color": "#ff9999",
+        "background_color": "#f2b7b7",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -14566,7 +15559,7 @@
         "name": "Night Hag",
         "subtitle": "Medium fiend, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/night-hag.png",
-        "background_color": "#ad99ff",
+        "background_color": "#bbb0ea",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -14682,7 +15675,7 @@
         "name": "Nightmare",
         "subtitle": "Large fiend, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nightmare.png",
-        "background_color": "#ffb099",
+        "background_color": "#ebb1a1",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral evil",
@@ -14755,6 +15748,2288 @@
         ]
     },
     {
+        "index": "noble",
+        "type": "HUMANOID",
+        "subtype": "any race",
+        "group": null,
+        "challenge_rating": 0.125,
+        "name": "Noble",
+        "subtitle": "Medium humanoid(any race), any alignment",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/noble.png",
+        "background_color": "#edb8a7",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "any alignment",
+        "armor_class": 15,
+        "hit_points": 9,
+        "hit_dice": "2d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "deception",
+                "modifier": 5
+            },
+            {
+                "index": "insight",
+                "modifier": 4
+            },
+            {
+                "index": "persuasion",
+                "modifier": 5
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "ochre-jelly",
+        "type": "OOZE",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Ochre Jelly",
+        "subtitle": "Large ooze, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ochre-jelly.png",
+        "background_color": "#f8c6af",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 8,
+        "hit_points": 45,
+        "hit_dice": "6d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "acid",
+                "type": "ACID",
+                "name": "Acid"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing"
+            }
+        ]
+    },
+    {
+        "index": "octopus",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Octopus",
+        "subtitle": "Small beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/octopus.png",
+        "background_color": "#faaea6",
+        "is_horizontal_image": false,
+        "size": "Small",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 3,
+        "hit_dice": "1d6",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 5,
+                    "value_formatted": "5 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 4,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 2
+            },
+            {
+                "index": "stealth",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "ogre",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Ogre",
+        "subtitle": "Large giant, chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ogre.png",
+        "background_color": "#f5e1bc",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "chaotic evil",
+        "armor_class": 11,
+        "hit_points": 59,
+        "hit_dice": "7d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "ogre-zombie",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Ogre Zombie",
+        "subtitle": "Large undead, neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ogre-zombie.png",
+        "background_color": "#eaccb4",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "neutral evil",
+        "armor_class": 8,
+        "hit_points": 85,
+        "hit_dice": "9d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "WISDOM",
+                "modifier": 0
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ]
+    },
+    {
+        "index": "oni",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Oni",
+        "subtitle": "Large giant, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/oni.png",
+        "background_color": "#a8e6eb",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 16,
+        "hit_points": 110,
+        "hit_dice": "13d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 6
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "arcana",
+                "modifier": 5
+            },
+            {
+                "index": "deception",
+                "modifier": 8
+            },
+            {
+                "index": "perception",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "orc-orc",
+        "type": "HUMANOID",
+        "subtype": "orc",
+        "group": "Orcs",
+        "challenge_rating": 0.5,
+        "name": "Orc",
+        "subtitle": "Medium humanoid(orc), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/orc.png",
+        "background_color": "#f5ceb5",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic evil",
+        "armor_class": 13,
+        "hit_points": 15,
+        "hit_dice": "2d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "intimidation",
+                "modifier": 2
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "otyugh",
+        "type": "ABERRATION",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Otyugh",
+        "subtitle": "Large aberration, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/otyugh.png",
+        "background_color": "#feabaf",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "neutral",
+        "armor_class": 14,
+        "hit_points": 114,
+        "hit_dice": "12d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "CONSTITUTION",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "owl",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Owl",
+        "subtitle": "Tiny beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/owl.png",
+        "background_color": "#ebe0b6",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 11,
+        "hit_points": 1,
+        "hit_dice": "1d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 5,
+                    "value_formatted": "5 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            },
+            {
+                "index": "stealth",
+                "modifier": 3
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "owlbear",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Owlbear",
+        "subtitle": "Large monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/owlbear.png",
+        "background_color": "#ecaeb6",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 59,
+        "hit_dice": "7d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "pegasus",
+        "type": "CELESTIAL",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Pegasus",
+        "subtitle": "Large celestial, chaotic good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pegasus.png",
+        "background_color": "#bee8fa",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "chaotic good",
+        "armor_class": 12,
+        "hit_points": 59,
+        "hit_dice": "7d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 90,
+                    "value_formatted": "90 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 6
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "phase-spider",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Phase Spider",
+        "subtitle": "Large monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/phase-spider.png",
+        "background_color": "#a2d3ec",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 32,
+        "hit_dice": "5d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "stealth",
+                "modifier": 6
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "planetar",
+        "type": "CELESTIAL",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 16.0,
+        "name": "Planetar",
+        "subtitle": "Large celestial, lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/planetar.png",
+        "background_color": "#9dfada",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "lawful good",
+        "armor_class": 19,
+        "hit_points": 200,
+        "hit_dice": "16d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 120,
+                    "value_formatted": "120 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "CHARISMA",
+                "value": 25,
+                "modifier": 7
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "CONSTITUTION",
+                "modifier": 12
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 11
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 12
+            }
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 11
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "radiant",
+                "type": "RADIANT",
+                "name": "Radiant"
+            },
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "plesiosaurus",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Plesiosaurus",
+        "subtitle": "Large beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/plesiosaurus.png",
+        "background_color": "#a3d4f0",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 68,
+        "hit_dice": "8d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            },
+            {
+                "index": "stealth",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "pseudodragon",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.25,
+        "name": "Pseudodragon",
+        "subtitle": "Tiny dragon, neutral good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pseudodragon.png",
+        "background_color": "#ffd29e",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "neutral good",
+        "armor_class": 13,
+        "hit_points": 7,
+        "hit_dice": "2d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 15,
+                    "value_formatted": "15 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            },
+            {
+                "index": "stealth",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "purple-worm",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 15.0,
+        "name": "Purple Worm",
+        "subtitle": "Gargantuan monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/purple-worm.png",
+        "background_color": "#f8db9e",
+        "is_horizontal_image": false,
+        "size": "Gargantuan",
+        "alignment": "unaligned",
+        "armor_class": 18,
+        "hit_points": 247,
+        "hit_dice": "15d20",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "BURROW",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 28,
+                "modifier": 9
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 4,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "CONSTITUTION",
+                "modifier": 11
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "quipper",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Quipper",
+        "subtitle": "Tiny beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/quipper.png",
+        "background_color": "#fbb999",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 1,
+        "hit_dice": "1d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 2,
+                "modifier": -4
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "rakshasa",
+        "type": "FIEND",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 13.0,
+        "name": "Rakshasa",
+        "subtitle": "Medium fiend, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rakshasa.png",
+        "background_color": "#f6c0a4",
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 16,
+        "hit_points": 110,
+        "hit_dice": "13d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 20,
+                "modifier": 5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "deception",
+                "modifier": 10
+            },
+            {
+                "index": "insight",
+                "modifier": 8
+            }
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "*piercing from magic weapons wielded by good creatures",
+                "type": "OTHER",
+                "name": "*piercing from magic weapons wielded by good creatures"
+            }
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "bludgeoning*",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing*",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing*",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "*bludgeoning, piercing, and slashing from nonmagical weapons",
+                "type": "OTHER",
+                "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
+            }
+        ]
+    },
+    {
+        "index": "rat",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Rat",
+        "subtitle": "Tiny beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rat.png",
+        "background_color": "#f4d29a",
+        "is_horizontal_image": true,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 10,
+        "hit_points": 1,
+        "hit_dice": "1d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 4,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "raven",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Raven",
+        "subtitle": "Tiny beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/raven.png",
+        "background_color": "#9eedca",
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 1,
+        "hit_dice": "1d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 3
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "red-dragon-wyrmling",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Red Dragon Wyrmling",
+        "subtitle": "Medium dragon, chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/red-dragon-wyrmling.png",
+        "background_color": "#e8ada0",
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "chaotic evil",
+        "armor_class": 17,
+        "hit_points": 75,
+        "hit_dice": "10d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 5
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 4
+            },
+            {
+                "index": "stealth",
+                "modifier": 2
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ]
+    },
+    {
+        "index": "remorhaz",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 11.0,
+        "name": "Remorhaz",
+        "subtitle": "Huge monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/remorhaz.png",
+        "background_color": "#ace7f1",
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "unaligned",
+        "armor_class": 17,
+        "hit_points": 195,
+        "hit_dice": "17d12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "BURROW",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ]
+    },
+    {
+        "index": "riding-horse",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.25,
+        "name": "Riding Horse",
+        "subtitle": "Large beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/riding-horse.png",
+        "background_color": "#a2f8e2",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 10,
+        "hit_points": 13,
+        "hit_dice": "2d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "roc",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 11.0,
+        "name": "Roc",
+        "subtitle": "Gargantuan monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/roc.png",
+        "background_color": "#eabfb5",
+        "is_horizontal_image": true,
+        "size": "Gargantuan",
+        "alignment": "unaligned",
+        "armor_class": 15,
+        "hit_points": 248,
+        "hit_dice": "16d20",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 120,
+                    "value_formatted": "120 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 28,
+                "modifier": 9
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 9,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+            {
+                "type": "DEXTERITY",
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "modifier": 9
+            },
+            {
+                "type": "WISDOM",
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 4
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "roper",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Roper",
+        "subtitle": "Large monstrosity, neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/roper.png",
+        "background_color": "#f4bcb1",
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "neutral evil",
+        "armor_class": 20,
+        "hit_points": 93,
+        "hit_dice": "11d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "perception",
+                "modifier": 6
+            },
+            {
+                "index": "stealth",
+                "modifier": 5
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
+        "index": "rug-of-smothering",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Rug of Smothering",
+        "subtitle": "Large construct, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rug-of-smothering.png",
+        "background_color": "#f2b6a7",
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 33,
+        "hit_dice": "6d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ]
+    },
+    {
+        "index": "rust-monster",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.5,
+        "name": "Rust Monster",
+        "subtitle": "Medium monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rust-monster.png",
+        "background_color": "#fbddc0",
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 14,
+        "hit_points": 27,
+        "hit_dice": "5d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ]
+    },
+    {
         "index": "sahuagin",
         "type": "HUMANOID",
         "subtype": "sahuagin",
@@ -14763,7 +18038,7 @@
         "name": "Sahuagin",
         "subtitle": "Medium humanoid(sahuagin), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sahuagin.png",
-        "background_color": "#ff99d9",
+        "background_color": "#f8bde2",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -14843,7 +18118,7 @@
         "name": "Salamander",
         "subtitle": "Large elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/salamander.png",
-        "background_color": "#ff99bb",
+        "background_color": "#ec92b0",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral evil",
@@ -14943,7 +18218,7 @@
         "name": "Satyr",
         "subtitle": "Medium fey, chaotic neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/satyr.png",
-        "background_color": "#ffd199",
+        "background_color": "#eac9a1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic neutral",
@@ -15025,7 +18300,7 @@
         "name": "Scout",
         "subtitle": "Medium humanoid(any race), any alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/scout.png",
-        "background_color": "#ffc299",
+        "background_color": "#f3be9b",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any alignment",
@@ -15111,7 +18386,7 @@
         "name": "Sea Hag",
         "subtitle": "Medium fey, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sea-hag.png",
-        "background_color": "#99ffd1",
+        "background_color": "#b0edd1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -15187,7 +18462,7 @@
         "name": "Shadow",
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shadow.png",
-        "background_color": "#ffc699",
+        "background_color": "#ebc3a4",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -15321,7 +18596,7 @@
         "name": "Shambling Mound",
         "subtitle": "Large plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shambling-mound.png",
-        "background_color": "#99ffca",
+        "background_color": "#acf6cf",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "unaligned",
@@ -15416,7 +18691,7 @@
         "name": "Shield Guardian",
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shield-guardian.png",
-        "background_color": "#ffa399",
+        "background_color": "#feb9b1",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -15491,7 +18766,7 @@
         "name": "Shrieker",
         "subtitle": "Medium plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shrieker.png",
-        "background_color": "#99dbff",
+        "background_color": "#99d5f6",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -15561,7 +18836,7 @@
         "name": "Silver Dragon Wyrmling",
         "subtitle": "Medium dragon, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/silver-dragon-wyrmling.png",
-        "background_color": "#ffd699",
+        "background_color": "#f0ca94",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful good",
@@ -15666,7 +18941,7 @@
         "name": "Skeleton",
         "subtitle": "Medium undead, lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/skeleton.png",
-        "background_color": "#ffd599",
+        "background_color": "#f9d5a1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -15741,7 +19016,7 @@
         "name": "Solar",
         "subtitle": "Large celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/solar.png",
-        "background_color": "#ffd299",
+        "background_color": "#fadcb7",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful good",
@@ -15868,7 +19143,7 @@
         "name": "Specter",
         "subtitle": "Medium undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/specter.png",
-        "background_color": "#e599ff",
+        "background_color": "#e6a7fb",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -15999,7 +19274,7 @@
         "name": "Spider",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/spider.png",
-        "background_color": "#ffaf99",
+        "background_color": "#f4bcad",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -16079,7 +19354,7 @@
         "name": "Spirit Naga",
         "subtitle": "Large monstrosity, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/spirit-naga.png",
-        "background_color": "#ff999e",
+        "background_color": "#f0b3b6",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -16170,7 +19445,7 @@
         "name": "Sprite",
         "subtitle": "Tiny fey, neutral good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sprite.png",
-        "background_color": "#ffb199",
+        "background_color": "#eaab98",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "neutral good",
@@ -16254,7 +19529,7 @@
         "name": "Steam Mephit",
         "subtitle": "Small elemental, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/steam-mephit.png",
-        "background_color": "#ff9f99",
+        "background_color": "#f1afac",
         "is_horizontal_image": false,
         "size": "Small",
         "alignment": "neutral evil",
@@ -16340,7 +19615,7 @@
         "name": "Stirge",
         "subtitle": "Tiny beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stirge.png",
-        "background_color": "#ffac99",
+        "background_color": "#f6c2b6",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "unaligned",
@@ -16416,7 +19691,7 @@
         "name": "Stone Giant",
         "subtitle": "Huge giant, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stone-giant.png",
-        "background_color": "#ffcb99",
+        "background_color": "#eeceaf",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "neutral",
@@ -16506,7 +19781,7 @@
         "name": "Stone Golem",
         "subtitle": "Large construct, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/stone-golem.png",
-        "background_color": "#99ffc4",
+        "background_color": "#aff1ca",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "unaligned",
@@ -16606,7 +19881,7 @@
         "name": "Storm Giant",
         "subtitle": "Huge giant, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/storm-giant.png",
-        "background_color": "#ffe299",
+        "background_color": "#efdba9",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "chaotic good",
@@ -16729,7 +20004,7 @@
         "name": "Tarrasque",
         "subtitle": "Gargantuan monstrosity(titan), unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tarrasque.png",
-        "background_color": "#ffc199",
+        "background_color": "#fbcdaf",
         "is_horizontal_image": false,
         "size": "Gargantuan",
         "alignment": "unaligned",
@@ -16841,7 +20116,7 @@
         "name": "Thug",
         "subtitle": "Medium humanoid(any race), any non-good alignment",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/thug.png",
-        "background_color": "#ffb999",
+        "background_color": "#eac8b8",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "any non-good alignment",
@@ -16915,7 +20190,7 @@
         "name": "Treant",
         "subtitle": "Huge plant, chaotic good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/treant.png",
-        "background_color": "#f0ff99",
+        "background_color": "#e8f4a6",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "chaotic good",
@@ -17000,7 +20275,7 @@
         "name": "Troll",
         "subtitle": "Large giant, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/troll.png",
-        "background_color": "#99d2ff",
+        "background_color": "#add2ef",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "chaotic evil",
@@ -17074,7 +20349,7 @@
         "name": "Tyrannosaurus Rex",
         "subtitle": "Huge beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tyrannosaurus-rex.png",
-        "background_color": "#99faff",
+        "background_color": "#b8eef1",
         "is_horizontal_image": false,
         "size": "Huge",
         "alignment": "unaligned",
@@ -17148,7 +20423,7 @@
         "name": "Unicorn",
         "subtitle": "Large celestial, lawful good",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/unicorn.png",
-        "background_color": "#ff999c",
+        "background_color": "#feb3b5",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "lawful good",
@@ -17223,7 +20498,7 @@
         "name": "Vampire",
         "subtitle": "Medium undead(shapechanger), lawful evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vampire.png",
-        "background_color": "#ff99b0",
+        "background_color": "#fdc0cd",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "lawful evil",
@@ -17338,7 +20613,7 @@
         "name": "Vampire Spawn",
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vampire-spawn.png",
-        "background_color": "#ffa199",
+        "background_color": "#f5bab5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -17449,7 +20724,7 @@
         "name": "Violet Fungus",
         "subtitle": "Medium plant, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/violet-fungus.png",
-        "background_color": "#ffd899",
+        "background_color": "#eed09e",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -17519,7 +20794,7 @@
         "name": "Water Elemental",
         "subtitle": "Large elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/water-elemental.png",
-        "background_color": "#99edff",
+        "background_color": "#b0edfa",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral",
@@ -17625,7 +20900,7 @@
         "name": "White Dragon Wyrmling",
         "subtitle": "Medium dragon, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/white-dragon-wyrmling.png",
-        "background_color": "#ffd999",
+        "background_color": "#ffe3b4",
         "is_horizontal_image": true,
         "size": "Medium",
         "alignment": "chaotic evil",
@@ -17742,7 +21017,7 @@
         "name": "Wight",
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wight.png",
-        "background_color": "#99ecff",
+        "background_color": "#91e0f1",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -17850,7 +21125,7 @@
         "name": "Will-o'-Wisp",
         "subtitle": "Tiny undead, chaotic evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/will-o-wisp.png",
-        "background_color": "#99ffdd",
+        "background_color": "#adecd7",
         "is_horizontal_image": true,
         "size": "Tiny",
         "alignment": "chaotic evil",
@@ -17981,7 +21256,7 @@
         "name": "Winter Wolf",
         "subtitle": "Large monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/winter-wolf.png",
-        "background_color": "#99d4ff",
+        "background_color": "#b0d7f3",
         "is_horizontal_image": false,
         "size": "Large",
         "alignment": "neutral evil",
@@ -18064,7 +21339,7 @@
         "name": "Wolf",
         "subtitle": "Medium beast, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wolf.png",
-        "background_color": "#ffab99",
+        "background_color": "#edb2a5",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "unaligned",
@@ -18142,7 +21417,7 @@
         "name": "Worg",
         "subtitle": "Large monstrosity, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/worg.png",
-        "background_color": "#ffa399",
+        "background_color": "#fbb7af",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "neutral evil",
@@ -18216,7 +21491,7 @@
         "name": "Wraith",
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wraith.png",
-        "background_color": "#99d2ff",
+        "background_color": "#9ad2fe",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
@@ -18347,7 +21622,7 @@
         "name": "Wyvern",
         "subtitle": "Large dragon, unaligned",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/wyvern.png",
-        "background_color": "#ffbd99",
+        "background_color": "#f3bd9f",
         "is_horizontal_image": true,
         "size": "Large",
         "alignment": "unaligned",
@@ -18427,7 +21702,7 @@
         "name": "Xorn",
         "subtitle": "Medium elemental, neutral",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/xorn.png",
-        "background_color": "#ffa899",
+        "background_color": "#eebfb7",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral",
@@ -18526,7 +21801,7 @@
         "name": "Zombie",
         "subtitle": "Medium undead, neutral evil",
         "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/zombie.png",
-        "background_color": "#ffaa99",
+        "background_color": "#f3bbaf",
         "is_horizontal_image": false,
         "size": "Medium",
         "alignment": "neutral evil",
