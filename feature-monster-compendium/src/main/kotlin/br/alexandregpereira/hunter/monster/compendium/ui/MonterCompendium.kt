@@ -48,7 +48,17 @@ fun MonsterCompendium(
     onItemCLick: (index: String) -> Unit = {},
 ) = LazyColumn {
 
-    monstersBySection.entries.forEach { monsterSectionEntry ->
+    monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
+        if (index > 0) {
+            item {
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(72.dp)
+                        .background(MaterialTheme.colors.surface)
+                )
+            }
+        }
         if (monsterSectionEntry.key.showTitle) {
             item {
                 Text(
@@ -59,32 +69,18 @@ fun MonsterCompendium(
                         .fillMaxWidth()
                         .background(MaterialTheme.colors.surface)
                         .padding(horizontal = 16.dp)
-                        .padding(top = 24.dp, bottom = 8.dp)
-                )
-            }
-        } else {
-            item {
-                Spacer(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(32.dp)
-                        .background(MaterialTheme.colors.surface)
+                        .padding(bottom = 16.dp)
                 )
             }
         }
-        monsterSectionEntry.value.entries.forEachIndexed { index, monsterEntry ->
+        monsterSectionEntry.value.entries.forEach { monsterEntry ->
             item {
                 val leftMonster = monsterEntry.key
                 val rightMonster = monsterEntry.value
 
-                val paddingBottom = if (index == monsterSectionEntry.value.entries.size - 1) {
-                    0.dp
-                } else 0.dp
-
                 MonsterSection(
                     leftMonster = leftMonster,
                     rightMonster = rightMonster,
-                    modifier = Modifier.padding(bottom = paddingBottom),
                     onItemClick = onItemCLick
                 )
             }
