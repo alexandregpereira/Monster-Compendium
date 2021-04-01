@@ -66,7 +66,7 @@ suspend fun main() = start {
 private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
     return this.filter { it.type != MonsterType.OTHER }.map {
         MonsterDto(
-            index = it.index,
+            index = it.getId(),
             type = MonsterTypeDto.valueOf(it.type.name),
             subtype = it.subtype,
             group = it.getGroup(),
@@ -100,18 +100,27 @@ private fun Monster.getImageUrl(): String {
     return "$GITHUB_IMAGE_HOST/$index.png"
 }
 
-private fun Monster.getGroup(): String? {
+private fun Monster.getId(): String {
     return when {
         isDragon() -> {
-            "Dragons"
+            "dragon-$index"
         }
         isAngel() -> {
-            "Angels"
+            "angel-$index"
         }
-        subtype != null && subtypeGroupAllowList.contains(subtype) -> {
-            subtype.capitalize(Locale.ROOT) + "s"
+        isSubtypeGroup() -> {
+            "$subtype-$index"
         }
-        else -> null
+        else -> index
+    }
+}
+
+private fun Monster.getGroup(): String? {
+    val id = getId()
+    return if (id == index) {
+        null
+    } else {
+        id.split("-").first().capitalize(Locale.ROOT) + "s"
     }
 }
 
@@ -121,6 +130,10 @@ private fun Monster.isDragon(): Boolean {
 
 private fun Monster.isAngel(): Boolean {
     return angels.contains(index)
+}
+
+private fun Monster.isSubtypeGroup(): Boolean {
+    return subtype != null && subtypeGroupAllowList.contains(subtype)
 }
 
 private fun Monster.asSpeedFormatted(): SpeedDto = speed.run {
