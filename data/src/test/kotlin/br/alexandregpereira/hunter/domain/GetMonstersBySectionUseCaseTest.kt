@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
+import br.alexandregpereira.hunter.domain.model.Color
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -142,7 +143,7 @@ class GetMonstersBySectionUseCaseTest {
             subtitle = "",
             imageData = MonsterImageData(
                 url = "",
-                backgroundColor = "",
+                backgroundColor = Color(light = "", dark = ""),
                 isHorizontal = isHorizontal
             ),
             size = "",

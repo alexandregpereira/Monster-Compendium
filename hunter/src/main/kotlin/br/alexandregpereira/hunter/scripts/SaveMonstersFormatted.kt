@@ -66,7 +66,7 @@ suspend fun main() = start {
 private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
     return this.filter { it.type != MonsterType.OTHER }.map {
         MonsterDto(
-            index = it.getId(),
+            index = it.index,
             type = MonsterTypeDto.valueOf(it.type.name),
             subtype = it.subtype,
             group = it.getGroup(),
@@ -100,32 +100,27 @@ private fun Monster.getImageUrl(): String {
     return "$GITHUB_IMAGE_HOST/$index.png"
 }
 
-private fun Monster.getId(): String {
-    return if (isDragon()) {
-        "dragon-$index"
-    } else if (subtype.isNullOrEmpty() || subtypeBlackList.contains(subtype)) {
-        index
-    } else {
-        "$subtype-$index"
+private fun Monster.getGroup(): String? {
+    return when {
+        isDragon() -> {
+            "Dragons"
+        }
+        isAngel() -> {
+            "Angels"
+        }
+        subtype != null && subtypeGroupAllowList.contains(subtype) -> {
+            subtype.capitalize(Locale.ROOT) + "s"
+        }
+        else -> null
     }
 }
 
-private fun Monster.getGroup(): String? {
-    return getId().let { index ->
-        when {
-            index.startsWith(type.name.toLowerCase(Locale.ROOT)) -> {
-                type.name.toLowerCase(Locale.ROOT)
-            }
-            index.startsWith(subtype?.toLowerCase(Locale.ROOT) ?: "Any") -> {
-                subtype
-            }
-            else -> null
-        }
-    }?.capitalize(Locale.ROOT)?.let { "${it}s" }
+private fun Monster.isDragon(): Boolean {
+    return this.index.endsWith("-dragon") || this.index.endsWith("-dragon-wyrmling")
 }
 
-private fun Monster.isDragon(): Boolean {
-    return this.index.endsWith("-dragon")
+private fun Monster.isAngel(): Boolean {
+    return angels.contains(index)
 }
 
 private fun Monster.asSpeedFormatted(): SpeedDto = speed.run {
@@ -260,17 +255,13 @@ private fun calculateAbilityScoreModifier(value: Int): Int {
     }
 }
 
-private val subtypeBlackList = listOf(
-    "any race",
-    "dwarf",
-    "elf",
-    "gnoll",
-    "gnome",
-    "goblinoid",
-    "grimlock",
-    "human",
-    "kobold",
-    "sahuagin",
-    "shapechanger",
-    "titan",
+private val subtypeGroupAllowList = listOf(
+    "devil",
+    "demon",
+)
+
+private val angels = listOf(
+    "deva",
+    "planetar",
+    "solar"
 )
