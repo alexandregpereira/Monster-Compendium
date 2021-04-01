@@ -103,12 +103,12 @@ class GetMonstersBySectionUseCaseTest {
                 monsters[11],
                 monsters[12],
                 monsters[14],
-                monsters[16],
+                monsters[15],
                 monsters[17],
-                monsters[19],
+                monsters[18],
+                monsters[20],
                 monsters[21],
-                monsters[22],
-                monsters[24],
+                monsters[23],
             ),
             result[monsterSectionExpected6]!!.keys.toList()
         )
@@ -116,13 +116,13 @@ class GetMonstersBySectionUseCaseTest {
             listOf(
                 null,
                 monsters[13],
-                monsters[15],
                 null,
-                monsters[18],
-                monsters[20],
+                monsters[16],
                 null,
-                monsters[23],
+                monsters[19],
                 null,
+                monsters[22],
+                monsters[24],
             ),
             result[monsterSectionExpected6]!!.values.toList()
         )
