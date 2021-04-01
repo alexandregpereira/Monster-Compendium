@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.compendium
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterSection
@@ -69,7 +70,7 @@ class MonsterCompendiumViewModelTest {
             subtitle = "",
             imageData = MonsterImageData(
                 url = "",
-                backgroundColor = ""
+                backgroundColor = Color(light = "", dark = "")
             ),
             size = "",
             alignment = "",
@@ -103,7 +104,7 @@ class MonsterCompendiumViewModelTest {
                                 name = "",
                                 imageData = MonsterImageData(
                                     url = "",
-                                    backgroundColor = ""
+                                    backgroundColor = Color(light = "", dark = "")
                                 ),
                                 group = null
                             ) to null
