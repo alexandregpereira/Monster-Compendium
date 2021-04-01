@@ -108,6 +108,9 @@ private fun Monster.getId(): String {
         isAngel() -> {
             "angel-$index"
         }
+        isAnimatedObjects() -> {
+            "animated_object-$index"
+        }
         isSubtypeGroup() -> {
             "$subtype-$index"
         }
@@ -120,7 +123,7 @@ private fun Monster.getGroup(): String? {
     return if (id == index) {
         null
     } else {
-        id.split("-").first().capitalize(Locale.ROOT) + "s"
+        id.split("-").first().replace("_", " ").capitalize(Locale.ROOT) + "s"
     }
 }
 
@@ -130,6 +133,10 @@ private fun Monster.isDragon(): Boolean {
 
 private fun Monster.isAngel(): Boolean {
     return angels.contains(index)
+}
+
+private fun Monster.isAnimatedObjects(): Boolean {
+    return animatedObjects.contains(index)
 }
 
 private fun Monster.isSubtypeGroup(): Boolean {
@@ -277,4 +284,10 @@ private val angels = listOf(
     "deva",
     "planetar",
     "solar"
+)
+
+private val animatedObjects = listOf(
+    "animated-armor",
+    "flying-sword",
+    "rug-of-smothering"
 )
