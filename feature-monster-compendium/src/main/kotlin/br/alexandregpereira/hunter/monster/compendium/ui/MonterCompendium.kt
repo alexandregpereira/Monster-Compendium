@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,8 +46,9 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 fun MonsterCompendium(
     monstersBySection: MonsterCardItemsBySection,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
-) = LazyColumn {
+) = LazyColumn(contentPadding = contentPadding) {
 
     monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
         if (index > 0) {

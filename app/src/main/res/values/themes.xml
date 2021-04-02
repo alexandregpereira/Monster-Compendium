@@ -16,26 +16,24 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Hunter" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.Hunter.DayNight" parent="Theme.Hunter"/>
+
+    <style name="Theme.Hunter" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
-        <!-- Customize your theme here. -->
+
+        <item name="android:colorBackground">@color/gray_scale_100</item>
+        <item name="android:statusBarColor">@color/white_alpha_060</item>
+        <item name="android:navigationBarColor">@color/nav_bar</item>
+
+        <!--Styles-->
+        <item name="navigationViewStyle">@style/Widget.Hunter.NavigationView</item>
+
+        <!--System/Platform attributes-->
+        <item name="android:windowBackground">?android:colorBackground</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
     </style>
-
-    <style name="Theme.Hunter.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Hunter.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Theme.Hunter.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

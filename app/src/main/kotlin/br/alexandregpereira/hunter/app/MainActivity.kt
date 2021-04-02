@@ -16,11 +16,8 @@
 
 package br.alexandregpereira.hunter.app
 
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import br.alexandregpereira.hunter.domain.Navigator
@@ -31,31 +28,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        findViewById<View>(R.id.nav_host_fragment).apply {
+            systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        }
+
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         val nav = fragment?.findNavController()
         get<Navigator> { parametersOf(nav) }
-        handleDarkMode()
-    }
-
-    private fun handleDarkMode() {
-        val isNightMode = this.resources.configuration.uiMode
-            .and(Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-
-        if (isNightMode) {
-            val view = window.decorView
-            view.systemUiVisibility =
-                view.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                window.insetsController?.setSystemBarsAppearance(
-                    APPEARANCE_LIGHT_STATUS_BARS,
-                    APPEARANCE_LIGHT_STATUS_BARS
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                window.decorView.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
-        }
     }
 }

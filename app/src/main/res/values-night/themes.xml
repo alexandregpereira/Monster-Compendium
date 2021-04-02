@@ -16,17 +16,20 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Abacate" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+    <style name="Theme.Hunter.DayNight" parent="Theme.Hunter.Dark"/>
+
+    <style name="Theme.Hunter.Dark" parent="Theme.Hunter">
+        <!--Color-->
+        <item name="colorPrimary">@color/gray_scale_900</item>
+        <item name="colorPrimaryVariant">@color/gray_scale_900</item>
+        <item name="colorSecondary">@color/gray_scale_900</item>
+        <item name="colorSecondaryVariant">@color/gray_scale_900</item>
+
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/gray_scale_900_alpha_060</item>
+
+        <!--System/Platform attributes-->
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
     </style>
+
 </resources>

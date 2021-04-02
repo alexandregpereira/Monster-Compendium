@@ -18,4 +18,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_scale_100">#E5E5E5</color>
+    <color name="gray_scale_900">#FF121212</color>
+
+    <color name="white_alpha_060">#99ffffff</color>
+    <color name="gray_scale_900_alpha_060">#99121212</color>
+    <color name="black_alpha_020">#33000000</color>
+
+    <color name="nav_bar">@color/black_alpha_020</color>
 </resources>

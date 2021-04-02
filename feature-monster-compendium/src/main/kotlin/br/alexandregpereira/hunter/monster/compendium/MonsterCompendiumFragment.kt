@@ -20,13 +20,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,13 +42,12 @@ class MonsterCompendiumFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                MonsterCompendium(
-                    viewModel = viewModel,
-                    navigator = navigator
-                )
-            }
+        return requireContext().createComposeView { padding ->
+            MonsterCompendium(
+                viewModel = viewModel,
+                navigator = navigator,
+                contentPadding = padding
+            )
         }
     }
 }
@@ -54,10 +55,14 @@ class MonsterCompendiumFragment : Fragment() {
 @Composable
 internal fun MonsterCompendium(
     viewModel: MonsterCompendiumViewModel,
-    navigator: Navigator
+    navigator: Navigator,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = Window {
     val state = viewModel.stateLiveData.observeAsState().value ?: return@Window
-    MonsterCompendium(monstersBySection = state.monstersBySection) {
+    MonsterCompendium(
+        monstersBySection = state.monstersBySection,
+        contentPadding = contentPadding
+    ) {
         viewModel.navigateToDetail(index = it)
     }
 
