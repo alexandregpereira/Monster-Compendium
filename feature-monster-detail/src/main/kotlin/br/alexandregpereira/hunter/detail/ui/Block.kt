@@ -1,0 +1,47 @@
+package br.alexandregpereira.hunter.detail.ui
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
+
+@Composable
+fun Block(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    content: @Composable BoxScope.() -> Unit
+) = Column(
+    modifier.background(color = MaterialTheme.colors.surface)
+        .padding(16.dp)
+) {
+
+    title?.let {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Normal,
+            fontSize = 18.sp,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+    }
+
+    Box(Modifier.fillMaxWidth(), content = content)
+}
+
+@Preview
+@Composable
+fun BlockPreview() = HunterTheme {
+    Block(title = "Title") {
+
+    }
+}

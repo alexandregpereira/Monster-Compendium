@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.Stats
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
@@ -38,9 +39,11 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             ),
             size = it.size,
             alignment = it.alignment,
-            armorClass = it.armorClass,
-            hitPoints = it.hitPoints,
-            hitDice = it.hitDice,
+            stats = Stats(
+                armorClass = it.armorClass,
+                hitPoints = it.hitPoints,
+                hitDice = it.hitDice
+            ),
             speed = it.speed.toDomain(),
             abilityScores = it.abilityScores.toDomain(),
             savingThrows = it.savingThrows.toDomain(),

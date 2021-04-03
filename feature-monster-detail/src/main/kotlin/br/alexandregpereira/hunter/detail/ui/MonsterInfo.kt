@@ -1,7 +1,9 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +15,7 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
+import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -24,6 +27,8 @@ fun MonsterInfo(monster: Monster) = Column(
         )
 ) {
     MonsterTitle(title = monster.name, subTitle = monster.subtitle)
+    Spacer(modifier = Modifier.padding(top = 1.dp))
+    StatsBlock(stats = monster.stats)
 }
 
 @Preview
@@ -46,9 +51,7 @@ fun MonsterInfoPreview() {
                 ),
                 size = "",
                 alignment = "",
-                armorClass = 0,
-                hitPoints = 0,
-                hitDice = "",
+                stats = Stats(armorClass = 0, hitPoints = 0, hitDice = ""),
                 speed = Speed(hover = false, values = listOf()),
                 abilityScores = listOf(),
                 savingThrows = listOf(),

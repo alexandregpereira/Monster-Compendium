@@ -18,4 +18,4 @@ package br.alexandregpereira.hunter.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val GrayScale100 = Color(0xE5E5E5)
+val GrayScale100 = Color(0xFFE5E5E5)
