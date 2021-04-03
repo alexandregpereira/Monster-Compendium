@@ -28,7 +28,8 @@ private val DarkColorPalette = darkColors(
     primaryVariant = Color.Black,
     secondary = Color.Black,
     secondaryVariant = Color.Black,
-    onPrimary = Color.Black
+    onPrimary = Color.White,
+    background = Color.Black,
 )
 
 private val LightColorPalette = lightColors(

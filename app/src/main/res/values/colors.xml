@@ -23,6 +23,6 @@
 
     <color name="white_alpha_060">#99ffffff</color>
     <color name="gray_scale_900_alpha_060">#99121212</color>
-    <color name="black_alpha_020">#33000000</color>
+    <color name="black_alpha_020">#33121212</color>
     <color name="white_alpha_020">#33ffffff</color>
 </resources>

@@ -104,7 +104,6 @@ fun MonsterImage(
             Icon(
                 painter = painterResource(type.iconRes),
                 contentDescription = type.name,
-                tint = Color.Black,
                 modifier = Modifier
                     .size(iconSize)
                     .alpha(0.7f)
