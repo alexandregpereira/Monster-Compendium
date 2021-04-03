@@ -20,22 +20,25 @@ import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.ui.compose.MonsterImage
 import br.alexandregpereira.hunter.ui.compose.MonsterItemType
-import br.alexandregpereira.hunter.ui.theme.Shapes
 
 @Composable
-fun MonsterDetail(monster: Monster) {
+fun MonsterDetail(
+    monster: Monster,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+) {
     Column(
         Modifier
             .fillMaxHeight()
-            .clip(Shapes.large)
             .background(
                 Color(
                     parseColor(
@@ -52,7 +55,7 @@ fun MonsterDetail(monster: Monster) {
             challengeRating = monster.challengeRating,
             type = MonsterItemType.valueOf(monster.type.name),
             fullOpen = true,
-            isHorizontalImage = monster.imageData.isHorizontal
+            modifier = Modifier.padding(contentPadding)
         )
     }
 }

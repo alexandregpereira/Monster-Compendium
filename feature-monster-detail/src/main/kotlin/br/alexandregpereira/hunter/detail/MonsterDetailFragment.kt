@@ -20,14 +20,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MonsterDetailFragment : Fragment() {
@@ -41,23 +43,22 @@ class MonsterDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel.getMonster(index)
-        return ComposeView(requireContext()).apply {
-            setContent {
-                MonsterDetail(viewModel)
-            }
+        return requireContext().createComposeView {
+            MonsterDetail(viewModel, contentPadding = it)
         }
     }
 }
 
 @Composable
 internal fun MonsterDetail(
-    viewModel: MonsterDetailViewModel
+    viewModel: MonsterDetailViewModel,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = Window {
     val viewState by viewModel.stateLiveData.observeAsState(MonsterDetailViewState())
 
     CircularLoading(viewState.isLoading) {
         viewState.monster?.let { monster ->
-            MonsterDetail(monster)
+            MonsterDetail(monster, contentPadding)
         }
     }
 }

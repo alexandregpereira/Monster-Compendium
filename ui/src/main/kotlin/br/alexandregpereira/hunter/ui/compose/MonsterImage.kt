@@ -17,15 +17,14 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import android.graphics.Color.parseColor
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,10 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -53,74 +56,110 @@ fun MonsterImage(
     modifier: Modifier = Modifier,
     backgroundColor: String? = null,
     fullOpen: Boolean = false,
-    isHorizontalImage: Boolean = false,
-) = Box(
-    modifier
-        .clip(Shapes.large)
 ) {
-    val height = if (fullOpen) {
-        if (isHorizontalImage) 360.dp else 420.dp
-    } else 208.dp
-
-    CoilImage(
-        data = imageUrl,
-        contentDescription = contentDescription,
-        fadeIn = true,
-        modifier = Modifier
-            .height(height)
-            .fillMaxWidth()
-            .background(
-                color = Color(
-                    backgroundColor
-                        .runCatching { parseColor(this) }
-                        .getOrNull() ?: 0
-                ),
-                shape = Shapes.large
-            )
-    )
-
-    ChallengeRatingCircle(
-        challengeRating = challengeRating,
-        modifier = Modifier.offset(x = -(53.dp), y = -(53.dp))
-    )
-
+    val shape = if (fullOpen) RectangleShape else Shapes.large
     val iconSize = if (fullOpen) 32.dp else 24.dp
+    val height = if (fullOpen) 420.dp else 208.dp
+    val challengeRatingSize = if (fullOpen) {
+        CHALLENGE_RATING_CIRCLE_SIZE_DEFAULT + 8.dp
+    } else CHALLENGE_RATING_CIRCLE_SIZE_DEFAULT
+    val challengeRatingFontSize = if (fullOpen) 16.sp else 14.sp
     Box(
-        contentAlignment = Alignment.TopEnd,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier
+            .clip(shape)
     ) {
-        Icon(
-            painter = painterResource(type.iconRes),
-            contentDescription = type.name,
-            tint = Color.Black,
+        CoilImage(
+            data = imageUrl,
+            contentDescription = contentDescription,
+            fadeIn = true,
             modifier = Modifier
-                .size(iconSize)
-                .alpha(0.7f)
+                .height(height)
+                .fillMaxWidth()
+                .run {
+                    if (fullOpen.not()) {
+                        background(
+                            color = Color(
+                                backgroundColor
+                                    .runCatching { parseColor(this) }
+                                    .getOrNull() ?: 0
+                            ),
+                            shape = shape
+                        )
+                    } else this
+                }
         )
+
+        ChallengeRatingCircle(
+            challengeRating = challengeRating,
+            size = challengeRatingSize,
+            fontSize = challengeRatingFontSize
+        )
+
+        Box(
+            contentAlignment = Alignment.TopEnd,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        ) {
+            Icon(
+                painter = painterResource(type.iconRes),
+                contentDescription = type.name,
+                tint = Color.Black,
+                modifier = Modifier
+                    .size(iconSize)
+                    .alpha(0.7f)
+            )
+        }
     }
 }
 
 @Composable
 fun ChallengeRatingCircle(
     challengeRating: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    size: Dp = CHALLENGE_RATING_CIRCLE_SIZE_DEFAULT,
+    fontSize: TextUnit = 14.sp
 ) = Box(
-    modifier = modifier
-        .size(90.dp)
-        .clip(CircleShape)
-        .background(challengeRating.getChallengeRatingColor())
+    contentAlignment = Alignment.CenterStart,
+    modifier = modifier.size(size)
 ) {
+    DrawChallengeRatingCircle(
+        color = challengeRating.getChallengeRatingColor(),
+        canvasSize = size
+    )
     Text(
         challengeRating.getChallengeRatingFormatted(),
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = fontSize,
         color = Color.White,
         textAlign = TextAlign.Center,
+        maxLines = 1,
         modifier = Modifier
-            .width(29.dp)
-            .offset(x = 52.dp, y = 58.dp)
+            .width(size - 20.dp)
+            .padding(bottom = 16.dp)
+    )
+}
+
+@Composable
+fun DrawChallengeRatingCircle(
+    color: Color,
+    modifier: Modifier = Modifier,
+    canvasSize: Dp = 48.dp
+) = Canvas(modifier.size(canvasSize)) {
+    val width = size.width - 8.dp.toPx()
+    val height = size.height - 8.dp.toPx()
+    drawPath(
+        path = Path().apply {
+            lineTo(0f, 0f)
+            lineTo(width, 0f)
+            cubicTo(
+                x1 = width, y1 = height / 2,
+                x2 = width / 2, y2 = height,
+                x3 = 0f, y3 = height
+            )
+            close()
+        },
+        color = color
     )
 }
 
@@ -163,3 +202,25 @@ fun ChallengeRatingPreview() {
         ChallengeRatingCircle(10f)
     }
 }
+
+@Preview
+@Composable
+fun ChallengeRatingPreviewWithDifferentSize() {
+    HunterTheme {
+        ChallengeRatingCircle(
+            10f,
+            size = 56.dp,
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Preview
+@Composable
+fun DrawChallengeRatingCirclePreview() {
+    HunterTheme {
+        DrawChallengeRatingCircle(Color.Blue)
+    }
+}
+
+private val CHALLENGE_RATING_CIRCLE_SIZE_DEFAULT = 48.dp
