@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
+import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.coil.CoilImage
 
 @Composable
@@ -78,11 +79,7 @@ fun MonsterImage(
                 .run {
                     if (fullOpen.not()) {
                         background(
-                            color = Color(
-                                backgroundColor
-                                    .runCatching { parseColor(this) }
-                                    .getOrNull() ?: 0
-                            ),
+                            color = backgroundColor.toColor(),
                             shape = shape
                         )
                     } else this

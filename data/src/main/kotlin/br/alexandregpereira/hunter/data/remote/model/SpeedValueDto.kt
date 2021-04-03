@@ -47,8 +47,6 @@ enum class SpeedTypeDto {
     CLIMB,
     @SerialName("FLY")
     FLY,
-    @SerialName("HOVER")
-    HOVER,
     @SerialName("WALK")
     WALK,
     @SerialName("SWIM")

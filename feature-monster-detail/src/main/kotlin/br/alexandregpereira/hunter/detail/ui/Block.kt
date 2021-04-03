@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -20,10 +21,11 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 fun Block(
     modifier: Modifier = Modifier,
     title: String? = null,
+    contentPaddingBottom: Dp = 0.dp,
     content: @Composable BoxScope.() -> Unit
 ) = Column(
     modifier.background(color = MaterialTheme.colors.surface)
-        .padding(16.dp)
+        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp + contentPaddingBottom)
 ) {
 
     title?.let {

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="monster_detail_armor_class">Armor Class</string>
+    <string name="monster_detail_speed_title">Speed</string>
+    <string name="monster_detail_speed_hover">Hover</string>
 </resources>

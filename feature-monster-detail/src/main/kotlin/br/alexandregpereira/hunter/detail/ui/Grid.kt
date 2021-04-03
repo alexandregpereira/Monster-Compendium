@@ -14,5 +14,6 @@ fun Grid(content: @Composable () -> Unit) = FlowRow(
     mainAxisSize = SizeMode.Wrap,
     mainAxisAlignment = FlowMainAxisAlignment.SpaceEvenly,
     mainAxisSpacing = 16.dp,
+    crossAxisSpacing = 16.dp,
     content = content
 )

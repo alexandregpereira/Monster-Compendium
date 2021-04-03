@@ -32,7 +32,6 @@ enum class SpeedType {
     BURROW,
     CLIMB,
     FLY,
-    HOVER,
     WALK,
     SWIM,
 }
