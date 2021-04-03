@@ -21,10 +21,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
+import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,6 +53,11 @@ class MonsterDetailFragment : Fragment() {
 internal fun MonsterDetail(
     viewModel: MonsterDetailViewModel
 ) = Window {
-    val monster = viewModel.stateLiveData.observeAsState().value?.monster ?: return@Window
-    MonsterDetail(monster)
+    val viewState by viewModel.stateLiveData.observeAsState(MonsterDetailViewState())
+
+    CircularLoading(viewState.isLoading) {
+        viewState.monster?.let { monster ->
+            MonsterDetail(monster)
+        }
+    }
 }

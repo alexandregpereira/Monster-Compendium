@@ -19,5 +19,6 @@ package br.alexandregpereira.hunter.detail
 import br.alexandregpereira.hunter.domain.model.Monster
 
 data class MonsterDetailViewState(
-    val monster: Monster
+    val isLoading: Boolean = false,
+    val monster: Monster? = null
 )

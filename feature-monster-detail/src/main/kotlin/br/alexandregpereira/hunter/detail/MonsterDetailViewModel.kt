@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.GetMonsterByIndexUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 internal class MonsterDetailViewModel(
@@ -35,6 +36,9 @@ internal class MonsterDetailViewModel(
 
     fun getMonster(index: String) = viewModelScope.launch {
         getMonsterByIndexUseCase(index)
+            .onStart {
+                _stateLiveData.value = MonsterDetailViewState(isLoading = true)
+            }
             .catch {
                 Log.e("MonsterDetailViewModel", it.message ?: "")
             }
