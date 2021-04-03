@@ -55,7 +55,7 @@ fun View.requestApplyInsetsWhenAttached() {
                 v.requestApplyInsets()
             }
 
-            override fun onViewDetachedFromWindow(v: View) = Unit
+            override fun onViewDetachedFromWindow(v: View) {}
         })
     }
 }

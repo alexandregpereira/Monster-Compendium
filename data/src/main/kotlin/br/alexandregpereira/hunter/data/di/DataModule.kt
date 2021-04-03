@@ -25,9 +25,11 @@ import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.MonsterRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 val dataModule = module {
     single {
@@ -35,9 +37,13 @@ val dataModule = module {
             ignoreUnknownKeys = true
             prettyPrint = true
         }
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
-            .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
+            .client(client)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
