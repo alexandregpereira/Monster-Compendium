@@ -48,8 +48,9 @@ fun MonsterCompendium(
     monstersBySection: MonsterCardItemsBySection,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
-) = LazyColumn(contentPadding = contentPadding) {
+) = LazyColumn {
 
+    val lastIndex = monstersBySection.size - 1
     monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
         if (index > 0) {
             item {
@@ -63,16 +64,17 @@ fun MonsterCompendium(
         }
         if (monsterSectionEntry.key.showTitle) {
             item {
-                Text(
-                    text = monsterSectionEntry.key.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colors.surface)
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp)
-                )
+                Surface {
+                    Text(
+                        text = monsterSectionEntry.key.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 16.dp)
+                    )
+                }
             }
         }
         monsterSectionEntry.value.entries.forEach { monsterEntry ->
@@ -80,10 +82,17 @@ fun MonsterCompendium(
                 val leftMonster = monsterEntry.key
                 val rightMonster = monsterEntry.value
 
+                val modifier = when (index) {
+                    0 -> Modifier.padding(top = contentPadding.calculateTopPadding())
+                    lastIndex -> Modifier.padding(bottom = contentPadding.calculateBottomPadding())
+                    else -> Modifier
+                }
+
                 MonsterSection(
                     leftMonster = leftMonster,
                     rightMonster = rightMonster,
-                    onItemClick = onItemCLick
+                    onItemClick = onItemCLick,
+                    modifier = modifier
                 )
             }
         }
@@ -96,23 +105,24 @@ fun MonsterSection(
     modifier: Modifier = Modifier,
     rightMonster: MonsterCardItem? = null,
     onItemClick: (index: String) -> Unit = {},
-) = Row(
-    modifier
-        .background(MaterialTheme.colors.surface)
-        .padding(horizontal = 8.dp)
-) {
+) = Surface {
+    Row(
+        modifier
+            .padding(horizontal = 8.dp)
+    ) {
 
-    MonsterCard(
-        monster = leftMonster,
-        modifier = Modifier.weight(1f),
-        onCLick = { onItemClick(leftMonster.index) }
-    )
-    rightMonster?.let {
         MonsterCard(
-            monster = it,
+            monster = leftMonster,
             modifier = Modifier.weight(1f),
-            onCLick = { onItemClick(it.index) }
+            onCLick = { onItemClick(leftMonster.index) }
         )
+        rightMonster?.let {
+            MonsterCard(
+                monster = it,
+                modifier = Modifier.weight(1f),
+                onCLick = { onItemClick(it.index) }
+            )
+        }
     }
 }
 

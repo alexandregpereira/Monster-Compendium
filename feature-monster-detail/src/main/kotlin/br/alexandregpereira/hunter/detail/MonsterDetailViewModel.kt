@@ -21,21 +21,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.GetMonsterByIndexUseCase
+import br.alexandregpereira.hunter.domain.GetMonstersByInitialIndexUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 internal class MonsterDetailViewModel(
-    private val getMonsterByIndexUseCase: GetMonsterByIndexUseCase
+    private val getMonstersByInitialIndexUseCase: GetMonstersByInitialIndexUseCase
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData<MonsterDetailViewState>()
     val stateLiveData: LiveData<MonsterDetailViewState> = _stateLiveData
 
-    fun getMonster(index: String) = viewModelScope.launch {
-        getMonsterByIndexUseCase(index)
+    fun getMonstersByInitialIndex(index: String) = viewModelScope.launch {
+        getMonstersByInitialIndexUseCase(index)
             .onStart {
                 _stateLiveData.value = MonsterDetailViewState(isLoading = true)
             }
@@ -43,7 +43,10 @@ internal class MonsterDetailViewModel(
                 Log.e("MonsterDetailViewModel", it.message ?: "")
             }
             .collect {
-                _stateLiveData.value = MonsterDetailViewState(monster = it)
+                _stateLiveData.value = MonsterDetailViewState(
+                    initialMonsterIndex = it.first,
+                    monsters = it.second
+                )
             }
     }
 }

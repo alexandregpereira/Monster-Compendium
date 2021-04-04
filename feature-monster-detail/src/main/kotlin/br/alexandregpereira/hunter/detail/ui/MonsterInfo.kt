@@ -28,9 +28,10 @@ import br.alexandregpereira.hunter.ui.util.toColor
 @Composable
 fun MonsterInfo(
     monster: Monster,
+    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = Column(
-    Modifier
+    modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
         .background(

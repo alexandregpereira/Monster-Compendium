@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -43,7 +44,7 @@ class MonsterDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.getMonster(index)
+        viewModel.getMonstersByInitialIndex(index)
         return requireContext().createComposeView {
             MonsterDetail(viewModel, contentPadding = it)
         }
@@ -59,8 +60,8 @@ internal fun MonsterDetail(
     val viewState by viewModel.stateLiveData.observeAsState(MonsterDetailViewState())
 
     CircularLoading(viewState.isLoading) {
-        viewState.monster?.let { monster ->
-            MonsterDetail(monster, contentPadding)
+        viewState.monsters.takeIf { it.isNotEmpty() }?.let {
+            MonsterDetail(it, viewState.initialMonsterIndex, contentPadding)
         }
     }
 }

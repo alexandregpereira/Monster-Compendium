@@ -20,5 +20,6 @@ import br.alexandregpereira.hunter.domain.model.Monster
 
 data class MonsterDetailViewState(
     val isLoading: Boolean = false,
-    val monster: Monster? = null
+    val initialMonsterIndex: Int = 0,
+    val monsters: List<Monster> = emptyList()
 )

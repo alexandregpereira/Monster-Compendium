@@ -20,14 +20,16 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetMonsterByIndexUseCase(
+class GetMonstersByInitialIndexUseCase(
     private val repository: MonsterRepository
 ) {
 
-    operator fun invoke(index: String): Flow<Monster> {
+    operator fun invoke(index: String): Flow<Pair<Int, List<Monster>>> {
         return repository.getMonsters().map {
-            it.find { monster -> monster.index == index }
+            val monster = it.find { monster -> monster.index == index }
                 ?: throw IllegalAccessError("Monster not found")
+
+            it.indexOf(monster) to it
         }
     }
 }

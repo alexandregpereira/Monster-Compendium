@@ -1,12 +1,8 @@
 package br.alexandregpereira.hunter.ui.util
 
-import android.graphics.Color.parseColor
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 
-fun String?.toColor(): Color {
-    return Color(
-        this
-            .runCatching { parseColor(this) }
-            .getOrNull() ?: 0
-    )
+fun String.toColor(): Color {
+    return Color(this.toColorInt())
 }

@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
-import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,8 +58,8 @@ internal fun MonsterCompendium(
     viewModel: MonsterCompendiumViewModel,
     navigator: Navigator,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) = Window {
-    val viewState = viewModel.stateLiveData.observeAsState().value ?: return@Window
+) = HunterTheme {
+    val viewState = viewModel.stateLiveData.observeAsState().value ?: return@HunterTheme
 
     CircularLoading(viewState.isLoading) {
         MonsterCompendium(
