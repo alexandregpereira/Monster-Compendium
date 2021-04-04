@@ -24,7 +24,7 @@ fun MonsterTitle(
         modifier = Modifier
             .fillMaxWidth()
             .background( color = MaterialTheme.colors.surface)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(16.dp)
     ) {
         Text(
             text = title,

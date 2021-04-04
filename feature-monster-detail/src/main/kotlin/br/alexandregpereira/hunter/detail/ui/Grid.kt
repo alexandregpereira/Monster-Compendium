@@ -9,8 +9,11 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.SizeMode
 
 @Composable
-fun Grid(content: @Composable () -> Unit) = FlowRow(
-    Modifier.fillMaxWidth(),
+fun Grid(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) = FlowRow(
+    modifier.fillMaxWidth(),
     mainAxisSize = SizeMode.Wrap,
     mainAxisAlignment = FlowMainAxisAlignment.SpaceEvenly,
     mainAxisSpacing = 16.dp,

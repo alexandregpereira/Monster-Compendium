@@ -33,7 +33,7 @@ fun Block(
             text = title,
             fontWeight = FontWeight.Normal,
             fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 24.dp)
         )
     }
 

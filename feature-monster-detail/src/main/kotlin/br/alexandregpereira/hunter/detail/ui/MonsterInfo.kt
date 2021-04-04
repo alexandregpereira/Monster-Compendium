@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +33,7 @@ import br.alexandregpereira.hunter.ui.util.toColor
 fun MonsterInfo(
     monster: Monster,
     modifier: Modifier = Modifier,
+    alpha: Float = 1f,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = Column(
     modifier
@@ -36,14 +41,33 @@ fun MonsterInfo(
         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
         .background(
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            color = monster.imageData.backgroundColor.getColor(isSystemInDarkTheme()).toColor()
+            color = MaterialTheme.colors.surface
         )
+        .alpha(alpha)
 ) {
     MonsterTitle(title = monster.name, subTitle = monster.subtitle)
-    Spacer(modifier = Modifier.padding(top = 1.dp))
+    Spacer(modifier = Modifier
+        .height(1.dp)
+        .fillMaxWidth()
+        .background(MaterialTheme.colors.background)
+    )
     StatsBlock(stats = monster.stats)
-    Spacer(modifier = Modifier.padding(top = 1.dp))
-    SpeedBlock(speed = monster.speed, contentPaddingBottom = contentPadding.calculateBottomPadding())
+    Spacer(modifier = Modifier
+        .height(1.dp)
+        .fillMaxWidth()
+        .background(MaterialTheme.colors.background)
+    )
+    SpeedBlock(speed = monster.speed)
+    Spacer(modifier = Modifier
+        .height(1.dp)
+        .fillMaxWidth()
+        .background(MaterialTheme.colors.background)
+    )
+    AbilityScoreBlock(abilityScores = monster.abilityScores)
+    Spacer(
+        modifier = Modifier.height(contentPadding.calculateBottomPadding())
+            .fillMaxWidth()
+    )
 }
 
 @Preview

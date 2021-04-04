@@ -71,6 +71,7 @@ fun IconInfo(
         textAlign = TextAlign.Center,
         modifier = Modifier
             .width(72.dp)
+            .padding(top = 8.dp)
     )
 }
 

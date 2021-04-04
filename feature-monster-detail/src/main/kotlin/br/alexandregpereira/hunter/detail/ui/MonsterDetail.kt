@@ -153,7 +153,7 @@ fun MonsterDetail(
             MonsterInfo(
                 monster,
                 contentPadding = contentPadding,
-                modifier = Modifier.alpha(alpha)
+                alpha = alpha
             )
             MonsterInfo(
                 nextMonster,
