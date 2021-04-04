@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,15 +48,15 @@ fun MonsterCompendium(
     onItemCLick: (index: String) -> Unit = {},
 ) = LazyColumn {
 
-    val lastIndex = monstersBySection.size - 1
+    val verticalSectionPadding = 24.dp
+    val lastIndex = monstersBySection.entries.size - 1
     monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
         if (index > 0) {
             item {
                 Spacer(
                     Modifier
                         .fillMaxWidth()
-                        .height(72.dp)
-                        .background(MaterialTheme.colors.surface)
+                        .height(4.dp)
                 )
             }
         }
@@ -72,19 +70,36 @@ fun MonsterCompendium(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp, top = verticalSectionPadding)
                     )
                 }
             }
         }
-        monsterSectionEntry.value.entries.forEach { monsterEntry ->
+
+        val monsterLastRowIndex = monsterSectionEntry.value.entries.size - 1
+        monsterSectionEntry.value.entries.forEachIndexed { monsterRowIndex, monsterEntry ->
             item {
                 val leftMonster = monsterEntry.key
                 val rightMonster = monsterEntry.value
 
-                val modifier = when (index) {
-                    0 -> Modifier.padding(top = contentPadding.calculateTopPadding())
-                    lastIndex -> Modifier.padding(bottom = contentPadding.calculateBottomPadding())
+                val contentPaddingValue = when (index) {
+                    0 -> contentPadding.calculateTopPadding()
+                    lastIndex -> contentPadding.calculateBottomPadding()
+                    else -> 0.dp
+                }
+                val topPadding = if (monsterSectionEntry.key.showTitle) {
+                    0.dp
+                } else verticalSectionPadding
+
+                val modifier = when (monsterRowIndex) {
+                    0 -> Modifier.padding(top = topPadding + contentPaddingValue)
+                    monsterLastRowIndex -> {
+                        if (index == lastIndex) {
+                            Modifier.padding(bottom = verticalSectionPadding + contentPaddingValue)
+                        } else {
+                            Modifier.padding(bottom = verticalSectionPadding)
+                        }
+                    }
                     else -> Modifier
                 }
 
