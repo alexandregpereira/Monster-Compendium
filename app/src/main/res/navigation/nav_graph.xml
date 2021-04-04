@@ -25,7 +25,11 @@
         android:label="MonsterCompendiumFragment" >
         <action
             android:id="@+id/action_monsterCompendiumFragment_to_monsterDetailFragment"
-            app:destination="@id/monsterDetailFragment" />
+            app:destination="@id/monsterDetailFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@anim/exit_animation"
+            app:popEnterAnim="@anim/pop_enter_animation"
+            app:popExitAnim="@anim/pop_exit_animation" />
     </fragment>
     <fragment
         android:id="@+id/monsterDetailFragment"
