@@ -35,8 +35,7 @@ class HunterApplication : Application() {
                 dataModule +
                     domainModule +
                     monsterCompendiumModule +
-                    monsterDetailModule +
-                    navigationModule
+                    monsterDetailModule
             )
         }
     }
