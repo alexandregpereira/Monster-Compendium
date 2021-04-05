@@ -1,9 +1,8 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -22,7 +21,7 @@ fun Block(
     modifier: Modifier = Modifier,
     title: String? = null,
     contentPaddingBottom: Dp = 0.dp,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) = Column(
     modifier.background(color = MaterialTheme.colors.surface)
         .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp + contentPaddingBottom)
@@ -37,7 +36,7 @@ fun Block(
         )
     }
 
-    Box(Modifier.fillMaxWidth(), content = content)
+    Column(Modifier.fillMaxWidth(), content = content)
 }
 
 @Preview

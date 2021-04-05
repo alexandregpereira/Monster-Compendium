@@ -1,14 +1,12 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
 fun MonsterInfo(
@@ -46,28 +43,49 @@ fun MonsterInfo(
         .alpha(alpha)
 ) {
     MonsterTitle(title = monster.name, subTitle = monster.subtitle)
-    Spacer(modifier = Modifier
-        .height(1.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colors.background)
-    )
-    StatsBlock(stats = monster.stats)
-    Spacer(modifier = Modifier
-        .height(1.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colors.background)
-    )
-    SpeedBlock(speed = monster.speed)
-    Spacer(modifier = Modifier
-        .height(1.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colors.background)
-    )
-    AbilityScoreBlock(abilityScores = monster.abilityScores)
+
+    BlockSection { StatsBlock(stats = monster.stats) }
+    BlockSection { SpeedBlock(speed = monster.speed) }
+    BlockSection { AbilityScoreBlock(abilityScores = monster.abilityScores) }
+    OptionalBlockSection(monster.damageVulnerabilities) {
+        DamageVulnerabilitiesBlock(damages = it)
+    }
+    OptionalBlockSection(monster.damageResistances) {
+        DamageResistancesBlock(damages = it)
+    }
+    OptionalBlockSection(monster.damageImmunities) {
+        DamageImmunitiesBlock(damages = it)
+    }
+
     Spacer(
-        modifier = Modifier.height(contentPadding.calculateBottomPadding())
+        modifier = Modifier
+            .height(contentPadding.calculateBottomPadding())
             .fillMaxWidth()
     )
+}
+
+@Composable
+private fun<T> ColumnScope.OptionalBlockSection(
+    value: List<T>,
+    content: @Composable ColumnScope.(List<T>) -> Unit
+) {
+    if (value.isEmpty()) return
+    BlockSection {
+        content(value)
+    }
+}
+
+@Composable
+private fun ColumnScope.BlockSection(
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Spacer(modifier = Modifier
+        .height(1.dp)
+        .fillMaxWidth()
+        .background(MaterialTheme.colors.background)
+    )
+
+    content()
 }
 
 @Preview

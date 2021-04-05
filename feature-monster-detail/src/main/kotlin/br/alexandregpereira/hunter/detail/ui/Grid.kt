@@ -17,6 +17,6 @@ fun Grid(
     mainAxisSize = SizeMode.Wrap,
     mainAxisAlignment = FlowMainAxisAlignment.SpaceEvenly,
     mainAxisSpacing = 16.dp,
-    crossAxisSpacing = 16.dp,
+    crossAxisSpacing = 32.dp,
     content = content
 )
