@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
-    id 'kotlin'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
-}
+package br.alexandregpereira.hunter.data.remote.mapper
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
+import br.alexandregpereira.hunter.domain.model.SavingThrow
 
-dependencies {
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
-    implementation 'org.jsoup:jsoup:1.13.1'
+internal fun List<SavingThrowDto>.toDomain(): List<SavingThrow> {
+    return this.map {
+        SavingThrow(type = it.type.toDomain(), modifier = it.modifier)
+    }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.mapper
+package br.alexandregpereira.hunter.data.remote.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto

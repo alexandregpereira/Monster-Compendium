@@ -16,18 +16,39 @@
 
 package br.alexandregpereira.hunter.data
 
-import br.alexandregpereira.hunter.data.mapper.toDomain
+import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
+import br.alexandregpereira.hunter.data.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.local.mapper.toEntity
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
+import br.alexandregpereira.hunter.data.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.model.Monster
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class MonsterRepositoryImpl(
-    private val remoteDataSource: MonsterRemoteDataSource
+    private val remoteDataSource: MonsterRemoteDataSource,
+    private val localDataSource: MonsterLocalDataSource
 ) : MonsterRepository {
 
     override fun getMonsters(): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters().map { it.toDomain() }
+        return localDataSource.getMonsters().flatMapLatest { entityList ->
+            if (entityList.isEmpty()) getMonstersRemote()
+            else flowOf(entityList.toDomain())
+        }
+    }
+
+    private fun getMonstersRemote(): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters().map { it.toDomain() }.onEach {
+            localDataSource.saveMonsters(it.toEntity()).collect()
+        }.flatMapLatest {
+            localDataSource.getMonsters()
+        }.map { it.toDomain() }
     }
 }

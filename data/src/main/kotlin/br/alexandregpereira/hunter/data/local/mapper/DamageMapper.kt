@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.mapper
+package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
-import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
-import br.alexandregpereira.hunter.domain.model.AbilityScore
-import br.alexandregpereira.hunter.domain.model.AbilityScoreType
+import br.alexandregpereira.hunter.data.local.entity.DamageEntity
+import br.alexandregpereira.hunter.domain.model.Damage
+import br.alexandregpereira.hunter.domain.model.DamageType
 
-internal fun List<AbilityScoreDto>.toDomain(): List<AbilityScore> {
+internal fun List<DamageEntity>.toDomain(): List<Damage> {
     return this.map {
-        AbilityScore(
-            type = it.type.toDomain(),
-            value = it.value,
-            modifier = it.modifier
-        )
+        Damage(index = it.index, type = DamageType.valueOf(it.type), name = it.name)
     }
 }
 
-internal fun AbilityScoreTypeDto.toDomain(): AbilityScoreType {
-    return AbilityScoreType.valueOf(name)
+internal fun List<Damage>.toEntity(): List<DamageEntity> {
+    return this.map {
+        DamageEntity(index = it.index, type = it.type.name, name = it.name)
+    }
 }

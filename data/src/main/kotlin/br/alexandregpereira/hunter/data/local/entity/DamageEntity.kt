@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.mapper
+package br.alexandregpereira.hunter.data.local.entity
 
-import br.alexandregpereira.hunter.data.remote.model.SkillDto
-import br.alexandregpereira.hunter.domain.model.Skill
+import kotlinx.serialization.Serializable
 
-internal fun List<SkillDto>.toDomain(): List<Skill> {
-    return this.map {
-        Skill(index = it.index, modifier = it.modifier)
-    }
-}
+@Serializable
+internal data class DamageEntity(
+    val index: String,
+    val type: String,
+    val name: String
+)

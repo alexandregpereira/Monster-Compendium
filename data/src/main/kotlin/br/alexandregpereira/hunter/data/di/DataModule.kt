@@ -18,7 +18,11 @@
 
 package br.alexandregpereira.hunter.data.di
 
+import androidx.room.Room
+import br.alexandregpereira.hunter.data.AppDatabase
 import br.alexandregpereira.hunter.data.MonsterRepositoryImpl
+import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
+import br.alexandregpereira.hunter.data.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.remote.MonsterApi
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
@@ -30,12 +34,12 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 
 val dataModule = module {
     single {
         val json = Json {
             ignoreUnknownKeys = true
-            prettyPrint = true
         }
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -54,6 +58,17 @@ val dataModule = module {
     single { get<Retrofit>().create(MonsterApi::class.java) }
 
     single<MonsterRepository> {
-        MonsterRepositoryImpl(get())
+        MonsterRepositoryImpl(get(), get())
     }
+
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java, "hunter-database"
+        ).build()
+    }
+
+    single { get<AppDatabase>().monsterDao() }
+
+    single<MonsterLocalDataSource> { MonsterLocalDataSourceImpl(get()) }
 }

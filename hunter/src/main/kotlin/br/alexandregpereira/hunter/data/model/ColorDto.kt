@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
-    id 'kotlin'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
-}
+package br.alexandregpereira.hunter.data.model
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
-dependencies {
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
-    implementation 'org.jsoup:jsoup:1.13.1'
-}
+@Serializable
+data class ColorDto(
+    @SerialName("light")
+    val light: String = "#00000000",
+    @SerialName("dark")
+    val dark: String = "#00000000",
+)

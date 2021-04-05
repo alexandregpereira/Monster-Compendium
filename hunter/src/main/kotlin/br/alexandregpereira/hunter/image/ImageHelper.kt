@@ -16,8 +16,8 @@
 
 package br.alexandregpereira.hunter.image
 
-import br.alexandregpereira.hunter.data.remote.model.ColorDto
-import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.model.ColorDto
+import br.alexandregpereira.hunter.data.model.MonsterDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -36,7 +36,6 @@ import java.io.InputStream
 import java.util.LinkedList
 import javax.imageio.ImageIO
 import javax.imageio.ImageReader
-import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map { inputStream ->

@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
-    id 'kotlin'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
-}
+package br.alexandregpereira.hunter.data.remote.mapper
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.domain.model.Skill
 
-dependencies {
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
-    implementation 'org.jsoup:jsoup:1.13.1'
+internal fun List<SkillDto>.toDomain(): List<Skill> {
+    return this.map {
+        Skill(index = it.index, modifier = it.modifier)
+    }
 }

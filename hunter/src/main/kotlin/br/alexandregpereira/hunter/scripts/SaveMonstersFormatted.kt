@@ -16,18 +16,18 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
-import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
-import br.alexandregpereira.hunter.data.remote.model.DamageDto
-import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
-import br.alexandregpereira.hunter.data.remote.model.MeasurementUnitDto
-import br.alexandregpereira.hunter.data.remote.model.MonsterDto
-import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
-import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
-import br.alexandregpereira.hunter.data.remote.model.SkillDto
-import br.alexandregpereira.hunter.data.remote.model.SpeedDto
-import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
-import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto
+import br.alexandregpereira.hunter.data.model.AbilityScoreDto
+import br.alexandregpereira.hunter.data.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.model.DamageDto
+import br.alexandregpereira.hunter.data.model.DamageTypeDto
+import br.alexandregpereira.hunter.data.model.MeasurementUnitDto
+import br.alexandregpereira.hunter.data.model.MonsterDto
+import br.alexandregpereira.hunter.data.model.MonsterTypeDto
+import br.alexandregpereira.hunter.data.model.SavingThrowDto
+import br.alexandregpereira.hunter.data.model.SkillDto
+import br.alexandregpereira.hunter.data.model.SpeedDto
+import br.alexandregpereira.hunter.data.model.SpeedTypeDto
+import br.alexandregpereira.hunter.data.model.SpeedValueDto
 import br.alexandregpereira.hunter.dndapi.data.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.Proficiency

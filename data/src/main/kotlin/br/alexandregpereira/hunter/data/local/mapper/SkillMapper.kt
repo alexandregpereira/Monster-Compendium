@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.mapper
+package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
-import br.alexandregpereira.hunter.domain.model.SavingThrow
+import br.alexandregpereira.hunter.data.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.domain.model.Skill
 
-internal fun List<SavingThrowDto>.toDomain(): List<SavingThrow> {
+internal fun List<SkillEntity>.toDomain(): List<Skill> {
     return this.map {
-        SavingThrow(type = it.type.toDomain(), modifier = it.modifier)
+        Skill(index = it.index, modifier = it.modifier)
+    }
+}
+
+internal fun List<Skill>.toEntity(): List<SkillEntity> {
+    return this.map {
+        SkillEntity(index = it.index, modifier = it.modifier)
     }
 }

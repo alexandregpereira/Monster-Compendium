@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.mapper
+package br.alexandregpereira.hunter.data.local.entity
 
-import br.alexandregpereira.hunter.data.remote.model.ColorDto
-import br.alexandregpereira.hunter.domain.model.Color
+import kotlinx.serialization.Serializable
 
-fun ColorDto.toDomain(): Color {
-    return Color(light = light, dark = dark)
-}
+internal data class SpeedEntity(
+    val hover: Boolean,
+    val values: String,
+)
+
+@Serializable
+internal data class SpeedValueEntity(
+    val type: String,
+    val measurementUnit: String,
+    val value: Int,
+    val valueFormatted: String
+)
