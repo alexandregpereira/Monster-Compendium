@@ -21,7 +21,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.GetMonstersByInitialIndexUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersByInitialIndexUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart

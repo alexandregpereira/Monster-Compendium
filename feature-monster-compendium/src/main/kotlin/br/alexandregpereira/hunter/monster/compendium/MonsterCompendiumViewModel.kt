@@ -21,17 +21,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
-import br.alexandregpereira.hunter.domain.MonsterPair
-import br.alexandregpereira.hunter.domain.MonstersBySection
 import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Event
 import br.alexandregpereira.hunter.domain.model.MonsterSection
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.MonsterPair
+import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
 typealias MonsterRow = Map<MonsterCardItem, MonsterCardItem?>
@@ -39,10 +41,12 @@ typealias MonsterCardItemsBySection = Map<MonsterSection, MonsterRow>
 
 internal class MonsterCompendiumViewModel(
     private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase,
+    private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
+    private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     loadOnInit: Boolean = true
 ) : ViewModel() {
 
-    private val _stateLiveData = MutableLiveData<MonsterCompendiumViewState>()
+    private val _stateLiveData = MutableLiveData(MonsterCompendiumViewState())
     val stateLiveData: LiveData<MonsterCompendiumViewState> = _stateLiveData
 
     private val _actionLiveData = MutableLiveData<Event<MonsterCompendiumAction>>()
@@ -54,16 +58,24 @@ internal class MonsterCompendiumViewModel(
 
     fun loadMonsters() = viewModelScope.launch {
         getMonstersBySectionUseCase()
+            .zip(
+                getLastCompendiumScrollItemPositionUseCase()
+            ) { monstersBySection, scrollOffset ->
+                scrollOffset to monstersBySection
+            }
             .onStart {
                 _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
             }
-            .toMonstersBySection()
+            .map {
+                it.first to it.second.toMonstersBySection()
+            }
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
             }
             .collect {
                 _stateLiveData.value = MonsterCompendiumViewState(
-                    monstersBySection = it
+                    monstersBySection = it.second,
+                    initialScrollItemPosition = it.first
                 )
             }
     }
@@ -72,11 +84,13 @@ internal class MonsterCompendiumViewModel(
         _actionLiveData.value = Event(MonsterCompendiumAction.NavigateToDetail(index))
     }
 
-    private fun Flow<MonstersBySection>.toMonstersBySection(): Flow<MonsterCardItemsBySection> {
-        return this.map {
-            it.map { key, value ->
-                key to value.toMonsterRow()
-            }
+    fun saveCompendiumScrollItemPosition(position: Int) = viewModelScope.launch {
+        saveCompendiumScrollItemPositionUseCase(position).collect()
+    }
+
+    private fun MonstersBySection.toMonstersBySection(): MonsterCardItemsBySection {
+        return this.map { key, value ->
+            key to value.toMonsterRow()
         }
     }
 
@@ -84,5 +98,14 @@ internal class MonsterCompendiumViewModel(
         return this.map { key, value ->
             key.toMonsterCardItem() to value?.toMonsterCardItem()
         }
+    }
+
+    private fun getMonstersBySectionState(
+        monstersBySection: MonsterCardItemsBySection
+    ): MonsterCompendiumViewState {
+        return _stateLiveData.value!!.copy(
+            isLoading = false,
+            monstersBySection = monstersBySection
+        )
     }
 }

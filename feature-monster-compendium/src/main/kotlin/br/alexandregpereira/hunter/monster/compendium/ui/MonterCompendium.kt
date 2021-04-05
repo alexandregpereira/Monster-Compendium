@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,71 +45,77 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 fun MonsterCompendium(
     monstersBySection: MonsterCardItemsBySection,
+    initialScrollItemPosition: Int = 0,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    onScrollItemPositionChange: (index: Int) -> Unit = {},
     onItemCLick: (index: String) -> Unit = {},
-) = LazyColumn {
+) {
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = initialScrollItemPosition)
+    onScrollItemPositionChange(listState.firstVisibleItemIndex)
+    LazyColumn(state = listState) {
 
-    val verticalSectionPadding = 24.dp
-    val lastIndex = monstersBySection.entries.size - 1
-    monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
-        if (index > 0) {
-            item {
-                Spacer(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(4.dp)
-                )
-            }
-        }
-        if (monsterSectionEntry.key.showTitle) {
-            item {
-                Surface {
-                    Text(
-                        text = monsterSectionEntry.key.title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        modifier = Modifier
+        val verticalSectionPadding = 24.dp
+        val lastIndex = monstersBySection.entries.size - 1
+        monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
+            if (index > 0) {
+                item {
+                    Spacer(
+                        Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 16.dp, top = verticalSectionPadding)
+                            .height(4.dp)
                     )
                 }
             }
-        }
-
-        val monsterLastRowIndex = monsterSectionEntry.value.entries.size - 1
-        monsterSectionEntry.value.entries.forEachIndexed { monsterRowIndex, monsterEntry ->
-            item {
-                val leftMonster = monsterEntry.key
-                val rightMonster = monsterEntry.value
-
-                val contentPaddingValue = when (index) {
-                    0 -> contentPadding.calculateTopPadding()
-                    lastIndex -> contentPadding.calculateBottomPadding()
-                    else -> 0.dp
-                }
-                val topPadding = if (monsterSectionEntry.key.showTitle) {
-                    0.dp
-                } else verticalSectionPadding
-
-                val modifier = when (monsterRowIndex) {
-                    0 -> Modifier.padding(top = topPadding + contentPaddingValue)
-                    monsterLastRowIndex -> {
-                        if (index == lastIndex) {
-                            Modifier.padding(bottom = verticalSectionPadding + contentPaddingValue)
-                        } else {
-                            Modifier.padding(bottom = verticalSectionPadding)
-                        }
+            if (monsterSectionEntry.key.showTitle) {
+                item {
+                    Surface {
+                        Text(
+                            text = monsterSectionEntry.key.title,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(bottom = 16.dp, top = verticalSectionPadding)
+                        )
                     }
-                    else -> Modifier
                 }
+            }
 
-                MonsterSection(
-                    leftMonster = leftMonster,
-                    rightMonster = rightMonster,
-                    onItemClick = onItemCLick,
-                    modifier = modifier
-                )
+            val monsterLastRowIndex = monsterSectionEntry.value.entries.size - 1
+            monsterSectionEntry.value.entries.forEachIndexed { monsterRowIndex, monsterEntry ->
+                item {
+                    val leftMonster = monsterEntry.key
+                    val rightMonster = monsterEntry.value
+
+                    val contentPaddingValue = when (index) {
+                        0 -> contentPadding.calculateTopPadding()
+                        lastIndex -> contentPadding.calculateBottomPadding()
+                        else -> 0.dp
+                    }
+                    val topPadding = if (monsterSectionEntry.key.showTitle) {
+                        0.dp
+                    } else verticalSectionPadding
+
+                    val modifier = when (monsterRowIndex) {
+                        0 -> Modifier.padding(top = topPadding + contentPaddingValue)
+                        monsterLastRowIndex -> {
+                            if (index == lastIndex) {
+                                Modifier.padding(bottom = verticalSectionPadding + contentPaddingValue)
+                            } else {
+                                Modifier.padding(bottom = verticalSectionPadding)
+                            }
+                        }
+                        else -> Modifier
+                    }
+
+                    MonsterSection(
+                        leftMonster = leftMonster,
+                        rightMonster = rightMonster,
+                        onItemClick = onItemCLick,
+                        modifier = modifier
+                    )
+                }
             }
         }
     }

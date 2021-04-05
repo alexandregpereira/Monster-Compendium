@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.domain.usecase
 
+import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Color
+import br.alexandregpereira.hunter.domain.model.Stats
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -148,9 +150,11 @@ class GetMonstersBySectionUseCaseTest {
             ),
             size = "",
             alignment = "",
-            armorClass = 0,
-            hitPoints = 0,
-            hitDice = "",
+            stats = Stats(
+                armorClass = 0,
+                hitPoints = 0,
+                hitDice = "",
+            ),
             speed = Speed(hover = false, values = listOf())
         )
     }

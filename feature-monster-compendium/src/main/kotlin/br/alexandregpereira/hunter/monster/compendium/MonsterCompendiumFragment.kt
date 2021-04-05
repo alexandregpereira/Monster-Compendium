@@ -64,7 +64,9 @@ internal fun MonsterCompendium(
     CircularLoading(viewState.isLoading) {
         MonsterCompendium(
             monstersBySection = viewState.monstersBySection,
-            contentPadding = contentPadding
+            initialScrollItemPosition = viewState.initialScrollItemPosition,
+            contentPadding = contentPadding,
+            onScrollItemPositionChange = viewModel::saveCompendiumScrollItemPosition
         ) {
             viewModel.navigateToDetail(index = it)
         }

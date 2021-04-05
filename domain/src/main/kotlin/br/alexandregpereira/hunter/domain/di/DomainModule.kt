@@ -16,11 +16,15 @@
 
 package br.alexandregpereira.hunter.domain.di
 
-import br.alexandregpereira.hunter.domain.GetMonstersByInitialIndexUseCase
-import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersByInitialIndexUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
     single { GetMonstersBySectionUseCase(get()) }
     single { GetMonstersByInitialIndexUseCase(get()) }
+    single { GetLastCompendiumScrollItemPositionUseCase(get()) }
+    single { SaveCompendiumScrollItemPositionUseCase(get()) }
 }

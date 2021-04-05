@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.local.mapper.toEntity
+import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.MonsterRepository
@@ -34,7 +35,8 @@ import kotlinx.coroutines.flow.onEach
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class MonsterRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
-    private val localDataSource: MonsterLocalDataSource
+    private val localDataSource: MonsterLocalDataSource,
+    private val preferencesDataSource: PreferencesDataSource
 ) : MonsterRepository {
 
     override fun getMonsters(): Flow<List<Monster>> {
@@ -42,6 +44,14 @@ internal class MonsterRepositoryImpl(
             if (entityList.isEmpty()) getMonstersRemote()
             else flowOf(entityList.toDomain())
         }
+    }
+
+    override fun getLastCompendiumScrollItemPosition(): Flow<Int> {
+        return preferencesDataSource.getLastCompendiumScrollItemPosition()
+    }
+
+    override fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit> {
+        return preferencesDataSource.saveCompendiumScrollItemPosition(position)
     }
 
     private fun getMonstersRemote(): Flow<List<Monster>> {

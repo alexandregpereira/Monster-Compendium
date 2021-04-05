@@ -20,5 +20,6 @@ import br.alexandregpereira.hunter.domain.model.MonsterSection
 
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = false,
-    val monstersBySection: Map<MonsterSection, Map<MonsterCardItem, MonsterCardItem?>> = emptyMap()
+    val monstersBySection: Map<MonsterSection, Map<MonsterCardItem, MonsterCardItem?>> = emptyMap(),
+    val initialScrollItemPosition: Int = 0
 )

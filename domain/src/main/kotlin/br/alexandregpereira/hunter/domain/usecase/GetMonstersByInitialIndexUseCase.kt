@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.domain.usecase
 
+import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

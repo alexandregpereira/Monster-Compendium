@@ -18,7 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import br.alexandregpereira.hunter.domain.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
@@ -26,6 +26,8 @@ import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -47,6 +49,8 @@ class MonsterCompendiumViewModelTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     private val getMonstersUseCase: GetMonstersBySectionUseCase = mockk()
+    private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
+    private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
     private val stateLiveDataObserver: Observer<MonsterCompendiumViewState> = mockk(
         relaxUnitFun = true
     )
@@ -82,6 +86,7 @@ class MonsterCompendiumViewModelTest {
             section to mapOf(monster to null)
         )
         every { getMonstersUseCase() } returns flowOf(monstersBySection)
+        every { getLastScrollPositionUseCase() } returns flowOf(1)
         createViewModel()
 
         // When
@@ -108,7 +113,8 @@ class MonsterCompendiumViewModelTest {
                                 group = null
                             ) to null
                         )
-                    )
+                    ),
+                    initialScrollItemPosition = 1
                 )
             )
         }
@@ -122,6 +128,8 @@ class MonsterCompendiumViewModelTest {
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
             getMonstersBySectionUseCase = getMonstersUseCase,
+            getLastScrollPositionUseCase,
+            saveScrollPositionUseCase,
             loadOnInit = false
         )
         viewModel.stateLiveData.observeForever(stateLiveDataObserver)
