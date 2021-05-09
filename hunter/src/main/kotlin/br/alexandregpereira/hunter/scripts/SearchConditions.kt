@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import kotlinx.serialization.decodeFromString
+import java.util.Locale
 
 suspend fun main() = start {
     json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME))
@@ -12,6 +13,6 @@ suspend fun main() = start {
         .toSet()
         .sorted()
         .forEach { conditionName ->
-            println(conditionName)
+            println("${conditionName.toUpperCase(Locale.ROOT)},")
         }
 }

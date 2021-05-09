@@ -96,6 +96,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -203,6 +205,48 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
             }
         ]
     },
@@ -336,6 +380,18 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -456,6 +512,23 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -576,6 +649,23 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -706,6 +796,28 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -788,6 +900,48 @@
                 "index": "psychic",
                 "type": "PSYCHIC",
                 "name": "Psychic"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "deafened",
+                "type": "DEAFENED",
+                "name": "Deafened"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -882,6 +1036,43 @@
                 "type": "PSYCHIC",
                 "name": "Psychic"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -965,6 +1156,43 @@
                 "type": "PSYCHIC",
                 "name": "Psychic"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -1044,6 +1272,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1203,6 +1433,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1305,6 +1537,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1392,6 +1626,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -1471,6 +1712,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1564,6 +1807,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1637,6 +1882,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1716,6 +1963,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1808,6 +2057,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -1907,6 +2158,38 @@
                 "type": "SLASHING",
                 "name": "Slashing"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
         ]
     },
     {
@@ -1988,6 +2271,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2069,6 +2354,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2152,6 +2439,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2237,6 +2526,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2320,6 +2611,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2407,6 +2700,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -2516,6 +2816,38 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -2599,6 +2931,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2692,6 +3026,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2771,6 +3107,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2892,6 +3230,8 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -2977,6 +3317,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -3058,6 +3400,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -3141,6 +3485,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -3222,6 +3568,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -3307,6 +3655,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -3442,6 +3792,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -3534,6 +3891,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -3664,6 +4028,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -3788,6 +4159,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -3917,6 +4295,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -4053,6 +4438,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -4169,6 +4561,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -4300,6 +4699,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -4437,6 +4843,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -4556,6 +4969,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -4691,6 +5111,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -4810,6 +5237,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -4941,6 +5375,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -5071,6 +5512,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -5189,6 +5637,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -5320,6 +5775,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -5407,6 +5869,23 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -5534,6 +6013,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -5615,6 +6101,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -5716,6 +6204,8 @@
                 "type": "THUNDER",
                 "name": "Thunder"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -5797,6 +6287,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            }
         ]
     },
     {
@@ -5911,6 +6408,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6025,6 +6524,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6147,6 +6648,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6265,6 +6768,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6383,6 +6888,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6505,6 +7012,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6631,6 +7140,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -6745,6 +7261,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6861,6 +7379,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -6981,6 +7501,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7095,6 +7617,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7209,6 +7733,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7331,6 +7857,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7449,6 +7977,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7567,6 +8097,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7689,6 +8221,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -7815,6 +8349,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -7929,6 +8470,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8045,6 +8588,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8165,6 +8710,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8279,6 +8826,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8393,6 +8942,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8507,6 +9058,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8621,6 +9174,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8735,6 +9290,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8849,6 +9406,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -8962,6 +9521,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -9077,6 +9643,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9185,6 +9753,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9281,6 +9851,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9401,6 +9973,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9515,6 +10089,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9629,6 +10205,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9747,6 +10325,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9865,6 +10445,8 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -9983,6 +10565,8 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10105,6 +10689,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10223,6 +10809,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -10337,6 +10930,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10453,6 +11048,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10573,6 +11170,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10660,6 +11259,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10741,6 +11342,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10826,6 +11429,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10907,6 +11512,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -10985,6 +11592,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11082,6 +11691,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -11165,6 +11781,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11274,6 +11892,33 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
+            }
         ]
     },
     {
@@ -11370,6 +12015,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11461,6 +12108,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11538,6 +12187,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11641,6 +12292,48 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
+            }
         ]
     },
     {
@@ -11739,6 +12432,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -11842,6 +12537,38 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -11927,6 +12654,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12014,6 +12743,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12112,6 +12843,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12216,6 +12949,23 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -12289,6 +13039,38 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
         ]
     },
     {
@@ -12366,6 +13148,13 @@
                 "index": "necrotic",
                 "type": "NECROTIC",
                 "name": "Necrotic"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -12501,6 +13290,53 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            }
         ]
     },
     {
@@ -12574,6 +13410,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -12653,6 +13496,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12736,6 +13581,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12809,6 +13656,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12896,6 +13745,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -12983,6 +13834,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13070,6 +13923,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13143,6 +13998,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13226,6 +14083,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13305,6 +14164,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
         ]
     },
     {
@@ -13378,6 +14244,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13455,6 +14323,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13532,6 +14402,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            }
         ]
     },
     {
@@ -13621,6 +14498,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13720,6 +14599,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13803,6 +14684,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -13888,6 +14771,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            }
         ]
     },
     {
@@ -13985,6 +14875,18 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -14106,6 +15008,18 @@
                 "type": "PSYCHIC",
                 "name": "Psychic"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -14184,6 +15098,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14263,6 +15179,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14346,6 +15264,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14428,6 +15348,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14505,6 +15427,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14588,6 +15512,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14661,6 +15587,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14745,6 +15673,18 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -14828,6 +15768,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -14905,6 +15847,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -15011,6 +15955,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -15124,6 +16075,48 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
+            }
         ]
     },
     {
@@ -15232,6 +16225,38 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -15305,6 +16330,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -15429,6 +16456,18 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            }
         ]
     },
     {
@@ -15514,6 +16553,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -15655,6 +16696,33 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -15746,6 +16814,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -15843,6 +16913,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -15942,6 +17019,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16021,6 +17100,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16098,6 +17179,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16187,6 +17270,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16270,6 +17355,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16349,6 +17436,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16431,6 +17520,13 @@
                 "type": "ACID",
                 "name": "Acid"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
         ]
     },
     {
@@ -16508,6 +17604,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16590,6 +17688,18 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -16702,6 +17812,33 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -16822,6 +17959,13 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            }
         ]
     },
     {
@@ -16906,6 +18050,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -16991,6 +18137,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17085,6 +18233,38 @@
                 "type": "SLASHING",
                 "name": "Slashing"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
         ]
     },
     {
@@ -17172,6 +18352,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17245,6 +18427,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17326,6 +18510,13 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -17434,6 +18625,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17511,6 +18704,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17588,6 +18783,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17675,6 +18872,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17752,6 +18951,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17847,6 +19048,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -17930,6 +19133,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18017,6 +19222,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18104,6 +19311,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18191,6 +19400,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18264,6 +19475,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18375,6 +19588,8 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18448,6 +19663,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18531,6 +19748,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18620,6 +19839,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18693,6 +19914,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18792,6 +20015,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18879,6 +20104,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -18952,6 +20179,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19035,6 +20264,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19138,6 +20369,8 @@
                 "type": "FIRE",
                 "name": "Fire"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19223,6 +20456,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19312,6 +20547,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19391,6 +20628,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -19528,6 +20767,48 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            }
         ]
     },
     {
@@ -19626,6 +20907,23 @@
                 "type": "LIGHTNING",
                 "name": "Lightning"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            }
         ]
     },
     {
@@ -19704,6 +21002,33 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -19777,6 +21102,23 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -19855,6 +21197,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -19989,6 +21338,53 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
+            }
         ]
     },
     {
@@ -20072,6 +21468,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -20166,6 +21564,18 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -20253,6 +21663,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -20342,6 +21754,13 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -20421,6 +21840,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -20514,6 +21935,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -20616,6 +22039,38 @@
                 "index": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine",
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons that aren't adamantine"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -20743,6 +22198,8 @@
                 "type": "THUNDER",
                 "name": "Thunder"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -20858,6 +22315,28 @@
                 "type": "OTHER",
                 "name": "*bludgeoning, piercing, and slashing from nonmagical weapons"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     },
     {
@@ -20935,6 +22414,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21023,6 +22504,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21100,6 +22583,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21177,6 +22662,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21254,6 +22741,23 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -21373,6 +22877,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21487,6 +22993,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -21560,6 +23068,23 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
         ]
     },
     {
@@ -21668,6 +23193,48 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
             }
         ]
     },
@@ -21779,6 +23346,18 @@
                 "index": "poison",
                 "type": "POISON",
                 "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
             }
         ]
     },
@@ -21914,6 +23493,43 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "unconscious",
+                "type": "UNCONSCIOUS",
+                "name": "Unconscious"
+            }
         ]
     },
     {
@@ -22000,6 +23616,8 @@
                 "type": "COLD",
                 "name": "Cold"
             }
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -22081,6 +23699,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -22158,6 +23778,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -22292,6 +23914,48 @@
                 "type": "POISON",
                 "name": "Poison"
             }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            }
         ]
     },
     {
@@ -22375,6 +24039,8 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -22477,6 +24143,8 @@
             }
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
         ]
     },
     {
@@ -22554,6 +24222,13 @@
         "damage_resistances": [
         ],
         "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
         ]
     }
 ]

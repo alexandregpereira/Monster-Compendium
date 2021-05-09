@@ -18,6 +18,8 @@ package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.data.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.model.ConditionDto
+import br.alexandregpereira.hunter.data.model.ConditionTypeDto
 import br.alexandregpereira.hunter.data.model.DamageDto
 import br.alexandregpereira.hunter.data.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.model.MeasurementUnitDto
@@ -28,6 +30,7 @@ import br.alexandregpereira.hunter.data.model.SkillDto
 import br.alexandregpereira.hunter.data.model.SpeedDto
 import br.alexandregpereira.hunter.data.model.SpeedTypeDto
 import br.alexandregpereira.hunter.data.model.SpeedValueDto
+import br.alexandregpereira.hunter.dndapi.data.model.APIReference
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.dndapi.data.model.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
@@ -87,6 +90,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             damageVulnerabilities = it.damageVulnerabilities.getDamages(),
             damageResistances = it.damageResistances.getDamages(),
             damageImmunities = it.damageImmunities.getDamages(),
+            conditionImmunities = it.conditionImmunities.asConditionsFormatted(),
         )
     }
 }
@@ -251,6 +255,20 @@ private fun List<String>.getDamages(): List<DamageDto> {
             type = damageType,
             name = it.capitalize(Locale.ROOT)
         )
+    }
+}
+
+private fun List<APIReference>.asConditionsFormatted(): List<ConditionDto> {
+    return this.mapNotNull {
+        runCatching {
+            ConditionTypeDto.valueOf(it.name.toUpperCase(Locale.ROOT))
+        }.getOrNull()?.let { conditionType ->
+            ConditionDto(
+                index = it.index,
+                type = conditionType,
+                name = it.name
+            )
+        }
     }
 }
 
