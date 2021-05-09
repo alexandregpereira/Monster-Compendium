@@ -14,15 +14,41 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-data class Response(
-    @SerialName("count")
-    val count: Int,
-    @SerialName("results")
-    val results: List<APIReference>
-)
+enum class MonsterType {
+    @SerialName("aberration")
+    ABERRATION,
+    @SerialName("beast")
+    BEAST,
+    @SerialName("celestial")
+    CELESTIAL,
+    @SerialName("construct")
+    CONSTRUCT,
+    @SerialName("dragon")
+    DRAGON,
+    @SerialName("elemental")
+    ELEMENTAL,
+    @SerialName("fey")
+    FEY,
+    @SerialName("fiend")
+    FIEND,
+    @SerialName("giant")
+    GIANT,
+    @SerialName("humanoid")
+    HUMANOID,
+    @SerialName("monstrosity")
+    MONSTROSITY,
+    @SerialName("ooze")
+    OOZE,
+    @SerialName("plant")
+    PLANT,
+    @SerialName("undead")
+    UNDEAD,
+    @SerialName("swarm of Tiny beasts")
+    OTHER
+}

@@ -16,32 +16,36 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.dndapi.data.model.Skill
-import br.alexandregpereira.hunter.dndapi.data.SkillApi
+import br.alexandregpereira.hunter.dndapi.data.ConditionApi
+import br.alexandregpereira.hunter.dndapi.data.model.Description
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
-private val skillApi: SkillApi = retrofit.create(SkillApi::class.java)
+private val api: ConditionApi = retrofit.create(ConditionApi::class.java)
 
 @FlowPreview
 @ExperimentalSerializationApi
 suspend fun main() = start {
-    val skillResponse = skillApi.getSkills()
+    val response = api.getConditions()
 
-    val skills = skillResponse.results.asFlow()
+    val result = response.results.asFlow()
         .flatMapMerge {
-            getSkill(it.index)
+            getCondition(it.index)
         }
         .toList()
         .sortedBy { it.index }
 
-    saveJsonFile(skills, SKILL_JSON_FILE_NAME)
+    saveJsonFile(result, CONDITION_JSON_FILE_NAME)
 }
 
 @ExperimentalSerializationApi
-private suspend fun getSkill(index: String): Flow<Skill> = flow {
-    println("Skill: $index")
-    emit(skillApi.getSkill(index))
+private suspend fun getCondition(index: String): Flow<Description> = flow {
+    println("Condition: $index")
+    emit(api.getCondition(index))
 }

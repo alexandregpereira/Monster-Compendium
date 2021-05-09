@@ -28,9 +28,9 @@ import br.alexandregpereira.hunter.data.model.SkillDto
 import br.alexandregpereira.hunter.data.model.SpeedDto
 import br.alexandregpereira.hunter.data.model.SpeedTypeDto
 import br.alexandregpereira.hunter.data.model.SpeedValueDto
-import br.alexandregpereira.hunter.dndapi.data.Monster
-import br.alexandregpereira.hunter.dndapi.data.MonsterType
-import br.alexandregpereira.hunter.dndapi.data.Proficiency
+import br.alexandregpereira.hunter.dndapi.data.model.Monster
+import br.alexandregpereira.hunter.dndapi.data.model.MonsterType
+import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
 import br.alexandregpereira.hunter.image.downloadImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

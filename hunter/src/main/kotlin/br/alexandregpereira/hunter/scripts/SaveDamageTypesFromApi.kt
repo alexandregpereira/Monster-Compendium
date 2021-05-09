@@ -16,7 +16,7 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.dndapi.data.DamageType
+import br.alexandregpereira.hunter.dndapi.data.model.Description
 import br.alexandregpereira.hunter.dndapi.data.DamageTypeApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -41,7 +41,7 @@ suspend fun main() = start {
 }
 
 @ExperimentalSerializationApi
-private suspend fun getSkill(index: String): Flow<DamageType> = flow {
+private suspend fun getSkill(index: String): Flow<Description> = flow {
     println("Damage Type: $index")
     emit(api.getDamageType(index))
 }

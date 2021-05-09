@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
-data class APIReference(
+data class Description(
     @SerialName("index")
     val index: String,
     @SerialName("name")
     val name: String,
+    @SerialName("desc")
+    val desc: List<String>,
     @SerialName("url")
     val url: String
 )

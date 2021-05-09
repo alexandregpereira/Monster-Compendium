@@ -16,19 +16,17 @@
 
 package br.alexandregpereira.hunter.dndapi.data
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerialName
+import br.alexandregpereira.hunter.dndapi.data.model.Description
+import br.alexandregpereira.hunter.dndapi.data.model.Response
+import br.alexandregpereira.hunter.dndapi.data.model.Skill
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-@Serializable
-data class Skill(
-    @SerialName("index")
-    val index: String,
-    @SerialName("name")
-    val name: String,
-    @SerialName("desc")
-    val desc: List<String>,
-    @SerialName("ability_score")
-    val abilityScore: APIReference,
-    @SerialName("url")
-    val url: String
-)
+interface ConditionApi {
+
+    @GET("conditions")
+    suspend fun getConditions(): Response
+
+    @GET("conditions/{index}")
+    suspend fun getCondition(@Path("index") index: String): Description
+}

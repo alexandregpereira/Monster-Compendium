@@ -16,6 +16,8 @@
 
 package br.alexandregpereira.hunter.dndapi.data
 
+import br.alexandregpereira.hunter.dndapi.data.model.Monster
+import br.alexandregpereira.hunter.dndapi.data.model.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 

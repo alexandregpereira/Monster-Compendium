@@ -16,7 +16,7 @@
 
 package br.alexandregpereira.hunter.scripts
 
-import br.alexandregpereira.hunter.dndapi.data.Monster
+import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.dndapi.data.MonsterApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*

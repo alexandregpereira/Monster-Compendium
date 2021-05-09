@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName

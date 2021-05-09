@@ -27,6 +27,7 @@ import retrofit2.Retrofit
 import java.io.File
 
 const val JSON_FILE_NAME = "json/dndapi-monsters.json"
+const val CONDITION_JSON_FILE_NAME = "json/dndapi-conditions.json"
 const val SKILL_JSON_FILE_NAME = "json/dndapi-skills.json"
 const val DAMAGE_TYPE_JSON_FILE_NAME = "json/dndapi-damage-types.json"
 const val JSON_FORMATTED_FILE_NAME = "json/monsters.json"

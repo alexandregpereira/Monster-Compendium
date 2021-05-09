@@ -14,41 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-enum class MonsterType {
-    @SerialName("aberration")
-    ABERRATION,
-    @SerialName("beast")
-    BEAST,
-    @SerialName("celestial")
-    CELESTIAL,
-    @SerialName("construct")
-    CONSTRUCT,
-    @SerialName("dragon")
-    DRAGON,
-    @SerialName("elemental")
-    ELEMENTAL,
-    @SerialName("fey")
-    FEY,
-    @SerialName("fiend")
-    FIEND,
-    @SerialName("giant")
-    GIANT,
-    @SerialName("humanoid")
-    HUMANOID,
-    @SerialName("monstrosity")
-    MONSTROSITY,
-    @SerialName("ooze")
-    OOZE,
-    @SerialName("plant")
-    PLANT,
-    @SerialName("undead")
-    UNDEAD,
-    @SerialName("swarm of Tiny beasts")
-    OTHER
-}
+data class Skill(
+    @SerialName("index")
+    val index: String,
+    @SerialName("name")
+    val name: String,
+    @SerialName("desc")
+    val desc: List<String>,
+    @SerialName("ability_score")
+    val abilityScore: APIReference,
+    @SerialName("url")
+    val url: String
+)

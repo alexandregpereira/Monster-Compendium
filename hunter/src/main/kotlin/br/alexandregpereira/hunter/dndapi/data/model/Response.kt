@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 @Serializable
-data class DamageType(
-    @SerialName("index")
-    val index: String,
-    @SerialName("name")
-    val name: String,
-    @SerialName("desc")
-    val desc: List<String>,
-    @SerialName("url")
-    val url: String
+data class Response(
+    @SerialName("count")
+    val count: Int,
+    @SerialName("results")
+    val results: List<APIReference>
 )

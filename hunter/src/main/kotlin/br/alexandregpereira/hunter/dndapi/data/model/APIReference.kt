@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.dndapi.data
+package br.alexandregpereira.hunter.dndapi.data.model
 
-import br.alexandregpereira.hunter.dndapi.data.model.Description
-import br.alexandregpereira.hunter.dndapi.data.model.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
-interface DamageTypeApi {
-
-    @GET("damage-types")
-    suspend fun getDamageTypes(): Response
-
-    @GET("damage-types/{index}")
-    suspend fun getDamageType(@Path("index") index: String): Description
-}
+@Serializable
+data class APIReference(
+    @SerialName("index")
+    val index: String,
+    @SerialName("name")
+    val name: String,
+    @SerialName("url")
+    val url: String
+)
