@@ -34,6 +34,7 @@ import br.alexandregpereira.hunter.dndapi.data.model.APIReference
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.dndapi.data.model.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
+import br.alexandregpereira.hunter.dndapi.data.model.Senses
 import br.alexandregpereira.hunter.image.downloadImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -91,6 +92,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             damageResistances = it.damageResistances.getDamages(),
             damageImmunities = it.damageImmunities.getDamages(),
             conditionImmunities = it.conditionImmunities.asConditionsFormatted(),
+            senses = it.senses.asSensesFormatted()
         )
     }
 }
@@ -270,6 +272,16 @@ private fun List<APIReference>.asConditionsFormatted(): List<ConditionDto> {
             )
         }
     }
+}
+
+private fun Senses.asSensesFormatted(): List<String> {
+    return listOfNotNull(
+        blindsight?.let { "blindsight $it" },
+        darkvision?.let { "darkvision $it" },
+        truesight?.let { "truesight $it" },
+        tremorsense?.let { "tremorsense $it" },
+        passivePerception?.let { "passive Perception $it" },
+    )
 }
 
 private fun calculateAbilityScoreModifier(value: Int): Int {

@@ -98,6 +98,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 20"
         ]
     },
     {
@@ -248,6 +252,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -392,6 +400,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 20"
         ]
     },
     {
@@ -529,6 +541,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 19"
         ]
     },
     {
@@ -666,6 +682,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 21"
         ]
     },
     {
@@ -818,6 +838,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 24"
         ]
     },
     {
@@ -943,6 +967,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 6"
         ]
     },
     {
@@ -1073,6 +1101,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 7"
         ]
     },
     {
@@ -1193,6 +1225,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 6"
         ]
     },
     {
@@ -1274,6 +1310,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -1435,6 +1476,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 12"
         ]
     },
     {
@@ -1539,6 +1583,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -1633,6 +1680,9 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "passive Perception 11"
         ]
     },
     {
@@ -1714,6 +1764,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -1809,6 +1863,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -1884,6 +1941,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -1965,6 +2026,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -2059,6 +2124,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 90 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -2190,6 +2259,10 @@
                 "type": "PRONE",
                 "name": "Prone"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 8"
         ]
     },
     {
@@ -2273,6 +2346,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -2356,6 +2432,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -2441,6 +2521,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -2528,6 +2613,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -2613,6 +2701,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -2708,6 +2800,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -2848,6 +2944,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -2933,6 +3033,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -3028,6 +3132,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 17"
         ]
     },
     {
@@ -3109,6 +3216,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -3232,6 +3343,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -3319,6 +3434,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 11"
         ]
     },
     {
@@ -3402,6 +3520,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -3487,6 +3608,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -3570,6 +3695,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -3657,6 +3786,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -3799,6 +3932,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -3899,6 +4036,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -4035,6 +4176,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -4167,6 +4312,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -4303,6 +4452,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -4445,6 +4598,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -4569,6 +4726,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -4707,6 +4868,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -4850,6 +5015,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -4977,6 +5146,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -5118,6 +5291,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -5245,6 +5422,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -5382,6 +5563,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -5519,6 +5704,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -5645,6 +5834,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -5782,6 +5976,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -5887,6 +6085,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -6020,6 +6222,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -6103,6 +6309,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -6206,6 +6415,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -6294,6 +6507,10 @@
                 "type": "CHARMED",
                 "name": "Charmed"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -6410,6 +6627,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 21"
         ]
     },
     {
@@ -6526,6 +6748,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 22"
         ]
     },
     {
@@ -6650,6 +6877,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 21"
         ]
     },
     {
@@ -6770,6 +7002,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 22"
         ]
     },
     {
@@ -6890,6 +7127,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 22"
         ]
     },
     {
@@ -7014,6 +7256,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 24"
         ]
     },
     {
@@ -7147,6 +7394,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 22"
         ]
     },
     {
@@ -7263,6 +7515,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 23"
         ]
     },
     {
@@ -7381,6 +7638,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 21"
         ]
     },
     {
@@ -7503,6 +7765,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 21"
         ]
     },
     {
@@ -7619,6 +7886,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 26"
         ]
     },
     {
@@ -7735,6 +8007,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 27"
         ]
     },
     {
@@ -7859,6 +8136,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 24"
         ]
     },
     {
@@ -7979,6 +8261,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 27"
         ]
     },
     {
@@ -8099,6 +8386,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 27"
         ]
     },
     {
@@ -8223,6 +8515,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 27"
         ]
     },
     {
@@ -8356,6 +8653,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 27"
         ]
     },
     {
@@ -8472,6 +8774,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 26"
         ]
     },
     {
@@ -8590,6 +8897,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 26"
         ]
     },
     {
@@ -8712,6 +9024,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 23"
         ]
     },
     {
@@ -8828,6 +9145,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -8944,6 +9266,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9060,6 +9387,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9176,6 +9508,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9292,6 +9629,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9408,6 +9750,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9529,6 +9876,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9645,6 +9997,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9755,6 +10112,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -9853,6 +10215,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -9975,6 +10341,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -10091,6 +10462,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -10207,6 +10583,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 19"
         ]
     },
     {
@@ -10327,6 +10708,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -10447,6 +10833,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 17"
         ]
     },
     {
@@ -10567,6 +10958,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 17"
         ]
     },
     {
@@ -10691,6 +11087,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 19"
         ]
     },
     {
@@ -10816,6 +11217,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 17"
         ]
     },
     {
@@ -10932,6 +11338,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -11050,6 +11461,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -11172,6 +11588,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "darkvision 120 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -11261,6 +11682,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -11344,6 +11769,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -11431,6 +11860,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -11514,6 +11946,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -11594,6 +12030,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -11698,6 +12138,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -11783,6 +12227,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -11919,6 +12366,11 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -12017,6 +12469,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -12110,6 +12566,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -12189,6 +12649,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -12334,6 +12798,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -12434,6 +12902,9 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 16"
         ]
     },
     {
@@ -12569,6 +13040,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -12656,6 +13131,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -12745,6 +13224,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -12845,6 +13328,9 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -12966,6 +13452,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -13071,6 +13561,10 @@
                 "type": "PRONE",
                 "name": "Prone"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 8"
         ]
     },
     {
@@ -13156,6 +13650,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -13337,6 +13835,10 @@
                 "type": "RESTRAINED",
                 "name": "Restrained"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -13417,6 +13919,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -13498,6 +14004,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -13583,6 +14093,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -13658,6 +14171,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "passive Perception 8"
         ]
     },
     {
@@ -13747,6 +14264,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -13836,6 +14357,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -13925,6 +14450,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -14000,6 +14529,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -14085,6 +14618,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -14171,6 +14709,10 @@
                 "type": "PRONE",
                 "name": "Prone"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -14246,6 +14788,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -14325,6 +14871,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -14409,6 +14959,10 @@
                 "type": "PETRIFIED",
                 "name": "Petrified"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -14500,6 +15054,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -14601,6 +15159,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -14686,6 +15248,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -14778,6 +15344,10 @@
                 "type": "BLINDED",
                 "name": "Blinded"
             }
+        ],
+        "senses": [
+            "blindsight 30 ft. or 10 ft. while deafened (blind beyond this radius)",
+            "passive Perception 13"
         ]
     },
     {
@@ -14888,6 +15458,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -15020,6 +15594,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -15100,6 +15678,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -15181,6 +15764,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -15266,6 +15852,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -15350,6 +15939,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -15429,6 +16022,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 12"
         ]
     },
     {
@@ -15514,6 +16110,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 15"
         ]
     },
     {
@@ -15589,6 +16188,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -15685,6 +16288,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -15770,6 +16377,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -15849,6 +16460,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -15963,6 +16577,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -16117,6 +16735,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 18"
         ]
     },
     {
@@ -16257,6 +16879,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -16332,6 +16958,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 8"
         ]
     },
     {
@@ -16468,6 +17098,10 @@
                 "type": "PARALYZED",
                 "name": "Paralyzed"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -16555,6 +17189,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -16723,6 +17361,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "truesight 120 ft.",
+            "passive Perception 19"
         ]
     },
     {
@@ -16816,6 +17458,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -16921,6 +17566,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -17021,6 +17670,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -17102,6 +17755,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -17181,6 +17838,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -17272,6 +17932,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -17357,6 +18021,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 12"
         ]
     },
     {
@@ -17438,6 +18105,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -17527,6 +18198,10 @@
                 "type": "PRONE",
                 "name": "Prone"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -17606,6 +18281,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 17"
         ]
     },
     {
@@ -17701,6 +18380,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -17840,6 +18523,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -17966,6 +18653,10 @@
                 "type": "CHARMED",
                 "name": "Charmed"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -18052,6 +18743,9 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 11"
         ]
     },
     {
@@ -18139,6 +18833,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 12"
         ]
     },
     {
@@ -18265,6 +18962,10 @@
                 "type": "PRONE",
                 "name": "Prone"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 8"
         ]
     },
     {
@@ -18354,6 +19055,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -18429,6 +19134,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 8"
         ]
     },
     {
@@ -18518,6 +19227,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 8"
         ]
     },
     {
@@ -18627,6 +19340,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -18706,6 +19423,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -18785,6 +19506,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -18874,6 +19599,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -18953,6 +19682,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -19050,6 +19783,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 16"
         ]
     },
     {
@@ -19135,6 +19871,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -19224,6 +19964,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -19313,6 +20056,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -19402,6 +20150,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 30 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -19477,6 +20230,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 8"
         ]
     },
     {
@@ -19590,6 +20347,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -19665,6 +20426,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -19750,6 +20515,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -19841,6 +20609,11 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -19916,6 +20689,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -20017,6 +20793,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -20106,6 +20885,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -20181,6 +20964,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -20266,6 +21053,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 15"
         ]
     },
     {
@@ -20371,6 +21162,10 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -20458,6 +21253,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 12"
         ]
     },
     {
@@ -20549,6 +21347,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 15"
         ]
     },
     {
@@ -20630,6 +21431,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 11"
         ]
     },
     {
@@ -20809,6 +21614,10 @@
                 "type": "RESTRAINED",
                 "name": "Restrained"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -20924,6 +21733,10 @@
                 "type": "EXHAUSTION",
                 "name": "Exhaustion"
             }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)",
+            "passive Perception 10"
         ]
     },
     {
@@ -21029,6 +21842,11 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -21119,6 +21937,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "blindsight 30 ft. (blind beyond this radius)",
+            "passive Perception 6"
         ]
     },
     {
@@ -21204,6 +22026,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -21385,6 +22211,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -21470,6 +22300,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -21576,6 +22410,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -21665,6 +22503,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -21761,6 +22602,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -21842,6 +22687,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 9"
         ]
     },
     {
@@ -21937,6 +22786,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -22072,6 +22925,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -22200,6 +23057,9 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 19"
         ]
     },
     {
@@ -22337,6 +23197,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "blindsight 120 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -22416,6 +23280,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 10"
         ]
     },
     {
@@ -22506,6 +23373,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -22585,6 +23455,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -22664,6 +23538,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 14"
         ]
     },
     {
@@ -22759,6 +23636,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -22879,6 +23760,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 17"
         ]
     },
     {
@@ -22995,6 +23880,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -23085,6 +23974,10 @@
                 "type": "FRIGHTENED",
                 "name": "Frightened"
             }
+        ],
+        "senses": [
+            "blindsight 30 ft. (blind beyond this radius)",
+            "passive Perception 6"
         ]
     },
     {
@@ -23236,6 +24129,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 10"
         ]
     },
     {
@@ -23359,6 +24256,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 13"
         ]
     },
     {
@@ -23530,6 +24431,10 @@
                 "type": "UNCONSCIOUS",
                 "name": "Unconscious"
             }
+        ],
+        "senses": [
+            "darkvision 120 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -23618,6 +24523,9 @@
             }
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 15"
         ]
     },
     {
@@ -23701,6 +24609,9 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "passive Perception 13"
         ]
     },
     {
@@ -23780,6 +24691,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -23956,6 +24871,10 @@
                 "type": "RESTRAINED",
                 "name": "Restrained"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 12"
         ]
     },
     {
@@ -24041,6 +24960,10 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 14"
         ]
     },
     {
@@ -24145,6 +25068,11 @@
         "damage_immunities": [
         ],
         "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "tremorsense 60 ft.",
+            "passive Perception 16"
         ]
     },
     {
@@ -24229,6 +25157,10 @@
                 "type": "POISONED",
                 "name": "Poisoned"
             }
+        ],
+        "senses": [
+            "darkvision 60 ft.",
+            "passive Perception 8"
         ]
     }
 ]
