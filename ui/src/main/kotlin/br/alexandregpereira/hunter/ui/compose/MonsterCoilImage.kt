@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,7 +11,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import br.alexandregpereira.hunter.ui.util.toColor
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
 fun MonsterCoilImage(
@@ -21,10 +22,12 @@ fun MonsterCoilImage(
     backgroundColor: String? = null,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
-    CoilImage(
-        data = imageUrl,
+    Image(
+        painter = rememberCoilPainter(
+            request = imageUrl,
+            fadeIn = true,
+        ),
         contentDescription = contentDescription,
-        fadeIn = true,
         modifier = Modifier
             .height(height)
             .fillMaxWidth()

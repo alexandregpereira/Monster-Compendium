@@ -51,7 +51,9 @@ import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import kotlin.math.absoluteValue
 
 @ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
@@ -63,48 +65,11 @@ fun MonsterDetail(
 ) {
     val pagerState = rememberPagerState(
         pageCount = monsters.size,
-        initialPage = initialMonsterIndex
+        initialPage = initialMonsterIndex,
+        initialOffscreenLimit = 2
     )
 
-    val monster = monsters[pagerState.currentPage]
-    val pageOffset = pagerState.currentPage + pagerState.currentPageOffset
-    val nextMonsterIndex = when {
-        pageOffset < pagerState.currentPage -> pagerState.currentPage - 1
-        pageOffset > pagerState.currentPage -> pagerState.currentPage + 1
-        else -> pagerState.currentPage
-    }
-    val nextMonster = monsters[nextMonsterIndex]
-    val type: MonsterItemType = MonsterItemType.valueOf(monster.type.name)
-    val nextType: MonsterItemType = MonsterItemType.valueOf(nextMonster.type.name)
-
-    val fraction = pagerState.currentPageOffset
-    val alpha = lerp(
-        start = 1f,
-        stop = 0f,
-        fraction = fraction
-    )
-
-    val nextAlpha = lerp(
-        start = 0f,
-        stop = 1f,
-        fraction = fraction
-    )
-
-    val isSystemInDarkTheme = isSystemInDarkTheme()
-    val startColor = monster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
-    val endColor = nextMonster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
-
-    val backgroundColor = lerp(
-        start = startColor.toColor(),
-        stop = endColor.toColor(),
-        fraction = fraction
-    )
-
-    Box(
-        Modifier
-            .fillMaxSize()
-            .background(backgroundColor)
-    )
+    BackGroundColor(monsters = monsters, pagerState = pagerState)
 
     Column(
         Modifier
@@ -125,44 +90,142 @@ fun MonsterDetail(
                 shape = RectangleShape
             )
 
-            ChallengeRatingCircle(
-                challengeRating = monster.challengeRating,
-                size = 56.dp,
-                fontSize = 16.sp,
-                modifier = Modifier.alpha(alpha)
-            )
-
-            ChallengeRatingCircle(
-                challengeRating = nextMonster.challengeRating,
-                size = 56.dp,
-                fontSize = 16.sp,
-                modifier = Modifier.alpha(nextAlpha)
-            )
-
-            MonsterTypeIcon(type = type, iconSize = 32.dp, Modifier.alpha(alpha))
-            MonsterTypeIcon(type = nextType, iconSize = 32.dp, Modifier.alpha(nextAlpha))
-        }
-        AnimatedVisibility(
-            visible = true,
-            initiallyVisible = false,
-            enter = slideIn(
-                initialOffset = { IntOffset(x = 0, y = it.height) },
-                animationSpec = spring(stiffness = 100f, dampingRatio = 0.65f)
-            )
-        ) {
-            MonsterInfo(
-                monster,
-                contentPadding = contentPadding,
-                alpha = alpha
-            )
-            MonsterInfo(
-                nextMonster,
-                contentPadding = contentPadding,
-                modifier = Modifier.alpha(nextAlpha)
+            MonsterImageInfo(
+                monsters = monsters,
+                pagerState = pagerState,
             )
         }
+
+        MonsterInfo(
+            monsters = monsters,
+            pagerState = pagerState,
+            contentPadding = contentPadding
+        )
     }
 }
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun BackGroundColor(
+    monsters: List<Monster>,
+    pagerState: PagerState
+) {
+    val transitionData = getTransitionData(monsters, pagerState)
+
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    val startColor = transitionData.monster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
+    val endColor = transitionData.nextMonster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
+    val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
+
+    val backgroundColor = lerp(
+        start = startColor.toColor(),
+        stop = endColor.toColor(),
+        fraction = fraction
+    )
+
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+    )
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun MonsterImageInfo(
+    monsters: List<Monster>,
+    pagerState: PagerState
+) {
+    val transitionData = getTransitionData(monsters, pagerState)
+
+    val type: MonsterItemType = MonsterItemType.valueOf(transitionData.monster.type.name)
+    val nextType: MonsterItemType = MonsterItemType.valueOf(transitionData.nextMonster.type.name)
+
+    ChallengeRatingCircle(
+        challengeRating = transitionData.monster.challengeRating,
+        size = 56.dp,
+        fontSize = 16.sp,
+        modifier = Modifier.alpha(transitionData.alpha)
+    )
+
+    ChallengeRatingCircle(
+        challengeRating = transitionData.nextMonster.challengeRating,
+        size = 56.dp,
+        fontSize = 16.sp,
+        modifier = Modifier.alpha(transitionData.nextAlpha)
+    )
+
+    MonsterTypeIcon(type = type, iconSize = 32.dp, Modifier.alpha(transitionData.alpha))
+    MonsterTypeIcon(type = nextType, iconSize = 32.dp, Modifier.alpha(transitionData.nextAlpha))
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@ExperimentalAnimationApi
+@Composable
+fun MonsterInfo(
+    monsters: List<Monster>,
+    pagerState: PagerState,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
+    val transitionData = getTransitionData(monsters, pagerState)
+
+    AnimatedVisibility(
+        visible = true,
+        enter = slideIn(
+            initialOffset = { IntOffset(x = 0, y = it.height) },
+            animationSpec = spring(stiffness = 100f, dampingRatio = 0.65f)
+        )
+    ) {
+        MonsterInfo(
+            transitionData.monster,
+            contentPadding = contentPadding,
+            alpha = transitionData.alpha
+        )
+        MonsterInfo(
+            transitionData.nextMonster,
+            contentPadding = contentPadding,
+            modifier = Modifier.alpha(transitionData.nextAlpha)
+        )
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+private fun getTransitionData(
+    monsters: List<Monster>,
+    pagerState: PagerState
+): TransitionData {
+    val monster = monsters[pagerState.currentPage]
+    val pageOffset = pagerState.currentPage + pagerState.currentPageOffset
+    val nextMonsterIndex = when {
+        pageOffset < pagerState.currentPage -> pagerState.currentPage - 1
+        pageOffset > pagerState.currentPage -> pagerState.currentPage + 1
+        else -> pagerState.currentPage
+    }
+    val nextMonster = monsters[nextMonsterIndex]
+
+    val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
+
+    val alpha = lerp(
+        start = 1f,
+        stop = 0f,
+        fraction = fraction
+    )
+
+    val nextAlpha = lerp(
+        start = 0f,
+        stop = 1f,
+        fraction = fraction
+    )
+
+    return TransitionData(monster, nextMonster, alpha, nextAlpha)
+}
+
+data class TransitionData(
+    val monster: Monster,
+    val nextMonster: Monster,
+    val alpha: Float,
+    val nextAlpha: Float
+)
 
 @ExperimentalAnimationApi
 @Preview

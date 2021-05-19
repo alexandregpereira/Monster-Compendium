@@ -23,7 +23,6 @@ fun MonsterImages(
     shape: Shape,
 ) = HorizontalPager(
     state = pagerState,
-    offscreenLimit = 2,
     verticalAlignment = Alignment.Top
 ) { pagePosition ->
     val image = images[pagePosition]
