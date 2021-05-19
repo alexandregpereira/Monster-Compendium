@@ -21,6 +21,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
@@ -62,15 +64,15 @@ internal fun MonsterCompendium(
     val viewState = viewModel.stateLiveData.observeAsState().value ?: return@HunterTheme
 
     CircularLoading(viewState.isLoading) {
+        val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewState.initialScrollItemPosition)
         MonsterCompendium(
             monstersBySection = viewState.monstersBySection,
-            initialScrollItemPosition = viewState.initialScrollItemPosition,
+            listState = listState,
             contentPadding = contentPadding,
-            onScrollItemPositionChange = viewModel::saveCompendiumScrollItemPosition
         ) {
             viewModel.navigateToDetail(index = it)
         }
-
+        OnFirstVisibleItemChange(viewModel, listState)
         Action(viewModel, navigator)
     }
 }
@@ -84,4 +86,12 @@ internal fun Action(
     when (action) {
         is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
     }
+}
+
+@Composable
+internal fun OnFirstVisibleItemChange(
+    viewModel: MonsterCompendiumViewModel,
+    listState: LazyListState,
+) {
+    viewModel.saveCompendiumScrollItemPosition(listState.firstVisibleItemIndex)
 }

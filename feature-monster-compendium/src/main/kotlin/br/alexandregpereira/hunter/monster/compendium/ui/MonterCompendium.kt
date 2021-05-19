@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -45,13 +46,10 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 fun MonsterCompendium(
     monstersBySection: MonsterCardItemsBySection,
-    initialScrollItemPosition: Int = 0,
+    listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onScrollItemPositionChange: (index: Int) -> Unit = {},
     onItemCLick: (index: String) -> Unit = {},
 ) {
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = initialScrollItemPosition)
-    onScrollItemPositionChange(listState.firstVisibleItemIndex)
     LazyColumn(state = listState) {
 
         val verticalSectionPadding = 24.dp

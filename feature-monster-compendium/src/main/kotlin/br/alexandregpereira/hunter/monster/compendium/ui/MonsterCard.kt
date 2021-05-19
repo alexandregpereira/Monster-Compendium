@@ -16,15 +16,16 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.compose.MonsterImage
 import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.compose.animatePressed
-import br.alexandregpereira.hunter.ui.compose.pressedGesture
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -49,8 +49,9 @@ fun MonsterCard(
     paddingValues: PaddingValues = PaddingValues(8.dp),
     onCLick: () -> Unit = {},
 ) {
-    var pressed by remember { mutableStateOf(false) }
-    val scale = animatePressed(pressed = pressed)
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale = animatePressed(pressed = isPressed)
 
     Column(
         modifier
@@ -59,7 +60,11 @@ fun MonsterCard(
                 scaleX = scale,
                 scaleY = scale
             )
-            .pressedGesture(onTap = onCLick, onPressed = { pressed = it })
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onCLick
+            )
     ) {
         MonsterImage(
             imageUrl = imageUrl,
