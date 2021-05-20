@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.data.model
+package br.alexandregpereira.hunter.data.remote.model
 
 import kotlinx.serialization.Serializable
 

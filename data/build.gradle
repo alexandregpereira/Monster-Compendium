@@ -51,6 +51,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     implementation project(':domain')
+    implementation project(':data-remote-model')
 
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation 'junit:junit:4.13.2'

@@ -16,8 +16,8 @@
 
 package br.alexandregpereira.hunter.image
 
-import br.alexandregpereira.hunter.data.model.ColorDto
-import br.alexandregpereira.hunter.data.model.MonsterDto
+import br.alexandregpereira.hunter.data.remote.model.ColorDto
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
