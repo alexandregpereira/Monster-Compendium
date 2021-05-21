@@ -31,6 +31,8 @@ data class AbilityScoreDto(
 
 @Serializable
 data class SavingThrowDto(
+    @SerialName("index")
+    val index: String,
     @SerialName("type")
     val type: AbilityScoreTypeDto,
     @SerialName("modifier")
@@ -42,7 +44,9 @@ data class SkillDto(
     @SerialName("index")
     val index: String,
     @SerialName("modifier")
-    val modifier: Int
+    val modifier: Int,
+    @SerialName("name")
+    val name: String
 )
 
 @Serializable

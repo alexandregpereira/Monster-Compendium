@@ -7,4 +7,6 @@
     <string name="monster_detail_resistances">Resistances</string>
     <string name="monster_detail_immunities">Immunities</string>
     <string name="monster_detail_condition_immunities">Condition Immunities</string>
+    <string name="monster_detail_saving_throws">Saving Throws</string>
+    <string name="monster_detail_skills">Skills</string>
 </resources>

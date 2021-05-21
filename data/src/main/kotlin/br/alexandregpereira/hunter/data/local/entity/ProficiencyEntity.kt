@@ -19,8 +19,8 @@ package br.alexandregpereira.hunter.data.local.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class AbilityScoreEntity(
-    val type: String,
-    val value: Int,
-    val modifier: Int
+internal data class ProficiencyEntity(
+    val index: String,
+    val modifier: Int,
+    val name: String
 )

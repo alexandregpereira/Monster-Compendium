@@ -208,6 +208,7 @@ private fun Monster.asAbilityScoresFormatted(): List<AbilityScoreDto> {
 private fun Monster.getSavingThrows(): List<SavingThrowDto> {
     return this.proficiencies.filter { it.proficiency.index.startsWith("saving-throw-") }.map {
         SavingThrowDto(
+            index = it.proficiency.index,
             type = it.proficiency.asSavingThrowType(),
             modifier = it.value
         )
@@ -229,8 +230,9 @@ private fun Proficiency.asSavingThrowType(): AbilityScoreTypeDto {
 private fun Monster.getSkills(): List<SkillDto> {
     return this.proficiencies.filter { it.proficiency.index.startsWith("skill-") }.map {
         SkillDto(
-            index = it.proficiency.index.removePrefix("skill-"),
-            modifier = it.value
+            index = it.proficiency.index,
+            modifier = it.value,
+            name = it.proficiency.name.removePrefix("Skill: ")
         )
     }
 }

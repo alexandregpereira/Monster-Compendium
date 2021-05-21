@@ -22,16 +22,6 @@ data class AbilityScore(
     val modifier: Int
 )
 
-data class SavingThrow(
-    val type: AbilityScoreType,
-    val modifier: Int
-)
-
-data class Skill(
-    val index: String,
-    val modifier: Int
-)
-
 enum class AbilityScoreType {
     STRENGTH,
     DEXTERITY,

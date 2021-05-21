@@ -69,26 +69,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             }
         ],
         "skills": [
             {
-                "index": "history",
-                "modifier": 12
+                "index": "skill-history",
+                "modifier": 12,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 10
+                "index": "skill-perception",
+                "modifier": 10,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -328,34 +333,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 9
+                "index": "skill-arcana",
+                "modifier": 9,
+                "name": "Arcana"
             },
             {
-                "index": "perception",
-                "modifier": 10
+                "index": "skill-perception",
+                "modifier": 10,
+                "name": "Perception"
             },
             {
-                "index": "religion",
-                "modifier": 15
+                "index": "skill-religion",
+                "modifier": 15,
+                "name": "Religion"
             }
         ],
         "damage_vulnerabilities": [
@@ -476,22 +488,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 9
+                "index": "skill-insight",
+                "modifier": 9,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 9
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -617,22 +633,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 12
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 12
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 11
+                "index": "skill-perception",
+                "modifier": 11,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -758,22 +778,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 17
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 14
+                "index": "skill-perception",
+                "modifier": 14,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -1043,6 +1067,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             }
@@ -1381,22 +1406,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 13
+                "index": "skill-arcana",
+                "modifier": 13,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 13
+                "index": "skill-history",
+                "modifier": 13,
+                "name": "History"
             }
         ],
         "damage_vulnerabilities": [
@@ -1545,30 +1574,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "acrobatics",
-                "modifier": 6
+                "index": "skill-acrobatics",
+                "modifier": 6,
+                "name": "Acrobatics"
             },
             {
-                "index": "deception",
-                "modifier": 3
+                "index": "skill-deception",
+                "modifier": 3,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 9
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -1652,6 +1687,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 4
             }
@@ -1834,26 +1870,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             }
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 4
+                "index": "skill-athletics",
+                "modifier": 4,
+                "name": "Athletics"
             },
             {
-                "index": "deception",
-                "modifier": 4
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
             }
         ],
         "damage_vulnerabilities": [
@@ -2104,12 +2145,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -2331,12 +2374,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -2417,12 +2462,14 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             },
             {
-                "index": "survival",
-                "modifier": 2
+                "index": "skill-survival",
+                "modifier": 2,
+                "name": "Survival"
             }
         ],
         "damage_vulnerabilities": [
@@ -2510,8 +2557,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -2594,16 +2642,19 @@
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 6
+                "index": "skill-athletics",
+                "modifier": 6,
+                "name": "Athletics"
             },
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "survival",
-                "modifier": 3
+                "index": "skill-survival",
+                "modifier": 3,
+                "name": "Survival"
             }
         ],
         "damage_vulnerabilities": [
@@ -2690,8 +2741,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -2779,8 +2831,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -3022,8 +3075,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -3103,26 +3157,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 7
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -3292,14 +3351,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 6
             }
@@ -3415,16 +3477,19 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 4
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
             },
             {
-                "index": "persuasion",
-                "modifier": 4
+                "index": "skill-persuasion",
+                "modifier": 4,
+                "name": "Persuasion"
             },
             {
-                "index": "religion",
-                "modifier": 2
+                "index": "skill-religion",
+                "modifier": 2,
+                "name": "Religion"
             }
         ],
         "damage_vulnerabilities": [
@@ -3505,12 +3570,14 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 2
+                "index": "skill-deception",
+                "modifier": 2,
+                "name": "Deception"
             },
             {
-                "index": "religion",
-                "modifier": 2
+                "index": "skill-religion",
+                "modifier": 2,
+                "name": "Religion"
             }
         ],
         "damage_vulnerabilities": [
@@ -3597,8 +3664,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -3680,12 +3748,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -3767,16 +3837,19 @@
         ],
         "skills": [
             {
-                "index": "investigation",
-                "modifier": 3
+                "index": "skill-investigation",
+                "modifier": 3,
+                "name": "Investigation"
             },
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -3862,18 +3935,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 12
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 12
             }
@@ -4106,18 +4183,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
@@ -4246,14 +4327,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             }
@@ -4382,18 +4466,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 10
             }
@@ -4528,18 +4616,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
@@ -4670,8 +4762,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -4802,14 +4895,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 2
             }
@@ -4938,34 +5034,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 5
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 5
+                "index": "skill-insight",
+                "modifier": 5,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -5085,14 +5188,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             }
@@ -5222,26 +5328,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 7
+                "index": "skill-deception",
+                "modifier": 7,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 6
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
             }
         ],
         "damage_vulnerabilities": [
@@ -5361,14 +5472,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
@@ -5498,18 +5612,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
@@ -5639,18 +5757,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
@@ -5774,18 +5896,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
@@ -5913,20 +6039,24 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 4
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 3
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
             },
             {
-                "index": "persuasion",
-                "modifier": 4
+                "index": "skill-persuasion",
+                "modifier": 4,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -6161,14 +6291,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 13
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             }
@@ -6294,12 +6427,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -6384,14 +6519,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
@@ -6487,12 +6625,14 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 6
+                "index": "skill-deception",
+                "modifier": 6,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 3
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
             }
         ],
         "damage_vulnerabilities": [
@@ -6589,30 +6729,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 11
+                "index": "skill-perception",
+                "modifier": 11,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -6710,30 +6856,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 12
+                "index": "skill-perception",
+                "modifier": 12,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -6831,38 +6983,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "history",
-                "modifier": 7
+                "index": "skill-history",
+                "modifier": 7,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 11
+                "index": "skill-perception",
+                "modifier": 11,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 8
+                "index": "skill-persuasion",
+                "modifier": 8,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -6960,34 +7120,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 7
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 12
+                "index": "skill-perception",
+                "modifier": 12,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7085,34 +7252,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 8
+                "index": "skill-deception",
+                "modifier": 8,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 12
+                "index": "skill-perception",
+                "modifier": 12,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7210,38 +7384,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 13
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 13
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 8
+                "index": "skill-insight",
+                "modifier": 8,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 14
+                "index": "skill-perception",
+                "modifier": 14,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 13
+                "index": "skill-persuasion",
+                "modifier": 13,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 8
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7339,42 +7521,51 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 8
+                "index": "skill-deception",
+                "modifier": 8,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 7
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 12
+                "index": "skill-perception",
+                "modifier": 12,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 8
+                "index": "skill-persuasion",
+                "modifier": 8,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7477,30 +7668,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 13
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 11
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 13
+                "index": "skill-perception",
+                "modifier": 13,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7592,38 +7789,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 12
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 10
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 8
+                "index": "skill-arcana",
+                "modifier": 8,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 8
+                "index": "skill-history",
+                "modifier": 8,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 11
+                "index": "skill-perception",
+                "modifier": 11,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7727,30 +7932,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 6
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 11
+                "index": "skill-perception",
+                "modifier": 11,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7848,30 +8059,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 11
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 16
+                "index": "skill-perception",
+                "modifier": 16,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 9
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -7969,30 +8186,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 15
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 12
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 17
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8090,38 +8313,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 13
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 10
             }
         ],
         "skills": [
             {
-                "index": "history",
-                "modifier": 9
+                "index": "skill-history",
+                "modifier": 9,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 14
+                "index": "skill-perception",
+                "modifier": 14,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 10
+                "index": "skill-persuasion",
+                "modifier": 10,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8219,34 +8450,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 15
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 12
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 10
+                "index": "skill-insight",
+                "modifier": 10,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 17
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8344,34 +8582,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 11
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 11
+                "index": "skill-deception",
+                "modifier": 11,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 17
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 8
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8469,38 +8714,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 16
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 16
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 10
+                "index": "skill-insight",
+                "modifier": 10,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 17
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 16
+                "index": "skill-persuasion",
+                "modifier": 16,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 9
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8598,42 +8851,51 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 11
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 11
+                "index": "skill-deception",
+                "modifier": 11,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 10
+                "index": "skill-insight",
+                "modifier": 10,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 17
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 11
+                "index": "skill-persuasion",
+                "modifier": 11,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 8
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8736,30 +8998,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 16
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 13
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 16
+                "index": "skill-perception",
+                "modifier": 16,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8851,38 +9119,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 16
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 13
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 11
+                "index": "skill-arcana",
+                "modifier": 11,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 11
+                "index": "skill-history",
+                "modifier": 11,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 16
+                "index": "skill-perception",
+                "modifier": 16,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -8986,30 +9262,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 13
+                "index": "skill-perception",
+                "modifier": 13,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9107,30 +9389,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9228,30 +9516,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9349,30 +9643,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9470,30 +9770,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9591,30 +9897,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9712,30 +10024,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9833,30 +10151,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -9959,30 +10283,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10074,30 +10404,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10189,14 +10525,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             }
@@ -10303,30 +10642,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 2
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10424,30 +10769,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10545,30 +10896,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 9
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10666,34 +11023,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 5
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10791,34 +11155,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 6
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 4
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -10916,34 +11287,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 5
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11041,38 +11419,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "insight",
-                "modifier": 5
+                "index": "skill-insight",
+                "modifier": 5,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 9
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
             },
             {
-                "index": "persuasion",
-                "modifier": 9
+                "index": "skill-persuasion",
+                "modifier": 9,
+                "name": "Persuasion"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11170,34 +11556,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 5
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11300,30 +11693,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11415,38 +11814,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 6
+                "index": "skill-arcana",
+                "modifier": 6,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 6
+                "index": "skill-history",
+                "modifier": 6,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11550,30 +11957,36 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11667,12 +12080,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 9
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11754,12 +12169,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -11841,16 +12258,19 @@
         ],
         "skills": [
             {
-                "index": "medicine",
-                "modifier": 4
+                "index": "skill-medicine",
+                "modifier": 4,
+                "name": "Medicine"
             },
             {
-                "index": "nature",
-                "modifier": 3
+                "index": "skill-nature",
+                "modifier": 3,
+                "name": "Nature"
             },
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -11931,12 +12351,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -12108,12 +12530,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -12216,8 +12640,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -12443,14 +12868,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 7
             }
@@ -12547,16 +12975,19 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             },
             {
-                "index": "survival",
-                "modifier": 3
+                "index": "skill-survival",
+                "modifier": 3,
+                "name": "Survival"
             }
         ],
         "damage_vulnerabilities": [
@@ -12638,8 +13069,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -12868,26 +13300,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 11
+                "index": "skill-athletics",
+                "modifier": 11,
+                "name": "Athletics"
             },
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -13209,12 +13646,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 1
+                "index": "skill-perception",
+                "modifier": 1,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -13294,26 +13733,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 9
+                "index": "skill-athletics",
+                "modifier": 9,
+                "name": "Athletics"
             },
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -14082,8 +14526,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -14249,12 +14694,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -14342,12 +14789,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -14435,12 +14884,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -14607,8 +15058,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 7
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -14860,8 +15312,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -14943,8 +15396,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -15031,20 +15485,24 @@
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 3
+                "index": "skill-arcana",
+                "modifier": 3,
+                "name": "Arcana"
             },
             {
-                "index": "deception",
-                "modifier": 4
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -15237,8 +15695,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -15320,16 +15779,19 @@
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 5
+                "index": "skill-athletics",
+                "modifier": 5,
+                "name": "Athletics"
             },
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -15414,22 +15876,27 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 8
             }
@@ -15536,20 +16003,24 @@
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 12
+                "index": "skill-arcana",
+                "modifier": 12,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 12
+                "index": "skill-history",
+                "modifier": 12,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             },
             {
-                "index": "religion",
-                "modifier": 8
+                "index": "skill-religion",
+                "modifier": 8,
+                "name": "Religion"
             }
         ],
         "damage_vulnerabilities": [
@@ -15841,8 +16312,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -15923,8 +16395,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -16011,8 +16484,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -16099,8 +16573,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -16366,8 +16841,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -16449,8 +16925,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -16537,12 +17014,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -16655,12 +17134,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 8
+                "index": "skill-perception",
+                "modifier": 8,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 10
+                "index": "skill-stealth",
+                "modifier": 10,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -17034,22 +17515,27 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 17
             },
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 13
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 11
             }
@@ -17170,16 +17656,19 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 7
+                "index": "skill-deception",
+                "modifier": 7,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 4
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -17259,34 +17748,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 12
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 18
+                "index": "skill-arcana",
+                "modifier": 18,
+                "name": "Arcana"
             },
             {
-                "index": "history",
-                "modifier": 12
+                "index": "skill-history",
+                "modifier": 12,
+                "name": "History"
             },
             {
-                "index": "insight",
-                "modifier": 9
+                "index": "skill-insight",
+                "modifier": 9,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 9
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -17439,16 +17935,19 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             },
             {
-                "index": "survival",
-                "modifier": 5
+                "index": "skill-survival",
+                "modifier": 5,
+                "name": "Survival"
             }
         ],
         "damage_vulnerabilities": [
@@ -17535,8 +18034,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -17827,8 +18327,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -17909,20 +18410,24 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 5
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 4
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -18010,8 +18515,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -18177,8 +18683,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -18270,8 +18777,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -18450,6 +18958,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 2
             }
@@ -18595,20 +19104,24 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 7
+                "index": "skill-deception",
+                "modifier": 7,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 6
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
             },
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -18814,16 +19327,19 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 5
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 4
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
             },
             {
-                "index": "persuasion",
-                "modifier": 5
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
             }
         ],
         "damage_vulnerabilities": [
@@ -19040,12 +19556,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -19204,6 +19722,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 0
             }
@@ -19303,34 +19822,41 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 3
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 5
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 5
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
             },
             {
-                "index": "deception",
-                "modifier": 8
+                "index": "skill-deception",
+                "modifier": 8,
+                "name": "Deception"
             },
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -19412,8 +19938,9 @@
         ],
         "skills": [
             {
-                "index": "intimidation",
-                "modifier": 2
+                "index": "skill-intimidation",
+                "modifier": 2,
+                "name": "Intimidation"
             }
         ],
         "damage_vulnerabilities": [
@@ -19493,6 +20020,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 7
             }
@@ -19584,12 +20112,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -19671,8 +20201,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -19758,22 +20289,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -19860,8 +20395,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -19949,12 +20485,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -20041,12 +20579,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -20133,10 +20673,12 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 11
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             }
@@ -20302,12 +20844,14 @@
         ],
         "skills": [
             {
-                "index": "deception",
-                "modifier": 10
+                "index": "skill-deception",
+                "modifier": 10,
+                "name": "Deception"
             },
             {
-                "index": "insight",
-                "modifier": 8
+                "index": "skill-insight",
+                "modifier": 8,
+                "name": "Insight"
             }
         ],
         "damage_vulnerabilities": [
@@ -20504,8 +21048,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -20764,26 +21309,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -20870,12 +21420,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -21042,8 +21594,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -21234,16 +21787,19 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             },
             {
-                "index": "performance",
-                "modifier": 6
+                "index": "skill-performance",
+                "modifier": 6,
+                "name": "Performance"
             },
             {
-                "index": "stealth",
-                "modifier": 5
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -21324,20 +21880,24 @@
         ],
         "skills": [
             {
-                "index": "nature",
-                "modifier": 4
+                "index": "skill-nature",
+                "modifier": 4,
+                "name": "Nature"
             },
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             },
             {
-                "index": "survival",
-                "modifier": 5
+                "index": "skill-survival",
+                "modifier": 5,
+                "name": "Survival"
             }
         ],
         "damage_vulnerabilities": [
@@ -21503,8 +22063,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -21692,8 +22253,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 2
+                "index": "skill-stealth",
+                "modifier": 2,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -22289,8 +22851,9 @@
         ],
         "skills": [
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -22370,18 +22933,22 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 6
             }
@@ -22488,12 +23055,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 8
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -22757,26 +23326,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 8
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 4
             }
         ],
         "skills": [
             {
-                "index": "athletics",
-                "modifier": 12
+                "index": "skill-athletics",
+                "modifier": 12,
+                "name": "Athletics"
             },
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -23001,38 +23575,46 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-str",
                 "type": "STRENGTH",
                 "modifier": 14
             },
             {
+                "index": "saving-throw-con",
                 "type": "CONSTITUTION",
                 "modifier": 10
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "arcana",
-                "modifier": 8
+                "index": "skill-arcana",
+                "modifier": 8,
+                "name": "Arcana"
             },
             {
-                "index": "athletics",
-                "modifier": 14
+                "index": "skill-athletics",
+                "modifier": 14,
+                "name": "Athletics"
             },
             {
-                "index": "history",
-                "modifier": 8
+                "index": "skill-history",
+                "modifier": 8,
+                "name": "History"
             },
             {
-                "index": "perception",
-                "modifier": 9
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -23126,14 +23708,17 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-int",
                 "type": "INTELLIGENCE",
                 "modifier": 5
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
@@ -23269,8 +23854,9 @@
         ],
         "skills": [
             {
-                "index": "intimidation",
-                "modifier": 2
+                "index": "skill-intimidation",
+                "modifier": 2,
+                "name": "Intimidation"
             }
         ],
         "damage_vulnerabilities": [
@@ -23444,8 +24030,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 2
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -23527,8 +24114,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -23706,26 +24294,31 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 9
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 7
             },
             {
+                "index": "saving-throw-cha",
                 "type": "CHARISMA",
                 "modifier": 9
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 7
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 9
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -23830,22 +24423,26 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-dex",
                 "type": "DEXTERITY",
                 "modifier": 6
             },
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 3
             }
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 6
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -24201,12 +24798,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -24503,12 +25102,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 5
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -24594,12 +25195,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 3
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 4
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -24680,8 +25283,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -24949,8 +25553,9 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 4
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
             }
         ],
         "damage_vulnerabilities": [
@@ -25038,12 +25643,14 @@
         ],
         "skills": [
             {
-                "index": "perception",
-                "modifier": 6
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
             },
             {
-                "index": "stealth",
-                "modifier": 3
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
             }
         ],
         "damage_vulnerabilities": [
@@ -25139,6 +25746,7 @@
         ],
         "saving_throws": [
             {
+                "index": "saving-throw-wis",
                 "type": "WISDOM",
                 "modifier": 0
             }

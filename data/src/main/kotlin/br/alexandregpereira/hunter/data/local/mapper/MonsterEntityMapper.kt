@@ -2,8 +2,7 @@ package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
-import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
-import br.alexandregpereira.hunter.data.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.local.entity.ProficiencyEntity
 import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -38,8 +37,8 @@ internal fun List<MonsterEntity>.toDomain(): List<Monster> {
             ),
             speed = it.speedEntity.toDomain(),
             abilityScores = it.abilityScores.toListFromJson<AbilityScoreEntity>().toDomain(),
-            savingThrows = it.savingThrows.toListFromJson<SavingThrowEntity>().toDomain(),
-            skills = it.skills.toListFromJson<SkillEntity>().toDomain(),
+            savingThrows = it.savingThrows.toListFromJson<ProficiencyEntity>().toDomain(),
+            skills = it.skills.toListFromJson<ProficiencyEntity>().toDomain(),
             damageVulnerabilities = it.damageVulnerabilities.toListFromJson<ValueEntity>()
                 .toDamageDomain(),
             damageResistances = it.damageResistances.toListFromJson<ValueEntity>().toDamageDomain(),

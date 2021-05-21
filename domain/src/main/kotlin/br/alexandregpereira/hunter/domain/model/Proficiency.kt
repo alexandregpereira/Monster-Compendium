@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.local.entity
+package br.alexandregpereira.hunter.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-internal data class AbilityScoreEntity(
-    val type: String,
-    val value: Int,
-    val modifier: Int
+data class Proficiency(
+    val index: String,
+    val modifier: Int,
+    val name: String
 )

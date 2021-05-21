@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -47,6 +49,18 @@ fun MonsterInfo(
     BlockSection { StatsBlock(stats = monster.stats) }
     BlockSection { SpeedBlock(speed = monster.speed) }
     BlockSection { AbilityScoreBlock(abilityScores = monster.abilityScores) }
+    OptionalBlockSection(monster.savingThrows) {
+        ProficiencyBlock(
+            proficiencies = it,
+            title = stringResource(R.string.monster_detail_saving_throws)
+        )
+    }
+    OptionalBlockSection(monster.skills) {
+        ProficiencyBlock(
+            proficiencies = it,
+            title = stringResource(R.string.monster_detail_skills)
+        )
+    }
     OptionalBlockSection(monster.damageVulnerabilities) {
         DamageVulnerabilitiesBlock(damages = it)
     }

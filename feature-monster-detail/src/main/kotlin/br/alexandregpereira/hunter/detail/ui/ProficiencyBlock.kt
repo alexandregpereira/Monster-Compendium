@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.local.mapper
+package br.alexandregpereira.hunter.detail.ui
 
-import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
-import br.alexandregpereira.hunter.domain.model.SavingThrow
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import br.alexandregpereira.hunter.domain.model.Proficiency
 
-internal fun List<SavingThrowEntity>.toDomain(): List<SavingThrow> {
-    return this.map {
-        SavingThrow(type = it.type.toDomain(), modifier = it.modifier)
-    }
-}
-
-internal fun List<SavingThrow>.toEntity(): List<SavingThrowEntity> {
-    return this.map {
-        SavingThrowEntity(type = it.type.toEntity(), modifier = it.modifier)
-    }
+@Composable
+internal fun ProficiencyBlock(
+    title: String,
+    proficiencies: List<Proficiency>,
+    modifier: Modifier = Modifier
+) = Block(modifier = modifier, title = title) {
+    ProficiencyGrid(proficiencies)
 }

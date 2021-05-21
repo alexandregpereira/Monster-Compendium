@@ -17,10 +17,15 @@
 package br.alexandregpereira.hunter.data.remote.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
-import br.alexandregpereira.hunter.domain.model.SavingThrow
+import br.alexandregpereira.hunter.domain.model.Proficiency
+import java.util.Locale
 
-internal fun List<SavingThrowDto>.toDomain(): List<SavingThrow> {
+internal fun List<SavingThrowDto>.toDomain(): List<Proficiency> {
     return this.map {
-        SavingThrow(type = it.type.toDomain(), modifier = it.modifier)
+        Proficiency(
+            index = it.index,
+            name = it.type.name.substring(0..2).capitalize(Locale.ROOT),
+            modifier = it.modifier
+        )
     }
 }
