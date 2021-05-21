@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.local.mapper
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.data.local.entity.ValueEntity
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+data class Condition(
+    val index: String,
+    val type: ConditionType,
+    val name: String
+)
 
-internal fun List<ValueEntity>.toDamageDomain(): List<Damage> {
-    return this.map {
-        Damage(index = it.index, type = DamageType.valueOf(it.type), name = it.name)
-    }
-}
-
-internal fun List<Damage>.toEntity(): List<ValueEntity> {
-    return this.map {
-        ValueEntity(index = it.index, type = it.type.name, name = it.name)
-    }
+enum class ConditionType {
+    BLINDED,
+    CHARMED,
+    DEAFENED,
+    EXHAUSTION,
+    FRIGHTENED,
+    GRAPPLED,
+    PARALYZED,
+    PETRIFIED,
+    POISONED,
+    PRONE,
+    RESTRAINED,
+    STUNNED,
+    UNCONSCIOUS,
 }

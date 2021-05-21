@@ -17,16 +17,16 @@
 package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.ValueEntity
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.domain.model.Condition
+import br.alexandregpereira.hunter.domain.model.ConditionType
 
-internal fun List<ValueEntity>.toDamageDomain(): List<Damage> {
+internal fun List<ValueEntity>.toConditionDomain(): List<Condition> {
     return this.map {
-        Damage(index = it.index, type = DamageType.valueOf(it.type), name = it.name)
+        Condition(index = it.index, type = ConditionType.valueOf(it.type), name = it.name)
     }
 }
 
-internal fun List<Damage>.toEntity(): List<ValueEntity> {
+internal fun List<Condition>.toEntity(): List<ValueEntity> {
     return this.map {
         ValueEntity(index = it.index, type = it.type.name, name = it.name)
     }

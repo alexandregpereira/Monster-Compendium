@@ -1,10 +1,10 @@
 package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
-import br.alexandregpereira.hunter.data.local.entity.DamageEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
@@ -40,10 +40,12 @@ internal fun List<MonsterEntity>.toDomain(): List<Monster> {
             abilityScores = it.abilityScores.toListFromJson<AbilityScoreEntity>().toDomain(),
             savingThrows = it.savingThrows.toListFromJson<SavingThrowEntity>().toDomain(),
             skills = it.skills.toListFromJson<SkillEntity>().toDomain(),
-            damageVulnerabilities = it.damageVulnerabilities.toListFromJson<DamageEntity>()
-                .toDomain(),
-            damageResistances = it.damageResistances.toListFromJson<DamageEntity>().toDomain(),
-            damageImmunities = it.damageImmunities.toListFromJson<DamageEntity>().toDomain()
+            damageVulnerabilities = it.damageVulnerabilities.toListFromJson<ValueEntity>()
+                .toDamageDomain(),
+            damageResistances = it.damageResistances.toListFromJson<ValueEntity>().toDamageDomain(),
+            damageImmunities = it.damageImmunities.toListFromJson<ValueEntity>().toDamageDomain(),
+            conditionImmunities = it.conditionImmunities.toListFromJson<ValueEntity>()
+                .toConditionDomain()
         )
     }
 }
@@ -73,7 +75,8 @@ internal fun List<Monster>.toEntity(): List<MonsterEntity> {
             skills = it.skills.toEntity().toJsonFromList(),
             damageVulnerabilities = it.damageVulnerabilities.toEntity().toJsonFromList(),
             damageResistances = it.damageResistances.toEntity().toJsonFromList(),
-            damageImmunities = it.damageImmunities.toEntity().toJsonFromList()
+            damageImmunities = it.damageImmunities.toEntity().toJsonFromList(),
+            conditionImmunities = it.conditionImmunities.toEntity().toJsonFromList()
         )
     }
 }

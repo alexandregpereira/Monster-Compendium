@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.local.entity
+package br.alexandregpereira.hunter.detail.ui
 
-import kotlinx.serialization.Serializable
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.Condition
 
-@Serializable
-internal data class DamageEntity(
-    val index: String,
-    val type: String,
-    val name: String
-)
+@Composable
+fun ConditionBlock(
+    conditions: List<Condition>,
+    modifier: Modifier = Modifier
+) = Block(
+    title = stringResource(R.string.monster_detail_condition_immunities),
+    modifier = modifier
+) {
+
+    ConditionGrid(conditions)
+}

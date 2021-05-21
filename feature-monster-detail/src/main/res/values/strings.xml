@@ -6,4 +6,5 @@
     <string name="monster_detail_vulnerabilities">Vulnerabilities</string>
     <string name="monster_detail_resistances">Resistances</string>
     <string name="monster_detail_immunities">Immunities</string>
+    <string name="monster_detail_condition_immunities">Condition Immunities</string>
 </resources>

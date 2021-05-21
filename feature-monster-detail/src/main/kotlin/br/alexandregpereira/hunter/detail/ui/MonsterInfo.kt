@@ -56,6 +56,9 @@ fun MonsterInfo(
     OptionalBlockSection(monster.damageImmunities) {
         DamageImmunitiesBlock(damages = it)
     }
+    OptionalBlockSection(monster.conditionImmunities) {
+        ConditionBlock(conditions = it)
+    }
 
     Spacer(
         modifier = Modifier

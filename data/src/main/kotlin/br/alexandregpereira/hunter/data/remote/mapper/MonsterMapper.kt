@@ -50,7 +50,8 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             skills = it.skills.toDomain(),
             damageVulnerabilities = it.damageVulnerabilities.toDomain(),
             damageResistances = it.damageResistances.toDomain(),
-            damageImmunities = it.damageImmunities.toDomain()
+            damageImmunities = it.damageImmunities.toDomain(),
+            conditionImmunities = it.conditionImmunities.toDomain()
         )
     }
 }

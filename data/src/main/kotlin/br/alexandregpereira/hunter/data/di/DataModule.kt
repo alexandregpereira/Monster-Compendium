@@ -65,10 +65,9 @@ val dataModule = module {
     }
 
     single {
-        Room.databaseBuilder(
-            androidContext(),
-            AppDatabase::class.java, "hunter-database"
-        ).build()
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "hunter-database")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     single { get<AppDatabase>().monsterDao() }
