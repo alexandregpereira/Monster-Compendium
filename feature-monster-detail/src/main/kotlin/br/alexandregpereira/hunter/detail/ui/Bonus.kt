@@ -16,25 +16,24 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,9 +42,15 @@ import androidx.compose.ui.unit.sp
 fun Bonus(
     value: Int,
     name: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    alpha: Float = 0.7f
 ) {
-    Column(modifier) {
+    Column(
+        modifier
+            .alpha(alpha)
+            .width(80.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Box(contentAlignment = Alignment.Center) {
             BonusImage()
             Text(
@@ -59,7 +64,7 @@ fun Bonus(
             text = name,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            modifier = Modifier.width(56.dp),
+            modifier = Modifier.padding(4.dp),
             textAlign = TextAlign.Center
         )
     }
@@ -81,7 +86,7 @@ fun BonusImage(
 
         drawCircle(
             color,
-            radius = (size.toPx() / 2f) - 4.dp.toPx(),
+            radius = (size.toPx() / 2f) - 5.dp.toPx(),
             style = Stroke(width = 1.dp.toPx()),
         )
     }
