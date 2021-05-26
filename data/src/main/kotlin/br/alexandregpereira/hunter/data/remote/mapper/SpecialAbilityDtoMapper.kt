@@ -16,16 +16,11 @@
 
 package br.alexandregpereira.hunter.data.remote.mapper
 
-import br.alexandregpereira.hunter.data.remote.model.DamageDto
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
+import br.alexandregpereira.hunter.domain.model.SpecialAbility
 
-internal fun List<DamageDto>.toDomain(): List<Damage> {
+internal fun List<SpecialAbilityDto>.toDomain(): List<SpecialAbility> {
     return this.map {
-        it.asDomain()
+        SpecialAbility(name = it.name, description = it.desc)
     }
-}
-
-internal fun DamageDto.asDomain(): Damage {
-    return Damage(index = this.index, type = DamageType.valueOf(this.type.name), name = this.name)
 }

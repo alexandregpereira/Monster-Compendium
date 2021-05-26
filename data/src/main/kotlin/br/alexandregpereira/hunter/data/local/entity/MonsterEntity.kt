@@ -45,5 +45,9 @@ internal data class MonsterEntity(
     val damageVulnerabilities: String,
     val damageResistances: String,
     val damageImmunities: String,
-    val conditionImmunities: String
+    val conditionImmunities: String,
+    val senses: String,
+    val languages: String,
+    val specialAbilities: String,
+    val actions: String
 )

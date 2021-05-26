@@ -71,6 +71,7 @@ internal class MonsterCompendiumViewModel(
             }
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
+                it.printStackTrace()
             }
             .collect {
                 _stateLiveData.value = MonsterCompendiumViewState(

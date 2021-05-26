@@ -1,8 +1,10 @@
 package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
+import br.alexandregpereira.hunter.data.local.entity.ActionEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.local.entity.ProficiencyEntity
+import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -36,15 +38,20 @@ internal fun List<MonsterEntity>.toDomain(): List<Monster> {
                 hitDice = it.hitDice
             ),
             speed = it.speedEntity.toDomain(),
-            abilityScores = it.abilityScores.toListFromJson<AbilityScoreEntity>().toDomain(),
-            savingThrows = it.savingThrows.toListFromJson<ProficiencyEntity>().toDomain(),
-            skills = it.skills.toListFromJson<ProficiencyEntity>().toDomain(),
-            damageVulnerabilities = it.damageVulnerabilities.toListFromJson<ValueEntity>()
+            abilityScores = it.abilityScores.toObjFromJson<List<AbilityScoreEntity>>().toDomain(),
+            savingThrows = it.savingThrows.toObjFromJson<List<ProficiencyEntity>>().toDomain(),
+            skills = it.skills.toObjFromJson<List<ProficiencyEntity>>().toDomain(),
+            damageVulnerabilities = it.damageVulnerabilities.toObjFromJson<List<ValueEntity>>()
                 .toDamageDomain(),
-            damageResistances = it.damageResistances.toListFromJson<ValueEntity>().toDamageDomain(),
-            damageImmunities = it.damageImmunities.toListFromJson<ValueEntity>().toDamageDomain(),
-            conditionImmunities = it.conditionImmunities.toListFromJson<ValueEntity>()
-                .toConditionDomain()
+            damageResistances = it.damageResistances.toObjFromJson<List<ValueEntity>>().toDamageDomain(),
+            damageImmunities = it.damageImmunities.toObjFromJson<List<ValueEntity>>().toDamageDomain(),
+            conditionImmunities = it.conditionImmunities.toObjFromJson<List<ValueEntity>>()
+                .toConditionDomain(),
+            senses = it.senses.toObjFromJson(),
+            languages = it.languages,
+            specialAbilities = it.specialAbilities.toObjFromJson<List<SpecialAbilityEntity>>()
+                .toDomain(),
+            actions = it.actions.toObjFromJson<List<ActionEntity>>().toDomain()
         )
     }
 }
@@ -69,13 +76,17 @@ internal fun List<Monster>.toEntity(): List<MonsterEntity> {
             hitPoints = it.stats.hitPoints,
             hitDice = it.stats.hitDice,
             speedEntity = it.speed.toEntity(),
-            abilityScores = it.abilityScores.toEntity().toJsonFromList(),
-            savingThrows = it.savingThrows.toEntity().toJsonFromList(),
-            skills = it.skills.toEntity().toJsonFromList(),
-            damageVulnerabilities = it.damageVulnerabilities.toEntity().toJsonFromList(),
-            damageResistances = it.damageResistances.toEntity().toJsonFromList(),
-            damageImmunities = it.damageImmunities.toEntity().toJsonFromList(),
-            conditionImmunities = it.conditionImmunities.toEntity().toJsonFromList()
+            abilityScores = it.abilityScores.toEntity().toJsonFromObj(),
+            savingThrows = it.savingThrows.toEntity().toJsonFromObj(),
+            skills = it.skills.toEntity().toJsonFromObj(),
+            damageVulnerabilities = it.damageVulnerabilities.toEntity().toJsonFromObj(),
+            damageResistances = it.damageResistances.toEntity().toJsonFromObj(),
+            damageImmunities = it.damageImmunities.toEntity().toJsonFromObj(),
+            conditionImmunities = it.conditionImmunities.toEntity().toJsonFromObj(),
+            senses = it.senses.toJsonFromObj(),
+            languages = it.languages,
+            specialAbilities = it.specialAbilities.toEntity().toJsonFromObj(),
+            actions = it.actions.toEntity().toJsonFromObj()
         )
     }
 }

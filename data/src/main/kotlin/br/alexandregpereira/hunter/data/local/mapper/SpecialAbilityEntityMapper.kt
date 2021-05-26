@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.remote.mapper
+package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.data.remote.model.DamageDto
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.domain.model.SpecialAbility
 
-internal fun List<DamageDto>.toDomain(): List<Damage> {
+internal fun List<SpecialAbilityEntity>.toDomain(): List<SpecialAbility> {
     return this.map {
-        it.asDomain()
+        SpecialAbility(name = it.name, description = it.description)
     }
 }
 
-internal fun DamageDto.asDomain(): Damage {
-    return Damage(index = this.index, type = DamageType.valueOf(this.type.name), name = this.name)
+internal fun List<SpecialAbility>.toEntity(): List<SpecialAbilityEntity> {
+    return this.map {
+        SpecialAbilityEntity(
+            name = it.name,
+            description = it.name,
+        )
+    }
 }

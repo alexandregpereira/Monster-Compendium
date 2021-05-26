@@ -141,7 +141,12 @@ fun MonsterInfoPreview() {
                 skills = listOf(),
                 damageVulnerabilities = listOf(),
                 damageResistances = listOf(),
-                damageImmunities = listOf()
+                damageImmunities = listOf(),
+                conditionImmunities = listOf(),
+                senses = listOf(),
+                languages = "",
+                specialAbilities = listOf(),
+                actions = listOf()
             )
         )
     }

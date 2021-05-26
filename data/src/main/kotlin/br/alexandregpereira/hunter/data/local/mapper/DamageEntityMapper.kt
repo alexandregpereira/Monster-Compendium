@@ -22,12 +22,20 @@ import br.alexandregpereira.hunter.domain.model.DamageType
 
 internal fun List<ValueEntity>.toDamageDomain(): List<Damage> {
     return this.map {
-        Damage(index = it.index, type = DamageType.valueOf(it.type), name = it.name)
+        it.toDamageDomain()
     }
+}
+
+internal fun ValueEntity.toDamageDomain(): Damage {
+    return Damage(index = this.index, type = DamageType.valueOf(this.type), name = this.name)
 }
 
 internal fun List<Damage>.toEntity(): List<ValueEntity> {
     return this.map {
-        ValueEntity(index = it.index, type = it.type.name, name = it.name)
+        it.toEntity()
     }
+}
+
+internal fun Damage.toEntity(): ValueEntity {
+    return ValueEntity(index = this.index, type = this.type.name, name = this.name)
 }

@@ -35,7 +35,11 @@ data class Monster(
     val damageVulnerabilities: List<Damage> = emptyList(),
     val damageResistances: List<Damage> = emptyList(),
     val damageImmunities: List<Damage> = emptyList(),
-    val conditionImmunities: List<Condition> = emptyList()
+    val conditionImmunities: List<Condition> = emptyList(),
+    val senses: List<String>,
+    val languages: String,
+    val specialAbilities: List<SpecialAbility>,
+    val actions: List<Action>
 )
 
 data class MonsterImageData(

@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.remote.mapper
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.data.remote.model.DamageDto
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+data class Action(
+    val damageDices: List<DamageDice>,
+    val attackBonus: Int?,
+    val description: String,
+    val name: String
+)
 
-internal fun List<DamageDto>.toDomain(): List<Damage> {
-    return this.map {
-        it.asDomain()
-    }
-}
-
-internal fun DamageDto.asDomain(): Damage {
-    return Damage(index = this.index, type = DamageType.valueOf(this.type.name), name = this.name)
-}
+data class DamageDice(
+    val dice: String,
+    val damage: Damage
+)

@@ -26,7 +26,7 @@ import br.alexandregpereira.hunter.domain.model.SpeedValue
 internal fun SpeedEntity.toDomain(): Speed {
     return Speed(
         hover = this.hover,
-        values = this.values.toListFromJson<SpeedValueEntity>().toDomain()
+        values = this.values.toObjFromJson<List<SpeedValueEntity>>().toDomain()
     )
 }
 
@@ -42,7 +42,7 @@ internal fun List<SpeedValueEntity>.toDomain(): List<SpeedValue> {
 }
 
 internal fun Speed.toEntity(): SpeedEntity {
-    return SpeedEntity(hover = this.hover, values = this.values.toEntity().toJsonFromList())
+    return SpeedEntity(hover = this.hover, values = this.values.toEntity().toJsonFromObj())
 }
 
 internal fun List<SpeedValue>.toEntity(): List<SpeedValueEntity> {

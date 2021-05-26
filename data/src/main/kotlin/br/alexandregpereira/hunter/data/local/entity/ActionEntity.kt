@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.remote.mapper
+package br.alexandregpereira.hunter.data.local.entity
 
-import br.alexandregpereira.hunter.data.remote.model.DamageDto
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
+import kotlinx.serialization.Serializable
 
-internal fun List<DamageDto>.toDomain(): List<Damage> {
-    return this.map {
-        it.asDomain()
-    }
-}
-
-internal fun DamageDto.asDomain(): Damage {
-    return Damage(index = this.index, type = DamageType.valueOf(this.type.name), name = this.name)
-}
+@Serializable
+data class ActionEntity(
+    val damageDices: String,
+    val attackBonus: Int?,
+    val description: String,
+    val name: String
+)

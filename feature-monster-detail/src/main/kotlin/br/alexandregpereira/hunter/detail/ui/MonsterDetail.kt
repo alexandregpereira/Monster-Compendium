@@ -262,7 +262,12 @@ fun MonsterDetailPreview() = Window {
                 skills = listOf(),
                 damageVulnerabilities = listOf(),
                 damageResistances = listOf(),
-                damageImmunities = listOf()
+                damageImmunities = listOf(),
+                conditionImmunities = listOf(),
+                senses = listOf(),
+                languages = "Test",
+                specialAbilities = listOf(),
+                actions = listOf(),
             )
         },
         initialMonsterIndex = 2
