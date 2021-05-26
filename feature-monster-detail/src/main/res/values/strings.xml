@@ -9,4 +9,8 @@
     <string name="monster_detail_condition_immunities">Condition Immunities</string>
     <string name="monster_detail_saving_throws">Saving Throws</string>
     <string name="monster_detail_skills">Skills</string>
+    <string name="monster_detail_senses">Senses</string>
+    <string name="monster_detail_languages">Languages</string>
+    <string name="monster_detail_special_abilities">Special Abilities</string>
+    <string name="monster_detail_actions">Actions</string>
 </resources>

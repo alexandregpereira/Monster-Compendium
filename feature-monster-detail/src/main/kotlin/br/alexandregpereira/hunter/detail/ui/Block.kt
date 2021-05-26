@@ -21,6 +21,7 @@ fun Block(
     modifier: Modifier = Modifier,
     title: String? = null,
     contentPaddingBottom: Dp = 0.dp,
+    contentTextPaddingBottom: Dp = 24.dp,
     content: @Composable ColumnScope.() -> Unit
 ) = Column(
     modifier.background(color = MaterialTheme.colors.surface)
@@ -32,7 +33,7 @@ fun Block(
             text = title,
             fontWeight = FontWeight.Normal,
             fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(bottom = contentTextPaddingBottom)
         )
     }
 

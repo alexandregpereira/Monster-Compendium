@@ -73,6 +73,13 @@ fun MonsterInfo(
     OptionalBlockSection(monster.conditionImmunities) {
         ConditionBlock(conditions = it)
     }
+    BlockSection { SensesBlock(senses = monster.senses) }
+    BlockSection {
+        TextBlock(
+            title = stringResource(R.string.monster_detail_languages),
+            text = monster.languages
+        )
+    }
 
     Spacer(
         modifier = Modifier
@@ -82,7 +89,7 @@ fun MonsterInfo(
 }
 
 @Composable
-private fun<T> ColumnScope.OptionalBlockSection(
+private fun <T> ColumnScope.OptionalBlockSection(
     value: List<T>,
     content: @Composable ColumnScope.(List<T>) -> Unit
 ) {
@@ -96,10 +103,11 @@ private fun<T> ColumnScope.OptionalBlockSection(
 private fun ColumnScope.BlockSection(
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Spacer(modifier = Modifier
-        .height(1.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colors.background)
+    Spacer(
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.background)
     )
 
     content()
