@@ -72,5 +72,7 @@ data class MonsterDto(
     @SerialName("languages")
     val languages: String,
     @SerialName("special_abilities")
-    val specialAbilities: List<SpecialAbilityDto>
+    val specialAbilities: List<SpecialAbilityDto>,
+    @SerialName("actions")
+    val actions: List<ActionDto>
 )

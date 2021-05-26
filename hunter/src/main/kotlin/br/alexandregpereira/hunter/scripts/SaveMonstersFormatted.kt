@@ -18,8 +18,10 @@ package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.remote.model.ActionDto
 import br.alexandregpereira.hunter.data.remote.model.ConditionDto
 import br.alexandregpereira.hunter.data.remote.model.ConditionTypeDto
+import br.alexandregpereira.hunter.data.remote.model.DamageDiceDto
 import br.alexandregpereira.hunter.data.remote.model.DamageDto
 import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MeasurementUnitDto
@@ -32,6 +34,7 @@ import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto
 import br.alexandregpereira.hunter.dndapi.data.model.APIReference
+import br.alexandregpereira.hunter.dndapi.data.model.Action
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.dndapi.data.model.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
@@ -96,7 +99,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             conditionImmunities = it.conditionImmunities.asConditionsFormatted(),
             senses = it.senses.asSensesFormatted(),
             languages = it.languages,
-            specialAbilities = it.specialAbilities.asSpecialAbilitiesFormatted()
+            specialAbilities = it.specialAbilities.asSpecialAbilitiesFormatted(),
+            actions = it.actions.asActionsFormatted(),
         )
     }
 }
@@ -243,27 +247,31 @@ private fun Monster.getSkills(): List<SkillDto> {
 
 private fun List<String>.getDamages(): List<DamageDto> {
     return this.map {
-        val damageType = when {
-            it.startsWith("acid") -> DamageTypeDto.ACID
-            it.startsWith("bludgeoning") -> DamageTypeDto.BLUDGEONING
-            it.startsWith("cold") -> DamageTypeDto.COLD
-            it.startsWith("fire") -> DamageTypeDto.FIRE
-            it.startsWith("lightning") -> DamageTypeDto.LIGHTNING
-            it.startsWith("necrotic") -> DamageTypeDto.NECROTIC
-            it.startsWith("piercing") -> DamageTypeDto.PIERCING
-            it.startsWith("poison") -> DamageTypeDto.POISON
-            it.startsWith("psychic") -> DamageTypeDto.PSYCHIC
-            it.startsWith("radiant") -> DamageTypeDto.RADIANT
-            it.startsWith("slashing") -> DamageTypeDto.SLASHING
-            it.startsWith("thunder") -> DamageTypeDto.THUNDER
-            else -> DamageTypeDto.OTHER
-        }
-        DamageDto(
-            index = it.toLowerCase(Locale.ROOT),
-            type = damageType,
-            name = it.capitalize(Locale.ROOT)
-        )
+        it.getDamage()
     }
+}
+
+private fun String.getDamage(): DamageDto {
+    val damageType = when {
+        this.startsWith("acid") -> DamageTypeDto.ACID
+        this.startsWith("bludgeoning") -> DamageTypeDto.BLUDGEONING
+        this.startsWith("cold") -> DamageTypeDto.COLD
+        this.startsWith("fire") -> DamageTypeDto.FIRE
+        this.startsWith("lightning") -> DamageTypeDto.LIGHTNING
+        this.startsWith("necrotic") -> DamageTypeDto.NECROTIC
+        this.startsWith("piercing") -> DamageTypeDto.PIERCING
+        this.startsWith("poison") -> DamageTypeDto.POISON
+        this.startsWith("psychic") -> DamageTypeDto.PSYCHIC
+        this.startsWith("radiant") -> DamageTypeDto.RADIANT
+        this.startsWith("slashing") -> DamageTypeDto.SLASHING
+        this.startsWith("thunder") -> DamageTypeDto.THUNDER
+        else -> DamageTypeDto.OTHER
+    }
+    return DamageDto(
+        index = this.toLowerCase(Locale.ROOT),
+        type = damageType,
+        name = this.capitalize(Locale.ROOT)
+    )
 }
 
 private fun List<APIReference>.asConditionsFormatted(): List<ConditionDto> {
@@ -293,6 +301,23 @@ private fun Senses.asSensesFormatted(): List<String> {
 private fun List<SpecialAbility>.asSpecialAbilitiesFormatted(): List<SpecialAbilityDto> {
     return this.map {
         SpecialAbilityDto(name = it.name, desc = it.desc)
+    }
+}
+
+private fun List<Action>.asActionsFormatted(): List<ActionDto> {
+    return this.map {
+        ActionDto(
+            damageDices = it.damages.mapNotNull { damage ->
+                if (damage.damageType == null || damage.damageDice == null) return@mapNotNull null
+                DamageDiceDto(
+                    dice = damage.damageDice,
+                    damage = damage.damageType.index.getDamage()
+                )
+            },
+            attackBonus = it.attackBonus,
+            description = it.desc,
+            name = it.name
+        )
     }
 }
 

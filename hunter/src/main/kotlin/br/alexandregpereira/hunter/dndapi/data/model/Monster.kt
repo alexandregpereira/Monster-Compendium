@@ -87,7 +87,7 @@ data class Action(
     @SerialName("attack_bonus")
     val attackBonus: Int? = null,
     @SerialName("damage")
-    val damage: List<Damage>,
+    val damages: List<Damage>,
     @SerialName("desc")
     val desc: String,
     @SerialName("name")
