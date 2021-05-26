@@ -68,5 +68,9 @@ data class MonsterDto(
     @SerialName("condition_immunities")
     val conditionImmunities: List<ConditionDto>,
     @SerialName("senses")
-    val senses: List<String>
+    val senses: List<String>,
+    @SerialName("languages")
+    val languages: String,
+    @SerialName("special_abilities")
+    val specialAbilities: List<SpecialAbilityDto>
 )

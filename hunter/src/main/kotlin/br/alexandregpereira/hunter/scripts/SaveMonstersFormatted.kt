@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto
@@ -35,6 +36,7 @@ import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.dndapi.data.model.MonsterType
 import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
 import br.alexandregpereira.hunter.dndapi.data.model.Senses
+import br.alexandregpereira.hunter.dndapi.data.model.SpecialAbility
 import br.alexandregpereira.hunter.image.downloadImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -92,7 +94,9 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             damageResistances = it.damageResistances.getDamages(),
             damageImmunities = it.damageImmunities.getDamages(),
             conditionImmunities = it.conditionImmunities.asConditionsFormatted(),
-            senses = it.senses.asSensesFormatted()
+            senses = it.senses.asSensesFormatted(),
+            languages = it.languages,
+            specialAbilities = it.specialAbilities.asSpecialAbilitiesFormatted()
         )
     }
 }
@@ -284,6 +288,12 @@ private fun Senses.asSensesFormatted(): List<String> {
         tremorsense?.let { "tremorsense $it" },
         passivePerception?.let { "passive Perception $it" },
     )
+}
+
+private fun List<SpecialAbility>.asSpecialAbilitiesFormatted(): List<SpecialAbilityDto> {
+    return this.map {
+        SpecialAbilityDto(name = it.name, desc = it.desc)
+    }
 }
 
 private fun calculateAbilityScoreModifier(value: Int): Int {
