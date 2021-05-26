@@ -28,3 +28,13 @@ internal fun ProficiencyBlock(
 ) = Block(modifier = modifier, title = title) {
     ProficiencyGrid(proficiencies)
 }
+
+@Composable
+fun ProficiencyGrid(
+    proficiencies: List<Proficiency>,
+) = Grid {
+
+    proficiencies.forEach { proficiency ->
+        Bonus(value = proficiency.modifier, name = proficiency.name)
+    }
+}
