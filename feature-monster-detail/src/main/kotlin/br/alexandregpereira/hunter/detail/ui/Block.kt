@@ -21,7 +21,7 @@ fun Block(
     modifier: Modifier = Modifier,
     title: String? = null,
     contentPaddingBottom: Dp = 0.dp,
-    contentTextPaddingBottom: Dp = 24.dp,
+    contentTextPaddingBottom: Dp = 16.dp,
     content: @Composable ColumnScope.() -> Unit
 ) = Column(
     modifier.background(color = MaterialTheme.colors.surface)

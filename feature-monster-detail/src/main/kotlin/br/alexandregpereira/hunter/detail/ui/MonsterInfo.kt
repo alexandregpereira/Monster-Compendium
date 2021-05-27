@@ -27,6 +27,8 @@ import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import br.alexandregpereira.hunter.domain.model.AbilityScore
+import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 
 @Composable
 fun MonsterInfo(
@@ -73,14 +75,14 @@ fun MonsterInfo(
     OptionalBlockSection(monster.conditionImmunities) {
         ConditionBlock(conditions = it)
     }
-    BlockSection { SensesBlock(senses = monster.senses) }
-    BlockSection {
+    OptionalBlockSection(monster.senses) { SensesBlock(senses = it) }
+    OptionalBlockSection(monster.languages) {
         TextBlock(
             title = stringResource(R.string.monster_detail_languages),
-            text = monster.languages
+            text = it
         )
     }
-    BlockSection { SpecialAbilityBlock(specialAbilities = monster.specialAbilities) }
+    OptionalBlockSection(monster.specialAbilities) { SpecialAbilityBlock(specialAbilities = it) }
     BlockSection { ActionBlock(actions = monster.actions) }
 
     Spacer(
@@ -96,6 +98,17 @@ private fun <T> ColumnScope.OptionalBlockSection(
     content: @Composable ColumnScope.(List<T>) -> Unit
 ) {
     if (value.isEmpty()) return
+    BlockSection {
+        content(value)
+    }
+}
+
+@Composable
+private fun ColumnScope.OptionalBlockSection(
+    value: String,
+    content: @Composable ColumnScope.(String) -> Unit
+) {
+    if (value.trim().isEmpty()) return
     BlockSection {
         content(value)
     }
@@ -146,7 +159,13 @@ fun MonsterInfoPreview() {
                         )
                     }
                 ),
-                abilityScores = listOf(),
+                abilityScores = (0..5).map {
+                    AbilityScore(
+                        type = AbilityScoreType.CHARISMA,
+                        value = 0,
+                        modifier = 0
+                    )
+                },
                 savingThrows = listOf(),
                 skills = listOf(),
                 damageVulnerabilities = listOf(),
