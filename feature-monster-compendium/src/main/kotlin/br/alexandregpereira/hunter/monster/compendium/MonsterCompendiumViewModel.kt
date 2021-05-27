@@ -29,8 +29,10 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.MonsterPair
 import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
@@ -63,11 +65,12 @@ internal class MonsterCompendiumViewModel(
             ) { monstersBySection, scrollOffset ->
                 scrollOffset to monstersBySection
             }
-            .onStart {
-                _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
-            }
             .map {
                 it.first to it.second.toMonstersBySection()
+            }
+            .flowOn(Dispatchers.IO)
+            .onStart {
+                _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
             }
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")

@@ -20,11 +20,13 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByInitialIndexUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { GetMonstersBySectionUseCase(get()) }
-    single { GetMonstersByInitialIndexUseCase(get()) }
-    single { GetLastCompendiumScrollItemPositionUseCase(get()) }
-    single { SaveCompendiumScrollItemPositionUseCase(get()) }
+    factory { GetMonstersBySectionUseCase(get(), get()) }
+    factory { GetMonstersByInitialIndexUseCase(get()) }
+    factory { GetLastCompendiumScrollItemPositionUseCase(get()) }
+    factory { SaveCompendiumScrollItemPositionUseCase(get()) }
+    factory { SyncMonstersUseCase(get()) }
 }

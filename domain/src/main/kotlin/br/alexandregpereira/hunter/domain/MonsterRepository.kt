@@ -21,7 +21,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterRepository {
 
-    fun getMonsters(): Flow<List<Monster>>
+    fun deleteMonsters(): Flow<Unit>
+    fun saveMonsters(monsters: List<Monster>): Flow<Unit>
+    fun getRemoteMonsters(): Flow<List<Monster>>
+    fun getLocalMonsters(): Flow<List<Monster>>
     fun getLastCompendiumScrollItemPosition(): Flow<Int>
     fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
 }

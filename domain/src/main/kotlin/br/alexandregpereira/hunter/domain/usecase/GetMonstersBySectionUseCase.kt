@@ -21,17 +21,21 @@ import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 typealias MonsterPair = Pair<Monster, Monster?>
 typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
 class GetMonstersBySectionUseCase(
+    private val syncMonstersUseCase: SyncMonstersUseCase,
     private val repository: MonsterRepository
 ) {
 
     operator fun invoke(): Flow<MonstersBySection> {
-        return repository.getMonsters().map { monsters ->
+        return syncMonstersUseCase().flatMapLatest {
+            repository.getLocalMonsters()
+        }.map { monsters ->
             var index = 0
             val groups = LinkedHashSet<String>()
             monsters.groupBy { monster ->

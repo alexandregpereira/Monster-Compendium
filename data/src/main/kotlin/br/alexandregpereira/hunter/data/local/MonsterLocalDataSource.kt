@@ -7,4 +7,5 @@ internal interface MonsterLocalDataSource {
 
     fun getMonsters(): Flow<List<MonsterEntity>>
     fun saveMonsters(monsters: List<MonsterEntity>): Flow<Unit>
+    fun deleteMonsters(): Flow<Unit>
 }

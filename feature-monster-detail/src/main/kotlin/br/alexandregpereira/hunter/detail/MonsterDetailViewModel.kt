@@ -22,8 +22,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByInitialIndexUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ internal class MonsterDetailViewModel(
 
     fun getMonstersByInitialIndex(index: String) = viewModelScope.launch {
         getMonstersByInitialIndexUseCase(index)
+            .flowOn(Dispatchers.IO)
             .onStart {
                 _stateLiveData.value = MonsterDetailViewState(isLoading = true)
             }

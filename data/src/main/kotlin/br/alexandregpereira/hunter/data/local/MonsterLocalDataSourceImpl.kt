@@ -19,4 +19,10 @@ internal class MonsterLocalDataSourceImpl(
             emit(Unit)
         }
     }
+
+    override fun deleteMonsters(): Flow<Unit> {
+        return flow {
+            emit(monsterDao.deleteAll())
+        }
+    }
 }

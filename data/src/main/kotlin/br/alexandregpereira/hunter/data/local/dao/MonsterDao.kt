@@ -15,4 +15,7 @@ internal interface MonsterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(monsters: List<MonsterEntity>)
+
+    @Query("DELETE FROM monster")
+    suspend fun deleteAll()
 }

@@ -24,24 +24,29 @@ import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.model.Monster
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class MonsterRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
     private val localDataSource: MonsterLocalDataSource,
     private val preferencesDataSource: PreferencesDataSource
 ) : MonsterRepository {
 
-    override fun getMonsters(): Flow<List<Monster>> {
-        return getMonstersRemote().flatMapLatest {
-            localDataSource.getMonsters()
-        }.map { it.toDomain() }
+    override fun deleteMonsters(): Flow<Unit> {
+        return localDataSource.deleteMonsters()
+    }
+
+    override fun saveMonsters(monsters: List<Monster>): Flow<Unit> {
+        return localDataSource.saveMonsters(monsters.toEntity())
+    }
+
+    override fun getRemoteMonsters(): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters().map { it.toDomain() }
+    }
+
+    override fun getLocalMonsters(): Flow<List<Monster>> {
+        return localDataSource.getMonsters().map { it.toDomain() }
     }
 
     override fun getLastCompendiumScrollItemPosition(): Flow<Int> {
@@ -50,11 +55,5 @@ internal class MonsterRepositoryImpl(
 
     override fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit> {
         return preferencesDataSource.saveCompendiumScrollItemPosition(position)
-    }
-
-    private fun getMonstersRemote(): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters().map { it.toDomain() }.onEach {
-            localDataSource.saveMonsters(it.toEntity()).collect()
-        }
     }
 }

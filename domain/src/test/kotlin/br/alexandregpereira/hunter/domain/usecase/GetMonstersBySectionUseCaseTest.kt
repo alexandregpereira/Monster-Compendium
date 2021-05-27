@@ -35,7 +35,8 @@ import org.junit.Test
 class GetMonstersBySectionUseCaseTest {
 
     private val repository = mockk<MonsterRepository>()
-    private val useCase = GetMonstersBySectionUseCase(repository)
+    private val syncMonstersUseCase: SyncMonstersUseCase = mockk()
+    private val useCase = GetMonstersBySectionUseCase(syncMonstersUseCase, repository)
 
     @Test
     fun invoke() = runBlocking {
@@ -47,7 +48,8 @@ class GetMonstersBySectionUseCaseTest {
                 isHorizontal = it != 0 && it != 9
             )
         }
-        every { repository.getMonsters() } returns flowOf(monsters)
+        every { syncMonstersUseCase() } returns flowOf(Unit)
+        every { repository.getLocalMonsters() } returns flowOf(monsters)
 
         // When
         val result = useCase().single()

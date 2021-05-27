@@ -17,20 +17,20 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.MonsterRepository
-import br.alexandregpereira.hunter.domain.model.Monster
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flatMapLatest
 
-class GetMonstersByInitialIndexUseCase(
-    private val repository: MonsterRepository
-) {
+class SyncMonstersUseCase(private val repository: MonsterRepository) {
 
-    operator fun invoke(index: String): Flow<Pair<Int, List<Monster>>> {
-        return repository.getLocalMonsters().map {
-            val monster = it.find { monster -> monster.index == index }
-                ?: throw IllegalAccessError("Monster not found")
-
-            it.indexOf(monster) to it
-        }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    operator fun invoke(): Flow<Unit> {
+        return repository.deleteMonsters()
+            .flatMapLatest {
+                repository.getRemoteMonsters()
+            }
+            .flatMapLatest {
+                repository.saveMonsters(monsters = it)
+            }
     }
 }
