@@ -38,7 +38,7 @@ data class Monster(
     val conditionImmunities: List<Condition> = emptyList(),
     val senses: List<String>,
     val languages: String,
-    val specialAbilities: List<SpecialAbility>,
+    val specialAbilities: List<AbilityDescription>,
     val actions: List<Action>
 )
 

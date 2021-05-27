@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.data.remote.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.ActionDto
 import br.alexandregpereira.hunter.data.remote.model.DamageDiceDto
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
 
@@ -26,8 +27,7 @@ internal fun List<ActionDto>.toDomain(): List<Action> {
         Action(
             damageDices = it.damageDices.toDamageDiceDomain(),
             attackBonus = it.attackBonus,
-            description = it.description,
-            name = it.name
+            abilityDescription = AbilityDescription(name = it.name, description = it.description)
         )
     }
 }

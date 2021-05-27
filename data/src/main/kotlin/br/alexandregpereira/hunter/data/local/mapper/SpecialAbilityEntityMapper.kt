@@ -17,19 +17,19 @@
 package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
-import br.alexandregpereira.hunter.domain.model.SpecialAbility
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
-internal fun List<SpecialAbilityEntity>.toDomain(): List<SpecialAbility> {
+internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
     return this.map {
-        SpecialAbility(name = it.name, description = it.description)
+        AbilityDescription(name = it.name, description = it.description)
     }
 }
 
-internal fun List<SpecialAbility>.toEntity(): List<SpecialAbilityEntity> {
+internal fun List<AbilityDescription>.toEntity(): List<SpecialAbilityEntity> {
     return this.map {
         SpecialAbilityEntity(
             name = it.name,
-            description = it.name,
+            description = it.description,
         )
     }
 }

@@ -80,6 +80,8 @@ fun MonsterInfo(
             text = monster.languages
         )
     }
+    BlockSection { SpecialAbilityBlock(specialAbilities = monster.specialAbilities) }
+    BlockSection { ActionBlock(actions = monster.actions) }
 
     Spacer(
         modifier = Modifier

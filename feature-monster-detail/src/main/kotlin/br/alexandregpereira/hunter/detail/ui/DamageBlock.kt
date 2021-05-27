@@ -72,7 +72,7 @@ fun DamageGrid(
     }
 }
 
-private fun DamageType.getIconRes(): Int? {
+internal fun DamageType.getIconRes(): Int? {
     return when (this) {
         DamageType.ACID -> R.drawable.ic_acid
         DamageType.BLUDGEONING -> R.drawable.ic_bludgeoning
@@ -91,7 +91,7 @@ private fun DamageType.getIconRes(): Int? {
 }
 
 @Composable
-private fun DamageType.getIconColor(): Color {
+internal fun DamageType.getIconColor(): Color {
     val colors = DamageIconColors(isSystemInDarkTheme())
     return when (this) {
         DamageType.OTHER -> LocalContentColor.current.copy(alpha = LocalContentAlpha.current)

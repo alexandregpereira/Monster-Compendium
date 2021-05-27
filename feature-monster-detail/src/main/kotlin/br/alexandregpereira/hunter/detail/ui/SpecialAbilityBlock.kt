@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.detail.ui
 
-data class SpecialAbility(
-    val name: String,
-    val description: String
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
+
+@Composable
+fun SpecialAbilityBlock(
+    specialAbilities: List<AbilityDescription>,
+    modifier: Modifier = Modifier
+) = AbilityDescriptionBlock(
+    title = stringResource(R.string.monster_detail_special_abilities),
+    abilityDescriptions = specialAbilities,
+    modifier = modifier
 )

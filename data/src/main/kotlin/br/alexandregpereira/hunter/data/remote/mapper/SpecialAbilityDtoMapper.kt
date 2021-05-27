@@ -17,10 +17,10 @@
 package br.alexandregpereira.hunter.data.remote.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
-import br.alexandregpereira.hunter.domain.model.SpecialAbility
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
-internal fun List<SpecialAbilityDto>.toDomain(): List<SpecialAbility> {
+internal fun List<SpecialAbilityDto>.toDomain(): List<AbilityDescription> {
     return this.map {
-        SpecialAbility(name = it.name, description = it.desc)
+        AbilityDescription(name = it.name, description = it.desc)
     }
 }

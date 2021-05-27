@@ -16,13 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-data class Action(
-    val damageDices: List<DamageDice>,
-    val attackBonus: Int?,
-    val abilityDescription: AbilityDescription
-)
-
-data class DamageDice(
-    val dice: String,
-    val damage: Damage
+data class AbilityDescription(
+    val name: String,
+    val description: String
 )

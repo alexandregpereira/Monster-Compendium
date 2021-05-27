@@ -43,6 +43,7 @@ fun Bonus(
     value: Int,
     name: String,
     modifier: Modifier = Modifier,
+    iconSize: Dp = 56.dp,
     alpha: Float = 0.7f
 ) {
     Column(
@@ -52,7 +53,7 @@ fun Bonus(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(contentAlignment = Alignment.Center) {
-            BonusImage()
+            BonusImage(size = iconSize)
             Text(
                 text = "+$value",
                 fontWeight = FontWeight.Normal,

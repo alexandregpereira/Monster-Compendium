@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.local.mapper
 import br.alexandregpereira.hunter.data.local.entity.ActionEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageDiceEntity
 import br.alexandregpereira.hunter.data.local.entity.ValueEntity
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
 
@@ -28,8 +29,7 @@ internal fun List<ActionEntity>.toDomain(): List<Action> {
             damageDices = it.damageDices.toObjFromJson<List<DamageDiceEntity>>()
                 .toDamageDiceDomain(),
             attackBonus = it.attackBonus,
-            description = it.description,
-            name = it.name
+            abilityDescription = AbilityDescription(name = it.name, description = it.description)
         )
     }
 }
@@ -48,8 +48,8 @@ internal fun List<Action>.toEntity(): List<ActionEntity> {
         ActionEntity(
             damageDices = it.damageDices.toDamageDiceEntity().toJsonFromObj(),
             attackBonus = it.attackBonus,
-            description = it.description,
-            name = it.name
+            description = it.abilityDescription.description,
+            name = it.abilityDescription.name
         )
     }
 }

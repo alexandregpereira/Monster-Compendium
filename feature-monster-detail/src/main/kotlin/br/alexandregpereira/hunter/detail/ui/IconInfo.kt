@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
@@ -34,6 +35,7 @@ fun IconInfo(
     title: String,
     painter: Painter,
     modifier: Modifier = Modifier,
+    iconSize: Dp = 56.dp,
     iconColor: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
     iconAlpha: Float = 0.7f,
     iconText: String? = null,
@@ -49,7 +51,7 @@ fun IconInfo(
             contentDescription = title,
             tint = iconColor,
             modifier = Modifier
-                .size(56.dp)
+                .size(iconSize)
                 .alpha(iconAlpha)
         )
 
