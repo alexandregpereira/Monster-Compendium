@@ -52,17 +52,17 @@ suspend fun start(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
     println("\nFinished in ${System.currentTimeMillis() - startTime} ms")
 }
 
-inline fun <reified T> saveJsonFile(values: T, fileName: String) {
+inline fun <reified T> saveJsonFile(values: T, fileName: String, printJson: Boolean = true) {
     println("\nSaving")
     val json = json.encodeToString(values)
-    saveJsonFile(fileName, json)
+    saveJsonFile(fileName, json, printJson)
     println()
     println("Json saved")
 }
 
-fun saveJsonFile(fileName: String, json: String) {
+fun saveJsonFile(fileName: String, json: String, printJson: Boolean = true) {
     File(fileName).writeText(json)
-    println(json)
+    if (printJson) println(json)
 }
 
 fun readJsonFile(fileName: String): String = File(fileName).readText()

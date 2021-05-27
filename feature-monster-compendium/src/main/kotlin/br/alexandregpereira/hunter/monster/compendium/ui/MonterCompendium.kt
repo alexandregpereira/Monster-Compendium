@@ -80,11 +80,11 @@ fun MonsterCompendium(
                 }
             }
 
-            val monsterLastRowIndex = monsterSectionEntry.value.entries.size - 1
-            monsterSectionEntry.value.entries.forEachIndexed { monsterRowIndex, monsterEntry ->
+            val monsterLastRowIndex = monsterSectionEntry.value.size - 1
+            monsterSectionEntry.value.forEachIndexed { monsterRowIndex, monsterEntry ->
                 item {
-                    val leftMonster = monsterEntry.key
-                    val rightMonster = monsterEntry.value
+                    val leftMonster = monsterEntry.first
+                    val rightMonster = monsterEntry.second
 
                     val contentPaddingValue = when (index) {
                         0 -> contentPadding.calculateTopPadding()
@@ -201,7 +201,7 @@ fun MonsterCompendiumPreview() = HunterTheme {
                         null
                     }
                     leftMonster to rightMonster
-                }.toMap()
+                }
             )
         )
     }
@@ -246,7 +246,7 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
                         null
                     }
                     leftMonster to rightMonster
-                }.toMap()
+                }
             )
         )
     }

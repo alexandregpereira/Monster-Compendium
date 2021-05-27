@@ -28,7 +28,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
@@ -40,10 +39,9 @@ internal class MonsterRepositoryImpl(
 ) : MonsterRepository {
 
     override fun getMonsters(): Flow<List<Monster>> {
-        return localDataSource.getMonsters().flatMapLatest { entityList ->
-            if (entityList.isEmpty()) getMonstersRemote()
-            else flowOf(entityList.toDomain())
-        }
+        return getMonstersRemote().flatMapLatest {
+            localDataSource.getMonsters()
+        }.map { it.toDomain() }
     }
 
     override fun getLastCompendiumScrollItemPosition(): Flow<Int> {
@@ -57,8 +55,6 @@ internal class MonsterRepositoryImpl(
     private fun getMonstersRemote(): Flow<List<Monster>> {
         return remoteDataSource.getMonsters().map { it.toDomain() }.onEach {
             localDataSource.saveMonsters(it.toEntity()).collect()
-        }.flatMapLatest {
-            localDataSource.getMonsters()
-        }.map { it.toDomain() }
+        }
     }
 }

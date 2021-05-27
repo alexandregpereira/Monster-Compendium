@@ -64,12 +64,12 @@ suspend fun main() = start {
         }
         .toList()
         .filterNotNull()
-        .sortedBy { it.index }
+        .sortedBy { it.name }
 
     println("\n${monsters.size} monsters formatted")
     monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
 
-    saveJsonFile(monsters, JSON_FORMATTED_FILE_NAME)
+    saveJsonFile(monsters, JSON_FORMATTED_FILE_NAME, printJson = false)
 }
 
 private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
@@ -115,42 +115,35 @@ private fun Monster.getImageUrl(): String {
 }
 
 private fun Monster.getId(): String {
-    return when {
-        isDragon() -> {
-            "dragon-$index"
-        }
-        isAngel() -> {
-            "angel-$index"
-        }
-        isAnimatedObjects() -> {
-            "animated_object-$index"
-        }
-        isSubtypeGroup() -> {
-            "$subtype-$index"
-        }
-        else -> index
-    }
+    return index
 }
 
 private fun Monster.getGroup(): String? {
-    val id = getId()
-    return if (id == index) {
-        null
-    } else {
-        id.split("-").first().replace("_", " ").capitalize(Locale.ROOT) + "s"
+    return when {
+        isGroupByIndex() -> {
+            getGroupByIndex()
+        }
+        isSubtypeGroup() -> {
+            subtype?.capitalize(Locale.ROOT)?.let { it + "s" }
+        }
+        else -> {
+            getGroupByGroupMap()
+        }
     }
 }
 
-private fun Monster.isDragon(): Boolean {
-    return this.index.endsWith("-dragon") || this.index.endsWith("-dragon-wyrmling")
+private fun Monster.isGroupByIndex(): Boolean {
+    return groupsByIndex.any { this.index.endsWith(it) }
 }
 
-private fun Monster.isAngel(): Boolean {
-    return angels.contains(index)
+private fun Monster.getGroupByIndex(): String? {
+    return groupsByIndex.find { this.index.endsWith(it) }
+        ?.removeSuffix("-wyrmling")
+        ?.capitalize(Locale.ROOT)?.let { it + "s" }
 }
 
-private fun Monster.isAnimatedObjects(): Boolean {
-    return animatedObjects.contains(index)
+private fun Monster.getGroupByGroupMap(): String? {
+    return groups.toList().find { it.second.any { i -> index == i } }?.first
 }
 
 private fun Monster.isSubtypeGroup(): Boolean {
@@ -347,6 +340,12 @@ private val subtypeGroupAllowList = listOf(
     "demon",
 )
 
+private val groupsByIndex = listOf(
+    "dragon",
+    "dragon-wyrmling",
+    "hag",
+)
+
 private val angels = listOf(
     "deva",
     "planetar",
@@ -357,4 +356,9 @@ private val animatedObjects = listOf(
     "animated-armor",
     "flying-sword",
     "rug-of-smothering"
+)
+
+private val groups = hashMapOf(
+    "Angels" to angels,
+    "Animated Objects" to animatedObjects
 )

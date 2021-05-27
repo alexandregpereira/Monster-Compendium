@@ -23,8 +23,8 @@ import br.alexandregpereira.hunter.domain.model.MonsterSection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-typealias MonsterPair = Map<Monster, Monster?>
-typealias MonstersBySection = Map<MonsterSection, MonsterPair>
+typealias MonsterPair = Pair<Monster, Monster?>
+typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
 class GetMonstersBySectionUseCase(
     private val repository: MonsterRepository
@@ -33,20 +33,26 @@ class GetMonstersBySectionUseCase(
     operator fun invoke(): Flow<MonstersBySection> {
         return repository.getMonsters().map { monsters ->
             var index = 0
+            val groups = LinkedHashSet<String>()
             monsters.groupBy { monster ->
-                monster.group?.let {
-                    index += 1
+                val monsterSection = monster.group?.let {
+                    if (groups.contains(it).not()) {
+                        index += 1
+                    }
                     MonsterSection(title = it, showTitle = true)
                 } ?: MonsterSection(title = index.toString(), showTitle = false)
+                monsterSection.also {
+                    groups.add(it.title)
+                }
             }
         }.map {
             it.map { key, value ->
-                key to value.toMonsterPair()
+                key to value.toMonsterPairs()
             }
         }
     }
 
-    private fun List<Monster>.toMonsterPair(): MonsterPair {
+    private fun List<Monster>.toMonsterPairs(): List<MonsterPair> {
         val map: LinkedHashMap<Monster, Monster?> = linkedMapOf()
         var lastMonsterHorizontalIndex = -1
         var mod = 0
@@ -66,7 +72,7 @@ class GetMonstersBySectionUseCase(
                 map[lastMonster] = monster
             }
         }
-        return map
+        return map.toList()
     }
 
     private fun isIndexEligibleToBeHorizontal(

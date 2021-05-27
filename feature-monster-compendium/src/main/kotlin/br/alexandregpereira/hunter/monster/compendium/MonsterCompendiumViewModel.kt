@@ -36,8 +36,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-typealias MonsterRow = Map<MonsterCardItem, MonsterCardItem?>
-typealias MonsterCardItemsBySection = Map<MonsterSection, MonsterRow>
+typealias MonsterRow = Pair<MonsterCardItem, MonsterCardItem?>
+typealias MonsterCardItemsBySection = Map<MonsterSection, List<MonsterRow>>
 
 internal class MonsterCompendiumViewModel(
     private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase,
@@ -95,9 +95,9 @@ internal class MonsterCompendiumViewModel(
         }
     }
 
-    private fun MonsterPair.toMonsterRow(): MonsterRow {
-        return this.map { key, value ->
-            key.toMonsterCardItem() to value?.toMonsterCardItem()
+    private fun List<MonsterPair>.toMonsterRow(): List<MonsterRow> {
+        return this.map { pair ->
+            pair.first.toMonsterCardItem() to pair.second?.toMonsterCardItem()
         }
     }
 

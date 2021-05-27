@@ -43,7 +43,7 @@ class GetMonstersBySectionUseCaseTest {
         val monsters = (0..24).map {
             createMonster(
                 index = it.toString(),
-                group = if (it in 3..4) "Group" else if (it == 8) "Group1" else if (it in 9..10) "Group2" else null,
+                group = if (it == 1 || it in 3..4) "Group" else if (it == 8) "Group1" else if (it in 9..10) "Group2" else null,
                 isHorizontal = it != 0 && it != 9
             )
         }
@@ -55,10 +55,11 @@ class GetMonstersBySectionUseCaseTest {
         // Then
         val monsterSectionExpected1 = MonsterSection(title = "0", showTitle = false)
         val monsterSectionExpected2 = MonsterSection(title = "Group", showTitle = true)
-        val monsterSectionExpected3 = MonsterSection(title = "2", showTitle = false)
+        val monsterSectionExpected3 = MonsterSection(title = "1", showTitle = false)
         val monsterSectionExpected4 = MonsterSection(title = "Group1", showTitle = true)
         val monsterSectionExpected5 = MonsterSection(title = "Group2", showTitle = true)
-        val monsterSectionExpected6 = MonsterSection(title = "5", showTitle = false)
+        val monsterSectionExpected6 = MonsterSection(title = "3", showTitle = false)
+        assertEquals(monsters.size, result.toMonsters().size)
         assertEquals(6, result.size)
         assertEquals(monsterSectionExpected1, result.keys.first())
         assertEquals(monsterSectionExpected2, result.keys.toList()[1])
@@ -68,65 +69,56 @@ class GetMonstersBySectionUseCaseTest {
         assertEquals(monsterSectionExpected6, result.keys.toList()[5])
 
         assertEquals(
-            listOf(monsters[0], monsters[2]),
-            result[monsterSectionExpected1]!!.keys.toList()
+            listOf(
+                monsters[0] to null,
+            ),
+            result[monsterSectionExpected1]
         )
-        assertEquals(
-            listOf(monsters[1], null),
-            result[monsterSectionExpected1]!!.values.toList()
-        )
-
-        assertEquals(listOf(monsters[3], monsters[4]), result[monsterSectionExpected2]!!.keys.toList())
-        assertEquals(listOf(null, null), result[monsterSectionExpected2]!!.values.toList())
 
         assertEquals(
             listOf(
-                monsters[5],
-                monsters[6]
+                monsters[1] to null,
+                monsters[3] to monsters[4]
             ),
-            result[monsterSectionExpected3]!!.keys.toList()
+            result[monsterSectionExpected2]
         )
-        assertEquals(
-            listOf(
-                null,
-                monsters[7]
-            ),
-            result[monsterSectionExpected3]!!.values.toList()
-        )
-
-        assertEquals(listOf(monsters[8]), result[monsterSectionExpected4]!!.keys.toList())
-        assertEquals(listOf(null), result[monsterSectionExpected4]!!.values.toList())
-
-        assertEquals(listOf(monsters[9]), result[monsterSectionExpected5]!!.keys.toList())
-        assertEquals(listOf(monsters[10]), result[monsterSectionExpected5]!!.values.toList())
 
         assertEquals(
             listOf(
-                monsters[11],
-                monsters[12],
-                monsters[14],
-                monsters[15],
-                monsters[17],
-                monsters[18],
-                monsters[20],
-                monsters[21],
-                monsters[23],
+                monsters[2] to null,
+                monsters[5] to monsters[6],
+                monsters[7] to null,
             ),
-            result[monsterSectionExpected6]!!.keys.toList()
+            result[monsterSectionExpected3]
         )
+
         assertEquals(
             listOf(
-                null,
-                monsters[13],
-                null,
-                monsters[16],
-                null,
-                monsters[19],
-                null,
-                monsters[22],
-                monsters[24],
+                monsters[8] to null
             ),
-            result[monsterSectionExpected6]!!.values.toList()
+            result[monsterSectionExpected4]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[9] to monsters[10]
+            ),
+            result[monsterSectionExpected5]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[11] to null,
+                monsters[12] to monsters[13],
+                monsters[14] to null,
+                monsters[15] to monsters[16],
+                monsters[17] to null,
+                monsters[18] to monsters[19],
+                monsters[20] to null,
+                monsters[21] to monsters[22],
+                monsters[23] to monsters[24],
+            ),
+            result[monsterSectionExpected6]
         )
     }
 
@@ -155,7 +147,28 @@ class GetMonstersBySectionUseCaseTest {
                 hitPoints = 0,
                 hitDice = "",
             ),
-            speed = Speed(hover = false, values = listOf())
+            speed = Speed(hover = false, values = listOf()),
+            abilityScores = listOf(),
+            savingThrows = listOf(),
+            skills = listOf(),
+            damageVulnerabilities = listOf(),
+            damageResistances = listOf(),
+            damageImmunities = listOf(),
+            conditionImmunities = listOf(),
+            senses = listOf(),
+            languages = "",
+            specialAbilities = listOf(),
+            actions = listOf()
         )
+    }
+
+    private fun MonstersBySection.toMonsters(): List<Monster> {
+        val monsters = mutableListOf<Monster>()
+        this.toList().map { it.second }.reduce { acc, list -> acc + list }.toList()
+            .forEach { pair ->
+                monsters.add(pair.first)
+                pair.second?.let { monsters.add(it) }
+            }
+        return monsters
     }
 }
