@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Color
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.Stats
 import io.mockk.every
 import io.mockk.mockk
@@ -32,24 +33,18 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class GetMonstersBySectionUseCaseTest {
+class GetMonsterPreviewsBySectionUseCaseTest {
 
     private val repository = mockk<MonsterRepository>()
     private val syncMonstersUseCase: SyncMonstersUseCase = mockk()
-    private val useCase = GetMonstersBySectionUseCase(syncMonstersUseCase, repository)
+    private val useCase = GetMonsterPreviewsBySectionUseCase(syncMonstersUseCase, repository)
 
     @Test
     fun invoke() = runBlocking {
         // Given
-        val monsters = (0..24).map {
-            createMonster(
-                index = it.toString(),
-                group = if (it == 1 || it in 3..4) "Group" else if (it == 8) "Group1" else if (it in 9..10) "Group2" else null,
-                isHorizontal = it != 0 && it != 9
-            )
-        }
+        val monsters = createMonsters().map { it.preview }
         every { syncMonstersUseCase() } returns flowOf(Unit)
-        every { repository.getLocalMonsters() } returns flowOf(monsters)
+        every { repository.getLocalMonsters() } returns flowOf(createMonsters())
 
         // When
         val result = useCase().single()
@@ -124,24 +119,36 @@ class GetMonstersBySectionUseCaseTest {
         )
     }
 
+    private fun createMonsters(): List<Monster> {
+        return (0..24).map {
+            createMonster(
+                index = it.toString(),
+                group = if (it == 1 || it in 3..4) "Group" else if (it == 8) "Group1" else if (it in 9..10) "Group2" else null,
+                isHorizontal = it != 0 && it != 9
+            )
+        }
+    }
+
     private fun createMonster(
         index: String,
         group: String? = null,
         isHorizontal: Boolean = true
     ): Monster {
         return Monster(
-            index = index,
-            type = MonsterType.ABERRATION,
+            preview = MonsterPreview(
+                index = index,
+                type = MonsterType.ABERRATION,
+                challengeRating = 0.0f,
+                name = "",
+                imageData = MonsterImageData(
+                    url = "",
+                    backgroundColor = Color(light = "", dark = ""),
+                    isHorizontal = isHorizontal
+                ),
+            ),
             subtype = null,
             group = group,
-            challengeRating = 0.0f,
-            name = "",
             subtitle = "",
-            imageData = MonsterImageData(
-                url = "",
-                backgroundColor = Color(light = "", dark = ""),
-                isHorizontal = isHorizontal
-            ),
             size = "",
             alignment = "",
             stats = Stats(
@@ -164,8 +171,8 @@ class GetMonstersBySectionUseCaseTest {
         )
     }
 
-    private fun MonstersBySection.toMonsters(): List<Monster> {
-        val monsters = mutableListOf<Monster>()
+    private fun MonstersBySection.toMonsters(): List<MonsterPreview> {
+        val monsters = mutableListOf<MonsterPreview>()
         this.toList().map { it.second }.reduce { acc, list -> acc + list }.toList()
             .forEach { pair ->
                 monsters.add(pair.first)

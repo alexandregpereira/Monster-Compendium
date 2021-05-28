@@ -36,9 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.monster.compendium.MonsterCardItem
 import br.alexandregpereira.hunter.monster.compendium.MonsterCardItemsBySection
 import br.alexandregpereira.hunter.ui.compose.MonsterItemType
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -121,9 +121,9 @@ fun MonsterCompendium(
 
 @Composable
 fun MonsterSection(
-    leftMonster: MonsterCardItem,
+    leftMonster: MonsterPreview,
     modifier: Modifier = Modifier,
-    rightMonster: MonsterCardItem? = null,
+    rightMonster: MonsterPreview? = null,
     onItemClick: (index: String) -> Unit = {},
 ) = Surface {
     Row(
@@ -148,7 +148,7 @@ fun MonsterSection(
 
 @Composable
 private fun MonsterCard(
-    monster: MonsterCardItem,
+    monster: MonsterPreview,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
 ) = MonsterCard(
@@ -169,12 +169,11 @@ fun MonsterCompendiumPreview() = HunterTheme {
         MonsterCompendium(
             monstersBySection = mapOf(
                 MonsterSection() to (0..10).map {
-                    val leftMonster = MonsterCardItem(
+                    val leftMonster = MonsterPreview(
                         index = "asdasdasd",
                         type = MonsterType.ABERRATION,
                         challengeRating = 8.0f,
                         name = "Monster of monsters",
-                        group = if (it == 1 || it == 2) "Group" else null,
                         imageData = MonsterImageData(
                             url = "sadasd",
                             backgroundColor = Color(
@@ -184,7 +183,7 @@ fun MonsterCompendiumPreview() = HunterTheme {
                         ),
                     )
                     val rightMonster = if (it == 1) {
-                        MonsterCardItem(
+                        MonsterPreview(
                             index = "asdasdasd",
                             type = MonsterType.ABERRATION,
                             challengeRating = 8.0f,
@@ -214,12 +213,11 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
         MonsterCompendium(
             monstersBySection = mapOf(
                 MonsterSection(title = "Title") to (0..10).map {
-                    val leftMonster = MonsterCardItem(
+                    val leftMonster = MonsterPreview(
                         index = "asdasdasd",
                         type = MonsterType.ABERRATION,
                         challengeRating = 8.0f,
                         name = "Monster of monsters",
-                        group = if (it == 1 || it == 2) "Group" else null,
                         imageData = MonsterImageData(
                             url = "sadasd",
                             backgroundColor = Color(
@@ -229,7 +227,7 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
                         ),
                     )
                     val rightMonster = if (it == 1) {
-                        MonsterCardItem(
+                        MonsterPreview(
                             index = "asdasdasd",
                             type = MonsterType.ABERRATION,
                             challengeRating = 8.0f,
@@ -257,7 +255,7 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
 fun MonsterSection2ItemsPreview() = HunterTheme {
     Surface {
         MonsterSection(
-            leftMonster = MonsterCardItem(
+            leftMonster = MonsterPreview(
                 index = "asdasdasd",
                 type = MonsterType.ABERRATION,
                 challengeRating = 8.0f,
@@ -270,7 +268,7 @@ fun MonsterSection2ItemsPreview() = HunterTheme {
                     )
                 )
             ),
-            rightMonster = MonsterCardItem(
+            rightMonster = MonsterPreview(
                 index = "asdasdasd",
                 type = MonsterType.ABERRATION,
                 challengeRating = 8.0f,
@@ -292,7 +290,7 @@ fun MonsterSection2ItemsPreview() = HunterTheme {
 fun MonsterSection1ItemPreview() = HunterTheme {
     Surface {
         MonsterSection(
-            leftMonster = MonsterCardItem(
+            leftMonster = MonsterPreview(
                 index = "asdasdasd",
                 type = MonsterType.ABERRATION,
                 challengeRating = 8.0f,

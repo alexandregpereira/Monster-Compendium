@@ -19,15 +19,16 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-typealias MonsterPair = Pair<Monster, Monster?>
+typealias MonsterPair = Pair<MonsterPreview, MonsterPreview?>
 typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
-class GetMonstersBySectionUseCase(
+class GetMonsterPreviewsBySectionUseCase(
     private val syncMonstersUseCase: SyncMonstersUseCase,
     private val repository: MonsterRepository
 ) {
@@ -76,7 +77,7 @@ class GetMonstersBySectionUseCase(
                 map[lastMonster] = monster
             }
         }
-        return map.toList()
+        return map.toList().map { it.first.preview to it.second?.preview }
     }
 
     private fun isIndexEligibleToBeHorizontal(
@@ -85,7 +86,7 @@ class GetMonstersBySectionUseCase(
         totalMonsters: Int
     ): Boolean {
         return lastMonsterHorizontalIndex == -1 ||
-                ((currentIndex - lastMonsterHorizontalIndex ) >= HORIZONTAL_IMAGE_INTERVAL &&
+                ((currentIndex - lastMonsterHorizontalIndex) >= HORIZONTAL_IMAGE_INTERVAL &&
                         currentIndex < (totalMonsters - 2))
     }
 }

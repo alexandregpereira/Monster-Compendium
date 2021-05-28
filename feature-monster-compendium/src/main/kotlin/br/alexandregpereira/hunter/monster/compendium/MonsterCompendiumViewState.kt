@@ -16,10 +16,11 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = false,
-    val monstersBySection: Map<MonsterSection, List<Pair<MonsterCardItem, MonsterCardItem?>>> = emptyMap(),
+    val monstersBySection: Map<MonsterSection, List<Pair<MonsterPreview, MonsterPreview?>>> = emptyMap(),
     val initialScrollItemPosition: Int = 0
 )

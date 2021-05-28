@@ -18,7 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
@@ -48,7 +48,7 @@ class MonsterCompendiumViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private val getMonstersUseCase: GetMonstersBySectionUseCase = mockk()
+    private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
     private val stateLiveDataObserver: Observer<MonsterCompendiumViewState> = mockk(
@@ -85,7 +85,7 @@ class MonsterCompendiumViewModelTest {
         val monstersBySection = mapOf(
             section to mapOf(monster to null)
         )
-        every { getMonstersUseCase() } returns flowOf(monstersBySection)
+        every { getMonsterPreviewsUseCase() } returns flowOf(monstersBySection)
         every { getLastScrollPositionUseCase() } returns flowOf(1)
         createViewModel()
 
@@ -93,7 +93,7 @@ class MonsterCompendiumViewModelTest {
         viewModel.loadMonsters()
 
         // Then
-        verify { getMonstersUseCase() }
+        verify { getMonsterPreviewsUseCase() }
         verifyOrder {
             stateLiveDataObserver.onChanged(MonsterCompendiumViewState(isLoading = true))
             stateLiveDataObserver.onChanged(
@@ -101,7 +101,7 @@ class MonsterCompendiumViewModelTest {
                     isLoading = false,
                     monstersBySection = mapOf(
                         section to mapOf(
-                            MonsterCardItem(
+                            MonsterPreview(
                                 index = "",
                                 type = MonsterType.ABERRATION,
                                 challengeRating = 0.0f,
@@ -127,7 +127,7 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
-            getMonstersBySectionUseCase = getMonstersUseCase,
+            getMonstersBySectionUseCase = getMonsterPreviewsUseCase,
             getLastScrollPositionUseCase,
             saveScrollPositionUseCase,
             loadOnInit = false

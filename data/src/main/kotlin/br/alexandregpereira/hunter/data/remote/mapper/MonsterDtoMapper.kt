@@ -20,23 +20,26 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.Stats
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
         Monster(
-            index = it.index,
-            type = MonsterType.valueOf(it.type.name),
+            preview = MonsterPreview(
+                index = it.index,
+                type = MonsterType.valueOf(it.type.name),
+                challengeRating = it.challengeRating,
+                name = it.name,
+                imageData = MonsterImageData(
+                    url = it.imageUrl,
+                    backgroundColor = it.backgroundColor.toDomain(),
+                    isHorizontal = it.isHorizontalImage
+                ),
+            ),
             subtype = it.subtype,
             group = it.group,
-            challengeRating = it.challengeRating,
-            name = it.name,
             subtitle = it.subtitle,
-            imageData = MonsterImageData(
-                url = it.imageUrl,
-                backgroundColor = it.backgroundColor.toDomain(),
-                isHorizontal = it.isHorizontalImage
-            ),
             size = it.size,
             alignment = it.alignment,
             stats = Stats(

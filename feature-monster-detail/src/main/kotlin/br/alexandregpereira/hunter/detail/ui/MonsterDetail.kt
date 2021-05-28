@@ -40,8 +40,10 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
@@ -114,7 +116,8 @@ fun BackGroundColor(
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val startColor = transitionData.monster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
-    val endColor = transitionData.nextMonster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
+    val endColor =
+        transitionData.nextMonster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
     val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
 
     val backgroundColor = lerp(
@@ -234,21 +237,23 @@ fun MonsterDetailPreview() = Window {
     MonsterDetail(
         monsters = (0..10).map {
             Monster(
-                index = "",
-                type = MonsterType.CELESTIAL,
+                preview = MonsterPreview(
+                    index = "",
+                    type = MonsterType.CELESTIAL,
+                    challengeRating = 0.0f,
+                    name = "",
+                    imageData = MonsterImageData(
+                        url = "",
+                        backgroundColor = Color(
+                            light = "#ffe2e2",
+                            dark = "#ffe2e2"
+                        ),
+                        isHorizontal = false
+                    ),
+                ),
                 subtype = null,
                 group = null,
-                challengeRating = 0.0f,
-                name = "",
                 subtitle = "",
-                imageData = MonsterImageData(
-                    url = "",
-                    backgroundColor = br.alexandregpereira.hunter.domain.model.Color(
-                        light = "#ffe2e2",
-                        dark = "#ffe2e2"
-                    ),
-                    isHorizontal = false
-                ),
                 size = "",
                 alignment = "",
                 stats = Stats(

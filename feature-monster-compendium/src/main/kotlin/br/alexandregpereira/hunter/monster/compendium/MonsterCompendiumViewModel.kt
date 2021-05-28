@@ -23,9 +23,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Event
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.MonsterPair
 import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
@@ -38,11 +39,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-typealias MonsterRow = Pair<MonsterCardItem, MonsterCardItem?>
+typealias MonsterRow = Pair<MonsterPreview, MonsterPreview?>
 typealias MonsterCardItemsBySection = Map<MonsterSection, List<MonsterRow>>
 
 internal class MonsterCompendiumViewModel(
-    private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase,
+    private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     loadOnInit: Boolean = true
@@ -59,7 +60,7 @@ internal class MonsterCompendiumViewModel(
     }
 
     fun loadMonsters() = viewModelScope.launch {
-        getMonstersBySectionUseCase()
+        getMonsterPreviewsBySectionUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
             ) { monstersBySection, scrollOffset ->
@@ -100,16 +101,7 @@ internal class MonsterCompendiumViewModel(
 
     private fun List<MonsterPair>.toMonsterRow(): List<MonsterRow> {
         return this.map { pair ->
-            pair.first.toMonsterCardItem() to pair.second?.toMonsterCardItem()
+            pair.first to pair.second
         }
-    }
-
-    private fun getMonstersBySectionState(
-        monstersBySection: MonsterCardItemsBySection
-    ): MonsterCompendiumViewState {
-        return _stateLiveData.value!!.copy(
-            isLoading = false,
-            monstersBySection = monstersBySection
-        )
     }
 }

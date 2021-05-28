@@ -17,14 +17,10 @@
 package br.alexandregpereira.hunter.domain.model
 
 data class Monster(
-    val index: String,
-    val type: MonsterType,
+    val preview: MonsterPreview,
     val subtype: String?,
     val group: String?,
-    val challengeRating: Float,
-    val name: String,
     val subtitle: String,
-    val imageData: MonsterImageData,
     val size: String,
     val alignment: String,
     val stats: Stats,
@@ -40,6 +36,25 @@ data class Monster(
     val languages: String,
     val specialAbilities: List<AbilityDescription>,
     val actions: List<Action>
+) {
+    val index: String
+        get() = preview.index
+    val name: String
+        get() = preview.name
+    val type: MonsterType
+        get() = preview.type
+    val challengeRating: Float
+        get() = preview.challengeRating
+    val imageData: MonsterImageData
+        get() =  preview.imageData
+}
+
+data class MonsterPreview(
+    val index: String,
+    val name: String,
+    val type: MonsterType,
+    val challengeRating: Float,
+    val imageData: MonsterImageData
 )
 
 data class MonsterImageData(

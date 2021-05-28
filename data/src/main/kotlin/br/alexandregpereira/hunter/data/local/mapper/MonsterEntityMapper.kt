@@ -10,26 +10,29 @@ import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.Stats
 
 internal fun List<MonsterEntity>.toDomain(): List<Monster> {
     return this.map {
         Monster(
-            index = it.index,
-            type = MonsterType.valueOf(it.type),
+            preview = MonsterPreview(
+                index = it.index,
+                type = MonsterType.valueOf(it.type),
+                challengeRating = it.challengeRating,
+                name = it.name,
+                imageData = MonsterImageData(
+                    url = it.imageUrl,
+                    backgroundColor = Color(
+                        light = it.backgroundColorLight,
+                        dark = it.backgroundColorDark
+                    ),
+                    isHorizontal = it.isHorizontalImage
+                )
+            ),
             subtype = it.subtype,
             group = it.group,
-            challengeRating = it.challengeRating,
-            name = it.name,
             subtitle = it.subtitle,
-            imageData = MonsterImageData(
-                url = it.imageUrl,
-                backgroundColor = Color(
-                    light = it.backgroundColorLight,
-                    dark = it.backgroundColorDark
-                ),
-                isHorizontal = it.isHorizontalImage
-            ),
             size = it.size,
             alignment = it.alignment,
             stats = Stats(
@@ -43,8 +46,10 @@ internal fun List<MonsterEntity>.toDomain(): List<Monster> {
             skills = it.skills.toObjFromJson<List<ProficiencyEntity>>().toDomain(),
             damageVulnerabilities = it.damageVulnerabilities.toObjFromJson<List<ValueEntity>>()
                 .toDamageDomain(),
-            damageResistances = it.damageResistances.toObjFromJson<List<ValueEntity>>().toDamageDomain(),
-            damageImmunities = it.damageImmunities.toObjFromJson<List<ValueEntity>>().toDamageDomain(),
+            damageResistances = it.damageResistances.toObjFromJson<List<ValueEntity>>()
+                .toDamageDomain(),
+            damageImmunities = it.damageImmunities.toObjFromJson<List<ValueEntity>>()
+                .toDamageDomain(),
             conditionImmunities = it.conditionImmunities.toObjFromJson<List<ValueEntity>>()
                 .toConditionDomain(),
             senses = it.senses.toObjFromJson(),

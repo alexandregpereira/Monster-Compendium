@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 
 @Composable
 fun MonsterInfo(
@@ -134,18 +135,20 @@ fun MonsterInfoPreview() {
     HunterTheme {
         MonsterInfo(
             Monster(
-                index = "sda",
-                type = MonsterType.ABERRATION,
+                preview = MonsterPreview(
+                    index = "sda",
+                    type = MonsterType.ABERRATION,
+                    challengeRating = 0.0f,
+                    name = "Teste dos tes",
+                    imageData = MonsterImageData(
+                        url = "",
+                        backgroundColor = Color(light = "", dark = ""),
+                        isHorizontal = false
+                    ),
+                ),
                 subtype = null,
                 group = null,
-                challengeRating = 0.0f,
-                name = "Teste dos tes",
                 subtitle = "asdasd asdasdas asdasdasd",
-                imageData = MonsterImageData(
-                    url = "",
-                    backgroundColor = Color(light = "", dark = ""),
-                    isHorizontal = false
-                ),
                 size = "",
                 alignment = "",
                 stats = Stats(armorClass = 0, hitPoints = 0, hitDice = ""),
