@@ -20,12 +20,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import io.mockk.every
@@ -65,25 +63,18 @@ class MonsterCompendiumViewModelTest {
     fun loadMonsters() {
         // Given
         val section = MonsterSection()
-        val monster = Monster(
+        val monster = MonsterPreview(
             index = "",
             type = MonsterType.ABERRATION,
-            subtype = null,
-            group = null,
             challengeRating = 0.0f,
             name = "",
-            subtitle = "",
             imageData = MonsterImageData(
                 url = "",
                 backgroundColor = Color(light = "", dark = "")
             ),
-            size = "",
-            alignment = "",
-            stats = Stats(armorClass = 0, hitPoints = 0, hitDice = ""),
-            speed = Speed(hover = false, values = listOf())
         )
         val monstersBySection = mapOf(
-            section to mapOf(monster to null)
+            section to listOf(monster to null)
         )
         every { getMonsterPreviewsUseCase() } returns flowOf(monstersBySection)
         every { getLastScrollPositionUseCase() } returns flowOf(1)
@@ -100,7 +91,7 @@ class MonsterCompendiumViewModelTest {
                 MonsterCompendiumViewState(
                     isLoading = false,
                     monstersBySection = mapOf(
-                        section to mapOf(
+                        section to listOf(
                             MonsterPreview(
                                 index = "",
                                 type = MonsterType.ABERRATION,
@@ -110,7 +101,6 @@ class MonsterCompendiumViewModelTest {
                                     url = "",
                                     backgroundColor = Color(light = "", dark = "")
                                 ),
-                                group = null
                             ) to null
                         )
                     ),
@@ -127,7 +117,7 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
-            getMonstersBySectionUseCase = getMonsterPreviewsUseCase,
+            getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
             getLastScrollPositionUseCase,
             saveScrollPositionUseCase,
             loadOnInit = false
