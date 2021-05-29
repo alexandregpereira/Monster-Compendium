@@ -62,7 +62,7 @@ class MonsterCompendiumViewModelTest {
     @Test
     fun loadMonsters() {
         // Given
-        val section = MonsterSection()
+        val section = MonsterSection(title = "Any")
         val monster = MonsterPreview(
             index = "",
             type = MonsterType.ABERRATION,
