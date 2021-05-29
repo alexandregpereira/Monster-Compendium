@@ -27,10 +27,12 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v2.2.3
       with:
-        path: "**/build/reports/tests/testReleaseUnitTest/index.html"
+        name: TestReport
+        path: "**/build/reports/tests/testReleaseUnitTest/**"
     - name: Build Debug APK
       run: ./gradlew assembleDebug
     - name:  Upload an APK
       uses: actions/upload-artifact@v2.2.3
       with:
+        name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
