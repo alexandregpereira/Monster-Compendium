@@ -46,7 +46,6 @@ fun MonsterCard(
     challengeRating: Float,
     type: MonsterItemType,
     modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(8.dp),
     onCLick: () -> Unit = {},
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -55,7 +54,6 @@ fun MonsterCard(
 
     Column(
         modifier
-            .padding(paddingValues)
             .graphicsLayer(
                 scaleX = scale,
                 scaleY = scale
@@ -78,7 +76,7 @@ fun MonsterCard(
             text = name,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)
         )
     }
 }

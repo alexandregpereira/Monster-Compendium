@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.Color
@@ -49,93 +50,91 @@ fun MonsterCompendium(
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
-) {
-    LazyColumn(state = listState) {
+) = LazyColumn(state = listState) {
 
-        val verticalSectionPadding = 24.dp
-        val lastIndex = monstersBySection.entries.size - 1
-        monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
-            if (index > 0) {
-                item {
-                    Spacer(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(4.dp)
-                    )
-                }
-            }
+    val lastIndex = monstersBySection.entries.size - 1
+    monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
+        val monsterSection = monsterSectionEntry.key
+        val monsterRows = monsterSectionEntry.value
+
+        if (index == 0) {
             item {
-                Surface {
-                    Text(
-                        text = monsterSectionEntry.key.title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 16.dp, top = verticalSectionPadding)
-                    )
-                }
+                TopBottomSpace(height = contentPadding.calculateTopPadding())
             }
+        }
 
-            val monsterLastRowIndex = monsterSectionEntry.value.size - 1
-            monsterSectionEntry.value.forEachIndexed { monsterRowIndex, monsterEntry ->
-                item {
-                    val leftMonster = monsterEntry.first
-                    val rightMonster = monsterEntry.second
-
-                    val contentPaddingValue = when (index) {
-                        0 -> contentPadding.calculateTopPadding()
-                        lastIndex -> contentPadding.calculateBottomPadding()
-                        else -> 0.dp
-                    }
-                    val topPadding = 0.dp
-
-                    val modifier = when (monsterRowIndex) {
-                        0 -> Modifier.padding(top = topPadding + contentPaddingValue)
-                        monsterLastRowIndex -> {
-                            if (index == lastIndex) {
-                                Modifier.padding(bottom = verticalSectionPadding + contentPaddingValue)
-                            } else {
-                                Modifier.padding(bottom = verticalSectionPadding)
-                            }
-                        }
-                        else -> Modifier
-                    }
-
-                    MonsterSection(
-                        leftMonster = leftMonster,
-                        rightMonster = rightMonster,
-                        onItemClick = onItemCLick,
-                        modifier = modifier
+        val sectionTitlePaddingTop = 32.dp
+        val sectionTitlePaddingBottom = 16.dp
+        monsterSection.parentTitle?.let {
+            item {
+                SectionTitle(
+                    title = it,
+                    isHeader = true,
+                    modifier = Modifier.padding(
+                        top = sectionTitlePaddingTop,
+                        bottom = sectionTitlePaddingBottom
                     )
-                }
+                )
+            }
+        }
+
+        item {
+            val paddingTop = when {
+                monsterSection.parentTitle != null -> 0.dp
+                monsterSection.isHeader -> sectionTitlePaddingTop
+                else -> 24.dp
+            }
+            SectionTitle(
+                title = monsterSection.title,
+                isHeader = monsterSection.isHeader && monsterSection.parentTitle == null,
+                modifier = Modifier.padding(top = paddingTop, bottom = sectionTitlePaddingBottom)
+            )
+        }
+
+        monsterRows.forEach { monsterRow ->
+            item {
+                val leftMonster = monsterRow.first
+                val rightMonster = monsterRow.second
+
+                MonsterRow(
+                    leftMonster = leftMonster,
+                    rightMonster = rightMonster,
+                    onItemClick = onItemCLick,
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+                )
+            }
+        }
+
+        if (index == lastIndex) {
+            item {
+                TopBottomSpace(height = contentPadding.calculateBottomPadding())
             }
         }
     }
 }
 
 @Composable
-fun MonsterSection(
+fun MonsterRow(
     leftMonster: MonsterPreview,
     modifier: Modifier = Modifier,
     rightMonster: MonsterPreview? = null,
     onItemClick: (index: String) -> Unit = {},
 ) = Surface {
-    Row(
-        modifier
-            .padding(horizontal = 8.dp)
-    ) {
+    Row(modifier) {
 
         MonsterCard(
             monster = leftMonster,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp),
             onCLick = { onItemClick(leftMonster.index) }
         )
         rightMonster?.let {
             MonsterCard(
                 monster = it,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp),
                 onCLick = { onItemClick(it.index) }
             )
         }
@@ -157,6 +156,38 @@ private fun MonsterCard(
     modifier = modifier,
     onCLick = onCLick
 )
+
+@Composable
+private fun SectionTitle(
+    title: String,
+    isHeader: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val fontSize = if (isHeader) 40.sp else 24.sp
+    Surface {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = fontSize,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+    }
+}
+
+@Composable
+private fun TopBottomSpace(
+    height: Dp
+) {
+    Surface {
+        Spacer(
+            Modifier
+                .fillMaxWidth()
+                .height(height)
+        )
+    }
+}
 
 @Preview
 @Composable
@@ -250,7 +281,7 @@ fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
 @Composable
 fun MonsterSection2ItemsPreview() = HunterTheme {
     Surface {
-        MonsterSection(
+        MonsterRow(
             leftMonster = MonsterPreview(
                 index = "asdasdasd",
                 type = MonsterType.ABERRATION,
@@ -285,7 +316,7 @@ fun MonsterSection2ItemsPreview() = HunterTheme {
 @Composable
 fun MonsterSection1ItemPreview() = HunterTheme {
     Surface {
-        MonsterSection(
+        MonsterRow(
             leftMonster = MonsterPreview(
                 index = "asdasdasd",
                 type = MonsterType.ABERRATION,
