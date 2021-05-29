@@ -1,4 +1,5 @@
 # hunter
+[![Android CI](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml)
 
 ## Licence
     Copyright 2021 Alexandre Gomes Pereira
