@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
+import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -35,25 +36,13 @@ class GetMonsterPreviewsBySectionUseCase(
 
     operator fun invoke(): Flow<MonstersBySection> {
         return syncMonstersUseCase().flatMapLatest { repository.getLocalMonsters() }
-            .sortMonsters()
+            .sortMonstersByNameAndGroup()
             .groupMonsters()
             .map {
                 it.map { key, value ->
                     key to value.toMonsterPairs()
                 }
             }
-    }
-
-    private fun Flow<List<Monster>>.sortMonsters(): Flow<List<Monster>> {
-        return this.map {
-            it.sortedWith { monsterA, monsterB ->
-                monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
-            }
-        }
-    }
-
-    private fun Monster.getOrderValue(): String {
-        return if (group != null) "$group-$name" else name
     }
 
     private fun Flow<List<Monster>>.groupMonsters(): Flow<Map<MonsterSection, List<Monster>>> {
