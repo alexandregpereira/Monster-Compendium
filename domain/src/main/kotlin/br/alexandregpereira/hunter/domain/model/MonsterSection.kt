@@ -17,6 +17,8 @@
 package br.alexandregpereira.hunter.domain.model
 
 data class MonsterSection(
-    val title: String = "",
-    val showTitle: Boolean = title.isNotEmpty()
+    val title: String,
+    val id: String = title,
+    val parentTitle: String? = null,
+    val isHeader: Boolean = false
 )

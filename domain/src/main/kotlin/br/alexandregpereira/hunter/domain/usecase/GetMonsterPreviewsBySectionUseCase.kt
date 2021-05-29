@@ -34,27 +34,108 @@ class GetMonsterPreviewsBySectionUseCase(
 ) {
 
     operator fun invoke(): Flow<MonstersBySection> {
-        return syncMonstersUseCase().flatMapLatest {
-            repository.getLocalMonsters()
-        }.map { monsters ->
-            var index = 0
-            val groups = LinkedHashSet<String>()
-            monsters.groupBy { monster ->
-                val monsterSection = monster.group?.let {
-                    if (groups.contains(it).not()) {
-                        index += 1
-                    }
-                    MonsterSection(title = it, showTitle = true)
-                } ?: MonsterSection(title = index.toString(), showTitle = false)
-                monsterSection.also {
-                    groups.add(it.title)
+        return syncMonstersUseCase().flatMapLatest { repository.getLocalMonsters() }
+            .sortMonsters()
+            .groupMonsters()
+            .map {
+                it.map { key, value ->
+                    key to value.toMonsterPairs()
                 }
             }
-        }.map {
-            it.map { key, value ->
-                key to value.toMonsterPairs()
+    }
+
+    private fun Flow<List<Monster>>.sortMonsters(): Flow<List<Monster>> {
+        return this.map {
+            it.sortedWith { monsterA, monsterB ->
+                monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
             }
         }
+    }
+
+    private fun Monster.getOrderValue(): String {
+        return if (group != null) "$group-$name" else name
+    }
+
+    private fun Flow<List<Monster>>.groupMonsters(): Flow<Map<MonsterSection, List<Monster>>> {
+        return this.map { monsters ->
+            val map = linkedMapOf<MonsterSection, MutableList<Monster>>()
+            val letterGroupCountMap = hashMapOf<String, Int>()
+            var previousSection: MonsterSection? = null
+            var previousSectionHasGroup = false
+            monsters.forEach { monster ->
+                val monsterSection = if (monster.group != null) {
+                    MonsterSection(
+                        title = monster.group,
+                        parentTitle = getParentTitle(
+                            title = monster.group,
+                            monsterSection = previousSection
+                        ),
+                    )
+                } else {
+                    val group = monster.getFirstLetter()
+
+                    val letterGroupCount = letterGroupCountMap.getOrPut(group) { 0 }
+                    if (previousSectionHasGroup) {
+                        letterGroupCountMap[group] = letterGroupCount + 1
+                    }
+
+                    MonsterSection(
+                        id = group + letterGroupCountMap[group],
+                        title = group,
+                        isHeader = isHeader(
+                            title = group,
+                            previousSection = previousSection,
+                        )
+                    )
+                }
+                map.getOrPut(monsterSection) { mutableListOf() }.run {
+                    add(monster)
+                }
+                previousSection = monsterSection
+                previousSectionHasGroup = monster.group != null
+            }
+            map
+        }
+    }
+
+    private fun getParentTitle(
+        title: String,
+        monsterSection: MonsterSection?
+    ): String? {
+        return if (
+            isParentTitleEligible(title, previousSection = monsterSection)
+        ) {
+            title.getFirstLetter().toString()
+        } else {
+            null
+        }
+    }
+
+    private fun isParentTitleEligible(
+        title: String,
+        previousSection: MonsterSection?
+    ): Boolean {
+        return previousSection == null
+                || title.getFirstLetter() != previousSection.title.getFirstLetter()
+                || (title == previousSection.title
+                && title.getFirstLetter() == previousSection.parentTitle?.getFirstLetter())
+    }
+
+    private fun isHeader(
+        title: String,
+        previousSection: MonsterSection?,
+    ): Boolean {
+        return previousSection == null
+                || title.getFirstLetter() != previousSection.title.getFirstLetter()
+                || previousSection.isHeader
+    }
+
+    private fun Monster.getFirstLetter(): String {
+        return this.name.getFirstLetter().toString()
+    }
+
+    private fun String.getFirstLetter(): Char {
+        return this.first().toUpperCase()
     }
 
     private fun List<Monster>.toMonsterPairs(): List<MonsterPair> {
@@ -85,7 +166,7 @@ class GetMonsterPreviewsBySectionUseCase(
         lastMonsterHorizontalIndex: Int,
         totalMonsters: Int
     ): Boolean {
-        return lastMonsterHorizontalIndex == -1 ||
+        return (lastMonsterHorizontalIndex == -1 && currentIndex < (totalMonsters - 2)) ||
                 ((currentIndex - lastMonsterHorizontalIndex) >= HORIZONTAL_IMAGE_INTERVAL &&
                         currentIndex < (totalMonsters - 2))
     }

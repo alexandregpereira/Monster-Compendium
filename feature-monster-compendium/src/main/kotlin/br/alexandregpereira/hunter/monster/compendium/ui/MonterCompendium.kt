@@ -64,19 +64,17 @@ fun MonsterCompendium(
                     )
                 }
             }
-            if (monsterSectionEntry.key.showTitle) {
-                item {
-                    Surface {
-                        Text(
-                            text = monsterSectionEntry.key.title,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(bottom = 16.dp, top = verticalSectionPadding)
-                        )
-                    }
+            item {
+                Surface {
+                    Text(
+                        text = monsterSectionEntry.key.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 16.dp, top = verticalSectionPadding)
+                    )
                 }
             }
 
@@ -91,9 +89,7 @@ fun MonsterCompendium(
                         lastIndex -> contentPadding.calculateBottomPadding()
                         else -> 0.dp
                     }
-                    val topPadding = if (monsterSectionEntry.key.showTitle) {
-                        0.dp
-                    } else verticalSectionPadding
+                    val topPadding = 0.dp
 
                     val modifier = when (monsterRowIndex) {
                         0 -> Modifier.padding(top = topPadding + contentPaddingValue)
@@ -168,7 +164,7 @@ fun MonsterCompendiumPreview() = HunterTheme {
     Surface {
         MonsterCompendium(
             monstersBySection = mapOf(
-                MonsterSection() to (0..10).map {
+                MonsterSection(title = "Any") to (0..10).map {
                     val leftMonster = MonsterPreview(
                         index = "asdasdasd",
                         type = MonsterType.ABERRATION,

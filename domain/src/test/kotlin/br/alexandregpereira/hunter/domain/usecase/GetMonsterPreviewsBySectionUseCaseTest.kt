@@ -39,6 +39,27 @@ class GetMonsterPreviewsBySectionUseCaseTest {
     private val syncMonstersUseCase: SyncMonstersUseCase = mockk()
     private val useCase = GetMonsterPreviewsBySectionUseCase(syncMonstersUseCase, repository)
 
+    private fun createMonsters(): List<Monster> {
+        return (0..23).map {
+            val name = when (it) {
+                2 -> "Aztest$it"
+                in 5..6 -> "Aztest$it"
+                in 0..6 -> "A1test$it"
+                in 7..11 -> "B1test$it"
+                in 12..14 -> "C1test$it"
+                in 15..18 -> "D1test$it"
+                22 -> "Hztest$it"
+                else -> "Hatest$it"
+            }
+            createMonster(
+                index = it.toString(),
+                name = name,
+                group = if (it == 1 || it in 3..4) "Any" else if (it == 10) "Group1" else if (it in 11..12) "Group2"  else if (it in 19..20) "Hags"  else if (it == 23) "Hxgs1" else null,
+                isHorizontal = it != 0 && it != 7
+            )
+        }
+    }
+
     @Test
     fun invoke() = runBlocking {
         // Given
@@ -50,20 +71,32 @@ class GetMonsterPreviewsBySectionUseCaseTest {
         val result = useCase().single()
 
         // Then
-        val monsterSectionExpected1 = MonsterSection(title = "0", showTitle = false)
-        val monsterSectionExpected2 = MonsterSection(title = "Group", showTitle = true)
-        val monsterSectionExpected3 = MonsterSection(title = "1", showTitle = false)
-        val monsterSectionExpected4 = MonsterSection(title = "Group1", showTitle = true)
-        val monsterSectionExpected5 = MonsterSection(title = "Group2", showTitle = true)
-        val monsterSectionExpected6 = MonsterSection(title = "3", showTitle = false)
+        val monsterSectionExpected1 = MonsterSection(title = "A", id= "A0", isHeader = true)
+        val monsterSectionExpected2 = MonsterSection(title = "Any", parentTitle = null)
+        val monsterSectionExpected3 = MonsterSection(title = "A", id= "A1", isHeader = false)
+        val monsterSectionExpected4 = MonsterSection(title = "B", id= "B0", isHeader = true)
+        val monsterSectionExpected5 = MonsterSection(title = "C", id= "C0", isHeader = true)
+        val monsterSectionExpected6 = MonsterSection(title = "D", id= "D0", isHeader = true)
+        val monsterSectionExpected7 = MonsterSection(title = "Group1", parentTitle = "G")
+        val monsterSectionExpected8 = MonsterSection(title = "Group2", parentTitle = null)
+        val monsterSectionExpected9 = MonsterSection(title = "Hags", parentTitle = "H")
+        val monsterSectionExpected10 = MonsterSection(title = "H", id= "H1", isHeader = false)
+        val monsterSectionExpected11 = MonsterSection(title = "Hxgs1", parentTitle = null)
+        val monsterSectionExpected12 = MonsterSection(title = "H", id= "H2", isHeader = false)
         assertEquals(monsters.size, result.toMonsters().size)
-        assertEquals(6, result.size)
+        assertEquals(12, result.size)
         assertEquals(monsterSectionExpected1, result.keys.first())
         assertEquals(monsterSectionExpected2, result.keys.toList()[1])
         assertEquals(monsterSectionExpected3, result.keys.toList()[2])
         assertEquals(monsterSectionExpected4, result.keys.toList()[3])
         assertEquals(monsterSectionExpected5, result.keys.toList()[4])
         assertEquals(monsterSectionExpected6, result.keys.toList()[5])
+        assertEquals(monsterSectionExpected7, result.keys.toList()[6])
+        assertEquals(monsterSectionExpected8, result.keys.toList()[7])
+        assertEquals(monsterSectionExpected9, result.keys.toList()[8])
+        assertEquals(monsterSectionExpected10, result.keys.toList()[9])
+        assertEquals(monsterSectionExpected11, result.keys.toList()[10])
+        assertEquals(monsterSectionExpected12, result.keys.toList()[11])
 
         assertEquals(
             listOf(
@@ -84,53 +117,80 @@ class GetMonsterPreviewsBySectionUseCaseTest {
             listOf(
                 monsters[2] to null,
                 monsters[5] to monsters[6],
-                monsters[7] to null,
             ),
             result[monsterSectionExpected3]
         )
 
         assertEquals(
             listOf(
-                monsters[8] to null
+                monsters[7] to monsters[8],
+                monsters[9] to null
             ),
             result[monsterSectionExpected4]
         )
 
         assertEquals(
             listOf(
-                monsters[9] to monsters[10]
+                monsters[13] to monsters[14],
             ),
             result[monsterSectionExpected5]
         )
 
         assertEquals(
             listOf(
-                monsters[11] to null,
-                monsters[12] to monsters[13],
-                monsters[14] to null,
-                monsters[15] to monsters[16],
-                monsters[17] to null,
-                monsters[18] to monsters[19],
-                monsters[20] to null,
-                monsters[21] to monsters[22],
-                monsters[23] to monsters[24],
+                monsters[15] to null,
+                monsters[16] to monsters[17],
+                monsters[18] to null,
             ),
             result[monsterSectionExpected6]
         )
-    }
 
-    private fun createMonsters(): List<Monster> {
-        return (0..24).map {
-            createMonster(
-                index = it.toString(),
-                group = if (it == 1 || it in 3..4) "Group" else if (it == 8) "Group1" else if (it in 9..10) "Group2" else null,
-                isHorizontal = it != 0 && it != 9
-            )
-        }
+        assertEquals(
+            listOf(
+                monsters[10] to null,
+            ),
+            result[monsterSectionExpected7]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[11] to monsters[12],
+            ),
+            result[monsterSectionExpected8]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[19] to monsters[20],
+            ),
+            result[monsterSectionExpected9]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[21] to null,
+            ),
+            result[monsterSectionExpected10]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[23] to null,
+            ),
+            result[monsterSectionExpected11]
+        )
+
+        assertEquals(
+            listOf(
+                monsters[22] to null,
+            ),
+            result[monsterSectionExpected12]
+        )
     }
 
     private fun createMonster(
         index: String,
+        name: String,
         group: String? = null,
         isHorizontal: Boolean = true
     ): Monster {
@@ -139,7 +199,7 @@ class GetMonsterPreviewsBySectionUseCaseTest {
                 index = index,
                 type = MonsterType.ABERRATION,
                 challengeRating = 0.0f,
-                name = "",
+                name = name,
                 imageData = MonsterImageData(
                     url = "",
                     backgroundColor = Color(light = "", dark = ""),
