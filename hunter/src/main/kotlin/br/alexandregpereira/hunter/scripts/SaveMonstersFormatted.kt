@@ -118,38 +118,6 @@ private fun Monster.getId(): String {
     return index
 }
 
-private fun Monster.getGroup(): String? {
-    return when {
-        isGroupByIndex() -> {
-            getGroupByIndex()
-        }
-        isSubtypeGroup() -> {
-            subtype?.capitalize(Locale.ROOT)?.let { it + "s" }
-        }
-        else -> {
-            getGroupByGroupMap()
-        }
-    }
-}
-
-private fun Monster.isGroupByIndex(): Boolean {
-    return groupsByIndex.any { this.index.endsWith(it) }
-}
-
-private fun Monster.getGroupByIndex(): String? {
-    return groupsByIndex.find { this.index.endsWith(it) }
-        ?.removeSuffix("-wyrmling")
-        ?.capitalize(Locale.ROOT)?.let { it + "s" }
-}
-
-private fun Monster.getGroupByGroupMap(): String? {
-    return groups.toList().find { it.second.any { i -> index == i } }?.first
-}
-
-private fun Monster.isSubtypeGroup(): Boolean {
-    return subtype != null && subtypeGroupAllowList.contains(subtype)
-}
-
 private fun Monster.asSpeedFormatted(): SpeedDto = speed.run {
     val burrow = createSpeedValue(SpeedTypeDto.BURROW, burrow)
     val climb = createSpeedValue(SpeedTypeDto.CLIMB, climb)
@@ -335,15 +303,55 @@ private fun calculateAbilityScoreModifier(value: Int): Int {
     }
 }
 
+private fun Monster.getGroup(): String? {
+    return when {
+        isGroupByIndex() -> {
+            getGroupByIndex()
+        }
+        isSubtypeGroup() -> {
+            subtype?.capitalize(Locale.ROOT)?.let { it + "s" }
+        }
+        else -> {
+            getGroupByGroupMap()
+        }
+    }
+}
+
+private fun Monster.isGroupByIndex(): Boolean {
+    return groupsByIndex.any { this.index.endsWith(it) }
+}
+
+private fun Monster.getGroupByIndex(): String? {
+    return groupsByIndex.find { this.index.endsWith(it) }
+        ?.removeSuffix("-wyrmling")
+        ?.capitalize(Locale.ROOT)?.let { it + "s" }
+}
+
+private fun Monster.getGroupByGroupMap(): String? {
+    return groups.toList().find { it.second.any { i -> index == i } }?.first
+}
+
+private fun Monster.isSubtypeGroup(): Boolean {
+    return subtype != null && subtypeGroupAllowList.contains(subtype)
+}
+
+private fun getDragonsByColor(color: String): List<String>{
+    return dragons.map { it.replace("{color}", color) }
+}
+
 private val subtypeGroupAllowList = listOf(
     "devil",
     "demon",
 )
 
 private val groupsByIndex = listOf(
-    "dragon",
-    "dragon-wyrmling",
     "hag",
+    "elemental",
+    "giant",
+    "golem",
+    "mephit",
+    "naga",
+    "zombie",
 )
 
 private val angels = listOf(
@@ -358,7 +366,58 @@ private val animatedObjects = listOf(
     "rug-of-smothering"
 )
 
+private val dragons = listOf(
+    "ancient-{color}-dragon",
+    "adult-{color}-dragon",
+    "young-{color}-dragon",
+    "{color}-dragon-wyrmling",
+)
+
+private val genies = listOf(
+    "djinni",
+    "efreeti",
+)
+
+private val lycanthropes = listOf(
+    "werebear",
+    "wereboar",
+    "wererat",
+    "weretiger",
+    "werewolf",
+)
+
+private val oozes = listOf(
+    "black-pudding",
+    "gelatinous-cube",
+    "ochre-jelly",
+)
+
+private val sphinxes = listOf(
+    "androsphinx",
+    "gynosphinx",
+)
+
+private val vampires = listOf(
+    "vampire",
+    "vampire-spawn",
+)
+
 private val groups = hashMapOf(
     "Angels" to angels,
-    "Animated Objects" to animatedObjects
+    "Animated Objects" to animatedObjects,
+    "Dragons, Black" to getDragonsByColor("black"),
+    "Dragons, Blue" to getDragonsByColor("blue"),
+    "Dragons, Green" to getDragonsByColor("green"),
+    "Dragons, Red" to getDragonsByColor("red"),
+    "Dragons, White" to getDragonsByColor("white"),
+    "Dragons, Brass" to getDragonsByColor("brass"),
+    "Dragons, Bronze" to getDragonsByColor("bronze"),
+    "Dragons, Cooper" to getDragonsByColor("copper"),
+    "Dragons, Gold" to getDragonsByColor("gold"),
+    "Dragons, Silver" to getDragonsByColor("silver"),
+    "Genies" to genies,
+    "Lycanthropes" to lycanthropes,
+    "0ozes" to oozes,
+    "Sphinxes" to sphinxes,
+    "Vampires" to vampires,
 )
