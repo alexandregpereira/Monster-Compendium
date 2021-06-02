@@ -417,7 +417,7 @@ private val groups = hashMapOf(
     "Dragons, Silver" to getDragonsByColor("silver"),
     "Genies" to genies,
     "Lycanthropes" to lycanthropes,
-    "0ozes" to oozes,
+    "Oozes" to oozes,
     "Sphinxes" to sphinxes,
     "Vampires" to vampires,
 )
