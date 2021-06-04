@@ -86,6 +86,7 @@ class MonsterCompendiumViewModelTest {
         // Then
         verify { getMonsterPreviewsUseCase() }
         verifyOrder {
+            stateLiveDataObserver.onChanged(MonsterCompendiumViewState(isLoading = false))
             stateLiveDataObserver.onChanged(MonsterCompendiumViewState(isLoading = true))
             stateLiveDataObserver.onChanged(
                 MonsterCompendiumViewState(
