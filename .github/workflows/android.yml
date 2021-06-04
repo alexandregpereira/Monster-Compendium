@@ -28,7 +28,10 @@ jobs:
       uses: actions/upload-artifact@v2.2.3
       with:
         name: TestReport
-        path: "**/build/reports/tests/testReleaseUnitTest/**"
+        path: |
+          data/build/reports/tests/testReleaseUnitTest
+          domain/build/reports/tests/testReleaseUnitTest
+          feature-monster-compendium/build/reports/tests/testReleaseUnitTest
     - name: Build Debug APK
       run: ./gradlew assembleDebug
     - name:  Upload an APK

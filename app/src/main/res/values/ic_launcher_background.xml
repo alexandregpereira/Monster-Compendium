@@ -16,5 +16,5 @@
   -->
 
 <resources>
-    <integer name="animation_time">300</integer>
+    <color name="ic_launcher_background">#E84599</color>
 </resources>
