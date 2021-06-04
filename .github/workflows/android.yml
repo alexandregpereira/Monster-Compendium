@@ -29,7 +29,9 @@ jobs:
       with:
         name: TestReport
         path: |
-          **/build/reports/tests/testReleaseUnitTest/**
+          data/build/reports/tests/testReleaseUnitTest
+          domain/build/reports/tests/testReleaseUnitTest
+          feature-monster-compendium/build/reports/tests/testReleaseUnitTest
     - name: Build Debug APK
       run: ./gradlew assembleDebug
     - name:  Upload an APK
