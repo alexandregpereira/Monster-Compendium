@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.detail
 
-enum class MeasurementUnit(
-    val possibilities: List<String>,
-    val values: List<String>
-) {
-    FEET(
-        possibilities = listOf(" ft .", " ft.", "ft.", "ft .", " feet"),
-        listOf(" ft.", " feet")
-    ),
-    METER(
-        possibilities = listOf("m", " meters"),
-        listOf("m", " meters")
-    )
+enum class MonsterDetailOption {
+    CHANGE_TO_FEET, CHANGE_TO_METERS
 }

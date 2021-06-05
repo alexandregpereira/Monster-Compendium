@@ -23,4 +23,6 @@ interface MeasurementUnitRepository {
 
     fun saveMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit>
     fun getMeasurementUnit(): Flow<MeasurementUnit>
+    fun savePreviousMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit>
+    fun getPreviousMeasurementUnit(): Flow<MeasurementUnit>
 }

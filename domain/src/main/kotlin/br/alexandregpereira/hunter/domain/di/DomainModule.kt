@@ -17,22 +17,26 @@
 package br.alexandregpereira.hunter.domain.di
 
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersByInitialIndexUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersWithMeasurementUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory { ChangeMonstersMeasurementUnitUseCase(get(), get()) }
-    factory { GetMonsterPreviewsBySectionUseCase(get(), get()) }
-    factory { GetMonstersByInitialIndexUseCase(get()) }
-    factory { GetMonstersUseCase(get()) }
-    factory { GetMonstersWithMeasurementUseCase(get(), get()) }
+    factory { ChangeMonstersMeasurementUnitUseCase(get(), get(), get()) }
     factory { GetLastCompendiumScrollItemPositionUseCase(get()) }
+    factory { GetMeasurementUnitUseCase(get()) }
+    factory { GetMonsterDetailUseCase(get(), get()) }
+    factory { GetMonsterPreviewsBySectionUseCase(get(), get()) }
+    factory { GetMonstersUseCase(get()) }
     factory { SaveCompendiumScrollItemPositionUseCase(get()) }
-    factory { SyncMonstersUseCase(get()) }
+    factory { SaveMeasurementUnitUseCase(get(), get()) }
+    factory { SaveMonstersUseCase(get(), get(), get()) }
+    factory { SyncMonstersUseCase(get(), get()) }
 }

@@ -35,12 +35,28 @@ internal class PreferencesRepository(
     }
 
     override fun saveMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit> {
-        return preferencesDataSource.save(MEASUREMENT_UNIT_KEY, measurementUnit.name)
+        return saveMeasurementUnit(MEASUREMENT_UNIT_KEY, measurementUnit)
     }
 
     override fun getMeasurementUnit(): Flow<MeasurementUnit> {
+        return getMeasurementUnit(MEASUREMENT_UNIT_KEY)
+    }
+
+    override fun savePreviousMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit> {
+        return saveMeasurementUnit(PREVIOUS_MEASUREMENT_UNIT_KEY, measurementUnit)
+    }
+
+    override fun getPreviousMeasurementUnit(): Flow<MeasurementUnit> {
+        return getMeasurementUnit(PREVIOUS_MEASUREMENT_UNIT_KEY)
+    }
+
+    private fun saveMeasurementUnit(key: String, measurementUnit: MeasurementUnit): Flow<Unit> {
+        return preferencesDataSource.save(key, measurementUnit.name)
+    }
+
+    private fun getMeasurementUnit(key: String): Flow<MeasurementUnit> {
         return preferencesDataSource.getString(
-            MEASUREMENT_UNIT_KEY,
+            key,
             defaultValue = MeasurementUnit.FEET.name
         ).map {
             MeasurementUnit.valueOf(it)
@@ -50,3 +66,4 @@ internal class PreferencesRepository(
 
 private const val COMPENDIUM_SCROLL_ITEM_POSITION_KEY = "COMPENDIUM_SCROLL_ITEM_POSITION_KEY"
 private const val MEASUREMENT_UNIT_KEY = "MEASUREMENT_UNIT_KEY"
+private const val PREVIOUS_MEASUREMENT_UNIT_KEY = "PREVIOUS_MEASUREMENT_UNIT_KEY"

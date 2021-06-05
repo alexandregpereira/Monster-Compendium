@@ -64,6 +64,8 @@ fun MonsterDetail(
     monsters: List<Monster>,
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    onMonsterChanged: (monster: Monster) -> Unit = {},
+    onOptionsClicked: () -> Unit = {}
 ) {
     val pagerState = rememberPagerState(
         pageCount = monsters.size,
@@ -101,7 +103,9 @@ fun MonsterDetail(
         MonsterInfo(
             monsters = monsters,
             pagerState = pagerState,
-            contentPadding = contentPadding
+            contentPadding = contentPadding,
+            onMonsterChanged = onMonsterChanged,
+            onOptionsClicked = onOptionsClicked
         )
     }
 }
@@ -168,9 +172,12 @@ fun MonsterImageInfo(
 fun MonsterInfo(
     monsters: List<Monster>,
     pagerState: PagerState,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    onMonsterChanged: (monster: Monster) -> Unit,
+    onOptionsClicked: () -> Unit
 ) {
     val transitionData = getTransitionData(monsters, pagerState)
+    onMonsterChanged(transitionData.monster)
 
     AnimatedVisibility(
         visible = true,
@@ -182,13 +189,16 @@ fun MonsterInfo(
         MonsterInfo(
             transitionData.monster,
             contentPadding = contentPadding,
-            alpha = transitionData.alpha
+            alpha = transitionData.alpha,
+            onOptionsClicked = onOptionsClicked
         )
-        MonsterInfo(
-            transitionData.nextMonster,
-            contentPadding = contentPadding,
-            modifier = Modifier.alpha(transitionData.nextAlpha)
-        )
+        if (transitionData.monster != transitionData.nextMonster) {
+            MonsterInfo(
+                transitionData.nextMonster,
+                contentPadding = contentPadding,
+                modifier = Modifier.alpha(transitionData.nextAlpha),
+            )
+        }
     }
 }
 

@@ -51,7 +51,8 @@ fun MonsterInfo(
     monster: Monster,
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    onOptionsClicked: () -> Unit = {}
 ) = Column(
     modifier
         .fillMaxWidth()
@@ -62,7 +63,7 @@ fun MonsterInfo(
         )
         .alpha(alpha)
 ) {
-    MonsterTitle(title = monster.name, subTitle = monster.subtitle)
+    MonsterTitle(title = monster.name, subTitle = monster.subtitle, onOptionsClicked)
 
     BlockSection { StatsBlock(stats = monster.stats) }
     BlockSection { SpeedBlock(speed = monster.speed) }

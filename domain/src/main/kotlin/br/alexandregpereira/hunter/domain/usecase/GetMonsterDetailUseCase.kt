@@ -17,24 +17,23 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
 
-class ChangeMonstersMeasurementUnitUseCase internal constructor(
-    private val saveMeasurementUnitUseCase: SaveMeasurementUnitUseCase,
-    private val saveMonstersUseCase: SaveMonstersUseCase,
-    private val getMonstersUseCase: GetMonstersUseCase
+typealias MonsterDetail = Triple<Int, List<Monster>, MeasurementUnit>
+
+class GetMonsterDetailUseCase internal constructor(
+    private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
+    private val getMonstersUseCase: GetMonstersUseCase,
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(measurementUnit: MeasurementUnit): Flow<Unit> {
-        return getMonstersUseCase()
-            .zip(saveMeasurementUnitUseCase(measurementUnit)) { monsters, _ ->
-                monsters
-            }.flatMapLatest { monsters ->
-                saveMonstersUseCase(monsters)
-            }
+    operator fun invoke(index: String): Flow<MonsterDetail> {
+        return getMonstersUseCase().zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
+            val monster = monsters.find { monster -> monster.index == index }
+                ?: throw IllegalAccessError("Monster not found")
+
+             Triple(monsters.indexOf(monster), monsters, measurementUnit)
+        }
     }
 }

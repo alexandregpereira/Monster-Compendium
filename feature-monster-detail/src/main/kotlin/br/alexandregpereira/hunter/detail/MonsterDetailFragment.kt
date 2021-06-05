@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -28,23 +29,24 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
+import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MonsterDetailFragment : Fragment() {
 
-    private val index: String by lazy { arguments?.getString("index") ?: "" }
-    private val viewModel: MonsterDetailViewModel by viewModel()
+    private val viewModel: MonsterDetailViewModel by viewModel {
+        parametersOf(arguments?.getString("index") ?: "")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.getMonstersByInitialIndex(index)
         return requireContext().createComposeView {
             MonsterDetail(viewModel, contentPadding = it)
         }
@@ -61,7 +63,22 @@ internal fun MonsterDetail(
 
     CircularLoading(viewState.isLoading) {
         viewState.monsters.takeIf { it.isNotEmpty() }?.let {
-            MonsterDetail(it, viewState.initialMonsterIndex, contentPadding)
+            MonsterDetail(
+                it,
+                viewState.initialMonsterIndex,
+                contentPadding,
+                onMonsterChanged = { monster ->
+                    viewModel.setMonsterIndex(monster.index)
+                },
+                onOptionsClicked = viewModel::onShowOptionsClicked
+            )
+
+            MonsterDetailOptionPicker(
+                options = viewState.options,
+                showOptions = viewState.showOptions,
+                onOptionSelected = viewModel::onOptionClicked,
+                onClosed = viewModel::onShowOptionsClosed
+            )
         }
     }
 }
