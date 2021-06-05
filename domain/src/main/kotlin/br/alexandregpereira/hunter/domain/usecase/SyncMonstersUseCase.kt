@@ -16,7 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

@@ -22,9 +22,13 @@ import kotlinx.coroutines.flow.map
 
 internal fun Flow<List<Monster>>.sortMonstersByNameAndGroup(): Flow<List<Monster>> {
     return this.map {
-        it.sortedWith { monsterA, monsterB ->
-            monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
-        }
+        it.sortMonstersByNameAndGroup()
+    }
+}
+
+internal fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
+    return this.sortedWith { monsterA, monsterB ->
+        monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
     }
 }
 

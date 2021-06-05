@@ -16,14 +16,20 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
+import br.alexandregpereira.hunter.domain.model.MeasurementUnit
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
+class ChangeMonstersMeasurementUnitUseCase(
+    private val repository: MeasurementUnitRepository,
+    private val getMonstersWithMeasurementUseCase: GetMonstersWithMeasurementUseCase
 ) {
 
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
+    operator fun invoke(measurementUnit: MeasurementUnit): Flow<List<Monster>> {
+        return repository.saveMeasurementUnit(measurementUnit).flatMapLatest {
+            getMonstersWithMeasurementUseCase()
+        }
     }
 }

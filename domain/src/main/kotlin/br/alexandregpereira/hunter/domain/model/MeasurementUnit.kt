@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
-import kotlinx.coroutines.flow.Flow
-
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
-) {
-
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
-    }
+enum class MeasurementUnit(val value: String) {
+    FEET(value = "ft."),
+    METER(value = "m")
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
@@ -72,8 +71,6 @@ fun SpeedGridPreview() = Window {
             hover = false, values = (0..6).map {
                 SpeedValue(
                     type = SpeedType.WALK,
-                    measurementUnit = MeasurementUnit.METER,
-                    value = 0,
                     valueFormatted = "10m"
                 )
             }
@@ -89,8 +86,6 @@ fun SpeedBlockPreview() = HunterTheme {
             hover = true, values = listOf(
                 SpeedValue(
                     type = SpeedType.WALK,
-                    measurementUnit = MeasurementUnit.METER,
-                    value = 0,
                     valueFormatted = "10m"
                 )
             )

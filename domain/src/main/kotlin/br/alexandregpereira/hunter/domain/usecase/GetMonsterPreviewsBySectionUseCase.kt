@@ -16,12 +16,10 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.MonsterRepository
 import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -31,12 +29,11 @@ typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
 class GetMonsterPreviewsBySectionUseCase(
     private val syncMonstersUseCase: SyncMonstersUseCase,
-    private val repository: MonsterRepository
+    private val getMonstersUseCase: GetMonstersUseCase
 ) {
 
     operator fun invoke(): Flow<MonstersBySection> {
-        return syncMonstersUseCase().flatMapLatest { repository.getLocalMonsters() }
-            .sortMonstersByNameAndGroup()
+        return syncMonstersUseCase().flatMapLatest { getMonstersUseCase() }
             .groupMonsters()
             .map {
                 it.map { key, value ->

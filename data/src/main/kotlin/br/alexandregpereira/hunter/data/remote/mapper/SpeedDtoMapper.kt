@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.data.remote.mapper
 
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedValueDto
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
@@ -31,8 +30,6 @@ internal fun List<SpeedValueDto>.toDomain(): List<SpeedValue> {
     return this.map {
         SpeedValue(
             type = SpeedType.valueOf(it.type.name),
-            measurementUnit = MeasurementUnit.valueOf(it.measurementUnit.name),
-            value = it.value,
             valueFormatted = it.valueFormatted
         )
     }

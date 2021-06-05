@@ -16,15 +16,15 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.MonsterRepository
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -35,9 +35,9 @@ import org.junit.Test
 
 class GetMonsterPreviewsBySectionUseCaseTest {
 
-    private val repository = mockk<MonsterRepository>()
     private val syncMonstersUseCase: SyncMonstersUseCase = mockk()
-    private val useCase = GetMonsterPreviewsBySectionUseCase(syncMonstersUseCase, repository)
+    private val getMonstersUseCase: GetMonstersUseCase = mockk()
+    private val useCase = GetMonsterPreviewsBySectionUseCase(syncMonstersUseCase, getMonstersUseCase)
 
     private fun createMonsters(): List<Monster> {
         return (0..23).map {
@@ -65,7 +65,7 @@ class GetMonsterPreviewsBySectionUseCaseTest {
         // Given
         val monsters = createMonsters().map { it.preview }
         every { syncMonstersUseCase() } returns flowOf(Unit)
-        every { repository.getLocalMonsters() } returns flowOf(createMonsters())
+        every { getMonstersUseCase() } returns flowOf(createMonsters().sortMonstersByNameAndGroup())
 
         // When
         val result = useCase().single()

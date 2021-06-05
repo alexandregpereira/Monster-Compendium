@@ -16,11 +16,11 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
 
 class SaveCompendiumScrollItemPositionUseCase(
-    private val repository: MonsterRepository
+    private val repository: CompendiumRepository
 ) {
 
     operator fun invoke(position: Int): Flow<Unit> {

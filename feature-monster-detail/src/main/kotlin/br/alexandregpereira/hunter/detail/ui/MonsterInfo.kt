@@ -33,19 +33,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.AbilityScore
+import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import br.alexandregpereira.hunter.domain.model.AbilityScore
-import br.alexandregpereira.hunter.domain.model.AbilityScoreType
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
 
 @Composable
 fun MonsterInfo(
@@ -172,8 +171,6 @@ fun MonsterInfoPreview() {
                     hover = true, values = (0..6).map {
                         SpeedValue(
                             type = SpeedType.WALK,
-                            measurementUnit = MeasurementUnit.METER,
-                            value = 0,
                             valueFormatted = "10m"
                         )
                     }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.domain.repository
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +25,4 @@ interface MonsterRepository {
     fun saveMonsters(monsters: List<Monster>): Flow<Unit>
     fun getRemoteMonsters(): Flow<List<Monster>>
     fun getLocalMonsters(): Flow<List<Monster>>
-    fun getLastCompendiumScrollItemPosition(): Flow<Int>
-    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
 }
