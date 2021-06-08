@@ -26,7 +26,5 @@ internal data class SpeedEntity(
 @Serializable
 internal data class SpeedValueEntity(
     val type: String,
-    val measurementUnit: String,
-    val value: Int,
     val valueFormatted: String
 )

@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
@@ -34,8 +33,6 @@ internal fun List<SpeedValueEntity>.toDomain(): List<SpeedValue> {
     return this.map {
         SpeedValue(
             type = SpeedType.valueOf(it.type),
-            measurementUnit = MeasurementUnit.valueOf(it.measurementUnit),
-            value = it.value,
             valueFormatted = it.valueFormatted
         )
     }
@@ -49,8 +46,6 @@ internal fun List<SpeedValue>.toEntity(): List<SpeedValueEntity> {
     return this.map {
         SpeedValueEntity(
             type = it.type.name,
-            measurementUnit = it.measurementUnit.name,
-            value = it.value,
             valueFormatted = it.valueFormatted
         )
     }

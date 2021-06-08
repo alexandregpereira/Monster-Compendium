@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUse
 import br.alexandregpereira.hunter.domain.usecase.MonsterPair
 import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -46,6 +47,7 @@ internal class MonsterCompendiumViewModel(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     loadOnInit: Boolean = true
 ) : ViewModel() {
 
@@ -69,7 +71,7 @@ internal class MonsterCompendiumViewModel(
             .map {
                 it.first to it.second.toMonstersBySection()
             }
-            .flowOn(Dispatchers.IO)
+            .flowOn(dispatcher)
             .onStart {
                 _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
             }

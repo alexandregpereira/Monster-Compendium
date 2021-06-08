@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.domain.repository
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
+import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
-) {
+interface MonsterRepository {
 
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
-    }
+    fun deleteMonsters(): Flow<Unit>
+    fun saveMonsters(monsters: List<Monster>): Flow<Unit>
+    fun getRemoteMonsters(): Flow<List<Monster>>
+    fun getLocalMonsters(): Flow<List<Monster>>
 }

@@ -16,14 +16,16 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import kotlinx.coroutines.flow.Flow
 
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
+class GetMonstersUseCase(
+    private val repository: MonsterRepository
 ) {
 
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
+    operator fun invoke(): Flow<List<Monster>> {
+        return repository.getLocalMonsters().sortMonstersByNameAndGroup()
     }
 }

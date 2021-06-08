@@ -26,10 +26,13 @@ import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSourceImpl
+import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
 import br.alexandregpereira.hunter.data.remote.MonsterApi
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
-import br.alexandregpereira.hunter.domain.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
+import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -61,7 +64,15 @@ val dataModule = module {
     single { get<Retrofit>().create(MonsterApi::class.java) }
 
     single<MonsterRepository> {
-        MonsterRepositoryImpl(get(), get(), get())
+        MonsterRepositoryImpl(get(), get())
+    }
+
+    single<CompendiumRepository> {
+        PreferencesRepository(get())
+    }
+
+    single<MeasurementUnitRepository> {
+        PreferencesRepository(get())
     }
 
     single {

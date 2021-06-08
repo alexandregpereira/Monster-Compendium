@@ -16,22 +16,15 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.MonsterRepository
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
+import br.alexandregpereira.hunter.domain.model.MeasurementUnit
+import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
-class GetMonstersByInitialIndexUseCase(
-    private val repository: MonsterRepository
+class GetMeasurementUnitUseCase internal constructor(
+    private val repository: MeasurementUnitRepository
 ) {
 
-    operator fun invoke(index: String): Flow<Pair<Int, List<Monster>>> {
-        return repository.getLocalMonsters().sortMonstersByNameAndGroup().map {
-            val monster = it.find { monster -> monster.index == index }
-                ?: throw IllegalAccessError("Monster not found")
-
-            it.indexOf(monster) to it
-        }
+    operator fun invoke(): Flow<MeasurementUnit> {
+        return repository.getMeasurementUnit()
     }
 }

@@ -16,24 +16,25 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.zip
 
-class SyncMonstersUseCase internal constructor(
-    private val repository: MonsterRepository,
-    private val saveMonstersUseCase: SaveMonstersUseCase
+class ChangeMonstersMeasurementUnitUseCase internal constructor(
+    private val saveMeasurementUnitUseCase: SaveMeasurementUnitUseCase,
+    private val saveMonstersUseCase: SaveMonstersUseCase,
+    private val getMonstersUseCase: GetMonstersUseCase
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(): Flow<Unit> {
-        return repository.deleteMonsters()
-            .flatMapLatest {
-                repository.getRemoteMonsters()
-            }
-            .flatMapLatest {
-                saveMonstersUseCase(monsters = it)
+    operator fun invoke(measurementUnit: MeasurementUnit): Flow<Unit> {
+        return getMonstersUseCase()
+            .zip(saveMeasurementUnitUseCase(measurementUnit)) { monsters, _ ->
+                monsters
+            }.flatMapLatest { monsters ->
+                saveMonstersUseCase(monsters)
             }
     }
 }

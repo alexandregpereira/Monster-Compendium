@@ -23,8 +23,6 @@ data class Speed(
 
 data class SpeedValue(
     val type: SpeedType,
-    val measurementUnit: MeasurementUnit,
-    val value: Int,
     val valueFormatted: String
 )
 
@@ -34,9 +32,4 @@ enum class SpeedType {
     FLY,
     WALK,
     SWIM,
-}
-
-enum class MeasurementUnit(val value: String) {
-    FEET(value = "ft."),
-    METER(value = "m")
 }

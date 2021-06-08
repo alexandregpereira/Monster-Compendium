@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.detail
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
-import kotlinx.coroutines.flow.Flow
-
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
-) {
-
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
-    }
+enum class MonsterDetailOption {
+    CHANGE_TO_FEET, CHANGE_TO_METERS
 }

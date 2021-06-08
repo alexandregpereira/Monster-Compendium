@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.domain.model.Monster
-import kotlinx.coroutines.flow.Flow
-
-interface MonsterRepository {
-
-    fun deleteMonsters(): Flow<Unit>
-    fun saveMonsters(monsters: List<Monster>): Flow<Unit>
-    fun getRemoteMonsters(): Flow<List<Monster>>
-    fun getLocalMonsters(): Flow<List<Monster>>
-    fun getLastCompendiumScrollItemPosition(): Flow<Int>
-    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
+enum class MeasurementUnit(
+    val possibilities: List<String>,
+    val values: List<String>
+) {
+    FEET(
+        possibilities = listOf(" ft .", " ft.", "ft.", "ft .", " feet"),
+        listOf(" ft.", " feet")
+    ),
+    METER(
+        possibilities = listOf("m", " meters"),
+        listOf("m", " meters")
+    )
 }

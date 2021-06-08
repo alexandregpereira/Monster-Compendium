@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.domain.repository
 
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetLastCompendiumScrollItemPositionUseCase(
-    private val repository: CompendiumRepository
-) {
+interface CompendiumRepository {
 
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
-    }
+    fun getLastCompendiumScrollItemPosition(): Flow<Int>
+    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
 }

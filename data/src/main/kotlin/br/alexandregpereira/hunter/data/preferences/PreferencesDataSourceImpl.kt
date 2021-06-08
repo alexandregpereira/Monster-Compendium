@@ -24,18 +24,27 @@ class PreferencesDataSourceImpl(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesDataSource {
 
-    override fun getLastCompendiumScrollItemPosition(): Flow<Int> {
+    override fun getInt(key: String, defaultValue: Int): Flow<Int> {
         return flow {
-            emit(sharedPreferences.getInt(COMPENDIUM_SCROLL_ITEM_POSITION_KEY, 0))
+            emit(sharedPreferences.getInt(key, defaultValue))
         }
     }
 
-    override fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit> {
+    override fun getString(key: String, defaultValue: String): Flow<String> {
         return flow {
-            sharedPreferences.edit().putInt(COMPENDIUM_SCROLL_ITEM_POSITION_KEY, position).apply()
+            emit(sharedPreferences.getString(key, defaultValue) ?: defaultValue)
+        }
+    }
+
+    override fun save(key: String, value: Any): Flow<Unit> {
+        return flow {
+            val editor = sharedPreferences.edit()
+            when (value) {
+                is Int -> editor.putInt(key, value).apply()
+                is String -> editor.putString(key, value).apply()
+                else -> throw UnsupportedOperationException("${value::class} not supported")
+            }
             emit(Unit)
         }
     }
 }
-
-private const val COMPENDIUM_SCROLL_ITEM_POSITION_KEY = "COMPENDIUM_SCROLL_ITEM_POSITION_KEY"

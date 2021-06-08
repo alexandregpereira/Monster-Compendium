@@ -20,9 +20,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val monsterDetailModule = module {
-    viewModel {
+    viewModel { (monsterIndex: String) ->
         MonsterDetailViewModel(
-            get()
+            monsterIndex, get(), get()
         )
     }
 }

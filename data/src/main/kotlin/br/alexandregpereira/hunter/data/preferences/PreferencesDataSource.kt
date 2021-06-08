@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PreferencesDataSource {
 
-    fun getLastCompendiumScrollItemPosition(): Flow<Int>
-    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
+    fun getInt(key: String, defaultValue: Int = 0): Flow<Int>
+    fun getString(key: String, defaultValue: String = ""): Flow<String>
+    fun save(key: String, value: Any): Flow<Unit>
 }
