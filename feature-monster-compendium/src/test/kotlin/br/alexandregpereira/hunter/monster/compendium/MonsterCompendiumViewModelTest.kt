@@ -30,13 +30,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifySequence
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -46,6 +41,9 @@ class MonsterCompendiumViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
+
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
@@ -53,11 +51,6 @@ class MonsterCompendiumViewModelTest {
         relaxUnitFun = true
     )
     private lateinit var viewModel: MonsterCompendiumViewModel
-
-    @Before
-    fun setup() {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-    }
 
     @Test
     fun loadMonsters() {
@@ -111,17 +104,13 @@ class MonsterCompendiumViewModelTest {
         }
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
             getLastScrollPositionUseCase,
             saveScrollPositionUseCase,
-            loadOnInit = false
+            loadOnInit = false,
+            dispatcher = testCoroutineRule.testCoroutineDispatcher
         )
         viewModel.stateLiveData.observeForever(stateLiveDataObserver)
     }
