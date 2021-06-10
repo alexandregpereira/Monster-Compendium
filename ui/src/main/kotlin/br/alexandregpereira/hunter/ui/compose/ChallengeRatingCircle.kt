@@ -64,7 +64,7 @@ fun ChallengeRatingCircle(
 }
 
 @Composable
-fun DrawChallengeRatingCircle(
+private fun DrawChallengeRatingCircle(
     color: Color,
     modifier: Modifier = Modifier,
     canvasSize: Dp = 48.dp
@@ -110,7 +110,7 @@ private fun Float.getChallengeRatingFormatted(): String {
 
 @Preview
 @Composable
-fun ChallengeRatingPreview() {
+private fun ChallengeRatingPreview() {
     HunterTheme {
         ChallengeRatingCircle(10f, 48.dp)
     }
@@ -118,7 +118,7 @@ fun ChallengeRatingPreview() {
 
 @Preview
 @Composable
-fun ChallengeRatingPreviewWithDifferentSize() {
+private fun ChallengeRatingPreviewWithDifferentSize() {
     HunterTheme {
         ChallengeRatingCircle(
             10f,
@@ -130,7 +130,7 @@ fun ChallengeRatingPreviewWithDifferentSize() {
 
 @Preview
 @Composable
-fun DrawChallengeRatingCirclePreview() {
+private fun DrawChallengeRatingCirclePreview() {
     HunterTheme {
         DrawChallengeRatingCircle(Color.Blue)
     }

@@ -16,20 +16,15 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -39,23 +34,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
-fun MonsterTitle(
+fun MonsterTitleCompose(
     title: String,
-    subTitle: String,
+    modifier: Modifier = Modifier,
+    subTitle: String? = null,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
+    titleFontSize: MonsterTitleFontSize = MonsterTitleFontSize.LARGE,
     onOptionsClicked: () -> Unit = {}
 ) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(contentPadding)
     ) {
         MonsterTitle(
             title,
             subTitle,
-            Modifier.weight(1f)
+            Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically),
+            titleFontSize
         )
 
         OptionIcon(Modifier.align(Alignment.CenterVertically), onOptionsClicked)
@@ -63,55 +65,57 @@ fun MonsterTitle(
 }
 
 @Composable
-fun MonsterTitle(
+private fun MonsterTitle(
     title: String,
-    subTitle: String,
-    modifier: Modifier = Modifier
+    subTitle: String?,
+    modifier: Modifier = Modifier,
+    titleFontSize: MonsterTitleFontSize = MonsterTitleFontSize.LARGE,
 ) = Column(modifier) {
+    val titleFontSizeValue = when (titleFontSize) {
+        MonsterTitleFontSize.LARGE -> 24.sp
+        MonsterTitleFontSize.SMALL -> 16.sp
+    }
+    val titleFontWeight = when (titleFontSize) {
+        MonsterTitleFontSize.LARGE -> FontWeight.Bold
+        MonsterTitleFontSize.SMALL -> FontWeight.SemiBold
+    }
     Text(
         text = title,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold
+        fontSize = titleFontSizeValue,
+        fontWeight = titleFontWeight
     )
-    Text(
-        text = subTitle,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.Light,
-        fontStyle = FontStyle.Italic
-    )
+    subTitle?.let {
+        Text(
+            text = it,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontStyle = FontStyle.Italic
+        )
+    }
 }
 
 @Composable
-fun OptionIcon(
+private fun OptionIcon(
     modifier: Modifier,
     onOptionsClicked: (() -> Unit)? = null
 ) {
-    Icon(
+    AppBarIcon(
         Icons.Filled.MoreVert,
         contentDescription = stringResource(R.string.monster_detail_options),
-        tint = LocalContentColor.current.copy(alpha = 0.7f),
-        modifier = modifier
-            .let {
-                if (onOptionsClicked != null) {
-                    it.clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = rememberRipple(
-                            bounded = false,
-                            radius = 32.dp
-                        ),
-                        onClick = onOptionsClicked
-                    )
-                }
-                else it
-            }
+        modifier = modifier,
+        onClicked = onOptionsClicked
     )
+}
+
+enum class MonsterTitleFontSize {
+    LARGE, SMALL
 }
 
 @Preview
 @Composable
-fun MonsterTitlePreview() {
+private fun MonsterTitlePreview() {
     HunterTheme {
-        MonsterTitle(
+        MonsterTitleCompose(
             title = "Teste dos testes",
             subTitle = "Teste dos teste testado dos testes"
         ) {}
