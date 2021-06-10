@@ -35,6 +35,7 @@ fun MonsterCoilImage(
     contentDescription: String,
     height: Dp,
     shape: Shape,
+    modifier: Modifier = Modifier,
     backgroundColor: String? = null,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
@@ -44,7 +45,7 @@ fun MonsterCoilImage(
             fadeIn = true,
         ),
         contentDescription = contentDescription,
-        modifier = Modifier
+        modifier = modifier
             .height(height)
             .fillMaxWidth()
             .run {

@@ -63,7 +63,11 @@ fun MonsterInfo(
         )
         .alpha(alpha)
 ) {
-    MonsterTitle(title = monster.name, subTitle = monster.subtitle, onOptionsClicked)
+    MonsterTitleCompose(
+        title = monster.name,
+        subTitle = monster.subtitle,
+        onOptionsClicked = onOptionsClicked
+    )
 
     BlockSection { StatsBlock(stats = monster.stats) }
     BlockSection { SpeedBlock(speed = monster.speed) }
@@ -147,7 +151,7 @@ private fun ColumnScope.BlockSection(
 
 @Preview
 @Composable
-fun MonsterInfoPreview() {
+private fun MonsterInfoPreview() {
     HunterTheme {
         MonsterInfo(
             Monster(
