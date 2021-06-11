@@ -2,9 +2,14 @@ name: Android CI
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
+      - dev
+    paths-ignore:
+      - '**.md'
   pull_request:
-    branches: [ main ]
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
@@ -37,5 +42,5 @@ jobs:
     - name:  Upload an APK
       uses: actions/upload-artifact@v2.2.3
       with:
-        name: app-debug.apk
+        name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
