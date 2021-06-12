@@ -53,23 +53,14 @@ fun MonsterInfo(
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onOptionsClicked: () -> Unit = {}
 ) = Column(
     modifier
         .fillMaxWidth()
-        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
         .background(
-            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             color = MaterialTheme.colors.surface
         )
         .alpha(alpha)
 ) {
-    MonsterTitleCompose(
-        title = monster.name,
-        subTitle = monster.subtitle,
-        onOptionsClicked = onOptionsClicked
-    )
-
     BlockSection { StatsBlock(stats = monster.stats) }
     BlockSection { SpeedBlock(speed = monster.speed) }
     BlockSection { AbilityScoreBlock(abilityScores = monster.abilityScores) }
