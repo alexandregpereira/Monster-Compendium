@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInVertically
@@ -48,6 +49,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
@@ -97,29 +99,39 @@ fun MonsterDetail(
     onMonsterChanged: (monster: Monster) -> Unit = {},
     onOptionsClicked: () -> Unit = {}
 ) {
-    BackGroundColor(monsters = monsters, pagerState = pagerState)
-
     Column(
         Modifier
             .fillMaxSize()
             .verticalScroll(
                 state = scrollState,
             )
+            .animateContentSize()
     ) {
         MonsterImageCompose(monsters, pagerState, contentPadding)
 
-        val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-        MonsterTitleCompose(
-            monsterTitleStates = monsters.map { MonsterTitleState(title = it.name, subTitle = it.subtitle) },
-            pagerState = pagerState,
-            onOptionsClicked = onOptionsClicked,
-            modifier = Modifier
-                .clip(shape)
-                .background(
-                    shape = shape,
-                    color = MaterialTheme.colors.surface
-                )
-        )
+        Box(
+            Modifier
+                .fillMaxSize()
+                .monsterImageBackground(monsters, pagerState)
+        ) {
+            val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+            MonsterTitleCompose(
+                monsterTitleStates = monsters.map {
+                    MonsterTitleState(
+                        title = it.name,
+                        subTitle = it.subtitle
+                    )
+                },
+                pagerState = pagerState,
+                onOptionsClicked = onOptionsClicked,
+                modifier = Modifier
+                    .clip(shape)
+                    .background(
+                        shape = shape,
+                        color = MaterialTheme.colors.surface
+                    )
+            )
+        }
 
         MonsterInfo(
             monsters = monsters,
@@ -152,6 +164,7 @@ private fun MonsterImageCompose(
 ) {
     Box(
         Modifier
+            .monsterImageBackground(monsters, pagerState)
             .padding(top = contentPadding.calculateTopPadding())
     ) {
         MonsterImages(
@@ -175,11 +188,10 @@ private fun MonsterImageCompose(
 }
 
 @OptIn(ExperimentalPagerApi::class)
-@Composable
-private fun BackGroundColor(
+private fun Modifier.monsterImageBackground(
     monsters: List<Monster>,
     pagerState: PagerState
-) {
+) = composed {
     val transitionData = getTransitionData(monsters, pagerState)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
@@ -194,13 +206,8 @@ private fun BackGroundColor(
         fraction = fraction
     )
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .background(backgroundColor)
-    )
+    this.background(backgroundColor)
 }
-
 
 @ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
