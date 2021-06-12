@@ -63,12 +63,6 @@ fun MonsterImages(
                 scaleX = scale
                 scaleY = scale
             }
-
-            alpha = lerp(
-                start = 0.2f,
-                stop = 1f,
-                fraction = fraction
-            )
         },
         modifier = Modifier.padding(contentPadding)
     )
