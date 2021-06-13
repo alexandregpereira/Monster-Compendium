@@ -20,28 +20,26 @@ package br.alexandregpereira.hunter.image
 import br.alexandregpereira.hunter.data.remote.model.ColorDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.IOException
 import java.io.InputStream
+import java.lang.IllegalArgumentException
 import java.util.LinkedList
 import javax.imageio.ImageIO
 import javax.imageio.ImageReader
+import kotlin.math.roundToInt
 
 @ExperimentalCoroutinesApi
 fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map { inputStream ->
     val imageData = getImageData(inputStream)
-    print("Color = ${imageData.lightBackgroundColor}; ")
+    print("Monster = ${this.name}; Color = ${imageData.lightBackgroundColor}; ")
     println("isHorizontal = ${imageData.isHorizontalImage}")
     this@downloadImage.copy(
         backgroundColor = ColorDto(
@@ -53,36 +51,27 @@ fun MonsterDto.downloadImage(): Flow<MonsterDto?> = downloadImage(imageUrl).map 
 }.catch {}
 
 @ExperimentalCoroutinesApi
-fun downloadImage(imageUrl: String): Flow<InputStream> = callbackFlow {
+fun downloadImage(imageUrl: String): Flow<InputStream> = flow {
     val client = OkHttpClient()
 
     val request: Request = Request.Builder()
         .url(imageUrl)
         .build()
 
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
-            println("request failed: $imageUrl: " + e.message)
-            channel.offer(null)
-            channel.close()
+    runCatching {
+        client.newCall(request).execute()
+    }.onSuccess { response ->
+        if (response.isSuccessful) {
+            println("request success: $imageUrl; ")
+            emit(response.body()!!.byteStream())
+        } else {
+            println("request failed: $imageUrl")
+            throw IOException()
         }
-
-        @Throws(IOException::class)
-        override fun onResponse(call: Call, response: Response) {
-            if (response.isSuccessful) {
-                println("request success: $imageUrl; ")
-                channel.offer(
-                    element = response.body()!!.byteStream()
-                )
-            } else {
-                println("request failed: $imageUrl")
-                channel.offer(element = null)
-            }
-            channel.close()
-        }
-    })
-
-    awaitClose()
+    }.onFailure { error ->
+        println("request failed: $imageUrl: " + error.message)
+        throw error
+    }
 }
 
 fun getImageData(inputStream: InputStream): ImageData {
@@ -137,31 +126,99 @@ fun BufferedImage.getMostCommonColours(): Pair<String, String> {
 
 fun getMostCommonColours(map: Map<Int, Int>): Pair<String, String> {
     val list: List<Map.Entry<Int, Int>> = LinkedList(map.entries).sortedBy { it.value }
-    val bestPixel = list[list.size / 4].key
+    val bestIndex = (list.lastIndex * 0.7).roundToInt()
+    val bestPixel = list[bestIndex].key
     val rgb = getRGBArr(bestPixel)
-    val hsb = Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null)
-    val lightColor = Color(
-        Color.HSBtoRGB(
-            hsb[0],
-            0.05f,
-            1f
-        )
-    )
-    val darkColor = Color(
-        Color.HSBtoRGB(
-            hsb[0],
-            0.1f,
-            0.18f
-        )
-    )
+    val hsl = Color(rgb[0], rgb[1], rgb[2]).toHsl()
+    val lightColor = floatArrayOf(
+        hsl[0],
+        hsl[1].coerceIn(0.8f, 1f),
+        hsl[2].coerceIn(0.7f, 1f)
+    ).fromHslToRgbColor()
+
+    val darkColor = floatArrayOf(
+        hsl[0],
+        hsl[1].coerceIn(0.8f, 1f),
+        hsl[2].coerceIn(0f, 0.3f)
+    ).fromHslToRgbColor()
+
     return lightColor.getHexColor(isDark = false) to darkColor.getHexColor(isDark = true)
+}
+
+fun Color.toHsl(): FloatArray {
+    // Get RGB values in the range 0 - 1
+    val rgb = this.getRGBColorComponents( null )
+    val r = rgb[0]
+    val g = rgb[1]
+    val b = rgb[2]
+
+    // Minimum and Maximum RGB values are used in the HSL calculations
+    val min = r.coerceAtMost(g.coerceAtMost(b))
+    val max = r.coerceAtLeast(g.coerceAtLeast(b))
+
+    // Calculate the Hue
+    val h = when (max) {
+        r -> (60 * (g - b) / (max - min) + 360) % 360
+        g -> 60 * (b - r) / (max - min) + 120
+        b -> 60 * (r - g) / (max - min) + 240
+        else -> 0f
+    }
+
+    // Calculate the Luminance
+    val l = (max + min) / 2
+
+    // Calculate the Saturation
+    val s = if (max == min) 0f else if (l <= .5f) (max - min) / (max + min) else (max - min) / (2 - max - min)
+    return floatArrayOf(h, s, l)
+}
+
+fun FloatArray.fromHslToRgbColor(): Color {
+        if (this[1] < 0f || this[1] > 1f) {
+        val message = "Color parameter outside of expected range - Saturation"
+        throw IllegalArgumentException(message)
+    }
+    if (this[2] < 0f || this[2] > 1f) {
+        val message = "Color parameter outside of expected range - Luminance"
+        throw IllegalArgumentException(message)
+    }
+
+    var _h = this[0]
+    var _s = this[1] * 100
+    var _l = this[2] * 100
+
+    //  Formula needs all values between 0 - 1.
+    _h %= 360.0f
+    _h /= 360f
+    _s /= 100f
+    _l /= 100f
+    val q = if (_l < 0.5) _l * (1 + _s) else _l + _s - _s * _l
+    val p = 2 * _l - q
+    val r = 0f.coerceAtLeast(hueToRGB(p, q, _h + 1.0f / 3.0f)).coerceAtMost(1f)
+    val g = 0f.coerceAtLeast(hueToRGB(p, q, _h)).coerceAtMost(1f)
+    val b = 0f.coerceAtLeast(hueToRGB(p, q, _h - 1.0f / 3.0f)).coerceAtMost(1f)
+    return Color(r, g, b, 1f)
+}
+
+private fun hueToRGB(p: Float, q: Float, h: Float): Float {
+    var _h = h
+    if (_h < 0) _h += 1f
+    if (_h > 1) _h -= 1f
+    if (6 * _h < 1) {
+        return p + (q - p) * 6 * _h
+    }
+    if (2 * _h < 1) {
+        return q
+    }
+    return if (3 * _h < 2) {
+        p + (q - p) * 6 * (2.0f / 3.0f - _h)
+    } else p
 }
 
 private fun Color.getHexColor(isDark: Boolean): String {
     return "#" +
             Integer.toHexString(this.red).normalizeHex(isDark) +
-            Integer.toHexString(this.green).normalizeHex() +
-            Integer.toHexString(this.blue).normalizeHex()
+            Integer.toHexString(this.green).normalizeHex(isDark) +
+            Integer.toHexString(this.blue).normalizeHex(isDark)
 }
 
 private fun String.normalizeHex(isDark: Boolean = false): String {
