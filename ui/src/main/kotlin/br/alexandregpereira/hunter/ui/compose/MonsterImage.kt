@@ -33,8 +33,8 @@ fun MonsterImage(
     contentDescription: String,
     challengeRating: Float,
     type: MonsterItemType,
-    modifier: Modifier = Modifier,
-    backgroundColor: String? = null
+    backgroundColor: String,
+    modifier: Modifier = Modifier
 ) {
     val shape = Shapes.large
     val iconSize = 24.dp

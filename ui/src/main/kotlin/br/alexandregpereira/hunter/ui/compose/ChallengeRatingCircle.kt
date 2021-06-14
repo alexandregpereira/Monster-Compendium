@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,14 +49,14 @@ fun ChallengeRatingCircle(
     modifier = modifier.size(size)
 ) {
     DrawChallengeRatingCircle(
-        color = challengeRating.getChallengeRatingColor(),
+        color = MaterialTheme.colors.surface,
         canvasSize = size
     )
     Text(
         challengeRating.getChallengeRatingFormatted(),
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = fontSize,
-        color = Color.White,
+        color = MaterialTheme.colors.onSurface,
         textAlign = TextAlign.Center,
         maxLines = 1,
         modifier = Modifier
@@ -65,7 +66,7 @@ fun ChallengeRatingCircle(
 }
 
 @Composable
-fun DrawChallengeRatingCircle(
+private fun DrawChallengeRatingCircle(
     color: Color,
     modifier: Modifier = Modifier,
     canvasSize: Dp = 48.dp
@@ -87,17 +88,6 @@ fun DrawChallengeRatingCircle(
     )
 }
 
-private fun Float.getChallengeRatingColor(): Color {
-    return when (this) {
-        in 0f..0.99f -> Color(0xFF13BB10)
-        in 1f..4f -> Color.Blue
-        in 5f..9f -> Color(0xFFA7A700)
-        in 10f..14f -> Color(0xFFEE6902)
-        in 15f..19f -> Color(0xFFC20000)
-        else -> Color.Black
-    }
-}
-
 private fun Float.getChallengeRatingFormatted(): String {
     return if (this < 1) {
         val value = 1 / this
@@ -111,7 +101,7 @@ private fun Float.getChallengeRatingFormatted(): String {
 
 @Preview
 @Composable
-fun ChallengeRatingPreview() {
+private fun ChallengeRatingPreview() {
     HunterTheme {
         ChallengeRatingCircle(10f, 48.dp)
     }
@@ -119,7 +109,7 @@ fun ChallengeRatingPreview() {
 
 @Preview
 @Composable
-fun ChallengeRatingPreviewWithDifferentSize() {
+private fun ChallengeRatingPreviewWithDifferentSize() {
     HunterTheme {
         ChallengeRatingCircle(
             10f,
@@ -131,7 +121,7 @@ fun ChallengeRatingPreviewWithDifferentSize() {
 
 @Preview
 @Composable
-fun DrawChallengeRatingCirclePreview() {
+private fun DrawChallengeRatingCirclePreview() {
     HunterTheme {
         DrawChallengeRatingCircle(Color.Blue)
     }

@@ -17,10 +17,13 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -38,9 +41,9 @@ fun MonsterImages(
     pagerState: PagerState,
     height: Dp,
     shape: Shape,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = HorizontalPager(
-    state = pagerState,
-    verticalAlignment = Alignment.Top
+    state = pagerState
 ) { pagePosition ->
     val image = images[pagePosition]
     MonsterCoilImage(
@@ -60,12 +63,7 @@ fun MonsterImages(
                 scaleX = scale
                 scaleY = scale
             }
-
-            alpha = lerp(
-                start = 0.2f,
-                stop = 1f,
-                fraction = fraction
-            )
-        }
+        },
+        modifier = Modifier.padding(contentPadding)
     )
 }
