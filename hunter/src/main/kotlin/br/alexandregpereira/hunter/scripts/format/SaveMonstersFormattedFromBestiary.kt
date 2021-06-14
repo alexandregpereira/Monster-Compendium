@@ -86,9 +86,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 group = it.getGroup(),
                 challengeRating = it.cr!!.challengeRatingFormatted(),
                 name = it.name,
-                subtitle = "",
                 imageUrl = getImageUrl(it.getIndex()),
-                isHorizontalImage = false,
                 size = MonsterSizeDto.valueOf(it.size.name),
                 alignment = it.alignmentFormatted(),
                 armorClass = it.ac,
@@ -106,7 +104,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 languages = "",
                 specialAbilities = listOf(),
                 actions = listOf()
-            )
+            ).formatSubtitle()
         }.getOrElse { error ->
             print("Monster error: ${it.name}")
             error.printStackTrace()

@@ -35,13 +35,13 @@ data class MonsterDto(
     @SerialName("name")
     val name: String,
     @SerialName("subtitle")
-    val subtitle: String,
+    val subtitle: String = "",
     @SerialName("image_url")
     val imageUrl: String,
     @SerialName("background_color")
     val backgroundColor: ColorDto = ColorDto(),
     @SerialName("is_horizontal_image")
-    val isHorizontalImage: Boolean,
+    val isHorizontalImage: Boolean = false,
     @SerialName("size")
     val size: MonsterSizeDto,
     @SerialName("alignment")

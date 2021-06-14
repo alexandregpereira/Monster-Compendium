@@ -17,6 +17,9 @@
 
 package br.alexandregpereira.hunter.scripts.format
 
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import java.util.Locale
+
 internal const val GITHUB_IMAGE_HOST =
     "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images"
 
@@ -43,4 +46,9 @@ internal fun calculateAbilityScoreModifier(value: Int): Int {
         in 28..29 -> 9
         else -> 10
     }
+}
+
+internal fun MonsterDto.formatSubtitle(): MonsterDto {
+    val subType = if (subtype.isNullOrEmpty()) "," else "($subtype),"
+    return this.copy(subtitle = "$size ${type.name.toLowerCase(Locale.ROOT)}$subType $alignment")
 }

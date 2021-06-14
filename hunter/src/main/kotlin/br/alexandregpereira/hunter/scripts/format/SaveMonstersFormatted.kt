@@ -86,7 +86,6 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             group = it.getGroup(),
             challengeRating = it.challengeRating,
             name = it.name,
-            subtitle = it.formatSubtitle(),
             imageUrl = getImageUrl(it.index),
             isHorizontalImage = false,
             size = MonsterSizeDto.valueOf(it.size.toUpperCase(Locale.ROOT)),
@@ -106,13 +105,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             languages = it.languages,
             specialAbilities = it.specialAbilities.asSpecialAbilitiesFormatted(),
             actions = it.actions.asActionsFormatted(),
-        )
+        ).formatSubtitle()
     }
-}
-
-private fun Monster.formatSubtitle(): String {
-    val subType = if (subtype.isNullOrEmpty()) "," else "($subtype),"
-    return "$size ${type.name.toLowerCase(Locale.ROOT)}$subType $alignment"
 }
 
 private fun Monster.getId(): String {
