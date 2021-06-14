@@ -19,8 +19,8 @@ package br.alexandregpereira.hunter.scripts.format
 
 import br.alexandregpereira.hunter.bestiary.Monster
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
-import br.alexandregpereira.hunter.data.remote.model.ColorDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.image.downloadImage
@@ -72,8 +72,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 subtitle = "",
                 imageUrl = getImageUrl(it.getIndex()),
                 isHorizontalImage = false,
-                size = "",
-                alignment = "",
+                size = MonsterSizeDto.valueOf(it.size.name),
+                alignment = it.alignmentFormatted(),
                 armorClass = 0,
                 hitPoints = 0,
                 hitDice = "",
@@ -124,4 +124,30 @@ private fun String.challengeRatingFormatted(): Float {
         val numbers = this.split("/")
         numbers[0].toFloat() / numbers[1].toFloat()
     }
+}
+
+private fun Monster.alignmentFormatted(): String {
+    return alignment.joinToString("-")
+        .replace("NX-C-G-NY-E", "L-NX-C-G-NY-E")
+        .replace("L-NX-C-NY-E", "L-NX-C-G-NY-E")
+        .replace("A", "U")
+        .run {
+            when (this) {
+                "A" -> "any alignment"
+                "C-E" -> "chaotic evil"
+                "C-G" -> "chaotic good"
+                "C-G-NY-E" -> "chaotic good or evil"
+                "C-N" -> "chaotic neutral"
+                "L" -> "any lawful alignment"
+                "L-E" -> "lawful evil"
+                "L-G" -> "lawful good"
+                "L-N" -> "lawful neutral"
+                "L-NX-C-E" -> "lawful or chaotic evil"
+                "L-NX-C-G-NY-E" -> "lawful or chaotic good or evil"
+                "N" -> "neutral"
+                "N-E" -> "neutral evil"
+                "N-G" -> "neutral good"
+                else -> "unaligned"
+            }
+        }
 }

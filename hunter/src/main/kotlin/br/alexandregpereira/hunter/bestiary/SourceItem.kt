@@ -52,7 +52,7 @@ data class Monster(
     @Serializable(with = TypeSerializer::class)
     val type: String,
     @Serializable(with = AlignmentSerializer::class)
-    val alignment: List<Alignment> = emptyList(),
+    val alignment: List<String> = emptyList(),
     @Serializable(with = AcSerializer::class)
     val ac: List<Ac>,
     val hp: Hp,
@@ -199,23 +199,16 @@ object AcSerializer : JsonTransformingSerializer<List<Ac>>(ListSerializer(Ac.ser
     }
 }
 
-object AlignmentSerializer : JsonTransformingSerializer<List<Alignment>>(
-    ListSerializer(Alignment.serializer())
+object AlignmentSerializer : JsonTransformingSerializer<List<String>>(
+    ListSerializer(String.serializer())
 ) {
 
     override fun transformDeserialize(element: JsonElement): JsonElement {
         if (element !is JsonArray) return JsonArray(emptyList())
 
-        if (element.first() is JsonPrimitive) {
-            return element.map {
-                buildJsonObject {
-                    putJsonArray("alignment") {
-                        add(it)
-                    }
-                }
-            }.run {
-                JsonArray(this)
-            }
+        val firstElement = element.first()
+        if (firstElement is JsonObject) {
+            return firstElement["alignment"] as? JsonArray ?: JsonArray(emptyList())
         }
 
         return element

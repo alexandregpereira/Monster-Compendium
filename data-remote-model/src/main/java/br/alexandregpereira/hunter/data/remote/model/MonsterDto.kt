@@ -43,7 +43,7 @@ data class MonsterDto(
     @SerialName("is_horizontal_image")
     val isHorizontalImage: Boolean,
     @SerialName("size")
-    val size: String,
+    val size: MonsterSizeDto,
     @SerialName("alignment")
     val alignment: String,
     @SerialName("armor_class")

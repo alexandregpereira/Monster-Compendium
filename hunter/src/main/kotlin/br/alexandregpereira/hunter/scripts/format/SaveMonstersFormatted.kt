@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.data.remote.model.DamageDto
 import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MeasurementUnitDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.remote.model.SkillDto
@@ -88,7 +89,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             subtitle = it.formatSubtitle(),
             imageUrl = getImageUrl(it.index),
             isHorizontalImage = false,
-            size = it.size,
+            size = MonsterSizeDto.valueOf(it.size.toUpperCase(Locale.ROOT)),
             alignment = it.alignment,
             armorClass = it.armorClass,
             hitPoints = it.hitPoints,

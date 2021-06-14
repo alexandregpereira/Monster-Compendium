@@ -15,23 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.remote.model
+package br.alexandregpereira.hunter.scripts
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import br.alexandregpereira.hunter.dndapi.data.model.Monster
+import kotlinx.serialization.decodeFromString
 
-@Serializable
-enum class MonsterSizeDto {
-    @SerialName("Tiny")
-    TINY,
-    @SerialName("Small")
-    SMALL,
-    @SerialName("Medium")
-    MEDIUM,
-    @SerialName("Large")
-    LARGE,
-    @SerialName("Huge")
-    HUGE,
-    @SerialName("Gargantuan")
-    GARGANTUAN
+suspend fun main() = start {
+    json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME))
+        .map { it.alignment }
+        .toSet()
+        .sorted()
+        .forEach {
+            println(it)
+        }
 }

@@ -15,23 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.remote.model
+package br.alexandregpereira.hunter.bestiary
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import br.alexandregpereira.hunter.scripts.start
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.single
 
-@Serializable
-enum class MonsterSizeDto {
-    @SerialName("Tiny")
-    TINY,
-    @SerialName("Small")
-    SMALL,
-    @SerialName("Medium")
-    MEDIUM,
-    @SerialName("Large")
-    LARGE,
-    @SerialName("Huge")
-    HUGE,
-    @SerialName("Gargantuan")
-    GARGANTUAN
+@FlowPreview
+suspend fun main() = start {
+    getMonstersFromBestiary()
+        .single()
+        .asSequence()
+        .map { it.alignment }
+        .map {
+            it.joinToString("-")
+                .replace("NX-C-G-NY-E", "L-NX-C-G-NY-E")
+                .replace("L-NX-C-NY-E", "L-NX-C-G-NY-E")
+        }
+        .toSet()
+        .sorted()
+        .toList()
+        .forEach {
+            println("\"$it\" -> \"\"")
+        }
 }
