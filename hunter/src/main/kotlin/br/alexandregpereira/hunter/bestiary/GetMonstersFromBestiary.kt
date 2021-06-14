@@ -49,6 +49,23 @@ suspend fun main() = start {
 
 @FlowPreview
 suspend fun getMonstersFromBestiary(): Flow<List<Monster>> {
+    return getSourceFromBestiary()
+        .map { sources ->
+            sources.map { source ->
+                source.monster.map { monster ->
+                    monster.copy(sourceName = source.name)
+                }
+            }.reduce { acc, list -> acc + list }
+        }.reduce { acc, list -> acc + list }.run {
+            flowOf(this)
+        }
+        .map { monsters ->
+            monsters.filter { it.srd.not() }
+        }
+}
+
+@FlowPreview
+suspend fun getSourceFromBestiary(): Flow<List<SourceItem>> {
     return listOf(
         BESTIARY_PART1_JSON_FILE_NAME,
         BESTIARY_PART2_JSON_FILE_NAME,
@@ -59,13 +76,8 @@ suspend fun getMonstersFromBestiary(): Flow<List<Monster>> {
             flow { emit(getBestiarySources(fileName = it)) }
         }
         .reduce { accumulator, value -> accumulator + value }
-        .map {
-            it.monster
-        }.reduce { acc, list -> acc + list }.run {
+        .run {
             flowOf(this)
-        }
-        .map { monsters ->
-            monsters.filter { it.srd.not() }
         }
 }
 

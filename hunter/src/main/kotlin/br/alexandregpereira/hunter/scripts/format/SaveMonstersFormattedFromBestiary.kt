@@ -22,9 +22,10 @@ import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
+import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.image.downloadImage
-import br.alexandregpereira.hunter.scripts.JSON_FORMATTED_FILE_NAME
+import br.alexandregpereira.hunter.scripts.MONSTER_JSON_FILE_NAME
 import br.alexandregpereira.hunter.scripts.saveJsonFile
 import br.alexandregpereira.hunter.scripts.start
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,7 +40,7 @@ import java.util.Locale
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {
-    val monsters = getMonstersFromBestiary()
+    getMonstersFromBestiary()
         .map {
             it.asMonstersFormatted()
         }
@@ -52,11 +53,17 @@ suspend fun main() = start {
         .toList()
         .filterNotNull()
         .sortedBy { it.name }
+        .groupBy { it.source.acronym }
+        .let {
+            it.forEach { entry ->
+                val monsters = entry.value
+                println("\n${monsters.size} monsters formatted")
+                monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
 
-    println("\n${monsters.size} monsters formatted")
-    monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
-
-    saveJsonFile(monsters, JSON_FORMATTED_FILE_NAME, printJson = false)
+                val fileName = "json/$MONSTER_JSON_FILE_NAME-${entry.key.toLowerCase(Locale.ROOT)}.json"
+                saveJsonFile(monsters, fileName, printJson = false)
+            }
+        }
 }
 
 private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
@@ -64,6 +71,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
         runCatching {
             MonsterDto(
                 index = it.getIndex(),
+                source = it.sourceFormatted(),
                 type = it.type.typeFormatted(),
                 subtype = null,
                 group = it.getGroup(),
@@ -150,4 +158,11 @@ private fun Monster.alignmentFormatted(): String {
                 else -> "unaligned"
             }
         }
+}
+
+private fun Monster.sourceFormatted(): SourceDto {
+    return SourceDto(
+        name = sourceName,
+        acronym = source
+    )
 }

@@ -46,6 +46,7 @@ data class Monster(
     val srd: Boolean = false,
     @Serializable(with = CrSerializer::class)
     val cr: String? = null,
+    val sourceName: String = "",
     val source: String,
     val page: Int? = null,
     val size: MonsterSize,

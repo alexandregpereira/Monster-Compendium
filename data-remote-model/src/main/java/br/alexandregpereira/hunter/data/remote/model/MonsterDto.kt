@@ -75,5 +75,10 @@ data class MonsterDto(
     @SerialName("special_abilities")
     val specialAbilities: List<SpecialAbilityDto>,
     @SerialName("actions")
-    val actions: List<ActionDto>
+    val actions: List<ActionDto>,
+    @SerialName("source")
+    val source: SourceDto = SourceDto(
+        name = "SRD",
+        acronym = "srd"
+    )
 )
