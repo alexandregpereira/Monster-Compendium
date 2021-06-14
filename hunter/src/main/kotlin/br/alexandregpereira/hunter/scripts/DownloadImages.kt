@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.scripts
 
+import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.image.downloadImage
 import br.alexandregpereira.hunter.image.getBufferedImage
@@ -36,11 +37,13 @@ import javax.imageio.ImageIO
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {
-    val monsterIndexList = json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME)).map {
+    val monsterIndexList = json.decodeFromString<List<MonsterDto>>(
+        readJsonFile(JSON_FORMATTED_FILE_NAME)
+    ).map {
         it.index
     }
     json.decodeFromString<List<WebImageData>>(readJsonFile(JSON_IMAGES_FILE_NAME))
-        .filter { monsterIndexList.contains(it.name) }
+        .filter { monsterIndexList.contains(it.name).not() }
         .asSequence()
         .asFlow()
         .flatMapMerge { data ->
