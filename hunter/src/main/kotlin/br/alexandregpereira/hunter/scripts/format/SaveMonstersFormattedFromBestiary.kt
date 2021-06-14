@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.scripts.format
 
 import br.alexandregpereira.hunter.bestiary.Monster
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
+import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
+import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
@@ -90,7 +92,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 hitPoints = it.hp.average!!,
                 hitDice = it.hp.formula!!.replace(" ", ""),
                 speed = it.speedFormatted(),
-                abilityScores = listOf(),
+                abilityScores = it.abilityScoresFormatted(),
                 savingThrows = listOf(),
                 skills = listOf(),
                 damageVulnerabilities = listOf(),
@@ -184,4 +186,38 @@ private fun Monster.speedFormatted(): SpeedDto {
         hover = speed.canHover,
         values = listOfNotNull(burrow, climb, fly, walk, swim)
     )
+}
+
+private fun Monster.abilityScoresFormatted(): List<AbilityScoreDto> {
+    val strength = AbilityScoreDto(
+        type = AbilityScoreTypeDto.STRENGTH,
+        value = str,
+        modifier = calculateAbilityScoreModifier(str)
+    )
+    val dexterity = AbilityScoreDto(
+        type = AbilityScoreTypeDto.DEXTERITY,
+        value = dex,
+        modifier = calculateAbilityScoreModifier(dex)
+    )
+    val constitution = AbilityScoreDto(
+        type = AbilityScoreTypeDto.CONSTITUTION,
+        value = con,
+        modifier = calculateAbilityScoreModifier(con)
+    )
+    val intelligence = AbilityScoreDto(
+        type = AbilityScoreTypeDto.INTELLIGENCE,
+        value = int,
+        modifier = calculateAbilityScoreModifier(int)
+    )
+    val wisdom = AbilityScoreDto(
+        type = AbilityScoreTypeDto.WISDOM,
+        value = wis,
+        modifier = calculateAbilityScoreModifier(wis)
+    )
+    val charisma = AbilityScoreDto(
+        type = AbilityScoreTypeDto.CHARISMA,
+        value = cha,
+        modifier = calculateAbilityScoreModifier(cha)
+    )
+    return listOf(strength, dexterity, constitution, intelligence, wisdom, charisma)
 }
