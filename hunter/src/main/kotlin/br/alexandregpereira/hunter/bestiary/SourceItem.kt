@@ -128,7 +128,14 @@ data class Speed(
     @Serializable(with = WalkSerializer::class)
     val walk: Int? = null,
     @Serializable(with = WalkSerializer::class)
-    val climb: Int? = null
+    val climb: Int? = null,
+    @Serializable(with = WalkSerializer::class)
+    val fly: Int? = null,
+    @Serializable(with = WalkSerializer::class)
+    val burrow: Int? = null,
+    @Serializable(with = WalkSerializer::class)
+    val swim: Int? = null,
+    val canHover: Boolean = false
 )
 
 @Serializable

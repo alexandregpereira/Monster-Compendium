@@ -24,14 +24,13 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
-import br.alexandregpereira.hunter.image.downloadImage
+import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
 import br.alexandregpereira.hunter.scripts.MONSTER_JSON_FILE_NAME
 import br.alexandregpereira.hunter.scripts.saveJsonFile
 import br.alexandregpereira.hunter.scripts.start
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.toList
@@ -41,15 +40,16 @@ import java.util.Locale
 @ExperimentalCoroutinesApi
 suspend fun main() = start {
     getMonstersFromBestiary()
-        .map {
-            it.asMonstersFormatted()
+        .map { monsters ->
+            monsters.filter { it.cr != null && it.hp.average != null }
+                .asMonstersFormatted()
         }
         .single()
         .asSequence()
         .asFlow()
-        .flatMapMerge {
-            it.downloadImage()
-        }
+//        .flatMapMerge {
+//            it.downloadImage()
+//        }
         .toList()
         .filterNotNull()
         .sortedBy { it.name }
@@ -58,10 +58,14 @@ suspend fun main() = start {
             it.forEach { entry ->
                 val monsters = entry.value
                 println("\n${monsters.size} monsters formatted")
-                monsters.forEach { println("id: ${it.index}, name: ${it.name}") }
+                monsters.forEach { monster ->
+                    println("id: ${monster.index}, name: ${monster.name}")
+                }
 
-                val fileName = "json/$MONSTER_JSON_FILE_NAME-${entry.key.toLowerCase(Locale.ROOT)}.json"
+                val fileName =
+                    "json/$MONSTER_JSON_FILE_NAME-${entry.key.toLowerCase(Locale.ROOT)}.json"
                 saveJsonFile(monsters, fileName, printJson = false)
+                return@start
             }
         }
 }
@@ -83,12 +87,9 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 size = MonsterSizeDto.valueOf(it.size.name),
                 alignment = it.alignmentFormatted(),
                 armorClass = it.ac,
-                hitPoints = 0,
-                hitDice = "",
-                speed = SpeedDto(
-                    hover = false,
-                    values = listOf(),
-                ),
+                hitPoints = it.hp.average!!,
+                hitDice = it.hp.formula!!.replace(" ", ""),
+                speed = it.speedFormatted(),
                 abilityScores = listOf(),
                 savingThrows = listOf(),
                 skills = listOf(),
@@ -101,7 +102,12 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 specialAbilities = listOf(),
                 actions = listOf()
             )
-        }.getOrNull()
+        }.getOrElse { error ->
+            print("Monster error: ${it.name}")
+            error.printStackTrace()
+            println()
+            null
+        }
     }
 }
 
@@ -164,5 +170,18 @@ private fun Monster.sourceFormatted(): SourceDto {
     return SourceDto(
         name = sourceName,
         acronym = source
+    )
+}
+
+private fun Monster.speedFormatted(): SpeedDto {
+    val burrow = createSpeedValue(SpeedTypeDto.BURROW, speed.burrow.toString())
+    val climb = createSpeedValue(SpeedTypeDto.CLIMB, speed.climb.toString())
+    val fly = createSpeedValue(SpeedTypeDto.FLY, speed.fly.toString())
+    val walk = createSpeedValue(SpeedTypeDto.WALK, speed.walk.toString())
+    val swim = createSpeedValue(SpeedTypeDto.SWIM, speed.swim.toString())
+
+    return SpeedDto(
+        hover = speed.canHover,
+        values = listOfNotNull(burrow, climb, fly, walk, swim)
     )
 }
