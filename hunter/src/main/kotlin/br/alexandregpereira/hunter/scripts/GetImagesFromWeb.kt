@@ -41,7 +41,7 @@ private const val FIRST_URL =
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() {
-    (90..TOTAL_PAGES).asSequence().asFlow()
+    (91..TOTAL_PAGES).asSequence().asFlow()
         .flatMapConcat { page ->
             getImages(page)
         }.map { pairs ->

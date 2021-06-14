@@ -43,7 +43,9 @@ suspend fun main() = start {
         it.index
     }
     json.decodeFromString<List<WebImageData>>(readJsonFile(JSON_IMAGES_FILE_NAME))
-        .filter { monsterIndexList.contains(it.name).not() }
+        .filter {
+            monsterIndexList.contains(it.name).not() && it.name.contains("variant").not()
+        }
         .asSequence()
         .asFlow()
         .flatMapMerge { data ->
