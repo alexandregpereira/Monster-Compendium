@@ -21,6 +21,8 @@ import br.alexandregpereira.hunter.bestiary.Monster
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.remote.model.ConditionDto
+import br.alexandregpereira.hunter.data.remote.model.ConditionTypeDto
 import br.alexandregpereira.hunter.data.remote.model.DamageDto
 import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
@@ -103,7 +105,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 damageVulnerabilities = it.vulnerable.damagesFormatted(),
                 damageResistances = it.resist.damagesFormatted(),
                 damageImmunities = it.immune.damagesFormatted(),
-                conditionImmunities = listOf(),
+                conditionImmunities = it.conditionsImmuneFormatted(),
                 senses = listOf(),
                 languages = "",
                 specialAbilities = listOf(),
@@ -278,6 +280,16 @@ private fun List<String>.damagesFormatted(): List<DamageDto> {
         DamageDto(
             index = it.replace("*", ""),
             type = damageType,
+            name = it.capitalize(Locale.ROOT)
+        )
+    }
+}
+
+private fun Monster.conditionsImmuneFormatted(): List<ConditionDto> {
+    return conditionImmune.map {
+        ConditionDto(
+            index = it,
+            type = ConditionTypeDto.valueOf(it.toUpperCase(Locale.ROOT)),
             name = it.capitalize(Locale.ROOT)
         )
     }
