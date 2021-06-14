@@ -27,13 +27,13 @@ import okhttp3.MediaType
 import retrofit2.Retrofit
 import java.io.File
 
-const val MONSTER_JSON_FILE_NAME = "monsters"
+const val MONSTER_JSON_FILE_NAME = "monsters.json"
 
 const val JSON_FILE_NAME = "json/dndapi-monsters.json"
 const val CONDITION_JSON_FILE_NAME = "json/dndapi-conditions.json"
 const val SKILL_JSON_FILE_NAME = "json/dndapi-skills.json"
 const val DAMAGE_TYPE_JSON_FILE_NAME = "json/dndapi-damage-types.json"
-const val JSON_FORMATTED_FILE_NAME = "json/$MONSTER_JSON_FILE_NAME.json"
+const val JSON_FORMATTED_FILE_NAME = "json/$MONSTER_JSON_FILE_NAME"
 const val JSON_IMAGES_FILE_NAME = "json/monster-images.json"
 const val BESTIARY_PART1_JSON_FILE_NAME = "json/5e-bestiary-div1.json"
 const val BESTIARY_PART2_JSON_FILE_NAME = "json/5e-bestiary-div2.json"

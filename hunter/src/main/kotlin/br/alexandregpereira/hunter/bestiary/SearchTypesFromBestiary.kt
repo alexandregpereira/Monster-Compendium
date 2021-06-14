@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.single
 suspend fun main() = start {
     getMonstersFromBestiary()
         .single()
-        .map { it.type }
+        .map { it.type.type }
         .toSet()
         .sorted()
         .forEach {

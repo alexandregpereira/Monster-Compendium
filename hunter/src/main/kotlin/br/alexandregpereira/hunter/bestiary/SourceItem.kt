@@ -51,7 +51,7 @@ data class Monster(
     val page: Int? = null,
     val size: MonsterSize,
     @Serializable(with = TypeSerializer::class)
-    val type: String,
+    val type: Type,
     @Serializable(with = AlignmentSerializer::class)
     val alignment: List<String> = emptyList(),
     @Serializable(with = AcSerializer::class)
@@ -80,47 +80,59 @@ data class Monster(
     val hasToken: Boolean = false,
     val senseTags: List<String> = emptyList(),
     val damageTags: List<String> = emptyList(),
-    val miscTags: List<String> = emptyList()
+    val miscTags: List<String> = emptyList(),
+)
+
+@Serializable
+data class Type(
+    val type: String,
+    @Serializable(with = TypeTagsSerializer::class)
+    val tags: List<String> = emptyList(),
 )
 
 @Serializable
 enum class MonsterSize {
     @SerialName("T")
     TINY,
+
     @SerialName("S")
     SMALL,
+
     @SerialName("M")
     MEDIUM,
+
     @SerialName("L")
     LARGE,
+
     @SerialName("H")
     HUGE,
+
     @SerialName("G")
     GARGANTUAN
 }
 
 @Serializable
 data class Alignment(
-    val alignments: List<String> = emptyList()
+    val alignments: List<String> = emptyList(),
 )
 
 data class MonsterFluff(
     val name: String,
     val source: String,
     val entries: List<Any>,
-    val images: List<Image>
+    val images: List<Image>,
 )
 
 @Serializable
 data class Ac(
     val ac: Int? = null,
-    val from: List<String> = emptyList()
+    val from: List<String> = emptyList(),
 )
 
 @Serializable
 data class Hp(
     val average: Int? = null,
-    val formula: String? = null
+    val formula: String? = null,
 )
 
 @Serializable
@@ -135,7 +147,7 @@ data class Speed(
     val burrow: Int? = null,
     @Serializable(with = WalkSerializer::class)
     val swim: Int? = null,
-    val canHover: Boolean = false
+    val canHover: Boolean = false,
 )
 
 @Serializable
@@ -156,33 +168,42 @@ sealed class ActionEntry {
     @SerialName("list")
     data class ActionDetail(
         val style: String,
-        val items: List<Item>
+        val items: List<Item>,
     ) : ActionEntry()
 }
 
 @Serializable
 data class Image(
     val type: String,
-    val href: Href
+    val href: Href,
 )
 
 @Serializable
 data class Href(
     val type: String,
-    val path: String
+    val path: String,
 )
 
 @Serializable
 data class Item(
     val type: String,
     val name: String,
-    val entry: String
+    val entry: String,
 )
 
-object TypeSerializer : JsonTransformingSerializer<String>(String.serializer()) {
+object TypeSerializer : JsonTransformingSerializer<Type>(Type.serializer()) {
     // If response is not an array, then it is a single object that should be wrapped into the array
-    override fun transformDeserialize(element: JsonElement): JsonElement =
-        if (element is JsonPrimitive) element else JsonPrimitive("npc")
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return when (element) {
+            is JsonPrimitive -> {
+                buildJsonObject {
+                    put("type", element)
+                }
+            }
+            is JsonObject -> element
+            else -> throw IllegalAccessException("WTF")
+        }
+    }
 }
 
 object AcSerializer : JsonTransformingSerializer<Int>(Int.serializer()) {
@@ -213,6 +234,25 @@ object AlignmentSerializer : JsonTransformingSerializer<List<String>>(
         }
 
         return element
+    }
+}
+
+object TypeTagsSerializer : JsonTransformingSerializer<List<String>>(
+    ListSerializer(String.serializer())
+) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonArray) return JsonArray(emptyList())
+
+        return element.map {
+            when (it) {
+                is JsonObject -> it["tag"]!!
+                is JsonPrimitive -> it
+                else -> throw IllegalAccessException("WTF")
+            }
+        }.run {
+            JsonArray(this)
+        }
     }
 }
 

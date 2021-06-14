@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.toList
+import java.io.File
 import java.util.Locale
 
 @FlowPreview
@@ -64,8 +65,10 @@ suspend fun main() = start {
                     println("id: ${monster.index}, name: ${monster.name}")
                 }
 
-                val fileName =
-                    "json/$MONSTER_JSON_FILE_NAME-${entry.key.toLowerCase(Locale.ROOT)}.json"
+                val source = "json/${entry.key.toLowerCase(Locale.ROOT)}"
+                val fileName = "$source/$MONSTER_JSON_FILE_NAME"
+
+                File(source).mkdir()
                 saveJsonFile(monsters, fileName, printJson = false)
                 return@start
             }
@@ -78,8 +81,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             MonsterDto(
                 index = it.getIndex(),
                 source = it.sourceFormatted(),
-                type = it.type.typeFormatted(),
-                subtype = null,
+                type = it.typeFormatted(),
+                subtype = it.subtypeFormatted(),
                 group = it.getGroup(),
                 challengeRating = it.cr!!.challengeRatingFormatted(),
                 name = it.name,
@@ -117,10 +120,14 @@ private fun Monster.getIndex(): String {
     return name.replace(" ", "-").toLowerCase(Locale.ROOT)
 }
 
-private fun String.typeFormatted(): MonsterTypeDto {
+private fun Monster.typeFormatted(): MonsterTypeDto {
     return runCatching {
-        MonsterTypeDto.valueOf(this.toLowerCase(Locale.ROOT))
+        MonsterTypeDto.valueOf(type.type.toLowerCase(Locale.ROOT))
     }.getOrDefault(MonsterTypeDto.HUMANOID)
+}
+
+private fun Monster.subtypeFormatted(): String? {
+    return type.tags.joinToString(" ").takeIf { it.isNotBlank() }
 }
 
 private fun Monster.getGroup(): String? {
