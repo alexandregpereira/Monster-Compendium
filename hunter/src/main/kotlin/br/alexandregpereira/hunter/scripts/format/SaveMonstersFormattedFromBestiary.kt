@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
+import br.alexandregpereira.hunter.data.remote.model.SkillDto
 import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
@@ -96,7 +97,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 speed = it.speedFormatted(),
                 abilityScores = it.abilityScoresFormatted(),
                 savingThrows = it.savingThrowFormatted(),
-                skills = listOf(),
+                skills = it.skillsFormatted(),
                 damageVulnerabilities = listOf(),
                 damageResistances = listOf(),
                 damageImmunities = listOf(),
@@ -255,4 +256,14 @@ private fun String.createSavingThrow(type: String): SavingThrowDto {
         type = typeEnum,
         modifier = this.replace("+", "").toInt()
     )
+}
+
+private fun Monster.skillsFormatted(): List<SkillDto> {
+    return skill.map {
+        SkillDto(
+            index = "skill-${it.key.replace(" ", "-")}",
+            modifier = it.value.replace("+", "").toInt(),
+            name = it.key.capitalize(Locale.ROOT)
+        )
+    }
 }

@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.bestiary
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -28,7 +29,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.JsonTransformingSerializer
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import kotlinx.serialization.json.putJsonArray
 
 @Serializable
 data class SourceItem(
@@ -81,7 +81,9 @@ data class Monster(
     val senseTags: List<String> = emptyList(),
     val damageTags: List<String> = emptyList(),
     val miscTags: List<String> = emptyList(),
-    val save: Save? = null
+    val save: Save? = null,
+    @Serializable(with = SkillSerializer::class)
+    val skill: Map<String, String> = emptyMap(),
 )
 
 @Serializable
@@ -363,5 +365,18 @@ object CrSerializer : JsonTransformingSerializer<String>(String.serializer()) {
             }
             else -> element
         }
+    }
+}
+
+object SkillSerializer : JsonTransformingSerializer<Map<String, String>>(MapSerializer(
+    String.serializer(), String.serializer()
+)) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonObject) throw IllegalAccessException("WTF")
+
+        return JsonObject(element.filter {
+            it.key != "other"
+        })
     }
 }
