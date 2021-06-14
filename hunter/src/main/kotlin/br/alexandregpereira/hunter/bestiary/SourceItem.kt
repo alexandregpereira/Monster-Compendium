@@ -43,9 +43,12 @@ data class SourceItem(
 data class Monster(
     val name: String,
     val isNpc: Boolean = false,
+    val srd: Boolean = false,
+    @Serializable(with = CrSerializer::class)
+    val cr: String? = null,
     val source: String,
     val page: Int? = null,
-    val size: String,
+    val size: MonsterSize,
     @Serializable(with = TypeSerializer::class)
     val type: String,
     @Serializable(with = AlignmentSerializer::class)
@@ -78,6 +81,22 @@ data class Monster(
     val damageTags: List<String> = emptyList(),
     val miscTags: List<String> = emptyList()
 )
+
+@Serializable
+enum class MonsterSize {
+    @SerialName("T")
+    TINY,
+    @SerialName("S")
+    SMALL,
+    @SerialName("M")
+    MEDIUM,
+    @SerialName("L")
+    LARGE,
+    @SerialName("H")
+    HUGE,
+    @SerialName("G")
+    GARGANTUAN
+}
 
 @Serializable
 data class Alignment(
@@ -286,8 +305,18 @@ object SpeedSerializer : JsonTransformingSerializer<Speed>(Speed.serializer()) {
 object PassiveSerializer : JsonTransformingSerializer<String>(String.serializer()) {
 
     override fun transformDeserialize(element: JsonElement): JsonElement {
-        return element.run { this as JsonPrimitive }.let {
-            JsonPrimitive(it.content)
+        return JsonPrimitive(element.run { this as JsonPrimitive }.content)
+    }
+}
+
+object CrSerializer : JsonTransformingSerializer<String>(String.serializer()) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return when (element) {
+            is JsonObject -> {
+                element["cr"]!!
+            }
+            else -> element
         }
     }
 }

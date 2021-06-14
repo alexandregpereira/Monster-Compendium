@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.scripts
+package br.alexandregpereira.hunter.scripts.format
 
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
@@ -42,6 +42,12 @@ import br.alexandregpereira.hunter.dndapi.data.model.Proficiency
 import br.alexandregpereira.hunter.dndapi.data.model.Senses
 import br.alexandregpereira.hunter.dndapi.data.model.SpecialAbility
 import br.alexandregpereira.hunter.image.downloadImage
+import br.alexandregpereira.hunter.scripts.JSON_FILE_NAME
+import br.alexandregpereira.hunter.scripts.JSON_FORMATTED_FILE_NAME
+import br.alexandregpereira.hunter.scripts.json
+import br.alexandregpereira.hunter.scripts.readJsonFile
+import br.alexandregpereira.hunter.scripts.saveJsonFile
+import br.alexandregpereira.hunter.scripts.start
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
@@ -49,9 +55,6 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.decodeFromString
 import java.util.Locale
-
-private const val GITHUB_IMAGE_HOST =
-    "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images"
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -83,7 +86,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             challengeRating = it.challengeRating,
             name = it.name,
             subtitle = it.formatSubtitle(),
-            imageUrl = it.getImageUrl(),
+            imageUrl = getImageUrl(it.index),
             isHorizontalImage = false,
             size = it.size,
             alignment = it.alignment,
@@ -109,10 +112,6 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
 private fun Monster.formatSubtitle(): String {
     val subType = if (subtype.isNullOrEmpty()) "," else "($subtype),"
     return "$size ${type.name.toLowerCase(Locale.ROOT)}$subType $alignment"
-}
-
-private fun Monster.getImageUrl(): String {
-    return "$GITHUB_IMAGE_HOST/$index.png"
 }
 
 private fun Monster.getId(): String {
@@ -306,119 +305,18 @@ private fun calculateAbilityScoreModifier(value: Int): Int {
 
 private fun Monster.getGroup(): String? {
     return when {
-        isGroupByIndex() -> {
-            getGroupByIndex()
+        isGroupByIndex(index) -> {
+            getGroupByIndex(index)
         }
         isSubtypeGroup() -> {
             subtype?.capitalize(Locale.ROOT)?.let { it + "s" }
         }
         else -> {
-            getGroupByGroupMap()
+            getGroupByGroupMap(index)
         }
     }
-}
-
-private fun Monster.isGroupByIndex(): Boolean {
-    return groupsByIndex.any { this.index.endsWith(it) }
-}
-
-private fun Monster.getGroupByIndex(): String? {
-    return groupsByIndex.find { this.index.endsWith(it) }
-        ?.removeSuffix("-wyrmling")
-        ?.capitalize(Locale.ROOT)?.let { it + "s" }
-}
-
-private fun Monster.getGroupByGroupMap(): String? {
-    return groups.toList().find { it.second.any { i -> index == i } }?.first
 }
 
 private fun Monster.isSubtypeGroup(): Boolean {
     return subtype != null && subtypeGroupAllowList.contains(subtype)
 }
-
-private fun getDragonsByColor(color: String): List<String>{
-    return dragons.map { it.replace("{color}", color) }
-}
-
-private val subtypeGroupAllowList = listOf(
-    "devil",
-    "demon",
-)
-
-private val groupsByIndex = listOf(
-    "hag",
-    "elemental",
-    "giant",
-    "golem",
-    "mephit",
-    "naga",
-    "zombie",
-)
-
-private val angels = listOf(
-    "deva",
-    "planetar",
-    "solar"
-)
-
-private val animatedObjects = listOf(
-    "animated-armor",
-    "flying-sword",
-    "rug-of-smothering"
-)
-
-private val dragons = listOf(
-    "ancient-{color}-dragon",
-    "adult-{color}-dragon",
-    "young-{color}-dragon",
-    "{color}-dragon-wyrmling",
-)
-
-private val genies = listOf(
-    "djinni",
-    "efreeti",
-)
-
-private val lycanthropes = listOf(
-    "werebear",
-    "wereboar",
-    "wererat",
-    "weretiger",
-    "werewolf",
-)
-
-private val oozes = listOf(
-    "black-pudding",
-    "gelatinous-cube",
-    "ochre-jelly",
-)
-
-private val sphinxes = listOf(
-    "androsphinx",
-    "gynosphinx",
-)
-
-private val vampires = listOf(
-    "vampire",
-    "vampire-spawn",
-)
-
-private val groups = hashMapOf(
-    "Angels" to angels,
-    "Animated Objects" to animatedObjects,
-    "Dragons, Black" to getDragonsByColor("black"),
-    "Dragons, Blue" to getDragonsByColor("blue"),
-    "Dragons, Green" to getDragonsByColor("green"),
-    "Dragons, Red" to getDragonsByColor("red"),
-    "Dragons, White" to getDragonsByColor("white"),
-    "Dragons, Brass" to getDragonsByColor("brass"),
-    "Dragons, Bronze" to getDragonsByColor("bronze"),
-    "Dragons, Cooper" to getDragonsByColor("copper"),
-    "Dragons, Gold" to getDragonsByColor("gold"),
-    "Dragons, Silver" to getDragonsByColor("silver"),
-    "Genies" to genies,
-    "Lycanthropes" to lycanthropes,
-    "Oozes" to oozes,
-    "Sphinxes" to sphinxes,
-    "Vampires" to vampires,
-)

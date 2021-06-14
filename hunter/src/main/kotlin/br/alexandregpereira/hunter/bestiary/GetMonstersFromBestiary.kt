@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
 import kotlinx.serialization.decodeFromString
 
@@ -62,6 +63,9 @@ suspend fun getMonstersFromBestiary(): Flow<List<Monster>> {
             it.monster
         }.reduce { acc, list -> acc + list }.run {
             flowOf(this)
+        }
+        .map { monsters ->
+            monsters.filter { it.srd.not() }
         }
 }
 
