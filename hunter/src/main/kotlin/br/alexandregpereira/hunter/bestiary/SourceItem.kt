@@ -55,7 +55,7 @@ data class Monster(
     @Serializable(with = AlignmentSerializer::class)
     val alignment: List<String> = emptyList(),
     @Serializable(with = AcSerializer::class)
-    val ac: List<Ac>,
+    val ac: Int,
     val hp: Hp,
     @Serializable(with = SpeedSerializer::class)
     val speed: Speed,
@@ -178,24 +178,17 @@ object TypeSerializer : JsonTransformingSerializer<String>(String.serializer()) 
         if (element is JsonPrimitive) element else JsonPrimitive("npc")
 }
 
-object AcSerializer : JsonTransformingSerializer<List<Ac>>(ListSerializer(Ac.serializer())) {
+object AcSerializer : JsonTransformingSerializer<Int>(Int.serializer()) {
 
     override fun transformDeserialize(element: JsonElement): JsonElement {
         if (element !is JsonArray) return JsonArray(emptyList())
 
-        return element.map { elementArrayItem ->
-            when (elementArrayItem) {
-                is JsonObject -> elementArrayItem
-                is JsonPrimitive -> buildJsonObject {
-                    put(
-                        "ac",
-                        JsonPrimitive(elementArrayItem.content.toInt())
-                    )
-                }
-                else -> throw IllegalAccessException("WTF")
+        return when (val firstElement = element.first()) {
+            is JsonObject -> {
+                firstElement["ac"] ?: JsonPrimitive(0)
             }
-        }.run {
-            JsonArray(this)
+            is JsonPrimitive -> firstElement
+            else -> throw IllegalAccessException("WTF")
         }
     }
 }

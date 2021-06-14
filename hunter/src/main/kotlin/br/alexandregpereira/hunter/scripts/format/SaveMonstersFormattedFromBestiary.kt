@@ -82,7 +82,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 isHorizontalImage = false,
                 size = MonsterSizeDto.valueOf(it.size.name),
                 alignment = it.alignmentFormatted(),
-                armorClass = 0,
+                armorClass = it.ac,
                 hitPoints = 0,
                 hitDice = "",
                 speed = SpeedDto(
