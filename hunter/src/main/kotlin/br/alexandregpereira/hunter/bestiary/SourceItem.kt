@@ -308,10 +308,25 @@ abstract class ResistanceSerializer(private val key: String) :
             when (elementArrayItem) {
                 is JsonObject -> {
                     if (elementArrayItem.contains(key)) {
-                        acc.addAll(elementArrayItem[key] as JsonArray)
-                        elementArrayItem["note"]?.let { acc.add(it) }
+                        if (elementArrayItem.containsKey("note")) {
+                            acc.addAll(
+                                elementArrayItem[key].run { this as JsonArray }.map { elementItem ->
+                                    elementItem.asPrimitive().run {
+                                        JsonPrimitive("$content*")
+                                    }
+                                }
+                            )
+                            val preNote = elementArrayItem["preNote"]?.getContent() ?: ""
+                            elementArrayItem["note"]?.getContent()?.let { note ->
+                                acc.add(JsonPrimitive("*$preNote$note"))
+                            }
+                        } else {
+                            acc.addAll(elementArrayItem[key].run { this as JsonArray })
+                        }
                     } else if (elementArrayItem.contains("special")) {
-                        acc.add(elementArrayItem["special"] as JsonPrimitive)
+                        acc.add(elementArrayItem["special"]!!.getContent().let {
+                            "*$it"
+                        }.asPrimitive())
                     }
                 }
                 is JsonPrimitive -> acc.add(elementArrayItem)
@@ -380,3 +395,7 @@ object SkillSerializer : JsonTransformingSerializer<Map<String, String>>(MapSeri
         })
     }
 }
+
+private fun String.asPrimitive(): JsonPrimitive = JsonPrimitive(this)
+private fun JsonElement.asPrimitive(): JsonPrimitive = this as JsonPrimitive
+private fun JsonElement.getContent(): String = this.asPrimitive().content

@@ -21,6 +21,8 @@ import br.alexandregpereira.hunter.bestiary.Monster
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.remote.model.DamageDto
+import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
@@ -98,9 +100,9 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 abilityScores = it.abilityScoresFormatted(),
                 savingThrows = it.savingThrowFormatted(),
                 skills = it.skillsFormatted(),
-                damageVulnerabilities = listOf(),
-                damageResistances = listOf(),
-                damageImmunities = listOf(),
+                damageVulnerabilities = it.vulnerable.damagesFormatted(),
+                damageResistances = it.resist.damagesFormatted(),
+                damageImmunities = it.immune.damagesFormatted(),
                 conditionImmunities = listOf(),
                 senses = listOf(),
                 languages = "",
@@ -264,6 +266,19 @@ private fun Monster.skillsFormatted(): List<SkillDto> {
             index = "skill-${it.key.replace(" ", "-")}",
             modifier = it.value.replace("+", "").toInt(),
             name = it.key.capitalize(Locale.ROOT)
+        )
+    }
+}
+
+private fun List<String>.damagesFormatted(): List<DamageDto> {
+    return this.map {
+        val damageType = runCatching {
+            DamageTypeDto.valueOf(it.replace("*", "").toUpperCase(Locale.ROOT))
+        }.getOrDefault(DamageTypeDto.OTHER)
+        DamageDto(
+            index = it.replace("*", ""),
+            type = damageType,
+            name = it.capitalize(Locale.ROOT)
         )
     }
 }
