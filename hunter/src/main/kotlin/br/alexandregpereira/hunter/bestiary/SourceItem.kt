@@ -1,0 +1,293 @@
+/*
+ * Hunter - DnD 5th edition monster compendium application
+ * Copyright (C) 2021 Alexandre Gomes Pereira
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package br.alexandregpereira.hunter.bestiary
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.JsonTransformingSerializer
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+
+@Serializable
+data class SourceItem(
+    val name: String,
+    val acronym: String,
+    val monster: List<Monster>,
+//    val monsterFluff: List<MonsterFluff>,
+//    val legendaryGroups: List<Any>
+)
+
+@Serializable
+data class Monster(
+    val name: String,
+    val isNpc: Boolean = false,
+    val source: String,
+    val page: Int? = null,
+    val size: String,
+    @Serializable(with = TypeSerializer::class)
+    val type: String,
+    @Serializable(with = AlignmentSerializer::class)
+    val alignment: List<Alignment> = emptyList(),
+    @Serializable(with = AcSerializer::class)
+    val ac: List<Ac>,
+    val hp: Hp,
+    @Serializable(with = SpeedSerializer::class)
+    val speed: Speed,
+    val str: Int,
+    val dex: Int,
+    val con: Int,
+    val int: Int,
+    val wis: Int,
+    val cha: Int,
+    val senses: List<String> = emptyList(),
+    @Serializable(with = PassiveSerializer::class)
+    val passive: String? = null,
+    @Serializable(with = ResistSerializer::class)
+    val resist: List<String> = emptyList(),
+    @Serializable(with = ImmuneSerializer::class)
+    val immune: List<String> = emptyList(),
+    @Serializable(with = VulnerableSerializer::class)
+    val vulnerable: List<String> = emptyList(),
+    val conditionImmune: List<String> = emptyList(),
+    val trait: List<Action> = emptyList(),
+    val action: List<Action> = emptyList(),
+    val hasToken: Boolean = false,
+    val senseTags: List<String> = emptyList(),
+    val damageTags: List<String> = emptyList(),
+    val miscTags: List<String> = emptyList()
+)
+
+@Serializable
+data class Alignment(
+    val alignments: List<String> = emptyList()
+)
+
+data class MonsterFluff(
+    val name: String,
+    val source: String,
+    val entries: List<Any>,
+    val images: List<Image>
+)
+
+@Serializable
+data class Ac(
+    val ac: Int? = null,
+    val from: List<String> = emptyList()
+)
+
+@Serializable
+data class Hp(
+    val average: Int? = null,
+    val formula: String? = null
+)
+
+@Serializable
+data class Speed(
+    @Serializable(with = WalkSerializer::class)
+    val walk: Int? = null,
+    @Serializable(with = WalkSerializer::class)
+    val climb: Int? = null
+)
+
+@Serializable
+data class Action(
+    val name: String,
+//    @Serializable(with = ActionEntrySerializer::class)
+//    val entries: List<ActionEntry>
+)
+
+@Serializable
+sealed class ActionEntry {
+
+    @Serializable
+    @SerialName("value")
+    data class ActionValue(val value: String) : ActionEntry()
+
+    @Serializable
+    @SerialName("list")
+    data class ActionDetail(
+        val style: String,
+        val items: List<Item>
+    ) : ActionEntry()
+}
+
+@Serializable
+data class Image(
+    val type: String,
+    val href: Href
+)
+
+@Serializable
+data class Href(
+    val type: String,
+    val path: String
+)
+
+@Serializable
+data class Item(
+    val type: String,
+    val name: String,
+    val entry: String
+)
+
+object TypeSerializer : JsonTransformingSerializer<String>(String.serializer()) {
+    // If response is not an array, then it is a single object that should be wrapped into the array
+    override fun transformDeserialize(element: JsonElement): JsonElement =
+        if (element is JsonPrimitive) element else JsonPrimitive("npc")
+}
+
+object AcSerializer : JsonTransformingSerializer<List<Ac>>(ListSerializer(Ac.serializer())) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonArray) return JsonArray(emptyList())
+
+        return element.map { elementArrayItem ->
+            when (elementArrayItem) {
+                is JsonObject -> elementArrayItem
+                is JsonPrimitive -> buildJsonObject {
+                    put(
+                        "ac",
+                        JsonPrimitive(elementArrayItem.content.toInt())
+                    )
+                }
+                else -> throw IllegalAccessException("WTF")
+            }
+        }.run {
+            JsonArray(this)
+        }
+    }
+}
+
+object AlignmentSerializer : JsonTransformingSerializer<List<Alignment>>(
+    ListSerializer(Alignment.serializer())
+) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonArray) return JsonArray(emptyList())
+
+        if (element.first() is JsonPrimitive) {
+            return element.map {
+                buildJsonObject {
+                    putJsonArray("alignment") {
+                        add(it)
+                    }
+                }
+            }.run {
+                JsonArray(this)
+            }
+        }
+
+        return element
+    }
+}
+
+object ActionEntrySerializer : JsonTransformingSerializer<List<ActionEntry>>(
+    ListSerializer(ActionEntry.serializer())
+) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonArray) return JsonArray(emptyList())
+
+        return element.map { elementArrayItem ->
+            when (elementArrayItem) {
+                is JsonPrimitive -> buildJsonObject {
+                    put("type", "value")
+                    put("value", elementArrayItem)
+                }
+                is JsonObject -> elementArrayItem
+                else -> throw IllegalAccessException("WTF")
+            }
+        }.run {
+            JsonArray(this)
+        }
+    }
+}
+
+object ResistSerializer : ResistanceSerializer("resist")
+object VulnerableSerializer : ResistanceSerializer("vulnerable")
+object ImmuneSerializer : ResistanceSerializer("immune")
+
+abstract class ResistanceSerializer(private val key: String) :
+    JsonTransformingSerializer<List<String>>(
+        ListSerializer(String.serializer())
+    ) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        if (element !is JsonArray) return JsonArray(emptyList())
+
+        val acc = mutableListOf<JsonElement>()
+        element.forEach { elementArrayItem ->
+            when (elementArrayItem) {
+                is JsonObject -> {
+                    if (elementArrayItem.contains(key)) {
+                        acc.addAll(elementArrayItem[key] as JsonArray)
+                        elementArrayItem["note"]?.let { acc.add(it) }
+                    } else if (elementArrayItem.contains("special")) {
+                        acc.add(elementArrayItem["special"] as JsonPrimitive)
+                    }
+                }
+                is JsonPrimitive -> acc.add(elementArrayItem)
+                else -> throw IllegalAccessException("WTF")
+            }
+        }
+
+        return acc.run {
+            JsonArray(this)
+        }
+    }
+}
+
+object WalkSerializer : JsonTransformingSerializer<Int>(Int.serializer()) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return when (element) {
+            is JsonObject -> {
+                element["number"] ?: throw IllegalAccessException("WTF")
+            }
+            else -> element
+        }
+    }
+}
+
+object SpeedSerializer : JsonTransformingSerializer<Speed>(Speed.serializer()) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return when (element) {
+            is JsonPrimitive -> {
+                buildJsonObject { put("walk", element) }
+            }
+            else -> element
+        }
+    }
+}
+
+object PassiveSerializer : JsonTransformingSerializer<String>(String.serializer()) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return element.run { this as JsonPrimitive }.let {
+            JsonPrimitive(it.content)
+        }
+    }
+}
