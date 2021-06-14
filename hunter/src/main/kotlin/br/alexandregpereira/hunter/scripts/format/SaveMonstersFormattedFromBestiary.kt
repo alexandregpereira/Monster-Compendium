@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
+import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
@@ -94,7 +95,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 hitDice = it.hp.formula!!.replace(" ", ""),
                 speed = it.speedFormatted(),
                 abilityScores = it.abilityScoresFormatted(),
-                savingThrows = listOf(),
+                savingThrows = it.savingThrowFormatted(),
                 skills = listOf(),
                 damageVulnerabilities = listOf(),
                 damageResistances = listOf(),
@@ -225,4 +226,33 @@ private fun Monster.abilityScoresFormatted(): List<AbilityScoreDto> {
         modifier = calculateAbilityScoreModifier(cha)
     )
     return listOf(strength, dexterity, constitution, intelligence, wisdom, charisma)
+}
+
+private fun Monster.savingThrowFormatted(): List<SavingThrowDto> = save?.run {
+    val strength = str?.createSavingThrow("str")
+    val dexterity = dex?.createSavingThrow("dex")
+    val constitution = con?.createSavingThrow("con")
+    val intelligence = int?.createSavingThrow("int")
+    val wisdom = wis?.createSavingThrow("wis")
+    val charisma = cha?.createSavingThrow("cha")
+
+    listOfNotNull(strength, dexterity, constitution, intelligence, wisdom, charisma)
+} ?: emptyList()
+
+private fun String.createSavingThrow(type: String): SavingThrowDto {
+    val typeEnum = when (type) {
+        "str" -> AbilityScoreTypeDto.STRENGTH
+        "dex" -> AbilityScoreTypeDto.DEXTERITY
+        "con" -> AbilityScoreTypeDto.CONSTITUTION
+        "int" -> AbilityScoreTypeDto.INTELLIGENCE
+        "wis" -> AbilityScoreTypeDto.WISDOM
+        "cha" -> AbilityScoreTypeDto.CHARISMA
+        else -> throw IllegalArgumentException("Invalid Saving throw:")
+    }
+
+    return SavingThrowDto(
+        index = "saving-throw-$type",
+        type = typeEnum,
+        modifier = this.replace("+", "").toInt()
+    )
 }

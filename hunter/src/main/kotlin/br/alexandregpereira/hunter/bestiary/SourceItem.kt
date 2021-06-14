@@ -81,6 +81,17 @@ data class Monster(
     val senseTags: List<String> = emptyList(),
     val damageTags: List<String> = emptyList(),
     val miscTags: List<String> = emptyList(),
+    val save: Save? = null
+)
+
+@Serializable
+data class Save(
+    val str: String? = null,
+    val dex: String? = null,
+    val con: String? = null,
+    val int: String? = null,
+    val wis: String? = null,
+    val cha: String? = null,
 )
 
 @Serializable
