@@ -74,7 +74,7 @@ internal val groupsByIndexSuffix = listOf(
 )
 
 internal val groupsByIndexPrefix = listOf(
-    "drow-",
+    "drow",
     "kuo-toa",
     "yuan-ti",
     "duergar",
