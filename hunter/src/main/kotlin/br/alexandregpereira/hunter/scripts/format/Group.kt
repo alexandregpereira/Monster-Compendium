@@ -57,6 +57,7 @@ private fun getDragonsByColor(color: String): List<String>{
 internal val subtypeGroupAllowList = listOf(
     "devil",
     "demon",
+    "yugoloth",
 )
 
 internal val groupsByIndexSuffix = listOf(
@@ -68,10 +69,13 @@ internal val groupsByIndexSuffix = listOf(
     "naga",
     "zombie",
     "slaad",
+    "blight",
 )
 
 internal val groupsByIndexPrefix = listOf(
     "drow",
+    "kuo-toa",
+    "yuan-ti",
 )
 
 internal val angels = listOf(

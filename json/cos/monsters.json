@@ -2004,7 +2004,7 @@
         "index": "tree-blight",
         "type": "PLANT",
         "subtype": null,
-        "group": null,
+        "group": "Blights",
         "challenge_rating": 7.0,
         "name": "Tree Blight",
         "subtitle": "Huge plant, neutral evil",
