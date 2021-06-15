@@ -22,14 +22,19 @@ import br.alexandregpereira.hunter.data.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.local.mapper.toEntity
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.mapper.toDomain
-import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
+import br.alexandregpereira.hunter.domain.exception.MonstersSourceUnexpectedException
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.Source
+import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import retrofit2.HttpException
 
 internal class MonsterRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
-    private val localDataSource: MonsterLocalDataSource
+    private val localDataSource: MonsterLocalDataSource,
 ) : MonsterRepository {
 
     override fun deleteMonsters(): Flow<Unit> {
@@ -42,6 +47,19 @@ internal class MonsterRepositoryImpl(
 
     override fun getRemoteMonsters(): Flow<List<Monster>> {
         return remoteDataSource.getMonsters().map { it.toDomain() }
+    }
+
+    override fun getRemoteMonsters(source: Source): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters(source.acronym)
+            .map { it.toDomain() }
+            .catch { error ->
+                throw when {
+                    error is HttpException && error.code() == 404 -> {
+                        MonstersSourceNotFoundedException(source.name)
+                    }
+                    else -> MonstersSourceUnexpectedException(source.name, error)
+                }
+            }
     }
 
     override fun getLocalMonsters(): Flow<List<Monster>> {

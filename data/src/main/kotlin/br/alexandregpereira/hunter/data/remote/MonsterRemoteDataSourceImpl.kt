@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.data.remote
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.Locale
 
 internal class MonsterRemoteDataSourceImpl(
     private val monsterApi: MonsterApi
@@ -27,5 +28,9 @@ internal class MonsterRemoteDataSourceImpl(
 
     override fun getMonsters(): Flow<List<MonsterDto>> = flow {
         emit(monsterApi.getMonsters())
+    }
+
+    override fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>> = flow {
+        emit(monsterApi.getMonsters(sourceAcronym.toLowerCase(Locale.ROOT)))
     }
 }

@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
@@ -228,7 +229,8 @@ class GetMonsterPreviewsBySectionUseCaseTest {
             senses = listOf(),
             languages = "",
             specialAbilities = listOf(),
-            actions = listOf()
+            actions = listOf(),
+            source = Source(name = "", acronym = "")
         )
     }
 

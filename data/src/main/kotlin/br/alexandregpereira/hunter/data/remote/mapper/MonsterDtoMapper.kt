@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
+import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Stats
 import java.util.Locale
 
@@ -60,7 +61,11 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             senses = it.senses,
             languages = it.languages,
             specialAbilities = it.specialAbilities.toDomain(),
-            actions = it.actions.toDomain()
+            actions = it.actions.toDomain(),
+            source = Source(
+                it.source.name,
+                it.source.acronym
+            )
         )
     }
 }

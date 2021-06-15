@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.domain.repository
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.Source
 import kotlinx.coroutines.flow.Flow
 
 interface MonsterRepository {
@@ -25,5 +26,6 @@ interface MonsterRepository {
     fun deleteMonsters(): Flow<Unit>
     fun saveMonsters(monsters: List<Monster>): Flow<Unit>
     fun getRemoteMonsters(): Flow<List<Monster>>
+    fun getRemoteMonsters(source: Source): Flow<List<Monster>>
     fun getLocalMonsters(): Flow<List<Monster>>
 }
