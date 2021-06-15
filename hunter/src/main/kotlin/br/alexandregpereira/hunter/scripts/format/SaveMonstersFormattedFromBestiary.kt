@@ -36,12 +36,14 @@ import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
+import br.alexandregpereira.hunter.image.downloadImage
 import br.alexandregpereira.hunter.scripts.MONSTER_JSON_FILE_NAME
 import br.alexandregpereira.hunter.scripts.saveJsonFile
 import br.alexandregpereira.hunter.scripts.start
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.toList
@@ -53,15 +55,17 @@ import java.util.Locale
 suspend fun main() = start {
     getMonstersFromBestiary()
         .map { monsters ->
-            monsters.filter { it.cr != null && it.hp.average != null }
-                .asMonstersFormatted()
+            monsters.filter {
+                it.cr != null && it.hp.average != null
+            }.asMonstersFormatted()
         }
         .single()
         .asSequence()
         .asFlow()
-//        .flatMapMerge {
-//            it.downloadImage()
-//        }
+        .filterByImages()
+        .flatMapMerge {
+            it.downloadImage()
+        }
         .toList()
         .filterNotNull()
         .sortedBy { it.name }
@@ -69,7 +73,7 @@ suspend fun main() = start {
         .let {
             it.forEach { entry ->
                 val monsters = entry.value
-                println("\n${monsters.size} monsters formatted")
+                println("\n${monsters.size} monsters formatted; Source = ${entry.key}")
                 monsters.forEach { monster ->
                     println("id: ${monster.index}, name: ${monster.name}")
                 }
@@ -79,7 +83,6 @@ suspend fun main() = start {
 
                 File(source).mkdir()
                 saveJsonFile(monsters, fileName, printJson = false)
-                return@start
             }
         }
 }
@@ -92,7 +95,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 source = it.sourceFormatted(),
                 type = it.typeFormatted(),
                 subtype = it.subtypeFormatted(),
-                group = it.getGroup(),
+                group = getGroup(it.getIndex(), it.subtypeFormatted()),
                 challengeRating = it.cr!!.challengeRatingFormatted(),
                 name = it.name,
                 imageUrl = getImageUrl(it.getIndex()),
@@ -112,7 +115,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 senses = it.senses,
                 languages = it.languages.joinToString(),
                 specialAbilities = it.specialAbilitiesFormatted(),
-                actions = it.actionsFormatted()
+                actions = it.actionsFormatted(),
+                isHorizontalImage = false
             ).formatSubtitle()
         }.getOrElse { error ->
             print("Monster error: ${it.name}")
@@ -129,24 +133,14 @@ private fun Monster.getIndex(): String {
 
 private fun Monster.typeFormatted(): MonsterTypeDto {
     return runCatching {
-        MonsterTypeDto.valueOf(type.type.toLowerCase(Locale.ROOT))
-    }.getOrDefault(MonsterTypeDto.HUMANOID)
+        MonsterTypeDto.valueOf(type.type.toUpperCase(Locale.ROOT))
+    }.getOrElse {
+        MonsterTypeDto.HUMANOID
+    }
 }
 
 private fun Monster.subtypeFormatted(): String? {
     return type.tags.joinToString(" ").takeIf { it.isNotBlank() }
-}
-
-private fun Monster.getGroup(): String? {
-    val index = getIndex()
-    return when {
-        isGroupByIndex(index) -> {
-            getGroupByIndex(index)
-        }
-        else -> {
-            getGroupByGroupMap(index)
-        }
-    }
 }
 
 private fun String.challengeRatingFormatted(): Float {

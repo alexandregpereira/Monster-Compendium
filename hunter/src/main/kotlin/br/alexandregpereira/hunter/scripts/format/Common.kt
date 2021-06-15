@@ -18,6 +18,13 @@
 package br.alexandregpereira.hunter.scripts.format
 
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import br.alexandregpereira.hunter.scripts.JSON_IMAGES_FILE_NAME
+import br.alexandregpereira.hunter.scripts.WebImageData
+import br.alexandregpereira.hunter.scripts.json
+import br.alexandregpereira.hunter.scripts.readJsonFile
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.serialization.decodeFromString
 import java.util.Locale
 
 internal const val GITHUB_IMAGE_HOST =
@@ -55,4 +62,13 @@ internal fun MonsterDto.formatSubtitle(): MonsterDto {
     return this.copy(
         subtitle = subtitle
     )
+}
+
+internal fun Flow<MonsterDto>.filterByImages(): Flow<MonsterDto> {
+    return this.filter { monster ->
+        val webImages = json.decodeFromString<List<WebImageData>>(
+            readJsonFile(JSON_IMAGES_FILE_NAME)
+        )
+        webImages.map { it.name }.contains(monster.index)
+    }
 }

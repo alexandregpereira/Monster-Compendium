@@ -64,6 +64,7 @@ suspend fun main() = start {
         .asMonstersFormatted()
         .asSequence()
         .asFlow()
+        .filterByImages()
         .flatMapMerge {
             it.downloadImage()
         }
@@ -83,7 +84,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             index = it.getId(),
             type = MonsterTypeDto.valueOf(it.type.name),
             subtype = it.subtype,
-            group = it.getGroup(),
+            group = getGroup(it.index, it.subtype),
             challengeRating = it.challengeRating,
             name = it.name,
             imageUrl = getImageUrl(it.index),
@@ -275,22 +276,4 @@ private fun List<Action>.asActionsFormatted(): List<ActionDto> {
             name = it.name
         )
     }
-}
-
-private fun Monster.getGroup(): String? {
-    return when {
-        isGroupByIndex(index) -> {
-            getGroupByIndex(index)
-        }
-        isSubtypeGroup() -> {
-            subtype?.capitalize(Locale.ROOT)?.let { it + "s" }
-        }
-        else -> {
-            getGroupByGroupMap(index)
-        }
-    }
-}
-
-private fun Monster.isSubtypeGroup(): Boolean {
-    return subtype != null && subtypeGroupAllowList.contains(subtype)
 }

@@ -1,0 +1,4416 @@
+[
+    {
+        "index": "bodytaker-plant",
+        "type": "PLANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Bodytaker Plant",
+        "subtitle": "Huge plant, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bodytaker-plant.png",
+        "background_color": {
+            "light": "#cbf075",
+            "dark": "#658a0f"
+        },
+        "is_horizontal_image": true,
+        "size": "Huge",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 92,
+        "hit_dice": "8d12+40",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            }
+        ],
+        "senses": [
+            "blindsight 120 ft. (blind beyond this radius)"
+        ],
+        "languages": "Deep Speech, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Podling Link",
+                "desc": "The plant can see through and communicate telepathically with any of its podlings within 10 miles of it."
+            },
+            {
+                "name": "Rejuvenation",
+                "desc": "When the plant dies, it returns to life in the place where it died 1d12 months later, unless the ground where it took root is sown with salt or soaked with poison."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The plant doesn't require sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The plant makes three Vine Lash attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 20 ft., one target. 11 (2d6 + 4) slashing damage. If the target is a creature, it is grappled (escape 15). Until the grapple ends, the target is restrained. The plant has four vines, each of which can grapple one target.",
+                "name": "Vine Lash"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8+4",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one Medium or smaller creature grappled by the plant. 22 (4d8 + 4) acid damage, and the target is pulled into the plant's space and enveloped by the pod, and the grapple ends. While enveloped, the target is restrained, and it has total cover against attacks and effects originating outside the pod. The enveloped target must also immediately succeed on a 16 Constitution saving throw or be stunned by the plant's sapping enzymes until it is removed from the pod or the plant dies. The enveloped target doesn't require air and gains 1 level of exhaustion for each hour it spends in the pod. If the target dies while enveloped, it immediately emerges from the pod as a living podling, wearing or carrying all of the original creature's equipment.\nAs an action, a creature within 5 feet of the bodytaker plant that is outside the pod can open the pod and pull the target free with a successful 15 Strength check. If the plant dies, the target is no longer restrained and can escape from the pod by spending 10 feet of movement, exiting prone. The plant has one pod, which can envelop one creature at a time.",
+                "name": "Entrapping Pod"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "boneless",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Boneless",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/boneless.png",
+        "background_color": {
+            "light": "#f0757d",
+            "dark": "#5f0b10"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 26,
+        "hit_dice": "4d8+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands the languages it knew in life but can't speak",
+        "special_abilities": [
+            {
+                "name": "Compression",
+                "desc": "The boneless can move through any opening at least 1 inch wide without squeezing. It can also squeeze to fit into a space that a Tiny creature could fit in."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The boneless doesn't require sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The boneless makes two Slam attacks. If both attacks hit a Large or smaller creature, the creature is grappled (escape 13), and the boneless can use Crushing Embrace.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+3",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. 5 (1d4 + 3) bludgeoning damage.",
+                "name": "Slam"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The boneless wraps its body around a Large or smaller creature grappled by it. While the boneless is attached, the target is blinded and is unable to breathe. The target must succeed on a 13 Strength saving throw at the start of each of the boneless' turns or take 5 (1d4 + 3) bludgeoning damage. If something moves the target, the boneless moves with it. The boneless can detach itself by spending 5 feet of its movement. A creature, including the target, can use its action to try to detach the boneless and force it to move into the nearest unoccupied space, doing so with a successful 13 Strength check. When the boneless dies, it detaches from any creature it is attached to.",
+                "name": "Crushing Embrace"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "carrion-stalker",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Carrion Stalker",
+        "subtitle": "Tiny monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/carrion-stalker.png",
+        "background_color": {
+            "light": "#f07597",
+            "dark": "#8a0f31"
+        },
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 14,
+        "hit_points": 35,
+        "hit_dice": "10d4+10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "BURROW",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 2,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            }
+        ],
+        "senses": [
+            "tremorsense 60 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The carrion stalker makes three Tentacle attacks. If it is attached to a creature, it can replace one Tentacle attack with Larval Burst, if available.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. 5 (1d4 + 3) piercing damage, and the carrion stalker attaches to the target and pulls itself into the target's space. While attached, the carrion stalker moves with the target and has advantage on attack rolls against it.\nA creature can use its action to try to detach the carrion stalker and force it to move into the nearest unoccupied space, doing so with a successful 11 Strength check. On its turn, the carrion stalker can detach itself from the target by using 5 feet of movement. When it dies, the carrion stalker detaches from any creature it is attached to.",
+                "name": "Tentacle"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6",
+                        "damage": {
+                            "index": "POISON",
+                            "type": "POISON",
+                            "name": "Poison"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The carrion stalker releases a burst of larvae in a 10-foot-radius sphere centered on itself. Each creature in that area must succeed on a 13 Constitution saving throw or be poisoned. A creature poisoned in this way takes 7 (2d6) poison damage at the start of each of its turns as larvae infest its body. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. Any effect that cures disease or removes the poisoned condition instantly kills the larvae in the creature, ending the effect on it.\nIf a creature is reduced to 0 hit points by the infestation, it dies. The larvae remain in the corpse, and one survives to become a fully grown carrion stalker in 1d4 weeks. Any effect that cures diseases or removes the poisoned condition that targets the corpse instantly kills the larvae.",
+                "name": "Larval Burst (1/Day)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "carrionette",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Carrionette",
+        "subtitle": "Small construct, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/carrionette.png",
+        "background_color": {
+            "light": "#75daf0",
+            "dark": "#0f748a"
+        },
+        "is_horizontal_image": false,
+        "size": "Small",
+        "alignment": "unaligned",
+        "armor_class": 15,
+        "hit_points": 27,
+        "hit_dice": "6d6+6",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+        ],
+        "languages": "understands the languages of its creator",
+        "special_abilities": [
+            {
+                "name": "False Object",
+                "desc": "If the carrionette is motionless at the start of combat, it has advantage on its initiative roll. Moreover, if a creature hasn't observed the carrionette move or act, that creature must succeed on a 15 Wisdom (Perception) check to discern that the carrionette is animate."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The carrionette doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. 1 piercing damage plus 3 (1d6) necrotic damage, and the target must succeed on a 12 Charisma saving throw or become cursed for 1 minute. While cursed in this way, the target's speed is reduced by 10 feet, and it must roll a 1d4 and subtract the number rolled from each ability check or attack roll it makes.",
+                "name": "Silver Needle"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The carrionette targets a creature it can see within 15 feet of it that is cursed by its Silver Needle. Unless the target is protected by a protection from evil and good spell, it must succeed on a 12 Charisma saving throw or have its consciousness swapped with the carrionette. The carrionette gains control of the target's body, and the target is unconscious for 1 hour, after which it gains control of the carrionette's body. While controlling the target's body, the carrionette retains its Intelligence, Wisdom, and Charisma scores. It otherwise uses the controlled body's statistics, but doesn't gain access to the target's knowledge, class features, or proficiencies.\nIf the carrionette's body is destroyed, both the carrionette and the target die. A protection from evil and good spell cast on the controlled body drives the carrionette out and returns the consciousness of both creatures to their original bodies. The swap is also undone if the controlled body takes damage from the carrionette's Silver Needle.",
+                "name": "Soul Swap"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "dullahan",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 10.0,
+        "name": "Dullahan",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dullahan.png",
+        "background_color": {
+            "light": "#ffc166",
+            "dark": "#995b00"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 135,
+        "hit_dice": "18d8+54",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "truesight 120 ft."
+        ],
+        "languages": "understands the languages it knew in life but can't speak",
+        "special_abilities": [
+            {
+                "name": "Headless Summoning (Recharges after a Short or Long Rest)",
+                "desc": "If the dullahan is reduced to 0 hit points, it doesn't die or fall unconscious. Instead, it regains 97 hit points. In addition, it summons three death's heads, one of each type, in unoccupied spaces within 5 feet of it. The death's heads are under the dullahan's control and act immediately after the dullahan in the initiative order. Additionally, the dullahan can now use the options in the \"Mythic Actions\" section. Award a party an additional 5,900 XP (11,800 XP total) for defeating the dullahan after it uses Headless Summoning."
+            },
+            {
+                "name": "Legendary Resistance (2/Day)",
+                "desc": "If the dullahan fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The dullahan doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The dullahan makes two attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "6d8",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands, plus 11 (2d10) necrotic damage. If the dullahan scores a critical hit against a creature, the target must succeed on a 15 Constitution saving throw or the dullahan cuts off the target's head. The target dies if it can't survive without the lost head. A creature that doesn't have or need a head, or has legendary actions, instead takes an extra 27 (6d8) slashing damage.",
+                "name": "Battleaxe"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+3",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. 14 (2d10 + 3) fire damage.",
+                "name": "Fiery Skull"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "elise",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Elise",
+        "subtitle": "Medium construct, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/elise.png",
+        "background_color": {
+            "light": "#75f0e2",
+            "dark": "#0f8a7c"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 9,
+        "hit_points": 93,
+        "hit_dice": "11d8+44",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks that aren't adamantine",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks that aren't adamantine"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands the languages of its creator but can't speak",
+        "special_abilities": [
+            {
+                "name": "Immutable Form",
+                "desc": "Elise is immune to any spell or effect that would alter her form."
+            },
+            {
+                "name": "Lightning Absorption",
+                "desc": "Whenever Elise is subjected to lightning damage, she takes no damage and instead regains a number of hit points equal to the lightning damage dealt."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "Elise has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "name": "Magic Weapons",
+                "desc": "Elise's weapon attacks are magical."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Elise makes two slam attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 13 (2d8 + 4) bludgeoning damage.",
+                "name": "Slam"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "gallows-speaker",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Gallows Speaker",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gallows-speaker.png",
+        "background_color": {
+            "light": "#75cdf0",
+            "dark": "#0f678a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 85,
+        "hit_dice": "19d8",
+        "speed": {
+            "hover": true,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 0,
+                    "value_formatted": "0 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            }
+        ],
+        "senses": [
+            "truesight 60 ft."
+        ],
+        "languages": "any languages its component spirits knew in life",
+        "special_abilities": [
+            {
+                "name": "Divination Senses",
+                "desc": "The gallows speaker can see 60 feet into the Ethereal Plane when it is on the Material Plane and vice versa."
+            },
+            {
+                "name": "Incorporeal Movement",
+                "desc": "The gallows speaker can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends it turn inside an object."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The gallows speaker doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+4",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Spell Attack: +7 to hit, reach 5 ft., one creature. 15 (2d10 + 4) psychic damage, and the target must roll a d4 and subtract the number rolled from the next attack roll or saving throw it makes before the start of the gallows speaker's next turn.",
+                "name": "Foretelling Touch"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d12",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    },
+                    {
+                        "dice": "3d8",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The gallows speaker targets a creature it can see within 30 feet of it. The target must make a 15 Wisdom saving throw. On a failed save, the target takes 19 (3d12) psychic damage, and waves of painful memories leap from the target to up to three other creatures of the gallows speaker's choice that are within 30 feet of the target, each of which takes 13 (3d8) psychic damage.",
+                "name": "Suffering Echoes"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "greater-star-spawn-emissary",
+        "type": "ABERRATION",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 21.0,
+        "name": "Greater Star Spawn Emissary",
+        "subtitle": "Huge aberration, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/greater-star-spawn-emissary.png",
+        "background_color": {
+            "light": "#f09c75",
+            "dark": "#79300d"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "unaligned",
+        "armor_class": 15,
+        "hit_points": 290,
+        "hit_dice": "20d12+160",
+        "speed": {
+            "hover": true,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 26,
+                "modifier": 8
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "WISDOM",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "CHARISMA",
+                "value": 25,
+                "modifier": 7
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 15
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 15
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 13
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 14
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 22,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 13,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "acid",
+                "type": "ACID",
+                "name": "Acid"
+            },
+            {
+                "index": "force",
+                "type": "OTHER",
+                "name": "Force"
+            },
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "truesight 120 ft."
+        ],
+        "languages": "all, telepathy 1,000 ft.",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (4/Day)",
+                "desc": "If the emissary fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The emissary doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The emissary makes three attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+7",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "3d8",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": 14,
+                "description": "Melee Weapon Attack: +14 to hit, reach 15 ft., one target. 20 (2d10 + 7) piercing damage plus 13 (3d8) acid damage.",
+                "name": "Lashing Maw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d12+8",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": 15,
+                "description": "Ranged Spell Attack: +15 to hit, range 120 ft., one creature. 27 (3d12 + 8) psychic damage.",
+                "name": "Psychic Orb"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "10d10",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The emissary expels bile that splashes all creatures in a 30-foot-radius sphere centered on a point within 120 feet of the emissary. Each creature in that area must make a 23 Dexterity saving throw, taking 55 (10d10) acid damage on a failed save, or half as much damage on a successful one. For each creature that fails the saving throw, a gibbering mouther (see its entry in the Monster Manual) appears in an unoccupied space on a surface that can support it within 30 feet of that creature. The gibbering mouthers act right after the emissary on the same initiative count, gaining a +7 bonus to their attack and damage rolls, and fighting until they are destroyed. They disappear when the emissary dies.",
+                "name": "Unearthly Bile (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "gremishka",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.125,
+        "name": "Gremishka",
+        "subtitle": "Tiny monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gremishka.png",
+        "background_color": {
+            "light": "#f0a875",
+            "dark": "#522809"
+        },
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 10,
+        "hit_dice": "4d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 4,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 30 ft."
+        ],
+        "languages": "understands Common but can't speak",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. 3 (1d4 + 2) piercing damage plus 3 (1d6) force damage.",
+                "name": "Bite"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "inquisitor-of-the-mind-fire",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Inquisitor of the Mind Fire",
+        "subtitle": "Medium humanoid, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/inquisitor-of-the-mind-fire.png",
+        "background_color": {
+            "light": "#75c9f0",
+            "dark": "#0f638a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 77,
+        "hit_dice": "14d8+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 19,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "truesight 30 ft."
+        ],
+        "languages": "any three languages, telepathy 120 ft.",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The inquisitor attacks twice with its Silver Longsword or uses Mind Fire twice.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) if used with two hands, plus 18 (4d8) force damage.",
+                "name": "Silver Longsword"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+4",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The inquisitor targets one creature it can see within 120 feet of it. The target must succeed on a 15 Intelligence saving throw or take 17 (3d8 + 4) psychic damage and be stunned until the start of the inquisitor's next turn.",
+                "name": "Mind Fire"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Each creature of the inquisitor's choice that it can see within 60 feet of it must succeed on a 15 Wisdom saving throw or be charmed until the start of the inquisitor's next turn. On the charmed target's turn, the inquisitor can telepathically control the target's move, action, or both. When controlled in this way, the target can take only the Attack (inquisitor chooses the target) or Dash action.",
+                "name": "Inquisitor's Command (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "inquisitor-of-the-sword",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Inquisitor of the Sword",
+        "subtitle": "Medium humanoid, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/inquisitor-of-the-sword.png",
+        "background_color": {
+            "light": "#75e9f0",
+            "dark": "#0f838a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 91,
+        "hit_dice": "14d8+28",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-acrobatics",
+                "modifier": 5,
+                "name": "Acrobatics"
+            },
+            {
+                "index": "skill-athletics",
+                "modifier": 4,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "truesight 30 ft."
+        ],
+        "languages": "any two languages, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Metabolic Control",
+                "desc": "At the start of each of its turns, the inquisitor regains 10 hit points and can end one condition on itself, provided the inquisitor has at least 1 hit point."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The inquisitor attacks twice with its Silver Longsword. After it hits or misses with an attack, the inquisitor can teleport up to 30 feet to an unoccupied space it can see.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) if used with two hands, plus 18 (4d8) force damage.",
+                "name": "Silver Longsword"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "inquisitor-of-the-tome",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Inquisitor of the Tome",
+        "subtitle": "Medium humanoid, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/inquisitor-of-the-tome.png",
+        "background_color": {
+            "light": "#f07582",
+            "dark": "#8a0f1c"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 11,
+        "hit_points": 77,
+        "hit_dice": "14d8+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 10,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-history",
+                "modifier": 7,
+                "name": "History"
+            },
+            {
+                "index": "skill-nature",
+                "modifier": 7,
+                "name": "Nature"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 10,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "truesight 30 ft."
+        ],
+        "languages": "any four languages, telepathy 120 ft.",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The inquisitor attacks twice.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 7,
+                "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. 22 (4d8 + 4) force damage, and if the target is a Large or smaller creature, the inquisitor can push it up to 10 feet away.",
+                "name": "Force Bolt"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) if used with two hands, plus 18 (4d8) force damage.",
+                "name": "Silver Longsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Each creature in a 20-foot-radius sphere centered on a point the inquisitor can see within 120 feet of it must succeed on a 15 Constitution saving throw or take 31 (6d8 + 4) force damage and be knocked prone and moved to the unoccupied space closest to the sphere's center. Large and smaller objects that aren't being worn or carried in the sphere automatically take the damage and are similarly moved.",
+                "name": "Implode (Recharge 4-6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "isolde",
+        "type": "FEY",
+        "subtype": "elf",
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Isolde",
+        "subtitle": "Medium fey(elf), lawful or chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/isolde.png",
+        "background_color": {
+            "light": "#f09975",
+            "dark": "#321306"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful or chaotic evil",
+        "armor_class": 19,
+        "hit_points": 82,
+        "hit_dice": "11d8+33",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 6,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 6,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Abyssal, Common, Infernal",
+        "special_abilities": [
+            {
+                "name": "Fiendish Blessing",
+                "desc": "The AC of Isolde includes her Charisma bonus."
+            },
+            {
+                "name": "Magic Resistance Aura",
+                "desc": "While holding Nepenthe, Isolde creates an aura in a 10-foot radius around her. While this aura is active, Isolde and all creatures friendly to her in the aura have advantage on saving throws against spells and other magical effects."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Isolde makes two melee attacks or uses its Fire Ray twice.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+7",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+7",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "2d10",
+                        "damage": {
+                            "index": "RADIANT",
+                            "type": "RADIANT",
+                            "name": "Radiant"
+                        }
+                    }
+                ],
+                "attack_bonus": 10,
+                "description": "Melee Weapon Attack: +10 to hit, reach 5 ft.., one target. 11 (1d8 + 7) slashing damage, or 12 (1d10 + 7) slashing damage if used with two hands to make a melee attack. If the target is a fiend or an undead, it takes an extra 11 (2d10) radiant damage.",
+                "name": "Nepenthe"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. 10 (3d6) fire damage.",
+                "name": "Fire Ray"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "One humanoid Isolde can see within 30 feet of it must succeed on a 14 Wisdom saving throw or be magically charmed for 1 day. The charmed target obeys Isolde's spoken commands. If the target suffers any harm from Isolde or another creature or receives a suicidal command from Isolde, the target can repeat the saving throw, ending the effect on itself on a success. If a target's saving throw is successful, or if the effect ends for it, the creature is immune to Isolde's Fiendish Charm for the next 24 hours.",
+                "name": "Fiendish Charm"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "jiangshi",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 9.0,
+        "name": "Jiangshi",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/jiangshi.png",
+        "background_color": {
+            "light": "#75caf0",
+            "dark": "#0d5677"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 119,
+        "hit_dice": "14d8+56",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "any languages it knew in life",
+        "special_abilities": [
+            {
+                "name": "Jiangshi Weaknesses",
+                "desc": "The jiangshi has the following flaws:"
+            },
+            {
+                "name": "Fear of Its Own Reflection",
+                "desc": "If the jiangshi sees its own reflection, it immediately uses its reaction, if available, to move as far away from the reflection as possible."
+            },
+            {
+                "name": "Susceptible to Holy Symbols",
+                "desc": "While the jiangshi is wearing or touching a holy symbol, it automatically fails saving throws against effects that turn Undead."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The jiangshi doesn't require air."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The jiangshi makes three Slam attacks and uses Consume Energy.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 13 (2d8 + 4) bludgeoning damage.",
+                "name": "Slam"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    },
+                    {
+                        "dice": "of",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The jiangshi draws energy from a creature it can see within 30 feet of it. The target makes a 16 Constitution saving throw, taking 18 (4d8) necrotic damage on a failed save, or half as much damage on a successful one. The jiangshi regains hit points equal to the amount of necrotic damage dealt. After regaining hit points from this action, the jiangshi gains the following benefits for 7 days: its walking speed increases to 40 feet, and it gains a flying speed equal to its walking speed and can hover.\nA Humanoid slain by this necrotic damage rises as a wight (see its entry in the Monster Manual) at the end of the jiangshi's turn. The wight acts immediately after the jiangshi in the initiative order. If this wight slays a Humanoid with its Life Drain, the wight transforms into a jiangshi 5 days later.",
+                "name": "Consume Energy"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The jiangshi polymorphs into a Beast, a Humanoid, or an Undead that is Medium or Small or back into its true form. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying is absorbed or borne by the new form (the jiangshi's choice). It reverts to its true form if it dies.",
+                "name": "Change Shape"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "loup-garou",
+        "type": "MONSTROSITY",
+        "subtype": "shapechanger",
+        "group": null,
+        "challenge_rating": 13.0,
+        "name": "Loup Garou",
+        "subtitle": "Medium monstrosity(shapechanger), unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/loup-garou.png",
+        "background_color": {
+            "light": "#f08675",
+            "dark": "#420f07"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 170,
+        "hit_dice": "20d8+80",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 8
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 13,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "Common (can't speak in wolf form)",
+        "special_abilities": [
+            {
+                "name": "Blood Frenzy",
+                "desc": "The loup garou has advantage on attack rolls against a creature that doesn't have all its hit points."
+            },
+            {
+                "name": "Legendary Resistance (2/Day)",
+                "desc": "When the loup garou fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Regeneration",
+                "desc": "The loup garou regains 10 hit points at the start of each of its turns. If the loup garou takes damage from a silver weapon, this trait doesn't function at the start of the loup garou's next turn. The loup garou dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The loup garou makes two attacks: two with its Longsword (humanoid form) or one with its Bite and one with its Claws (dire wolf or hybrid form).",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. 13 (2d8 + 4) piercing damage plus 14 (4d6) necrotic damage. If the target is a Humanoid, it must succeed on a 17 Constitution saving throw or be cursed with loup garou lycanthropy.",
+                "name": "Bite (Dire Wolf or Hybrid Form Only)"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. 11 (2d6 + 4) slashing damage. If the target is a creature, it must succeed on a 17 Strength saving throw or be knocked prone.",
+                "name": "Claws (Dire Wolf or Hybrid Form Only)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "2d10+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. 13 (2d8 + 4) slashing damage, or 15 (2d10 + 4) slashing damage if used with two hands.",
+                "name": "Longsword (Humanoid Form Only)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "necrichor",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Necrichor",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/necrichor.png",
+        "background_color": {
+            "light": "#f0b375",
+            "dark": "#432507"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 67,
+        "hit_dice": "9d8+27",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 9,
+                "name": "Arcana"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "acid",
+                "type": "ACID",
+                "name": "Acid"
+            },
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "deafened",
+                "type": "DEAFENED",
+                "name": "Deafened"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            }
+        ],
+        "senses": [
+            "blindsight 120 ft. (blind beyond this radius)"
+        ],
+        "languages": "any three languages, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (2/Day)",
+                "desc": "If the necrichor fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Rejuvenation",
+                "desc": "Unless its lifeless remains are splashed with holy water or placed in a vessel under the effects of the hallow spell, the destroyed necrichor re-forms in 1d10 days, regaining all its hits points and appearing in the place it died or in the nearest unoccupied space."
+            },
+            {
+                "name": "Spider Climb",
+                "desc": "The necrichor can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The necrichor doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The necrichor makes two attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. 5 (1d6 + 2) necrotic damage, and the target must succeed on a 14 Constitution saving throw or be paralyzed until the start of the necrichor's next turn.",
+                "name": "Pseudopod"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+3",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Ranged Spell Attack: +6 to hit, range 120 ft., one creature. 12 (2d8 + 3) necrotic damage, and the target can't regain hit points until the start of the necrichor's next turn.",
+                "name": "Necrotic Bolt"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The necrichor targets a creature it can see within 5 feet of it that is missing any of its hit points. If the target isn't a Construct or an Undead, it must succeed on a 14 Constitution saving throw or the necrichor enters the target's space and attaches itself to the target for 1 minute. While attached, the necrichor takes only half damage dealt to it (round down), and the target takes the remaining damage. The necrichor can attach to only one creature at a time.\nThe attached necrichor can telepathically control the target's move, action, or both. When controlled this way, the target can take only the Attack action (necrichor chooses the target) or the Dash action. The attached target can repeat the saving throw at the end of each of its turns, detaching from the necrichor and forcing it to move into the nearest unoccupied space on a success.",
+                "name": "Blood Puppeteering (Recharge 6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "nosferatu",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Nosferatu",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nosferatu.png",
+        "background_color": {
+            "light": "#f0a375",
+            "dark": "#6d300c"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 17,
+        "hit_points": 85,
+        "hit_dice": "9d8+45",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 10,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "the languages it knew in life",
+        "special_abilities": [
+            {
+                "name": "Regeneration",
+                "desc": "The nosferatu regains 10 hit points at the start of each of its turns if it has at least 1 hit point and isn't in sunlight. If the nosferatu takes radiant damage, this trait doesn't function until the start of the nosferatu's next turn."
+            },
+            {
+                "name": "Spider Climb",
+                "desc": "The nosferatu can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "name": "Sunlight Hypersensitivity",
+                "desc": "The nosferatu takes 20 radiant damage when it starts its turn in sunlight. While in sunlight, it has disadvantage on attack rolls and ability checks."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The nosferatu doesn't require air."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The nosferatu makes two Claw attacks followed by one Bite attack. If both Claw attacks hit the same creature, the Bite attack is made with advantage.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+5",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 9 (1d8 + 5) slashing damage.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d10",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one creature. 9 (1d8 + 5) piercing damage plus 7 (2d6) necrotic damage. If the target is missing any of its hit points, it instead takes 11 (2d10) necrotic damage.\nThe target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and the nosferatu regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if its hit point maximum is reduced to 0. A Humanoid slain in this way and then buried in the ground rises as a nosferatu after 1d10 days.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The nosferatu vomits blood in a 15-foot cone. Each creature in that area must make a 16 Constitution saving throw. On a failed save, a creature takes 18 (4d8) necrotic damage, and it can't regain hit points for 1 minute. On a successful save, the creature takes half as much damage with no additional effects.",
+                "name": "Blood Disgorge (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "priest-of-osybus",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Priest of Osybus",
+        "subtitle": "Medium humanoid, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/priest-of-osybus.png",
+        "background_color": {
+            "light": "#f08a75",
+            "dark": "#8a240f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 14,
+        "hit_points": 60,
+        "hit_dice": "8d8+24",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "any three languages",
+        "special_abilities": [
+            {
+                "name": "Tattoo of Osybus",
+                "desc": "If the priest drops to 0 hit points, roll on the Boons of Undeath table for the boon the priest receives. The priest dies if it receives a boon it already has. If it receives a new boon, it revives at the start of its next turn with half its hit points restored, and its creature type is now Undead.\nTo prevent this revival, the Tattoo of Osybus on the priest's body must be destroyed. The tattoo is invulnerable while the priest has at least 1 hit point. The tattoo is otherwise an object with AC 15, and it is immune to poison and psychic damage. It has 15 hit points, but it regains all its hit points at the end of every combatant's turn."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The priest attacks twice.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d4+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. 7 (2d4 + 2) piercing damage, and if the target is a creature, it is paralyzed until the start of the priest's next turn. If this damage reduces a Medium or smaller creature to 0 hit points, the creature dies, and its soul is trapped in the priest's body, manifesting as a shadowy Soul Tattoo on the priest. The soul is freed if the priest dies.",
+                "name": "Soul Blade"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+4",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. 17 (3d8 + 4) necrotic damage, and the target can't regain hit points until the start of the priest's next turn.",
+                "name": "Necrotic Bolt"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "relentless-juggernaut",
+        "type": "FIEND",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 12.0,
+        "name": "Relentless Juggernaut",
+        "subtitle": "Large fiend, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/relentless-juggernaut.png",
+        "background_color": {
+            "light": "#f0758e",
+            "dark": "#5b0a1a"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 17,
+        "hit_points": 161,
+        "hit_dice": "14d10+84",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 6,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "understands all languages but can't speak",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If the juggernaut fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Regeneration",
+                "desc": "The juggernaut regains 20 hit points at the start of its turn. If the juggernaut takes radiant damage, this trait doesn't function at the start of its next turn. The juggernaut dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The juggernaut doesn't require air, food, drink, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The juggernaut makes two attacks. It can replace one attack with Deadly Shaping if it is ready.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 10,
+                "description": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. 17 (2d10 + 6) piercing damage, and if the target is a creature, its speed is reduced by 10 feet until the start of the juggernaut's next turn.",
+                "name": "Executioner's Pick"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 10,
+                "description": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. 11 (1d10 + 6) bludgeoning damage, and if the target is a Large or smaller creature, it must succeed on a 18 Strength saving throw or be knocked prone.",
+                "name": "Fist"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The juggernaut magically shapes a feature of its surroundings into a deadly implement. A creature the juggernaut can see within 60 feet of it must make a 18 Dexterity saving throw. If the saving throw fails, the targeted creature is struck by one of the following (juggernaut's choice):",
+                "name": "Deadly Shaping (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "5d8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The target takes 22 (5d8) bludgeoning damage and is incapacitated until the start of the juggernaut's next turn, and the implement vanishes.",
+                "name": "Flying Stone"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d6",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The target takes 14 (4d6) slashing damage, and the implement vanishes. At the start of each of its turns, the target takes 10 (3d6) necrotic damage from the wound left by the shrapnel. The wound ends if the target regains any hit points or if a creature uses an action to stanch the wound, which requires a successful 15 Wisdom (Medicine) check.",
+                "name": "Scything Shrapnel"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "strigoi",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Strigoi",
+        "subtitle": "Medium monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/strigoi.png",
+        "background_color": {
+            "light": "#f08d75",
+            "dark": "#8a270f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 16,
+        "hit_points": 52,
+        "hit_dice": "7d8+21",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 4
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Stirge Telepathy",
+                "desc": "The strigoi can magically command any stirge within 120 feet of it, using a limited form of telepathy."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The strigoi makes one Claw attack and makes one Proboscis attack.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+3",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d12+3",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. 7 (1d8 + 3) slashing damage plus 6 (1d12 + 3) acid damage.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    },
+                    {
+                        "dice": "of",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. 8 (1d10 + 3) piercing damage plus 10 (3d6) necrotic damage, and the strigoi regains hit points equal to the amount of necrotic damage dealt. A creature reduced to 0 hit points from this attack dies and leaves nothing behind except its skin and its equipment.",
+                "name": "Proboscis"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The strigoi magically summons 1d4 + 2 stirges (see their entry in the Monster Manual) in unoccupied spaces it can see within 30 feet of it. The stirges are under the strigoi's control and act immediately after the strigoi in the initiative order. The stirges disappear after 1 hour, when the strigoi dies, or when the strigoi dismisses them (no action required).",
+                "name": "Ravenous Children (1/Day)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "swarm-of-gremishkas",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Swarm of Gremishkas",
+        "subtitle": "Medium monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/swarm-of-gremishkas.png",
+        "background_color": {
+            "light": "#f0a875",
+            "dark": "#522809"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 24,
+        "hit_dice": "7d6",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 4,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "stunned",
+                "type": "STUNNED",
+                "name": "Stunned"
+            }
+        ],
+        "senses": [
+            "darkvision 30 ft."
+        ],
+        "languages": "understands Common but can't speak",
+        "special_abilities": [
+            {
+                "name": "Limited Spell Immunity",
+                "desc": "The swarm automatically succeeds on saving throws against spells of 3rd level or lower, and the attack rolls of such spells always miss it."
+            },
+            {
+                "name": "Swarm",
+                "desc": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny gremishka. The swarm can't regain hit points or gain temporary hit points."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 0 ft., one target in the swarm's space. 12 (3d6 + 2) piercing damage, or 5 (1d6 + 2) piercing damage if the swarm has half of its hit points or fewer, plus 7 (2d6) force damage.",
+                "name": "Bites"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "swarm-of-maggots",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Swarm of Maggots",
+        "subtitle": "Medium beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/swarm-of-maggots.png",
+        "background_color": {
+            "light": "#f08d75",
+            "dark": "#350f06"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 11,
+        "hit_points": 22,
+        "hit_dice": "5d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "grappled",
+                "type": "GRAPPLED",
+                "name": "Grappled"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "prone",
+                "type": "PRONE",
+                "name": "Prone"
+            },
+            {
+                "index": "restrained",
+                "type": "RESTRAINED",
+                "name": "Restrained"
+            },
+            {
+                "index": "stunned",
+                "type": "STUNNED",
+                "name": "Stunned"
+            }
+        ],
+        "senses": [
+            "blindsight 10 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Swarm",
+                "desc": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny maggot. The swarm can't regain hit points or gain temporary hit points."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 3,
+                "description": "Melee Weapon Attack: +3 to hit, reach 0 ft., one target in the swarm's space. 10 (4d4) piercing damage, or 5 (2d4) piercing damage if the swarm has half of its hit points or fewer. A creature damaged by the swarm must succeed on a 12 Constitution saving throw or contract a disease.\nEach time the diseased creature finishes a long rest, roll a d6 to determine the disease's effect:\n1-2. The creature is blinded until it finishes a long rest.\n3-4. The creature's hit point maximum decreases by 5 (2d4), and the reduction can't be removed until the disease ends. The creature dies if its hit point maximum drops to 0.\n5-6. The creature has disadvantage on ability checks and attack rolls until it finishes its next long rest. The disease lasts until it's removed by magic or until the creature rolls the same random effect for the disease two long rests in a row.",
+                "name": "Infestation"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "unspeakable-horror",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Unspeakable Horror",
+        "subtitle": "Huge monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/unspeakable-horror.png",
+        "background_color": {
+            "light": "#f0c675",
+            "dark": "#8a600f"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "unaligned",
+        "armor_class": 15,
+        "hit_points": 95,
+        "hit_dice": "10d10+40",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 17,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Formed by the Mists",
+                "desc": "When created, the horror's body composition takes one of four forms: Aberrant Armor, Loathsome Limbs, Malleable Mass, or Oozing Organs. This form determines certain traits in this stat block."
+            },
+            {
+                "name": "Amorphous (Malleable Mass Only)",
+                "desc": "The horror can move through any opening at least 1 inch wide without squeezing."
+            },
+            {
+                "name": "Bile Body (Oozing Organs Only)",
+                "desc": "Any creature that touches the horror or hits it with a melee attack takes 5 (1d10) acid damage."
+            },
+            {
+                "name": "Relentless Stride (Loathsome Limbs Only)",
+                "desc": "The horror can move through the space of another creature. The first time on a turn that the horror enters a creature's space during this move, the creature must succeed on a 16 Strength saving throw or be knocked prone."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The horror makes two Limbs attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d10+5",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 21 (3d10 + 5) bludgeoning damage.",
+                "name": "Limbs"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "7d12",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The horror expels necrotic energy in a 30-foot cone. Each creature in that area must make a 15 Constitution saving throw, taking 45 (7d12) necrotic damage on a failed save, or half as much damage on a successful one.",
+                "name": "Hex Blast (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    },
+    {
+        "index": "vampiric-mind-flayer",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Vampiric Mind Flayer",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/vampiric-mind-flayer.png",
+        "background_color": {
+            "light": "#75bdf0",
+            "dark": "#0f578a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 15,
+        "hit_points": 85,
+        "hit_dice": "10d8+40",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 0
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "telepathy 120 ft. but can only project emotions",
+        "special_abilities": [
+            {
+                "name": "Spider Climb",
+                "desc": "The mind flayer can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "name": "Sunlight Sensitivity",
+                "desc": "While in sunlight, the mind flayer has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "name": "Unusual Nature",
+                "desc": "The mind flayer doesn't require air, food, or sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The mind flayer makes two Claw attacks or one Claw attack and one Tentacles attack.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 8 (1d8 + 4) slashing damage plus 10 (3d6) necrotic damage.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one creature. 11 (1d6 + 4) piercing damage, and if the target is a creature, it is grappled (escape 15).",
+                "name": "Tentacles"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d6",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    },
+                    {
+                        "dice": "the",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    },
+                    {
+                        "dice": "the",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The mind flayer targets one creature it is grappling. The target must succeed on a 15 Wisdom saving throw or take 14 (4d6) psychic damage and gain 1 level of exhaustion. The mind flayer regains a number of hit points equal to the psychic damage dealt. A creature reduced to 0 hit points by the psychic damage dies.",
+                "name": "Drink Sapience"
+            }
+        ],
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        }
+    }
+]

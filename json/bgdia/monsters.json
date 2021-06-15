@@ -1,0 +1,4122 @@
+[
+    {
+        "index": "abyssal-chicken",
+        "type": "FIEND",
+        "subtype": "demon",
+        "group": "Demons",
+        "challenge_rating": 0.25,
+        "name": "Abyssal Chicken",
+        "subtitle": "Tiny fiend(demon), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/abyssal-chicken.png",
+        "background_color": {
+            "light": "#f08f75",
+            "dark": "#8a290f"
+        },
+        "is_horizontal_image": false,
+        "size": "Tiny",
+        "alignment": "chaotic evil",
+        "armor_class": 13,
+        "hit_points": 10,
+        "hit_dice": "3d4+3",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 5,
+                "modifier": -3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "blindsight 30ft. (blind beyond this radius)"
+        ],
+        "languages": "understands Abyssal but can't speak",
+        "special_abilities": [
+            {
+                "name": "Bad Flier",
+                "desc": "The abyssal chicken falls at the end of a turn if it's airborne and the only thing holding it aloft is its flying speed."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The abyssal chicken makes two attacks: one with its bite and one with its claws.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
+                "name": "Claws"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "amrik-vanthampur",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Amrik Vanthampur",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/amrik-vanthampur.png",
+        "background_color": {
+            "light": "#f07578",
+            "dark": "#8a0f12"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 17,
+        "hit_points": 66,
+        "hit_dice": "12d8+12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-acrobatics",
+                "modifier": 6,
+                "name": "Acrobatics"
+            },
+            {
+                "index": "skill-athletics",
+                "modifier": 3,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 6,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Infernal",
+        "special_abilities": [
+            {
+                "name": "Suave Defense",
+                "desc": "While Amrik is wearing light or no armor and wielding no shield, his AC includes his Charisma modifier."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Amrik makes three dagger attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 6 (1d4 + 4) piercing damage.",
+                "name": "Dagger"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Amrik hurls a smoke bomb up to 20 feet away. The bomb explodes on impact, creating a cloud of black smoke that fills a 10-foot-radius sphere. The area within the cloud is heavily obscured. A strong wind disperses the cloud, which otherwise remains until the end of Amrik's next turn.",
+                "name": "Smoke Bomb (1/Day)"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "archduke-zariel-of-avernus",
+        "type": "FIEND",
+        "subtype": "devil",
+        "group": "Devils",
+        "challenge_rating": 26.0,
+        "name": "Archduke Zariel of Avernus",
+        "subtitle": "Large fiend(devil), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/archduke-zariel-of-avernus.png",
+        "background_color": {
+            "light": "#f07580",
+            "dark": "#8a0f1a"
+        },
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 21,
+        "hit_points": 580,
+        "hit_dice": "40d10+360",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 150,
+                    "value_formatted": "150 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 24,
+                "modifier": 7
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 28,
+                "modifier": 9
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 26,
+                "modifier": 8
+            },
+            {
+                "type": "WISDOM",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "CHARISMA",
+                "value": 30,
+                "modifier": 10
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 16
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 16
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 18
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 18,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 16,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "radiant",
+                "type": "RADIANT",
+                "name": "Radiant"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks that aren't silvered",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks that aren't silvered"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "all, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Devil's Sight",
+                "desc": "Magical darkness doesn't impede Zariel's darkvision."
+            },
+            {
+                "name": "Magic Weapons",
+                "desc": "Zariel's weapon attacks are magical. When she hits with any weapon, the weapon deals an extra 36 (8d8) fire damage (included in the weapon attacks below)."
+            },
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If Zariel fails a saving throw, she can choose to succeed instead."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "Zariel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "name": "Regeneration",
+                "desc": "Zariel regains 20 hit points at the start of her turn. If she takes radiant damage, this trait doesn't function at the start of her next turn. Zariel dies only if she starts her turn with 0 hit points and doesn't regenerate."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Zariel attacks twice with her flail and once with Matalotok. She can substitute Horrid Touch for Matalotok.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "8d8",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 17 (2d8 + 8) piercing damage plus 36 (8d8) fire damage.",
+                "name": "Flail"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "COLD",
+                            "type": "COLD",
+                            "name": "Cold"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 17 (2d8 + 8) bludgeoning, or 19 (2d10 + 8) bludgeoning damage if used with two hands, plus 36 (8d8) fire damage. In addition, the weapon emits a burst of cold that deals 10 (3d6) cold damage to each creature within 30 feet of it.",
+                "name": "Matalotok (Warhammer)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "8d10",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Zariel touches one creature within 10 feet of her. The target must succeed on a DC 26 Constitution saving throw or take 44 (8d10) necrotic damage and be poisoned for 1 minute. While poisoned in this way, the target is also blinded and deafened. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "name": "Horrid Touch (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Zariel magically teleports, along with any equipment she is wearing and carrying, up to 120 feet to an unoccupied space she can see.",
+                "name": "Teleport"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "arkhan-the-cruel",
+        "type": "HUMANOID",
+        "subtype": "dragonborn",
+        "group": null,
+        "challenge_rating": 16.0,
+        "name": "Arkhan the Cruel",
+        "subtitle": "Medium humanoid(dragonborn), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/arkhan-the-cruel.png",
+        "background_color": {
+            "light": "#f0a575",
+            "dark": "#833c0f"
+        },
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 23,
+        "hit_points": 221,
+        "hit_dice": "26d8+104",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 9
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 10,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 9,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 9,
+                "name": "Intimidation"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft. (can see invisible creatures out to the same range)"
+        ],
+        "languages": "Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Aura of Hate",
+                "desc": "While Arkhan isn't incapacitated, he and all fiends and undead within 30 feet of him deal 4 extra damage whenever they hit with a melee weapon attack (already factored into Arkhan's attacks). This extra damage is of the same type as the weapon's damage type."
+            },
+            {
+                "name": "Hand of Vecna",
+                "desc": "The Hand of Vecna has 8 charges and regains 1d4 + 4 expended charges daily at dawn. Arkhan can cast the following spells from the hand by expending the specified number of charges (spell save DC 18): finger of death (5 charges), sleep (1 charge), slow (2 charges), and teleport (3 charges)."
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Arkhan wields Fane-Eater and wears a suit of Obsidian Flint Dragon Plate. The armor gives Arkhan advantage on ability checks and saving throws made to avoid or end the grappled condition on him."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Arkhan makes three weapon attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+12",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+12",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "2d8",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    },
+                    {
+                        "dice": "the",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 13,
+                "description": "Melee Weapon Attack: +13 to hit, reach 5 ft., one target. Hit: 16 (1d8 + 12) slashing damage, or 17 (1d10 + 12) slashing damage when used with two hands, plus 9 (2d8) cold damage. If the target is a creature and Arkhan rolls a 20 on the attack roll, the creature takes an extra 9 (2d8) necrotic damage, and Arkhan regains an amount of hit points equal to the necrotic damage dealt.",
+                "name": "Fane-Eater (Battleaxe)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d8",
+                        "damage": {
+                            "index": "COLD",
+                            "type": "COLD",
+                            "name": "Cold"
+                        }
+                    }
+                ],
+                "attack_bonus": 10,
+                "description": "Melee or Ranged Weapon Attack: +10 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 8 (1d6 + 5) piercing damage, plus 4 piercing damage and 9 (2d8) cold damage if the javelin was used to make a melee",
+                "name": "Javelin"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "bel",
+        "type": "FIEND",
+        "subtype": "devil",
+        "group": "Devils",
+        "challenge_rating": 25.0,
+        "name": "Bel",
+        "subtitle": "Large fiend(devil), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bel.png",
+        "background_color": {
+            "light": "#f09275",
+            "dark": "#5f1e0a"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 19,
+        "hit_points": 364,
+        "hit_dice": "27d10+216",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 28,
+                "modifier": 9
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 26,
+                "modifier": 8
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 25,
+                "modifier": 7
+            },
+            {
+                "type": "WISDOM",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 26,
+                "modifier": 8
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 16
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 12
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 14,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 15,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 11,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 15,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks that aren't silvered",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks that aren't silvered"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "truesight 120 ft."
+        ],
+        "languages": "Common, Infernal, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Fear Aura",
+                "desc": "Any creature hostile to Bel that starts its turn within 20 feet of him must make a DC 23 Wisdom saving throw, unless Bel is incapacitated. Unless the save succeeds, the creature is frightened until the start of its next turn. If a creature's saving throw is successful, the creature is immune to Bel's Fear Aura for the next 24 hours."
+            },
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If Bel fails a saving throw, he can choose to succeed instead."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "Bel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "name": "Magic Weapons",
+                "desc": "Bel's weapon attacks are magical."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Bel makes three attacks: two with his greatsword and one with his tail.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d6+9",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 23 (4d6 + 9) slashing damage plus 21 (6d6) fire damage. If the target is a flammable object that is not being held or worn, it catches fire.",
+                "name": "Greatsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 25 (3d10 + 9) bludgeoning damage. If the target is a creature, it must succeed on a DC 23 Constitution saving throw or be stunned until the end of its next turn.",
+                "name": "Tail"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "black-gauntlet-of-bane",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Black Gauntlet of Bane",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/black-gauntlet-of-bane.png",
+        "background_color": {
+            "light": "#f07e75",
+            "dark": "#8a180f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 16,
+        "hit_points": 51,
+        "hit_dice": "6d8+24",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 7,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Aura of Terror",
+                "desc": "When a hostile creature within 5 feet of the black gauntlet makes an attack roll or a saving throw, it has disadvantage on the roll. Creatures that are immune to the frightened condition are immune to this trait."
+            },
+            {
+                "name": "Tactical Discipline",
+                "desc": "The black gauntlet has advantage on all ability checks and saving throws made during combat."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The black gauntlet makes two attacks with its mace.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "3d8",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage plus 13 (3d8) necrotic damage.",
+                "name": "Mace"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d6",
+                        "damage": {
+                            "index": "RADIANT",
+                            "type": "RADIANT",
+                            "name": "Radiant"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one creature. Hit: 14 (4d6) radiant damage, and the next attack roll made against the target before the end of the black gauntlet's next turn has advantage. If the black gauntlet casts this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.",
+                "name": "Guiding Bolt (1st-Level Spell; Requires a Spell Slot)"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "bone-whelk",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.25,
+        "name": "Bone Whelk",
+        "subtitle": "Large monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/bone-whelk.png",
+        "background_color": {
+            "light": "#f09175",
+            "dark": "#8a2b0f"
+        },
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 12,
+        "hit_points": 27,
+        "hit_dice": "5d10",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 15,
+                    "value_formatted": "15 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 15,
+                    "value_formatted": "15 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 3,
+                "modifier": -4
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Adhesive",
+                "desc": "The bone whelk can cause Medium or smaller objects to adhere to it. A Medium or smaller creature that touches the bone whelk is grappled by it (escape DC 10)."
+            },
+            {
+                "name": "Death Scream",
+                "desc": "When the bone whelk dies, it emits a blood-curdling shriek than can be heard out to a range of 120 feet. This shriek causes nonmagical, organic material within 10 feet of the bone whelk to rot. Each creature within 10 feet of the bone whelk when it dies takes 9 (2d8) necrotic damage."
+            },
+            {
+                "name": "Spider Climb",
+                "desc": "The bone whelk can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 2,
+                "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one creature. Hit: 4 (1d8) piercing damage.",
+                "name": "Bite"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "duke-thalamra-vanthampur",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Duke Thalamra Vanthampur",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/duke-thalamra-vanthampur.png",
+        "background_color": {
+            "light": "#f09d75",
+            "dark": "#8a370f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 10,
+        "hit_points": 78,
+        "hit_dice": "12d8+24",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 6,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 5,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 6,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 3,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft. (see devil's sight below)"
+        ],
+        "languages": "Common, Infernal",
+        "special_abilities": [
+            {
+                "name": "Dark Devotion",
+                "desc": "Thalamra has advantage on saving throws against being charmed or frightened."
+            },
+            {
+                "name": "Devil's Sight",
+                "desc": "Thalamra can see normally in darkness, both magical and nonmagical, out to a distance of 120 feet."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Thalamra uses eldritch blast twice or makes two unarmed strikes.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 6,
+                "description": "Ranged Spell Attack: +6 to hit, range 120 ft., one creature. Hit: 9 (1d10 + 4) force damage.",
+                "name": "Eldritch Blast (Cantrip)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 4 bludgeoning damage.",
+                "name": "Unarmed Strike"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "gideon-lightward",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Gideon Lightward",
+        "subtitle": "Medium undead, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/gideon-lightward.png",
+        "background_color": {
+            "light": "#f09a75",
+            "dark": "#8a340f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 11,
+        "hit_points": 136,
+        "hit_dice": "16d8+64",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 4
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 6,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "radiant",
+                "type": "RADIANT",
+                "name": "Radiant"
+            }
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Regeneration",
+                "desc": "Gideon regains 10 hit points at the start of each of his turns. If he takes radiant damage, this trait doesn't function at the start of his next turn. Gideon is destroyed only if he starts his turn with 0 hit points and doesn't regenerate."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Gideon attacks twice with his fists.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+                "name": "Fist"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d10",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Gideon targets one creature he can see within 60 feet of him. The target must make a DC 15 Constitution saving throw, taking 22 (4d10) necrotic damage on a failed save, or half as much damage on a successful one.",
+                "name": "Withering Gaze"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "hellwasp",
+        "type": "FIEND",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Hellwasp",
+        "subtitle": "Large fiend, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hellwasp.png",
+        "background_color": {
+            "light": "#f07c75",
+            "dark": "#8a160f"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 19,
+        "hit_points": 52,
+        "hit_dice": "8d10+8",
+        "speed": {
+            "hover": true,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 60,
+                    "value_formatted": "60 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 10,
+                    "value_formatted": "10 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            }
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Infernal, telepathy 300 ft. (with other hellwasps only)",
+        "special_abilities": [
+            {
+                "name": "Magic Weapons",
+                "desc": "The hellwasp's weapon attacks are magical."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The hellwasp makes two attacks: one with its sting and one with its sword talons.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d6",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one creature. Hit: 8 (1d8 + 4) piercing damage plus 7 (2d6) fire damage, and the target must succeed on a DC 12 Constitution saving throw or be poisoned for 1 minute. While poisoned in this way, the target is also paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "name": "Sting"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
+                "name": "Sword Talons"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "hollyphant",
+        "type": "CELESTIAL",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Hollyphant",
+        "subtitle": "Small celestial, lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/hollyphant.png",
+        "background_color": {
+            "light": "#f0b075",
+            "dark": "#733e0d"
+        },
+        "is_horizontal_image": true,
+        "size": "Small",
+        "alignment": "lawful good",
+        "armor_class": 18,
+        "hit_points": 36,
+        "hit_dice": "8d6+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 120,
+                    "value_formatted": "120 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 3
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 4
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+        ],
+        "languages": "Celestial, telepathy 120 ft.",
+        "special_abilities": [
+            {
+                "name": "Aura of Invulnerability",
+                "desc": "An invisible aura forms a 10-foot-radius sphere around the hollyphant for as long as it lives. Any spell of 5th level or lower cast from outside the barrier can't affect creatures or objects within it, even if the spell is cast using a higher level spell slot. Such a spell can target creatures and objects within the barrier, but the spell has no effect on them. Similarly, the area within the barrier is excluded from the areas affected by such spells. The hollyphant can use an action to suppress this trait until its concentration ends (as if concentrating on a spell)."
+            },
+            {
+                "name": "Magic Weapons",
+                "desc": "The hollyphant's weapon attacks are magical."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 3,
+                "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d6) piercing damage.",
+                "name": "Tusks"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The hollyphant blows air through its trunk, creating a trumpet sound that can be heard out to a range of 600 feet. The trumpet also creates a 30-foot cone of energy that has one of the following effects, chosen by the hollyphant:",
+                "name": "Trumpet (3/Day)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "5d6",
+                        "damage": {
+                            "index": "THUNDER",
+                            "type": "THUNDER",
+                            "name": "Thunder"
+                        }
+                    },
+                    {
+                        "dice": "10d6",
+                        "damage": {
+                            "index": "THUNDER",
+                            "type": "THUNDER",
+                            "name": "Thunder"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Each creature in the cone must make a DC 14 Constitution saving throw. On a failed save, a creature takes 17 (5d6) thunder damage and is deafened for 1 minute. On a successful save, a creature takes half as much damage and isn't deafened. Nonmagical objects in the cone that aren't being held or worn take 35 (10d6) thunder damage.",
+                "name": "Trumpet of Blasting"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8+4",
+                        "damage": {
+                            "index": "RADIANT",
+                            "type": "RADIANT",
+                            "name": "Radiant"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Creatures in the cone must make a DC 14 Constitution saving throw, taking 22 (4d8 + 4) radiant damage on a failed save, or half as much damage on a successful one. Evil creatures have disadvantage on the saving throw. Good creatures in the cone take no damage.",
+                "name": "Trumpet of Sparkles"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "kostchtchie",
+        "type": "FIEND",
+        "subtype": "demon",
+        "group": "Demons",
+        "challenge_rating": 25.0,
+        "name": "Kostchtchie",
+        "subtitle": "Large fiend(demon), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/kostchtchie.png",
+        "background_color": {
+            "light": "#f08875",
+            "dark": "#8a220f"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "chaotic evil",
+        "armor_class": 16,
+        "hit_points": 243,
+        "hit_dice": "18d10+144",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 30,
+                "modifier": 10
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "CHARISMA",
+                "value": 19,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 16
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 14
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 12,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 14,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 14,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            },
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "truesight 120 ft"
+        ],
+        "languages": "Abyssal, Giant, telepathy 120 ft",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If Kostchtchie fails a saving throw, he can choose to succeed instead."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "Kostchtchie has advantage on saving throws against spells and other magical effects."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Kostchtchie makes two melee attacks, only one of which can be a bite attack.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+10",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 18,
+                "description": "Melee Weapon Attack: +18 to hit, reach 5 ft., one creature. Hit: 13 (1d6 + 10) piercing damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+10",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "2d10+10",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "COLD",
+                            "type": "COLD",
+                            "name": "Cold"
+                        }
+                    }
+                ],
+                "attack_bonus": 18,
+                "description": "Melee Weapon Attack: +18 to hit, reach 10 ft., one target. Hit: 19 (2d8 + 10) bludgeoning damage, or 21 (2d10 + 10) bludgeoning damage when used with two hands, and the weapon emits a burst of cold that deals 10 (3d6) cold damage to each creature within 30 feet of it.",
+                "name": "Matalotok (Warhammer)"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "krull",
+        "type": "HUMANOID",
+        "subtype": "tortle",
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Krull",
+        "subtitle": "Medium humanoid(tortle), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/krull.png",
+        "background_color": {
+            "light": "#aff183",
+            "dark": "#418a0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 17,
+        "hit_points": 117,
+        "hit_dice": "18d8+36",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 4,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-medicine",
+                "modifier": 8,
+                "name": "Medicine"
+            },
+            {
+                "index": "skill-nature",
+                "modifier": 4,
+                "name": "Nature"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 8,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Aquan, Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Hold Breath",
+                "desc": "Krull can hold his breath for 1 hour."
+            },
+            {
+                "name": "Inescapable Destruction",
+                "desc": "Necrotic damage dealt by Krull's spells ignores resistance to necrotic damage."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                "name": "Claws"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "2d8",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) bludgeoning damage plus 9 (2d8) necrotic damage.",
+                "name": "+1 Maul"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Krull withdraws into his shell. Until he emerges as a bonus action, he has a +4 bonus to AC and has advantage on Strength and Constitution saving throws. While in his shell, Krull is prone, his speed is 0 and can't increase, he has disadvantage on Dexterity saving throws, he can't take reactions, and the only action he can take is to emerge from his shell.",
+                "name": "Shell Defense"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "mahadi-the-rakshasa",
+        "type": "FIEND",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 14.0,
+        "name": "Mahadi the Rakshasa",
+        "subtitle": "Medium fiend, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mahadi-the-rakshasa.png",
+        "background_color": {
+            "light": "#f09e75",
+            "dark": "#722f0d"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 17,
+        "hit_points": 195,
+        "hit_dice": "23d8+92",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 20,
+                "modifier": 5
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 10
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 7,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 10,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 9,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "from magic weapons wielded by good creatures",
+                "type": "OTHER",
+                "name": "*from magic weapons wielded by good creatures"
+            }
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "all (can read only), Common, Infernal",
+        "special_abilities": [
+            {
+                "name": "Limited Magic Immunity",
+                "desc": "Mahadi can't be affected or detected by spells of 6th level or lower unless he wishes to be. He has advantage on saving throws against all other spells and magical effects."
+            },
+            {
+                "name": "Magic Weapons",
+                "desc": "Mahadi's weapon attacks are magical."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Mahadi makes four claw attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) slashing damage, and the target is cursed if it's a creature. The curse takes effect whenever the target takes a short or long rest, filling the target's thoughts with horrible images and dreams. The cursed target gains no benefit from finishing a short or long rest. The curse lasts until it is lifted by a remove curse spell or similar magic.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Mahadi summons Ilzabet, an erinyes bound to him by an infernal contract. The erinyes appears in an unoccupied space within 60 feet of him, acts as his ally, and can't summon other devils. The erinyes remains for 10 minutes or until Mahadi dismisses it as an action. If the erinyes dies, Mahadi loses this action option.",
+                "name": "Summon Erinyes (1/Day)"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "mortlock-vanthampur",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Mortlock Vanthampur",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mortlock-vanthampur.png",
+        "background_color": {
+            "light": "#f08a75",
+            "dark": "#8a240f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 12,
+        "hit_points": 90,
+        "hit_dice": "12d8+36",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 6,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 5,
+                "name": "Intimidation"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Indomitable (2/Day)",
+                "desc": "Mortlock can reroll a saving throw that he fails. He must use the new roll."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Mortlock makes two attacks with his greatclub.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d4+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "2d4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (2d4 + 4) bludgeoning damage, plus 5 (2d4) bludgeoning damage if Mortlock has taken any damage since his last turn.",
+                "name": "Greatclub"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Ranged Weapon Attack: +4 to hit, range 100/400 ft., one target. Hit: 7 (1d10 + 2) piercing damage.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "necromite-of-myrkul",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.5,
+        "name": "Necromite of Myrkul",
+        "subtitle": "Medium humanoid(human), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/necromite-of-myrkul.png",
+        "background_color": {
+            "light": "#f0b775",
+            "dark": "#8a510f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 11,
+        "hit_points": 13,
+        "hit_dice": "2d8+4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 5,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Abyssal, Common, Infernal",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 2,
+                "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 4 (1d8) bludgeoning damage.",
+                "name": "Skull Flail"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d4+3",
+                        "damage": {
+                            "index": "NECROTIC",
+                            "type": "NECROTIC",
+                            "name": "Necrotic"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Ranged Spell Attack: +5 to hit, range 90 ft., one target. Hit: 8 (2d4 + 3) necrotic damage.",
+                "name": "Claws of the Grave"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "nine-fingers-keene",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Nine-Fingers Keene",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/nine-fingers-keene.png",
+        "background_color": {
+            "light": "#f08a75",
+            "dark": "#4a1308"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 15,
+        "hit_points": 84,
+        "hit_dice": "13d8+26",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-acrobatics",
+                "modifier": 10,
+                "name": "Acrobatics"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 5,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-sleight-of-hand",
+                "modifier": 10,
+                "name": "Sleight of hand"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 10,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Thieves' cant",
+        "special_abilities": [
+            {
+                "name": "Cunning Action",
+                "desc": "On each of her turns in combat, Nine-Fingers can use a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "name": "Dagger Thrower",
+                "desc": "Nine-Fingers adds double her proficiency bonus to the damage she deals on ranged attacks made with daggers (already factored into her attacks)."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Nine-Fingers attacks three times with her daggers.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 6 (1d4 + 4) piercing damage, plus 6 piercing damage if it's a ranged attack.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "reaper-of-bhaal",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Reaper of Bhaal",
+        "subtitle": "Medium humanoid(human), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/reaper-of-bhaal.png",
+        "background_color": {
+            "light": "#f0db75",
+            "dark": "#8a750f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic evil",
+        "armor_class": 15,
+        "hit_points": 27,
+        "hit_dice": "5d8+5",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 5,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Aura of Murder",
+                "desc": "As long as the reaper is not incapacitated, hostile creatures within 5 feet of it gain vulnerability to piercing damage unless they have resistance or immunity to such damage."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The reaper makes two dagger attacks and uses Shroud Self.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                "name": "Dagger"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The reaper magically turns invisible until the start of its next turn. This invisibility ends if the reaper makes an attack roll, makes a damage roll, or casts a spell.",
+                "name": "Shroud Self"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "rilsa-rael",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Rilsa Rael",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rilsa-rael.png",
+        "background_color": {
+            "light": "#f09675",
+            "dark": "#8a300f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 15,
+        "hit_points": 52,
+        "hit_dice": "8d8+16",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 2
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-acrobatics",
+                "modifier": 6,
+                "name": "Acrobatics"
+            },
+            {
+                "index": "skill-athletics",
+                "modifier": 4,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-sleight-of-hand",
+                "modifier": 6,
+                "name": "Sleight of hand"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Thieves' cant",
+        "special_abilities": [
+            {
+                "name": "Cunning Action",
+                "desc": "On each of her turns in combat, Rilsa can use a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "name": "Focus",
+                "desc": "If Rilsa damages a creature with a weapon attack, she gains advantage on attack rolls against that target until the end of her next turn."
+            },
+            {
+                "name": "Tactical Leadership",
+                "desc": "As a bonus action, Rilsa chooses one creature she can see within 30 feet of her. The creature doesn't provoke opportunity attacks until the end of its next turn, provided it can hear Rilsa's commands."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Rilsa makes three weapon attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "name": "Shortsword"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 6 (1d4 + 4) piercing damage.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "smiler-the-defiler",
+        "type": "FEY",
+        "subtype": "elf",
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Smiler the Defiler",
+        "subtitle": "Medium fey(elf), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/smiler-the-defiler.png",
+        "background_color": {
+            "light": "#b8f075",
+            "dark": "#47780d"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic evil",
+        "armor_class": 18,
+        "hit_points": 165,
+        "hit_dice": "22d8+66",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 7,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 7,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning*"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing*"
+            },
+            {
+                "index": "slashing",
+                "type": "SLASHING",
+                "name": "Slashing*"
+            },
+            {
+                "index": "from nonmagical attacks",
+                "type": "OTHER",
+                "name": "*from nonmagical attacks"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Elvish, Sylvan",
+        "special_abilities": [
+            {
+                "name": "Fey Step (Recharge 4-6)",
+                "desc": "As a bonus action, Smiler can teleport up to 30 feet to an unoccupied space that he can see or to the empty seat of his infernal war machine."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "Smiler has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "name": "Equipment",
+                "desc": "Smiler wears +2 leather armor. He carries seven soul coins in a bag and a +1 shortsword"
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Smiler makes two weapon attacks. He can cast a spell in place of one of these attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 9 (1d6 + 6) piercing damage.",
+                "name": "+1 Shortsword"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "thurstwell-vanthampur",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.125,
+        "name": "Thurstwell Vanthampur",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/thurstwell-vanthampur.png",
+        "background_color": {
+            "light": "#75e2f0",
+            "dark": "#0b5c67"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 9,
+        "hit_points": 5,
+        "hit_dice": "2d8-4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 3,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 5,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 4,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Elvish, Infernal",
+        "special_abilities": [
+            {
+                "name": "Dark Devotion",
+                "desc": "Thurstwell has advantage on saving throws against being charmed or frightened."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "RADIANT",
+                            "type": "RADIANT",
+                            "name": "Radiant"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Flame-like radiance descends on one creature Thurstwell can see within 60 feet of him. The target must succeed on a DC 13 Dexterity saving throw or take 4 (1d8) radiant damage, gaining no benefit from cover.",
+                "name": "Sacred Flame (Cantrip)"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "torogar-steelfist",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 11.0,
+        "name": "Torogar Steelfist",
+        "subtitle": "Large monstrosity, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/torogar-steelfist.png",
+        "background_color": {
+            "light": "#f0b675",
+            "dark": "#563109"
+        },
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "lawful evil",
+        "armor_class": 17,
+        "hit_points": 168,
+        "hit_dice": "16d10+80",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 25,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "WISDOM",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 11
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 9
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Abyssal, Common",
+        "special_abilities": [
+            {
+                "name": "Goring Rush",
+                "desc": "Immediately after using the Dash action, Torogar can make one melee attack with his horns."
+            },
+            {
+                "name": "Labyrinthine Recall",
+                "desc": "Torogar can perfectly recall any path he has traveled."
+            },
+            {
+                "name": "Rage (Recharges after a Short or Long Rest)",
+                "desc": "As a bonus action, Torogar can enter a rage that lasts for 1 minute. The rage ends early if Torogar is knocked unconscious or if his turn ends and he hasn't attacked a hostile creature or taken damage since his last turn. While raging, Torogar gains the following benefits:\nHe has advantage on Strength checks and Strength saving throws.\nHe deals an extra 3 damage when he hits a target with a melee weapon attack.\nHe has resistance to bludgeoning, piercing, and slashing damage."
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Torogar wears gauntlets of flaming fury and a belt of fire giant strength. Without the belt, his Strength is 21. He also carries a soul coin."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Torogar makes three attacks: two with his scimitars and one with his horns.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+7",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "2d6+10",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 14 (2d6 + 7) slashing damage, or 17 (2d6 + 10) slashing damage while raging, plus 3 (1d6) fire damage from the gauntlets of flaming fury.",
+                "name": "Scimitar"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+7",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d8+10",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 16 (2d8 + 7) piercing damage, or 19 (2d8 + 10) piercing damage while raging.",
+                "name": "Horns"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "tressym",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Tressym",
+        "subtitle": "Tiny monstrosity, chaotic neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tressym.png",
+        "background_color": {
+            "light": "#bfe7f8",
+            "dark": "#0f658a"
+        },
+        "is_horizontal_image": true,
+        "size": "Tiny",
+        "alignment": "chaotic neutral",
+        "armor_class": 12,
+        "hit_points": 5,
+        "hit_dice": "2d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands Common but can't speak",
+        "special_abilities": [
+            {
+                "name": "Detect Invisibility",
+                "desc": "Within 60 feet of the tressym, magical invisibility fails to conceal anything from the tressym's sight"
+            },
+            {
+                "name": "Keen Smell",
+                "desc": "The tressym has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "name": "Poison Sense",
+                "desc": "The tressym can detect whether a substance is poisonous by taste, touch, or smell."
+            },
+            {
+                "name": "Familiar",
+                "desc": "With the DM's permission, a person who casts the find familiar spell can choose to conjure a tressym in stead of a normal cat."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 0,
+                "description": "Melee Weapon Attack: +0 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
+                "name": "Claws"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    },
+    {
+        "index": "ulder-ravengard",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Ulder Ravengard",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ulder-ravengard.png",
+        "background_color": {
+            "light": "#f0ba75",
+            "dark": "#8a540f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 20,
+        "hit_points": 112,
+        "hit_dice": "15d8+45",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 17,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 6,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 6,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Ulder makes three melee attacks, only one of which can be with his shield.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage when used with two hands.",
+                "name": "+1 Longsword"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+3",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one creature. Hit: 6 (1d6 + 3) bludgeoning damage, and Ulder pushes the target 5 feet away from him. Ulder then enters the space vacated by the target. If the target is pushed to within 5 feet of a creature friendly to Ulder, the target provokes an opportunity attack from that creature.",
+                "name": "Shield"
+            }
+        ],
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        }
+    }
+]

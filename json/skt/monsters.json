@@ -1,0 +1,4184 @@
+[
+    {
+        "index": "augrek-brighthelm",
+        "type": "HUMANOID",
+        "subtype": "shield dwarf",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Augrek Brighthelm",
+        "subtitle": "Medium humanoid(shield dwarf), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/augrek-brighthelm.png",
+        "background_color": {
+            "light": "#f09a75",
+            "dark": "#8a340f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 15,
+        "hit_points": 13,
+        "hit_dice": "2d8+4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 4,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Dwarvish",
+        "special_abilities": [
+            {
+                "name": "Dwarven Resilience",
+                "desc": "Augrek has advantage on saving throws against poison."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "Sheriff's deputy Augrek guards the southwest gate of Bryn Shander and welcomes visitors to town. She has a good heart.\nIdeal: \"You'll get farther in life with a kind word than an axe.\"\nBond: \"Bryn Shander is my home. It's my job to protect her.\"\nFlaw: \"I'm head over heels in love with Sheriff Southwell. One day I hope to marry him.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+2",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "1d10+2",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) bludgeoning damage, or 7 (1d10 + 2) bludgeoning damage if used with two hands.",
+                "name": "Warhammer"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target. Hit: 5 (1d10) piercing damage. Augrek carries ten crossbow bolts.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "beldora",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Beldora",
+        "subtitle": "Medium humanoid(human), chaotic good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/beldora.png",
+        "background_color": {
+            "light": "#f0b375",
+            "dark": "#8a4d0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic good",
+        "armor_class": 12,
+        "hit_points": 18,
+        "hit_dice": "4d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 5,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Dwarvish, Halfling",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "Beldora is a member of the harpers who survives using her wits and wiles. She looks like a homeless waif, but she's a survivor who shies away from material wealth.\nIdeal: \"We should all strive to help one another\"\nBond: \"I'll risk my life to protect the powerless.\"\nFlaw: \"I like lying to people. Makes life more interesting, no?\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
+                "name": "Shortsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 4,
+                "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage. Beldora carries ten crossbow bolts.",
+                "name": "Hand Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "chief-guh",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Chief Guh",
+        "subtitle": "Huge giant, chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/chief-guh.png",
+        "background_color": {
+            "light": "#f0a875",
+            "dark": "#8a420f"
+        },
+        "is_horizontal_image": true,
+        "size": "Huge",
+        "alignment": "chaotic evil",
+        "armor_class": 9,
+        "hit_points": 160,
+        "hit_dice": "10d12+40",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 0,
+                    "value_formatted": "0 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 5,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Giant, Goblin",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The giant makes two greatclub attacks or two unarmed attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+5",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 18 (3d8 + 5) bludgeoning damage.",
+                "name": "Greatclub"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d4+5",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 12 (3d4 + 5) bludgeoning damage.",
+                "name": "Unarmed Attack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d10+5",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Ranged Weapon Attack: +8 to hit, range 60/240 ft., one target. Hit: 21 (3d10 + 5) bludgeoning damage.",
+                "name": "Rock"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "claugiyliamatar",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 23.0,
+        "name": "Claugiyliamatar",
+        "subtitle": "Gargantuan dragon, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/claugiyliamatar.png",
+        "background_color": {
+            "light": "#d1f075",
+            "dark": "#6b8a0f"
+        },
+        "is_horizontal_image": true,
+        "size": "Gargantuan",
+        "alignment": "lawful evil",
+        "armor_class": 21,
+        "hit_points": 385,
+        "hit_dice": "22d20+154",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 80,
+                    "value_formatted": "80 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 25,
+                "modifier": 7
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 19,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 14
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 11
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 11,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 10,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 11,
+                "name": "Persuasion"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft."
+        ],
+        "languages": "Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Amphibious",
+                "desc": "The dragon can breathe air and water."
+            },
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If the dragon fails a saving throw, it can choose to succeed instead."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "3d6",
+                        "damage": {
+                            "index": "POISON",
+                            "type": "POISON",
+                            "name": "Poison"
+                        }
+                    }
+                ],
+                "attack_bonus": 15,
+                "description": "Melee Weapon Attack: +15 to hit, reach 15 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 10 (3d6) poison damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d6+8",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 15,
+                "description": "Melee Weapon Attack: +15 to hit, reach 10 ft., one target. Hit: 22 (4d6 + 8) slashing damage.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 15,
+                "description": "Melee Weapon Attack: +15 to hit, reach 20 ft., one target. Hit: 17 (2d8 + 8) bludgeoning damage.",
+                "name": "Tail"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                "name": "Frightful Presence"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "22d6",
+                        "damage": {
+                            "index": "POISON",
+                            "type": "POISON",
+                            "name": "Poison"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The dragon exhales poisonous gas in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 77 (22d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "name": "Poison Breath (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "countess-sansuri",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 11.0,
+        "name": "Countess Sansuri",
+        "subtitle": "Huge giant, neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/countess-sansuri.png",
+        "background_color": {
+            "light": "#75f0bb",
+            "dark": "#042718"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "neutral evil",
+        "armor_class": 14,
+        "hit_points": 200,
+        "hit_dice": "16d12+96",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 7,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Auran, Common, Giant",
+        "special_abilities": [
+            {
+                "name": "Keen Smell",
+                "desc": "Sansuri has advantage on Wisdom (Perception) checks that rely on smell."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Sansuri tries to throw a Small or Medium creature within 10 feet of her. The target must succeed on a DC 20 Dexterity saving throw or be hurled up to 60 feet horizontally in a direction of Sansuri's choice and land prone, taking 1d8 bludgeoning damage for every 10 feet it was thrown.",
+                "name": "Fling"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "A magical aura of wind surrounds Sansuri. The aura is a 10-foot-radius sphere that lasts as long as Sansuri maintains concentration on it (as if concentrating on a spell). While the aura is in effect, Sansuri gains a +2 bonus to its AC against ranged weapon attacks, and all open flames within the aura are extinguished unless they are magical.",
+                "name": "Wind Aura"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Sansuri makes two spear attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 12,
+                "description": "Melee Weapon Attack: +12 to hit, reach 10 ft., one target. Hit: 21 (3d8 + 8) piercing damage.",
+                "name": "Morningstar"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d10+8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 12,
+                "description": "Ranged Weapon Attack: +12 to hit, range 60/240 ft., one target. Hit: 30 (4d10 + 8) bludgeoning damage.",
+                "name": "Rock"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "crag-cat",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Crag Cat",
+        "subtitle": "Large beast, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/crag-cat.png",
+        "background_color": {
+            "light": "#f0b375",
+            "dark": "#8a4d0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 34,
+        "hit_dice": "4d10+12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 8,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Nondetection",
+                "desc": "The cat cannot be targeted or detected by any divination magic or perceived through magical scrying sensors."
+            },
+            {
+                "name": "Pounce",
+                "desc": "If the cat moves at least 20 feet straight toward a creature then hits it with a claw attack on the same turn, that target must succeed on a DC13 Strength saving throw or be knocked prone. If the target is prone, the cat can make one bite attack against it as a bonus action."
+            },
+            {
+                "name": "Spell Turning",
+                "desc": "The cat has advantage on saving throws against any spell that targets only the cat (not an area). If the cat's saving throw succeeds and the spell is of 7th level or lower, the spell has no effect on the cat and instead targets the caster."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 8 (1d10 + 3) piercing damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+3",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage.",
+                "name": "Claw"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "darathra-shendrel",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Darathra Shendrel",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/darathra-shendrel.png",
+        "background_color": {
+            "light": "#f0758e",
+            "dark": "#3b0711"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 14,
+        "hit_points": 52,
+        "hit_dice": "8d8+16",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-history",
+                "modifier": 2,
+                "name": "History"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 4,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 2,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 4,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Brave",
+                "desc": "Darathra has advantage on saving throws against being frightened"
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "As the Lord Protector of Triboar and a secret agent of the Harpers, Darathra has sworn an oath to defend the town. She takes her duty very seriously. In addition to her gear, Darathra has an unarmored warhorse named Buster.\nIdeal: \"Good people should be given every chance to prosper, free of tyranny.\"\nBond: \"I'll lay down my life to protect Triboar and its citizens.\"\nFlaw: \"I refuse to back down. Push me, and I'll push back.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Darthra makes two melee attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+3",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage",
+                "name": "Greatsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target. Hit: 5 (1d10) piercing damage. Darathra carries twenty crossbow bolts.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "darz-helgar",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Darz Helgar",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/darz-helgar.png",
+        "background_color": {
+            "light": "#f09e75",
+            "dark": "#8a380f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 12,
+        "hit_points": 27,
+        "hit_dice": "5d8+5",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 2,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-sleight-of-hand",
+                "modifier": 4,
+                "name": "Sleight of hand"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Sneak Attack (1/Turn)",
+                "desc": "Darz deals an extra 7 (2d6) damage when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Darz that isn't incapacitated and Darz doesn't have disadvantage on the attack roll."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "In his youth, Darz was a member of the Xanathar Thieves' Guild in Waterdeep. After serving ten years in prison for his crimes, he cut all ties to the city and moved north to be a campground caretaker.\nIdeal: \"You can run from your past, but you can't hide from it.\"\nBond: \"I've made a new life in Triboar. I'm not gonna run away this time. \"\nFlaw: \"I have no regrets. I do whatever it takes to survive.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "name": "Shortsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 4,
+                "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 4 (1d4 + 2) piercing damage. Darz carries twenty sling stones.",
+                "name": "Sling"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "duke-zalto",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 9.0,
+        "name": "Duke Zalto",
+        "subtitle": "Huge giant, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/duke-zalto.png",
+        "background_color": {
+            "light": "#f0b275",
+            "dark": "#8a4c0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "lawful evil",
+        "armor_class": 18,
+        "hit_points": 221,
+        "hit_dice": "13d12+78",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 25,
+                "modifier": 7
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 23,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 3
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 11,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Elvish, Giant",
+        "special_abilities": [
+            {
+                "name": "Siege Monster",
+                "desc": "Zalto deals double damage to objects and structures."
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Zalto wears a ring of lightning resistance."
+            },
+            {
+                "name": "Tackle",
+                "desc": "When Zalto enters any enemy's space for the first time on a turn, the enemy must succeed on a DC 19 Strength saving throw or be knocked prone."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Zalto makes two maul attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "6d6+7",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 28 (6d6 + 7) bludgeoning damage.",
+                "name": "Maul"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d10+7",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Ranged Weapon Attack: +11 to hit, range 60/240 ft., one target. Hit: 29 (4d10 + 7) bludgeoning damage.",
+                "name": "Rock"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "duvessa-shane",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Duvessa Shane",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/duvessa-shane.png",
+        "background_color": {
+            "light": "#f0b175",
+            "dark": "#8a4b0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 10,
+        "hit_points": 9,
+        "hit_dice": "2d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 3,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Dwarvish, Giant, Orc",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "The daughter of a Waterdhavian trader and a tavern server, Duvessa has her mother's talent for negotiation and her father's charm. As the first woman to serve as Town Speaker of Bryn Shander, and a young one at that, she has much to prove.\nIdeal: \"The people of Icewind Dale are survivors. They can weather any storm.\"\nBond: \"My mother taught me what it means to be a good leader. I won't disappoint her.\"\nFlaw: \"I don't give an inch in any argument of conflict.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 2 (1d4) piercing damage. Duvessa carries only one dagger.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "ghelryn-foehammer",
+        "type": "HUMANOID",
+        "subtype": "dwarf",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Ghelryn Foehammer",
+        "subtitle": "Medium humanoid(dwarf), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ghelryn-foehammer.png",
+        "background_color": {
+            "light": "#f08d75",
+            "dark": "#8a270f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 14,
+        "hit_points": 30,
+        "hit_dice": "4d8+12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 7,
+                "modifier": -2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 6,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 2,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Dwarvish",
+        "special_abilities": [
+            {
+                "name": "Dwarven Resilience",
+                "desc": "Ghelryn has advantage on saving throws against poison."
+            },
+            {
+                "name": "Giant Slayer",
+                "desc": "Any weapon attack that Ghelryn makes against a giant deals an extra 7 (2d6) damage on a hit."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "The blacksmith Ghelryn has a good heart, but he hates orcs and giants—hates them with a fiery passion. He considers it the solemn duty of all dwarves to cave in their skulls!\nIdeal: \"It is incumbent upon every dwarf to forge a legacy.\"\nBond: \"I stand for Clan Foehammer and all dwarvenkind.\"\nFlaw: \"I never run from a fight, especially if it involves killing orcs or giants.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Ghelryn makes two battleaxe attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands.",
+                "name": "Battleaxe"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "iymrith",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 23.0,
+        "name": "Iymrith",
+        "subtitle": "Gargantuan dragon, lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/iymrith.png",
+        "background_color": {
+            "light": "#759ff0",
+            "dark": "#0a2559"
+        },
+        "is_horizontal_image": false,
+        "size": "Gargantuan",
+        "alignment": "lawful evil",
+        "armor_class": 22,
+        "hit_points": 481,
+        "hit_dice": "26d20+208",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "BURROW",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 80,
+                    "value_formatted": "80 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 29,
+                "modifier": 9
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 27,
+                "modifier": 8
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 21,
+                "modifier": 5
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 15
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 12
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 17,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft."
+        ],
+        "languages": "Common, Draconic, Giant, Terran",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (3/Day)",
+                "desc": "If Iymrith fails a saving throw, she can choose to succeed instead."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Iymrith can use her Frightful Presence. She then makes three attacks: one with her bite and two with her claws.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+9",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "2d10",
+                        "damage": {
+                            "index": "LIGHTNING",
+                            "type": "LIGHTNING",
+                            "name": "Lightning"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 15 ft., one target. Hit: 20 (2d10 + 9) piercing damage plus 11 (2d10) lightning damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+9",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 16 (2d6 + 9) slashing damage.",
+                "name": "Claw"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+9",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 16,
+                "description": "Melee Weapon Attack: +16 to hit, reach 20 ft., one target. Hit: 18 (2d8 + 9) bludgeoning damage.",
+                "name": "Tail"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Each creature of Iymrith's choice that is within 120 feet of Iymrith and aware of it must succeed on a DC 20 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to Iymrith's Frightful Presence for the next 24 hours.",
+                "name": "Frightful Presence"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "16d10",
+                        "damage": {
+                            "index": "LIGHTNING",
+                            "type": "LIGHTNING",
+                            "name": "Lightning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Iymrith exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 23 Dexterity saving throw, taking 88 (16d10) lightning damage on a failed save, or half as much damage on a successful one.",
+                "name": "Lightning Breath (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Iymrith magically polymorphs into a female storm giant or back into her true form. She reverts to her true form if she dies. Any equipment she is wearing or carrying is absorbed or borne by the new form (Iymrith's choice).\nIn storm giant form, Iymrith retains her alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Her statistics are otherwise replaced by those of the new form.",
+                "name": "Change Shape"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "jarl-storvald",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "Jarl Storvald",
+        "subtitle": "Huge giant, neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/jarl-storvald.png",
+        "background_color": {
+            "light": "#75e8f0",
+            "dark": "#0f828a"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "neutral evil",
+        "armor_class": 15,
+        "hit_points": 189,
+        "hit_dice": "12d12+60",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 23,
+                "modifier": 6
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 9,
+                "name": "Athletics"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            }
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Giant, Giant Owl",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "15",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Ranged Weapon Attack: +5 to hit, ranged 20/60 ft., one Small, Medium, or Large creature. Hit: The target is restrained until it escapes the net. Any creature can use its action to make a DC 17 Strength check to free itself or another creature in the net, ending the effect on a success. Dealing 15 slashing damage to the net (AC 12) destroys the net and frees the target.",
+                "name": "Weighted Net"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The giant makes two greataxe attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d12+6",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 25 (3d12 + 6) slashing damage.",
+                "name": "Greataxe"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d10+6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target. Hit: 28 (4d10 + 6) bludgeoning damage.",
+                "name": "Rock"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "king-hekaton",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 13.0,
+        "name": "King Hekaton",
+        "subtitle": "Huge giant, chaotic good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/king-hekaton.png",
+        "background_color": {
+            "light": "#f09675",
+            "dark": "#782a0d"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "chaotic good",
+        "armor_class": 16,
+        "hit_points": 330,
+        "hit_dice": "20d12+100",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 50,
+                    "value_formatted": "50 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 29,
+                "modifier": 9
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 14
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 9
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 8,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-athletics",
+                "modifier": 14,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-history",
+                "modifier": 8,
+                "name": "History"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 9,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "cold",
+                "type": "COLD",
+                "name": "Cold"
+            }
+        ],
+        "damage_immunities": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            },
+            {
+                "index": "thunder",
+                "type": "THUNDER",
+                "name": "Thunder"
+            }
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Giant",
+        "special_abilities": [
+            {
+                "name": "Amphibious",
+                "desc": "Hekaton can breathe air and water."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Hekaton makes two broken chain attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d6+9",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 14,
+                "description": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 18 (3d6 + 9) bludgeoning damage.",
+                "name": "Broken Chain"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d10+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Ranged Weapon Attack: +6 to hit, range 120/480 ft., one target. Hit: 18 (3d10 + 2) piercing damage.",
+                "name": "Ballista"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "12d8",
+                        "damage": {
+                            "index": "LIGHTNING",
+                            "type": "LIGHTNING",
+                            "name": "Lightning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Hekaton hurls a magical lightning bolt at a point he can see within 500 feet of it. Each creature within 10 feet of that point must make a DC 17 Dexterity saving throw, taking 54 (12d8) lightning damage on a failed save, or half as much damage on a successful one.",
+                "name": "Lightning Strike (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "6d10",
+                        "damage": {
+                            "index": "THUNDER",
+                            "type": "THUNDER",
+                            "name": "Thunder"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Hekaton stomps the ground, triggering a thunderclap. All other creatures within 15 feet of him must succeed on a DC 17 Constitution saving throw or take 33 (6d10) thunder damage and be deafened until the start of Hekaton's next turn. On a successful save, a creature takes half as much damage and isn't deafened. The thunderclap can be heard out to a range of 1,200 feet.",
+                "name": "Thunderous Stomp (Recharge 6)"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "lifferlas",
+        "type": "PLANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Lifferlas",
+        "subtitle": "Huge plant, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/lifferlas.png",
+        "background_color": {
+            "light": "#f0a675",
+            "dark": "#351906"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 59,
+        "hit_dice": "7d12+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+            {
+                "index": "fire",
+                "type": "FIRE",
+                "name": "Fire"
+            }
+        ],
+        "damage_resistances": [
+            {
+                "index": "bludgeoning",
+                "type": "BLUDGEONING",
+                "name": "Bludgeoning"
+            },
+            {
+                "index": "piercing",
+                "type": "PIERCING",
+                "name": "Piercing"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "False Appearance",
+                "desc": "While Lifferlas remains motionless, it is indistinguishable from a normal tree."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "A druid of the Emerald Enclave awakened the tree Lifferlas with a spell. Goldenfields is his home, its people his friends. Children like to carve their name and initials into his body and hang from his boughs, and he's happy with that.\nIdeal: \"I exist to protect the people and plants of Goldenfields.\"\nBond: \"Children are wonderful. I would do anything to make them feel happy and safe.\"\nFlaw: \"I can't remember people's names and often get them mixed up.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Lifferlas makes two slam attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d6+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 14 (3d6 + 4) bludgeoning damage.",
+                "name": "Slam"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "markham-southwell",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Markham Southwell",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/markham-southwell.png",
+        "background_color": {
+            "light": "#f0b075",
+            "dark": "#8a4a0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 17,
+        "hit_points": 58,
+        "hit_dice": "9d8+18",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 5,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "Sheriff Markham of Bryn Shander is a brawny, likable man of few words. Nothing is more important to him than protecting Icewind Dale. He judges others by their actions, not their words.\nIdeal: \"All people deserve to be treated with dignity.\"\nBond: \"Duvessa is a natural leader, but she needs help. That's my job.\"\nFlaw: \"I bury my emotions and have no interest in small talk.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Markham makes two melee attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    },
+                    {
+                        "dice": "1d10+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) slashing damage, or 7 (1d10 + 2) slashing damage if used with two hands.",
+                "name": "Longsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 3,
+                "description": "Ranged Weapon Attack: +3 to hit, range 100/400 ft., one target. Hit: 6 (1d10 + 1) piercing damage. Markham carries twenty crossbow bolts.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "miros-xelbrin",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Miros Xelbrin",
+        "subtitle": "Medium humanoid(human), neutral good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/miros-xelbrin.png",
+        "background_color": {
+            "light": "#f08a75",
+            "dark": "#8a240f"
+        },
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "neutral good",
+        "armor_class": 10,
+        "hit_points": 22,
+        "hit_dice": "4d8+4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-intimidation",
+                "modifier": 4,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "Innkeeper Miros is a retired carnival attraction, dubbed \"the Yeti\" because of his barrel-shaped body and the thick, white hair covering his arms, chest, back, and head. When Goldenfields suffers, so does his business, so he takes strides to protect the compound.\nIdeal: \"As does the Emerald Enclave, I believe that civilization and the wilderness need to learn to coexist.\"\nBond: \"Make fun of me all you like, but don't speak ill of my inn or my employees.\"\nFlaw: \"When something upsets me, I have a tendency to fly into a rage.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+3",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "1d4+3",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 5 (1d4 + 3) bludgeoning damage, and the target grappled (escape DC 13) and takes 5 (1d4 + 3) bludgeoning damage at the start of each of Miros's turns until the grapple ends. Miros cannot make attacks while grappling a creature.",
+                "name": "Bear Hug"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+1",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 1) bludgeoning damage",
+                "name": "Club"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target. Hit: 5 (1d10) piercing damage. Miros carries ten crossbow bolts.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "narth-tezrin",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Narth Tezrin",
+        "subtitle": "Medium humanoid(human), chaotic good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/narth-tezrin.png",
+        "background_color": {
+            "light": "#f0a975",
+            "dark": "#2e1605"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic good",
+        "armor_class": 12,
+        "hit_points": 18,
+        "hit_dice": "4d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 3,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Dwarvish",
+        "special_abilities": [
+            {
+                "name": "Cunning Action",
+                "desc": "On each of his turns, Narth can use a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "Narth sells gear to adventurers, and he also has an adventurous spirit. The Lionshield Coster pays him well, but he longs to make a name for himself. At the same time, he runs a business with his partner Alaestra and knows she wouldn't forgive him if he ran off and never returned.\nIdeal: \"The bigger the risk, the greater the reward.\"\nBond: \"I adore my colleague Alestra, and I'd like to do something to impress her.\"\nFlaw: \"I'll risk life and limb to become a legend.-\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "name": "Shortsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 4,
+                "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage. Narth carries twenty crossbow bolts.",
+                "name": "Hand Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "naxene-drathkala",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Naxene Drathkala",
+        "subtitle": "Medium humanoid(human), neutral good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/naxene-drathkala.png",
+        "background_color": {
+            "light": "#f07e75",
+            "dark": "#550f09"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral good",
+        "armor_class": 10,
+        "hit_points": 27,
+        "hit_dice": "6d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-history",
+                "modifier": 5,
+                "name": "History"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Dwarvish, Elvish",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "Goldenfields' crops are vital Waterdeep's survival, which is why the Watchful Order of Magists and Protectors sent Naxene to make sure the temple-farm is adequately defended. At first she regarded the task as a punishment, but now she appreciates the peace and quiet.\nIdeal: \"There's no problem that can't be solved with magic.\"\nBond: \"I have great respect for Lady Laeral Silverhand of Waterdeep. She and the Lords' Alliance are going to bring some much-needed order to this lawless land.\"\nFlaw: \"I'm too smart to be wrong about anything.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6-1",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "1d8-1",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 1,
+                "description": "Melee Weapon Attack: +1 to hit, reach 5 ft., one creature. Hit: 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands.",
+                "name": "Staff"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "oren-yogilvy",
+        "type": "HUMANOID",
+        "subtype": "strongheart halfling",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Oren Yogilvy",
+        "subtitle": "Small humanoid(strongheart halfling), chaotic good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/oren-yogilvy.png",
+        "background_color": {
+            "light": "#f0a075",
+            "dark": "#712f0c"
+        },
+        "is_horizontal_image": false,
+        "size": "Small",
+        "alignment": "chaotic good",
+        "armor_class": 11,
+        "hit_points": 9,
+        "hit_dice": "2d6+2",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-performance",
+                "modifier": 7,
+                "name": "Performance"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Halfling",
+        "special_abilities": [
+            {
+                "name": "Halfling Nimbleness",
+                "desc": "Oren can move through the space of any creature that is of a size larger than his."
+            },
+            {
+                "name": "Lucky",
+                "desc": "When Oren rolls a 1 on an attack roll, ability check, or saving throw, he can reroll the die and must use the new roll."
+            },
+            {
+                "name": "Stout Resilience",
+                "desc": "Oren has advantage on saving throws against poison"
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "Oren came to Nurthfurrow's End looking for easy work and found it. He sings for his supper, drinks like a fish, and wanders the fields at night dreaming up new lyrics to entertain the inn's other guests. Oren likes to stir up trouble from time to time, but he doesn't have a mean bone in his body.\nIdeal: \"Music is food for the soul.\"\nBond: \"You had me at \"Can I buy you a drink.\"\nFlaw: \"I have a knack for putting myself in harm's way. Good thing I'm lucky!\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 3,
+                "description": "Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage. Duvessa carries only one dagger.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "othovir",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Othovir",
+        "subtitle": "Medium humanoid(human), lawful neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/othovir.png",
+        "background_color": {
+            "light": "#f0b475",
+            "dark": "#8a4e0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful neutral",
+        "armor_class": 10,
+        "hit_points": 16,
+        "hit_dice": "3d8+3",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 5,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Elvish",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "Othovir is a gifted harness-maker who doesn't talk about his family or where he came from. He cares about his business, his clients, and his good name.\nIdeal: \"Find what you do well, and do it to the best of your ability.\"\nBond: \"I won't allow my name to be tarnished.\"\nFlaw: \"I get angry when others pry into my private life.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 2,
+                "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 4 (1d8) piercing damage.",
+                "name": "Rapier"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "pow-ming",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Pow Ming",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pow-ming.png",
+        "background_color": {
+            "light": "#f0ba75",
+            "dark": "#4a2d08"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 12,
+        "hit_points": 40,
+        "hit_dice": "9d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 6,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-history",
+                "modifier": 6,
+                "name": "History"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Dwarvish, Elvish",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Pow carries a bag of holding and wears a robe of serpents with six snakes."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "shalvus-martholio",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Shalvus Martholio",
+        "subtitle": "Medium humanoid(human), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/shalvus-martholio.png",
+        "background_color": {
+            "light": "#f0be75",
+            "dark": "#8a580f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 13,
+        "hit_points": 27,
+        "hit_dice": "6d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 3,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-sleight-of-hand",
+                "modifier": 4,
+                "name": "Sleight of hand"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Elvish",
+        "special_abilities": [
+            {
+                "name": "Sneak Attack (1/Turn)",
+                "desc": "Shalvus deals an extra 7 (2d6) damage when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Shalvus that isn't incapacitated and Shalvus doesn't have disadvantage on the attack roll."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "Nalaskur Thaelond of Bargewright Inn has entrusted the shepherd Shalvus with an important assignment: to figure out the best way by which Goldenfields can be brought under the Black Network's control. Shalvus believes that success will ensure his swift rise through the Zhentarim ranks.\nIdeal: \"I'll do what it takes to prove myself to the Zhentarim.\"\nBond: \"I love animals, and I'm very protective of them.\"\nFlaw: \"I can't resist taking risks to feed my ambitions.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 2,
+                "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with both hands.",
+                "name": "Quarterstaff"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Ranged Weapon Attack: +2 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage. Shalvus carries ten crossbow bolts.",
+                "name": "Hand Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "sir-baric-nylef",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Sir Baric Nylef",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sir-baric-nylef.png",
+        "background_color": {
+            "light": "#f08a75",
+            "dark": "#8a240f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 18,
+        "hit_points": 52,
+        "hit_dice": "8d8+16",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-insight",
+                "modifier": 4,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 2,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-medicine",
+                "modifier": 4,
+                "name": "Medicine"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 4,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common",
+        "special_abilities": [
+            {
+                "name": "Brave",
+                "desc": "Baric has advantage on saving throws against being frightened."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "As a knight of the Order of the Gauntlet, Sir Baric has sworn oaths to catch evildoers and bring them to justice. His current quarry is a dwarf brigand, Worvil \"the Weevil\" Forkbeard, who is rumored to be hiding in Icewind Dale. In addition to his gear, Sir Baric has an unarmored warhorse, Henry.\nIdeal: \"Evil must not be allowed to thrive in this world.\"\nBond: \"Tyr is my lord; the order, my family. Through my actions, I shall honor both.\"\nFlaw: \"I'm not afraid to die. When Tyr finally calls me, I'll go to him happily.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+                "name": "Maul"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 2,
+                "description": "Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target. Hit: 5 (1d10) piercing damage. Baric carries twenty crossbow bolts.",
+                "name": "Heavy Crossbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "sirac-of-suzail",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Sirac of Suzail",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/sirac-of-suzail.png",
+        "background_color": {
+            "light": "#f0b175",
+            "dark": "#8a4b0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 14,
+        "hit_points": 22,
+        "hit_dice": "5d8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 4,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 3,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Orc",
+        "special_abilities": [
+            {
+                "name": "Roleplaying Information",
+                "desc": "An acolyte of Torm, Sirac grew up on the streets of Suzail, the capital of Cormyr. He came to Icewind Dale to become a knucklehead trout fisher but instead found religion. The misbegotten son of Artus Cimber, a renowned human adventurer, Sirac hasn't seen his father since he was a baby.\nIdeal: \"Without duty or loyalty, a man is nothing.\"\nBond: \"Icewind Dale is where i belong for the rest of my life.\"\nFlaw: \"I am honest to a fault.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "name": "Shortsword"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 5,
+                "description": "Ranged Weapon Attack: +5 to hit, range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage. Sirac carries six darts.",
+                "name": "Dart"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "tressym",
+        "type": "BEAST",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Tressym",
+        "subtitle": "Tiny beast, chaotic neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/tressym.png",
+        "background_color": {
+            "light": "#bfe7f8",
+            "dark": "#0f658a"
+        },
+        "is_horizontal_image": true,
+        "size": "Tiny",
+        "alignment": "chaotic neutral",
+        "armor_class": 12,
+        "hit_points": 5,
+        "hit_dice": "2d4",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                },
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands Common but can't speak",
+        "special_abilities": [
+            {
+                "name": "Detect Invisibility",
+                "desc": "Within 60 feet of the tressym, magical invisibility fails to conceal anything from the tressym's sight"
+            },
+            {
+                "name": "Keen Smell",
+                "desc": "The tressym has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "name": "Poison Sense",
+                "desc": "The tressym can detect whether a substance is poisonous by taste, touch, or smell."
+            },
+            {
+                "name": "Familiar",
+                "desc": "With the DM's permission, a person who casts the find familiar spell can choose to conjure a tressym in stead of a normal cat."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 0,
+                "description": "Melee Weapon Attack: +0 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
+                "name": "Claws"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "urgala-meltimer",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Urgala Meltimer",
+        "subtitle": "Medium humanoid(human), lawful good",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/urgala-meltimer.png",
+        "background_color": {
+            "light": "#f08f75",
+            "dark": "#441407"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful good",
+        "armor_class": 12,
+        "hit_points": 58,
+        "hit_dice": "9d8+18",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 13,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 5,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 3,
+                "name": "Intimidation"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Giant",
+        "special_abilities": [
+            {
+                "name": "Giant Slayer",
+                "desc": "Any weapon attack that Urgala makes against a giant deals an extra 7 (2d6) damage on a hit."
+            },
+            {
+                "name": "Roleplaying Information",
+                "desc": "A retired adventurer, Urgala owns a respectable inn, the North shield House, and she doesn't want to see it or her neighbors' homes destroyed. She has no tolerance for monsters or bullies.\nIdeal: \"We live in a violent world, and sometimes violence is necessary for survival.\"\nBond: \"My home is my life. Threaten it, and I'll hurt you.\"\nFlaw: \"I know how treacherous and greedy adventurers can be. I don't trust them—any of them.\""
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Urgala makes two attacks with her morningstar or her shortbow.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
+                "name": "Morningstar"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 3,
+                "description": "Ranged Weapon Attack: +3 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 1) piercing damage. Urgala carries a quiver of twenty arrows.",
+                "name": "Shortbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    },
+    {
+        "index": "uthgardt-shaman",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Uthgardt Shaman",
+        "subtitle": "Medium humanoid(human), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/uthgardt-shaman.png",
+        "background_color": {
+            "light": "#f09d75",
+            "dark": "#371606"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 13,
+        "hit_points": 38,
+        "hit_dice": "7d8+7",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-medicine",
+                "modifier": 4,
+                "name": "Medicine"
+            },
+            {
+                "index": "skill-nature",
+                "modifier": 4,
+                "name": "Nature"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-survival",
+                "modifier": 6,
+                "name": "Survival"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Bothii, Common",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "1d8+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 5 (1d6 + 2) piercing damage, or 6 (1d8 + 2) piercing damage if wielded with two hands.",
+                "name": "Spear"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+1",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 3,
+                "description": "Ranged Weapon Attack: +3 to hit, range 80/320 ft., one target. Hit: 4 (1d6 + 1) piercing damage.",
+                "name": "Shortbow"
+            }
+        ],
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        }
+    }
+]

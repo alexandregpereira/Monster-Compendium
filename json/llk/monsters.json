@@ -1,0 +1,432 @@
+[
+    {
+        "index": "brain-in-a-jar",
+        "type": "UNDEAD",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Brain in a Jar",
+        "subtitle": "Medium undead, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/brain-in-a-jar.png",
+        "background_color": {
+            "light": "#75f0d2",
+            "dark": "#0f8a6c"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 11,
+        "hit_points": 58,
+        "hit_dice": "9d8+18",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 0,
+                    "value_formatted": "0 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "necrotic",
+                "type": "NECROTIC",
+                "name": "Necrotic"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Detect Sentience",
+                "desc": "The brain in a jar can sense the presence and location of any creature within 300 feet of it that has an Intelligence of 3 or higher, regardless of interposing barriers, unless the creature is protected by a mind blank spell."
+            },
+            {
+                "name": "Magic Resistance",
+                "desc": "The brain in a jar has advantage on saving throws against spells and other magical effects."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+4",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The brain in a jar magically emits psychic energy in a 60-foot cone. Each creature in that area must succeed on a DC 15 Intelligence saving throw or take 13 (2d8 + 4) psychic damage and be stunned for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "name": "Mind Blast (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Lost Laboratory of Kwalish",
+            "acronym": "LLK"
+        }
+    },
+    {
+        "index": "garret-levistusson",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Garret Levistusson",
+        "subtitle": "Medium humanoid, chaotic neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/garret-levistusson.png",
+        "background_color": {
+            "light": "#f09575",
+            "dark": "#8a2f0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic neutral",
+        "armor_class": 14,
+        "hit_points": 44,
+        "hit_dice": "8d8+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 17,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 7,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-investigation",
+                "modifier": 4,
+                "name": "Investigation"
+            },
+            {
+                "index": "skill-performance",
+                "modifier": 5,
+                "name": "Performance"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 5,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Abyssal, Common, Infernal, Thieves' cant",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Garret wears a Ring of Warmth (included in his statistics) and wields a Gambler's Blade longsword."
+            },
+            {
+                "name": "Bardic Inspiration (3/Day)",
+                "desc": "As a bonus action, Garret can give one chosen creature (other than him) a d6 inspiration die. The chosen creature must be within 60 feet of Garret and able to hear him. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can use the inspiration die after the roll is made but before the DM says whether it succeeds or fails. Once the inspiration die is rolled, it is lost. A creature can have only one inspiration die at a time."
+            },
+            {
+                "name": "Cunning Action",
+                "desc": "On each of his turns, Garret can use a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "name": "Sneak Attack (1/Turn)",
+                "desc": "Garret deals an extra 7 (2d6) damage when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Garret that isn't incapacitated and Garret doesn't have disadvantage on the attack roll."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. 5 (1d6 + 2) piercing damage.",
+                "name": "Shortsword"
+            }
+        ],
+        "source": {
+            "name": "Lost Laboratory of Kwalish",
+            "acronym": "LLK"
+        }
+    },
+    {
+        "index": "mary-greymalkin",
+        "type": "HUMANOID",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Mary Greymalkin",
+        "subtitle": "Medium humanoid, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/mary-greymalkin.png",
+        "background_color": {
+            "light": "#f08e75",
+            "dark": "#8a280f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral",
+        "armor_class": 12,
+        "hit_points": 45,
+        "hit_dice": "7d8+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 4
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 4,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-medicine",
+                "modifier": 4,
+                "name": "Medicine"
+            },
+            {
+                "index": "skill-nature",
+                "modifier": 4,
+                "name": "Nature"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 4,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Abyssal, Celestial, Common, Elvish, Infernal, Sylvan",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Mary wears Bracers of Defense and a Ring of Protection, and carries a Deck of Several Things"
+            },
+            {
+                "name": "Fey Presence (Recharges after a Short Rest)",
+                "desc": "Mary can cause each creature within 10 feet of her to succeed on a DC 12 Wisdom saving throw or become charmed or frightened by her (Mary's choice) until the end of her next turn."
+            },
+            {
+                "name": "Fey Ancestry",
+                "desc": "Mary has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 2,
+                "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. 3 (1d6) bludgeoning damage.",
+                "name": "Quarterstaff"
+            }
+        ],
+        "source": {
+            "name": "Lost Laboratory of Kwalish",
+            "acronym": "LLK"
+        }
+    }
+]

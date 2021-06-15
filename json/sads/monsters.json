@@ -1,0 +1,252 @@
+[
+    {
+        "index": "adult-sapphire-dragon",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 15.0,
+        "name": "Adult Sapphire Dragon",
+        "subtitle": "Huge dragon, lawful neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/adult-sapphire-dragon.png",
+        "background_color": {
+            "light": "#75b0f0",
+            "dark": "#0f4a8a"
+        },
+        "is_horizontal_image": true,
+        "size": "Huge",
+        "alignment": "lawful neutral",
+        "armor_class": 19,
+        "hit_points": 207,
+        "hit_dice": "18d12+60",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "BURROW",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "FLY",
+                    "measurement_unit": "FEET",
+                    "value": 80,
+                    "value_formatted": "80 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 23,
+                "modifier": 6
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 18,
+                "modifier": 4
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 10
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 9
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-history",
+                "modifier": 9,
+                "name": "History"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 13,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 14,
+                "name": "Persuasion"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 8,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "thunder",
+                "type": "THUNDER",
+                "name": "Thunder"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "blindsight 60 ft.",
+            "darkvision 120 ft."
+        ],
+        "languages": "telepathy 120 ft., Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Legendary Resistance (2/Day)",
+                "desc": "If the dragon fails a saving throw, it can choose to succeed instead."
+            },
+            {
+                "name": "Spider Climb",
+                "desc": "The dragon can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "name": "Tunneler",
+                "desc": "The dragon can burrow through solid rock at half its burrow speed and can choose to leave a 10-foot-diameter tunnel in its wake."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The dragon can use its Frightful Presence. It then makes two melee attacks, one with its bite and one with its claws.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d10+6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "THUNDER",
+                            "type": "THUNDER",
+                            "name": "Thunder"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. 17 (2d10 + 6) piercing damage plus 3 (1d6) thunder damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+6",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. 19 (3d8 + 6) slashing damage.",
+                "name": "Claws"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+6",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 11,
+                "description": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. 15 (2d8 + 6) bludgeoning damage.",
+                "name": "Tail"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                "name": "Frightful Presence"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "13d6",
+                        "damage": {
+                            "index": "THUNDER",
+                            "type": "THUNDER",
+                            "name": "Thunder"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The dragon exhales a pulse of high-pitched, nearly inaudible sound in a 60-foot-cone. Each creature in that cone must make a DC 18 Constitution saving throw. On a failed save, the creature takes 45 (13d6) thunder damage and is incapacitated until the end of its next turn. On a successful save, the creature takes half as much damage and isn't incapacitated.",
+                "name": "Debilitating Breath (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Sapphire Anniversary Dice Set",
+            "acronym": "SADS"
+        }
+    }
+]

@@ -41,7 +41,7 @@ data class MonsterDto(
     @SerialName("background_color")
     val backgroundColor: ColorDto = ColorDto(),
     @SerialName("is_horizontal_image")
-    val isHorizontalImage: Boolean = false,
+    val isHorizontalImage: Boolean,
     @SerialName("size")
     val size: MonsterSizeDto,
     @SerialName("alignment")

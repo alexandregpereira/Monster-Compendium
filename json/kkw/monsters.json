@@ -1,0 +1,169 @@
+[
+    {
+        "index": "loading-rig",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Loading Rig",
+        "subtitle": "Large construct, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/loading-rig.png",
+        "background_color": {
+            "light": "#78ddf0",
+            "dark": "#0f768a"
+        },
+        "is_horizontal_image": true,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 18,
+        "hit_points": 39,
+        "hit_dice": "6d10+6",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 1,
+                "modifier": -5
+            },
+            {
+                "type": "WISDOM",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 1,
+                "modifier": -5
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            },
+            {
+                "index": "psychic",
+                "type": "PSYCHIC",
+                "name": "Psychic"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "blinded",
+                "type": "BLINDED",
+                "name": "Blinded"
+            },
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "deafened",
+                "type": "DEAFENED",
+                "name": "Deafened"
+            },
+            {
+                "index": "exhaustion",
+                "type": "EXHAUSTION",
+                "name": "Exhaustion"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            },
+            {
+                "index": "paralyzed",
+                "type": "PARALYZED",
+                "name": "Paralyzed"
+            },
+            {
+                "index": "petrified",
+                "type": "PETRIFIED",
+                "name": "Petrified"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "blindsight 60 ft. (blind beyond this radius)"
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Antimagic Susceptibility",
+                "desc": "The rig is incapacitated while in the area of an antimagic field. If targeted by dispel magic, the rig must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute."
+            },
+            {
+                "name": "Unstable",
+                "desc": "If the rig takes damage, it must succeed on a DC 10 Constitution saving throw or be incapacitated with a speed of 0 until a creature activates it with a successful DC 10 Intelligence (Arcana) check made as an action."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The armor makes two melee attacks.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage.",
+                "name": "Slam"
+            }
+        ],
+        "source": {
+            "name": "Krenko's Way",
+            "acronym": "KKW"
+        }
+    }
+]

@@ -1,0 +1,945 @@
+[
+    {
+        "index": "moghadam",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 12.0,
+        "name": "Moghadam",
+        "subtitle": "Medium humanoid(human), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/moghadam.png",
+        "background_color": {
+            "light": "#f07586",
+            "dark": "#8a0f20"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 14,
+        "hit_points": 104,
+        "hit_dice": "19d8+19",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 8,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-medicine",
+                "modifier": 7,
+                "name": "Medicine"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Abyssal, Common, Dwarvish, Infernal, Undercommon",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Moghadam wields Ruinblade (see appendix C)."
+            },
+            {
+                "name": "Artificial Mind",
+                "desc": "Moghadam can manifest an artificial mind as a floating spectral image of a demilich's jeweled skull. Moghadam can communicate telepathically with this mind, send it up to 300 feet away from him, and see and hear through it."
+            },
+            {
+                "name": "Infoportation (1/Day)",
+                "desc": "Moghadam can teleport himself into an unoccupied space next to his artificial mind."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+2",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. 9 (2d6 + 2) slashing damage.",
+                "name": "Ruinblade"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "While wielding  Ruinblade, Moghadam can cast the blight spell (DC 15).",
+                "name": "Blight (1/Day)"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "While wielding Ruinblade, Moghadam can cast the disintegrate spell against any nonmagical object or creation of magical force.",
+                "name": "Disintegrate (1/7 Days)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8+4",
+                        "damage": {
+                            "index": "PSYCHIC",
+                            "type": "PSYCHIC",
+                            "name": "Psychic"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Moghadam overloads the thoughts of one creature within 5 feet of either himself or his artificial mind. The target must succeed on a DC 16 Intelligence saving throw or take 22 (4d8 + 4) psychic damage, and the next attack roll made against the target before the end of Moghadam's next turn has advantage.",
+                "name": "Information Overload (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    },
+    {
+        "index": "neo-otyugh",
+        "type": "ABERRATION",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Neo-Otyugh",
+        "subtitle": "Huge aberration, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/neo-otyugh.png",
+        "background_color": {
+            "light": "#75a8f0",
+            "dark": "#0f428a"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "neutral",
+        "armor_class": 16,
+        "hit_points": 150,
+        "hit_dice": "12d12+72",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 22,
+                "modifier": 6
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 9
+            }
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 120 ft."
+        ],
+        "languages": "Otyugh",
+        "special_abilities": [
+            {
+                "name": "Limited Telepathy",
+                "desc": "The otyugh can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The neo-otyugh makes three attacks: one with its bite and two with its tentacles.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. 16 (2d10 + 5) piercing damage. If the target is a creature, it must succeed on a DC 17 Constitution saving throw against disease or become poisoned until the disease is cured. Every 24 hours that elapse, the target must repeat the saving throw, reducing its hit point maximum by 5 (1d10) on a failure. The disease is cured on a success. The target dies if the disease reduces its hit point maximum to 0. This reduction to the target's hit point maximum lasts until the disease is cured.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 15 ft., one target. 10 (1d10 + 5) bludgeoning damage. If the target is Large or smaller, it is grappled (escape DC 16) and restrained until the grapple ends. The neo-otyugh has two tentacles, each of which can grapple one target.",
+                "name": "Tentacle"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d6+5",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    },
+                    {
+                        "dice": "the",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The neo-otyugh slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 16 Constitution saving throw or take 15 (3d6 + 5) bludgeoning damage and be stunned until the end of the neo-otyugh's next turn. On a successful save, the target takes half the bludgeoning damage and isn't stunned.",
+                "name": "Tentacle Slam"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    },
+    {
+        "index": "the-demogorgon",
+        "type": "GIANT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 8.0,
+        "name": "The Demogorgon",
+        "subtitle": "Large giant, chaotic neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/the-demogorgon.png",
+        "background_color": {
+            "light": "#f0cd75",
+            "dark": "#8a670f"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "chaotic neutral",
+        "armor_class": 15,
+        "hit_points": 123,
+        "hit_dice": "13d12+39",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 21,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 6,
+                "modifier": -2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 8,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Giant, Orc",
+        "special_abilities": [
+            {
+                "name": "Two Heads",
+                "desc": "The ettin has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious."
+            },
+            {
+                "name": "Wakeful",
+                "desc": "When one of the ettin's heads is asleep, its other head is awake."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The ettin makes two attacks: one with its battleaxe and one with its morningstar.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+5",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 14 (2d8 + 5) slashing damage.",
+                "name": "Battleaxe"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. 14 (2d8 + 5) piercing damage.",
+                "name": "Morningstar"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "10d8",
+                        "damage": {
+                            "index": "FIRE",
+                            "type": "FIRE",
+                            "name": "Fire"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The ettin's right head exhales fire in a 30-foot cone. Each creature in that area must make a DC 14 Dexterity saving throw, taking 45 (10d8) fire damage on a failed save, or half as much damage on a successful one.",
+                "name": "Fire Breath (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "10d8",
+                        "damage": {
+                            "index": "COLD",
+                            "type": "COLD",
+                            "name": "Cold"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "The ettin's left head exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 14 Constitution saving throw, taking 45 (10d8) cold damage on a failed save, or half as much damage on a successful one.",
+                "name": "Cold Breath (Recharge 5-6)"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The ettin turns its magical gaze toward one creature that it can see within 120 feet of it. That target must make a DC 14 Wisdom saving throw. Unless the target is incapacitated, it can avert its eyes to avoid the gaze and to automatically succeed on the save. If the target does so, it can't see the ettin until the start of the ettin's next turn. If the target looks at the ettin in the meantime, it must immediately make the save.\nIf the target fails the save, it suffers one of the following effects of the ettin's choice or at random:",
+                "name": "Gaze"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The target is stunned until the start of the ettin's next turn or until the ettin is no longer within line of sight.",
+                "name": "Beguiling Gaze"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The target is charmed by the ettin until the start of the ettin's next turn. The ettin chooses how the charmed target uses its actions, reactions, and movement.",
+                "name": "Hypnotic Gaze"
+            },
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The target suffers the effect of the confusion spell without making a saving throw. The effect lasts until the start of the ettin's next turn. The ettin doesn't need to concentrate on the spell.",
+                "name": "Insanity Gaze"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    },
+    {
+        "index": "thessalar",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 12.0,
+        "name": "Thessalar",
+        "subtitle": "Medium humanoid(human), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/thessalar.png",
+        "background_color": {
+            "light": "#f0c275",
+            "dark": "#8a5c0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 14,
+        "hit_points": 104,
+        "hit_dice": "7d10+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 8
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 7
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-animal-handling",
+                "modifier": 7,
+                "name": "Animal handling"
+            },
+            {
+                "index": "skill-arcana",
+                "modifier": 8,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 7,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-medicine",
+                "modifier": 7,
+                "name": "Medicine"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "acid",
+                "type": "ACID",
+                "name": "Acid"
+            },
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Elvish, Primordial",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Thessalar wields a +1 dagger coated with thessaltoxin poison (see appendix C)."
+            },
+            {
+                "name": "Alchemical Homunculus",
+                "desc": "Thessalar is accompanied by his thessalars homunculus. If the mending spell is cast on it, the homunculus regains 2d6 hit points."
+            },
+            {
+                "name": "Healing Toxicity",
+                "desc": "Any magic item that restores hit points and can be applied to a piercing or slashing weapon (a potion, an ointment, and so forth) causes a hit with that weapon to deal extra damage to Thessalar equal to the amount the item would normally heal."
+            },
+            {
+                "name": "Greater Restoration (1/Day)",
+                "desc": "Thessalar can cast greater restoration if he has access to alchemical supplies."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+1",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack:,rw +5 to hit, reach 5 ft. or range 20/60 ft., one target. 3 (1d4 + 1) piercing damage, and the target must succeed on a DC 15 Constitution saving throw. On a failed save, the target is affected as if by the polymorph spell, transforming into a random beast or a creature it has seen within the last 24 hours (as chosen by the DM). This effect lasts until the target finishes a long rest.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    },
+    {
+        "index": "thessalheart-construct",
+        "type": "CONSTRUCT",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.0,
+        "name": "Thessalheart Construct",
+        "subtitle": "Tiny construct, neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/thessalheart-construct.png",
+        "background_color": {
+            "light": "#f08675",
+            "dark": "#8a200f"
+        },
+        "is_horizontal_image": true,
+        "size": "Tiny",
+        "alignment": "neutral",
+        "armor_class": 15,
+        "hit_points": 7,
+        "hit_dice": "2d4+2",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "CLIMB",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                },
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "poisoned",
+                "type": "POISONED",
+                "name": "Poisoned"
+            }
+        ],
+        "senses": [
+            "darkvision 60"
+        ],
+        "languages": "understands the languages of its creator but can't speak",
+        "special_abilities": [
+            {
+                "name": "Telepathic Bond",
+                "desc": "While the construct is on the same plane of existence as its master, it can magically convey what it senses to its master, and the two can communicate telepathically."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. 1 slashing damage, and the target must succeed on a DC 10 Constitution saving throw or be poisoned for 1 minute. If the saving throw fails by 5 or more, the target is instead poisoned for 5 (1d10) minutes and unconscious while poisoned in this way.",
+                "name": "Claws"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    },
+    {
+        "index": "two-headed-owlbear",
+        "type": "MONSTROSITY",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Two-Headed Owlbear",
+        "subtitle": "Large monstrosity, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/two-headed-owlbear.png",
+        "background_color": {
+            "light": "#f08f75",
+            "dark": "#8a290f"
+        },
+        "is_horizontal_image": false,
+        "size": "Large",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 59,
+        "hit_dice": "7d10+21",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 3,
+                "modifier": -4
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 3,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60"
+        ],
+        "languages": "",
+        "special_abilities": [
+            {
+                "name": "Two Heads",
+                "desc": "The two-headed owlbear has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious."
+            },
+            {
+                "name": "Wakeful",
+                "desc": "When one of the owlbear's heads is asleep, its other head is awake."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The two-headed owlbear makes three attacks: two with its beaks and one with its claws.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+5",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 10 (1d10 + 5) piercing damage.",
+                "name": "Beak"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d8+5",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. 14 (2d8 + 5) slashing damage.",
+                "name": "Claws"
+            }
+        ],
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        }
+    }
+]
