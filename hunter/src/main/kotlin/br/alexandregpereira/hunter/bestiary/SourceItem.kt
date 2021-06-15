@@ -84,6 +84,7 @@ data class Monster(
     val save: Save? = null,
     @Serializable(with = SkillSerializer::class)
     val skill: Map<String, String> = emptyMap(),
+    val languages: List<String> = emptyList()
 )
 
 @Serializable

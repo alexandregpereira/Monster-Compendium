@@ -106,8 +106,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 damageResistances = it.resist.damagesFormatted(),
                 damageImmunities = it.immune.damagesFormatted(),
                 conditionImmunities = it.conditionsImmuneFormatted(),
-                senses = listOf(),
-                languages = "",
+                senses = it.senses,
+                languages = it.languages.joinToString(),
                 specialAbilities = listOf(),
                 actions = listOf()
             ).formatSubtitle()
@@ -287,9 +287,11 @@ private fun List<String>.damagesFormatted(): List<DamageDto> {
 
 private fun Monster.conditionsImmuneFormatted(): List<ConditionDto> {
     return conditionImmune.map {
+        val type = runCatching { ConditionTypeDto.valueOf(it.toUpperCase(Locale.ROOT)) }
+            .getOrDefault(ConditionTypeDto.UNCONSCIOUS)
         ConditionDto(
             index = it,
-            type = ConditionTypeDto.valueOf(it.toUpperCase(Locale.ROOT)),
+            type = type,
             name = it.capitalize(Locale.ROOT)
         )
     }
