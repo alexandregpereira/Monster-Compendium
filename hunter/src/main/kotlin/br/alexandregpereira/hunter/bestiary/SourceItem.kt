@@ -28,7 +28,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.JsonTransformingSerializer
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
 
 @Serializable
 data class SourceItem(
@@ -84,7 +83,7 @@ data class Monster(
     val save: Save? = null,
     @Serializable(with = SkillSerializer::class)
     val skill: Map<String, String> = emptyMap(),
-    val languages: List<String> = emptyList()
+    val languages: List<String> = emptyList(),
 )
 
 @Serializable
@@ -125,22 +124,11 @@ enum class MonsterSize {
     GARGANTUAN
 }
 
-@Serializable
-data class Alignment(
-    val alignments: List<String> = emptyList(),
-)
-
 data class MonsterFluff(
     val name: String,
     val source: String,
     val entries: List<Any>,
     val images: List<Image>,
-)
-
-@Serializable
-data class Ac(
-    val ac: Int? = null,
-    val from: List<String> = emptyList(),
 )
 
 @Serializable
@@ -167,24 +155,9 @@ data class Speed(
 @Serializable
 data class Action(
     val name: String,
-//    @Serializable(with = ActionEntrySerializer::class)
-//    val entries: List<ActionEntry>
+    @Serializable(with = ActionEntrySerializer::class)
+    val entries: List<String>,
 )
-
-@Serializable
-sealed class ActionEntry {
-
-    @Serializable
-    @SerialName("value")
-    data class ActionValue(val value: String) : ActionEntry()
-
-    @Serializable
-    @SerialName("list")
-    data class ActionDetail(
-        val style: String,
-        val items: List<Item>,
-    ) : ActionEntry()
-}
 
 @Serializable
 data class Image(
@@ -196,13 +169,6 @@ data class Image(
 data class Href(
     val type: String,
     val path: String,
-)
-
-@Serializable
-data class Item(
-    val type: String,
-    val name: String,
-    val entry: String,
 )
 
 object TypeSerializer : JsonTransformingSerializer<Type>(Type.serializer()) {
@@ -270,25 +236,37 @@ object TypeTagsSerializer : JsonTransformingSerializer<List<String>>(
     }
 }
 
-object ActionEntrySerializer : JsonTransformingSerializer<List<ActionEntry>>(
-    ListSerializer(ActionEntry.serializer())
+object ActionEntrySerializer : JsonTransformingSerializer<List<String>>(
+    ListSerializer(String.serializer())
 ) {
 
     override fun transformDeserialize(element: JsonElement): JsonElement {
         if (element !is JsonArray) return JsonArray(emptyList())
 
-        return element.map { elementArrayItem ->
+        val acc = mutableListOf<JsonElement>()
+        element.forEach { elementArrayItem ->
             when (elementArrayItem) {
-                is JsonPrimitive -> buildJsonObject {
-                    put("type", "value")
-                    put("value", elementArrayItem)
+                is JsonPrimitive -> acc.add(elementArrayItem)
+                is JsonObject -> {
+                    elementArrayItem["items"]?.asArray()?.forEach { item ->
+                        when (item) {
+                            is JsonPrimitive -> acc.add(item)
+                            is JsonObject -> {
+                                val name = item["name"]?.getContent()
+                                val entry = item["entry"]?.getContent()
+                                if (name != null && entry != null) {
+                                    acc.add("$name: $entry".asPrimitive())
+                                }
+                            }
+                            else -> throw IllegalAccessException("WTF")
+                        }
+                    }
                 }
-                is JsonObject -> elementArrayItem
                 else -> throw IllegalAccessException("WTF")
             }
-        }.run {
-            JsonArray(this)
         }
+
+        return JsonArray(acc)
     }
 }
 
@@ -399,4 +377,5 @@ object SkillSerializer : JsonTransformingSerializer<Map<String, String>>(MapSeri
 
 private fun String.asPrimitive(): JsonPrimitive = JsonPrimitive(this)
 private fun JsonElement.asPrimitive(): JsonPrimitive = this as JsonPrimitive
+private fun JsonElement.asArray(): JsonArray = this as JsonArray
 private fun JsonElement.getContent(): String = this.asPrimitive().content

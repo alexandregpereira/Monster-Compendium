@@ -60,7 +60,9 @@ suspend fun getMonstersFromBestiary(): Flow<List<Monster>> {
             flowOf(this)
         }
         .map { monsters ->
-            monsters.filter { it.srd.not() }
+            monsters.filter { it.srd.not() }.map {
+                it.copy(name = it.name.replace("\"", ""))
+            }
         }
 }
 

@@ -21,8 +21,10 @@ import br.alexandregpereira.hunter.bestiary.Monster
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
+import br.alexandregpereira.hunter.data.remote.model.ActionDto
 import br.alexandregpereira.hunter.data.remote.model.ConditionDto
 import br.alexandregpereira.hunter.data.remote.model.ConditionTypeDto
+import br.alexandregpereira.hunter.data.remote.model.DamageDiceDto
 import br.alexandregpereira.hunter.data.remote.model.DamageDto
 import br.alexandregpereira.hunter.data.remote.model.DamageTypeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
@@ -31,6 +33,7 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.remote.model.SkillDto
 import br.alexandregpereira.hunter.data.remote.model.SourceDto
+import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
 import br.alexandregpereira.hunter.scripts.MONSTER_JSON_FILE_NAME
@@ -108,8 +111,8 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
                 conditionImmunities = it.conditionsImmuneFormatted(),
                 senses = it.senses,
                 languages = it.languages.joinToString(),
-                specialAbilities = listOf(),
-                actions = listOf()
+                specialAbilities = it.specialAbilitiesFormatted(),
+                actions = it.actionsFormatted()
             ).formatSubtitle()
         }.getOrElse { error ->
             print("Monster error: ${it.name}")
@@ -293,6 +296,61 @@ private fun Monster.conditionsImmuneFormatted(): List<ConditionDto> {
             index = it,
             type = type,
             name = it.capitalize(Locale.ROOT)
+        )
+    }
+}
+
+private fun Monster.specialAbilitiesFormatted(): List<SpecialAbilityDto> {
+    return trait.map {
+        SpecialAbilityDto(
+            name = it.name,
+            desc = it.entries.joinToString("\n")
+        )
+    }
+}
+
+private fun Monster.actionsFormatted(): List<ActionDto> {
+    return action.map { action ->
+        val descSplit = action.entries.first()
+            .replace("to hit", "to-hit")
+            .replace("\\(([^)]+)\\)".toRegex()) { match ->
+                match.value.replace(" ", "")
+            }
+            .removeSuffix(".")
+            .split(" ")
+            .map { it.replace(",", "") }
+
+        val attackBonus = descSplit.indexOf("to-hit").takeIf { it >= 0 }?.let { i ->
+            descSplit[i - 1].replace("+", "").toInt()
+        }
+
+        val damageDices = descSplit.indices.filter { i -> descSplit[i] == "damage" }
+            .mapNotNull { i ->
+                runCatching {
+                    val damageTypeValue = descSplit[i - 1]
+                    DamageTypeDto.valueOf(damageTypeValue.toUpperCase(Locale.ROOT))
+                }.getOrNull()?.let { damageType ->
+                    val dice = descSplit[i - 2]
+                        .replace("(", "")
+                        .replace(")", "")
+                        .replace(" ", "")
+
+                    DamageDiceDto(
+                        dice = dice,
+                        damage = DamageDto(
+                            index = damageType.name.toUpperCase(Locale.ROOT),
+                            type = damageType,
+                            name = damageType.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
+                        )
+                    )
+                }
+            }
+
+        ActionDto(
+            name = action.name,
+            damageDices = damageDices,
+            attackBonus = attackBonus,
+            description = action.entries.joinToString("\n")
         )
     }
 }
