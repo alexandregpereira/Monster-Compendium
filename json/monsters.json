@@ -168,7 +168,11 @@
                 "description": "The aboleth targets one creature it can see within 30 ft. of it. The target must succeed on a DC 14 Wisdom saving throw or be magically charmed by the aboleth until the aboleth dies or until it is on a different plane of existence from the target. The charmed target is under the aboleth's control and can't take reactions, and the aboleth and the target can communicate telepathically with each other over any distance.\nWhenever the charmed target takes damage, the target can repeat the saving throw. On a success, the effect ends. No more than once every 24 hours, the target can also repeat the saving throw when it is at least 1 mile away from the aboleth.",
                 "name": "Enslave"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-black-dragon",
@@ -390,7 +394,11 @@
                 "description": "The dragon exhales acid in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed save, or half as much damage on a successful one.",
                 "name": "Acid Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-blue-dragon",
@@ -608,7 +616,11 @@
                 "description": "The dragon exhales lightning in a 90-foot line that is 5 ft. wide. Each creature in that line must make a DC 19 Dexterity saving throw, taking 66 (12d10) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-brass-dragon",
@@ -820,7 +832,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 45 (13d6) fire damage on a failed save, or half as much damage on a successful one.\nSleep Breath. The dragon exhales sleep gas in a 60-foot cone. Each creature in that area must succeed on a DC 18 Constitution saving throw or fall unconscious for 10 minutes. This effect ends for a creature if the creature takes damage or someone uses an action to wake it.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-bronze-dragon",
@@ -1031,7 +1047,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nLightning Breath. The dragon exhales lightning in a 90-foot line that is 5 feet wide. Each creature in that line must make a DC 19 Dexterity saving throw, taking 66 (12d10) lightning damage on a failed save, or half as much damage on a successful one.\nRepulsion Breath. The dragon exhales repulsion energy in a 30-foot cone. Each creature in that area must succeed on a DC 19 Strength saving throw. On a failed save, the creature is pushed 60 feet away from the dragon.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-copper-dragon",
@@ -1238,7 +1258,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nAcid Breath. The dragon exhales acid in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed save, or half as much damage on a successful one.\nSlowing Breath. The dragon exhales gas in a 60-foot cone. Each creature in that area must succeed on a DC 18 Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-gold-dragon",
@@ -1454,7 +1478,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 66 (12d10) fire damage on a failed save, or half as much damage on a successful one.\nWeakening Breath. The dragon exhales gas in a 60-foot cone. Each creature in that area must succeed on a DC 21 Strength saving throw or have disadvantage on Strength-based attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-green-dragon",
@@ -1696,7 +1724,11 @@
                 "description": "The dragon exhales poisonous gas in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 56 (16d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Poison Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-red-dragon",
@@ -1921,7 +1953,11 @@
                 "description": "On initiative count 20 (losing initiative ties), the dragon takes a lair action to cause one of the following effects: the dragon can't use the same effect two rounds in a row:\n- Magma erupts from a point on the ground the dragon can see within 120 feet of it, creating a 20-foot-high, 5-foot-radius geyser. Each creature in the geyser's area must make a DC 15 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one.\n- A tremor shakes the lair in a 60-foot-radius around the dragon. Each creature other than the dragon on the ground in that area must succeed on a DC 15 Dexterity saving throw or be knocked prone.\n- Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.",
                 "name": "Lair Actions"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-silver-dragon",
@@ -2127,7 +2163,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nCold Breath. The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a DC 20 Constitution saving throw, taking 58 (13d8) cold damage on a failed save, or half as much damage on a successful one.\nParalyzing Breath. The dragon exhales paralyzing gas in a 60-foot cone. Each creature in that area must succeed on a DC 20 Constitution saving throw or be paralyzed for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "adult-white-dragon",
@@ -2355,7 +2395,11 @@
                 "description": "The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a DC 19 Constitution saving throw, taking 54 (12d8) cold damage on a failed save, or half as much damage on a successful one.",
                 "name": "Cold Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "air-elemental",
@@ -2547,7 +2591,11 @@
                 "description": "Each creature in the elemental's space must make a DC 13 Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning damage and is flung up 20 feet away from the elemental in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone.",
                 "name": "Whirlwind"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-black-dragon",
@@ -2769,7 +2817,11 @@
                 "description": "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 67 (15d8) acid damage on a failed save, or half as much damage on a successful one.",
                 "name": "Acid Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-blue-dragon",
@@ -2975,7 +3027,11 @@
                 "description": "The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 23 Dexterity saving throw, taking 88 (16d10) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-brass-dragon",
@@ -3194,7 +3250,11 @@
                 "description": "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).\nIn a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-bronze-dragon",
@@ -3412,7 +3472,11 @@
                 "description": "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).\nIn a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-copper-dragon",
@@ -3626,7 +3690,11 @@
                 "description": "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).\nIn a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-gold-dragon",
@@ -3849,7 +3917,11 @@
                 "description": "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).\nIn a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-green-dragon",
@@ -4091,7 +4163,11 @@
                 "description": "The dragon exhales poisonous gas in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 77 (22d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Poison Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-red-dragon",
@@ -4309,7 +4385,11 @@
                 "description": "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 24 Dexterity saving throw, taking 91 (26d6) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-silver-dragon",
@@ -4522,7 +4602,11 @@
                 "description": "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).\nIn a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ancient-white-dragon",
@@ -4750,7 +4834,11 @@
                 "description": "The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 72 (l6d8) cold damage on a failed save, or half as much damage on a successful one.",
                 "name": "Cold Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "androsphinx",
@@ -4951,7 +5039,11 @@
                 "description": "The sphinx emits a magical roar. Each time it roars before finishing a long rest, the roar is louder and the effect is different, as detailed below. Each creature within 500 feet of the sphinx and able to hear the roar must make a saving throw.\n\nFirst Roar. Each creature that fails a DC 18 Wisdom saving throw is frightened for 1 minute. A frightened creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n\nSecond Roar. Each creature that fails a DC 18 Wisdom saving throw is deafened and frightened for 1 minute. A frightened creature is paralyzed and can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n\nThird Roar. Each creature makes a DC 18 Constitution saving throw. On a failed save, a creature takes 44 (8d10) thunder damage and is knocked prone. On a successful save, the creature takes half as much damage and isn't knocked prone.",
                 "name": "Roar"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "animated-armor",
@@ -5115,7 +5207,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage.",
                 "name": "Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ankheg",
@@ -5244,7 +5340,11 @@
                 "description": "The ankheg spits acid in a line that is 30 ft. long and 5 ft. wide, provided that it has no creature grappled. Each creature in that line must make a DC 13 Dexterity saving throw, taking 10 (3d6) acid damage on a failed save, or half as much damage on a successful one.",
                 "name": "Acid Spray (Recharge 6)"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "archmage",
@@ -5440,7 +5540,11 @@
                 "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
                 "name": "Dagger"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "assassin",
@@ -5623,7 +5727,11 @@
                 "description": "Ranged Weapon Attack: +6 to hit, range 80/320 ft., one target. Hit: 7 (1d8 + 3) piercing damage, and the target must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Light Crossbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "azer",
@@ -5761,7 +5869,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage, or 8 (1d10 + 3) bludgeoning damage if used with two hands to make a melee attack, plus 3 (1d6) fire damage.",
                 "name": "Warhammer"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "badger",
@@ -5870,7 +5982,11 @@
                 "description": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 1 piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "balor",
@@ -6108,7 +6224,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA balor has a 50 percent chance of summoning 1d8 vrocks, 1d6 hezrous, 1d4 glabrezus, 1d3 nalfeshnees, 1d2 mariliths, or one goristro.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bandit-captain",
@@ -6253,7 +6373,11 @@
                 "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
                 "name": "Dagger"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "barbed-devil",
@@ -6476,7 +6600,11 @@
                 "description": "Ranged Spell Attack: +5 to hit, range 150 ft., one target. Hit: 10 (3d6) fire damage. If the target is a flammable object that isn't being worn or carried, it also catches fire.",
                 "name": "Hurl Flame"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "basilisk",
@@ -6587,7 +6715,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage plus 7 (2d6) poison damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bat",
@@ -6700,7 +6832,11 @@
                 "description": "Melee Weapon Attack: +0 to hit, reach 5 ft., one creature. Hit: 1 piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bearded-devil",
@@ -6888,7 +7024,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 8 (1d10 + 3) slashing damage. If the target is a creature other than an undead or a construct, it must succeed on a DC 12 Constitution saving throw or lose 5 (1d10) hit points at the start of each of its turns due to an infernal wound. Each time the devil hits the wounded target with this attack, the damage dealt by the wound increases by 5 (1d10). Any creature can take an action to stanch the wound with a successful DC 12 Wisdom (Medicine) check. The wound also closes if the target receives magical healing.",
                 "name": "Glaive"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "behir",
@@ -7068,7 +7208,11 @@
                 "description": "The behir makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is blinded and restrained, it has total cover against attacks and other effects outside the behir, and it takes 21 (6d6) acid damage at the start of each of the behir's turns. A behir can have only one creature swallowed at a time.\nIf the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a DC 14 Constitution saving throw at the end of that turn or regurgitate the creature, which falls prone in a space within 10 ft. of the behir. If the behir dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 15 ft. of movement, exiting prone.",
                 "name": "Swallow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "black-dragon-wyrmling",
@@ -7242,7 +7386,11 @@
                 "description": "The dragon exhales acid in a 15-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 22 (Sd8) acid damage on a failed save, or half as much damage on a successful one.",
                 "name": "Acid Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "black-pudding",
@@ -7417,7 +7565,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) bludgeoning damage plus 18 (4d8) acid damage. In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative -1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10.",
                 "name": "Pseudopod"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "blink-dog",
@@ -7536,7 +7688,11 @@
                 "description": "The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 ft. to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack.",
                 "name": "Teleport"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "blue-dragon-wyrmling",
@@ -7706,7 +7862,11 @@
                 "description": "The dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bone-devil",
@@ -7914,7 +8074,11 @@
                 "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target must succeed on a DC 14 Constitution saving throw or become poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success .",
                 "name": "Sting"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "brass-dragon-wyrmling",
@@ -8068,7 +8232,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 14 (4d6) fire damage on a failed save, or half as much damage on a successful one.\nSleep Breath. The dragon exhales sleep gas in a 15-foot cone. Each creature in that area must succeed on a DC 11 Constitution saving throw or fall unconscious for 1 minute. This effect ends for a creature if the creature takes damage or someone uses an action to wake it.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bronze-dragon-wyrmling",
@@ -8226,7 +8394,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nLightning Breath. The dragon exhales lightning in a 40-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 16 (3d10) lightning damage on a failed save, or half as much damage on a successful one.\nRepulsion Breath. The dragon exhales repulsion energy in a 30-foot cone. Each creature in that area must succeed on a DC 12 Strength saving throw. On a failed save, the creature is pushed 30 feet away from the dragon.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bugbear",
@@ -8358,7 +8530,11 @@
                 "description": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.",
                 "name": "Javelin"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "bulette",
@@ -8480,7 +8656,11 @@
                 "description": "If the bulette jumps at least 15 ft. as part of its movement, it can then use this action to land on its ft. in a space that contains one or more other creatures. Each of those creatures must succeed on a DC 16 Strength or Dexterity saving throw (target's choice) or be knocked prone and take 14 (3d6 + 4) bludgeoning damage plus 14 (3d6 + 4) slashing damage. On a successful save, the creature takes only half the damage, isn't knocked prone, and is pushed 5 ft. out of the bulette's space into an unoccupied space of the creature's choice. If no unoccupied space is within range, the creature instead falls prone in the bulette's space.",
                 "name": "Deadly Leap"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "centaur",
@@ -8634,7 +8814,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "chain-devil",
@@ -8810,7 +8994,11 @@
                 "description": "Up to four chains the devil can see within 60 feet of it magically sprout razor-edged barbs and animate under the devil's control, provided that the chains aren't being worn or carried.\nEach animated chain is an object with AC 20, 20 hit points, resistance to piercing damage, and immunity to psychic and thunder damage. When the devil uses Multiattack on its turn, it can use each animated chain to make one additional chain attack. An animated chain can grapple one creature of its own but can't make attacks while grappling. An animated chain reverts to its inanimate state if reduced to 0 hit points or if the devil is incapacitated or dies.",
                 "name": "Animate Chains"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "chimera",
@@ -8972,7 +9160,11 @@
                 "description": "The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "chuul",
@@ -9114,7 +9306,11 @@
                 "description": "One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Tentacles"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "clay-golem",
@@ -9312,7 +9508,11 @@
                 "description": "Until the end of its next turn, the golem magically gains a +2 bonus to its AC, has advantage on Dexterity saving throws, and can use its slam attack as a bonus action.",
                 "name": "Haste"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "cloaker",
@@ -9470,7 +9670,11 @@
                 "description": "The cloaker magically creates three illusory duplicates of itself if it isn't in bright light. The duplicates move with it and mimic its actions, shifting position so as to make it impossible to track which cloaker is the real one. If the cloaker is ever in an area of bright light, the duplicates disappear.\nWhenever any creature targets the cloaker with an attack or a harmful spell while a duplicate remains, that creature rolls randomly to determine whether it targets the cloaker or one of the duplicates. A creature is unaffected by this magical effect if it can't see or if it relies on senses other than sight.\nA duplicate has the cloaker's AC and uses its saving throws. If an attack hits a duplicate, or if a duplicate fails a saving throw against an effect that deals damage, the duplicate disappears.",
                 "name": "Phantasms"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "cloud-giant",
@@ -9623,7 +9827,11 @@
                 "description": "Ranged Weapon Attack: +12 to hit, range 60/240 ft., one target. Hit: 30 (4d10 + 8) bludgeoning damage.",
                 "name": "Rock"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "cockatrice",
@@ -9728,7 +9936,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one creature. Hit: 3 (1d4 + 1) piercing damage, and the target must succeed on a DC 11 Constitution saving throw against being magically petrified. On a failed save, the creature begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified for 24 hours.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "copper-dragon-wyrmling",
@@ -9882,7 +10094,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nAcid Breath. The dragon exhales acid in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 18 (4d8) acid damage on a failed save, or half as much damage on a successful one.\nSlowing Breath. The dragon exhales gas in a 1 5-foot cone. Each creature in that area must succeed on a DC 11 Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "couatl",
@@ -10066,7 +10282,11 @@
                 "description": "The couatl magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the couatl's choice).\nIn a new form, the couatl retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and other actions are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks. If the new form has a bite attack, the couatl can use its bite in that form.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "cult-fanatic",
@@ -10194,7 +10414,11 @@
                 "description": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one creature. Hit: 4 (1d4 + 2) piercing damage.",
                 "name": "Dagger"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "cultist",
@@ -10306,7 +10530,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one creature. Hit: 4 (1d6 + 1) slashing damage.",
                 "name": "Scimitar"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "darkmantle",
@@ -10431,7 +10659,11 @@
                 "description": "A 15-foot radius of magical darkness extends out from the darkmantle, moves with it, and spreads around corners. The darkness lasts as long as the darkmantle maintains concentration, up to 10 minutes (as if concentrating on a spell). Darkvision can't penetrate this darkness, and no natural light can illuminate it. If any of the darkness overlaps with an area of light created by a spell of 2nd level or lower, the spell creating the light is dispelled.",
                 "name": "Darkness Aura"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "death-dog",
@@ -10551,7 +10783,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage. If the target is a creature, it must succeed on a DC 12 Constitution saving throw against disease or become poisoned until the disease is cured. Every 24 hours that elapse, the creature must repeat the saving throw, reducing its hit point maximum by 5 (1d10) on a failure. This reduction lasts until the disease is cured. The creature dies if the disease reduces its hit point maximum to 0.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "deep-gnome-svirfneblin",
@@ -10692,7 +10928,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one creature. Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 12 Constitution saving throw or be poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success",
                 "name": "Poisoned Dart"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "deva",
@@ -10898,7 +11138,11 @@
                 "description": "The deva magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the deva's choice).\nIn a new form, the deva retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and special senses are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "dire-wolf",
@@ -11014,7 +11258,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "djinni",
@@ -11170,7 +11418,11 @@
                 "description": "A 5-foot-radius, 30-foot-tall cylinder of swirling air magically forms on a point the djinni can see within 120 feet of it. The whirlwind lasts as long as the djinni maintains concentration (as if concentrating on a spell). Any creature but the djinni that enters the whirlwind must succeed on a DC 18 Strength saving throw or be restrained by it. The djinni can move the whirlwind up to 60 feet as an action, and creatures restrained by the whirlwind move with it. The whirlwind ends if the djinni loses sight of it.\nA creature can use its action to free a creature restrained by the whirlwind, including itself, by succeeding on a DC 18 Strength check. If the check succeeds, the creature is no longer restrained and moves to the nearest space outside the whirlwind.",
                 "name": "Create Whirlwind"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "doppelganger",
@@ -11310,7 +11562,11 @@
                 "description": "The doppelganger magically reads the surface thoughts of one creature within 60 ft. of it. The effect can penetrate barriers, but 3 ft. of wood or dirt, 2 ft. of stone, 2 inches of metal, or a thin sheet of lead blocks it. While the target is in range, the doppelganger can continue reading its thoughts, as long as the doppelganger's concentration isn't broken (as if concentrating on a spell). While reading the target's mind, the doppelganger has advantage on Wisdom (Insight) and Charisma (Deception, Intimidation, and Persuasion) checks against the target.",
                 "name": "Read Thoughts"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "dragon-turtle",
@@ -11491,7 +11747,11 @@
                 "description": "The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater doesn't grant resistance against this damage.",
                 "name": "Steam Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "dretch",
@@ -11644,7 +11904,11 @@
                 "description": "A 10-foot radius of disgusting green gas extends out from the dretch. The gas spreads around corners, and its area is lightly obscured. It lasts for 1 minute or until a strong wind disperses it. Any creature that starts its turn in that area must succeed on a DC 11 Constitution saving throw or be poisoned until the start of its next turn. While poisoned in this way, the target can take either an action or a bonus action on its turn, not both, and can't take reactions.",
                 "name": "Fetid Cloud"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "drider",
@@ -11824,7 +12088,11 @@
                 "description": "Ranged Weapon Attack: +6 to hit, range 150/600 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 4 (1d8) poison damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "drow",
@@ -11960,7 +12228,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage, and the target must succeed on a DC 13 Constitution saving throw or be poisoned for 1 hour. If the saving throw fails by 5 or more, the target is also unconscious while poisoned in this way. The target wakes up if it takes damage or if another creature takes an action to shake it awake.",
                 "name": "Hand Crossbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "druid",
@@ -12069,7 +12341,11 @@
                 "description": "Melee Weapon Attack: +2 to hit (+4 to hit with shillelagh), reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 6 (1d8 + 2) bludgeoning damage with shillelagh or if wielded with two hands.",
                 "name": "Quarterstaff"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "dryad",
@@ -12201,7 +12477,11 @@
                 "description": "The dryad targets one humanoid or beast that she can see within 30 feet of her. If the target can see the dryad, it must succeed on a DC 14 Wisdom saving throw or be magically charmed. The charmed creature regards the dryad as a trusted friend to be heeded and protected. Although the target isn't under the dryad's control, it takes the dryad's requests or actions in the most favorable way it can.\nEach time the dryad or its allies do anything harmful to the target, it can repeat the saving throw, ending the effect on itself on a success. Otherwise, the effect lasts 24 hours or until the dryad dies, is on a different plane of existence from the target, or ends the effect as a bonus action. If a target's saving throw is successful, the target is immune to the dryad's Fey Charm for the next 24 hours.\nThe dryad can have no more than one humanoid and up to three beasts charmed at a time.",
                 "name": "Fey Charm"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "duergar",
@@ -12342,7 +12622,11 @@
                 "description": "The duergar magically turns invisible until it attacks, casts a spell, or uses its Enlarge, or until its concentration is broken, up to 1 hour (as if concentrating on a spell). Any equipment the duergar wears or carries is invisible with it .",
                 "name": "Invisibility"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "dust-mephit",
@@ -12494,7 +12778,11 @@
                 "description": "The mephit has a 25 percent chance of summoning 1d4 mephits of its kind. A summoned mephit appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other mephits. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Mephits"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "eagle",
@@ -12607,7 +12895,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "earth-elemental",
@@ -12783,7 +13075,11 @@
                 "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 14 (2d8 + 5) bludgeoning damage.",
                 "name": "Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "efreeti",
@@ -12950,7 +13246,11 @@
                 "description": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. Hit: 17 (5d6) fire damage.",
                 "name": "Hurl Flame"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "erinyes",
@@ -13160,7 +13460,11 @@
                 "description": "Some erinyes carry a rope of entanglement (detailed in the Dungeon Master's Guide). When such an erinyes uses its Multiattack, the erinyes can use the rope in place of two of the attacks.",
                 "name": "Variant: Rope of Entanglement"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ettercap",
@@ -13344,7 +13648,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one Medium or Small creature against which the ettercap has advantage on the attack roll. Hit: 4 (1d4 + 2) bludgeoning damage, and the target is grappled (escape DC 12). Until this grapple ends, the target can't breathe, and the ettercap has advantage on attack rolls against it.",
                 "name": "Variant: Web Garrote"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ettin",
@@ -13478,7 +13786,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) piercing damage.",
                 "name": "Morningstar"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "fire-elemental",
@@ -13666,7 +13978,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) fire damage. If the target is a creature or a flammable object, it ignites. Until a creature takes an action to douse the fire, the target takes 5 (1d10) fire damage at the start of each of its turns.",
                 "name": "Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "fire-giant",
@@ -13816,7 +14132,11 @@
                 "description": "Ranged Weapon Attack: +11 to hit, range 60/240 ft., one target. Hit: 29 (4d10 + 7) bludgeoning damage.",
                 "name": "Rock"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "flesh-golem",
@@ -14006,7 +14326,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) bludgeoning damage.",
                 "name": "Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "flying-snake",
@@ -14129,7 +14453,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 1 piercing damage plus 7 (3d4) poison damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "flying-sword",
@@ -14292,7 +14620,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage.",
                 "name": "Longsword"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "frog",
@@ -14400,7 +14732,11 @@
             }
         ],
         "actions": [
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "frost-giant",
@@ -14550,7 +14886,11 @@
                 "description": "Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target. Hit: 28 (4d10 + 6) bludgeoning damage.",
                 "name": "Rock"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gargoyle",
@@ -14721,7 +15061,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gelatinous-cube",
@@ -14873,7 +15217,11 @@
                 "description": "The cube moves up to its speed. While doing so, it can enter Large or smaller creatures' spaces. Whenever the cube enters a creature's space, the creature must make a DC 12 Dexterity saving throw.\nOn a successful save, the creature can choose to be pushed 5 feet back or to the side of the cube. A creature that chooses not to be pushed suffers the consequences of a failed saving throw.\nOn a failed save, the cube enters the creature's space, and the creature takes 10 (3d6) acid damage and is engulfed. The engulfed creature can't breathe, is restrained, and takes 21 (6d6) acid damage at the start of each of the cube's turns. When the cube moves, the engulfed creature moves with it.\nAn engulfed creature can try to escape by taking an action to make a DC 12 Strength check. On a success, the creature escapes and enters a space of its choice within 5 feet of the cube.",
                 "name": "Engulf"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ghast",
@@ -15005,7 +15353,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage. If the target is a creature other than an undead, it must succeed on a DC 10 Constitution saving throw or be paralyzed for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ghost",
@@ -15239,7 +15591,11 @@
                 "description": "One humanoid that the ghost can see within 5 ft. of it must succeed on a DC 13 Charisma saving throw or be possessed by the ghost; the ghost then disappears, and the target is incapacitated and loses control of its body. The ghost now controls the body but doesn't deprive the target of awareness. The ghost can't be targeted by any attack, spell, or other effect, except ones that turn undead, and it retains its alignment, Intelligence, Wisdom, Charisma, and immunity to being charmed and frightened. It otherwise uses the possessed target's statistics, but doesn't gain access to the target's knowledge, class features, or proficiencies.\nThe possession lasts until the body drops to 0 hit points, the ghost ends it as a bonus action, or the ghost is turned or forced out by an effect like the dispel evil and good spell. When the possession ends, the ghost reappears in an unoccupied space within 5 ft. of the body. The target is immune to this ghost's Possession for 24 hours after succeeding on the saving throw or after the possession ends.",
                 "name": "Possession (Recharge 6)"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ghoul",
@@ -15358,7 +15714,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) slashing damage. If the target is a creature other than an elf or undead, it must succeed on a DC 10 Constitution saving throw or be paralyzed for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-badger",
@@ -15489,7 +15849,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 6 (2d4 + 1) slashing damage.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-eagle",
@@ -15624,7 +15988,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-fire-beetle",
@@ -15727,7 +16095,11 @@
                 "description": "Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 2 (1d6 - 1) slashing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-frog",
@@ -15857,7 +16229,11 @@
                 "description": "The frog makes one bite attack against a Small or smaller target it is grappling. If the attack hits, the target is swallowed, and the grapple ends. The swallowed target is blinded and restrained, it has total cover against attacks and other effects outside the frog, and it takes 5 (2d4) acid damage at the start of each of the frog's turns. The frog can have only one target swallowed at a time. If the frog dies, a swallowed creature is no longer restrained by it and can escape from the corpse using 5 ft. of movement, exiting prone.",
                 "name": "Swallow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-octopus",
@@ -15991,7 +16367,11 @@
                 "description": "A 20-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is heavily obscured for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the Dash action as a bonus action.",
                 "name": "Ink Cloud"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-owl",
@@ -16114,7 +16494,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 8 (2d6 + 1) slashing damage.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-rat",
@@ -16221,7 +16605,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "giant-spider",
@@ -16351,7 +16739,11 @@
                 "description": "Ranged Weapon Attack: +5 to hit, range 30/60 ft., one creature. Hit: The target is restrained by webbing. As an action, the restrained target can make a DC 12 Strength check, bursting the webbing on a success. The webbing can also be attacked and destroyed (AC 10; hp 5; vulnerability to fire damage; immunity to bludgeoning, poison, and psychic damage).",
                 "name": "Web"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gibbering-mouther",
@@ -16483,7 +16875,11 @@
                 "description": "The mouther spits a chemical glob at a point it can see within 15 feet of it. The glob explodes in a blinding flash of light on impact. Each creature within 5 feet of the flash must succeed on a DC 13 Dexterity saving throw or be blinded until the end of the mouther's next turn.",
                 "name": "Blinding Spittle"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "glabrezu",
@@ -16684,7 +17080,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA glabrezu has a 30 percent chance of summoning 1d3 vrocks, 1d2 hezrous, or one glabrezu.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gnoll",
@@ -16809,7 +17209,11 @@
                 "description": "Ranged Weapon Attack: +3 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "goblin",
@@ -16932,7 +17336,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
                 "name": "Shortbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gold-dragon-wyrmling",
@@ -17090,7 +17498,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 22 (4d10) fire damage on a failed save, or half as much damage on a successful one.\nWeakening Breath. The dragon exhales gas in a 15-foot cone. Each creature in that area must succeed on a DC 13 Strength saving throw or have disadvantage on Strength-based attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gorgon",
@@ -17225,7 +17637,11 @@
                 "description": "The gorgon exhales petrifying gas in a 30-foot cone. Each creature in that area must succeed on a DC 13 Constitution saving throw. On a failed save, a target begins to turn to stone and is restrained. The restrained target must repeat the saving throw at the end of its next turn. On a success, the effect ends on the target. On a failure, the target is petrified until freed by the greater restoration spell or other magic.",
                 "name": "Petrifying Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "green-dragon-wyrmling",
@@ -17404,7 +17820,11 @@
                 "description": "The dragon exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 11 Constitution saving throw, taking 21 (6d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Poison Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "green-hag",
@@ -17549,7 +17969,11 @@
                 "description": "The hag magically turns invisible until she attacks or casts a spell, or until her concentration ends (as if concentrating on a spell). While invisible, she leaves no physical evidence of her passage, so she can be tracked only by magic. Any equipment she wears or carries is invisible with her.",
                 "name": "Invisible Passage"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "grick",
@@ -17700,7 +18124,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
                 "name": "Beak"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "griffon",
@@ -17836,7 +18264,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "grimlock",
@@ -17975,7 +18407,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) bludgeoning damage plus 2 (1d4) piercing damage.",
                 "name": "Spiked Bone Club"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "guardian-naga",
@@ -18129,7 +18565,11 @@
                 "description": "Ranged Weapon Attack: +8 to hit, range 15/30 ft., one creature. Hit: The target must make a DC 15 Constitution saving throw, taking 45 (10d8) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Spit Poison"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "gynosphinx",
@@ -18308,7 +18748,11 @@
                 "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage.",
                 "name": "Claw"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "half-red-dragon-veteran",
@@ -18457,7 +18901,11 @@
                 "description": "The veteran exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "harpy",
@@ -18590,7 +19038,11 @@
                 "description": "The harpy sings a magical melody. Every humanoid and giant within 300 ft. of the harpy that can hear the song must succeed on a DC 11 Wisdom saving throw or be charmed until the song ends. The harpy must take a bonus action on its subsequent turns to continue singing. It can stop singing at any time. The song ends if the harpy is incapacitated.\nWhile charmed by the harpy, a target is incapacitated and ignores the songs of other harpies. If the charmed target is more than 5 ft. away from the harpy, the must move on its turn toward the harpy by the most direct route. It doesn't avoid opportunity attacks, but before moving into damaging terrain, such as lava or a pit, and whenever it takes damage from a source other than the harpy, a target can repeat the saving throw. A creature can also repeat the saving throw at the end of each of its turns. If a creature's saving throw is successful, the effect ends on it.\nA target that successfully saves is immune to this harpy's song for the next 24 hours.",
                 "name": "Luring Song"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hawk",
@@ -18703,7 +19155,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hell-hound",
@@ -18843,7 +19299,11 @@
                 "description": "The hound exhales fire in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hezrou",
@@ -19039,7 +19499,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA hezrou has a 30 percent chance of summoning 2d6 dretches or one hezrou.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hill-giant",
@@ -19164,7 +19628,11 @@
                 "description": "Ranged Weapon Attack: +8 to hit, range 60/240 ft., one target. Hit: 21 (3d10 + 5) bludgeoning damage.",
                 "name": "Rock"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hippogriff",
@@ -19299,7 +19767,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hobgoblin",
@@ -19409,7 +19881,11 @@
                 "description": "Ranged Weapon Attack: +3 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "homunculus",
@@ -19533,7 +20009,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 1 piercing damage, and the target must succeed on a DC 10 Constitution saving throw or be poisoned for 1 minute. If the saving throw fails by 5 or more, the target is instead poisoned for 5 (1d10) minutes and unconscious while poisoned in this way.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "horned-devil",
@@ -19743,7 +20223,11 @@
                 "description": "Ranged Spell Attack: +7 to hit, range 150 ft., one target. Hit: 14 (4d6) fire damage. If the target is a flammable object that isn't being worn or carried, it also catches fire.",
                 "name": "Hurl Flame"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hydra",
@@ -19876,7 +20360,11 @@
                 "description": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 10 (1d10 + 5) piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "hyena",
@@ -19983,7 +20471,11 @@
                 "description": "Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d6) piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ice-devil",
@@ -20214,7 +20706,11 @@
                 "description": "The devil magically forms an opaque wall of ice on a solid surface it can see within 60 feet of it. The wall is 1 foot thick and up to 30 feet long and 10 feet high, or it's a hemispherical dome up to 20 feet in diameter.\nWhen the wall appears, each creature in its space is pushed out of it by the shortest route. The creature chooses which side of the wall to end up on, unless the creature is incapacitated. The creature then makes a DC 17 Dexterity saving throw, taking 35 (10d6) cold damage on a failed save, or half as much damage on a successful one.\nThe wall lasts for 1 minute or until the devil is incapacitated or dies. The wall can be damaged and breached; each 10-foot section has AC 5, 30 hit points, vulnerability to fire damage, and immunity to acid, cold, necrotic, poison, and psychic damage. If a section is destroyed, it leaves behind a sheet of frigid air in the space the wall occupied. Whenever a creature finishes moving through the frigid air on a turn, willingly or otherwise, the creature must make a DC 17 Constitution saving throw, taking 17 (5d6) cold damage on a failed save, or half as much damage on a successful one. The frigid air dissipates when the rest of the wall vanishes.",
                 "name": "Wall of Ice"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ice-mephit",
@@ -20396,7 +20892,11 @@
                 "description": "The mephit has a 25 percent chance of summoning 1d4 mephits of its kind. A summoned mephit appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other mephits. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Mephits"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "imp",
@@ -20584,7 +21084,11 @@
                 "description": "The imp magically turns invisible until it attacks, or until its concentration ends (as if concentrating on a spell). Any equipment the imp wears or carries is invisible with it.",
                 "name": "Invisibility"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "invisible-stalker",
@@ -20779,7 +21283,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) bludgeoning damage.",
                 "name": "Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "iron-golem",
@@ -20996,7 +21504,11 @@
                 "description": "The golem exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 19 Constitution saving throw, taking 45 (l0d8) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Poison Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "kobold",
@@ -21118,7 +21630,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 4 (1d4 + 2) bludgeoning damage.",
                 "name": "Sling"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "kraken",
@@ -21339,7 +21855,11 @@
                 "description": "The kraken magically creates three bolts of lightning, each of which can strike a target the kraken can see within 120 feet of it. A target must make a DC 23 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Storm"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "lamia",
@@ -21486,7 +22006,11 @@
                 "description": "Melee Spell Attack: +5 to hit, reach 5 ft., one creature. Hit: The target is magically cursed for 1 hour. Until the curse ends, the target has disadvantage on Wisdom saving throws and all ability checks.",
                 "name": "Intoxicating Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "lemure",
@@ -21623,7 +22147,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 2 (1d4) bludgeoning damage.",
                 "name": "Fist"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "lich",
@@ -21838,7 +22366,11 @@
                 "description": "Melee Spell Attack: +12 to hit, reach 5 ft., one creature. Hit: 10 (3d6) cold damage. The target must succeed on a DC 18 Constitution saving throw or be paralyzed for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Paralyzing Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "lizardfolk",
@@ -22013,7 +22545,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
                 "name": "Spiked Shield"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "magma-mephit",
@@ -22185,7 +22721,11 @@
                 "description": "The mephit has a 25 percent chance of summoning 1d4 mephits of its kind. A summoned mephit appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other mephits. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Mephits"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "magmin",
@@ -22317,7 +22857,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d6) fire damage. If the target is a creature or a flammable object, it ignites. Until a target takes an action to douse the fire, the target takes 3 (1d6) fire damage at the end of each of its turns.",
                 "name": "Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "manticore",
@@ -22463,7 +23007,11 @@
                 "description": "Ranged Weapon Attack: +5 to hit, range 100/200 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
                 "name": "Tail Spike"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "marilith",
@@ -22675,7 +23223,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA marilith has a 50 percent chance of summoning 1d6 vrocks, 1d4 hezrous, 1d3 glabrezus, 1d2 nalfeshnees, or one marilith.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "mastiff",
@@ -22782,7 +23334,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "medusa",
@@ -22958,7 +23514,11 @@
                 "description": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage plus 7 (2d6) poison damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "merfolk",
@@ -23063,7 +23623,11 @@
                 "description": "Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d6) piercing damage, or 4 (1d8) piercing damage if used with two hands to make a melee attack.",
                 "name": "Spear"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "merrow",
@@ -23209,7 +23773,11 @@
                 "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 11 (2d6 + 4) piercing damage. If the target is a Huge or smaller creature, it must succeed on a Strength contest against the merrow or be pulled up to 20 feet toward the merrow.",
                 "name": "Harpoon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "mimic",
@@ -23362,7 +23930,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 4 (1d8) acid damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "minotaur",
@@ -23493,7 +24065,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) piercing damage.",
                 "name": "Gore"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "minotaur-skeleton",
@@ -23631,7 +24207,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) piercing damage.",
                 "name": "Gore"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "mummy",
@@ -23817,7 +24397,11 @@
                 "description": "The mummy targets one creature it can see within 60 ft. of it. If the target can see the mummy, it must succeed on a DC 11 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies (but not mummy lords) for the next 24 hours.",
                 "name": "Dreadful Glare"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "nalfeshnee",
@@ -24034,7 +24618,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA nalfeshnee has a 50 percent chance of summoning 1d4 vrocks, 1d3 hezrous, 1d2 glabrezus, or one nalfeshnee.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "night-hag",
@@ -24221,7 +24809,11 @@
                 "description": "While on the Ethereal Plane, the hag magically touches a sleeping humanoid on the Material Plane. A protection from evil and good spell cast on the target prevents this contact, as does a magic circle. As long as the contact persists, the target has dreadful visions. If these visions last for at least 1 hour, the target gains no benefit from its rest, and its hit point maximum is reduced by 5 (1d10). If this effect reduces the target's hit point maximum to 0, the target dies, and if the target was evil, its soul is trapped in the hag's soul bag. The reduction to the target's hit point maximum lasts until removed by the greater restoration spell or similar magic.",
                 "name": "Nightmare Haunting"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "nightmare",
@@ -24353,7 +24945,11 @@
                 "description": "The nightmare and up to three willing creatures within 5 feet of it magically enter the Ethereal Plane from the Material Plane, or vice versa.",
                 "name": "Ethereal Stride"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "noble",
@@ -24466,7 +25062,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) piercing damage.",
                 "name": "Rapier"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ochre-jelly",
@@ -24632,7 +25232,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) bludgeoning damage plus 3 (1d6) acid damage.",
                 "name": "Pseudopod"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "octopus",
@@ -24766,7 +25370,11 @@
                 "description": "A 5-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is heavily obscured for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the Dash action as a bonus action.",
                 "name": "Ink Cloud"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ogre",
@@ -24880,7 +25488,11 @@
                 "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
                 "name": "Javelin"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "ogre-zombie",
@@ -24998,7 +25610,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) bludgeoning damage.",
                 "name": "Morningstar"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "oni",
@@ -25179,7 +25795,11 @@
                 "description": "The oni magically polymorphs into a Small or Medium humanoid, into a Large giant, or back into its true form. Other than its size, its statistics are the same in each form. The only equipment that is transformed is its glaive, which shrinks so that it can be wielded in humanoid form. If the oni dies, it reverts to its true form, and its glaive reverts to its normal size.",
                 "name": "Change Shape"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "orc",
@@ -25302,7 +25922,11 @@
                 "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
                 "name": "Javelin"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "otyugh",
@@ -25447,7 +26071,11 @@
                 "description": "The otyugh slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 14 Constitution saving throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end of the otyugh's next turn. On a successful save, the target takes half the bludgeoning damage and isn't stunned.",
                 "name": "Tentacle Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "owl",
@@ -25570,7 +26198,11 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "owlbear",
@@ -25700,7 +26332,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) slashing damage.",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "pegasus",
@@ -25824,7 +26460,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
                 "name": "Hooves"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "phase-spider",
@@ -25946,7 +26586,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 7 (1d10 + 2) piercing damage, and the target must make a DC 11 Constitution saving throw, taking 18 (4d8) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but poisoned for 1 hour, even after regaining hit points, and is paralyzed while poisoned in this way.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "pit-fiend",
@@ -26174,7 +26818,11 @@
                 "description": "Melee Weapon Attack: +14 to hit, reach 10ft., one target. Hit: 24 (3d1O + 8) bludgeoning damage.",
                 "name": "Tail"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "planetar",
@@ -26377,7 +27025,11 @@
                 "description": "The planetar touches another creature. The target magically regains 30 (6d8 + 3) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
                 "name": "Healing Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "plesiosaurus",
@@ -26495,7 +27147,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 14 (3d6 + 4) piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "pseudodragon",
@@ -26642,7 +27298,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 11 Constitution saving throw or become poisoned for 1 hour. If the saving throw fails by 5 or more, the target falls unconscious for the same duration, or until it takes damage or another creature uses an action to shake it awake.",
                 "name": "Sting"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "purple-worm",
@@ -26784,7 +27444,11 @@
                 "description": "Melee Weapon Attack: +9 to hit, reach 10 ft., one creature. Hit: 19 (3d6 + 9) piercing damage, and the target must make a DC 19 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Tail Stinger"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "quasit",
@@ -26959,7 +27623,11 @@
                 "description": "The quasit magically turns invisible until it attacks or uses Scare, or until its concentration ends (as if concentrating on a spell). Any equipment the quasit wears or carries is invisible with it.",
                 "name": "Invisibility"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "quipper",
@@ -27066,7 +27734,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 1 piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "rakshasa",
@@ -27220,7 +27892,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) slashing damage, and the target is cursed if it is a creature. The magical curse takes effect whenever the target takes a short or long rest, filling the target's thoughts with horrible images and dreams. The cursed target gains no benefit from finishing a short or long rest. The curse lasts until it is lifted by a remove curse spell or similar magic.",
                 "name": "Claw"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "rat",
@@ -27323,7 +27999,11 @@
                 "description": "Melee Weapon Attack: +0 to hit, reach 5 ft., one target. Hit: 1 piercing damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "raven",
@@ -27436,7 +28116,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 1 piercing damage.",
                 "name": "Beak"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "red-dragon-wyrmling",
@@ -27606,7 +28290,11 @@
                 "description": "The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC l3 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "remorhaz",
@@ -27741,7 +28429,11 @@
                 "description": "The remorhaz makes one bite attack against a Medium or smaller creature it is grappling. If the attack hits, that creature takes the bite's damage and is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the remorhaz, and it takes 21 (6d6) acid damage at the start of each of the remorhaz's turns.\nIf the remorhaz takes 30 damage or more on a single turn from a creature inside it, the remorhaz must succeed on a DC 15 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet oft he remorhaz. If the remorhaz dies, a swallowed creature is no longer restrained by it and can escape from the corpse using 15 feet of movement, exiting prone.",
                 "name": "Swallow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "riding-horse",
@@ -27839,7 +28531,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 8 (2d4 + 3) bludgeoning damage.",
                 "name": "Hooves"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "roc",
@@ -27994,7 +28690,11 @@
                 "description": "Melee Weapon Attack: +13 to hit, reach 5 ft., one target. Hit: 23 (4d6 + 9) slashing damage, and the target is grappled (escape DC 19). Until this grapple ends, the target is restrained, and the roc can't use its talons on another target.",
                 "name": "Talons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "roper",
@@ -28142,7 +28842,11 @@
                 "description": "The roper pulls each creature grappled by it up to 25 ft. straight toward it.",
                 "name": "Reel"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "rug-of-smothering",
@@ -28290,7 +28994,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one Medium or smaller creature. Hit: The creature is grappled (escape DC 13). Until this grapple ends, the target is restrained, blinded, and at risk of suffocating, and the rug can't smother another target. In addition, at the start of each of the target's turns, the target takes 10 (2d6 + 3) bludgeoning damage.",
                 "name": "Smother"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "rust-monster",
@@ -28404,7 +29112,11 @@
                 "description": "The rust monster corrodes a nonmagical ferrous metal object it can see within 5 feet of it. If the object isn't being worn or carried, the touch destroys a 1-foot cube of it. If the object is being worn or carried by a creature, the creature can make a DC 11 Dexterity saving throw to avoid the rust monster's touch.\nIf the object touched is either metal armor or a metal shield being worn or carried, its takes a permanent and cumulative -1 penalty to the AC it offers. Armor reduced to an AC of 10 or a shield that drops to a bonus is destroyed. If the object touched is a held metal weapon, it rusts as described in the Rust Metal trait.",
                 "name": "Antennae"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "sahuagin",
@@ -28555,7 +29267,11 @@
                 "description": "Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 + 1) piercing damage if used with two hands to make a melee attack.",
                 "name": "Spear"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "salamander",
@@ -28722,7 +29438,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage plus 7 (2d6) fire damage, and the target is grappled (escape DC 14). Until this grapple ends, the target is restrained, the salamander can automatically hit the target with its tail, and the salamander can't make tail attacks against other targets.",
                 "name": "Tail"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "satyr",
@@ -28876,7 +29596,11 @@
                 "description": "Gentle Lullaby. The creature falls asleep and is unconscious for 1 minute. The effect ends if the creature takes damage or if someone takes an action to shake the creature awake.",
                 "name": "Variant: Panpipes"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "scout",
@@ -29020,7 +29744,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, ranged 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "sea-hag",
@@ -29147,7 +29875,11 @@
                 "description": "The hag covers herself and anything she is wearing or carrying with a magical illusion that makes her look like an ugly creature of her general size and humanoid shape. The effect ends if the hag takes a bonus action to end it or if she dies.\nThe changes wrought by this effect fail to hold up to physical inspection. For example, the hag could appear to have no claws, but someone touching her hand might feel the claws. Otherwise, a creature must take an action to visually inspect the illusion and succeed on a DC 16 Intelligence (Investigation) check to discern that the hag is disguised.",
                 "name": "Illusory Appearance"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "shadow",
@@ -29363,7 +30095,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 9 (2d6 + 2) necrotic damage, and the target's Strength score is reduced by 1d4. The target dies if this reduces its Strength to 0. Otherwise, the reduction lasts until the target finishes a short or long rest.\nIf a non-evil humanoid dies from this attack, a new shadow rises from the corpse 1d4 hours later.",
                 "name": "Strength Drain"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "shambling-mound",
@@ -29521,7 +30257,11 @@
                 "description": "The shambling mound engulfs a Medium or smaller creature grappled by it. The engulfed target is blinded, restrained, and unable to breathe, and it must succeed on a DC 14 Constitution saving throw at the start of each of the mound's turns or take 13 (2d8 + 4) bludgeoning damage. If the mound moves, the engulfed target moves with it. The mound can have only one creature engulfed at a time.",
                 "name": "Engulf"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "shield-guardian",
@@ -29670,7 +30410,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
                 "name": "Fist"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "shrieker",
@@ -29780,7 +30524,11 @@
                 "description": "When bright light or a creature is within 30 feet of the shrieker, it emits a shriek audible within 300 feet of it. The shrieker continues to shriek until the disturbance moves out of range and for 1d4 of the shrieker's turns afterward",
                 "name": "Shriek"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "silver-dragon-wyrmling",
@@ -29928,7 +30676,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nCold Breath. The dragon exhales an icy blast in a 15-foot cone. Each creature in that area must make a DC 13 Constitution saving throw, taking 18 (4d8) cold damage on a failed save, or half as much damage on a successful one.\nParalyzing Breath. The dragon exhales paralyzing gas in a 15-foot cone. Each creature in that area must succeed on a DC 13 Constitution saving throw or be paralyzed for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "skeleton",
@@ -30052,7 +30804,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
                 "name": "Shortbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "solar",
@@ -30300,7 +31056,11 @@
                 "description": "The solar touches another creature. The target magically regains 40 (8d8 + 4) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
                 "name": "Healing Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "specter",
@@ -30513,7 +31273,11 @@
                 "description": "Melee Spell Attack: +4 to hit, reach 5 ft., one creature. Hit: 10 (3d6) necrotic damage. The target must succeed on a DC 10 Constitution saving throw or its hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the creature finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.",
                 "name": "Life Drain"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "spider",
@@ -30635,7 +31399,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 1 piercing damage, and the target must succeed on a DC 9 Constitution saving throw or take 2 (1d4) poison damage.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "spirit-naga",
@@ -30777,7 +31545,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 10 ft., one creature. Hit: 7 (1d6 + 4) piercing damage, and the target must make a DC 13 Constitution saving throw, taking 31 (7d8) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "sprite",
@@ -30920,7 +31692,11 @@
                 "description": "The sprite magically turns invisible until it attacks or casts a spell, or until its concentration ends (as if concentrating on a spell). Any equipment the sprite wears or carries is invisible with it.",
                 "name": "Invisibility"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "steam-mephit",
@@ -31078,7 +31854,11 @@
                 "description": "The mephit has a 25 percent chance of summoning 1d4 mephits of its kind. A summoned mephit appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other mephits. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Mephits"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "stirge",
@@ -31183,7 +31963,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 5 (1d4 + 3) piercing damage, and the stirge attaches to the target. While attached, the stirge doesn't attack. Instead, at the start of each of the stirge's turns, the target loses 5 (1d4 + 3) hit points due to blood loss.\nThe stirge can detach itself by spending 5 feet of its movement. It does so after it drains 10 hit points of blood from the target or the target dies. A creature, including the target, can use its action to detach the stirge.",
                 "name": "Blood Drain"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "stone-giant",
@@ -31333,7 +32117,11 @@
                 "description": "Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target. Hit: 28 (4d10 + 6) bludgeoning damage. If the target is a creature, it must succeed on a DC 17 Strength saving throw or be knocked prone.",
                 "name": "Rock"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "stone-golem",
@@ -31518,7 +32306,11 @@
                 "description": "The golem targets one or more creatures it can see within 10 ft. of it. Each target must make a DC 17 Wisdom saving throw against this magic. On a failed save, a target can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the target can take either an action or a bonus action on its turn, not both. These effects last for 1 minute. A target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Slow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "storm-giant",
@@ -31722,7 +32514,11 @@
                 "description": "The giant hurls a magical lightning bolt at a point it can see within 500 feet of it. Each creature within 10 feet of that point must make a DC 17 Dexterity saving throw, taking 54 (12d8) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Strike"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "tarrasque",
@@ -31968,7 +32764,11 @@
                 "description": "The tarrasque makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, the target takes the bite's damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the tarrasque, and it takes 56 (16d6) acid damage at the start of each of the tarrasque's turns.\nIf the tarrasque takes 60 damage or more on a single turn from a creature inside it, the tarrasque must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of the tarrasque. If the tarrasque dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 30 feet of movement, exiting prone.",
                 "name": "Swallow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "thug",
@@ -32097,7 +32897,11 @@
                 "description": "Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target. Hit: 5 (1d10) piercing damage.",
                 "name": "Heavy Crossbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "treant",
@@ -32247,7 +33051,11 @@
                 "description": "The treant magically animates one or two trees it can see within 60 feet of it. These trees have the same statistics as a treant, except they have Intelligence and Charisma scores of 1, they can't speak, and they have only the Slam action option. An animated tree acts as an ally of the treant. The tree remains animate for 1 day or until it dies; until the treant dies or is more than 120 feet from the tree; or until the treant takes a bonus action to turn it back into an inanimate tree. The tree then takes root if possible.",
                 "name": "Animate Trees"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "troll",
@@ -32385,7 +33193,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
                 "name": "Claw"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "tyrannosaurus-rex",
@@ -32510,7 +33322,11 @@
                 "description": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 20 (3d8 + 7) bludgeoning damage.",
                 "name": "Tail"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "unicorn",
@@ -32681,7 +33497,11 @@
                 "description": "The unicorn magically teleports itself and up to three willing creatures it can see within 5 ft. of it, along with any equipment they are wearing or carrying, to a location the unicorn is familiar with, up to 1 mile away.",
                 "name": "Teleport"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "vampire",
@@ -32898,7 +33718,11 @@
                 "description": "The vampire magically calls 2d4 swarms of bats or rats, provided that the sun isn't up. While outdoors, the vampire can call 3d6 wolves instead. The called creatures arrive in 1d4 rounds, acting as allies of the vampire and obeying its spoken commands. The beasts remain for 1 hour, until the vampire dies, or until the vampire dismisses them as a bonus action.",
                 "name": "Children of the Night"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "vampire-spawn",
@@ -33084,7 +33908,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one creature. Hit: 8 (2d4 + 3) slashing damage. Instead of dealing damage, the vampire can grapple the target (escape DC 13).",
                 "name": "Claws"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "violet-fungus",
@@ -33209,7 +34037,11 @@
                 "description": "Melee Weapon Attack: +2 to hit, reach 10 ft., one creature. Hit: 4 (1d8) necrotic damage.",
                 "name": "Rotting Touch"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "vrock",
@@ -33421,7 +34253,11 @@
                 "description": "The demon chooses what to summon and attempts a magical summoning.\nA vrock has a 30 percent chance of summoning 2d4 dretches or one vrock.\nA summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
                 "name": "Variant: Summon Demon"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "water-elemental",
@@ -33626,7 +34462,11 @@
                 "description": "Each creature in the elemental's space must make a DC 15 Strength saving throw. On a failure, a target takes 13 (2d8 + 4) bludgeoning damage. If it is Large or smaller, it is also grappled (escape DC 14). Until this grapple ends, the target is restrained and unable to breathe unless it can breathe water. If the saving throw is successful, the target is pushed out of the elemental's space.\nThe elemental can grapple one Large creature or up to two Medium or smaller creatures at one time. At the start of each of the elemental's turns, each target grappled by it takes 13 (2d8 + 4) bludgeoning damage. A creature within 5 feet of the elemental can pull a creature or object out of it by taking an action to make a DC 14 Strength and succeeding.",
                 "name": "Whelm"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "white-dragon-wyrmling",
@@ -33802,7 +34642,11 @@
                 "description": "The dragon exhales an icy blast of hail in a 15-foot cone. Each creature in that area must make a DC 12 Constitution saving throw, taking 22 (5d8) cold damage on a failed save, or half as much damage on a successful one.",
                 "name": "Cold Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "wight",
@@ -33984,7 +34828,11 @@
                 "description": "Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
                 "name": "Longbow"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "will-o-wisp",
@@ -34202,7 +35050,11 @@
                 "description": "The will-o'-wisp and its light magically become invisible until it attacks or uses its Consume Life, or until its concentration ends (as if concentrating on a spell).",
                 "name": "Invisibility"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "winter-wolf",
@@ -34342,7 +35194,11 @@
                 "description": "The wolf exhales a blast of freezing wind in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 18 (4d8) cold damage on a failed save, or half as much damage on a successful one.",
                 "name": "Cold Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "wolf",
@@ -34458,7 +35314,11 @@
                 "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "worg",
@@ -34566,7 +35426,11 @@
                 "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.",
                 "name": "Bite"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "wraith",
@@ -34781,7 +35645,11 @@
                 "description": "The wraith targets a humanoid within 10 feet of it that has been dead for no longer than 1 minute and died violently. The target's spirit rises as a specter in the space of its corpse or in the nearest unoccupied space. The specter is under the wraith's control. The wraith can have no more than seven specters under its control at one time.",
                 "name": "Create Specter"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "wyvern",
@@ -34928,7 +35796,11 @@
                 "description": "Melee Weapon Attack: +7 to hit, reach 10 ft., one creature. Hit: 11 (2d6 + 4) piercing damage. The target must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Stinger"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "xorn",
@@ -35093,7 +35965,11 @@
                 "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage.",
                 "name": "Claw"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-black-dragon",
@@ -35289,7 +36165,11 @@
                 "description": "The dragon exhales acid in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 49 (11d8) acid damage on a failed save, or half as much damage on a successful one.",
                 "name": "Acid Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-blue-dragon",
@@ -35481,7 +36361,11 @@
                 "description": "The dragon exhales lightning in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 16 Dexterity saving throw, taking 55 (10d10) lightning damage on a failed save, or half as much damage on a successful one.",
                 "name": "Lightning Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-brass-dragon",
@@ -35662,7 +36546,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in a 40-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 42 (12d6) fire damage on a failed save, or half as much damage on a successful one.\nSleep Breath. The dragon exhales sleep gas in a 30-foot cone. Each creature in that area must succeed on a DC 14 Constitution saving throw or fall unconscious for 5 minutes. This effect ends for a creature if the creature takes damage or someone uses an action to wake it.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-bronze-dragon",
@@ -35847,7 +36735,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nLightning Breath. The dragon exhales lightning in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 15 Dexterity saving throw, taking 55 (10d10) lightning damage on a failed save, or half as much damage on a successful one.\nRepulsion Breath. The dragon exhales repulsion energy in a 30-foot cone. Each creature in that area must succeed on a DC 15 Strength saving throw. On a failed save, the creature is pushed 40 feet away from the dragon.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-copper-dragon",
@@ -36028,7 +36920,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nAcid Breath. The dragon exhales acid in an 40-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 40 (9d8) acid damage on a failed save, or half as much damage on a successful one.\nSlowing Breath. The dragon exhales gas in a 30-foot cone. Each creature in that area must succeed on a DC 14 Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-gold-dragon",
@@ -36218,7 +37114,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nFire Breath. The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 55 (10d10) fire damage on a failed save, or half as much damage on a successful one.\nWeakening Breath. The dragon exhales gas in a 30-foot cone. Each creature in that area must succeed on a DC 17 Strength saving throw or have disadvantage on Strength-based attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-green-dragon",
@@ -36424,7 +37324,11 @@
                 "description": "The dragon exhales poisonous gas in a 30-foot cone. Each creature in that area must make a DC 14 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one.",
                 "name": "Poison Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-red-dragon",
@@ -36616,7 +37520,11 @@
                 "description": "The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 (16d6) fire damage on a failed save, or half as much damage on a successful one.",
                 "name": "Fire Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-silver-dragon",
@@ -36796,7 +37704,11 @@
                 "description": "The dragon uses one of the following breath weapons.\nCold Breath. The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 17 Constitution saving throw, taking 54 (12d8) cold damage on a failed save, or half as much damage on a successful one.\nParalyzing Breath. The dragon exhales paralyzing gas in a 30-foot cone. Each creature in that area must succeed on a DC 17 Constitution saving throw or be paralyzed for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
                 "name": "Breath Weapons"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "young-white-dragon",
@@ -36998,7 +37910,11 @@
                 "description": "The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 15 Constitution saving throw, taking 45 (10d8) cold damage on a failed save, or half as much damage on a successful one.",
                 "name": "Cold Breath"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     },
     {
         "index": "zombie",
@@ -37111,6 +38027,10 @@
                 "description": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
                 "name": "Slam"
             }
-        ]
+        ],
+        "source": {
+            "name": "System Reference Document",
+            "acronym": "SRD"
+        }
     }
 ]

@@ -1,0 +1,310 @@
+[
+    {
+        "source": {
+            "name": "Acquisitions Incorporated",
+            "acronym": "AI"
+        },
+        "totalMonsters": 22
+    },
+    {
+        "source": {
+            "name": "Baldur's Gate: Descent Into Avernus",
+            "acronym": "BGDIA"
+        },
+        "totalMonsters": 53
+    },
+    {
+        "source": {
+            "name": "Candlekeep Mysteries",
+            "acronym": "CM"
+        },
+        "totalMonsters": 38
+    },
+    {
+        "source": {
+            "name": "Curse of Strahd",
+            "acronym": "CoS"
+        },
+        "totalMonsters": 82
+    },
+    {
+        "source": {
+            "name": "Divine Contention",
+            "acronym": "DC"
+        },
+        "totalMonsters": 1
+    },
+    {
+        "source": {
+            "name": "Dragon of Icespire Peak",
+            "acronym": "DIP"
+        },
+        "totalMonsters": 5
+    },
+    {
+        "source": {
+            "name": "Dungeon Master's Guide",
+            "acronym": "DMG"
+        },
+        "totalMonsters": 3
+    },
+    {
+        "source": {
+            "name": "Eberron: Rising from the Last War",
+            "acronym": "ERLW"
+        },
+        "totalMonsters": 43
+    },
+    {
+        "source": {
+            "name": "Essentials Kit",
+            "acronym": "ESK"
+        },
+        "totalMonsters": 3
+    },
+    {
+        "source": {
+            "name": "Explorer's Guide to Wildemount",
+            "acronym": "EGW"
+        },
+        "totalMonsters": 48
+    },
+    {
+        "source": {
+            "name": "Ghosts of Saltmarsh",
+            "acronym": "GoS"
+        },
+        "totalMonsters": 57
+    },
+    {
+        "source": {
+            "name": "Guildmaster's Guide to Ravnica",
+            "acronym": "GGR"
+        },
+        "totalMonsters": 79
+    },
+    {
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        },
+        "totalMonsters": 16
+    },
+    {
+        "source": {
+            "name": "House of Lament",
+            "acronym": "HoL"
+        },
+        "totalMonsters": 4
+    },
+    {
+        "source": {
+            "name": "Hunt for the Thessalhydra",
+            "acronym": "HftT"
+        },
+        "totalMonsters": 2
+    },
+    {
+        "source": {
+            "name": "Icewind Dale: Rime of the Frostmaiden",
+            "acronym": "IDRotF"
+        },
+        "totalMonsters": 81
+    },
+    {
+        "source": {
+            "name": "Infernal Machine Rebuild",
+            "acronym": "IMR"
+        },
+        "totalMonsters": 11
+    },
+    {
+        "source": {
+            "name": "Krenko's Way",
+            "acronym": "KKW"
+        },
+        "totalMonsters": 3
+    },
+    {
+        "source": {
+            "name": "Locathah Rising",
+            "acronym": "LR"
+        },
+        "totalMonsters": 4
+    },
+    {
+        "source": {
+            "name": "Lost Laboratory of Kwalish",
+            "acronym": "LLK"
+        },
+        "totalMonsters": 5
+    },
+    {
+        "source": {
+            "name": "Lost Mines of Phandelver",
+            "acronym": "LMoP"
+        },
+        "totalMonsters": 9
+    },
+    {
+        "source": {
+            "name": "Monster Manual",
+            "acronym": "MM"
+        },
+        "totalMonsters": 450
+    },
+    {
+        "source": {
+            "name": "Mordenkainen's Fiendish Folio",
+            "acronym": "MFF"
+        },
+        "totalMonsters": 18
+    },
+    {
+        "source": {
+            "name": "Mordenkainen's Tome of Foes",
+            "acronym": "MTF"
+        },
+        "totalMonsters": 140
+    },
+    {
+        "source": {
+            "name": "Mythic Odysseys of Theros",
+            "acronym": "MOT"
+        },
+        "totalMonsters": 51
+    },
+    {
+        "source": {
+            "name": "Orrery of the Wanderer",
+            "acronym": "OoW"
+        },
+        "totalMonsters": 17
+    },
+    {
+        "source": {
+            "name": "Out of the Abyss",
+            "acronym": "OotA"
+        },
+        "totalMonsters": 31
+    },
+    {
+        "source": {
+            "name": "Player's Handbook",
+            "acronym": "PHB"
+        },
+        "totalMonsters": 5
+    },
+    {
+        "source": {
+            "name": "Princes of the Apocalypse",
+            "acronym": "PotA"
+        },
+        "totalMonsters": 59
+    },
+    {
+        "source": {
+            "name": "Rise of Tiamat",
+            "acronym": "RoT"
+        },
+        "totalMonsters": 8
+    },
+    {
+        "source": {
+            "name": "Sapphire Anniversary Dice Set",
+            "acronym": "SADS"
+        },
+        "totalMonsters": 1
+    },
+    {
+        "source": {
+            "name": "Sleeping Dragon's Wake",
+            "acronym": "SDW"
+        },
+        "totalMonsters": 2
+    },
+    {
+        "source": {
+            "name": "Storm King's Thunder",
+            "acronym": "SKT"
+        },
+        "totalMonsters": 105
+    },
+    {
+        "source": {
+            "name": "Storm Lord's Wrath",
+            "acronym": "SLW"
+        },
+        "totalMonsters": 3
+    },
+    {
+        "source": {
+            "name": "Tales from the Yawning Portal",
+            "acronym": "TftYP"
+        },
+        "totalMonsters": 107
+    },
+    {
+        "source": {
+            "name": "Tasha's Cauldron of Everything",
+            "acronym": "TCE"
+        },
+        "totalMonsters": 18
+    },
+    {
+        "source": {
+            "name": "The Lost Dungeon of Rickedness: Big Rick Energy",
+            "acronym": "RMBRE"
+        },
+        "totalMonsters": 9
+    },
+    {
+        "source": {
+            "name": "The Tortle Package",
+            "acronym": "TTP"
+        },
+        "totalMonsters": 4
+    },
+    {
+        "source": {
+            "name": "Tomb of Annihilation",
+            "acronym": "ToA"
+        },
+        "totalMonsters": 89
+    },
+    {
+        "source": {
+            "name": "Van Richten's Guide to Ravenloft",
+            "acronym": "VRGR"
+        },
+        "totalMonsters": 32
+    },
+    {
+        "source": {
+            "name": "Volo's Guide to Monsters",
+            "acronym": "VGM"
+        },
+        "totalMonsters": 136
+    },
+    {
+        "source": {
+            "name": "Waterdeep: Dragon Heist",
+            "acronym": "WDH"
+        },
+        "totalMonsters": 89
+    },
+    {
+        "source": {
+            "name": "Waterdeep: Dungeon of the Mad Mage",
+            "acronym": "WDMM"
+        },
+        "totalMonsters": 95
+    },
+    {
+        "source": {
+            "name": "Xanathar's Guide to Everything",
+            "acronym": "XGE"
+        },
+        "totalMonsters": 1
+    }
+]

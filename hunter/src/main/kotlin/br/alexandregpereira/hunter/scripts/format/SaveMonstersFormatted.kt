@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterSizeDto
 import br.alexandregpereira.hunter.data.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.remote.model.SkillDto
+import br.alexandregpereira.hunter.data.remote.model.SourceDto
 import br.alexandregpereira.hunter.data.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.remote.model.SpeedTypeDto
@@ -106,6 +107,10 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             languages = it.languages,
             specialAbilities = it.specialAbilities.asSpecialAbilitiesFormatted(),
             actions = it.actions.asActionsFormatted(),
+            source = SourceDto(
+                name = "System Reference Document",
+                acronym = "SRD"
+            )
         ).formatSubtitle()
     }
 }
