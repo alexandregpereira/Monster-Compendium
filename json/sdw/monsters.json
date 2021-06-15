@@ -132,6 +132,10 @@
         "languages": "Common, Draconic",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Lhammaruntosz is an 8th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 17; +9 to hit with spell attacks). She has the following sorcerer spells prepared:\n- Cantrips (at will): light, mage hand, mending\n- 1st level (4 slots): charm person, detect magic, expeditious retreat, sleep\n- 2nd level (3 slots): darkness, invisibility, suggestion\n- 3rd level (3 slots): dispel magic, protection from energy\n- 4th level (2 slots): dimension door, stoneskin"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "Lhammaruntosz can breathe air and water."
             },

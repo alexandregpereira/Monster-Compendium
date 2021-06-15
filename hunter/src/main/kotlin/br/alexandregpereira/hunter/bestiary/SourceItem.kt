@@ -84,6 +84,7 @@ data class Monster(
     @Serializable(with = SkillSerializer::class)
     val skill: Map<String, String> = emptyMap(),
     val languages: List<String> = emptyList(),
+    val spellcasting: List<Spellcasting> = emptyList()
 )
 
 @Serializable
@@ -169,6 +170,19 @@ data class Image(
 data class Href(
     val type: String,
     val path: String,
+)
+
+@Serializable
+data class Spellcasting(
+    val name: String,
+    val headerEntries: List<String>,
+    val spells: Map<String, SpellLevel> = emptyMap()
+)
+
+@Serializable
+data class SpellLevel(
+    val slots: Int? = null,
+    val spells: List<String>
 )
 
 object TypeSerializer : JsonTransformingSerializer<Type>(Type.serializer()) {

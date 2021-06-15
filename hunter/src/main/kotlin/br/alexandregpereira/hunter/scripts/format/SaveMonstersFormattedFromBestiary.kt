@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.scripts.format
 
 import br.alexandregpereira.hunter.bestiary.Monster
+import br.alexandregpereira.hunter.bestiary.Spellcasting
 import br.alexandregpereira.hunter.bestiary.getMonstersFromBestiary
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreDto
 import br.alexandregpereira.hunter.data.remote.model.AbilityScoreTypeDto
@@ -295,12 +296,35 @@ private fun Monster.conditionsImmuneFormatted(): List<ConditionDto> {
 }
 
 private fun Monster.specialAbilitiesFormatted(): List<SpecialAbilityDto> {
-    return trait.map {
-        SpecialAbilityDto(
-            name = it.name,
-            desc = it.entries.joinToString("\n")
-        )
-    }
+    return listOfNotNull(
+        spellcasting.firstOrNull { it.spells.size > 1 }?.getSpecialAbilityDtoBySpellcasting()) +
+            trait.map {
+                SpecialAbilityDto(
+                    name = it.name,
+                    desc = it.entries.joinToString("\n")
+                )
+            }
+}
+
+private fun Spellcasting.getSpecialAbilityDtoBySpellcasting(): SpecialAbilityDto {
+    return SpecialAbilityDto(
+        name = name,
+        desc = headerEntries.joinToString(" ").run {
+            this + "\n" + spells.map { entry ->
+                "- " + when (entry.key) {
+                    "0" -> "Cantrips (at will):"
+                    "1" -> "1st level${entry.value.slots.formatSlotsText()}:"
+                    "2" -> "2nd level${entry.value.slots.formatSlotsText()}:"
+                    "3" -> "3rd level${entry.value.slots.formatSlotsText()}:"
+                    else -> "${entry.key}th level${entry.value.slots.formatSlotsText()}:"
+                } + " " + entry.value.spells.joinToString()
+            }.joinToString("\n")
+        }
+    )
+}
+
+private fun Int?.formatSlotsText(): String {
+    return if (this == null) "" else if (this == 1) " ($this slot)" else " ($this slots)"
 }
 
 private fun Monster.actionsFormatted(): List<ActionDto> {

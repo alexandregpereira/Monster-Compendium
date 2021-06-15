@@ -376,6 +376,10 @@
         "languages": "any one language (usually Common)",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The knight is an 8th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). It has the following paladin spells prepared:\n- 1st level (4 slots): command, compelled duel, hellish rebuke, wrathful smite\n- 2nd level (3 slots): branding smite, crown of madness, darkness, find steed, magic weapon"
+            },
+            {
                 "name": "Commander of Bones",
                 "desc": "As a bonus action, the knight can target one skeleton or zombie it can see within 30 feet of it. The target must make a DC 14 Wisdom saving throw. On a failed save, the target must obey the knight's commands until the knight dies or until the knight releases it as a bonus action. The knight can command up to twelve undead at a time this way."
             },
@@ -2648,6 +2652,10 @@
         "languages": "Common, Draconic, Elvish",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Illmarrow is a 20th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 23, +15 to hit with spell attacks). Illmarrow has the following wizard spells prepared:\n- Cantrips (at will): chill touch (see \"Actions\" below), fire bolt, mage hand, prestidigitation, ray of frost\n- 1st level (4 slots): magic missile, shield, sleep\n- 2nd level (3 slots): blur, detect thoughts, mirror image\n- 3rd level (3 slots): animate dead, counterspell, fireball, fly, lightning bolt\n- 4th level (3 slots): blight, confusion, polymorph\n- 5th level (3 slots): cloudkill, cone of cold, hold monster, scrying\n- 6th level (2 slots): chain lightning, circle of death, create undead, scrying\n- 7th level (2 slots): finger of death, forcecage, prismatic spray\n- 8th level (1 slot): incendiary cloud, maze\n- 9th level (1 slot): power word kill, time stop"
+            },
+            {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If Illmarrow fails a saving throw, she can choose to succeed instead."
             },
@@ -4770,6 +4778,10 @@
         ],
         "languages": "Common, Draconic, Dwarvish, Elvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The Lord of Blades is a 20th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 18, +10 to hit with spell attacks). He has the following artificer spells prepared:\n- Cantrips (at will): fire bolt (see \"Actions\" below), mage hand, mending, prestidigitation\n- 1st level (4 slots): expeditious retreat, sanctuary, thunderwave\n- 2nd level (3 slots): blur, heat metal, scorching ray, see invisibility\n- 3rd level (3 slots): dispel magic, fly, haste\n- 4th level (3 slots): freedom of movement, Mordenkainen's faithful hound\n- 5th level (2 slots): animate objects, wall of force"
+            },
             {
                 "name": "Adamantine Plating",
                 "desc": "Any critical hit against the Lord of Blades becomes a normal hit."

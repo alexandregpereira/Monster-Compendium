@@ -287,6 +287,10 @@
         ],
         "languages": "Common, Draconic, Elvish, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Ammalia is a 9th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): friends, mage hand, mending, message\n- 1st level (4 slots): charm person, mage armor, magic missile\n- 2nd level (3 slots): hold person, invisibility, suggestion\n- 3rd level (3 slots): fireball, haste, tongues\n- 4th level (3 slots): confusion, stoneskin\n- 5th level (1 slot): hold monster"
+            }
         ],
         "actions": [
             {
@@ -426,6 +430,10 @@
         ],
         "languages": "Common, Draconic, Dwarvish, Halfling",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Barnibus is a 7th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks) He has the following wizard spells prepared:\n- Cantrips (at will): blade ward, light, mage hand, message\n- 1st level (4 slots): comprehend languages, identify, detect magic, mage armor, shield\n- 2nd level (3 slots): detect thoughts, suggestion\n- 3rd level (3 slots): clairvoyance, sending\n- 4th level (1 slot): locate creature, Otiluke's resilient sphere"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Barnibus carries a wand of magic detection. (spell included in spell list below but does not use a slot when cast from the wand)"
@@ -737,6 +745,10 @@
         ],
         "languages": "Common, Draconic, Dwarvish, Elvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Davil is a 12th-level spellcaster. His spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks) He has the following bard spells prepared:\n- Cantrips (at will): mage hand, mending, minor illusion, vicious mockery\n- 1st level (4 slots): cure wounds, disguise self, sleep\n- 2nd level (3 slots): crown of madness, invisibility, suggestion\n- 3rd level (3 slots): nondetection, sending, tongues\n- 4th level (3 slots): compulsion, freedom of movement, polymorph\n- 5th level (2 slots): dominate person, greater restoration\n- 6th level (1 slot): Otto's irresistible dance"
+            },
             {
                 "name": "Fey Ancestry",
                 "desc": "Davil has advantage on saving throws against being charmed, and magic can't put him to sleep."
@@ -1353,6 +1365,10 @@
         "languages": "all spoken languages",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Hlam is a 5th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks) He has the following cleric spells prepared:\n- Cantrips (at will): guidance, light, sacred flame, spare the dying\n- 1st level (4 slots): detect evil and good, healing word, sanctuary, shield of faith\n- 2nd level (3 slots): calm emotions, prayer of healing, silence\n- 3rd level (2 slots): protection from energy, remove curse, sending"
+            },
+            {
                 "name": "Evasion",
                 "desc": "If Hlam is subjected to an effect that allows him to make a Dexterity saving throw to take only half damage, he instead takes no damage if he succeeds on the saving throw, and only half damage if he fails. He can't use this trait if he's incapacitated."
             },
@@ -1673,6 +1689,10 @@
         ],
         "languages": "Common, Dwarvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Istrid is a 9th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks) She has the following cleric spells prepared:\n- Cantrips (at will): light, mending, sacred flame, spare the dying\n- 1st level (4 slots): divine favor, guiding bolt, healing word, shield of faith\n- 2nd level (3 slots): lesser restoration, magic weapon, hold person, silence, spiritual weapon\n- 3rd level (3 slots): beacon of hope, crusader's mantle, dispel magic, revivify, spirit guardians, water walk\n- 4th level (3 slots): banishment, freedom of movement, guardian of faith, stoneskin\n- 5th level (1 slot): flame strike, mass cure wounds, hold monster"
+            },
             {
                 "name": "Dwarven Resilience",
                 "desc": "Istrid has advantage on saving throws against being poisoned."
@@ -2199,6 +2219,10 @@
         "languages": "Common, Draconic, Dwarvish, Elvish, Giant, Infernal",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Laeral is a 19th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 21, +13 to hit with spell attacks). Laeral has the following wizard spells prepared:\n- Cantrips (at will): light, mage hand, minor illusion, prestidigitation, ray of frost\n- 1st level: detect magic, disguise self, magic missile, shield\n- 2nd level: detect thoughts, invisibility, misty step\n- 3rd level (3 slots): counterspell, fly, sending, tongues\n- 4th level (3 slots): banishment, greater invisibility, Otiluke's resilient sphere\n- 5th level (3 slots): cone of cold, geas, Rary's telepathic bond\n- 6th level (2 slots): globe of invulnerability, mass suggestion\n- 7th level (1 slot): prismatic spray, teleport\n- 8th level (1 slot): feeblemind, power word stun\n- 9th level (1 slot): time stop"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Laeral wears a white robe of the archmagi (accounted for in her statistics). She wields a flame tongue longsword."
             },
@@ -2393,6 +2417,10 @@
         ],
         "languages": "Common, Draconic, Goblin, Infernal, Orc, Undercommon",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Manshoon is an 18th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 21, +15 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, prestidigitation, shocking grasp\n- 1st level (4 slots): detect magic, mage armor, magic missile, shield\n- 2nd level (3 slots): detect thoughts, mirror image, misty step\n- 3rd level (3 slots): counterspell, lightning bolt, sending\n- 4th level (3 slots): fire shield, greater invisibility, polymorph\n- 5th level (3 slots): Bigby's hand, scrying, wall of force\n- 6th level (1 slot): flesh to stone, globe of invulnerability\n- 7th level (1 slot): finger of death, simulacrum\n- 8th level (1 slot): feeblemind, mind blank\n- 9th level (1 slot): imprisonment, power word kill"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Manshoon wears a black robe of the archmagi and wields a staff of power (both accounted for in his statistics). Roll 2d10 to determine how many charges the staff has remaining."
@@ -3477,6 +3505,10 @@
         "languages": "Abyssal, Common, Gnomish, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Skeemo is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks) He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, mage armor, magic missile, shield\n- 2nd level (3 slots): misty step, suggestion\n- 3rd level (3 slots): counterspell, fireball, fly\n- 4th level (3 slots): greater invisibility, ice storm\n- 5th level (1 slot): cone of cold"
+            },
+            {
                 "name": "Gnome Cunning",
                 "desc": "Skeemo has advantage on Intelligence, Wisdom, and Charisma saving throws against magic."
             }
@@ -4079,6 +4111,10 @@
         "languages": "Common, Dwarvish, Elvish, Giant, Halfling, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Vajra is an 18th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 18, +12 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, message, prestidigitation\n- 1st level (4 slots): detect magic, identify, mage armor, thunderwave\n- 2nd level (3 slots): invisibility, misty step, web\n- 3rd level (3 slots): counterspell, fly, sending\n- 4th level (3 slots): banishment, fire shield, stoneskin\n- 5th level (3 slots): Bigby's hand, geas, telekinesis\n- 6th level (1 slot): chain lightning, globe of invulnerability\n- 7th level (1 slot): forcecage, prismatic spray\n- 8th level (1 slot): antimagic field, power word stun\n- 9th level (1 slot): imprisonment"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Vajra wields the Blackstaff, accounted for in her statistics. Roll 2d10 to determine how many charges the staff has remaining."
             },
@@ -4224,6 +4260,10 @@
         ],
         "languages": "Common, Draconic, Elvish, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Victoro is a 15th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). Victoro has the following cleric spells prepared:\n- Cantrips (at will): guidance, light, mending, spare the dying, thaumaturgy\n- 1st level (4 slots): charm person, command, detect magic, disguise self, protection from evil and good, sanctuary\n- 2nd level (3 slots): augury, lesser restoration, mirror image, pass without trace, spiritual weapon\n- 3rd level (3 slots): blink, clairvoyance, dispel magic, magic circle, protection from energy\n- 4th level (3 slots): banishment, dimension door, divination, freedom of movement, polymorph\n- 5th level (2 slots): dominate person, flame strike, modify memory, insect plague\n- 6th level (1 slot): heal\n- 7th level (1 slot): divine word\n- 8th level (1 slot): earthquake"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Victoro wears a ring of protection and glamoured studded leather disguised to look like fine clothing. He carries a rod of rulership shaped like a ruby-tipped cane."

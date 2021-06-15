@@ -233,6 +233,10 @@
         "languages": "Common, Draconic, Infernal, Primordial, Thayan",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Azbara is a 6th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Azbara has the following spells prepared from the wizard spell list:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost, shocking grasp\n- 1st level (4 slots): fog cloud, magic missile, shield, thunderwave\n- 2nd level (3 slots): invisibility, misty step, scorching ray\n- 3rd level (3 slots): counterspell, dispel magic, fireball"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Azbara has two scrolls of mage armor."
             },
@@ -380,6 +384,10 @@
         ],
         "languages": "Common, Draconic, Giant",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Blagothkus is a 5th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 15, +7 to hit with spell attacks). Blagothkus has the following spells prepared from the wizard spell list:\n- Cantrips (at will): light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, identify, magic missile, shield\n- 2nd level (3 slots): gust of wind, misty step, shatter\n- 3rd level (2 slots): fly, lightning bolt"
+            },
             {
                 "name": "Keen Smell",
                 "desc": "Blagothkus has advantage on Wisdom (Perception) checks that rely on smell."
@@ -825,6 +833,10 @@
         "languages": "Common, Bullywug, Draconic, Elvish, Goblin, Sylvan",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Dralmorrer is a 7th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Dralmorrer has the following spells prepared from the wizard spell list:\n- Cantrips (at will): fire bolt, prestidigitation, shocking grasp\n- 1st level (4 slots): longstrider, magic missile, shield, thunderwave\n- 2nd level (2 slots): magic weapon, misty step"
+            },
+            {
                 "name": "Fey Ancestry",
                 "desc": "Dralmorrer has advantage on saving throws against being charmed, and magic can't put him to sleep."
             },
@@ -984,6 +996,10 @@
         ],
         "languages": "Common, Draconic, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Frulam is a 5th-level spellcaster that uses Wisdom as her spellcasting ability (spell save DC 14, +6 to hit with spell attacks). Frulam has the following spells prepared from the cleric spell list:\n- Cantrips (at will): light, sacred flame, thaumaturgy\n- 1st level (4 slots): command, cure wounds, healing word, sanctuary\n- 2nd level (3 slots): calm emotions, hold person, spiritual weapon\n- 3rd level (2 slots): mass healing word, spirit guardians"
+            }
         ],
         "actions": [
             {
@@ -1267,6 +1283,10 @@
         ],
         "languages": "Common, Gnomish, Goblin, Sylvan",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Jamna is a 4th-level spellcaster that uses Intelligence as her spellcasting ability (spell save DC 12, +4 to hit with spell attacks). Jamna has the following spells prepared from the wizard spell list.\n- Cantrips (at will): mage hand, minor illusion, prestidigitation, ray of frost\n- 1st level (3 slots): charm person, color spray, disguise self, longstrider"
+            },
             {
                 "name": "Cunning Action",
                 "desc": "Jamna can take a bonus action to take the Dash, Disengage, or Hide action."
@@ -1601,6 +1621,10 @@
         "languages": "Common, Bullywug",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Pharblex is a 6th-level spellcaster that uses Wisdom as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Pharblex has the following spells prepared from the druid spell list:\n- Cantrips (at will): druidcraft, guidance, poison spray\n- 1st level (4 slots): cure wounds, entangle, healing word, thunderwave\n- 2nd level (3 slots): barkskin, beast sense, spike growth\n- 3rd level (3 slots): plant growth, water walk"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "Pharblex can breathe air and water."
             },
@@ -1769,6 +1793,10 @@
         ],
         "languages": "Common, Draconic, Infernal, Primordial, Thayan",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Rath is an 11th-level spellcaster who uses Intelligence as his spellcasting ability (spell save DC 15, +7 to hit with spell attacks). Rath has the following spells prepared from the wizard spell list:\n- Cantrips (at will): fire bolt, minor illusion, prestidigitation, shocking grasp\n- 1st level (4 slots): chromatic orb, color spray, mage armor, magic missile\n- 2nd level (3 slots): detect thoughts, mirror image, phantasmal force\n- 3rd level (3 slots): counterspell, fireball, major image\n- 4th level (3 slots): confusion, greater invisibility\n- 5th level (2 slots): mislead, seeming\n- 6th level (1 slot): globe of invulnerability"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Rath has a staff of fire, and scrolls of dimension door, feather fall, and fireball."
@@ -2097,6 +2125,10 @@
         ],
         "languages": "Common, Draconic, Elvish, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Talis is a 9th-level spellcaster that uses Wisdom as her spellcasting ability (spell save DC 14, +6 to hit with spell attacks). Talis has the following spells prepared from the cleric spell list:\n- Cantrips (at will): guidance, resistance, thaumaturgy\n- 1st level (4 slots): command, cure wounds, healing word, inflict wounds\n- 2nd level (3 slots): blindness/deafness, lesser restoration, spiritual weapon (spear)\n- 3rd level (3 slots): dispel magic, mass healing word, sending\n- 4th level (3 slots): death ward, freedom of movement\n- 5th level (1 slot): insect plague"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Talis has +1 scale mail and a wand of winter."

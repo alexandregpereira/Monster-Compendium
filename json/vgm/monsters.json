@@ -194,6 +194,10 @@
         "languages": "Deep Speech, Undercommon, telepathy 120 ft.",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The alhoon is a 12th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). The alhoon has the following wizard spells prepared:\n- Cantrips (at will): chill touch, dancing lights, mage hand, prestidigitation, shocking grasp\n- 1st level (4 slots): detect magic, disguise self, magic missile, shield\n- 2nd level (3 slots): invisibility, mirror image, scorching ray\n- 3rd level (3 slots): counterspell, fly, lightning bolt\n- 4th level (3 slots): confusion, Evard's black tentacles, phantasmal killer\n- 5th level (2 slots): modify memory, wall of force\n- 6th level (1 slot): disintegrate, globe of invulnerability"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The alhoon has advantage on saving throws against spells and other magical effects."
             },
@@ -359,6 +363,10 @@
         "languages": "Common, Giant, Sylvan",
         "special_abilities": [
             {
+                "name": "Shared Spellcasting (Coven Only)",
+                "desc": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves:\n- 1st level (4 slots): identify, ray of sickness\n- 2nd level (3 slots): hold person, locate object\n- 3rd level (3 slots): bestow curse, counterspell, lightning bolt\n- 4th level (3 slots): phantasmal killer, polymorph\n- 5th level (2 slots): contact other plane, scrying\n- 6th level (1 slot): eyebite"
+            },
+            {
                 "name": "Hag Coven",
                 "desc": "When hags must work together, they form covens, in spite of their selfish natures. A coven is made up of hags of any type, all of whom are equals within the group. However, each of the hags continues to desire more personal power.\nA coven consists of three hags so that any arguments between two hags can be settled by the third. If more than three hags ever come together, as might happen if two covens come into conflict, the result is usually chaos."
             },
@@ -522,6 +530,10 @@
         ],
         "languages": "any one language (usually Common)",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The apprentice is a 1st-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). It has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, mending, prestidigitation\n- 1st level (2 slots): burning hands, disguise self, shield"
+            }
         ],
         "actions": [
             {
@@ -1260,6 +1272,10 @@
         "languages": "any two languages",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The bard is a 4th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It has the following bard spells prepared:\n- Cantrips (at will): friends, mage hand, vicious mockery\n- 1st level (4 slots): charm person, healing word, heroism, sleep, thunderwave\n- 2nd level (3 slots): invisibility, shatter"
+            },
+            {
                 "name": "Song of Rest",
                 "desc": "The bard can perform a song while taking a short rest. Any ally who hears the song regains an extra 1d6 hit points if it spends any Hit Dice to regain hit points at the end of that rest. The bard can confer this benefit on itself as well."
             },
@@ -1618,6 +1634,10 @@
         ],
         "languages": "Auran, Common, Giant",
         "special_abilities": [
+            {
+                "name": "Shared Spellcasting (Coven Only)",
+                "desc": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves:\n- 1st level (4 slots): identify, ray of sickness\n- 2nd level (3 slots): hold person, locate object\n- 3rd level (3 slots): bestow curse, counterspell, lightning bolt\n- 4th level (3 slots): phantasmal killer, polymorph\n- 5th level (2 slots): contact other plane, scrying\n- 6th level (1 slot): eyebite"
+            },
             {
                 "name": "Graystaff Magic",
                 "desc": "The hag carries a graystaff, a length of gray wood that is a focus for her inner power. She can ride the staff as if it were a broom of flying. While holding the staff, she can cast additional spells with her Innate Spellcasting trait (these spells are marked with an asterisk). If the staff is lost or destroyed, the hag must craft another, which takes a year and a day. Only a bheur hag can use a graystaff."
@@ -2970,6 +2990,10 @@
         "languages": "Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The choldrith is a 4th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The choldrith has the following cleric spells prepared:\n- Cantrips (at will): guidance, mending, resistance, thaumaturgy\n- 1st level (4 slots): bane, healing word, sanctuary, shield of faith\n- 2nd level (3 slots): hold person, spiritual weapon (dagger)"
+            },
+            {
                 "name": "Fey Ancestry",
                 "desc": "The choldrith has advantage on saving throws against being charmed, and magic can't put the choldrith to sleep."
             },
@@ -3140,6 +3164,10 @@
         ],
         "languages": "Common, Giant",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The giant is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 15, +7 to hit with spell attacks). The giant has the following bard spells prepared:\n- Cantrips (at will): minor illusion, prestidigitation, vicious mockery\n- 1st level (4 slots): cure wounds, disguise self, silent image, Tasha's hideous laughter\n- 2nd level (3 slots): invisibility, suggestion\n- 3rd level (2 slots): major image, tongues"
+            },
             {
                 "name": "Keen Smell",
                 "desc": "The giant has advantage on Wisdom (Perception) checks that rely on smell."
@@ -6912,6 +6940,10 @@
         "languages": "Grung",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The grung is a 9th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). It knows the following ranger spells:\n- 1st level (4 slots): cure wounds, jump\n- 2nd level (3 slots): barkskin, spike growth\n- 3rd level (2 slots): plant growth"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "The grung can breathe air and water."
             },
@@ -7062,6 +7094,10 @@
         "languages": "Common, Goblin",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The hobgoblin is a 7th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). It has the following wizard spells prepared:\n- Cantrips (at will): acid splash, fire bolt, ray of frost, shocking grasp\n- 1st level (4 slots): fog cloud, magic missile, thunderwave\n- 2nd level (3 slots): gust of wind, Melf's acid arrow, scorching ray\n- 3rd level (3 slots): fireball, fly, lightning bolt\n- 4th level (1 slot): ice storm"
+            },
+            {
                 "name": "Arcane Advantage",
                 "desc": "Once per turn, the hobgoblin can deal an extra 7 (2d6) damage to a creature it hits with a damaging spell attack if that target is within 5 feet of an ally of the hobgoblin and that ally isn't incapacitated."
             },
@@ -7194,6 +7230,10 @@
         ],
         "languages": "Common, Goblin",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The hobgoblin is a 2nd-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). It has the following wizard spells prepared:\n- Cantrips (at will): minor illusion, prestidigitation, true strike\n- 1st level (3 slots): charm person, disguise self, expeditious retreat, silent image"
+            },
             {
                 "name": "Unarmored Defense",
                 "desc": "While the hobgoblin is wearing no armor and wielding no shield, its AC includes its Wisdom modifier."
@@ -7361,6 +7401,10 @@
         ],
         "languages": "all, telepathy 120 ft.",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The ki-rin is a 18th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 17, +9 to hit with spell attacks). It has the following cleric spells prepared:\n- Cantrips (at will): light, mending, sacred flame, spare the dying, thaumaturgy\n- 1st level (4 slots): command, cure wounds, detect evil and good, protection from evil and good, sanctuary\n- 2nd level (3 slots): calm emotions, lesser restoration, silence\n- 3rd level (3 slots): dispel magic, remove curse, sending\n- 4th level (3 slots): banishment, freedom of movement, guardian of faith\n- 5th level (3 slots): greater restoration, mass cure wounds, scrying\n- 6th level (1 slot): heroes' feast, true seeing\n- 7th level (1 slot): etherealness, plane shift\n- 8th level (1 slot): control weather\n- 9th level (1 slot): true resurrection"
+            },
             {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If the ki-rin fails a saving throw, it can choose to succeed instead."
@@ -7782,6 +7826,10 @@
         ],
         "languages": "Common, Draconic",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The kobold is a 3rd-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It has the following sorcerer spells prepared:\n- Cantrips (at will): fire bolt, mage hand, mending, poison spray\n- 1st level (4 slots): charm person, chromatic orb, expeditious retreat\n- 2nd level (2 slots): scorching ray"
+            },
             {
                 "name": "Sorcery Points",
                 "desc": "The kobold has 3 sorcery points. It regains all its spent sorcery points when it finishes a long rest. It can spend its sorcery points on the following options:\nHeightened Spell: When it casts a spell that forces a creature to a saving throw to resist the spell's effects, the kobold can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw against the spell.\nSubtle Spell: When the kobold casts a spell, it can spend 1 sorcery point to cast the spell without any somatic or verbal components."
@@ -8866,6 +8914,10 @@
         "languages": "Deep Speech, Undercommon, telepathy 120 ft.",
         "special_abilities": [
             {
+                "name": "Innate Spellcasting (Psionics)",
+                "desc": "The mind flayer is a 10th-level spellcaster. Its innate spellcasting ability is Intelligence (spell save DC 15; +7 to hit with spell attacks). It can innately cast the following spells, requiring no components:\n- 1st level (4 slots): charm person, command, comprehend languages, sanctuary\n- 2nd level (3 slots): crown of madness, phantasmal force, see invisibility\n- 3rd level (3 slots): clairvoyance, fear, meld into stone\n- 4th level (3 slots): confusion, stone shape\n- 5th level (2 slots): scrying, telekinesis"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The mind flayer has advantage on saving throws against spells and other magical effects."
             }
@@ -9200,6 +9252,10 @@
         ],
         "languages": "telepathy 120 ft.",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The morkoth is an 11th-level spellcaster. Its spellcasting ability is Intelligence (save DC 17, +9 to hit with spell attacks). The morkoth has the following wizard spells prepared:\n- Cantrips (at will): acid splash, mage hand, mending, ray of frost, shocking grasp\n- 1st level (4 slots): detect magic, identify, shield, witch bolt\n- 2nd level (3 slots): darkness, detect thoughts, shatter\n- 3rd level (3 slots): dispel magic, lightning bolt, sending\n- 4th level (3 slots): dimension door, Evard's black tentacles\n- 5th level (3 slots): geas, scrying\n- 6th level (1 slot): chain lightning"
+            },
             {
                 "name": "Amphibious",
                 "desc": "The morkoth can breathe air and water."
@@ -9929,6 +9985,10 @@
         ],
         "languages": "Common, Orc",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The orc is a 5th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The orc has the following cleric spells prepared:\n- Cantrips (at will): guidance, mending, resistance, thaumaturgy\n- 1st level (4 slots): bane, cure wounds, guiding bolt\n- 2nd level (3 slots): augury, warding bond\n- 3rd level (2 slots): bestow curse, create food and water"
+            },
             {
                 "name": "Aggressive",
                 "desc": "As a bonus action, the orc can move up to its speed toward a hostile creature that it can see."

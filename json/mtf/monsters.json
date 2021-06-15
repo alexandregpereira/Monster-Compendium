@@ -2552,6 +2552,10 @@
         "languages": "Draconic, Infernal, telepathy 120 ft.",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The abishai is a 13th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). The abishai has the following wizard spells prepared:\n- Cantrips (at will): friends, mage hand, message, minor illusion, shocking grasp\n- 1st level (4 slots): chromatic orb, disguise self, expeditious retreat, magic missile, charm person, thunderwave\n- 2nd level (3 slots): darkness, mirror image, misty step\n- 3rd level (3 slots): dispel magic, fear, lightning bolt\n- 4th level (3 slots): dimension door, greater invisibility, ice storm\n- 5th level (2 slots): cone of cold, wall of force\n- 6th level (1 slot): chain lightning\n- 7th level (1 slot): teleport"
+            },
+            {
                 "name": "Devil's Sight",
                 "desc": "Magical darkness doesn't impede the abishai's darkvision."
             },
@@ -3996,6 +4000,10 @@
         "languages": "the languages it knew in life",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The deathlock is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). It regains its expended spell slots when it finishes a short or long rest. It knows the following warlock spells:\n- Cantrips (at will): chill touch, eldritch blast, mage hand\n- 3rd level (2 slots): arms of Hadar, dispel magic, hold person, hunger of Hadar, invisibility, spider climb"
+            },
+            {
                 "name": "Turn Resistance",
                 "desc": "The deathlock has advantage on saving throws against any effect that turns undead."
             }
@@ -4166,6 +4174,10 @@
         ],
         "languages": "the languages it knew in life",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The deathlock is a 10th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). It regains its expended spell slots when it finishes a short or long rest. It knows the following warlock spells:\n- Cantrips (at will): chill touch, mage hand, minor illusion, poison spray\n- 5th level (2 slots): arms of Hadar, blight, counterspell, crown of madness, darkness, dimension door, dispel magic, fly, hold monster, invisibility"
+            },
             {
                 "name": "Turn Resistance",
                 "desc": "The deathlock has advantage on saving throws against any effect that turns undead."
@@ -4794,6 +4806,10 @@
         "languages": "Dwarvish, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The derro savant is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). The derro knows the following sorcerer spells:\n- Cantrips (at will): acid splash, mage hand, message, prestidigitation, ray of frost\n- 1st level (4 slots): burning hands, chromatic orb, sleep\n- 2nd level (3 slots): invisibility, spider climb\n- 3rd level (2 slots): lightning bolt"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The derro savant has advantage on saving throws against spells and other magical effects."
             },
@@ -5346,6 +5362,10 @@
         "languages": "Elvish, Undercommon, can speak with spiders",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The drow is a 16th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 16, +8 to hit with spell attacks). It regains its expended spell slots when it finishes a short or long rest. It knows the following warlock spells:\n- Cantrips (at will): chill touch, eldritch blast, mage hand, poison spray\n- 5th level (3 slots): conjure animals (spiders only), crown of madness, dimension door, dispel magic, fear, fly, giant insect, hold monster, insect plague, invisibility, vampiric touch, web, witch bolt"
+            },
+            {
                 "name": "Change Shape (Recharges after a Short or Long Rest)",
                 "desc": "The drow can use a bonus action to magically polymorph into a giant spider, remaining in that form for up to 1 hour. It can revert to its true form as a bonus action. Its statistics, other than its size, are the same in each form. It can speak and cast spells while in giant spider form. Any equipment it is wearing or carrying in humanoid form melds into the giant spider form. It can't activate, use, wield, or otherwise benefit from any of its equipment. It reverts to its humanoid form if it dies."
             },
@@ -5570,6 +5590,10 @@
         ],
         "languages": "Elvish, Undercommon",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The drow is a 20th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 19, +11 to hit with spell attacks). The drow has the following cleric spells prepared:\n- Cantrips (at will): guidance, mending, resistance, sacred flame, thaumaturgy\n- 1st level (4 slots): bane, command, cure wounds, guiding bolt\n- 2nd level (3 slots): hold person, silence, spiritual weapon\n- 3rd level (3 slots): bestow curse, clairvoyance, dispel magic, spirit guardians\n- 4th level (3 slots): banishment, death ward, freedom of movement, guardian of faith\n- 5th level (3 slots): contagion, flame strike, geas, mass cure wounds\n- 6th level (2 slots): blade barrier, harm\n- 7th level (2 slots): divine word, plane shift\n- 8th level (1 slot): holy aura\n- 9th level (1 slot): gate"
+            },
             {
                 "name": "Fey Ancestry",
                 "desc": "The drow has advantage on saving throws against being charmed, and magic can't put the drow to sleep."
@@ -8051,6 +8075,10 @@
         "languages": "Gith",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The githyanki is an 8th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 15, +7 to hit with spell attacks). The githyanki has the following wizard spells prepared:\n- Cantrips (at will): blade ward, light, message, true strike\n- 1st level (4 slots): expeditious retreat, magic missile, sleep, thunderwave\n- 2nd level (3 slots): blur, invisibility, levitate\n- 3rd level (3 slots): counterspell, fireball, haste\n- 4th level (2 slots): dimension door"
+            },
+            {
                 "name": "War Magic",
                 "desc": "When the githyanki uses its action to cast a spell, it can make one weapon attack as a bonus action."
             }
@@ -8681,6 +8709,10 @@
         ],
         "languages": "Common, Elvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The gloom weaver is a 12th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 16, +8 to hit with spell attacks). It regains its expended spell slots when it finishes a short or long rest. It knows the following warlock spells:\n- Cantrips (at will): minor illusion, prestidigitation, chill touch, eldritch blast*\n- 5th level (3 slots): armor of Agathys, blight, darkness, dream, invisibility, fear, hypnotic pattern, major image, contact other plane, vampiric touch, witch bolt"
+            },
             {
                 "name": "Burden of Time",
                 "desc": "Beasts and humanoids, other than shadar-kai, have disadvantage on saving throws while within 10 feet of the gloom weaver."
@@ -12345,6 +12377,10 @@
         ],
         "languages": "Common plus up to five other languages",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The nagpa is a 15th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). A nagpa has the following wizard spells prepared:\n- Cantrips (at will): chill touch, fire bolt, mage hand, message, minor illusion\n- 1st level (4 slots): charm person, detect magic, protection from evil and good, witch bolt\n- 2nd level (3 slots): hold person, ray of enfeeblement, suggestion\n- 3rd level (3 slots): counterspell, fireball, fly\n- 4th level (3 slots): confusion, hallucinatory terrain, wall of fire\n- 5th level (2 slots): dominate person, dream, geas\n- 6th level (1 slot): circle of death, disintegrate\n- 7th level (1 slot): etherealness, prismatic spray\n- 8th level (1 slot): feeblemind"
+            },
             {
                 "name": "Corruption",
                 "desc": "As a bonus action, the nagpa targets one creature it can see within 90 feet of it. The target must make a DC 20 Charisma saving throw. An evil creature makes the save with disadvantage. On a failed save, the target is charmed by the nagpa until the start of the nagpa's next turn. On a successful save, the target becomes immune to the nagpa's Corruption for the next 24 hours."
@@ -16199,6 +16235,10 @@
         ],
         "languages": "all the languages it knew in life",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The skull lord is a 13th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 18, +10 to hit with spell attacks). The skull lord knows the following sorcerer spells:\n- Cantrips (at will): chill touch, fire bolt, mage hand, poison spray, ray of frost, shocking grasp\n- 1st level (4 slots): magic missile, expeditious retreat, thunderwave\n- 2nd level (3 slots): mirror image, scorching ray\n- 3rd level (3 slots): fear, haste\n- 4th level (3 slots): dimension door, ice storm\n- 5th level (2 slots): cloudkill, cone of cold\n- 6th level (1 slot): eyebite\n- 7th level (1 slot): finger of death"
+            },
             {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If the skull lord fails a saving throw, it can choose to succeed instead."

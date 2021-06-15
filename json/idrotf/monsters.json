@@ -109,6 +109,10 @@
         "languages": "Common, Draconic, Infernal, Orc, Yeti",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Avarice is a 10th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14; +6 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): fire bolt (see \"Actions\" below), mage hand, message, minor illusion, prestidigitation\n- 1st level (4 slots): detect magic, mage armor, magic missile\n- 2nd level (3 slots): flaming sphere, knock, scorching ray\n- 3rd level (3 slots): counterspell, fireball, fly\n- 4th level (3 slots): banishment, fire shield\n- 5th level (2 slots): Bigby's hand, Rary's telepathic bond"
+            },
+            {
                 "name": "Icy Doom",
                 "desc": "When Avarice dies, her corpse freezes for 9 days, during which time it can't be thawed, harmed by fire, animated, or raised from the dead."
             },
@@ -1610,6 +1614,10 @@
         ],
         "languages": "Common, Druidic",
         "special_abilities": [
+            {
+                "name": "Spellcasting (Humanoid Form Only)",
+                "desc": "The druid is a 9th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 14; +6 to hit with spell attacks). It has the following druid spells prepared:\n- Cantrips (at will): druidcraft, guidance, resistance\n- 1st level (4 slots): animal friendship, fog cloud, speak with animals\n- 2nd level (3 slots): animal messenger, moonbeam, pass without trace\n- 3rd level (3 slots): conjure animals, sleet storm, wind wall\n- 4th level (3 slots): hallucinatory terrain, ice storm\n- 5th level (1 slot): awaken"
+            }
         ],
         "actions": [
             {
@@ -3785,6 +3793,10 @@
         "languages": "Common, Infernal",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The fanatic is a 4th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 11, +3 to hit with spell attacks). The fanatic has the following cleric spells prepared:\n- Cantrips (at will): light, sacred flame, thaumaturgy\n- 1st level (4 slots): command, inflict wounds, shield of faith\n- 2nd level (3 slots): hold person, spiritual weapon"
+            },
+            {
                 "name": "Dark Devotion",
                 "desc": "The fanatic has advantage on saving throws against being charmed or frightened."
             }
@@ -5071,6 +5083,10 @@
         ],
         "languages": "Common, Draconic, Infernal, Orc",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Prisoner 237 is a 5th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13; +5 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): light*, message*, prestidigitation, shocking grasp (see \"Actions\" below)\n- 1st level (4 slots): mage armor*, shield, sleep\n- 2nd level (3 slots): arcane lock*, detect thoughts*, suggestion*\n- 3rd level (2 slots): counterspell, lightning bolt*"
+            }
         ],
         "actions": [
             {
@@ -6471,6 +6487,10 @@
         ],
         "languages": "Common, Draconic, Dwarvish, Elvish, Orc",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Vellynne is an 8th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): chill touch (see \"Actions\" below), light, mage hand, message, prestidigitation\n- 1st level (4 slots): comprehend languages, detect magic, ray of sickness, Tasha's hideous laughter\n- 2nd level (3 slots): darkvision, hold person, ray of enfeeblement\n- 3rd level (3 slots): animate dead, Leomund's tiny hut, vampiric touch (see \"Actions\" below)\n- 4th level (2 slots): arcane eye, blight"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Vellynne wears bracers of defense and carries a wand of magic missiles (see \"Actions\" below)."

@@ -99,6 +99,10 @@
         "languages": "Auran, Common, Elvish",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Aerisi is a 12th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). Aerisi has the following wizard spells prepared:\n- Cantrips (at will): gust, mage hand, message, prestidigitation, ray of frost, shocking grasp\n- 1st level (4 slots): charm person, feather fall, mage armor, thunderwave\n- 2nd level (3 slots): dust devil, gust of wind, invisibility\n- 3rd level (3 slots): fly, gaseous form, lightning bolt\n- 4th level (3 slots): ice storm, storm sphere\n- 5th level (2 slots): cloudkill, seeming (cast each day)\n- 6th level (1 slot): chain lightning"
+            },
+            {
                 "name": "Fey Ancestry",
                 "desc": "Aerisi has advantage on saving throws against being charmed, and magic can't put her to sleep."
             },
@@ -774,6 +778,10 @@
         "languages": "Common, Druidic",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Elizar is a 7th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). Elizar has the following druid spells prepared:\n- Cantrips (at will): druidcraft, guidance, poison spray, produce flame\n- 1st level (4 slots): animal friendship, faerie fire, healing word, jump, thunderwave\n- 2nd level (3 slots): flame blade, spike growth\n- 3rd level (3 slots): dispel magic, stinking cloud\n- 4th level (2 slots): blight, wall of fire"
+            },
+            {
                 "name": "Summon Mephits (Recharges after a Long Rest)",
                 "desc": "By puffing on his pipe, Elizar can use an action to cast conjure minor elementals. If he does so, he summons four smoke mephits."
             }
@@ -1040,6 +1048,10 @@
         ],
         "languages": "Common, Ignan",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The priest is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). It knows the following sorcerer spells:\n- Cantrips (at will): control flames, create bonfire, fire bolt, light, minor illusion\n- 1st level (4 slots): burning hands, expeditious retreat, mage armor\n- 2nd level (3 slots): blur, scorching ray\n- 3rd level (2 slots): fireball"
+            }
         ],
         "actions": [
             {
@@ -1156,6 +1168,10 @@
         ],
         "languages": "Aquan, Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting (Human Form Only)",
+                "desc": "The fathomer is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It has two 3rd-level spell slots, which it regains after finishing a short or long rest, and knows the following warlock spells:\n- Cantrips (at will): chill touch, eldritch blast, mage hand\n- 3rd level (2 slots): armor of Agathys, expeditious retreat, hex, invisibility, Vampiric touch"
+            },
             {
                 "name": "Shapechanger (2/Day)",
                 "desc": "The fathomer can use its action to polymorph into a Medium serpent composed of water, or back into its true form. Anything the fathomer is wearing or carrying is subsumed into the serpent form during the change, inaccessible until the fathomer returns to its true form. The fathomer reverts to its true form after 4 hours, unless it can expend another use of this trait. If the fathomer is knocked unconscious or dies, it also reverts to its true form.\nWhile in serpent form, the fathomer gains a swimming speed of 40 feet, the ability to breathe underwater, immunity to poison damage, as well as resistance to fire damage and bludgeoning, piercing, and slashing damage from nonmagical attacks. It also has immunity to the following conditions: exhaustion, grappled, paralyzed, poisoned, restrained, prone, unconscious. The serpent form can enter a hostile creature's space and stop there. In addition, if water can pass through a space, the serpent can do so without squeezing."
@@ -1288,6 +1304,10 @@
         "languages": "Common, Ignan",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The flamewrath is a 7th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). It knows the following sorcerer spells:\n- Cantrips (at will): control flames, fire bolt, friends, light, minor illusion\n- 1st level (4 slots): burning hands, color spray, mage armor\n- 2nd level (3 slots): scorching ray, suggestion\n- 3rd level (3 slots): fireball, hypnotic pattern\n- 4th level (1 slot): fire shield (see Wreathed in Flame)"
+            },
+            {
                 "name": "Wreathed in Flame",
                 "desc": "For the flamewrath, the warm version of the fire shield spell has a duration of \"until dispelled.\" The fire shield burns for 10 minutes after the flamewrath dies, consuming its body."
             }
@@ -1413,6 +1433,10 @@
         ],
         "languages": "Aquan, Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Gar is a 9th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). He has the following druid spells prepared:\n- Cantrips (at will): mending, resistance, shape water\n- 1st level (4 slots): create or destroy water, cure wounds, fog cloud, thunderwave\n- 2nd level (3 slots): darkvision, hold person, protection from poison\n- 3rd level (3 slots): call lightning, sleet storm, tidal wave\n- 4th level (3 slots): control water, ice storm\n- 5th level (1 slot): scrying"
+            },
             {
                 "name": "Amphibious",
                 "desc": "Gar can breathe air and water."
@@ -1953,6 +1977,10 @@
         ],
         "languages": "Auran, Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The priest is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). It knows the following sorcerer spells:\n- Cantrips (at will): blade ward, gust, light, prestidigitation, shocking grasp\n- 1st level (4 slots): feather fall, shield, witch bolt\n- 2nd level (3 slots): dust devil, gust of wind\n- 3rd level (2 slots): gaseous form"
+            },
             {
                 "name": "Hold Breath",
                 "desc": "The priest can hold its breath for 30 minutes."
@@ -2770,6 +2798,10 @@
         "languages": "Common",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The one-eyed shiver is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). It knows the following sorcerer spells:\n- Cantrips (at will): chill touch, mage hand\n- 1st level (4 slots): fog cloud, mage armor, thunderwave\n- 2nd level (3 slots): mirror image, misty step\n- 3rd level (2 slots): fear"
+            },
+            {
                 "name": "Chilling Mist",
                 "desc": "While it is alive, the one-eyed shiver projects an aura of cold mist within 10 feet of itself. If the one-eyed shiver deals damage to a creature in this area, the creature also takes 5 (1d10) cold damage."
             }
@@ -2901,6 +2933,10 @@
         ],
         "languages": "Abyssal, Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Oreioth is a 6th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): chill touch, minor illusion, prestidigitation, shocking grasp\n- 1st level (4 slots): false life, mage armor, magic missile, ray of sickness\n- 2nd level (3 slots): crown of madness, misty step\n- 3rd level (3 slots): animate dead, vampiric touch"
+            },
             {
                 "name": "Grim Harvest",
                 "desc": "Once per turn when Oreioth kills one or more creatures with a spell of 1st level or higher, he regains hit points equal to twice the spell's level."
@@ -3178,6 +3214,10 @@
         ],
         "languages": "Common, Ignan, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Vanifer is a 10th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 16, +8 to hit with spell attacks). Vanifer knows the following sorcerer spells:\n- Cantrips (at will): chill touch, fire bolt, friends, mage hand, message, produce flame, thaumaturgy\n- 1st level (4 slots): burning hands, chromatic orb, hellish rebuke, shield\n- 2nd level (3 slots): darkness, detect thoughts, misty step, scorching ray\n- 3rd level (3 slots): counterspell, fireball, hypnotic pattern\n- 4th level (3 slots): wall of fire\n- 5th level (2 slots): dominate person"
+            },
             {
                 "name": "Funeral Pyre",
                 "desc": "When Vanifer drops to 0 hit points, her body is consumed in a flash of fire and smoke. Anything she was wearing or carrying is left behind among ashes."

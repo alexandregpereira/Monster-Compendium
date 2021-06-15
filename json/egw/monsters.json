@@ -2848,6 +2848,10 @@
         "languages": "Abyssal, Aquan",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The merrow is a 6th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). The merrow has the following druid spells prepared:\n- Cantrips (at will): druidcraft, minor illusion, shocking grasp\n- 1st level (4 slots): cure wounds, fog cloud, thunderwave\n- 2nd level (3 slots): hold person, mirror image, misty step\n- 3rd level (3 slots): dispel magic, lightning bolt (see \"Actions\" below), sleet storm"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "The merrow can breathe air and water."
             }

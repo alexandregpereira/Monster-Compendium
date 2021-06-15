@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.Stats
+import java.util.Locale
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
@@ -41,7 +42,7 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             subtype = it.subtype,
             group = it.group,
             subtitle = it.subtitle,
-            size = it.size,
+            size = it.size.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
             alignment = it.alignment,
             stats = Stats(
                 armorClass = it.armorClass,

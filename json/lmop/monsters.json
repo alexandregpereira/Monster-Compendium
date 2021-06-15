@@ -310,6 +310,10 @@
         "languages": "Elvish, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Nezznar is a 4th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 13; +5 to hit with spell attacks). Nezznar has the following spells prepared from the wizard's spell list:\n- Cantrips (at will): mage hand, ray of frost, shocking grasp\n- 1st level (4 slots): mage armor, magic missile, shield\n- 2nd level (3 slots): invisibility, suggestion"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Nezznar has a spider staff."
             },

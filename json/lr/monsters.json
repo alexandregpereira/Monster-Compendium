@@ -104,6 +104,10 @@
         "languages": "Aquan, Common",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Gar is a 13th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). He has the following druid spells prepared:\n- Cantrips (at will): frostbite, mending, resistance, shape water, thunderclap*\n- 1st level (4 slots): create or destroy water, charm person, cure wounds, thunderwave\n- 2nd level (3 slots): darkvision, hold person, mirror image*, misty step*, pass without trace, protection from poison\n- 3rd level (3 slots): conjure animals, dispel magic, tidal wave, water breathing*, water walk*\n- 4th level (3 slots): charm monster, control water*, dominate beast, freedom of movement*, watery sphere\n- 5th level (2 slots): conjure elemental*, maelstrom, scrying*, tree stride\n- 6th level (1 slot): heal\n- 7th level (1 slot): plane shift"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "Gar can breathe air and water."
             },

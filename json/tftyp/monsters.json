@@ -618,6 +618,10 @@
         ],
         "languages": "Common, Draconic, Gnomish, Goblin",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The acolyte is a 1st-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The acolyte has following cleric spells prepared:\n- Cantrips (at will): light, sacred flame, thaumaturgy\n- 1st level (3 slots): bless, cure wounds, sanctuary"
+            }
         ],
         "actions": [
             {
@@ -1608,6 +1612,10 @@
         "languages": "Abyssal, Common, Infernal, Primordial, Thayan",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Var is a 12th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). He has the following wizard spells prepared: *Conjuration spell of 1st level or higher\n- Cantrips (at will): fire bolt, mage hand, minor illusion, prestidigitation, ray of frost\n- 1st level (4 slots): detect magic, magic missile, shield, unseen servant*\n- 2nd level (3 slots): detect thoughts, flaming sphere*, mirror image, scorching ray\n- 3rd level (3 slots): counterspell, dispel magic, fireball\n- 4th level (3 slots): dimension door*, Evard's black tentacles*\n- 5th level (3 slots): cloudkill*, scrying\n- 6th level (1 slot): circle of death"
+            },
+            {
                 "name": "Focused Conjuration",
                 "desc": "While Var is concentrating on a conjuration spell, his concentration can't be broken as a result of taking damage."
             },
@@ -1728,6 +1736,10 @@
         ],
         "languages": "Common, Thayan",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The apprentice is a 4th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). It has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, mage hand, prestidigitation, shocking grasp\n- 1st level (4 slots): burning hands, detect magic, mage armor, shield\n- 2nd level (3 slots): blur, scorching ray"
+            },
             {
                 "name": "Doomvault Devotion",
                 "desc": "Within the Doomvault, the apprentice has advantage on saving throws against being charmed or frightened."

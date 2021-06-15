@@ -93,6 +93,10 @@
         "languages": "Abyssal, Common, Draconic, Dwarvish, Giant",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Baba Lysaga is a 16th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). Baba Lysaga has the following wizard spells prepared:\n- Cantrips (at will): acid splash, fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, magic missile, sleep, witch bolt\n- 2nd level (3 slots): crown of madness, enlarge/reduce, misty step\n- 3rd level (3 slots): dispel magic, fireball, lightning bolt\n- 4th level (3 slots): blight, Evard's black tentacles, polymorph\n- 5th level (2 slots): cloudkill, geas, scrying\n- 6th level (1 slot): programmed illusion, true seeing\n- 7th level (1 slot): finger of death, mirage arcane\n- 8th level (1 slot): power word stun"
+            },
+            {
                 "name": "Shapechanger",
                 "desc": "Baba Lysaga can use an action to polymorph into a swarm of insects (flies), or back into her true form. While in swarm form, she has a walking speed of 5 feet and a flying speed of 30 feet. Anything she is wearing transforms with her, but nothing she is carrying does."
             },
@@ -234,6 +238,10 @@
         ],
         "languages": "Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The witch is a 3rd-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). The witch has the following wizard spells prepared:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost\n- 1st level (4 slots): ray of sickness, sleep, Tasha's hideous laughter\n- 2nd level (2 slots): alter self, invisibility"
+            }
         ],
         "actions": [
             {
@@ -1350,6 +1358,10 @@
         "languages": "Abyssal, Common, Elvish, Infernal",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Rictavio is a 9th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). Rictavio has the following cleric spells prepared:\n- Cantrips (at will): guidance, light, mending, thaumaturgy\n- 1st level (4 slots): cure wounds, detect evil and good, protection from evil and good, sanctuary\n- 2nd level (3 slots): augury, lesser restoration, protection from poison\n- 3rd level (3 slots): magic circle, remove curse, speak with dead\n- 4th level (3 slots): death ward, freedom of movement\n- 5th level (1 slot): dispel evil and good"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "In addition to his sword cane, Rictavio wears a hat of disguise and a ring of mind shielding, and he carries a spell scroll of raise dead."
             },
@@ -1539,6 +1551,10 @@
         ],
         "languages": "the languages it knew in life",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Sir Godfrey is a 16th-level spellcaster. His spellcasting ability is Charisma (spell save DC 15, +7 to hit with spell attacks). He has the following paladin spells prepared:\n- 1st level (4 slots): command, divine favor, thunderous smite\n- 2nd level (3 slots): branding smite, magic weapon\n- 3rd level (3 slots): blinding smite, dispel magic\n- 4th level (2 slots): staggering smite"
+            },
             {
                 "name": "Regeneration",
                 "desc": "The knight regains 10 hit points at the start of its turn. If the knight takes fire or radiant damage, this trait doesn't function at the start of the knight's next turn. The knight's body is destroyed only if it starts its turn with 0 hit points and doesn't regenerate."
@@ -1881,6 +1897,10 @@
         ],
         "languages": "Abyssal, Common, Draconic, Elvish, Giant, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Strahd is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 18, +10 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost\n- 1st level (4 slots): comprehend languages, fog cloud, sleep\n- 2nd level (3 slots): detect thoughts, gust of wind, mirror image\n- 3rd level (3 slots): animate dead, fireball, nondetection\n- 4th level (3 slots): blight, greater invisibility, polymorph\n- 5th level (1 slot): animate objects, scrying"
+            },
             {
                 "name": "Shapechanger",
                 "desc": "If Strahd isn't in running water or sunlight, he can use his action to polymorph into a Tiny bat, a Medium wolf, or a Medium cloud of mist, or back into his true form.\nWhile in bat or wolf form, Strahd can't speak. In bat form, his walking speed is 5 feet, and he has a flying speed of 30 feet. In wolf form, his walking speed is 40 feet. His statistics, other than his size and speed, are unchanged. Anything he is wearing transforms with him, but nothing he is carrying does. He reverts to his true form if he dies.\nWhile in mist form, Strahd can't take any actions, speak, or manipulate objects. He is weightless, has a flying speed of 20 feet, can hover, and can enter a hostile creature's space and stop there. In addition, if air can pass through a space, the mist can do so without squeezing, and he can't pass through water. He has advantage on Strength, Dexterity, and Constitution saving throws, and he is immune to all nonmagical damage, except the damage he takes from sunlight."

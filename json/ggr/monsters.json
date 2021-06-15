@@ -1058,6 +1058,10 @@
         "languages": "Common plus any one language",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The biomancer is a 16th-level Simic spellcaster. Its spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). The biomancer has the following wizard spells prepared:\n- Cantrips (at will): acid splash, light, mending, poison spray, shocking grasp\n- 1st level (4 slots): detect magic, grease, shield\n- 2nd level (3 slots): alter self, darkvision, enlarge/reduce, hold person\n- 3rd level (3 slots): counterspell, dispel magic, haste, protection from energy\n- 4th level (3 slots): confusion, conjure minor elementals, polymorph\n- 5th level (2 slots): cone of cold, creation, hold monster\n- 6th level (1 slot): move earth, wall of ice\n- 7th level (1 slot): prismatic spray\n- 8th level (1 slot): control weather"
+            },
+            {
                 "name": "Bolstering Presence",
                 "desc": "The biomancer magically emanates life-giving energy within 30 feet of itself. Any ally of the biomancer that starts its turn there regains 5 (1d10) hit points."
             },
@@ -3264,6 +3268,10 @@
         "languages": "Common, Elvish, Kraul",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The lich is a 14th-level Golgari spellcaster. Its spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). The lich has the following wizard spells prepared:\n- Cantrips (at will): acid splash, chill touch, mage hand, poison spray, prestidigitation\n- 1st level (4 slots): chromatic orb, magic missile, ray of sickness\n- 2nd level (3 slots): Melf's acid arrow, ray of enfeeblement, spider climb, web\n- 3rd level (3 slots): animate dead, bestow curse, fear, vampiric touch\n- 4th level (3 slots): blight, Evard's black tentacles\n- 5th level (2 slots): cloudkill, insect plague\n- 6th level (1 slot): circle of death, create undead\n- 7th level (1 slot): finger of death"
+            },
+            {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If the lich fails a saving throw, it can choose to succeed instead."
             },
@@ -3410,6 +3418,10 @@
         ],
         "languages": "Common, Druidic",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The druid is a 12th-level Gruul spellcaster. Its spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). It has the following druid spells prepared:\n- Cantrips (at will): druidcraft, produce flame, resistance, thorn whip\n- 1st level (4 slots): cure wounds, faerie fire, thunderwave\n- 2nd level (3 slots): beast sense, flame blade, pass without trace\n- 3rd level (3 slots): conjure animals, dispel magic, plant growth\n- 4th level (3 slots): dominate beast, freedom of movement, wall of fire\n- 5th level (2 slots): commune with nature, conjure elemental, scrying\n- 6th level (1 slot): transport via plants, wall of thorns"
+            },
             {
                 "name": "Siege Monster",
                 "desc": "The druid deals double damage to objects and structures."
@@ -3708,6 +3720,10 @@
         ],
         "languages": "any one language (usually Common)",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The firefist is a 9th-level Boros spellcaster. Its spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). It has the following cleric spells prepared:\n- Cantrips (at will): fire bolt, light, sacred flame, spare the dying\n- 1st level (4 slots): guiding bolt, healing word, heroism, shield of faith\n- 2nd level (3 slots): lesser restoration, scorching ray\n- 3rd level (3 slots): blinding smite, crusader's mantle, revivify\n- 4th level (3 slots): banishment, wall of fire\n- 5th level (1 slot): flame strike"
+            }
         ],
         "actions": [
             {
@@ -5636,6 +5652,10 @@
         "languages": "Common, Sphinx",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Isperia is a 15th-level Azorius spellcaster. Her spellcasting ability is Wisdom (spell save DC 23, +14 to hit with spell attacks). Isperia has the following cleric spells prepared:\n- Cantrips (at will): guidance, light, resistance, sacred flame, thaumaturgy\n- 1st level (4 slots): command, detect evil and good, ensnaring strike, sanctuary, shield of faith\n- 2nd level (3 slots): arcane lock, augury, calm emotions, hold person, silence, zone of truth\n- 3rd level (3 slots): bestow curse, clairvoyance, counterspell, dispel magic, tongues\n- 4th level (3 slots): divination, locate creature\n- 5th level (2 slots): dispel evil and good, scrying\n- 6th level (1 slot): word of recall\n- 7th level (1 slot): divine word\n- 8th level (1 slot): antimagic field"
+            },
+            {
                 "name": "Inscrutable",
                 "desc": "Isperia is immune to any effect that would sense her emotions or read her thoughts, as well as any divination spell that she refuses. Wisdom (Insight) checks made to ascertain her intentions or sincerity have disadvantage."
             },
@@ -5848,6 +5868,10 @@
         ],
         "languages": "Common, Elvish, Kraul",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Jarad is a 14th-level Golgari spellcaster. His spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). Jarad has the following wizard spells prepared:\n- Cantrips (at will): acid splash, chill touch, mage hand, poison spray, prestidigitation\n- 1st level (4 slots): entangle, ray of sickness, sleep\n- 2nd level (3 slots): Melf's acid arrow, ray of enfeeblement, spider climb, web\n- 3rd level (3 slots): animate dead, plant growth, vampiric touch\n- 4th level (3 slots): blight, giant insect, grasping vine\n- 5th level (2 slots): cloudkill, insect plague\n- 6th level (1 slot): circle of death, create undead\n- 7th level (1 slot): finger of death, forcecage"
+            },
             {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If Jarad fails a saving throw, he can choose to succeed instead."
@@ -7227,6 +7251,10 @@
         "languages": "Common, Draconic",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Niv-Mizzet is a 20th-level Izzet spellcaster. His spellcasting ability is Intelligence (spell save DC 26, +18 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, prestidigitation, ray of frost, shocking grasp\n- 1st level (4 slots): detect magic, magic missile, shield, thunderwave, unseen servant\n- 2nd level (3 slots): blur, enlarge/reduce, flaming sphere, scorching ray\n- 3rd level (3 slots): counterspell, fireball, hold person, lightning bolt, slow\n- 4th level (3 slots): confusion, dimension door, fabricate\n- 5th level (2 slots): conjure elemental, polymorph, wall of fire, wall of force\n- 6th level (1 slot): chain lightning, disintegrate, true seeing\n- 7th level (1 slot): project image, reverse gravity, teleport\n- 8th level (1 slot): control weather, maze, power word stun\n- 9th level (1 slot): prismatic wall"
+            },
+            {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If Niv-Mizzet fails a saving throw, he can choose to succeed instead."
             },
@@ -8345,6 +8373,10 @@
         ],
         "languages": "Common plus any one language",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The lampooner is a 4th-level Rakdos spellcaster. Its spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). It knows the following bard spells:\n- Cantrips (at will): dancing lights, minor illusion, vicious mockery\n- 1st level (4 slots): bane, dissonant whispers, silent image, Tasha's hideous laughter, thunderwave\n- 2nd level (3 slots): crown of madness, enthrall, suggestion"
+            }
         ],
         "actions": [
             {
@@ -8461,6 +8493,10 @@
         ],
         "languages": "Common plus any one language",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The reckoner is a 5th-level Boros spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). The reckoner has the following wizard spells prepared:\n- Cantrips (at will): blade ward, light, message, shocking grasp\n- 1st level (4 slots): guiding bolt, shield, thunderwave, witch bolt\n- 2nd level (3 slots): blur, levitate\n- 3rd level (2 slots): lightning bolt"
+            },
             {
                 "name": "First Strike",
                 "desc": "The reckoner has advantage on initiative rolls."

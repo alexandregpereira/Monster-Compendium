@@ -199,6 +199,10 @@
         "languages": "Abyssal, Common, Draconic, Dwarvish, Elvish, Giant, Infernal, Primordial, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Acererak is a 20th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 23, +15 to hit with spell attacks). Acererak has the following wizard spells prepared:\n- Cantrips (at will): mage hand, ray of frost, shocking grasp\n- 1st level: ray of sickness, shield\n- 2nd level: arcane lock, knock\n- 3rd level: animate dead, counterspell\n- 4th level (3 slots): blight, ice storm, phantasmal killer\n- 5th level (3 slots): cloudkill, hold monster, wall of force\n- 6th level (3 slots): chain lightning, circle of death, disintegrate\n- 7th level (3 slots): finger of death, plane shift, teleport\n- 8th level (2 slots): maze, mind blank\n- 9th level (2 slots): power word kill, time stop"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Acererak carries the Staff of the Forgotten One. He wears a Talisman of the Sphere and has a Sphere of Annihilation under his control."
             },
@@ -3952,6 +3956,10 @@
         ],
         "languages": "Common, Abyssal, Draconic, Dwarvish, Elvish, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Valindra is an 18th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). Valindra has the following wizard spells prepared:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost\n- 1st level (4 slots): detect magic, magic missile, shield, thunderwave\n- 2nd level (3 slots): detect thoughts, invisibility, Melf's acid arrow, mirror image\n- 3rd level (3 slots): animate dead, counterspell, dispel magic, fireball\n- 4th level (3 slots): blight, dimension door\n- 5th level (3 slots): cloudkill, scrying\n- 6th level (1 slot): disintegrate, globe of invulnerability\n- 7th level (1 slot): finger of death, plane shift\n- 8th level (1 slot): dominate monster, power word stun\n- 9th level (1 slot): power word kill"
+            },
             {
                 "name": "Mask",
                 "desc": "As a bonus action, Valindra can mask her shriveled flesh and appear to be a living elf. This magical illusion lasts until she ends it as a bonus action or until she uses her Frightening Gaze legendary action. The effect also ends if Valindra drops to 30 hit points or fewer, or if dispel magic is cast on her."

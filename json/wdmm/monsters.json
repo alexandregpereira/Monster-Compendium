@@ -185,6 +185,10 @@
         "languages": "Common plus up to five other languages",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Arcturia is an 18th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). Arcturia can cast alter self at will and has the following wizard spells prepared:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost\n- 1st level (4 slots): detect magic, magic missile, shield, thunderwave\n- 2nd level (3 slots): detect thoughts, enlarge/reduce, Melf's Acid Arrow, mirror image\n- 3rd level (3 slots): counterspell, dispel magic, fireball, slow\n- 4th level (3 slots): blight, polymorph\n- 5th level (3 slots): animate objects, telekinesis\n- 6th level (1 slot): disintegrate, flesh to stone\n- 7th level (1 slot): reverse gravity, teleport\n- 8th level (1 slot): feeblemind, maze\n- 9th level (1 slot): True Polymorph"
+            },
+            {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If Arcturia fails a saving throw, it can choose to succeed instead."
             },
@@ -494,6 +498,10 @@
         "languages": "Abyssal, Common",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Dezmyr is a 19th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 18, +10 to hit with spell attacks). She has the following paladin spells prepared:\n- 1st level (4 slots): command, compelled duel, searing smite\n- 2nd level (3 slots): hold person, magic weapon\n- 3rd level (3 slots): dispel magic, elemental weapon\n- 4th level (3 slots): locate creature, staggering smite\n- 5th level (2 slots): destructive wave (necrotic)"
+            },
+            {
                 "name": "Warp Reality",
                 "desc": "As a bonus action on her turn, Dezmyr can warp reality, undoing damage dealt to herself or another creature that she can see within 20 feet of her. The beneficiary of this warped reality instantly regains 10 hit points."
             },
@@ -744,6 +752,10 @@
         "languages": "Dwarvish, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The mummy lord is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 17, +9 to hit with spell attacks). The mummy lord has the following cleric spells prepared:\n- Cantrips (at will): sacred flame, thaumaturgy\n- 1st level (4 slots): command, guiding bolt, shield of faith\n- 2nd level (3 slots): hold person, silence, spiritual weapon\n- 3rd level (3 slots): animate dead, dispel magic\n- 4th level (3 slots): stone shape, guardian of faith\n- 5th level (2 slots): contagion, insect plague\n- 6th level (1 slot): harm"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The mummy lord has advantage on saving throws against spells and other magical effects."
             },
@@ -921,6 +933,10 @@
         ],
         "languages": "Abyssal, Celestial, Common, Draconic, Dwarvish, Elvish, Infernal, Undercommon",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Halaster is a 20th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 22, +14 to hit with spell attacks). He can cast disguise self and invisibility at will. He can cast fly and lightning bolt once each without expending a spell slot, but can't do so again until he finishes a short or long rest. Halaster has the following wizard spells prepared:\n- Cantrips (at will): dancing lights, fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): mage armor, magic missile, shield, silent image\n- 2nd level (3 slots): arcane lock, cloud of daggers, darkvision, knock\n- 3rd level (3 slots): counterspell, dispel magic, fireball\n- 4th level (3 slots): confusion, hallucinatory terrain, polymorph\n- 5th level (3 slots): Bigby's hand, geas, wall of force\n- 6th level (2 slots): chain lightning, globe of invulnerability, programmed illusion\n- 7th level (2 slots): finger of death, symbol, teleport\n- 8th level (1 slot): maze, mind blank\n- 9th level (1 slot): meteor swarm, wish"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Halaster wears a robe of eyes that lets him see in all directions, gives him darkvision out to a range of 120 feet, grants advantage on Wisdom (Perception) checks that rely on sight, and allows him to see invisible creatures and objects, as well as into the Ethereal Plane, out to a range of 120 feet.\nHalaster wields a blast scepter (a very rare magic item that requires attunement). It can be used as an arcane focus. Whoever is attuned to the blast scepter gains resistance to fire and lightning damage and can, as an action, use it to cast thunderwave as a 4th-level spell (save DC 16) without expending a spell slot.\nHalaster also wears a horned ring (a very rare magic item that requires attunement), which allows an attuned wearer to ignore Undermountain's magical restrictions (see \"Alterations to Magic\")."
@@ -1238,6 +1254,10 @@
         ],
         "languages": "Common, Dwarvish, Elvish, Goblin, Undercommon",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Muiral is a 13th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): dancing lights, mage hand, prestidigitation, ray of frost, shocking grasp\n- 1st level (4 slots): expeditious retreat, fog cloud, magic missile, shield\n- 2nd level (3 slots): darkness, knock, see invisibility, spider climb\n- 3rd level (3 slots): animate dead, counterspell, lightning bolt\n- 4th level (3 slots): greater invisibility, polymorph\n- 5th level (2 slots): animate objects, wall of force\n- 6th level (1 slot): create undead, flesh to stone\n- 7th level (1 slot): finger of death"
+            },
             {
                 "name": "Legendary Resistance (3/Day)",
                 "desc": "If Muiral fails a saving throw, he can choose to succeed instead."
@@ -1640,6 +1660,10 @@
         ],
         "languages": "understands the languages of its creator but can't speak",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Trobriand is an 18th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, magic missile, shield\n- 2nd level (3 slots): blur, detect thoughts, misty step, shatter\n- 3rd level (3 slots): counterspell, dispel magic, fireball, haste\n- 4th level (3 slots): blight, greater invisibility\n- 5th level (3 slots): animate objects, Bigby's hand, scrying\n- 6th level (1 slot): chain lightning, globe of invulnerability\n- 7th level (1 slot): finger of death, forcecage\n- 8th level (1 slot): incendiary cloud, power word stun\n- 9th level (1 slot): power word kill"
+            },
             {
                 "name": "Fire Absorption",
                 "desc": "Whenever Trobriand is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt."

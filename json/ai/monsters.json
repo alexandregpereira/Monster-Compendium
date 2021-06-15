@@ -287,6 +287,10 @@
         "languages": "Common, Elvish",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Brahma is a 4th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). She has the following bard spells prepared:\n- Cantrips (at will): mage hand, message, vicious mockery\n- 1st level (4 slots): charm person, heroism, illusory script, sleep, unseen servant\n- 2nd level (3 slots): cloud of daggers, invisibility"
+            },
+            {
                 "name": "Fey Ancestry",
                 "desc": "Brahma has advantage on saving throws against being charmed, and magic can't put her to sleep."
             },
@@ -723,6 +727,10 @@
         ],
         "languages": "Common, Draconic, Elvish, Gnomish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Flabbergast is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, mage armor, distort value*\n- 2nd level (3 slots): gift of gab*, suggestion\n- 3rd level (3 slots): fast friends*, lightning bolt\n- 4th level (3 slots): greater invisibility\n- 5th level (1 slot): cone of cold"
+            }
         ],
         "actions": [
             {
@@ -859,6 +867,10 @@
         ],
         "languages": "Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Jim is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 15, +7 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, friends, mage hand, minor illusion, prestidigitation\n- 1st level (4 slots): disguise self, Jim's magic missile*, mage armor\n- 2nd level (3 slots): invisibility, Jim's glowing coin*\n- 3rd level (3 slots): incite greed*, fireball\n- 4th level (3 slots): conjure minor elementals, polymorph\n- 5th level (1 slot): mislead"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Jim carries a wand of wonder. Benign Transportation (Recharges after Jim Casts a Conjuration Spell of 1st Level or Higher). As a bonus action, Jim teleports up to 30 feet to a space he can see. The space must be unoccupied or occupied by a willing Small or Medium creature. If the latter, Jim and the willing creature both teleport, swapping places."
@@ -1377,6 +1389,10 @@
         "languages": "Common, Dwarvish, Elvish, Goblin",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Omin is a 9th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). He has the following cleric spells prepared:\n- Cantrips (at will): guidance, sacred flame, spare the dying, thaumaturgy\n- 1st level (4 slots): bless, command, divine favor, shield of faith\n- 2nd level (3 slots): enhance ability, hold person, magic weapon, silence, spiritual weapon\n- 3rd level (3 slots): beacon of hope, crusader's mantle, dispel magic, mass healing word, spirit guardians\n- 4th level (3 slots): death ward, freedom of movement, locate creature, stoneskin\n- 5th level (1 slot): dispel evil and good, flame strike, hold monster, greater restoration, legend lore"
+            },
+            {
                 "name": "Divine Strike",
                 "desc": "Once on each of his turns when he hits a creature with a weapon attack, Omin can cause the attack to deal an extra 4 (1d8) damage of the same type dealt by the weapon."
             },
@@ -1508,6 +1524,10 @@
         "languages": "Common, Draconic, Elvish, Halfling",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Pendragon is a 4th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). He has the following wizard spells prepared:\n- Cantrips (at will): acid splash, light, mage hand, poison spray, shocking grasp\n- 1st level (4 slots): detect magic, mage armor, magic missile, sleep\n- 2nd level (3 slots): blindness/deafness, cloud of daggers, scorching ray"
+            },
+            {
                 "name": "Echo Spell (1/Day)",
                 "desc": "Pendragon can cast the spell he cast on his last turn, whose casting time becomes 1 bonus action. This bonus casting uses a spell slot as normal."
             }
@@ -1632,6 +1652,10 @@
         ],
         "languages": "Common, Elvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Phoenix is a 4th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). He has the following cleric spells prepared:\n- Cantrips (at will): guidance, light, mending, sacred flame\n- 1st level (4 slots): bane, cure wounds, guiding bolt\n- 2nd level (3 slots): hold person, spiritual weapon"
+            },
             {
                 "name": "Divine Display (1/Day)",
                 "desc": "As a bonus action, Phoenix causes his shield to flare with divine light. Each creature of his choice within 30 feet of him must succeed on a DC 13 Wisdom saving throw or be blinded for 1 minute. A creature can repeat the save at the end of each of its turns, ending the effect on itself with a success."
@@ -2287,6 +2311,10 @@
         ],
         "languages": "Common, Druidic, Elvish, Sylvan",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Walnut is a 7th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). She has the following druid spells prepared:\n- Cantrips (at will): druidcraft, produce flame, thorn whip\n- 1st level (4 slots): cure wounds, entangle, thunderwave\n- 2nd level (3 slots): flame blade, moonbeam, pass without trace\n- 3rd level (3 slots): call lightning, dispel magic, plant growth\n- 4th level (1 slot): blight, freedom of movement"
+            },
             {
                 "name": "Fey Ancestry",
                 "desc": "Walnut has advantage on saving throws against being charmed, and magic can't put her to sleep."

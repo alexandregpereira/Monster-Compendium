@@ -1648,6 +1648,10 @@
         "languages": "Common, Draconic, Sylvan",
         "special_abilities": [
             {
+                "name": "Shared Spellcasting",
+                "desc": "While all three members of the Fetid Gaze are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves:\n- 1st level (4 slots): charm person, witch bolt\n- 2nd level (3 slots): alter self, suggestion\n- 3rd level (3 slots): dispel magic, glyph of warding, slow\n- 4th level (3 slots): blight, polymorph\n- 5th level (2 slots): dominate person, seeming\n- 6th level (1 slot): Otto's irresistible dance"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "The hag can breathe air and water."
             },
@@ -4208,6 +4212,10 @@
         ],
         "languages": "The languages it knew in life",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Valin Sarnaster is a 10th-level spellcaster. Her spellcasting ability is Wisdom (spell save 17, +9 to hit with spell attacks). Valin has the following cleric spells prepared:\n- Cantrips (at will): sacred flame, thaumaturgy\n- 1st level (4 slots): command, guiding bolt, shield of faith\n- 2nd level (3 slots): hold person, silence, spiritual weapon\n- 3rd level (3 slots): clairvoyance, dispel magic\n- 4th level (3 slots): divination, dimension door\n- 5th level (2 slots): contagion, scrying\n- 6th level (1 slot): harm"
+            },
             {
                 "name": "Magic Resistance",
                 "desc": "Valin has advantage on saving throws against spells and other magical effects."

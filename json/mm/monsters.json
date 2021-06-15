@@ -318,6 +318,10 @@
         "languages": "all, telepathy 120 ft.",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The arcanaloth is a 16th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). The arcanaloth has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, mage hand, minor illusion, prestidigitation\n- 1st level (4 slots): detect magic, identify, shield, Tenser's floating disk\n- 2nd level (3 slots): detect thoughts, mirror image, phantasmal force, suggestion\n- 3rd level (3 slots): counterspell, fear, fireball\n- 4th level (3 slots): banishment, dimension door\n- 5th level (2 slots): contact other plane, hold monster\n- 6th level (1 slot): chain lightning\n- 7th level (1 slot): finger of death\n- 8th level (1 slot): mind blank"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The arcanaloth has advantage on saving throws against spells and other magical effects."
             },
@@ -2335,6 +2339,10 @@
         "languages": "Abyssal, Common",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The death knight is a 19th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 18, +10 to hit with spell attacks). It has the following paladin spells prepared:\n- 1st level (4 slots): command, compelled duel, searing smite\n- 2nd level (3 slots): hold person, magic weapon\n- 3rd level (3 slots): dispel magic, elemental weapon\n- 4th level (3 slots): banishment, staggering smite\n- 5th level (2 slots): destructive wave (necrotic)"
+            },
+            {
                 "name": "Magic Resistance",
                 "desc": "The death knight has advantage on saving throws against spells and other magical effects."
             },
@@ -3282,6 +3290,10 @@
         "languages": "Elvish, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The drow is a 10th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The drow has the following wizard spells prepared:\n- Cantrips (at will): mage hand, minor illusion, poison spray, ray of frost\n- 1st level (4 slots): mage armor, magic missile, shield, witch bolt\n- 2nd level (3 slots): alter self, misty step, web\n- 3rd level (3 slots): fly, lightning bolt\n- 4th level (3 slots): Evard's black tentacles, greater invisibility\n- 5th level (2 slots): cloudkill"
+            },
+            {
                 "name": "Fey Ancestry",
                 "desc": "The drow has advantage on saving throws against being charmed, and magic can't put the drow to sleep."
             },
@@ -3966,6 +3978,10 @@
         ],
         "languages": "Common",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The flameskull is a 5th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). It requires no somatic or material components to cast its spells. The flameskull has the following wizard spells prepared:\n- Cantrips (at will): mage hand\n- 1st level (3 slots): magic missile, shield\n- 2nd level (2 slots): blur, flaming sphere\n- 3rd level (1 slot): fireball"
+            },
             {
                 "name": "Illumination",
                 "desc": "The flameskull sheds either dim light in a 15-foot radius, or bright light in a 15-foot radius and dim light for an additional 15 feet. It can switch between the options as an action."
@@ -7012,6 +7028,10 @@
         "languages": "Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The kuo-toa is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). The kuo-toa has the following cleric spells prepared:\n- Cantrips (at will): guidance, sacred flame, thaumaturgy\n- 1st level (4 slots): detect magic, sanctuary, shield of faith\n- 2nd level (3 slots): hold person, spiritual weapon\n- 3rd level (3 slots): spirit guardians, tongues\n- 4th level (3 slots): control water, divination\n- 5th level (2 slots): mass cure wounds, scrying"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "The kuo-toa can breathe air and water."
             },
@@ -7175,6 +7195,10 @@
         ],
         "languages": "Undercommon",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The kuo-toa is a 2nd-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The kuo-toa has the following cleric spells prepared:\n- Cantrips (at will): sacred flame, thaumaturgy\n- 1st level (3 slots): bane, shield of faith"
+            },
             {
                 "name": "Amphibious",
                 "desc": "The kuo-toa can breathe air and water."
@@ -8048,6 +8072,10 @@
         ],
         "languages": "Deep Speech, Undercommon, telepathy 120 ft.",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "The mind flayer is a 10th-level spellcaster. Its spellcasting ability is Intelligence (save DC 15, +7 to hit with spell attacks). The mind flayer has the following wizard spells prepared:\n- Cantrips (at will): blade ward, dancing lights, mage hand, shocking grasp\n- 1st level (4 slots): detect magic, disguise self, shield, sleep\n- 2nd level (3 slots): blur, invisibility, ray of enfeeblement\n- 3rd level (3 slots): clairvoyance, lightning bolt, sending\n- 4th level (3 slots): confusion, hallucinatory terrain\n- 5th level (2 slots): telekinesis, wall of force"
+            },
             {
                 "name": "Magic Resistance",
                 "desc": "The mind flayer has advantage on saving throws against spells and other magical effects."

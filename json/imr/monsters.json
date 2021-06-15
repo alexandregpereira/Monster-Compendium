@@ -108,6 +108,10 @@
         "languages": "Abyssal, Common, Dwarvish, Infernal, Undercommon",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Moghadam is an 18th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). He has the following artificer spells prepared:\n- Cantrips (at will): dancing lights, light, message, shocking grasp\n- 1st level (4 slots): comprehend languages, cure wounds, grease, identify\n- 2nd level (3 slots): detect thoughts, invisibility, heat metal\n- 3rd level (3 slots): dispel magic, flame arrows, hypnotic pattern\n- 4th level (3 slots): fabricate, stone shape, stoneskin\n- 5th level (1 slot): creation"
+            },
+            {
                 "name": "Special Equipment",
                 "desc": "Moghadam wields Ruinblade (see appendix C)."
             },
@@ -639,6 +643,10 @@
         ],
         "languages": "Common, Draconic, Elvish, Primordial",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Thessalar is an 18th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). He has the following artificer spells prepared:\n- Cantrips (at will): light, mending, message, shocking grasp\n- 1st level (4 slots): alarm, cure wounds, identify, ray of sickness\n- 2nd level (3 slots): invisibility, Melf's acid arrow, web\n- 3rd level (3 slots): dispel magic, haste, stinking cloud\n- 4th level (3 slots): blight, Mordenkainen's faithful hound, Otiluke's resilient sphere\n- 5th level (1 slot): cloudkill"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Thessalar wields a +1 dagger coated with thessaltoxin poison (see appendix C)."

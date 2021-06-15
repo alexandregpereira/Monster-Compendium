@@ -567,6 +567,10 @@
         "languages": "Common, Draconic",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Claugiyliamatar is an 8th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). She has the following druid spells prepared:\n- Cantrips (at will): druidcraft, mending, produce flame\n- 1st level (4 slots): cure wounds, detect magic, entangle, speak with animals\n- 2nd level (3 slots): animal messenger, pass without trace\n- 3rd level (3 slots): dispel magic, plant growth\n- 4th level (2 slots): blight, locate creature, stoneskin"
+            },
+            {
                 "name": "Amphibious",
                 "desc": "The dragon can breathe air and water."
             },
@@ -767,6 +771,10 @@
         ],
         "languages": "Auran, Common, Giant",
         "special_abilities": [
+            {
+                "name": "Innate Spellcasting",
+                "desc": "Sansuri is a 13th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 15; +7 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): mage hand, mending, message, prestidigitation, ray of frost\n- 1st level (4 slots): identify, magic missile, shield, unseen servant\n- 2nd level (3 slots): arcane lock, gust of wind, invisibility\n- 3rd level (3 slots): haste, hypnotic pattern, lightning bolt\n- 4th level (3 slots): ice storm, stoneskin\n- 5th level (2 slots): Bigby's hand, wall of force\n- 6th level (1 slot): globe of invulnerability\n- 7th level (1 slot): Mordenkainen's sword"
+            },
             {
                 "name": "Keen Smell",
                 "desc": "Sansuri has advantage on Wisdom (Perception) checks that rely on smell."
@@ -2013,6 +2021,10 @@
         ],
         "languages": "Common, Giant, Giant Owl",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Jarl Storvald is a 9th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). He knows the following ranger spells:\n- 1st level (4 slots): hunter's mark, jump\n- 2nd level (3 slots): locate animals or plants, locate object\n- 3rd level (2 slots): water breathing, water walk"
+            }
         ],
         "actions": [
             {
@@ -2929,6 +2941,10 @@
         "languages": "Common, Draconic, Dwarvish, Elvish",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Naxene is a 6th level spellcaster. Her spellcasting ability is Intelligence (spell save DC 13; +5 to hit with spell attacks). She has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): mage armor, magic missile, shield\n- 2nd level (3 slots): misty step, suggestion\n- 3rd level (3 slots): fly, lightning bolt"
+            },
+            {
                 "name": "Roleplaying Information",
                 "desc": "Goldenfields' crops are vital Waterdeep's survival, which is why the Watchful Order of Magists and Protectors sent Naxene to make sure the temple-farm is adequately defended. At first she regarded the task as a punishment, but now she appreciates the peace and quiet.\nIdeal: \"There's no problem that can't be solved with magic.\"\nBond: \"I have great respect for Lady Laeral Silverhand of Waterdeep. She and the Lords' Alliance are going to bring some much-needed order to this lawless land.\"\nFlaw: \"I'm too smart to be wrong about anything.\""
             }
@@ -3186,6 +3202,10 @@
         "languages": "Common, Elvish",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "Othovir is a 2nd-level spellcaster. His spellcasting ability is Charisma (spell save DC 13; +5 to hit with spell attacks). He has the following sorcerer spells prepared:\n- Cantrips (at will): blade ward, fire bolt, mending, prestidigitation\n- 1st level (3 slots): mage armor, thunderwave, witch bolt"
+            },
+            {
                 "name": "Roleplaying Information",
                 "desc": "Othovir is a gifted harness-maker who doesn't talk about his family or where he came from. He cares about his business, his clients, and his good name.\nIdeal: \"Find what you do well, and do it to the best of your ability.\"\nBond: \"I won't allow my name to be tarnished.\"\nFlaw: \"I get angry when others pry into my private life.\""
             }
@@ -3310,6 +3330,10 @@
         ],
         "languages": "Common, Draconic, Dwarvish, Elvish",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Pow is a 9th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). Pow has the following wizard spells prepared:\n- Cantrips (at will): fire bolt, light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, mage armor, magic missile, shield\n- 2nd level (3 slots): detect thoughts, suggestion\n- 3rd level (3 slots): counterspell, fireball, fly\n- 4th level (3 slots): greater invisibility, ice storm\n- 5th level (1 slot): cone of cold"
+            },
             {
                 "name": "Special Equipment",
                 "desc": "Pow carries a bag of holding and wears a robe of serpents with six snakes."

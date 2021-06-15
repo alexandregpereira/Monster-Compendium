@@ -1128,6 +1128,10 @@
         "languages": "Common",
         "special_abilities": [
             {
+                "name": "Spellcasting",
+                "desc": "The black gauntlet is a 5th-level spellcaster. Its spellcasting ability is Charisma (spell save DC 15, +7 to hit with spell attacks). It has the following cleric spells prepared:\n- Cantrips (at will): guidance, sacred flame, thaumaturgy\n- 1st level (4 slots): bane, bless, cure wounds, guiding bolt (see \"Actions\" below)\n- 2nd level (3 slots): blindness/deafness, hold person, silence\n- 3rd level (2 slots): sending, spirit guardians"
+            },
+            {
                 "name": "Aura of Terror",
                 "desc": "When a hostile creature within 5 feet of the black gauntlet makes an attack roll or a saving throw, it has disadvantage on the roll. Creatures that are immune to the frightened condition are immune to this trait."
             },
@@ -2363,6 +2367,10 @@
         ],
         "languages": "Aquan, Common, Draconic",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Krull is a 14th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). He has the following cleric spells prepared:\n- Cantrips (at will): chill touch, mending, resistance, sacred flame, spare the dying, thaumaturgy\n- 1st level (4 slots): cure wounds, detect evil and good, false life, inflict wounds, ray of sickness\n- 2nd level (3 slots): blindness/deafness, gentle repose, hold person, ray of enfeeblement, spiritual weapon\n- 3rd level (3 slots): animate dead, magic circle, speak with dead, spirit guardians, vampiric touch\n- 4th level (3 slots): banishment, blight, death ward, divination, locate creature\n- 5th level (2 slots): antilife shell, cloudkill, contagion, greater restoration\n- 6th level (1 slot): create undead, true seeing\n- 7th level (1 slot): divine word, regenerate"
+            },
             {
                 "name": "Hold Breath",
                 "desc": "Krull can hold his breath for 1 hour."
@@ -3612,6 +3620,10 @@
         ],
         "languages": "Common, Elvish, Infernal",
         "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Thurstwell is a 2nd-level spellcaster. His spellcasting ability is Wisdom (spell save DC 13). He has the following cleric spells prepared:\n- Cantrips (at will): guidance, sacred flame (see \"Actions\" below), thaumaturgy\n- 1st level (3 slots): command, detect evil and good, sanctuary"
+            },
             {
                 "name": "Dark Devotion",
                 "desc": "Thurstwell has advantage on saving throws against being charmed or frightened."
