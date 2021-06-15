@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.remote
+package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.data.remote.model.MonsterDto
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.data.remote.model.AlternativeSourceDto
+import retrofit2.http.GET
 
-interface MonsterRemoteDataSource {
+internal interface AlternativeSourceApi {
 
-    fun getMonsters(): Flow<List<MonsterDto>>
-    fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
+    @GET("alternative-sources.json")
+    suspend fun getAlternativeSources(): List<AlternativeSourceDto>
 }

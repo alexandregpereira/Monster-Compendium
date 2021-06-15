@@ -31,6 +31,11 @@ import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
 import br.alexandregpereira.hunter.data.remote.MonsterApi
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.remote.MonsterRemoteDataSourceImpl
+import br.alexandregpereira.hunter.data.source.AlternativeSourceApi
+import br.alexandregpereira.hunter.data.source.AlternativeSourceRemoteDataSource
+import br.alexandregpereira.hunter.data.source.AlternativeSourceRemoteDataSourceImpl
+import br.alexandregpereira.hunter.data.source.AlternativeSourceRepositoryImpl
+import br.alexandregpereira.hunter.domain.repository.AlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
@@ -49,7 +54,7 @@ val dataModule = module {
             ignoreUnknownKeys = true
         }
         val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
@@ -89,4 +94,10 @@ val dataModule = module {
     single { androidContext().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
 
     single<PreferencesDataSource> { PreferencesDataSourceImpl(get()) }
+
+    single { get<Retrofit>().create(AlternativeSourceApi::class.java) }
+
+    factory<AlternativeSourceRemoteDataSource> { AlternativeSourceRemoteDataSourceImpl(get()) }
+
+    factory<AlternativeSourceRepository> { AlternativeSourceRepositoryImpl(get()) }
 }

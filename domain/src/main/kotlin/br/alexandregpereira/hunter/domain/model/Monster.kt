@@ -36,7 +36,8 @@ data class Monster(
     val senses: List<String>,
     val languages: String,
     val specialAbilities: List<AbilityDescription>,
-    val actions: List<Action>
+    val actions: List<Action>,
+    val source: Source
 ) {
     val index: String
         get() = preview.index

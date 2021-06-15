@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
+import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Stats
 
 internal fun List<MonsterEntity>.toDomain(): List<Monster> {
@@ -73,7 +74,8 @@ internal fun List<MonsterEntity>.toDomain(): List<Monster> {
             languages = it.languages,
             specialAbilities = it.specialAbilities.toObjFromJson<List<SpecialAbilityEntity>>()
                 .toDomain(),
-            actions = it.actions.toObjFromJson<List<ActionEntity>>().toDomain()
+            actions = it.actions.toObjFromJson<List<ActionEntity>>().toDomain(),
+            source = Source(it.sourceName, it.sourceAcronym)
         )
     }
 }
@@ -108,7 +110,9 @@ internal fun List<Monster>.toEntity(): List<MonsterEntity> {
             senses = it.senses.toJsonFromObj(),
             languages = it.languages,
             specialAbilities = it.specialAbilities.toEntity().toJsonFromObj(),
-            actions = it.actions.toEntity().toJsonFromObj()
+            actions = it.actions.toEntity().toJsonFromObj(),
+            sourceName = it.source.name,
+            sourceAcronym = it.source.acronym
         )
     }
 }

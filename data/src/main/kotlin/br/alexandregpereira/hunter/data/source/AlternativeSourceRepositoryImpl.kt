@@ -15,13 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.remote
+package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.data.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.source.mapper.toDomain
+import br.alexandregpereira.hunter.domain.model.AlternativeSource
+import br.alexandregpereira.hunter.domain.repository.AlternativeSourceRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-interface MonsterRemoteDataSource {
+internal class AlternativeSourceRepositoryImpl(
+    private val remoteDataSource: AlternativeSourceRemoteDataSource
+) : AlternativeSourceRepository {
 
-    fun getMonsters(): Flow<List<MonsterDto>>
-    fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
+    override fun getAlternativeSources(): Flow<List<AlternativeSource>> {
+       return remoteDataSource.getAlternativeSources().map { it.toDomain() }
+    }
 }
