@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
@@ -198,7 +199,8 @@ class SaveMonstersUseCaseTest {
                             description = "ASDAS sada 5 ft.//asdqweqweqw 30 ft.-asd-20 ft. 10ft."
                         )
                     )
-                )
+                ),
+                source = Source(name = "", acronym = "")
             )
         )
     }
@@ -252,7 +254,8 @@ class SaveMonstersUseCaseTest {
                             description = "ASDAS sada 1.5m//asdqweqweqw 9m-asd-6m 3m"
                         )
                     )
-                )
+                ),
+                source = Source(name = "", acronym = "")
             )
         )
     }

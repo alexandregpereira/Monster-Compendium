@@ -19,9 +19,13 @@ package br.alexandregpereira.hunter.data.remote
 
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 internal interface MonsterApi {
 
     @GET("monsters.json")
     suspend fun getMonsters(): List<MonsterDto>
+
+    @GET("{sourceAcronym}/monsters.json")
+    suspend fun getMonsters(@Path("sourceAcronym") sourceAcronym: String): List<MonsterDto>
 }

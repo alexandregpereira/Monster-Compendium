@@ -68,6 +68,7 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
@@ -448,6 +449,7 @@ private fun MonsterDetailPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
+                source = Source(name = "", acronym = "")
             )
         },
         initialMonsterIndex = 2
@@ -498,6 +500,7 @@ private fun MonsterTopBarPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
+                source = Source(name = "", acronym = "")
             )
         ),
         pagerState = rememberPagerState(pageCount = 1),

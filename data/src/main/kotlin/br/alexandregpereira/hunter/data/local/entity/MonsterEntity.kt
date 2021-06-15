@@ -50,5 +50,7 @@ internal data class MonsterEntity(
     val senses: String,
     val languages: String,
     val specialAbilities: String,
-    val actions: String
+    val actions: String,
+    val sourceName: String,
+    val sourceAcronym: String
 )

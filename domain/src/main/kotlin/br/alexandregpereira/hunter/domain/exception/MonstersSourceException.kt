@@ -15,13 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.remote
+package br.alexandregpereira.hunter.domain.exception
 
-import br.alexandregpereira.hunter.data.remote.model.MonsterDto
-import kotlinx.coroutines.flow.Flow
+class MonstersSourceNotFoundedException(source: String) : Throwable("$source not founded")
 
-interface MonsterRemoteDataSource {
-
-    fun getMonsters(): Flow<List<MonsterDto>>
-    fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
-}
+class MonstersSourceUnexpectedException(source: String, cause: Throwable? = null) : Throwable(
+    message = "$source unexpected error",
+    cause = cause
+)
