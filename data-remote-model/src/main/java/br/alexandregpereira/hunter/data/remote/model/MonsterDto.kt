@@ -35,7 +35,7 @@ data class MonsterDto(
     @SerialName("name")
     val name: String,
     @SerialName("subtitle")
-    val subtitle: String,
+    val subtitle: String = "",
     @SerialName("image_url")
     val imageUrl: String,
     @SerialName("background_color")
@@ -43,7 +43,7 @@ data class MonsterDto(
     @SerialName("is_horizontal_image")
     val isHorizontalImage: Boolean,
     @SerialName("size")
-    val size: String,
+    val size: MonsterSizeDto,
     @SerialName("alignment")
     val alignment: String,
     @SerialName("armor_class")
@@ -75,5 +75,10 @@ data class MonsterDto(
     @SerialName("special_abilities")
     val specialAbilities: List<SpecialAbilityDto>,
     @SerialName("actions")
-    val actions: List<ActionDto>
+    val actions: List<ActionDto>,
+    @SerialName("source")
+    val source: SourceDto = SourceDto(
+        name = "SRD",
+        acronym = "srd"
+    )
 )

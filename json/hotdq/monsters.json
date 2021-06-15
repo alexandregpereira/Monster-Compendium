@@ -1,0 +1,2167 @@
+[
+    {
+        "index": "ambush-drake",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 0.5,
+        "name": "Ambush Drake",
+        "subtitle": "Medium dragon, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/ambush-drake.png",
+        "background_color": {
+            "light": "#f0ac75",
+            "dark": "#8a460f"
+        },
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 13,
+        "hit_points": 22,
+        "hit_dice": "4d6+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 6,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 4,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "poison",
+                "type": "POISON",
+                "name": "Poison"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands Draconic but can't speak it",
+        "special_abilities": [
+            {
+                "name": "Pack Tactics",
+                "desc": "The drake has advantage on an attack roll against a creature if at least one of the drake's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "name": "Surprise Attack",
+                "desc": "If the drake surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+1",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) piercing damage.",
+                "name": "Bite"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "azbara-jos",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Azbara Jos",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/azbara-jos.png",
+        "background_color": {
+            "light": "#f0a075",
+            "dark": "#8a3a0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 13,
+        "hit_points": 39,
+        "hit_dice": "6d8+12",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 11,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 3
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 2,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 3,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Infernal, Primordial, Thayan",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Azbara is a 6th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Azbara has the following spells prepared from the wizard spell list:\n- Cantrips (at will): mage hand, prestidigitation, ray of frost, shocking grasp\n- 1st level (4 slots): fog cloud, magic missile, shield, thunderwave\n- 2nd level (3 slots): invisibility, misty step, scorching ray\n- 3rd level (3 slots): counterspell, dispel magic, fireball"
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Azbara has two scrolls of mage armor."
+            },
+            {
+                "name": "Potent Cantrips",
+                "desc": "When Azbara casts an evocation Cantrips and misses, or the target succeeds on its saving throw, the target still takes half the cantrip's damage but suffers no other effect."
+            },
+            {
+                "name": "Sculpt Spells",
+                "desc": "When Azbara casts an evocation spell that affects other creatures that he can see, he can choose a number of them equal to 1+the spell's level to succeed on their saving throws against the spell. Those creatures take no damage if they would normally take half damage from the spell."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "blagothkus",
+        "type": "GIANT",
+        "subtype": "cloud giant",
+        "group": null,
+        "challenge_rating": 9.0,
+        "name": "Blagothkus",
+        "subtitle": "Huge giant(cloud giant), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/blagothkus.png",
+        "background_color": {
+            "light": "#75a9f0",
+            "dark": "#0f438a"
+        },
+        "is_horizontal_image": false,
+        "size": "Huge",
+        "alignment": "neutral evil",
+        "armor_class": 17,
+        "hit_points": 138,
+        "hit_dice": "12d12+60",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 26,
+                "modifier": 8
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 20,
+                "modifier": 5
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 9
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 7,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 6,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Giant",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Blagothkus is a 5th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 15, +7 to hit with spell attacks). Blagothkus has the following spells prepared from the wizard spell list:\n- Cantrips (at will): light, mage hand, prestidigitation\n- 1st level (4 slots): detect magic, identify, magic missile, shield\n- 2nd level (3 slots): gust of wind, misty step, shatter\n- 3rd level (2 slots): fly, lightning bolt"
+            },
+            {
+                "name": "Keen Smell",
+                "desc": "Blagothkus has advantage on Wisdom (Perception) checks that rely on smell."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Blagothkus attacks twice with his morningstar.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "3d8+8",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 10,
+                "description": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 21 (3d8 + 8) piercing damage.",
+                "name": "Morningstar"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "captain-othelstan",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Captain Othelstan",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/captain-othelstan.png",
+        "background_color": {
+            "light": "#f0a475",
+            "dark": "#7c380e"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 19,
+        "hit_points": 93,
+        "hit_dice": "11d10+33",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 7,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 7,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 4,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Giant",
+        "special_abilities": [
+            {
+                "name": "Action Surge (Recharges on a Short or Long Rest)",
+                "desc": "On his turn, Othelstan can take one additional action."
+            },
+            {
+                "name": "Tiamat's Blessing of Retribution",
+                "desc": "When Othelstan takes damage that reduces him to 0 hit points, he immediately regains 20 hit points. If he has 20 hit points or fewer at the end of his next turn, he dies."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Othelstan attacks twice with his flail or spear, or makes two ranged attacks with his spears.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) bludgeoning damage.",
+                "name": "Flail"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 7,
+                "description": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "name": "Spear"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "dragonclaw",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Dragonclaw",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dragonclaw.png",
+        "background_color": {
+            "light": "#f6d4b2",
+            "dark": "#8a4d0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 14,
+        "hit_points": 16,
+        "hit_dice": "3d8+3",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 9,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 2
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 3,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 5,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Dragon Fanatic",
+                "desc": "The dragonclaw has advantage on saving throws against being charmed or frightened. While the dragonclaw can see a dragon or higher-ranking Cult of the Dragon cultist friendly to it, the dragonclaw ignores the effects of being charmed or frightened."
+            },
+            {
+                "name": "Fanatic Advantage",
+                "desc": "Once per turn, if the dragonclaw makes a weapon attack with advantage on the attack roll and hits, it deals an extra 7 (2d6) damage."
+            },
+            {
+                "name": "Pack Tactics",
+                "desc": "The dragonclaw has advantage on an attack roll against a creature if at least one of the dragonclaw's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The dragonclaw attacks twice with its scimitar.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+3",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage.",
+                "name": "Scimitar"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "dralmorrer-borngray",
+        "type": "HUMANOID",
+        "subtype": "high elf",
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Dralmorrer Borngray",
+        "subtitle": "Medium humanoid(high elf), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/dralmorrer-borngray.png",
+        "background_color": {
+            "light": "#75cff0",
+            "dark": "#0f698a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 16,
+        "hit_points": 52,
+        "hit_dice": "7d10+14",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 8,
+                "modifier": -1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 1,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 2,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 5,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Bullywug, Draconic, Elvish, Goblin, Sylvan",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Dralmorrer is a 7th-level spellcaster that uses Intelligence as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Dralmorrer has the following spells prepared from the wizard spell list:\n- Cantrips (at will): fire bolt, prestidigitation, shocking grasp\n- 1st level (4 slots): longstrider, magic missile, shield, thunderwave\n- 2nd level (2 slots): magic weapon, misty step"
+            },
+            {
+                "name": "Fey Ancestry",
+                "desc": "Dralmorrer has advantage on saving throws against being charmed, and magic can't put him to sleep."
+            },
+            {
+                "name": "War Magic",
+                "desc": "When Dralmorrer uses his action to cast a cantrip, he can also take a bonus action to make one weapon attack."
+            },
+            {
+                "name": "Weapon Bond",
+                "desc": "Provided his longsword is on the same plane Dralmorrer can take a bonus action to teleport it to his hand."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Dralmorrer attacks twice, either with his longsword or dagger.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "name": "Longsword"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 6 (1d4 + 4) piercing damage.",
+                "name": "Dagger"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "frulam-mondath",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Frulam Mondath",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/frulam-mondath.png",
+        "background_color": {
+            "light": "#f0bd75",
+            "dark": "#8a570f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 16,
+        "hit_points": 44,
+        "hit_dice": "8d8+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "CHARISMA",
+                "value": 15,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 4,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-history",
+                "modifier": 2,
+                "name": "History"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 2,
+                "name": "Religion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Infernal",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Frulam is a 5th-level spellcaster that uses Wisdom as her spellcasting ability (spell save DC 14, +6 to hit with spell attacks). Frulam has the following spells prepared from the cleric spell list:\n- Cantrips (at will): light, sacred flame, thaumaturgy\n- 1st level (4 slots): command, cure wounds, healing word, sanctuary\n- 2nd level (3 slots): calm emotions, hold person, spiritual weapon\n- 3rd level (2 slots): mass healing word, spirit guardians"
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Frulam attacks twice with her halberd.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d10+2",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 7 (1d10 + 2) bludgeoning damage.",
+                "name": "Halberd"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "guard-drake",
+        "type": "DRAGON",
+        "subtype": null,
+        "group": null,
+        "challenge_rating": 2.0,
+        "name": "Guard Drake",
+        "subtitle": "Medium dragon, unaligned",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/guard-drake.png",
+        "background_color": {
+            "light": "#7587f0",
+            "dark": "#0f218a"
+        },
+        "is_horizontal_image": true,
+        "size": "Medium",
+        "alignment": "unaligned",
+        "armor_class": 14,
+        "hit_points": 52,
+        "hit_dice": "7d8+21",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 4,
+                "modifier": -3
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 2,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "understands Draconic but can't speak it",
+        "special_abilities": [
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "The drake attacks twice, once with its bite and once with its tail.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+3",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) bludgeoning damage.",
+                "name": "Tail"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "jamna-gleamsilver",
+        "type": "HUMANOID",
+        "subtype": "gnome",
+        "group": null,
+        "challenge_rating": 1.0,
+        "name": "Jamna Gleamsilver",
+        "subtitle": "Small humanoid(gnome), neutral",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/jamna-gleamsilver.png",
+        "background_color": {
+            "light": "#f0ae75",
+            "dark": "#4d2809"
+        },
+        "is_horizontal_image": false,
+        "size": "Small",
+        "alignment": "neutral",
+        "armor_class": 15,
+        "hit_points": 22,
+        "hit_dice": "4d6+8",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 25,
+                    "value_formatted": "25 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 8,
+                "modifier": -1
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 17,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 5
+            },
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-acrobatics",
+                "modifier": 5,
+                "name": "Acrobatics"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 3,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 2,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 3,
+                "name": "Persuasion"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 7,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Gnomish, Goblin, Sylvan",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Jamna is a 4th-level spellcaster that uses Intelligence as her spellcasting ability (spell save DC 12, +4 to hit with spell attacks). Jamna has the following spells prepared from the wizard spell list.\n- Cantrips (at will): mage hand, minor illusion, prestidigitation, ray of frost\n- 1st level (3 slots): charm person, color spray, disguise self, longstrider"
+            },
+            {
+                "name": "Cunning Action",
+                "desc": "Jamna can take a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "name": "Gnome Cunning",
+                "desc": "Jamna has advantage on Intelligence, Wisdom and Charisma saving throws against magic."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Jamna attacks twice with her shortswords.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+3",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    },
+                    {
+                        "dice": "1d6",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage, or 9 (1d6 + 3) plus (1d6) piercing damage if the target is Medium or larger.",
+                "name": "Shortsword"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "langdedrosa-cyanwrath",
+        "type": "HUMANOID",
+        "subtype": "half-dragon",
+        "group": null,
+        "challenge_rating": 4.0,
+        "name": "Langdedrosa Cyanwrath",
+        "subtitle": "Medium humanoid(half-dragon), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/langdedrosa-cyanwrath.png",
+        "background_color": {
+            "light": "#759ff0",
+            "dark": "#0f398a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 17,
+        "hit_points": 57,
+        "hit_dice": "6d12+18",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 19,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 13,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 12,
+                "modifier": 1
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-athletics",
+                "modifier": 6,
+                "name": "Athletics"
+            },
+            {
+                "index": "skill-intimidation",
+                "modifier": 3,
+                "name": "Intimidation"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 4,
+                "name": "Perception"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+            {
+                "index": "lightning",
+                "type": "LIGHTNING",
+                "name": "Lightning"
+            }
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Draconic",
+        "special_abilities": [
+            {
+                "name": "Action Surge (Recharges on a Short or Long Rest)",
+                "desc": "On his turn, Langdedrosa can take one additional action."
+            },
+            {
+                "name": "Improved Critical",
+                "desc": "Langdedrosa's weapon attacks score a critical hit on a roll of 19 or 20."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Langdedrosa attacks twice, either with his greatsword or spear.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+4",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+                "name": "Greatsword"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+4",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 6,
+                "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "name": "Spear"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d10",
+                        "damage": {
+                            "index": "LIGHTNING",
+                            "type": "LIGHTNING",
+                            "name": "Lightning"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Langdedrosa breathes lightning in a 30-foot line that is 5 feet wide. Each creature in the line must make a DC 13 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.",
+                "name": "Lightning Breath (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "pharblex-spattergoo",
+        "type": "HUMANOID",
+        "subtype": "bullywug",
+        "group": null,
+        "challenge_rating": 3.0,
+        "name": "Pharblex Spattergoo",
+        "subtitle": "Medium humanoid(bullywug), chaotic evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/pharblex-spattergoo.png",
+        "background_color": {
+            "light": "#f0a575",
+            "dark": "#8a3f0f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "chaotic evil",
+        "armor_class": 15,
+        "hit_points": 59,
+        "hit_dice": "7d8+28",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 20,
+                    "value_formatted": "20 ft."
+                },
+                {
+                    "type": "SWIM",
+                    "measurement_unit": "FEET",
+                    "value": 40,
+                    "value_formatted": "40 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 7,
+                "modifier": -2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-str",
+                "type": "STRENGTH",
+                "modifier": 4
+            },
+            {
+                "index": "saving-throw-con",
+                "type": "CONSTITUTION",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-perception",
+                "modifier": 5,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-religion",
+                "modifier": 2,
+                "name": "Religion"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 3,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Bullywug",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Pharblex is a 6th-level spellcaster that uses Wisdom as his spellcasting ability (spell save DC 13, +5 to hit with spell attacks). Pharblex has the following spells prepared from the druid spell list:\n- Cantrips (at will): druidcraft, guidance, poison spray\n- 1st level (4 slots): cure wounds, entangle, healing word, thunderwave\n- 2nd level (3 slots): barkskin, beast sense, spike growth\n- 3rd level (3 slots): plant growth, water walk"
+            },
+            {
+                "name": "Amphibious",
+                "desc": "Pharblex can breathe air and water."
+            },
+            {
+                "name": "Poison Strike (3/Day)",
+                "desc": "Once per turn, when Pharblex hits with a melee attack, he can expend a use of this trait to deal an extra 9 (2d8) poison damage."
+            },
+            {
+                "name": "Standing Leap",
+                "desc": "As part of his movement and without a running start, Pharblex can long jump up to 20 feet and high jump up to 10 feet."
+            },
+            {
+                "name": "Swamp Camouflage",
+                "desc": "Pharblex has advantage on Dexterity (Stealth) checks made to hide in swampy terrain."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                ],
+                "attack_bonus": null,
+                "description": "Pharblex attacks twice. Once with his bite and once with his spear.",
+                "name": "Multiattack"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d4+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "name": "Bite"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Melee or Ranged Weapon Attack: +5 to hit. reach 5 ft. or ranged 20/60 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "name": "Spear"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "rath-modar",
+        "type": "HUMANOID",
+        "subtype": "human",
+        "group": null,
+        "challenge_rating": 6.0,
+        "name": "Rath Modar",
+        "subtitle": "Medium humanoid(human), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rath-modar.png",
+        "background_color": {
+            "light": "#f0a675",
+            "dark": "#8a400f"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 13,
+        "hit_points": 71,
+        "hit_dice": "11d8+22",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 11,
+                "modifier": 0
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "WISDOM",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "CHARISMA",
+                "value": 10,
+                "modifier": 0
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-int",
+                "type": "INTELLIGENCE",
+                "modifier": 7
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 5
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 7,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-deception",
+                "modifier": 3,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 5,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 6,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+        ],
+        "languages": "Common, Draconic, Infernal, Primordial, Thayan",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Rath is an 11th-level spellcaster who uses Intelligence as his spellcasting ability (spell save DC 15, +7 to hit with spell attacks). Rath has the following spells prepared from the wizard spell list:\n- Cantrips (at will): fire bolt, minor illusion, prestidigitation, shocking grasp\n- 1st level (4 slots): chromatic orb, color spray, mage armor, magic missile\n- 2nd level (3 slots): detect thoughts, mirror image, phantasmal force\n- 3rd level (3 slots): counterspell, fireball, major image\n- 4th level (3 slots): confusion, greater invisibility\n- 5th level (2 slots): mislead, seeming\n- 6th level (1 slot): globe of invulnerability"
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Rath has a staff of fire, and scrolls of dimension door, feather fall, and fireball."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d8",
+                        "damage": {
+                            "index": "BLUDGEONING",
+                            "type": "BLUDGEONING",
+                            "name": "Bludgeoning"
+                        }
+                    }
+                ],
+                "attack_bonus": 4,
+                "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d8) bludgeoning damage.",
+                "name": "Quarterstaff"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "rezmir",
+        "type": "HUMANOID",
+        "subtype": "half-black dragon",
+        "group": null,
+        "challenge_rating": 7.0,
+        "name": "Rezmir",
+        "subtitle": "Medium humanoid(half-black dragon), neutral evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/rezmir.png",
+        "background_color": {
+            "light": "#9775f0",
+            "dark": "#2f0f84"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "neutral evil",
+        "armor_class": 13,
+        "hit_points": 90,
+        "hit_dice": "12d8+36",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 18,
+                "modifier": 4
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 15,
+                "modifier": 2
+            },
+            {
+                "type": "WISDOM",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CHARISMA",
+                "value": 14,
+                "modifier": 2
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-dex",
+                "type": "DEXTERITY",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 4
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-arcana",
+                "modifier": 5,
+                "name": "Arcana"
+            },
+            {
+                "index": "skill-stealth",
+                "modifier": 9,
+                "name": "Stealth"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+            {
+                "index": "acid",
+                "type": "ACID",
+                "name": "Acid"
+            }
+        ],
+        "condition_immunities": [
+            {
+                "index": "charmed",
+                "type": "CHARMED",
+                "name": "Charmed"
+            },
+            {
+                "index": "frightened",
+                "type": "FRIGHTENED",
+                "name": "Frightened"
+            }
+        ],
+        "senses": [
+            "blindsight 10 ft.",
+            "darkvision 120 ft."
+        ],
+        "languages": "Common, Draconic, Infernal, Giant, Netherese",
+        "special_abilities": [
+            {
+                "name": "Special Equipment",
+                "desc": "Rezmir has the Black Dragon Mask, Hazirawn, and an insignia of claws."
+            },
+            {
+                "name": "Amphibious",
+                "desc": "Rezmir can breathe air and water."
+            },
+            {
+                "name": "Dark Advantage",
+                "desc": "Once per turn, Rezmir can deal an extra 10 (3d6) damage when she hits with a weapon attack, provided Rezmir has advantage on the attack roll."
+            },
+            {
+                "name": "Draconic Majesty",
+                "desc": "While wearing no armor and wearing the Black Dragon Mask, Rezmir adds her Charisma bonus to her AC (included)."
+            },
+            {
+                "name": "Immolation",
+                "desc": "When Rezmir is reduced to 0 hit points, her body disintegrates into a pile of ash."
+            },
+            {
+                "name": "Legendary Resistance (1/Day)",
+                "desc": "If Rezmir fails a saving throw while wearing the Black Dragon Mask, she can choose to succeed instead."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "2d6+6",
+                        "damage": {
+                            "index": "SLASHING",
+                            "type": "SLASHING",
+                            "name": "Slashing"
+                        }
+                    }
+                ],
+                "attack_bonus": 9,
+                "description": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) slashing damage plus 7 (2d6) necrotic damage. If the target is a creature, it can't regain hit points for 1 minute. The target can make a DC 15 Constitution saving throw at the end of each of its turns, ending this effect early on a success.",
+                "name": "Greatsword (Hazirawn)"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "4d8",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": 8,
+                "description": "Ranged Spell Attack: +8 to hit, range 90 ft., one target. Hit: 18 (4d8) acid damage.",
+                "name": "Caustic Bolt"
+            },
+            {
+                "damage_dices": [
+                    {
+                        "dice": "5d8",
+                        "damage": {
+                            "index": "ACID",
+                            "type": "ACID",
+                            "name": "Acid"
+                        }
+                    }
+                ],
+                "attack_bonus": null,
+                "description": "Rezmir breathes acid in a 30-foot line that is 5 feet wide. Each creature in the line must make a DC 14 Dexterity saving throw, taking 22 (5d8) acid damage on a failed save, or half as much damage on a successful one.",
+                "name": "Acid Breath (Recharge 5-6)"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    },
+    {
+        "index": "talis-the-white",
+        "type": "HUMANOID",
+        "subtype": "half-elf",
+        "group": null,
+        "challenge_rating": 5.0,
+        "name": "Talis the White",
+        "subtitle": "Medium humanoid(half-elf), lawful evil",
+        "image_url": "https://raw.githubusercontent.com/alexandregpereira/hunter/main/images/talis-the-white.png",
+        "background_color": {
+            "light": "#d4e7fa",
+            "dark": "#0f4d8a"
+        },
+        "is_horizontal_image": false,
+        "size": "Medium",
+        "alignment": "lawful evil",
+        "armor_class": 18,
+        "hit_points": 58,
+        "hit_dice": "9d8+18",
+        "speed": {
+            "hover": false,
+            "value": [
+                {
+                    "type": "WALK",
+                    "measurement_unit": "FEET",
+                    "value": 30,
+                    "value_formatted": "30 ft."
+                }
+            ]
+        },
+        "ability_scores": [
+            {
+                "type": "STRENGTH",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "DEXTERITY",
+                "value": 12,
+                "modifier": 1
+            },
+            {
+                "type": "CONSTITUTION",
+                "value": 14,
+                "modifier": 2
+            },
+            {
+                "type": "INTELLIGENCE",
+                "value": 10,
+                "modifier": 0
+            },
+            {
+                "type": "WISDOM",
+                "value": 16,
+                "modifier": 3
+            },
+            {
+                "type": "CHARISMA",
+                "value": 16,
+                "modifier": 3
+            }
+        ],
+        "saving_throws": [
+            {
+                "index": "saving-throw-wis",
+                "type": "WISDOM",
+                "modifier": 6
+            },
+            {
+                "index": "saving-throw-cha",
+                "type": "CHARISMA",
+                "modifier": 6
+            }
+        ],
+        "skills": [
+            {
+                "index": "skill-deception",
+                "modifier": 6,
+                "name": "Deception"
+            },
+            {
+                "index": "skill-insight",
+                "modifier": 6,
+                "name": "Insight"
+            },
+            {
+                "index": "skill-perception",
+                "modifier": 6,
+                "name": "Perception"
+            },
+            {
+                "index": "skill-persuasion",
+                "modifier": 6,
+                "name": "Persuasion"
+            }
+        ],
+        "damage_vulnerabilities": [
+        ],
+        "damage_resistances": [
+        ],
+        "damage_immunities": [
+        ],
+        "condition_immunities": [
+        ],
+        "senses": [
+            "darkvision 60 ft."
+        ],
+        "languages": "Common, Draconic, Elvish, Infernal",
+        "special_abilities": [
+            {
+                "name": "Spellcasting",
+                "desc": "Talis is a 9th-level spellcaster that uses Wisdom as her spellcasting ability (spell save DC 14, +6 to hit with spell attacks). Talis has the following spells prepared from the cleric spell list:\n- Cantrips (at will): guidance, resistance, thaumaturgy\n- 1st level (4 slots): command, cure wounds, healing word, inflict wounds\n- 2nd level (3 slots): blindness/deafness, lesser restoration, spiritual weapon (spear)\n- 3rd level (3 slots): dispel magic, mass healing word, sending\n- 4th level (3 slots): death ward, freedom of movement\n- 5th level (1 slot): insect plague"
+            },
+            {
+                "name": "Special Equipment",
+                "desc": "Talis has +1 scale mail and a wand of winter."
+            },
+            {
+                "name": "Fey Ancestry",
+                "desc": "Talis has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "name": "Winter Strike (3/Day)",
+                "desc": "Once per turn, when Talis hits with a melee attack, she can expend a use of this trait to deal an extra 9 (2d8) cold damage."
+            }
+        ],
+        "actions": [
+            {
+                "damage_dices": [
+                    {
+                        "dice": "1d6+2",
+                        "damage": {
+                            "index": "PIERCING",
+                            "type": "PIERCING",
+                            "name": "Piercing"
+                        }
+                    }
+                ],
+                "attack_bonus": 5,
+                "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 6 (1d6 + 2) piercing damage.",
+                "name": "Spear"
+            }
+        ],
+        "source": {
+            "name": "Hoard of the Dragon Queen",
+            "acronym": "HotDQ"
+        }
+    }
+]

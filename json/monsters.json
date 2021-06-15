@@ -11830,7 +11830,7 @@
         "index": "drow",
         "type": "HUMANOID",
         "subtype": "elf",
-        "group": null,
+        "group": "Drows",
         "challenge_rating": 0.25,
         "name": "Drow",
         "subtitle": "Medium humanoid(elf), neutral evil",
