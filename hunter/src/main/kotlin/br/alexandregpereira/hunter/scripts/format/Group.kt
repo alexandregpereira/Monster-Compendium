@@ -58,6 +58,7 @@ internal val subtypeGroupAllowList = listOf(
     "devil",
     "demon",
     "yugoloth",
+    "kobold",
 )
 
 internal val groupsByIndexSuffix = listOf(
@@ -76,6 +77,8 @@ internal val groupsByIndexPrefix = listOf(
     "drow",
     "kuo-toa",
     "yuan-ti",
+    "duergar",
+    "gnoll",
 )
 
 internal val angels = listOf(
@@ -103,8 +106,10 @@ private val dragons = listOf(
 )
 
 private val genies = listOf(
+    "dao",
     "djinni",
     "efreeti",
+    "marid",
 )
 
 private val lycanthropes = listOf(
@@ -131,10 +136,27 @@ private val vampires = listOf(
     "vampire-spawn",
 )
 
+private val demonLords = listOf(
+    "baphomet",
+    "demogorgon",
+    "juiblex",
+    "orcus",
+)
+
+private val guildMasters = listOf(
+    "rakdos",
+    "obzedat-ghost",
+    "niv-mizzet",
+    "borborygmos",
+    "isperia",
+    "aurelia",
+)
+
 private val groups = hashMapOf(
     "Angels" to angels,
     "Animated Objects" to animatedObjects,
     "Beholders" to beholders,
+    "Demon Lords" to demonLords,
     "Dragons, Black" to getDragonsByColor("black"),
     "Dragons, Blue" to getDragonsByColor("blue"),
     "Dragons, Green" to getDragonsByColor("green"),
@@ -145,9 +167,11 @@ private val groups = hashMapOf(
     "Dragons, Cooper" to getDragonsByColor("copper"),
     "Dragons, Gold" to getDragonsByColor("gold"),
     "Dragons, Silver" to getDragonsByColor("silver"),
+    "Dragons, Shadow" to getDragonsByColor("red-shadow"),
     "Genies" to genies,
     "Lycanthropes" to lycanthropes,
     "Oozes" to oozes,
+    "Ravnica Guild Masters" to guildMasters,
     "Sphinxes" to sphinxes,
     "Vampires" to vampires,
 )

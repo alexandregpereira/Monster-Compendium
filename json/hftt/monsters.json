@@ -3,7 +3,7 @@
         "index": "demogorgon",
         "type": "MONSTROSITY",
         "subtype": null,
-        "group": null,
+        "group": "Demon Lords",
         "challenge_rating": 4.0,
         "name": "Demogorgon",
         "subtitle": "Medium monstrosity, unaligned",
