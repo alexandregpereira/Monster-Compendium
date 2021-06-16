@@ -57,8 +57,10 @@ internal fun calculateAbilityScoreModifier(value: Int): Int {
 
 internal fun MonsterDto.formatSubtitle(): MonsterDto {
     val subType = if (subtype.isNullOrEmpty()) "," else "($subtype),"
-    val subtitle = "${size.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT)} " +
-            "${type.name.toLowerCase(Locale.ROOT)}$subType $alignment"
+    val sizeName = size.name.lowercase(Locale.ROOT)
+        .replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
+
+    val subtitle = "$sizeName ${type.name.lowercase(Locale.ROOT)}$subType $alignment"
     return this.copy(
         subtitle = subtitle
     )

@@ -65,7 +65,7 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation 'junit:junit:4.13.2'

@@ -90,7 +90,7 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
             name = it.name,
             imageUrl = getImageUrl(it.index),
             isHorizontalImage = false,
-            size = MonsterSizeDto.valueOf(it.size.toUpperCase(Locale.ROOT)),
+            size = MonsterSizeDto.valueOf(it.size.uppercase(Locale.ROOT)),
             alignment = it.alignment,
             armorClass = it.armorClass,
             hitPoints = it.hitPoints,
@@ -230,16 +230,16 @@ private fun String.getDamage(): DamageDto {
         else -> DamageTypeDto.OTHER
     }
     return DamageDto(
-        index = this.toLowerCase(Locale.ROOT),
+        index = this.lowercase(Locale.ROOT),
         type = damageType,
-        name = this.capitalize(Locale.ROOT)
+        name = this.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
     )
 }
 
 private fun List<APIReference>.asConditionsFormatted(): List<ConditionDto> {
     return this.mapNotNull {
         runCatching {
-            ConditionTypeDto.valueOf(it.name.toUpperCase(Locale.ROOT))
+            ConditionTypeDto.valueOf(it.name.uppercase(Locale.ROOT))
         }.getOrNull()?.let { conditionType ->
             ConditionDto(
                 index = it.index,

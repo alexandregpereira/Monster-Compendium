@@ -79,7 +79,7 @@ suspend fun main() = start {
                     println("id: ${monster.index}, name: ${monster.name}")
                 }
 
-                val source = "json/${entry.key.toLowerCase(Locale.ROOT)}"
+                val source = "json/${entry.key.lowercase(Locale.ROOT)}"
                 val fileName = "$source/$MONSTER_JSON_FILE_NAME"
 
                 File(source).mkdir()
@@ -129,12 +129,12 @@ private fun List<Monster>.asMonstersFormatted(): List<MonsterDto> {
 }
 
 private fun Monster.getIndex(): String {
-    return name.replace(" ", "-").toLowerCase(Locale.ROOT)
+    return name.replace(" ", "-").lowercase(Locale.ROOT)
 }
 
 private fun Monster.typeFormatted(): MonsterTypeDto {
     return runCatching {
-        MonsterTypeDto.valueOf(type.type.toUpperCase(Locale.ROOT))
+        MonsterTypeDto.valueOf(type.type.uppercase(Locale.ROOT))
     }.getOrElse {
         MonsterTypeDto.HUMANOID
     }
@@ -265,7 +265,7 @@ private fun Monster.skillsFormatted(): List<SkillDto> {
         SkillDto(
             index = "skill-${it.key.replace(" ", "-")}",
             modifier = it.value.replace("+", "").toInt(),
-            name = it.key.capitalize(Locale.ROOT)
+            name = it.key.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
         )
     }
 }
@@ -273,24 +273,24 @@ private fun Monster.skillsFormatted(): List<SkillDto> {
 private fun List<String>.damagesFormatted(): List<DamageDto> {
     return this.map {
         val damageType = runCatching {
-            DamageTypeDto.valueOf(it.replace("*", "").toUpperCase(Locale.ROOT))
+            DamageTypeDto.valueOf(it.replace("*", "").uppercase(Locale.ROOT))
         }.getOrDefault(DamageTypeDto.OTHER)
         DamageDto(
             index = it.replace("*", ""),
             type = damageType,
-            name = it.capitalize(Locale.ROOT)
+            name = it.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
         )
     }
 }
 
 private fun Monster.conditionsImmuneFormatted(): List<ConditionDto> {
     return conditionImmune.map {
-        val type = runCatching { ConditionTypeDto.valueOf(it.toUpperCase(Locale.ROOT)) }
+        val type = runCatching { ConditionTypeDto.valueOf(it.uppercase(Locale.ROOT)) }
             .getOrDefault(ConditionTypeDto.UNCONSCIOUS)
         ConditionDto(
             index = it,
             type = type,
-            name = it.capitalize(Locale.ROOT)
+            name = it.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
         )
     }
 }
@@ -346,7 +346,7 @@ private fun Monster.actionsFormatted(): List<ActionDto> {
             .mapNotNull { i ->
                 runCatching {
                     val damageTypeValue = descSplit[i - 1]
-                    DamageTypeDto.valueOf(damageTypeValue.toUpperCase(Locale.ROOT))
+                    DamageTypeDto.valueOf(damageTypeValue.uppercase(Locale.ROOT))
                 }.getOrNull()?.let { damageType ->
                     val dice = descSplit[i - 2]
                         .replace("(", "")
@@ -356,9 +356,10 @@ private fun Monster.actionsFormatted(): List<ActionDto> {
                     DamageDiceDto(
                         dice = dice,
                         damage = DamageDto(
-                            index = damageType.name.toUpperCase(Locale.ROOT),
+                            index = damageType.name.uppercase(Locale.ROOT),
                             type = damageType,
-                            name = damageType.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
+                            name = damageType.name.lowercase(Locale.ROOT)
+                                .replaceFirstChar { char -> char.titlecase(Locale.ROOT) },
                         )
                     )
                 }
