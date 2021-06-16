@@ -3,7 +3,7 @@
         "index": "drowned-assassin",
         "type": "UNDEAD",
         "subtype": null,
-        "group": "Drows",
+        "group": null,
         "challenge_rating": 4.0,
         "name": "Drowned Assassin",
         "subtitle": "Medium undead, chaotic evil",
