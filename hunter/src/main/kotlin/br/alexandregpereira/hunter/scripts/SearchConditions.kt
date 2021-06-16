@@ -30,6 +30,6 @@ suspend fun main() = start {
         .toSet()
         .sorted()
         .forEach { conditionName ->
-            println("${conditionName.toUpperCase(Locale.ROOT)},")
+            println("${conditionName.uppercase(Locale.ROOT)},")
         }
 }

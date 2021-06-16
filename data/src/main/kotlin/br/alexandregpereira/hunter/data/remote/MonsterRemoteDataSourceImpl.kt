@@ -31,6 +31,6 @@ internal class MonsterRemoteDataSourceImpl(
     }
 
     override fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>> = flow {
-        emit(monsterApi.getMonsters(sourceAcronym.toLowerCase(Locale.ROOT)))
+        emit(monsterApi.getMonsters(sourceAcronym.lowercase(Locale.ROOT)))
     }
 }

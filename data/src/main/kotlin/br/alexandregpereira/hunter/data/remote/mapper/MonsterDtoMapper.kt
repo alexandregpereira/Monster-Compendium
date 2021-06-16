@@ -43,7 +43,8 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             subtype = it.subtype,
             group = it.group,
             subtitle = it.subtitle,
-            size = it.size.name.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT),
+            size = it.size.name.lowercase(Locale.ROOT)
+                .replaceFirstChar { char -> char.titlecase(Locale.ROOT) },
             alignment = it.alignment,
             stats = Stats(
                 armorClass = it.armorClass,
