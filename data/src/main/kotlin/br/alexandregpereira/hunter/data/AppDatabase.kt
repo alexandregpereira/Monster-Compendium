@@ -22,7 +22,7 @@ import androidx.room.RoomDatabase
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 
-@Database(entities = [MonsterEntity::class], version = 2)
+@Database(entities = [MonsterEntity::class], version = 2, exportSchema = false)
 internal abstract class AppDatabase : RoomDatabase() {
     abstract fun monsterDao(): MonsterDao
 }

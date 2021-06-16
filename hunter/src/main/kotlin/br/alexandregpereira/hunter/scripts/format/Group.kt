@@ -31,18 +31,18 @@ private fun isSubtypeGroup(subtype: String?): Boolean {
 }
 
 private fun String.getSubtypeGroup(): String {
-    return capitalize(Locale.ROOT).let { it + "s" }
+    return replaceFirstChar { char -> char.titlecase(Locale.ROOT) }.let { it + "s" }
 }
 
 internal fun getGroupByIndexSuffix(index: String): String? {
     return groupsByIndexSuffix.find { index.endsWith(it) }
         ?.removeSuffix("-wyrmling")
-        ?.capitalize(Locale.ROOT)?.let { it + "s" }
+        ?.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }?.let { it + "s" }
 }
 
 internal fun getGroupByIndexPrefix(index: String): String? {
     return groupsByIndexPrefix.find { index.startsWith(it) }
-        ?.capitalize(Locale.ROOT)?.let { it + "s" }
+        ?.replaceFirstChar { char -> char.titlecase(Locale.ROOT) }?.let { it + "s" }
 }
 
 internal fun getGroupByGroupMap(index: String): String? {

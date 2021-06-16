@@ -124,7 +124,7 @@ class GetMonsterPreviewsBySectionUseCase internal constructor(
     }
 
     private fun String.getFirstLetter(): Char {
-        return this.first().toUpperCase()
+        return this.first().uppercaseChar()
     }
 
     private fun List<Monster>.toMonsterPairs(): List<MonsterPair> {
