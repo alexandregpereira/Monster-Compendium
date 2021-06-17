@@ -33,7 +33,7 @@ import br.alexandregpereira.hunter.ui.compose.Window
 @Composable
 fun AbilityDescriptionBlock(
     title: String,
-    abilityDescriptions: List<AbilityDescription>,
+    abilityDescriptions: List<AbilityDescriptionState>,
     modifier: Modifier = Modifier,
     content: @Composable (index: Int) -> Unit = {}
 ) = Block(title = title, modifier = modifier) {
@@ -51,7 +51,7 @@ fun AbilityDescriptionBlock(
 }
 
 @Composable
-fun AbilityDescription(
+private fun AbilityDescription(
     name: String,
     description: String,
     modifier: Modifier = Modifier,
@@ -77,7 +77,7 @@ fun AbilityDescription(
 
 @Preview
 @Composable
-fun AbilityDescriptionPreview() = Window {
+private fun AbilityDescriptionPreview() = Window {
     AbilityDescription(
         name = "Name",
         description = "Description very long to test the description field"

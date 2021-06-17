@@ -63,16 +63,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Source
-import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
+import br.alexandregpereira.hunter.ui.compose.ColorState
+import br.alexandregpereira.hunter.ui.compose.MonsterImageState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -88,7 +82,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MonsterDetail(
-    monsters: List<Monster>,
+    monsters: List<MonsterState>,
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     pagerState: PagerState = rememberPagerState(
@@ -97,8 +91,8 @@ fun MonsterDetail(
         initialOffscreenLimit = 2
     ),
     scrollState: ScrollState = rememberScrollState(),
-    onMonsterChanged: (monster: Monster) -> Unit = {},
-    onOptionsClicked: () -> Unit = {}
+    onMonsterChanged: (monster: MonsterState) -> Unit = {},
+    onOptionsClicked: () -> Unit = {},
 ) {
     Column(
         Modifier
@@ -159,7 +153,7 @@ fun MonsterDetail(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MonsterImageCompose(
-    monsters: List<Monster>,
+    monsters: List<MonsterState>,
     pagerState: PagerState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -169,7 +163,7 @@ private fun MonsterImageCompose(
             .padding(top = contentPadding.calculateTopPadding())
     ) {
         MonsterImages(
-            images = monsters.map { Image(it.imageData.url, it.name) },
+            images = monsters.map { ImageState(it.imageState.url, it.name) },
             pagerState = pagerState,
             height = IMAGE_HEIGHT,
             shape = RectangleShape,
@@ -190,15 +184,15 @@ private fun MonsterImageCompose(
 
 @OptIn(ExperimentalPagerApi::class)
 private fun Modifier.monsterImageBackground(
-    monsters: List<Monster>,
-    pagerState: PagerState
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
 ) = composed {
     val transitionData = getTransitionData(monsters, pagerState)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    val startColor = transitionData.monster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
+    val startColor = transitionData.monster.imageState.backgroundColor.getColor(isSystemInDarkTheme)
     val endColor =
-        transitionData.nextMonster.imageData.backgroundColor.getColor(isSystemInDarkTheme)
+        transitionData.nextMonster.imageState.backgroundColor.getColor(isSystemInDarkTheme)
     val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
 
     val backgroundColor = lerp(
@@ -214,11 +208,11 @@ private fun Modifier.monsterImageBackground(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MonsterTopBar(
-    monsters: List<Monster>,
+    monsters: List<MonsterState>,
     pagerState: PagerState,
     scrollState: ScrollState,
     contentPadding: PaddingValues = PaddingValues(16.dp),
-    onOptionsClicked: () -> Unit
+    onOptionsClicked: () -> Unit,
 ) {
     val imageHeightInPixels = LocalDensity.current.run { IMAGE_HEIGHT.toPx() }
     val contentPaddingTotalInPixels = LocalDensity.current.run {
@@ -281,13 +275,13 @@ private fun MonsterTopBar(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ChallengeRatingCompose(
-    monsters: List<Monster>,
-    pagerState: PagerState
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
 ) {
     val transitionData = getTransitionData(monsters, pagerState)
 
     ChallengeRatingCircle(
-        challengeRating = transitionData.monster.challengeRating,
+        challengeRating = transitionData.monster.imageState.challengeRating,
         size = 56.dp,
         fontSize = 16.sp,
         modifier = Modifier.alpha(transitionData.alpha)
@@ -295,7 +289,7 @@ private fun ChallengeRatingCompose(
 
     if (transitionData.monster != transitionData.nextMonster) {
         ChallengeRatingCircle(
-            challengeRating = transitionData.nextMonster.challengeRating,
+            challengeRating = transitionData.nextMonster.imageState.challengeRating,
             size = 56.dp,
             fontSize = 16.sp,
             modifier = Modifier.alpha(transitionData.nextAlpha)
@@ -306,14 +300,14 @@ private fun ChallengeRatingCompose(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MonsterTypeIcon(
-    monsters: List<Monster>,
+    monsters: List<MonsterState>,
     pagerState: PagerState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val transitionData = getTransitionData(monsters, pagerState)
 
-    val type: MonsterTypeState = MonsterTypeState.valueOf(transitionData.monster.type.name)
-    val nextType: MonsterTypeState = MonsterTypeState.valueOf(transitionData.nextMonster.type.name)
+    val type: MonsterTypeState = transitionData.monster.imageState.type
+    val nextType: MonsterTypeState = transitionData.nextMonster.imageState.type
 
     MonsterTypeIcon(type = type, iconSize = 32.dp, modifier.alpha(transitionData.alpha))
 
@@ -326,10 +320,10 @@ private fun MonsterTypeIcon(
 @ExperimentalAnimationApi
 @Composable
 private fun MonsterInfo(
-    monsters: List<Monster>,
+    monsters: List<MonsterState>,
     pagerState: PagerState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onMonsterChanged: (monster: Monster) -> Unit,
+    onMonsterChanged: (monster: MonsterState) -> Unit,
 ) {
     val transitionData = getTransitionData(monsters, pagerState)
     onMonsterChanged(transitionData.monster)
@@ -366,8 +360,8 @@ private fun MonsterInfo(
 
 @OptIn(ExperimentalPagerApi::class)
 private fun getTransitionData(
-    monsters: List<Monster>,
-    pagerState: PagerState
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
 ): TransitionData {
     val monster = monsters[pagerState.currentPage]
     val pageOffset = pagerState.currentPage + pagerState.currentPageOffset
@@ -396,10 +390,10 @@ private fun getTransitionData(
 }
 
 private data class TransitionData(
-    val monster: Monster,
-    val nextMonster: Monster,
+    val monster: MonsterState,
+    val nextMonster: MonsterState,
     val alpha: Float,
-    val nextAlpha: Float
+    val nextAlpha: Float,
 )
 
 private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
@@ -412,32 +406,30 @@ private val IMAGE_HEIGHT = 420.dp
 private fun MonsterDetailPreview() = Window {
     MonsterDetail(
         monsters = (0..10).map {
-            Monster(
-                preview = MonsterPreview(
-                    index = "",
-                    type = MonsterType.CELESTIAL,
+            MonsterState(
+                index = "",
+                name = "Monster of the monsters",
+                imageState = MonsterImageState(
+                    url = "",
+                    type = MonsterTypeState.CELESTIAL,
                     challengeRating = 0.0f,
-                    name = "Monster of the monsters",
-                    imageData = MonsterImageData(
-                        url = "",
-                        backgroundColor = Color(
-                            light = "#ffe2e2",
-                            dark = "#ffe2e2"
-                        ),
-                        isHorizontal = false
+                    backgroundColor = ColorState(
+                        light = "#ffe2e2",
+                        dark = "#ffe2e2"
                     ),
+                    isHorizontal = false
                 ),
                 subtype = null,
                 group = null,
                 subtitle = "This is the subtitle",
                 size = "Large",
                 alignment = "Good",
-                stats = Stats(
+                stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,
                     hitDice = ""
                 ),
-                speed = Speed(hover = false, values = listOf()),
+                speed = SpeedState(hover = false, values = listOf()),
                 abilityScores = listOf(),
                 savingThrows = listOf(),
                 skills = listOf(),
@@ -449,7 +441,6 @@ private fun MonsterDetailPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
-                source = Source(name = "", acronym = "")
             )
         },
         initialMonsterIndex = 2
@@ -463,32 +454,30 @@ private fun MonsterDetailPreview() = Window {
 private fun MonsterTopBarPreview() = Window {
     MonsterTopBar(
         monsters = listOf(
-            Monster(
-                preview = MonsterPreview(
-                    index = "",
-                    type = MonsterType.CELESTIAL,
+            MonsterState(
+                index = "",
+                name = "Monster of the monsters",
+                imageState = MonsterImageState(
+                    url = "",
+                    type = MonsterTypeState.CELESTIAL,
                     challengeRating = 0.0f,
-                    name = "Monster of the monsters",
-                    imageData = MonsterImageData(
-                        url = "",
-                        backgroundColor = Color(
-                            light = "#ffe2e2",
-                            dark = "#ffe2e2"
-                        ),
-                        isHorizontal = false
+                    backgroundColor = ColorState(
+                        light = "#ffe2e2",
+                        dark = "#ffe2e2"
                     ),
+                    isHorizontal = false
                 ),
                 subtype = null,
                 group = null,
                 subtitle = "This is the subtitle",
                 size = "Large",
                 alignment = "Good",
-                stats = Stats(
+                stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,
                     hitDice = ""
                 ),
-                speed = Speed(hover = false, values = listOf()),
+                speed = SpeedState(hover = false, values = listOf()),
                 abilityScores = listOf(),
                 savingThrows = listOf(),
                 skills = listOf(),
@@ -500,7 +489,6 @@ private fun MonsterTopBarPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
-                source = Source(name = "", acronym = "")
             )
         ),
         pagerState = rememberPagerState(pageCount = 1),

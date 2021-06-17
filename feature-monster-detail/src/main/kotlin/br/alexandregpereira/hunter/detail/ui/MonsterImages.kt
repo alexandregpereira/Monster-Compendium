@@ -32,12 +32,12 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import kotlin.math.absoluteValue
 
-data class Image(val url: String, val contentDescription: String)
+data class ImageState(val url: String, val contentDescription: String)
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MonsterImages(
-    images: List<Image>,
+    images: List<ImageState>,
     pagerState: PagerState,
     height: Dp,
     shape: Shape,

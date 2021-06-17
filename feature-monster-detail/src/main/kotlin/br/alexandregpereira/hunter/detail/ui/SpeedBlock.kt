@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,15 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.model.SpeedType
-import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun SpeedBlock(
-    speed: Speed,
+    speed: SpeedState,
     modifier: Modifier = Modifier,
     contentPaddingBottom: Dp = 0.dp,
 ) {
@@ -48,30 +46,24 @@ fun SpeedBlock(
 }
 
 @Composable
-fun SpeedGrid(
-    speed: Speed,
+private fun SpeedGrid(
+    speed: SpeedState,
 ) = Grid {
 
     speed.values.forEach { speedValue ->
-        val iconRes = when (speedValue.type) {
-            SpeedType.BURROW -> R.drawable.ic_ghost
-            SpeedType.CLIMB -> R.drawable.ic_climbing
-            SpeedType.FLY -> R.drawable.ic_superhero
-            SpeedType.WALK -> R.drawable.ic_runer_silhouette_running_fast
-            SpeedType.SWIM -> R.drawable.ic_swimmer
-        }
+        val iconRes = speedValue.type.iconRes
         IconInfo(title = speedValue.valueFormatted, painter = painterResource(iconRes))
     }
 }
 
 @Preview
 @Composable
-fun SpeedGridPreview() = Window {
+private fun SpeedGridPreview() = Window {
     SpeedGrid(
-        speed = Speed(
+        speed = SpeedState(
             hover = false, values = (0..6).map {
-                SpeedValue(
-                    type = SpeedType.WALK,
+                SpeedValueState(
+                    type = SpeedTypeState.WALK,
                     valueFormatted = "10m"
                 )
             }
@@ -81,12 +73,12 @@ fun SpeedGridPreview() = Window {
 
 @Preview
 @Composable
-fun SpeedBlockPreview() = HunterTheme {
+private fun SpeedBlockPreview() = HunterTheme {
     SpeedBlock(
-        speed = Speed(
+        speed = SpeedState(
             hover = true, values = listOf(
-                SpeedValue(
-                    type = SpeedType.WALK,
+                SpeedValueState(
+                    type = SpeedTypeState.WALK,
                     valueFormatted = "10m"
                 )
             )

@@ -34,13 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.AbilityScore
-import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 fun AbilityScore(
-    abilityScore: AbilityScore,
+    abilityScore: AbilityScoreState,
     modifier: Modifier = Modifier
 ) = Box(
     modifier = modifier
@@ -49,7 +47,7 @@ fun AbilityScore(
 ) {
     Icon(
         painter = painterResource(id = R.drawable.ic_ability_score),
-        contentDescription = abilityScore.type.name,
+        contentDescription = abilityScore.name,
         modifier = Modifier
             .width(69.dp)
             .height(89.dp)
@@ -60,7 +58,7 @@ fun AbilityScore(
         modifier = Modifier.height(89.dp)
     ) {
         Text(
-            text = abilityScore.type.name.substring(0..2),
+            text = abilityScore.name.substring(0..2),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             modifier = Modifier.padding(top = 8.dp)
@@ -85,10 +83,10 @@ fun AbilityScore(
 
 @Preview
 @Composable
-fun AbilityScorePreview() = Window {
+private fun AbilityScorePreview() = Window {
     AbilityScore(
-        abilityScore = AbilityScore(
-            type = AbilityScoreType.CHARISMA,
+        abilityScore = AbilityScoreState(
+            name ="CHARISMA",
             value = 20,
             modifier = 5
         ),

@@ -24,12 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.Action
-import br.alexandregpereira.hunter.domain.model.DamageDice
 
 @Composable
 fun ActionBlock(
-    actions: List<Action>,
+    actions: List<ActionState>,
     modifier: Modifier = Modifier
 ) = AbilityDescriptionBlock(
     title = stringResource(R.string.monster_detail_actions),
@@ -49,9 +47,9 @@ fun ActionBlock(
 }
 
 @Composable
-fun ActionDamageGrid(
+private fun ActionDamageGrid(
     attackBonus: Int?,
-    damageDices: List<DamageDice>,
+    damageDices: List<DamageDiceState>,
     modifier: Modifier = Modifier
 ) = Grid(modifier = modifier) {
 
@@ -61,7 +59,7 @@ fun ActionDamageGrid(
     }
 
     damageDices.forEach { damageDice ->
-        val iconRes = damageDice.damage.type.getIconRes()
+        val iconRes = damageDice.damage.type.iconRes
         if (iconRes != null) {
             IconInfo(
                 title = damageDice.dice,
