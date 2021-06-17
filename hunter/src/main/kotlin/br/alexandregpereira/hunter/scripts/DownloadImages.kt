@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.data.remote.model.MonsterDto
-import br.alexandregpereira.hunter.dndapi.data.model.Monster
 import br.alexandregpereira.hunter.image.downloadImage
 import br.alexandregpereira.hunter.image.getBufferedImage
 import br.alexandregpereira.hunter.image.removeWhiteBackgroundColor

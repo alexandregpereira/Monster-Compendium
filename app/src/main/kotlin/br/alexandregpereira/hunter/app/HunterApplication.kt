@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.monster.compendium.monsterCompendiumModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
+@Suppress("unused")
 class HunterApplication : Application() {
 
     override fun onCreate() {
