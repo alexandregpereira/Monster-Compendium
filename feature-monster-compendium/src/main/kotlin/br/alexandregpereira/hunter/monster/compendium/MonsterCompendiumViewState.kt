@@ -17,11 +17,27 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = false,
-    val monstersBySection: Map<MonsterSection, List<Pair<MonsterPreview, MonsterPreview?>>> = emptyMap(),
-    val initialScrollItemPosition: Int = 0
+    val monstersBySection: Map<SectionState, List<MonsterRowState>> = emptyMap(),
+    val initialScrollItemPosition: Int = 0,
+)
+
+data class SectionState(
+    val title: String,
+    val id: String = title,
+    val parentTitle: String? = null,
+    val isHeader: Boolean = false,
+)
+
+data class MonsterRowState(
+    val leftMonsterCardState: MonsterCardState,
+    val rightMonsterCardState: MonsterCardState?,
+)
+
+infix fun MonsterCardState.and(that: MonsterCardState?) = MonsterRowState(
+    leftMonsterCardState = this,
+    rightMonsterCardState = that
 )

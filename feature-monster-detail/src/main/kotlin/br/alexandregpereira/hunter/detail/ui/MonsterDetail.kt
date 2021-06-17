@@ -73,7 +73,7 @@ import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
-import br.alexandregpereira.hunter.ui.compose.MonsterItemType
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -312,8 +312,8 @@ private fun MonsterTypeIcon(
 ) {
     val transitionData = getTransitionData(monsters, pagerState)
 
-    val type: MonsterItemType = MonsterItemType.valueOf(transitionData.monster.type.name)
-    val nextType: MonsterItemType = MonsterItemType.valueOf(transitionData.nextMonster.type.name)
+    val type: MonsterTypeState = MonsterTypeState.valueOf(transitionData.monster.type.name)
+    val nextType: MonsterTypeState = MonsterTypeState.valueOf(transitionData.nextMonster.type.name)
 
     MonsterTypeIcon(type = type, iconSize = 32.dp, modifier.alpha(transitionData.alpha))
 

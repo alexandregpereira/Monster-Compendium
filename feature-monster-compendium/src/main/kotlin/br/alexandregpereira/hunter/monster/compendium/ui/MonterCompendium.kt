@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,18 +35,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.monster.compendium.MonsterCardItemsBySection
-import br.alexandregpereira.hunter.ui.compose.MonsterItemType
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import br.alexandregpereira.hunter.monster.compendium.MonsterRowState
+import br.alexandregpereira.hunter.monster.compendium.SectionState
+import br.alexandregpereira.hunter.monster.compendium.and
+import br.alexandregpereira.hunter.ui.compose.ColorState
+import br.alexandregpereira.hunter.ui.compose.MonsterImageState
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 fun MonsterCompendium(
-    monstersBySection: MonsterCardItemsBySection,
+    monstersBySection: Map<SectionState, List<MonsterRowState>>,
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
@@ -94,8 +92,8 @@ fun MonsterCompendium(
 
         monsterRows.forEach { monsterRow ->
             item {
-                val leftMonster = monsterRow.first
-                val rightMonster = monsterRow.second
+                val leftMonster = monsterRow.leftMonsterCardState
+                val rightMonster = monsterRow.rightMonsterCardState
 
                 MonsterRow(
                     leftMonster = leftMonster,
@@ -116,15 +114,15 @@ fun MonsterCompendium(
 
 @Composable
 fun MonsterRow(
-    leftMonster: MonsterPreview,
+    leftMonster: MonsterCardState,
     modifier: Modifier = Modifier,
-    rightMonster: MonsterPreview? = null,
+    rightMonster: MonsterCardState? = null,
     onItemClick: (index: String) -> Unit = {},
 ) = Surface {
     Row(modifier) {
 
         MonsterCard(
-            monster = leftMonster,
+            monsterCardState = leftMonster,
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 8.dp),
@@ -132,7 +130,7 @@ fun MonsterRow(
         )
         rightMonster?.let {
             MonsterCard(
-                monster = it,
+                monsterCardState = it,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp),
@@ -141,22 +139,6 @@ fun MonsterRow(
         }
     }
 }
-
-@Composable
-private fun MonsterCard(
-    monster: MonsterPreview,
-    modifier: Modifier = Modifier,
-    onCLick: () -> Unit = {},
-) = MonsterCard(
-    name = monster.name,
-    imageUrl = monster.imageData.url,
-    backgroundColor = monster.imageData.backgroundColor.getColor(isSystemInDarkTheme()),
-    contentDescription = monster.name,
-    challengeRating = monster.challengeRating,
-    type = MonsterItemType.valueOf(monster.type.name),
-    modifier = modifier,
-    onCLick = onCLick
-)
 
 @Composable
 private fun SectionTitle(
@@ -192,145 +174,117 @@ private fun TopBottomSpace(
 
 @Preview
 @Composable
-fun MonsterCompendiumPreview() = HunterTheme {
-    Surface {
-        MonsterCompendium(
-            monstersBySection = mapOf(
-                MonsterSection(title = "Any") to (0..10).map {
-                    val leftMonster = MonsterPreview(
+fun MonsterCompendiumPreview() = Window {
+    val imageState = MonsterImageState(
+        url = "",
+        type = MonsterTypeState.ABERRATION,
+        challengeRating = 8.0f,
+        backgroundColor = ColorState(
+            light = "#ffe0e0",
+            dark = "#ffe0e0"
+        )
+    )
+    MonsterCompendium(
+        monstersBySection = mapOf(
+            SectionState(title = "Any") to (0..10).map {
+                val leftMonster = MonsterCardState(
+                    index = "asdasdasd",
+                    name = "Monster of monsters",
+                    imageState = imageState,
+                )
+                val rightMonster = if (it == 1) {
+                    MonsterCardState(
                         index = "asdasdasd",
-                        type = MonsterType.ABERRATION,
-                        challengeRating = 8.0f,
                         name = "Monster of monsters",
-                        imageData = MonsterImageData(
-                            url = "sadasd",
-                            backgroundColor = Color(
-                                light = "#ffe0e0",
-                                dark = "#ffe0e0"
-                            )
-                        ),
+                        imageState = imageState,
                     )
-                    val rightMonster = if (it == 1) {
-                        MonsterPreview(
-                            index = "asdasdasd",
-                            type = MonsterType.ABERRATION,
-                            challengeRating = 8.0f,
-                            name = "Monster of monsters",
-                            imageData = MonsterImageData(
-                                url = "sadasd",
-                                backgroundColor = Color(
-                                    light = "#ffe0e0",
-                                    dark = "#ffe0e0"
-                                )
-                            ),
-                        )
-                    } else {
-                        null
-                    }
-                    leftMonster to rightMonster
+                } else {
+                    null
                 }
-            )
+                leftMonster and rightMonster
+            }
         )
-    }
+    )
 }
 
 @Preview
 @Composable
-fun MonsterCompendiumWithSectionTitlePreview() = HunterTheme {
-    Surface {
-        MonsterCompendium(
-            monstersBySection = mapOf(
-                MonsterSection(title = "Title") to (0..10).map {
-                    val leftMonster = MonsterPreview(
+fun MonsterCompendiumWithSectionTitlePreview() = Window {
+    val imageState = MonsterImageState(
+        url = "",
+        type = MonsterTypeState.ABERRATION,
+        challengeRating = 8.0f,
+        backgroundColor = ColorState(
+            light = "#ffe0e0",
+            dark = "#ffe0e0"
+        )
+    )
+    MonsterCompendium(
+        monstersBySection = mapOf(
+            SectionState(title = "Title") to (0..10).map {
+                val leftMonster = MonsterCardState(
+                    index = "asdasdasd",
+                    name = "Monster of monsters",
+                    imageState = imageState,
+                )
+                val rightMonster = if (it == 1) {
+                    MonsterCardState(
                         index = "asdasdasd",
-                        type = MonsterType.ABERRATION,
-                        challengeRating = 8.0f,
                         name = "Monster of monsters",
-                        imageData = MonsterImageData(
-                            url = "sadasd",
-                            backgroundColor = Color(
-                                light = "#ffe0e0",
-                                dark = "#ffe0e0"
-                            )
-                        ),
+                        imageState = imageState,
                     )
-                    val rightMonster = if (it == 1) {
-                        MonsterPreview(
-                            index = "asdasdasd",
-                            type = MonsterType.ABERRATION,
-                            challengeRating = 8.0f,
-                            name = "Monster of monsters",
-                            imageData = MonsterImageData(
-                                url = "sadasd",
-                                backgroundColor = Color(
-                                    light = "#ffe0e0",
-                                    dark = "#ffe0e0"
-                                )
-                            ),
-                        )
-                    } else {
-                        null
-                    }
-                    leftMonster to rightMonster
+                } else {
+                    null
                 }
-            )
+                leftMonster and rightMonster
+            }
         )
-    }
+    )
 }
 
 @Preview
 @Composable
-fun MonsterSection2ItemsPreview() = HunterTheme {
-    Surface {
-        MonsterRow(
-            leftMonster = MonsterPreview(
-                index = "asdasdasd",
-                type = MonsterType.ABERRATION,
-                challengeRating = 8.0f,
-                name = "Monster of monsters",
-                imageData = MonsterImageData(
-                    url = "sadasd",
-                    backgroundColor = Color(
-                        light = "#ffe0e0",
-                        dark = "#ffe0e0"
-                    )
-                )
-            ),
-            rightMonster = MonsterPreview(
-                index = "asdasdasd",
-                type = MonsterType.ABERRATION,
-                challengeRating = 8.0f,
-                name = "Monster of monsters",
-                imageData = MonsterImageData(
-                    url = "sadasd",
-                    backgroundColor = Color(
-                        light = "#ffe0e0",
-                        dark = "#ffe0e0"
-                    )
-                )
-            )
+fun MonsterSection2ItemsPreview() = Window {
+    val imageState = MonsterImageState(
+        url = "",
+        type = MonsterTypeState.ABERRATION,
+        challengeRating = 8.0f,
+        backgroundColor = ColorState(
+            light = "#ffe0e0",
+            dark = "#ffe0e0"
         )
-    }
+    )
+    MonsterRow(
+        leftMonster = MonsterCardState(
+            index = "asdasdasd",
+            name = "Monster of monsters",
+            imageState = imageState
+        ),
+        rightMonster = MonsterCardState(
+            index = "asdasdasd",
+            name = "Monster of monsters",
+            imageState = imageState
+        )
+    )
 }
 
 @Preview
 @Composable
-fun MonsterSection1ItemPreview() = HunterTheme {
-    Surface {
-        MonsterRow(
-            leftMonster = MonsterPreview(
-                index = "asdasdasd",
-                type = MonsterType.ABERRATION,
-                challengeRating = 8.0f,
-                name = "Monster of monsters",
-                imageData = MonsterImageData(
-                    url = "sadasd",
-                    backgroundColor = Color(
-                        light = "#ffe0e0",
-                        dark = "#ffe0e0"
-                    )
-                )
-            )
+fun MonsterSection1ItemPreview() = Window {
+    val imageState = MonsterImageState(
+        url = "",
+        type = MonsterTypeState.ABERRATION,
+        challengeRating = 8.0f,
+        backgroundColor = ColorState(
+            light = "#ffe0e0",
+            dark = "#ffe0e0"
         )
-    }
+    )
+    MonsterRow(
+        leftMonster = MonsterCardState(
+            index = "asdasdasd",
+            name = "Monster of monsters",
+            imageState = imageState
+        )
+    )
 }
