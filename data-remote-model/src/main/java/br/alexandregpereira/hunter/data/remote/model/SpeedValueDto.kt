@@ -54,6 +54,7 @@ enum class SpeedTypeDto {
     SWIM,
 }
 
+@Suppress("unused")
 @Serializable
 enum class MeasurementUnitDto(val value: String) {
     @SerialName("FEET")

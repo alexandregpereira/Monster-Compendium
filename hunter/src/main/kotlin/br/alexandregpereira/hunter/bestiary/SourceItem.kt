@@ -104,6 +104,7 @@ data class Type(
     val tags: List<String> = emptyList(),
 )
 
+@Suppress("unused")
 @Serializable
 enum class MonsterSize {
     @SerialName("T")
