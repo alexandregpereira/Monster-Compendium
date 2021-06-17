@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MonsterTypeIcon(
-    type: MonsterItemType,
+    type: MonsterTypeState,
     iconSize: Dp,
     modifier: Modifier = Modifier
 ) = Box(

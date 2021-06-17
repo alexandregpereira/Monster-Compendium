@@ -27,6 +27,10 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
+import br.alexandregpereira.hunter.ui.compose.ColorState
+import br.alexandregpereira.hunter.ui.compose.MonsterImageState
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -86,17 +90,17 @@ class MonsterCompendiumViewModelTest {
                 MonsterCompendiumViewState(
                     isLoading = false,
                     monstersBySection = mapOf(
-                        section to listOf(
-                            MonsterPreview(
+                        SectionState(title = "Any") to listOf(
+                            MonsterCardState(
                                 index = "",
-                                type = MonsterType.ABERRATION,
-                                challengeRating = 0.0f,
                                 name = "",
-                                imageData = MonsterImageData(
+                                imageState = MonsterImageState(
                                     url = "",
-                                    backgroundColor = Color(light = "", dark = "")
+                                    type = MonsterTypeState.ABERRATION,
+                                    challengeRating = 0.0f,
+                                    backgroundColor = ColorState(light = "", dark = "")
                                 ),
-                            ) to null
+                            ) and null
                         )
                     ),
                     initialScrollItemPosition = 1

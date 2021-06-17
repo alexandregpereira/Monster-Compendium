@@ -19,20 +19,19 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.domain.model.Proficiency
 
 @Composable
 internal fun ProficiencyBlock(
     title: String,
-    proficiencies: List<Proficiency>,
+    proficiencies: List<ProficiencyState>,
     modifier: Modifier = Modifier
 ) = Block(modifier = modifier, title = title) {
     ProficiencyGrid(proficiencies)
 }
 
 @Composable
-fun ProficiencyGrid(
-    proficiencies: List<Proficiency>,
+private fun ProficiencyGrid(
+    proficiencies: List<ProficiencyState>,
 ) = Grid {
 
     proficiencies.forEach { proficiency ->

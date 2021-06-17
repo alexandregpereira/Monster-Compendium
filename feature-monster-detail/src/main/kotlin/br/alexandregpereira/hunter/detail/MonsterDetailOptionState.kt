@@ -17,6 +17,6 @@
 
 package br.alexandregpereira.hunter.detail
 
-enum class MonsterDetailOption {
+enum class MonsterDetailOptionState {
     CHANGE_TO_FEET, CHANGE_TO_METERS
 }

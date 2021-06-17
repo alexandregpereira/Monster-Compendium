@@ -68,7 +68,4 @@ data class MonsterImageData(
 data class Color(
     val light: String,
     val dark: String
-) {
-
-    fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
-}
+)

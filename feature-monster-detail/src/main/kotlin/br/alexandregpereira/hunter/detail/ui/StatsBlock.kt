@@ -29,12 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 fun StatsBlock(
-    stats: Stats,
+    stats: StatsState,
     modifier: Modifier = Modifier
 ) = Block(modifier = modifier) {
 
@@ -42,8 +41,8 @@ fun StatsBlock(
 }
 
 @Composable
-fun StatsGrid(
-    stats: Stats,
+private fun StatsGrid(
+    stats: StatsState,
 ) = Grid {
     IconInfo(
         title = stringResource(R.string.monster_detail_armor_class),
@@ -65,14 +64,14 @@ fun StatsGrid(
 
 @Preview
 @Composable
-fun StatsGridPreview() = Window {
+private fun StatsGridPreview() = Window {
     StatsGrid(
-        stats = Stats(armorClass = 20, hitPoints = 100, hitDice = "28d20 + 252")
+        stats = StatsState(armorClass = 20, hitPoints = 100, hitDice = "28d20 + 252")
     )
 }
 
 @Preview
 @Composable
-fun StatsBlockPreview() = Window {
-    StatsBlock(stats = Stats(armorClass = 0, hitPoints = 0, hitDice = "teasdas"))
+private fun StatsBlockPreview() = Window {
+    StatsBlock(stats = StatsState(armorClass = 0, hitPoints = 0, hitDice = "teasdas"))
 }

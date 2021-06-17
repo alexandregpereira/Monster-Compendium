@@ -51,7 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.detail.MonsterDetailOption
+import br.alexandregpereira.hunter.detail.MonsterDetailOptionState
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
@@ -59,9 +59,9 @@ import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MonsterDetailOptionPicker(
-    options: List<MonsterDetailOption>,
+    options: List<MonsterDetailOptionState>,
     showOptions: Boolean,
-    onOptionSelected: (MonsterDetailOption) -> Unit = {},
+    onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
     onClosed: () -> Unit = {}
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -94,8 +94,8 @@ fun MonsterDetailOptionPicker(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun MonsterDetailOptions(
-    options: List<MonsterDetailOption>,
-    onOptionSelected: (MonsterDetailOption) -> Unit = {},
+    options: List<MonsterDetailOptionState>,
+    onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -150,8 +150,8 @@ private fun MonsterDetailOptions(
 fun MonsterDetailOptionPickerPreview() {
     MonsterDetailOptionPicker(
         listOf(
-            MonsterDetailOption.CHANGE_TO_FEET,
-            MonsterDetailOption.CHANGE_TO_METERS
+            MonsterDetailOptionState.CHANGE_TO_FEET,
+            MonsterDetailOptionState.CHANGE_TO_METERS
         ),
         showOptions = true
     )
