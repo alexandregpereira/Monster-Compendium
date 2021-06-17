@@ -32,19 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.ui.compose.ColorState
 import br.alexandregpereira.hunter.ui.compose.MonsterImage
-import br.alexandregpereira.hunter.ui.compose.MonsterItemType
+import br.alexandregpereira.hunter.ui.compose.MonsterImageState
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun MonsterCard(
-    name: String,
-    imageUrl: String,
-    backgroundColor: String,
-    contentDescription: String,
-    challengeRating: Float,
-    type: MonsterItemType,
+    monsterCardState: MonsterCardState,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
 ) {
@@ -64,16 +61,10 @@ fun MonsterCard(
                 onClick = onCLick
             )
     ) {
-        MonsterImage(
-            imageUrl = imageUrl,
-            backgroundColor = backgroundColor,
-            contentDescription = contentDescription,
-            challengeRating = challengeRating,
-            type = type
-        )
+        MonsterImage(monsterCardState.imageState)
 
         Text(
-            text = name,
+            text = monsterCardState.name,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
             modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)
@@ -81,17 +72,27 @@ fun MonsterCard(
     }
 }
 
+data class MonsterCardState(
+    val index: String,
+    val name: String,
+    val imageState: MonsterImageState,
+)
+
 @Preview
 @Composable
-fun MonsterCardPreview() {
+private fun MonsterCardPreview() {
     HunterTheme {
-        MonsterCard(
-            "Monster of the Monsters",
-            "https://raw.githubusercontent.com/alexandregpereira/dnd-monster-manual/main/images/aboleth.png",
-            "#80e3efef",
-            "any",
-            22f,
-            type = MonsterItemType.ABERRATION
+        val imageState = MonsterImageState(
+            url = "asdasdas",
+            backgroundColor = ColorState("#ffe3ee", ""),
+            challengeRating = 18f,
+            type = MonsterTypeState.ABERRATION
         )
+        val state = MonsterCardState(
+            index = "Monster of the Monsters",
+            name = "Monster of the Monsters",
+            imageState = imageState
+        )
+        MonsterCard(state)
     }
 }

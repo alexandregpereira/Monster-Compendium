@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentAlpha
@@ -31,19 +32,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.Damage
-import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
 private fun DamageBlock(
-    damages: List<Damage>,
+    damages: List<DamageState>,
     title: String,
     modifier: Modifier = Modifier
 ) = Block(title = title, modifier = modifier) {
 
     DamageGrid(damages)
-    damages.filter { it.type == DamageType.OTHER }.forEach { damage ->
+    damages.filter { it.type == DamageTypeState.OTHER }.forEach { damage ->
         Text(
             text = damage.name,
             fontWeight = FontWeight.Light,
@@ -55,29 +54,29 @@ private fun DamageBlock(
 
 @Composable
 fun DamageVulnerabilitiesBlock(
-    damages: List<Damage>,
+    damages: List<DamageState>,
     modifier: Modifier = Modifier
 ) = DamageBlock(damages, title = stringResource(R.string.monster_detail_vulnerabilities), modifier)
 
 @Composable
 fun DamageResistancesBlock(
-    damages: List<Damage>,
+    damages: List<DamageState>,
     modifier: Modifier = Modifier
 ) = DamageBlock(damages, title = stringResource(R.string.monster_detail_resistances), modifier)
 
 @Composable
 fun DamageImmunitiesBlock(
-    damages: List<Damage>,
+    damages: List<DamageState>,
     modifier: Modifier = Modifier
 ) = DamageBlock(damages, title = stringResource(R.string.monster_detail_immunities), modifier)
 
 @Composable
 fun DamageGrid(
-    damages: List<Damage>
+    damages: List<DamageState>
 ) = Grid {
 
     damages.forEach { damage ->
-        val iconRes = damage.type.getIconRes()
+        val iconRes = damage.type.iconRes
         if (iconRes != null) {
             IconInfo(
                 title = damage.name,
@@ -89,41 +88,23 @@ fun DamageGrid(
     }
 }
 
-internal fun DamageType.getIconRes(): Int? {
-    return when (this) {
-        DamageType.ACID -> R.drawable.ic_acid
-        DamageType.BLUDGEONING -> R.drawable.ic_bludgeoning
-        DamageType.COLD -> R.drawable.ic_cold
-        DamageType.FIRE -> R.drawable.ic_elemental
-        DamageType.LIGHTNING -> R.drawable.ic_lightning
-        DamageType.NECROTIC -> R.drawable.ic_undead
-        DamageType.PIERCING -> R.drawable.ic_piercing
-        DamageType.POISON -> R.drawable.ic_poison
-        DamageType.PSYCHIC -> R.drawable.ic_psychic
-        DamageType.RADIANT -> R.drawable.ic_radiant
-        DamageType.SLASHING -> R.drawable.ic_slashing
-        DamageType.THUNDER -> R.drawable.ic_thunder
-        DamageType.OTHER -> null
-    }
-}
-
 @Composable
-internal fun DamageType.getIconColor(): Color {
+internal fun DamageTypeState.getIconColor(): Color {
     val colors = DamageIconColors(isSystemInDarkTheme())
     return when (this) {
-        DamageType.OTHER -> LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-        DamageType.SLASHING -> colors.bludgeoning
-        DamageType.PIERCING -> colors.piercing
-        DamageType.BLUDGEONING -> colors.slashing
-        DamageType.ACID -> colors.acid
-        DamageType.COLD -> colors.cold
-        DamageType.FIRE -> colors.fire
-        DamageType.LIGHTNING -> colors.lightning
-        DamageType.NECROTIC -> colors.necrotic
-        DamageType.POISON -> colors.poison
-        DamageType.PSYCHIC -> colors.psychic
-        DamageType.RADIANT -> colors.radiant
-        DamageType.THUNDER -> colors.thunder
+        DamageTypeState.OTHER -> LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+        DamageTypeState.SLASHING -> colors.bludgeoning
+        DamageTypeState.PIERCING -> colors.piercing
+        DamageTypeState.BLUDGEONING -> colors.slashing
+        DamageTypeState.ACID -> colors.acid
+        DamageTypeState.COLD -> colors.cold
+        DamageTypeState.FIRE -> colors.fire
+        DamageTypeState.LIGHTNING -> colors.lightning
+        DamageTypeState.NECROTIC -> colors.necrotic
+        DamageTypeState.POISON -> colors.poison
+        DamageTypeState.PSYCHIC -> colors.psychic
+        DamageTypeState.RADIANT -> colors.radiant
+        DamageTypeState.THUNDER -> colors.thunder
     }
 }
 

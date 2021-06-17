@@ -22,27 +22,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.model.Event
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
-import br.alexandregpereira.hunter.domain.usecase.MonsterPair
-import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
-
-typealias MonsterRow = Pair<MonsterPreview, MonsterPreview?>
-typealias MonsterCardItemsBySection = Map<MonsterSection, List<MonsterRow>>
 
 internal class MonsterCompendiumViewModel(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
@@ -66,25 +57,22 @@ internal class MonsterCompendiumViewModel(
         getMonsterPreviewsBySectionUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
-            ) { monstersBySection, scrollOffset ->
-                scrollOffset to monstersBySection
+            ) { monstersBySection, scrollItemPosition ->
+                MonsterCompendiumViewState(
+                    monstersBySection = monstersBySection.asState(),
+                    initialScrollItemPosition = scrollItemPosition
+                )
             }
-            .map {
-                it.first to it.second.toMonstersBySection()
+            .onStart {
+                emit(MonsterCompendiumViewState(isLoading = true))
             }
             .flowOn(dispatcher)
-            .onStart {
-                _stateLiveData.value = MonsterCompendiumViewState(isLoading = true)
-            }
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
                 it.printStackTrace()
             }
-            .collect {
-                _stateLiveData.value = MonsterCompendiumViewState(
-                    monstersBySection = it.second,
-                    initialScrollItemPosition = it.first
-                )
+            .collect { state ->
+                _stateLiveData.value = state
             }
     }
 
@@ -94,17 +82,5 @@ internal class MonsterCompendiumViewModel(
 
     fun saveCompendiumScrollItemPosition(position: Int) = viewModelScope.launch {
         saveCompendiumScrollItemPositionUseCase(position).collect()
-    }
-
-    private fun MonstersBySection.toMonstersBySection(): MonsterCardItemsBySection {
-        return this.map { key, value ->
-            key to value.toMonsterRow()
-        }
-    }
-
-    private fun List<MonsterPair>.toMonsterRow(): List<MonsterRow> {
-        return this.map { pair ->
-            pair.first to pair.second
-        }
     }
 }

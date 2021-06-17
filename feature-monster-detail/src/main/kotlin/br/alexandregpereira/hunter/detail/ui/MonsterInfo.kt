@@ -32,23 +32,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.domain.model.AbilityScore
-import br.alexandregpereira.hunter.domain.model.AbilityScoreType
-import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Source
-import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.model.SpeedType
-import br.alexandregpereira.hunter.domain.model.SpeedValue
-import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.hunter.ui.compose.ColorState
+import br.alexandregpereira.hunter.ui.compose.MonsterImageState
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun MonsterInfo(
-    monster: Monster,
+    monster: MonsterState,
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -107,7 +98,7 @@ fun MonsterInfo(
 @Composable
 private fun <T> ColumnScope.OptionalBlockSection(
     value: List<T>,
-    content: @Composable ColumnScope.(List<T>) -> Unit
+    content: @Composable ColumnScope.(List<T>) -> Unit,
 ) {
     if (value.isEmpty()) return
     BlockSection {
@@ -118,7 +109,7 @@ private fun <T> ColumnScope.OptionalBlockSection(
 @Composable
 private fun ColumnScope.OptionalBlockSection(
     value: String,
-    content: @Composable ColumnScope.(String) -> Unit
+    content: @Composable ColumnScope.(String) -> Unit,
 ) {
     if (value.trim().isEmpty()) return
     BlockSection {
@@ -128,7 +119,7 @@ private fun ColumnScope.OptionalBlockSection(
 
 @Composable
 private fun ColumnScope.BlockSection(
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Spacer(
         modifier = Modifier
@@ -145,35 +136,33 @@ private fun ColumnScope.BlockSection(
 private fun MonsterInfoPreview() {
     HunterTheme {
         MonsterInfo(
-            Monster(
-                preview = MonsterPreview(
-                    index = "sda",
-                    type = MonsterType.ABERRATION,
+            MonsterState(
+                index = "sda",
+                name = "Teste dos tes",
+                imageState = MonsterImageState(
+                    url = "",
+                    type = MonsterTypeState.ABERRATION,
                     challengeRating = 0.0f,
-                    name = "Teste dos tes",
-                    imageData = MonsterImageData(
-                        url = "",
-                        backgroundColor = Color(light = "", dark = ""),
-                        isHorizontal = false
-                    ),
+                    backgroundColor = ColorState(light = "", dark = ""),
+                    isHorizontal = false
                 ),
                 subtype = null,
                 group = null,
                 subtitle = "asdasd asdasdas asdasdasd",
                 size = "",
                 alignment = "",
-                stats = Stats(armorClass = 0, hitPoints = 0, hitDice = ""),
-                speed = Speed(
+                stats = StatsState(armorClass = 0, hitPoints = 0, hitDice = ""),
+                speed = SpeedState(
                     hover = true, values = (0..6).map {
-                        SpeedValue(
-                            type = SpeedType.WALK,
+                        SpeedValueState(
+                            type = SpeedTypeState.WALK,
                             valueFormatted = "10m"
                         )
                     }
                 ),
                 abilityScores = (0..5).map {
-                    AbilityScore(
-                        type = AbilityScoreType.CHARISMA,
+                    AbilityScoreState(
+                        name = "CHARISMA",
                         value = 0,
                         modifier = 0
                     )
@@ -187,8 +176,7 @@ private fun MonsterInfoPreview() {
                 senses = listOf(),
                 languages = "",
                 specialAbilities = listOf(),
-                actions = listOf(),
-                source = Source(name = "", acronym = "")
+                actions = listOf()
             )
         )
     }

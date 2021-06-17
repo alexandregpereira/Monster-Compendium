@@ -33,13 +33,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class MonsterDetailViewModel(
     private var monsterIndex: String,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
-    private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase
+    private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData(MonsterDetailViewState())
@@ -65,11 +68,15 @@ internal class MonsterDetailViewModel(
         _stateLiveData.value = stateLiveData.value?.copy(showOptions = false)
     }
 
-    fun onOptionClicked(option: MonsterDetailOption) {
+    fun onOptionClicked(option: MonsterDetailOptionState) {
         _stateLiveData.value = stateLiveData.value?.copy(showOptions = false)
         when (option) {
-            MonsterDetailOption.CHANGE_TO_FEET -> changeMeasurementUnit(MeasurementUnit.FEET)
-            MonsterDetailOption.CHANGE_TO_METERS -> changeMeasurementUnit(MeasurementUnit.METER)
+            MonsterDetailOptionState.CHANGE_TO_FEET -> {
+                changeMeasurementUnit(MeasurementUnit.FEET)
+            }
+            MonsterDetailOptionState.CHANGE_TO_METERS -> {
+                changeMeasurementUnit(MeasurementUnit.METER)
+            }
         }
     }
 
@@ -81,25 +88,33 @@ internal class MonsterDetailViewModel(
     }
 
     private suspend fun Flow<MonsterDetail>.collectDetail() {
-        this.flowOn(Dispatchers.IO)
-            .onStart {
-                _stateLiveData.value = stateLiveData.value?.copy(isLoading = true)
-            }
+        this.map {
+            Log.i("MonsterDetailViewModel", "collectDetail")
+            val measurementUnit = it.third
+            getState().copy(
+                initialMonsterIndex = it.first,
+                monsters = it.second.asState(),
+                options = when (measurementUnit) {
+                    MeasurementUnit.FEET -> listOf(MonsterDetailOptionState.CHANGE_TO_METERS)
+                    MeasurementUnit.METER -> listOf(MonsterDetailOptionState.CHANGE_TO_FEET)
+                }
+            )
+        }.onStart {
+            Log.i("MonsterDetailViewModel", "onStart")
+            emit(getState().copy(isLoading = true))
+        }.onCompletion {
+            Log.i("MonsterDetailViewModel", "onCompletion")
+            emit(getState().copy(isLoading = false))
+        }.flowOn(Dispatchers.IO)
             .catch {
                 Log.e("MonsterDetailViewModel", it.message ?: "")
                 it.printStackTrace()
-            }.collect {
-                val measurementUnit = it.third
-
-                _stateLiveData.value = stateLiveData.value?.copy(
-                    isLoading = false,
-                    initialMonsterIndex = it.first,
-                    monsters = it.second,
-                    options = when (measurementUnit) {
-                        MeasurementUnit.FEET -> listOf(MonsterDetailOption.CHANGE_TO_METERS)
-                        MeasurementUnit.METER -> listOf(MonsterDetailOption.CHANGE_TO_FEET)
-                    }
-                )
+            }.collect { state ->
+                _stateLiveData.value = state
             }
+    }
+
+    private suspend fun getState(): MonsterDetailViewState = withContext(Dispatchers.Main) {
+        stateLiveData.value!!
     }
 }

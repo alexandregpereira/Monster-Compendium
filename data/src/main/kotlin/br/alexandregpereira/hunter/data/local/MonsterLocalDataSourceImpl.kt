@@ -27,7 +27,9 @@ internal class MonsterLocalDataSourceImpl(
 ) : MonsterLocalDataSource {
 
     override fun getMonsters(): Flow<List<MonsterEntity>> {
-        return monsterDao.getMonsters()
+        return flow {
+            emit(monsterDao.getMonsters())
+        }
     }
 
     override fun saveMonsters(monsters: List<MonsterEntity>): Flow<Unit> {

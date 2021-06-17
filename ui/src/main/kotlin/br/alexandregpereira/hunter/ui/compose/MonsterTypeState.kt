@@ -20,7 +20,7 @@ package br.alexandregpereira.hunter.ui.compose
 import androidx.annotation.DrawableRes
 import br.alexandregpereira.hunter.ui.R
 
-enum class MonsterItemType(@DrawableRes val iconRes: Int) {
+enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     ABERRATION(R.drawable.ic_aberration),
     BEAST(R.drawable.ic_beast),
     CELESTIAL(R.drawable.ic_celestial),

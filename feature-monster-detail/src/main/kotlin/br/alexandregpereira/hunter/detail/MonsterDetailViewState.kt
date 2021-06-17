@@ -17,12 +17,12 @@
 
 package br.alexandregpereira.hunter.detail
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.detail.ui.MonsterState
 
 data class MonsterDetailViewState(
     val isLoading: Boolean = false,
     val initialMonsterIndex: Int = 0,
-    val monsters: List<Monster> = emptyList(),
+    val monsters: List<MonsterState> = emptyList(),
     val showOptions: Boolean = false,
-    val options: List<MonsterDetailOption> = emptyList()
+    val options: List<MonsterDetailOptionState> = emptyList()
 )

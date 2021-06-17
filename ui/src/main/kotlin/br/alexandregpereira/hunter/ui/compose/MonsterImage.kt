@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,11 +30,7 @@ import br.alexandregpereira.hunter.ui.theme.Shapes
 
 @Composable
 fun MonsterImage(
-    imageUrl: String,
-    contentDescription: String,
-    challengeRating: Float,
-    type: MonsterItemType,
-    backgroundColor: String,
+    monsterImageState: MonsterImageState,
     modifier: Modifier = Modifier
 ) {
     val shape = Shapes.large
@@ -46,31 +43,49 @@ fun MonsterImage(
             .clip(shape)
     ) {
         MonsterCoilImage(
-            imageUrl = imageUrl,
-            contentDescription = contentDescription,
+            imageUrl = monsterImageState.url,
+            contentDescription = monsterImageState.contentDescription,
             height = height,
-            backgroundColor = backgroundColor,
+            backgroundColor = monsterImageState.backgroundColor.getColor(isSystemInDarkTheme()),
             shape = shape,
         )
 
         ChallengeRatingCircle(
-            challengeRating = challengeRating,
+            challengeRating = monsterImageState.challengeRating,
             size = challengeRatingSize,
             fontSize = challengeRatingFontSize
         )
 
-        MonsterTypeIcon(type = type, iconSize = iconSize)
+        MonsterTypeIcon(type = monsterImageState.type, iconSize = iconSize)
     }
+}
+
+data class MonsterImageState(
+    val url: String,
+    val type: MonsterTypeState,
+    val backgroundColor: ColorState,
+    val challengeRating: Float,
+    val isHorizontal: Boolean = false,
+    val contentDescription: String = ""
+)
+
+data class ColorState(
+    val light: String,
+    val dark: String
+) {
+
+    fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
 }
 
 @Preview
 @Composable
 fun MonsterImagePreview() = HunterTheme {
-    MonsterImage(
-        imageUrl = "asdasdas",
-        backgroundColor = "#ffe3ee",
+    val state = MonsterImageState(
+        url = "asdasdas",
+        backgroundColor = ColorState("#ffe3ee", ""),
         contentDescription = "Anything",
         challengeRating = 18f,
-        type = MonsterItemType.ABERRATION
+        type = MonsterTypeState.ABERRATION
     )
+    MonsterImage(state)
 }
