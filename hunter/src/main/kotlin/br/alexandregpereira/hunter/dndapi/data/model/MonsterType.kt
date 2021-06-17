@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.dndapi.data.model
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
+@Suppress("unused")
 @Serializable
 enum class MonsterType {
     @SerialName("aberration")

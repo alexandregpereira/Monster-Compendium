@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.dndapi.data
 
 import br.alexandregpereira.hunter.dndapi.data.model.Description
 import br.alexandregpereira.hunter.dndapi.data.model.Response
-import br.alexandregpereira.hunter.dndapi.data.model.Skill
 import retrofit2.http.GET
 import retrofit2.http.Path
 
