@@ -28,18 +28,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.createComposeView
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MonsterDetailFragment : Fragment() {
 
-    private val viewModel: MonsterDetailViewModel by viewModel {
-        parametersOf(arguments?.getString("index") ?: "")
+    @Inject
+    internal lateinit var monsterDetailViewModelFactory: MonsterDetailViewModelFactory
+
+    private val viewModel: MonsterDetailViewModel by viewModels {
+        MonsterDetailViewModelFactory.provideFactory(
+            monsterDetailViewModelFactory,
+            arguments?.getString("index") ?: ""
+        )
     }
 
     override fun onCreateView(

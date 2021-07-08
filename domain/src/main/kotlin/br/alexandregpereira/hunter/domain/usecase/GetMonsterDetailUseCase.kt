@@ -21,10 +21,11 @@ import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
+import javax.inject.Inject
 
 typealias MonsterDetail = Triple<Int, List<Monster>, MeasurementUnit>
 
-class GetMonsterDetailUseCase internal constructor(
+class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
 ) {

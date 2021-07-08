@@ -17,10 +17,32 @@
 
 package br.alexandregpereira.hunter.app
 
-import androidx.navigation.NavHostController
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import br.alexandregpereira.hunter.domain.Navigator
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 
-val navigationModule = module {
-    single<Navigator> { (navHostController: NavHostController) -> NavigatorImpl(navHostController) }
+@Module
+@InstallIn(ActivityComponent::class)
+object NavControllerModule {
+
+    @Provides
+    fun provideNavHostController(activity: FragmentActivity): NavController {
+        val fragment = activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        return fragment?.findNavController()
+            ?: throw IllegalAccessError("NavHostController not founded")
+    }
+}
+
+@Module
+@InstallIn(ActivityComponent::class)
+abstract class NavigationModule {
+
+    @Binds
+    abstract fun bindNavigator(navigatorImpl: NavigatorImpl): Navigator
 }

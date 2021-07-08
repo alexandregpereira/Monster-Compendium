@@ -25,11 +25,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 typealias MonsterPair = Pair<MonsterPreview, MonsterPreview?>
 typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
-class GetMonsterPreviewsBySectionUseCase internal constructor(
+class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     private val syncMonstersUseCase: SyncMonstersUseCase,
     private val getMonstersUseCase: GetMonstersUseCase
 ) {

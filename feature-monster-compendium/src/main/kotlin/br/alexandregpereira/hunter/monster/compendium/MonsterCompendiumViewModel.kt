@@ -26,6 +26,8 @@ import br.alexandregpereira.hunter.domain.model.Event
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -35,12 +37,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-internal class MonsterCompendiumViewModel(
+internal class MonsterCompendiumViewModel @AssistedInject constructor(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    loadOnInit: Boolean = true
+    @Assisted private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @Assisted loadOnInit: Boolean = true
 ) : ViewModel() {
 
     private val _stateLiveData = MutableLiveData(MonsterCompendiumViewState())

@@ -21,8 +21,9 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetMonstersUseCase(
+class GetMonstersUseCase @Inject internal constructor(
     private val repository: MonsterRepository
 ) {
 
