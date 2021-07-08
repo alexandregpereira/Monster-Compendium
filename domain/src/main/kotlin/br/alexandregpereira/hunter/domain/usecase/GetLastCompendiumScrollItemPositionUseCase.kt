@@ -19,8 +19,9 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetLastCompendiumScrollItemPositionUseCase(
+class GetLastCompendiumScrollItemPositionUseCase @Inject internal constructor(
     private val repository: CompendiumRepository
 ) {
 

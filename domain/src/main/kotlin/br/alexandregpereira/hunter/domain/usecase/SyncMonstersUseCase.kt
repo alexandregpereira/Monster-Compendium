@@ -31,9 +31,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
+import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
-class SyncMonstersUseCase internal constructor(
+class SyncMonstersUseCase @Inject internal constructor(
     private val repository: MonsterRepository,
     private val alternativeSourceRepository: AlternativeSourceRepository,
     private val saveMonstersUseCase: SaveMonstersUseCase

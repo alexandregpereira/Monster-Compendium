@@ -21,8 +21,9 @@ import br.alexandregpereira.hunter.data.remote.model.MonsterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.Locale
+import javax.inject.Inject
 
-internal class MonsterRemoteDataSourceImpl(
+internal class MonsterRemoteDataSourceImpl @Inject constructor(
     private val monsterApi: MonsterApi
 ) : MonsterRemoteDataSource {
 

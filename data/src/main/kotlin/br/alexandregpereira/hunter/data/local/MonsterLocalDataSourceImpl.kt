@@ -21,8 +21,9 @@ import br.alexandregpereira.hunter.data.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-internal class MonsterLocalDataSourceImpl(
+internal class MonsterLocalDataSourceImpl @Inject constructor(
     private val monsterDao: MonsterDao
 ) : MonsterLocalDataSource {
 

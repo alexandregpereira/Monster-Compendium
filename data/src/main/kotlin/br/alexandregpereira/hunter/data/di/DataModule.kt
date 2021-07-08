@@ -20,11 +20,13 @@
 package br.alexandregpereira.hunter.data.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import br.alexandregpereira.hunter.data.AppDatabase
 import br.alexandregpereira.hunter.data.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSourceImpl
+import br.alexandregpereira.hunter.data.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSourceImpl
 import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
@@ -40,64 +42,133 @@ import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
-val dataModule = module {
-    single {
+internal class RetrofitWrapper {
+    val retrofit: Retrofit by lazy {
         val json = Json {
             ignoreUnknownKeys = true
         }
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
         Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
+}
 
-    single<MonsterRemoteDataSource> {
-        MonsterRemoteDataSourceImpl(get())
+@Module
+@InstallIn(SingletonComponent::class)
+internal object NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): RetrofitWrapper {
+        return RetrofitWrapper()
     }
 
-    single { get<Retrofit>().create(MonsterApi::class.java) }
-
-    single<MonsterRepository> {
-        MonsterRepositoryImpl(get(), get())
+    @Singleton
+    @Provides
+    fun provideMonsterApi(retrofitWrapper: RetrofitWrapper): MonsterApi {
+        return retrofitWrapper.retrofit.create(MonsterApi::class.java)
     }
 
-    single<CompendiumRepository> {
-        PreferencesRepository(get())
+    @Singleton
+    @Provides
+    fun provideAlternativeSourceApi(retrofitWrapper: RetrofitWrapper): AlternativeSourceApi {
+        return retrofitWrapper.retrofit.create(AlternativeSourceApi::class.java)
     }
+}
 
-    single<MeasurementUnitRepository> {
-        PreferencesRepository(get())
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
 
-    single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "hunter-database")
+    @Singleton
+    @Provides
+    internal fun provideAppDataBase(
+        @ApplicationContext context: Context
+    ): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "hunter-database")
             .fallbackToDestructiveMigration()
             .build()
     }
 
-    single { get<AppDatabase>().monsterDao() }
+    @Provides
+    internal fun provideSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+    }
 
-    single<MonsterLocalDataSource> { MonsterLocalDataSourceImpl(get()) }
+    @Provides
+    internal fun provideMonsterDao(appDatabase: AppDatabase): MonsterDao {
+        return appDatabase.monsterDao()
+    }
+}
 
-    single { androidContext().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
+@Module
+@InstallIn(ActivityComponent::class)
+internal abstract class DataModule {
 
-    single<PreferencesDataSource> { PreferencesDataSourceImpl(get()) }
+    @Binds
+    abstract fun bindMonsterRemoteDataSource(
+        monsterRemoteDataSourceImpl: MonsterRemoteDataSourceImpl
+    ): MonsterRemoteDataSource
 
-    single { get<Retrofit>().create(AlternativeSourceApi::class.java) }
+    @Binds
+    abstract fun bindMonsterLocalDataSource(
+        monsterLocalDataSourceImpl: MonsterLocalDataSourceImpl
+    ): MonsterLocalDataSource
 
-    factory<AlternativeSourceRemoteDataSource> { AlternativeSourceRemoteDataSourceImpl(get()) }
+    @Binds
+    abstract fun bindPreferencesDataSource(
+        preferencesDataSourceImpl: PreferencesDataSourceImpl
+    ): PreferencesDataSource
 
-    factory<AlternativeSourceRepository> { AlternativeSourceRepositoryImpl(get()) }
+    @Binds
+    abstract fun bindAlternativeSourceRemoteDataSource(
+        alternativeSourceRemoteDataSourceImpl: AlternativeSourceRemoteDataSourceImpl
+    ): AlternativeSourceRemoteDataSource
+}
+
+@Module
+@InstallIn(ActivityComponent::class)
+internal abstract class RepositoryModule {
+
+    @Binds
+    abstract fun bindMonsterRepository(
+        monsterRepositoryImpl: MonsterRepositoryImpl
+    ): MonsterRepository
+
+    @Binds
+    abstract fun bindCompendiumRepository(
+        preferencesRepository: PreferencesRepository
+    ): CompendiumRepository
+
+    @Binds
+    abstract fun bindMeasurementUnitRepository(
+        preferencesRepository: PreferencesRepository
+    ): MeasurementUnitRepository
+
+    @Binds
+    abstract fun bindAlternativeSourceRepository(
+        alternativeSourceRepositoryImpl: AlternativeSourceRepositoryImpl
+    ): AlternativeSourceRepository
 }

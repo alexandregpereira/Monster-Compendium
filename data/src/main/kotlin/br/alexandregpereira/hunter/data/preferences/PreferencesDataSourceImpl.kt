@@ -20,8 +20,9 @@ package br.alexandregpereira.hunter.data.preferences
 import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PreferencesDataSourceImpl(
+internal class PreferencesDataSourceImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesDataSource {
 

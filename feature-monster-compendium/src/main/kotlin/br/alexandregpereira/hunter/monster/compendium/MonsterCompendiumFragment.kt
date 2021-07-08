@@ -28,18 +28,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.createComposeView
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MonsterCompendiumFragment : Fragment() {
 
-    private val viewModel: MonsterCompendiumViewModel by viewModel()
-    private val navigator: Navigator by inject()
+    @Inject
+    internal lateinit var monsterCompendiumViewModelFactory: MonsterCompendiumViewModelFactory
+
+    private val viewModel: MonsterCompendiumViewModel by viewModels {
+        MonsterCompendiumViewModelFactory.provideFactory(monsterCompendiumViewModelFactory)
+    }
+    @Inject internal lateinit var navigator: Navigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
