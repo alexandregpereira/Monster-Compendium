@@ -18,11 +18,12 @@
 package br.alexandregpereira.hunter.app
 
 import androidx.core.os.bundleOf
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import br.alexandregpereira.hunter.domain.Navigator
+import javax.inject.Inject
 
-class NavigatorImpl(
-    private val navController: NavHostController
+class NavigatorImpl @Inject constructor(
+    private val navController: NavController
 ): Navigator {
 
     override fun navigateToDetail(index: String) {

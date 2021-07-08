@@ -26,6 +26,8 @@ import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.domain.usecase.MonsterDetail
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -39,8 +41,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-internal class MonsterDetailViewModel(
-    private var monsterIndex: String,
+internal class MonsterDetailViewModel @AssistedInject constructor(
+    @Assisted private var monsterIndex: String,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
 ) : ViewModel() {

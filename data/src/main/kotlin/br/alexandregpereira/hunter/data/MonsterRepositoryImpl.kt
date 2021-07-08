@@ -31,8 +31,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
+import javax.inject.Inject
 
-internal class MonsterRepositoryImpl(
+internal class MonsterRepositoryImpl @Inject constructor(
     private val remoteDataSource: MonsterRemoteDataSource,
     private val localDataSource: MonsterLocalDataSource,
 ) : MonsterRepository {
