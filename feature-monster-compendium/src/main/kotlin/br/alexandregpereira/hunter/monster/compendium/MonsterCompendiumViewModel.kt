@@ -60,13 +60,13 @@ internal class MonsterCompendiumViewModel @Inject constructor(
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
             ) { monstersBySection, scrollItemPosition ->
-                MonsterCompendiumViewState.Complete(
+                MonsterCompendiumViewState.Initial.complete(
                     monstersBySection = monstersBySection.asState(),
                     initialScrollItemPosition = scrollItemPosition
                 )
             }
             .onStart {
-                emit(MonsterCompendiumViewState.Loading)
+                emit(MonsterCompendiumViewState.Initial.Loading)
             }
             .flowOn(dispatcher)
             .catch {

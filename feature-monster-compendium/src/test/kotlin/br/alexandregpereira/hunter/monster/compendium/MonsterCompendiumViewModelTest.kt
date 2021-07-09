@@ -86,9 +86,9 @@ class MonsterCompendiumViewModelTest {
 
         assertEquals(3, results.size)
         assertEquals(MonsterCompendiumViewState.Initial, results[0])
-        assertEquals(MonsterCompendiumViewState.Loading, results[1])
+        assertEquals(MonsterCompendiumViewState.Initial.Loading, results[1])
         assertEquals(
-            MonsterCompendiumViewState.Complete(
+            MonsterCompendiumViewState.Initial.complete(
                 monstersBySection = mapOf(
                     SectionState(title = "Any") to listOf(
                         MonsterCardState(

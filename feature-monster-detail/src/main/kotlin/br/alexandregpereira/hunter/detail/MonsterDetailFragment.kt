@@ -24,8 +24,8 @@ import android.view.ViewGroup
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,7 +67,7 @@ internal fun MonsterDetail(
     viewModel: MonsterDetailViewModel,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = Window {
-    val viewState by viewModel.stateLiveData.observeAsState(MonsterDetailViewState())
+    val viewState by viewModel.state.collectAsState()
 
     CircularLoading(viewState.isLoading) {
         viewState.monsters.takeIf { it.isNotEmpty() }?.let {
