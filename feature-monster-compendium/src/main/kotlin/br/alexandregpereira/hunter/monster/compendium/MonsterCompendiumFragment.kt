@@ -86,7 +86,7 @@ internal fun Action(
     viewModel: MonsterCompendiumViewModel,
     navigator: Navigator
 ) {
-    val action = viewModel.action.collectAsState().value?.getContentIfNotHandled() ?: return
+    val action = viewModel.action.collectAsState().value?.content ?: return
     when (action) {
         is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
     }
