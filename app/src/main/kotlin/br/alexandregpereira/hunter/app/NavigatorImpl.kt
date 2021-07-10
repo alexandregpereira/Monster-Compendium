@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import br.alexandregpereira.hunter.domain.Navigator
 import javax.inject.Inject
 
-class NavigatorImpl @Inject constructor(
+internal class NavigatorImpl @Inject constructor(
     private val navController: NavController
 ): Navigator {
 
