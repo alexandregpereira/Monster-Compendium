@@ -46,7 +46,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
@@ -57,7 +56,9 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 internal class RetrofitWrapper {
-    val retrofit: Retrofit by lazy {
+    val retrofit: Retrofit
+
+    init {
         val json = Json {
             ignoreUnknownKeys = true
         }
@@ -65,7 +66,7 @@ internal class RetrofitWrapper {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        Retrofit.Builder()
+        retrofit = Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
@@ -83,13 +84,11 @@ internal object NetworkModule {
         return RetrofitWrapper()
     }
 
-    @Singleton
     @Provides
     fun provideMonsterApi(retrofitWrapper: RetrofitWrapper): MonsterApi {
         return retrofitWrapper.retrofit.create(MonsterApi::class.java)
     }
 
-    @Singleton
     @Provides
     fun provideAlternativeSourceApi(retrofitWrapper: RetrofitWrapper): AlternativeSourceApi {
         return retrofitWrapper.retrofit.create(AlternativeSourceApi::class.java)
@@ -124,7 +123,7 @@ object DatabaseModule {
 }
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 internal abstract class DataModule {
 
     @Binds
@@ -149,24 +148,28 @@ internal abstract class DataModule {
 }
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 internal abstract class RepositoryModule {
 
+    @Singleton
     @Binds
     abstract fun bindMonsterRepository(
         monsterRepositoryImpl: MonsterRepositoryImpl
     ): MonsterRepository
 
+    @Singleton
     @Binds
     abstract fun bindCompendiumRepository(
         preferencesRepository: PreferencesRepository
     ): CompendiumRepository
 
+    @Singleton
     @Binds
     abstract fun bindMeasurementUnitRepository(
         preferencesRepository: PreferencesRepository
     ): MeasurementUnitRepository
 
+    @Singleton
     @Binds
     abstract fun bindAlternativeSourceRepository(
         alternativeSourceRepositoryImpl: AlternativeSourceRepositoryImpl

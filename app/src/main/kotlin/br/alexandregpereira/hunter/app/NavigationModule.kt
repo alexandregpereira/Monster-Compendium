@@ -41,7 +41,7 @@ object NavControllerModule {
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class NavigationModule {
+internal abstract class NavigationModule {
 
     @Binds
     abstract fun bindNavigator(navigatorImpl: NavigatorImpl): Navigator

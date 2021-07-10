@@ -25,7 +25,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,12 +41,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MonsterCompendiumFragment : Fragment() {
 
-    @Inject
-    internal lateinit var monsterCompendiumViewModelFactory: MonsterCompendiumViewModelFactory
-
-    private val viewModel: MonsterCompendiumViewModel by viewModels {
-        MonsterCompendiumViewModelFactory.provideFactory(monsterCompendiumViewModelFactory)
-    }
+    private val viewModel: MonsterCompendiumViewModel by viewModels()
     @Inject internal lateinit var navigator: Navigator
 
     override fun onCreateView(
@@ -69,7 +65,7 @@ internal fun MonsterCompendium(
     navigator: Navigator,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = HunterTheme {
-    val viewState = viewModel.stateLiveData.observeAsState().value ?: return@HunterTheme
+    val viewState by viewModel.state.collectAsState()
 
     CircularLoading(viewState.isLoading) {
         val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewState.initialScrollItemPosition)
@@ -90,7 +86,7 @@ internal fun Action(
     viewModel: MonsterCompendiumViewModel,
     navigator: Navigator
 ) {
-    val action = viewModel.actionLiveData.observeAsState().value?.getContentIfNotHandled() ?: return
+    val action = viewModel.action.collectAsState().value?.getContentIfNotHandled() ?: return
     when (action) {
         is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
     }
