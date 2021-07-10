@@ -18,14 +18,14 @@
 package br.alexandregpereira.hunter.detail
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.domain.usecase.MonsterDetail
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,9 +41,11 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-internal class MonsterDetailViewModel @AssistedInject constructor(
-    @Assisted private var monsterIndex: String,
+@HiltViewModel
+internal class MonsterDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val dispatcher: CoroutineDispatcher
@@ -52,16 +54,14 @@ internal class MonsterDetailViewModel @AssistedInject constructor(
     private val _state = MutableStateFlow(MonsterDetailViewState.Initial)
     val state: StateFlow<MonsterDetailViewState> = _state
 
+    var monsterIndex: String = savedStateHandle["index"] ?: ""
+
     init {
         getMonstersByInitialIndex()
     }
 
     private fun getMonstersByInitialIndex() = viewModelScope.launch {
         getMonsterDetailUseCase(monsterIndex).collectDetail()
-    }
-
-    fun setMonsterIndex(index: String) {
-        monsterIndex = index
     }
 
     fun onShowOptionsClicked() {

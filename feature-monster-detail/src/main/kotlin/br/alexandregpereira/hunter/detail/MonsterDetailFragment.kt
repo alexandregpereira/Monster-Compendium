@@ -35,20 +35,11 @@ import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MonsterDetailFragment : Fragment() {
 
-    @Inject
-    internal lateinit var monsterDetailViewModelFactory: MonsterDetailViewModelFactory
-
-    private val viewModel: MonsterDetailViewModel by viewModels {
-        MonsterDetailViewModelFactory.provideFactory(
-            monsterDetailViewModelFactory,
-            arguments?.getString("index") ?: ""
-        )
-    }
+    private val viewModel: MonsterDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +67,7 @@ internal fun MonsterDetail(
                 viewState.initialMonsterIndex,
                 contentPadding,
                 onMonsterChanged = { monster ->
-                    viewModel.setMonsterIndex(monster.index)
+                    viewModel.monsterIndex = monster.index
                 },
                 onOptionsClicked = viewModel::onShowOptionsClicked
             )
