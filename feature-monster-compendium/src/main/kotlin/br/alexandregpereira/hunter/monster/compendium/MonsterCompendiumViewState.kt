@@ -27,19 +27,19 @@ data class MonsterCompendiumViewState(
 
     companion object {
         val Initial = MonsterCompendiumViewState()
-
-        val Loading = MonsterCompendiumViewState(isLoading = true)
-
-        @Suppress("FunctionName")
-        fun Complete(
-            monstersBySection: Map<SectionState, List<MonsterRowState>>,
-            initialScrollItemPosition: Int
-        ) = MonsterCompendiumViewState(
-            monstersBySection = monstersBySection,
-            initialScrollItemPosition = initialScrollItemPosition
-        )
     }
 }
+
+val MonsterCompendiumViewState.Loading: MonsterCompendiumViewState
+    get() = this.copy(isLoading = true)
+
+fun MonsterCompendiumViewState.complete(
+    monstersBySection: Map<SectionState, List<MonsterRowState>>,
+    initialScrollItemPosition: Int
+) = this.copy(
+    monstersBySection = monstersBySection,
+    initialScrollItemPosition = initialScrollItemPosition
+)
 
 data class SectionState(
     val title: String,
