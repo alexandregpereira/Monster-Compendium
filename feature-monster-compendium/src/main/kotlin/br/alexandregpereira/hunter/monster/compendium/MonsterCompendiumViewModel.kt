@@ -21,6 +21,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.model.Event
+import br.alexandregpereira.hunter.domain.model.asEvent
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
@@ -79,7 +80,7 @@ internal class MonsterCompendiumViewModel @Inject constructor(
     }
 
     fun navigateToDetail(index: String) {
-        _action.value = Event(MonsterCompendiumAction.NavigateToDetail(index))
+        _action.value = MonsterCompendiumAction.NavigateToDetail(index).asEvent()
     }
 
     fun saveCompendiumScrollItemPosition(position: Int) = viewModelScope.launch {

@@ -17,19 +17,23 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-class Event<out T>(private val content: T) {
+interface Event<out T> {
+    val content: T?
+}
+
+fun <T> T.asEvent() = eventOf(this)
+
+fun <T> eventOf(value: T): Event<T> = EventImpl(value)
+
+private class EventImpl<out T>(val value: T) : Event<T> {
 
     private var hasBeenHandled = false
 
-    /**
-     * Returns the content and prevents its use again.
-     */
-    fun getContentIfNotHandled(): T? {
-        return if (hasBeenHandled) {
+    override val content: T?
+        get() = if (hasBeenHandled) {
             null
         } else {
             hasBeenHandled = true
-            content
+            value
         }
-    }
 }
