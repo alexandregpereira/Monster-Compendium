@@ -26,7 +26,17 @@ import br.alexandregpereira.hunter.data.AppDatabase
 import br.alexandregpereira.hunter.data.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSourceImpl
+import br.alexandregpereira.hunter.data.local.dao.AbilityScoreDao
+import br.alexandregpereira.hunter.data.local.dao.ActionDao
+import br.alexandregpereira.hunter.data.local.dao.ConditionDao
+import br.alexandregpereira.hunter.data.local.dao.DamageDao
+import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
+import br.alexandregpereira.hunter.data.local.dao.SkillDao
+import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
+import br.alexandregpereira.hunter.data.local.dao.SpeedDao
+import br.alexandregpereira.hunter.data.local.dao.SpeedValueDao
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSourceImpl
 import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
@@ -117,8 +127,58 @@ object DatabaseModule {
     }
 
     @Provides
+    internal fun provideAbilityScoreDao(appDatabase: AppDatabase): AbilityScoreDao {
+        return appDatabase.abilityScoreDao()
+    }
+
+    @Provides
+    internal fun provideActionDao(appDatabase: AppDatabase): ActionDao {
+        return appDatabase.actionDao()
+    }
+
+    @Provides
+    internal fun provideConditionDao(appDatabase: AppDatabase): ConditionDao {
+        return appDatabase.conditionDao()
+    }
+
+    @Provides
+    internal fun provideDamageDao(appDatabase: AppDatabase): DamageDao {
+        return appDatabase.damageDao()
+    }
+
+    @Provides
+    internal fun provideDamageDiceDao(appDatabase: AppDatabase): DamageDiceDao {
+        return appDatabase.damageDiceDao()
+    }
+
+    @Provides
     internal fun provideMonsterDao(appDatabase: AppDatabase): MonsterDao {
         return appDatabase.monsterDao()
+    }
+
+    @Provides
+    internal fun provideSavingThrowDao(appDatabase: AppDatabase): SavingThrowDao {
+        return appDatabase.savingThrowDao()
+    }
+
+    @Provides
+    internal fun provideSkillDao(appDatabase: AppDatabase): SkillDao {
+        return appDatabase.skillDao()
+    }
+
+    @Provides
+    internal fun provideSpecialAbilityDao(appDatabase: AppDatabase): SpecialAbilityDao {
+        return appDatabase.specialAbilityDao()
+    }
+
+    @Provides
+    internal fun provideSpeedDao(appDatabase: AppDatabase): SpeedDao {
+        return appDatabase.speedDao()
+    }
+
+    @Provides
+    internal fun provideSpeedValueDao(appDatabase: AppDatabase): SpeedValueDao {
+        return appDatabase.speedValueDao()
     }
 }
 

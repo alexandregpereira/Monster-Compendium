@@ -17,11 +17,9 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 internal data class ProficiencyEntity(
     val index: String,
     val modifier: Int,
-    val name: String
+    val name: String,
+    val monsterIndex: String
 )

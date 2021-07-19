@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.asEvent
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +40,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class MonsterCompendiumViewModel @Inject constructor(
+    private val syncMonstersUseCase: SyncMonstersUseCase,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -53,6 +55,7 @@ internal class MonsterCompendiumViewModel @Inject constructor(
     val action: StateFlow<Event<MonsterCompendiumAction>?> = _action
 
     init {
+        startSync()
         if (loadOnInit) loadMonsters()
     }
 
@@ -85,5 +88,14 @@ internal class MonsterCompendiumViewModel @Inject constructor(
 
     fun saveCompendiumScrollItemPosition(position: Int) = viewModelScope.launch {
         saveCompendiumScrollItemPositionUseCase(position).collect()
+    }
+
+    private fun startSync() = viewModelScope.launch {
+        syncMonstersUseCase()
+            .flowOn(dispatcher)
+            .catch {
+                Log.e("MonsterViewModel", it.message ?: "")
+                it.printStackTrace()
+            }.collect()
     }
 }

@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.data.local.mapper
 import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
+import br.alexandregpereira.hunter.domain.model.Monster
 
 internal fun List<AbilityScoreEntity>.toDomain(): List<AbilityScore> {
     return this.map {
@@ -35,12 +36,14 @@ internal fun String.toDomain(): AbilityScoreType {
     return AbilityScoreType.valueOf(this)
 }
 
-internal fun List<AbilityScore>.toEntity(): List<AbilityScoreEntity> {
-    return this.map {
+internal fun Monster.toAbilityScoreEntity(): List<AbilityScoreEntity> {
+    val abilityScores = this.abilityScores
+    return abilityScores.map {
         AbilityScoreEntity(
             type = it.type.toEntity(),
             value = it.value,
-            modifier = it.modifier
+            modifier = it.modifier,
+            monsterIndex = this.index
         )
     }
 }

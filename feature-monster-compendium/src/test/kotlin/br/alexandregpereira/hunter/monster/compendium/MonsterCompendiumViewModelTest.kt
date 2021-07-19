@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.ColorState
 import br.alexandregpereira.hunter.ui.compose.MonsterImageState
@@ -50,6 +51,7 @@ class MonsterCompendiumViewModelTest {
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
+    private val syncMonstersUseCase: SyncMonstersUseCase = mockk(relaxUnitFun = true)
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
@@ -82,6 +84,7 @@ class MonsterCompendiumViewModelTest {
         viewModel.loadMonsters()
 
         // Then
+        verify { syncMonstersUseCase() }
         verify { getMonsterPreviewsUseCase() }
 
         assertEquals(3, results.size)
@@ -113,9 +116,10 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
+            syncMonstersUseCase = syncMonstersUseCase,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
-            getLastScrollPositionUseCase,
-            saveScrollPositionUseCase,
+            getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
+            saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )

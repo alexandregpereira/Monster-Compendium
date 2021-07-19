@@ -17,11 +17,12 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
+import androidx.room.Entity
 
-@Serializable
+@Entity(primaryKeys = ["type", "monsterIndex"])
 internal data class AbilityScoreEntity(
     val type: String,
     val value: Int,
-    val modifier: Int
+    val modifier: Int,
+    val monsterIndex: String
 )

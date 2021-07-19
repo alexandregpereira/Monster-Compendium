@@ -21,20 +21,28 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
-import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
-import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageImmunityEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageResistanceEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageVulnerabilityEntity
 
 @Dao
-internal interface MonsterDao {
-
-    @Transaction
-    @Query("SELECT * FROM MonsterEntity")
-    suspend fun getMonsters(): List<MonsterCompleteEntity>
+internal interface DamageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(monsters: List<MonsterEntity>)
+    suspend fun insertVulnerability(entities: List<DamageVulnerabilityEntity>)
 
-    @Query("DELETE FROM MonsterEntity")
-    suspend fun deleteAll()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertResistance(entities: List<DamageResistanceEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertImmunity(entities: List<DamageImmunityEntity>)
+
+    @Query("DELETE FROM DamageVulnerabilityEntity")
+    suspend fun deleteAllVulnerabilities()
+
+    @Query("DELETE FROM DamageResistanceEntity")
+    suspend fun deleteAllResistances()
+
+    @Query("DELETE FROM DamageImmunityEntity")
+    suspend fun deleteAllImmunities()
 }
