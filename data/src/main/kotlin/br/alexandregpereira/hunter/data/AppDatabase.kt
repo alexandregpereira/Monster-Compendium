@@ -19,10 +19,60 @@ package br.alexandregpereira.hunter.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import br.alexandregpereira.hunter.data.local.dao.AbilityScoreDao
+import br.alexandregpereira.hunter.data.local.dao.ActionDao
+import br.alexandregpereira.hunter.data.local.dao.ConditionDao
+import br.alexandregpereira.hunter.data.local.dao.DamageDao
+import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
+import br.alexandregpereira.hunter.data.local.dao.SkillDao
+import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
+import br.alexandregpereira.hunter.data.local.dao.SpeedDao
+import br.alexandregpereira.hunter.data.local.dao.SpeedValueDao
+import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
+import br.alexandregpereira.hunter.data.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.local.entity.ConditionEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageDiceEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageImmunityEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageResistanceEntity
+import br.alexandregpereira.hunter.data.local.entity.DamageVulnerabilityEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.data.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.data.local.entity.SpeedEntity
+import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
 
-@Database(entities = [MonsterEntity::class], version = 2, exportSchema = false)
+@Database(
+    entities = [
+        AbilityScoreEntity::class,
+        ActionEntity::class,
+        ConditionEntity::class,
+        DamageVulnerabilityEntity::class,
+        DamageResistanceEntity::class,
+        DamageImmunityEntity::class,
+        DamageDiceEntity::class,
+        MonsterEntity::class,
+        SavingThrowEntity::class,
+        SkillEntity::class,
+        SpecialAbilityEntity::class,
+        SpeedEntity::class,
+        SpeedValueEntity::class,
+    ],
+    version = 9,
+    exportSchema = false
+)
 internal abstract class AppDatabase : RoomDatabase() {
+    abstract fun abilityScoreDao(): AbilityScoreDao
+    abstract fun actionDao(): ActionDao
+    abstract fun conditionDao(): ConditionDao
+    abstract fun damageDao(): DamageDao
+    abstract fun damageDiceDao(): DamageDiceDao
     abstract fun monsterDao(): MonsterDao
+    abstract fun savingThrowDao(): SavingThrowDao
+    abstract fun skillDao(): SkillDao
+    abstract fun specialAbilityDao(): SpecialAbilityDao
+    abstract fun speedDao(): SpeedDao
+    abstract fun speedValueDao(): SpeedValueDao
 }

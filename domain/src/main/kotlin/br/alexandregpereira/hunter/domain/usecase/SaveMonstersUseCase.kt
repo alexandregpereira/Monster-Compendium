@@ -38,12 +38,12 @@ class SaveMonstersUseCase @Inject internal constructor(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(monsters: List<Monster>): Flow<Unit> {
+    operator fun invoke(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit> {
         return getMeasurementUnitUseCase()
             .zip(measurementUnitRepository.getPreviousMeasurementUnit()) { unit, previousUnit ->
                 monsters.changeMeasurementUnit(previousUnit, unit)
             }.flatMapLatest {
-                monsterRepository.saveMonsters(monsters = it)
+                monsterRepository.saveMonsters(monsters = it, isSync)
             }
     }
 

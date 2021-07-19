@@ -19,14 +19,16 @@ package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.local.entity.SpeedWithValuesEntity
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
+import java.util.UUID
 
-internal fun SpeedEntity.toDomain(): Speed {
+internal fun SpeedWithValuesEntity.toDomain(): Speed {
     return Speed(
-        hover = this.hover,
-        values = this.values.toObjFromJson<List<SpeedValueEntity>>().toDomain()
+        hover = this.speed.hover,
+        values = this.values.toDomain()
     )
 }
 
@@ -39,15 +41,24 @@ internal fun List<SpeedValueEntity>.toDomain(): List<SpeedValue> {
     }
 }
 
-internal fun Speed.toEntity(): SpeedEntity {
-    return SpeedEntity(hover = this.hover, values = this.values.toEntity().toJsonFromObj())
+internal fun Speed.toEntity(monsterIndex: String): SpeedWithValuesEntity {
+    val speedId = UUID.randomUUID().toString()
+    return SpeedWithValuesEntity(
+        speed = SpeedEntity(
+            id = speedId,
+            hover = this.hover,
+            monsterIndex = monsterIndex
+        ),
+        values = this.values.toEntity(speedId)
+    )
 }
 
-internal fun List<SpeedValue>.toEntity(): List<SpeedValueEntity> {
+internal fun List<SpeedValue>.toEntity(speedId: String): List<SpeedValueEntity> {
     return this.map {
         SpeedValueEntity(
             type = it.type.name,
-            valueFormatted = it.valueFormatted
+            valueFormatted = it.valueFormatted,
+            speedId = speedId
         )
     }
 }

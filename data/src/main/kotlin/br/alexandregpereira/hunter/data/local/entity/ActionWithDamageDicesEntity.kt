@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local.mapper
+package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import androidx.room.Embedded
+import androidx.room.Relation
 
-internal inline fun <reified T> T.toJsonFromObj(): String {
-    return Json.encodeToString(this)
-}
-
-internal inline fun <reified T> String.toObjFromJson(): T {
-    return Json.decodeFromString(this)
-}
+internal data class ActionWithDamageDicesEntity(
+    @Embedded val action: ActionEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "actionId",
+    )
+    val damageDices: List<DamageDiceEntity>,
+)

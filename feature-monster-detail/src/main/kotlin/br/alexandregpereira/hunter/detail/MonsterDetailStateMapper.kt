@@ -72,7 +72,7 @@ private fun Monster.asState(): MonsterState {
         abilityScores = abilityScores.map { it.asState() },
         savingThrows = savingThrows.map { it.asState() },
         skills = skills.map { it.asState() },
-        damageVulnerabilities = damageResistances.map { it.asState() },
+        damageVulnerabilities = damageVulnerabilities.map { it.asState() },
         damageResistances = damageResistances.map { it.asState() },
         damageImmunities = damageImmunities.map { it.asState() },
         conditionImmunities = conditionImmunities.map { it.asState() },

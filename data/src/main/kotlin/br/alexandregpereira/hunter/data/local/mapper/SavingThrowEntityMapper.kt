@@ -15,16 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.Source
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.domain.model.Proficiency
 
-interface MonsterRepository {
+internal fun List<SavingThrowEntity>.toDomain(): List<Proficiency> {
+    return this.map {
+        it.value.toDomain()
+    }
+}
 
-    fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
-    fun getRemoteMonsters(): Flow<List<Monster>>
-    fun getRemoteMonsters(source: Source): Flow<List<Monster>>
-    fun getLocalMonsters(): Flow<List<Monster>>
+internal fun List<Proficiency>.toSavingThrowEntity(monsterIndex: String): List<SavingThrowEntity> {
+    return this.map {
+        SavingThrowEntity(
+            value = it.toEntity(monsterIndex)
+        )
+    }
 }

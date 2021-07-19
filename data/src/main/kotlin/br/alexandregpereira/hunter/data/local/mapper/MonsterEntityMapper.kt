@@ -17,102 +17,100 @@
 
 package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
-import br.alexandregpereira.hunter.data.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
-import br.alexandregpereira.hunter.data.local.entity.ProficiencyEntity
-import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
-import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
+import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Stats
 
-internal fun List<MonsterEntity>.toDomain(): List<Monster> {
+internal fun List<MonsterCompleteEntity>.toDomain(): List<Monster> {
     return this.map {
-        Monster(
-            preview = MonsterPreview(
-                index = it.index,
-                type = MonsterType.valueOf(it.type),
-                challengeRating = it.challengeRating,
-                name = it.name,
-                imageData = MonsterImageData(
-                    url = it.imageUrl,
-                    backgroundColor = Color(
-                        light = it.backgroundColorLight,
-                        dark = it.backgroundColorDark
-                    ),
-                    isHorizontal = it.isHorizontalImage
-                )
-            ),
-            subtype = it.subtype,
-            group = it.group,
-            subtitle = it.subtitle,
-            size = it.size,
-            alignment = it.alignment,
-            stats = Stats(
-                armorClass = it.armorClass,
-                hitPoints = it.hitPoints,
-                hitDice = it.hitDice
-            ),
-            speed = it.speedEntity.toDomain(),
-            abilityScores = it.abilityScores.toObjFromJson<List<AbilityScoreEntity>>().toDomain(),
-            savingThrows = it.savingThrows.toObjFromJson<List<ProficiencyEntity>>().toDomain(),
-            skills = it.skills.toObjFromJson<List<ProficiencyEntity>>().toDomain(),
-            damageVulnerabilities = it.damageVulnerabilities.toObjFromJson<List<ValueEntity>>()
-                .toDamageDomain(),
-            damageResistances = it.damageResistances.toObjFromJson<List<ValueEntity>>()
-                .toDamageDomain(),
-            damageImmunities = it.damageImmunities.toObjFromJson<List<ValueEntity>>()
-                .toDamageDomain(),
-            conditionImmunities = it.conditionImmunities.toObjFromJson<List<ValueEntity>>()
-                .toConditionDomain(),
-            senses = it.senses.toObjFromJson(),
-            languages = it.languages,
-            specialAbilities = it.specialAbilities.toObjFromJson<List<SpecialAbilityEntity>>()
-                .toDomain(),
-            actions = it.actions.toObjFromJson<List<ActionEntity>>().toDomain(),
-            source = Source(it.sourceName, it.sourceAcronym)
-        )
+        it.toDomain()
     }
 }
 
-internal fun List<Monster>.toEntity(): List<MonsterEntity> {
+internal fun MonsterCompleteEntity.toDomain(): Monster {
+    val monster = this.monster
+    return Monster(
+        preview = MonsterPreview(
+            index = monster.index,
+            type = MonsterType.valueOf(monster.type),
+            challengeRating = monster.challengeRating,
+            name = monster.name,
+            imageData = MonsterImageData(
+                url = monster.imageUrl,
+                backgroundColor = Color(
+                    light = monster.backgroundColorLight,
+                    dark = monster.backgroundColorDark
+                ),
+                isHorizontal = monster.isHorizontalImage
+            )
+        ),
+        subtype = monster.subtype,
+        group = monster.group,
+        subtitle = monster.subtitle,
+        size = monster.size,
+        alignment = monster.alignment,
+        stats = Stats(
+            armorClass = monster.armorClass,
+            hitPoints = monster.hitPoints,
+            hitDice = monster.hitDice
+        ),
+        speed = this.speed.toDomain(),
+        abilityScores = this.abilityScores.toDomain(),
+        savingThrows = this.savingThrows.toDomain(),
+        skills = this.skills.toDomain(),
+        damageVulnerabilities = this.damageVulnerabilities.toDamageDomain(),
+        damageResistances = this.damageResistances.toDamageDomain(),
+        damageImmunities = this.damageImmunities.toDamageDomain(),
+        conditionImmunities = this.conditionImmunities.toConditionDomain(),
+        senses = monster.senses.split(", "),
+        languages = monster.languages,
+        specialAbilities = this.specialAbilities.toDomain(),
+        actions = this.actions.toDomain(),
+        source = Source(monster.sourceName, monster.sourceAcronym)
+    )
+}
+
+internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
     return this.map {
-        MonsterEntity(
-            index = it.index,
-            type = it.type.name,
-            subtype = it.subtype,
-            group = it.group,
-            challengeRating = it.challengeRating,
-            name = it.name,
-            subtitle = it.subtitle,
-            imageUrl = it.imageData.url,
-            backgroundColorLight = it.imageData.backgroundColor.light,
-            backgroundColorDark = it.imageData.backgroundColor.dark,
-            isHorizontalImage = it.imageData.isHorizontal,
-            size = it.size,
-            alignment = it.alignment,
-            armorClass = it.stats.armorClass,
-            hitPoints = it.stats.hitPoints,
-            hitDice = it.stats.hitDice,
-            speedEntity = it.speed.toEntity(),
-            abilityScores = it.abilityScores.toEntity().toJsonFromObj(),
-            savingThrows = it.savingThrows.toEntity().toJsonFromObj(),
-            skills = it.skills.toEntity().toJsonFromObj(),
-            damageVulnerabilities = it.damageVulnerabilities.toEntity().toJsonFromObj(),
-            damageResistances = it.damageResistances.toEntity().toJsonFromObj(),
-            damageImmunities = it.damageImmunities.toEntity().toJsonFromObj(),
-            conditionImmunities = it.conditionImmunities.toEntity().toJsonFromObj(),
-            senses = it.senses.toJsonFromObj(),
-            languages = it.languages,
-            specialAbilities = it.specialAbilities.toEntity().toJsonFromObj(),
-            actions = it.actions.toEntity().toJsonFromObj(),
-            sourceName = it.source.name,
-            sourceAcronym = it.source.acronym
+        MonsterCompleteEntity(
+            monster = MonsterEntity(
+                index = it.index,
+                type = it.type.name,
+                subtype = it.subtype,
+                group = it.group,
+                challengeRating = it.challengeRating,
+                name = it.name,
+                subtitle = it.subtitle,
+                imageUrl = it.imageData.url,
+                backgroundColorLight = it.imageData.backgroundColor.light,
+                backgroundColorDark = it.imageData.backgroundColor.dark,
+                isHorizontalImage = it.imageData.isHorizontal,
+                size = it.size,
+                alignment = it.alignment,
+                armorClass = it.stats.armorClass,
+                hitPoints = it.stats.hitPoints,
+                hitDice = it.stats.hitDice,
+                senses = it.senses.joinToString(),
+                languages = it.languages,
+                sourceName = it.source.name,
+                sourceAcronym = it.source.acronym
+            ),
+            speed = it.speed.toEntity(it.index),
+            abilityScores = it.toAbilityScoreEntity(),
+            savingThrows = it.savingThrows.toSavingThrowEntity(it.index),
+            skills = it.skills.toSkillEntity(it.index),
+            damageVulnerabilities = it.damageVulnerabilities.toDamageVulnerabilityEntity(it.index),
+            damageResistances = it.damageResistances.toDamageResistanceEntity(it.index),
+            damageImmunities = it.damageImmunities.toDamageImmunityEntity(it.index),
+            conditionImmunities = it.conditionImmunities.toEntity(it.index),
+            specialAbilities = it.specialAbilities.toEntity(it.index),
+            actions = it.actions.toEntity(it.index),
         )
     }
 }

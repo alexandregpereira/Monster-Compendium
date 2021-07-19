@@ -38,12 +38,8 @@ internal class MonsterRepositoryImpl @Inject constructor(
     private val localDataSource: MonsterLocalDataSource,
 ) : MonsterRepository {
 
-    override fun deleteMonsters(): Flow<Unit> {
-        return localDataSource.deleteMonsters()
-    }
-
-    override fun saveMonsters(monsters: List<Monster>): Flow<Unit> {
-        return localDataSource.saveMonsters(monsters.toEntity())
+    override fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
+        return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
     override fun getRemoteMonsters(): Flow<List<Monster>> {
