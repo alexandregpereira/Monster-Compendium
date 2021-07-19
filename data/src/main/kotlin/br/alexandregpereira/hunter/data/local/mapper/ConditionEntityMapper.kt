@@ -17,18 +17,30 @@
 
 package br.alexandregpereira.hunter.data.local.mapper
 
+import br.alexandregpereira.hunter.data.local.entity.ConditionEntity
 import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.ConditionType
 
-internal fun List<ValueEntity>.toConditionDomain(): List<Condition> {
+internal fun List<ConditionEntity>.toConditionDomain(): List<Condition> {
     return this.map {
-        Condition(index = it.index, type = ConditionType.valueOf(it.type), name = it.name)
+        Condition(
+            index = it.value.index,
+            type = ConditionType.valueOf(it.value.type),
+            name = it.value.name
+        )
     }
 }
 
-internal fun List<Condition>.toEntity(): List<ValueEntity> {
+internal fun List<Condition>.toEntity(monsterIndex: String): List<ConditionEntity> {
     return this.map {
-        ValueEntity(index = it.index, type = it.type.name, name = it.name)
+        ConditionEntity(
+            value = ValueEntity(
+                index = it.index,
+                type = it.type.name,
+                name = it.name,
+                monsterIndex = monsterIndex
+            )
+        )
     }
 }

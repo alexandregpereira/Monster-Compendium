@@ -17,17 +17,19 @@
 
 package br.alexandregpereira.hunter.data.local.mapper
 
-import br.alexandregpereira.hunter.data.local.entity.ProficiencyEntity
+import br.alexandregpereira.hunter.data.local.entity.SkillEntity
 import br.alexandregpereira.hunter.domain.model.Proficiency
 
-internal fun List<ProficiencyEntity>.toDomain(): List<Proficiency> {
+internal fun List<SkillEntity>.toDomain(): List<Proficiency> {
     return this.map {
-        Proficiency(index = it.index, modifier = it.modifier, name = it.name)
+        it.value.toDomain()
     }
 }
 
-internal fun List<Proficiency>.toEntity(): List<ProficiencyEntity> {
+internal fun List<Proficiency>.toSkillEntity(monsterIndex: String): List<SkillEntity> {
     return this.map {
-        ProficiencyEntity(index = it.index, modifier = it.modifier, name = it.name)
+        SkillEntity(
+            value = it.toEntity(monsterIndex)
+        )
     }
 }

@@ -15,16 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.data.local.dao
 
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.Source
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import br.alexandregpereira.hunter.data.local.entity.SkillEntity
 
-interface MonsterRepository {
+@Dao
+internal interface SkillDao {
 
-    fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
-    fun getRemoteMonsters(): Flow<List<Monster>>
-    fun getRemoteMonsters(source: Source): Flow<List<Monster>>
-    fun getLocalMonsters(): Flow<List<Monster>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(entities: List<SkillEntity>)
+
+    @Query("DELETE FROM SkillEntity")
+    suspend fun deleteAll()
 }

@@ -17,11 +17,10 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "monster")
+@Entity
 internal data class MonsterEntity(
     @PrimaryKey val index: String,
     val type: String,
@@ -39,18 +38,8 @@ internal data class MonsterEntity(
     val armorClass: Int,
     val hitPoints: Int,
     val hitDice: String,
-    @Embedded val speedEntity: SpeedEntity,
-    val abilityScores: String,
-    val savingThrows: String,
-    val skills: String,
-    val damageVulnerabilities: String,
-    val damageResistances: String,
-    val damageImmunities: String,
-    val conditionImmunities: String,
     val senses: String,
     val languages: String,
-    val specialAbilities: String,
-    val actions: String,
     val sourceName: String,
     val sourceAcronym: String
 )

@@ -17,12 +17,15 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Serializable
+@Entity
 data class ActionEntity(
-    val damageDices: String,
+    @PrimaryKey
+    val id: String,
     val attackBonus: Int?,
     val description: String,
-    val name: String
+    val name: String,
+    val monsterIndex: String
 )

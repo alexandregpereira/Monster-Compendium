@@ -20,6 +20,5 @@ package br.alexandregpereira.hunter.app
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-@Suppress("unused")
 @HiltAndroidApp
 class HunterApplication : Application()

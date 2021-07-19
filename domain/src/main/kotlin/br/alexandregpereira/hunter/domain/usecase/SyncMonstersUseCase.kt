@@ -44,10 +44,7 @@ class SyncMonstersUseCase @Inject internal constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
-        return repository.deleteMonsters()
-            .flatMapLatest {
-                alternativeSourceRepository.getAlternativeSources()
-            }
+        return alternativeSourceRepository.getAlternativeSources()
             .map { alternativeSources ->
                 alternativeSources.map { it.source }
                     .run { this + srdSource }
@@ -58,7 +55,7 @@ class SyncMonstersUseCase @Inject internal constructor(
                     .reduce { accumulator, value -> accumulator + value }
             }
             .flatMapLatest {
-                saveMonstersUseCase(monsters = it)
+                saveMonstersUseCase(monsters = it, isSync = true)
             }
     }
 

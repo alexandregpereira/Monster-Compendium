@@ -17,12 +17,11 @@
 
 package br.alexandregpereira.hunter.data.local
 
-import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import kotlinx.coroutines.flow.Flow
 
 internal interface MonsterLocalDataSource {
 
-    fun getMonsters(): Flow<List<MonsterEntity>>
-    fun saveMonsters(monsters: List<MonsterEntity>): Flow<Unit>
-    fun deleteMonsters(): Flow<Unit>
+    fun getMonsters(): Flow<List<MonsterCompleteEntity>>
+    fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
 }

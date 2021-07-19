@@ -26,11 +26,12 @@ internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
     }
 }
 
-internal fun List<AbilityDescription>.toEntity(): List<SpecialAbilityEntity> {
+internal fun List<AbilityDescription>.toEntity(monsterIndex: String): List<SpecialAbilityEntity> {
     return this.map {
         SpecialAbilityEntity(
             name = it.name,
             description = it.description,
+            monsterIndex = monsterIndex
         )
     }
 }

@@ -17,10 +17,11 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
+import androidx.room.Entity
 
-@Serializable
+@Entity(primaryKeys = ["name", "monsterIndex"])
 data class SpecialAbilityEntity(
     val name: String,
-    val description: String
+    val description: String,
+    val monsterIndex: String
 )

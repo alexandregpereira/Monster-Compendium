@@ -18,13 +18,16 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.collections.map
+import br.alexandregpereira.hunter.domain.exception.NoMonstersException
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.retry
 import javax.inject.Inject
 
 typealias MonsterPair = Pair<MonsterPreview, MonsterPreview?>
@@ -37,7 +40,17 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<MonstersBySection> {
-        return syncMonstersUseCase().flatMapLatest { getMonstersUseCase() }
+        return getMonstersUseCase()
+            .flatMapLatest { monsters ->
+                if (monsters.isEmpty()) {
+                    syncMonstersUseCase().map {
+                        throw NoMonstersException()
+                    }
+                } else flowOf(monsters)
+            }
+            .retry(retries = 1) { cause: Throwable ->
+                cause is NoMonstersException
+            }
             .groupMonsters()
             .map {
                 it.map { key, value ->
