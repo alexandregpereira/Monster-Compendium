@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.ui.transition
 
-import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -50,6 +49,52 @@ fun <Data> AlphaTransition(
             fraction = fraction
         )
     )
+}
+
+@OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+@Composable
+fun <Data> HorizontalSlideTransition(
+    dataList: List<Data>,
+    pagerState: PagerState,
+    modifier: Modifier = Modifier,
+    enableGesture: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    content: @Composable (data: Data) -> Unit
+) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
+    Layout(
+        content = {
+            content(data)
+        }
+    ) { measurables, constraints ->
+        val currentPlaceable = measurables.first().measure(constraints)
+
+        val width = currentPlaceable.width
+        val height = currentPlaceable.height
+
+        val scrollDirection = pagerState.getScrollDirection()
+
+        val value = lerp(
+            start = if (isTarget) {
+                when (scrollDirection) {
+                    ScrollDirection.LEFT -> width + 24.dp.roundToPx()
+                    ScrollDirection.RIGHT -> -width
+                    ScrollDirection.IDLE -> 0
+                }
+            } else 0,
+            stop = if (isTarget.not()) {
+                when (scrollDirection) {
+                    ScrollDirection.LEFT -> -width
+                    ScrollDirection.RIGHT -> width + 24.dp.roundToPx()
+                    ScrollDirection.IDLE -> 0
+                }
+            } else 0,
+            fraction = fraction
+        )
+
+        layout(width, height) {
+            currentPlaceable.placeRelative(x = value, y = 0)
+        }
+    }
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
@@ -87,114 +132,51 @@ fun <Data> Transition(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
-@Composable
-fun <Data> HorizontalSlideTransition(
-    dataList: List<Data>,
-    pagerState: PagerState,
-    modifier: Modifier = Modifier,
-    enableGesture: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    content: @Composable (data: Data) -> Unit
-) {
-    val transitionData = getTransitionData(dataList, pagerState)
-
-    val rowModifier = if (enableGesture) {
-        modifier.scrollable(
-            orientation = Orientation.Horizontal,
-            reverseDirection = true,
-            flingBehavior = PagerDefaults.flingBehavior(pagerState),
-            state = pagerState
-        )
-    } else modifier
-
-    Layout(
-        content = {
-            content(
-                transitionData.data
-            )
-            content(
-                transitionData.nextData
-            )
-        },
-        modifier = rowModifier
-    ) { measurables, constraints ->
-        val currentPlaceable = measurables.first().measure(constraints)
-        val nextPlaceable = measurables.last().measure(constraints)
-
-        val width = currentPlaceable.width
-        val height = currentPlaceable.height
-
-        val scrollDirection = pagerState.getScrollDirection()
-        val value = lerp(
-            start = 0,
-            stop = when (scrollDirection) {
-                ScrollDirection.LEFT -> -width
-                ScrollDirection.RIGHT -> width + 24.dp.roundToPx()
-                ScrollDirection.IDLE -> 0
-            },
-            fraction = transitionData.fraction
-        )
-
-        val nextValue = lerp(
-            start = when (scrollDirection) {
-                ScrollDirection.LEFT -> width + 24.dp.roundToPx()
-                ScrollDirection.RIGHT -> -width
-                ScrollDirection.IDLE -> 0
-            },
-            stop = 0,
-            fraction = transitionData.fraction
-        )
-
-        layout(width, height) {
-            currentPlaceable.placeRelative(x = value, y = 0)
-            if (transitionData.data != transitionData.nextData) {
-                nextPlaceable.placeRelative(x = nextValue, y = 0)
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalPagerApi::class)
 fun <Data> getTransitionData(
     dataList: List<Data>,
     pagerState: PagerState
 ): TransitionData<Data> {
-    val (data, nextData) = getCurrentAndNextData(dataList, pagerState)
-    val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
-    Log.d("getTransitionData", "fraction: $fraction")
-    return TransitionData(data, nextData, fraction)
+    val (currentIndex, nextIndex) = pagerState.getCurrentAndNextIndex()
+    val currentPageOffsetDecimal = pagerState.run {
+        currentPageOffset - currentPageOffset.toInt()
+    }
+    val fraction = currentPageOffsetDecimal.absoluteValue.coerceIn(0f, 1f)
+    return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
 }
 
 @OptIn(ExperimentalPagerApi::class)
-fun <Data> getCurrentAndNextData(
-    dataList: List<Data>,
-    pagerState: PagerState
-): Pair<Data, Data> {
-    val data = dataList[pagerState.currentPage]
-    val nextDataIndex = when (pagerState.getScrollDirection()) {
-        ScrollDirection.RIGHT -> pagerState.currentPage - 1
-        ScrollDirection.LEFT -> pagerState.currentPage + 1
-        ScrollDirection.IDLE -> pagerState.currentPage
+fun PagerState.getCurrentAndNextIndex(): Pair<Int, Int> {
+    val scrollDirection = getScrollDirection()
+    val pageOffset = getPageOffset()
+    val currentIndex = when (scrollDirection) {
+        ScrollDirection.RIGHT -> pageOffset.toInt() + 1
+        else -> pageOffset.toInt()
     }
-    val nextData = dataList[nextDataIndex]
+    val nextIndex = when (scrollDirection) {
+        ScrollDirection.LEFT -> pageOffset.toInt() + 1
+        else -> pageOffset.toInt()
+    }
 
-    return data to nextData
+    return currentIndex to nextIndex
 }
 
 @OptIn(ExperimentalPagerApi::class)
 fun PagerState.getScrollDirection(): ScrollDirection {
-    val pageOffset = getPageOffset()
-    Log.d("getScrollDirection", "getScrollDirection: $currentPage -- $pageOffset")
+    val currentPageOffsetDecimal = this.run {
+        currentPageOffset - currentPageOffset.toInt()
+    }
     return when {
-        pageOffset < this.currentPage -> ScrollDirection.RIGHT
-        pageOffset > this.currentPage -> ScrollDirection.LEFT
+        currentPageOffsetDecimal > 0f -> ScrollDirection.LEFT
+        currentPageOffsetDecimal < 0f -> ScrollDirection.RIGHT
         else -> ScrollDirection.IDLE
     }
 }
 
 @OptIn(ExperimentalPagerApi::class)
-private fun PagerState.getPageOffset(): Float = this.currentPage + this.currentPageOffset
+private fun PagerState.getPageOffset(): Float {
+    return (this.currentPage + this.currentPageOffset).coerceAtLeast(0f)
+}
 
 data class TransitionData<Data>(
     val data: Data,
