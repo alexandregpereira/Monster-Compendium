@@ -20,11 +20,9 @@ package br.alexandregpereira.hunter.ui.transition
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerDefaults
@@ -58,7 +56,6 @@ fun <Data> HorizontalSlideTransition(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     enableGesture: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
     content: @Composable (data: Data) -> Unit
 ) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
     Layout(
@@ -76,7 +73,7 @@ fun <Data> HorizontalSlideTransition(
         val value = lerp(
             start = if (isTarget) {
                 when (scrollDirection) {
-                    ScrollDirection.LEFT -> width + 24.dp.roundToPx()
+                    ScrollDirection.LEFT -> width
                     ScrollDirection.RIGHT -> -width
                     ScrollDirection.IDLE -> 0
                 }
@@ -84,7 +81,7 @@ fun <Data> HorizontalSlideTransition(
             stop = if (isTarget.not()) {
                 when (scrollDirection) {
                     ScrollDirection.LEFT -> -width
-                    ScrollDirection.RIGHT -> width + 24.dp.roundToPx()
+                    ScrollDirection.RIGHT -> width
                     ScrollDirection.IDLE -> 0
                 }
             } else 0,

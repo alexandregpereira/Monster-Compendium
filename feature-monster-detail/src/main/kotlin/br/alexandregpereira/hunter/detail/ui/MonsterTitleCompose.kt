@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +62,7 @@ fun MonsterTitleCompose(
     HorizontalSlideTransition(
         dataList = monsterTitleStates,
         pagerState,
-        modifier = Modifier.weight(1f)
+        modifier = Modifier.weight(1f).clipToBounds()
     ) { data ->
         MonsterTitle(
             data.title,
