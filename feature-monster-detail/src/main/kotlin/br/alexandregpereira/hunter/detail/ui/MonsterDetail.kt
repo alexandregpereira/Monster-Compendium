@@ -26,8 +26,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -67,16 +65,16 @@ import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.ColorState
 import br.alexandregpereira.hunter.ui.compose.MonsterImageState
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
+import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.transition.AlphaTransition
+import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerDefaults
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
 
 @ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
@@ -86,9 +84,7 @@ fun MonsterDetail(
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     pagerState: PagerState = rememberPagerState(
-        pageCount = monsters.size,
-        initialPage = initialMonsterIndex,
-        initialOffscreenLimit = 2
+        initialPage = initialMonsterIndex
     ),
     scrollState: ScrollState = rememberScrollState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
@@ -132,7 +128,6 @@ fun MonsterDetail(
             monsters = monsters,
             pagerState = pagerState,
             contentPadding = contentPadding,
-            onMonsterChanged = onMonsterChanged,
         )
     }
 
@@ -148,6 +143,18 @@ fun MonsterDetail(
         ),
         onOptionsClicked = onOptionsClicked
     )
+    OnMonsterChanged(monsters, pagerState, onMonsterChanged)
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+private fun OnMonsterChanged(
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
+    onMonsterChanged: (monster: MonsterState) -> Unit
+) {
+    val transitionData = getTransitionData(dataList = monsters, pagerState)
+    onMonsterChanged(transitionData.data)
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -190,15 +197,13 @@ private fun Modifier.monsterImageBackground(
     val transitionData = getTransitionData(monsters, pagerState)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    val startColor = transitionData.monster.imageState.backgroundColor.getColor(isSystemInDarkTheme)
-    val endColor =
-        transitionData.nextMonster.imageState.backgroundColor.getColor(isSystemInDarkTheme)
-    val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
+    val startColor = transitionData.data.imageState.backgroundColor.getColor(isSystemInDarkTheme)
+    val endColor = transitionData.nextData.imageState.backgroundColor.getColor(isSystemInDarkTheme)
 
     val backgroundColor = lerp(
         start = startColor.toColor(),
         stop = endColor.toColor(),
-        fraction = fraction
+        fraction = transitionData.fraction
     )
 
     this.background(backgroundColor)
@@ -278,21 +283,12 @@ private fun ChallengeRatingCompose(
     monsters: List<MonsterState>,
     pagerState: PagerState,
 ) {
-    val transitionData = getTransitionData(monsters, pagerState)
-
-    ChallengeRatingCircle(
-        challengeRating = transitionData.monster.imageState.challengeRating,
-        size = 56.dp,
-        fontSize = 16.sp,
-        modifier = Modifier.alpha(transitionData.alpha)
-    )
-
-    if (transitionData.monster != transitionData.nextMonster) {
+    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState, alpha: Float ->
         ChallengeRatingCircle(
-            challengeRating = transitionData.nextMonster.imageState.challengeRating,
+            challengeRating = data.imageState.challengeRating,
             size = 56.dp,
             fontSize = 16.sp,
-            modifier = Modifier.alpha(transitionData.nextAlpha)
+            modifier = Modifier.alpha(alpha)
         )
     }
 }
@@ -304,15 +300,12 @@ private fun MonsterTypeIcon(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
 ) {
-    val transitionData = getTransitionData(monsters, pagerState)
-
-    val type: MonsterTypeState = transitionData.monster.imageState.type
-    val nextType: MonsterTypeState = transitionData.nextMonster.imageState.type
-
-    MonsterTypeIcon(type = type, iconSize = 32.dp, modifier.alpha(transitionData.alpha))
-
-    if (transitionData.monster != transitionData.nextMonster) {
-        MonsterTypeIcon(type = nextType, iconSize = 32.dp, modifier.alpha(transitionData.nextAlpha))
+    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState, alpha ->
+        MonsterTypeIcon(
+            type = data.imageState.type,
+            iconSize = 32.dp,
+            modifier.alpha(alpha)
+        )
     }
 }
 
@@ -322,12 +315,8 @@ private fun MonsterTypeIcon(
 private fun MonsterInfo(
     monsters: List<MonsterState>,
     pagerState: PagerState,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    onMonsterChanged: (monster: MonsterState) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    val transitionData = getTransitionData(monsters, pagerState)
-    onMonsterChanged(transitionData.monster)
-
     AnimatedVisibility(
         visible = true,
         enter = slideIn(
@@ -335,61 +324,44 @@ private fun MonsterInfo(
             animationSpec = spring(stiffness = 100f, dampingRatio = 0.65f)
         )
     ) {
-        Box(
-            modifier = Modifier.scrollable(
-                orientation = Orientation.Horizontal,
-                flingBehavior = PagerDefaults.defaultPagerFlingConfig(pagerState),
-                state = pagerState
-            )
-        ) {
+        AlphaTransition(monsters, pagerState) { data: MonsterState, alpha: Float ->
             MonsterInfo(
-                transitionData.monster,
+                data,
                 contentPadding = contentPadding,
-                alpha = transitionData.alpha,
+                alpha = alpha,
             )
-            if (transitionData.monster != transitionData.nextMonster) {
-                MonsterInfo(
-                    transitionData.nextMonster,
-                    contentPadding = contentPadding,
-                    modifier = Modifier.alpha(transitionData.nextAlpha),
-                )
-            }
         }
     }
 }
 
 @OptIn(ExperimentalPagerApi::class)
-private fun getTransitionData(
+private fun getAlphaTransitionData(
     monsters: List<MonsterState>,
     pagerState: PagerState,
-): TransitionData {
-    val monster = monsters[pagerState.currentPage]
-    val pageOffset = pagerState.currentPage + pagerState.currentPageOffset
-    val nextMonsterIndex = when {
-        pageOffset < pagerState.currentPage -> pagerState.currentPage - 1
-        pageOffset > pagerState.currentPage -> pagerState.currentPage + 1
-        else -> pagerState.currentPage
-    }
-    val nextMonster = monsters[nextMonsterIndex]
-
-    val fraction = pagerState.currentPageOffset.absoluteValue.coerceIn(0f, 1f)
+): AlphaTransitionData {
+    val transitionData = getTransitionData(monsters, pagerState)
 
     val alpha = lerp(
         start = 1f,
         stop = 0f,
-        fraction = fraction
+        fraction = transitionData.fraction
     )
 
     val nextAlpha = lerp(
         start = 0f,
         stop = 1f,
-        fraction = fraction
+        fraction = transitionData.fraction
     )
 
-    return TransitionData(monster, nextMonster, alpha, nextAlpha)
+    return AlphaTransitionData(
+        monster = transitionData.data,
+        nextMonster = transitionData.nextData,
+        alpha,
+        nextAlpha
+    )
 }
 
-private data class TransitionData(
+private data class AlphaTransitionData(
     val monster: MonsterState,
     val nextMonster: MonsterState,
     val alpha: Float,
@@ -491,7 +463,7 @@ private fun MonsterTopBarPreview() = Window {
                 actions = listOf(),
             )
         ),
-        pagerState = rememberPagerState(pageCount = 1),
+        pagerState = rememberPagerState(),
         scrollState = rememberScrollState(Int.MAX_VALUE)
     ) {
 

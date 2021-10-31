@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -40,8 +41,8 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.transition.HorizontalSlideTransition
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 
@@ -50,7 +51,7 @@ import com.google.accompanist.pager.rememberPagerState
 fun MonsterTitleCompose(
     monsterTitleStates: List<MonsterTitleState>,
     modifier: Modifier = Modifier,
-    pagerState: PagerState = rememberPagerState(pageCount = 0),
+    pagerState: PagerState = rememberPagerState(),
     contentPadding: PaddingValues = PaddingValues(16.dp),
     titleFontSize: MonsterTitleFontSize = MonsterTitleFontSize.LARGE,
     onOptionsClicked: () -> Unit = {}
@@ -58,16 +59,14 @@ fun MonsterTitleCompose(
     modifier
         .fillMaxWidth()
 ) {
-    HorizontalPager(
-        state = pagerState,
-        Modifier
-            .weight(1f)
-            .align(Alignment.CenterVertically)
-    ) { pagePosition ->
-        val header = monsterTitleStates[pagePosition]
+    HorizontalSlideTransition(
+        dataList = monsterTitleStates,
+        pagerState,
+        modifier = Modifier.weight(1f).clipToBounds()
+    ) { data ->
         MonsterTitle(
-            monsterTitleStates[pagePosition].title,
-            header.subTitle,
+            data.title,
+            data.subTitle,
             Modifier
                 .fillMaxWidth()
                 .padding(
@@ -157,6 +156,7 @@ data class MonsterTitleState(
 
 @Preview
 @Composable
+@OptIn(ExperimentalPagerApi::class)
 private fun MonsterTitleWithSubtitlePreview() = Window {
     MonsterTitleCompose(
         listOf(
@@ -170,7 +170,8 @@ private fun MonsterTitleWithSubtitlePreview() = Window {
 
 @Preview
 @Composable
-private fun MonsterTitlePreview() = Window {
+@OptIn(ExperimentalPagerApi::class)
+private fun MonsterTitleComposePreview() = Window {
     MonsterTitleCompose(
         monsterTitleStates = listOf(
             MonsterTitleState(

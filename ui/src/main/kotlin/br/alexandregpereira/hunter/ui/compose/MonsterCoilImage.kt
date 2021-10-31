@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import br.alexandregpereira.hunter.ui.util.toColor
-import com.google.accompanist.coil.rememberCoilPainter
+import coil.compose.rememberImagePainter
 
 @Composable
 fun MonsterCoilImage(
@@ -41,9 +41,11 @@ fun MonsterCoilImage(
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
     Image(
-        painter = rememberCoilPainter(
-            request = imageUrl,
-            fadeIn = true,
+        painter = rememberImagePainter (
+            data = imageUrl,
+            builder = {
+                crossfade(true)
+            }
         ),
         contentDescription = contentDescription,
         modifier = modifier
