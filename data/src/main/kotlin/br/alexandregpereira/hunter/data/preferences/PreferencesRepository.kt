@@ -22,8 +22,9 @@ import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-internal class PreferencesRepository(
+internal class PreferencesRepository @Inject constructor(
     private val preferencesDataSource: PreferencesDataSource
 ) : CompendiumRepository, MeasurementUnitRepository {
 

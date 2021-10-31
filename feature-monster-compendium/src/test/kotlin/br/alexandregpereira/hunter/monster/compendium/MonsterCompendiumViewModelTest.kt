@@ -17,8 +17,6 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
@@ -27,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.ColorState
 import br.alexandregpereira.hunter.ui.compose.MonsterImageState
@@ -34,9 +33,12 @@ import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.mockk.verifySequence
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -44,21 +46,16 @@ import org.junit.Test
 class MonsterCompendiumViewModelTest {
 
     @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
-    private val stateLiveDataObserver: Observer<MonsterCompendiumViewState> = mockk(
-        relaxUnitFun = true
-    )
+    private val syncMonstersUseCase: SyncMonstersUseCase = mockk(relaxUnitFun = true)
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
-    fun loadMonsters() {
+    fun loadMonsters() = runBlockingTest {
         // Given
         val section = MonsterSection(title = "Any")
         val monster = MonsterPreview(
@@ -78,45 +75,53 @@ class MonsterCompendiumViewModelTest {
         every { getLastScrollPositionUseCase() } returns flowOf(1)
         createViewModel()
 
+        val results = mutableListOf<MonsterCompendiumViewState>()
+        val job = launch {
+            viewModel.state.toList(results)
+        }
+
         // When
         viewModel.loadMonsters()
 
         // Then
+        verify { syncMonstersUseCase() }
         verify { getMonsterPreviewsUseCase() }
-        verifySequence {
-            stateLiveDataObserver.onChanged(MonsterCompendiumViewState(isLoading = false))
-            stateLiveDataObserver.onChanged(MonsterCompendiumViewState(isLoading = true))
-            stateLiveDataObserver.onChanged(
-                MonsterCompendiumViewState(
-                    isLoading = false,
-                    monstersBySection = mapOf(
-                        SectionState(title = "Any") to listOf(
-                            MonsterCardState(
-                                index = "",
-                                name = "",
-                                imageState = MonsterImageState(
-                                    url = "",
-                                    type = MonsterTypeState.ABERRATION,
-                                    challengeRating = 0.0f,
-                                    backgroundColor = ColorState(light = "", dark = "")
-                                ),
-                            ) and null
-                        )
-                    ),
-                    initialScrollItemPosition = 1
-                )
-            )
-        }
+
+        assertEquals(3, results.size)
+        assertEquals(MonsterCompendiumViewState.Initial, results[0])
+        assertEquals(MonsterCompendiumViewState.Initial.Loading, results[1])
+        assertEquals(
+            MonsterCompendiumViewState.Initial.complete(
+                monstersBySection = mapOf(
+                    SectionState(title = "Any") to listOf(
+                        MonsterCardState(
+                            index = "",
+                            name = "",
+                            imageState = MonsterImageState(
+                                url = "",
+                                type = MonsterTypeState.ABERRATION,
+                                challengeRating = 0.0f,
+                                backgroundColor = ColorState(light = "", dark = "")
+                            ),
+                        ) and null
+                    )
+                ),
+                initialScrollItemPosition = 1
+            ),
+            results[2]
+        )
+
+        job.cancel()
     }
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
+            syncMonstersUseCase = syncMonstersUseCase,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
-            getLastScrollPositionUseCase,
-            saveScrollPositionUseCase,
+            getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
+            saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )
-        viewModel.stateLiveData.observeForever(stateLiveDataObserver)
     }
 }

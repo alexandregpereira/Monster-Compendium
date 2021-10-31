@@ -23,8 +23,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.merge
+import javax.inject.Inject
 
-class SaveMeasurementUnitUseCase internal constructor(
+class SaveMeasurementUnitUseCase @Inject internal constructor(
     private val repository: MeasurementUnitRepository,
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase
 ) {

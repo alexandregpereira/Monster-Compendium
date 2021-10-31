@@ -18,19 +18,22 @@
 package br.alexandregpereira.hunter.data.local.mapper
 
 import br.alexandregpereira.hunter.data.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.local.entity.ActionWithDamageDicesEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageDiceEntity
-import br.alexandregpereira.hunter.data.local.entity.ValueEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
+import java.util.UUID
 
-internal fun List<ActionEntity>.toDomain(): List<Action> {
+internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
     return this.map {
         Action(
-            damageDices = it.damageDices.toObjFromJson<List<DamageDiceEntity>>()
-                .toDamageDiceDomain(),
-            attackBonus = it.attackBonus,
-            abilityDescription = AbilityDescription(name = it.name, description = it.description)
+            damageDices = it.damageDices.toDamageDiceDomain(),
+            attackBonus = it.action.attackBonus,
+            abilityDescription = AbilityDescription(
+                name = it.action.name,
+                description = it.action.description
+            )
         )
     }
 }
@@ -39,24 +42,34 @@ internal fun List<DamageDiceEntity>.toDamageDiceDomain(): List<DamageDice> {
     return this.map {
         DamageDice(
             dice = it.dice,
-            damage = it.damage.toObjFromJson<ValueEntity>().toDamageDomain()
+            damage = it.damage.toDamageDomain()
         )
     }
 }
 
-internal fun List<Action>.toEntity(): List<ActionEntity> {
+internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageDicesEntity> {
     return this.map {
-        ActionEntity(
-            damageDices = it.damageDices.toDamageDiceEntity().toJsonFromObj(),
-            attackBonus = it.attackBonus,
-            description = it.abilityDescription.description,
-            name = it.abilityDescription.name
+        val actionId = it.abilityDescription.name + monsterIndex
+        ActionWithDamageDicesEntity(
+            damageDices = it.damageDices.toDamageDiceEntity(actionId),
+            action = ActionEntity(
+                id = actionId,
+                attackBonus = it.attackBonus,
+                description = it.abilityDescription.description,
+                name = it.abilityDescription.name,
+                monsterIndex = monsterIndex
+            )
         )
     }
 }
 
-internal fun List<DamageDice>.toDamageDiceEntity(): List<DamageDiceEntity> {
+internal fun List<DamageDice>.toDamageDiceEntity(actionId: String): List<DamageDiceEntity> {
     return this.map {
-        DamageDiceEntity(dice = it.dice, damage = it.damage.toEntity().toJsonFromObj())
+        DamageDiceEntity(
+            id = UUID.randomUUID().toString(),
+            dice = it.dice,
+            damage = it.damage.toEntity(actionId),
+            actionId = actionId
+        )
     }
 }

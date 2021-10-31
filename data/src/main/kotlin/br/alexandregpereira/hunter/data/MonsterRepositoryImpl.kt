@@ -31,18 +31,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
+import javax.inject.Inject
 
-internal class MonsterRepositoryImpl(
+internal class MonsterRepositoryImpl @Inject constructor(
     private val remoteDataSource: MonsterRemoteDataSource,
     private val localDataSource: MonsterLocalDataSource,
 ) : MonsterRepository {
 
-    override fun deleteMonsters(): Flow<Unit> {
-        return localDataSource.deleteMonsters()
-    }
-
-    override fun saveMonsters(monsters: List<Monster>): Flow<Unit> {
-        return localDataSource.saveMonsters(monsters.toEntity())
+    override fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
+        return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
     override fun getRemoteMonsters(): Flow<List<Monster>> {

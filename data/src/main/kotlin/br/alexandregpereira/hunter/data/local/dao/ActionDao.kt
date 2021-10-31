@@ -15,15 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.detail
+package br.alexandregpereira.hunter.data.local.dao
 
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import br.alexandregpereira.hunter.data.local.entity.ActionEntity
 
-val monsterDetailModule = module {
-    viewModel { (monsterIndex: String) ->
-        MonsterDetailViewModel(
-            monsterIndex, get(), get()
-        )
-    }
+@Dao
+internal interface ActionDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(entities: List<ActionEntity>)
+
+    @Query("DELETE FROM ActionEntity")
+    suspend fun deleteAll()
 }

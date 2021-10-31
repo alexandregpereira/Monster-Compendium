@@ -17,15 +17,31 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 
+@Entity
 internal data class SpeedEntity(
+    @PrimaryKey
+    val id: String,
     val hover: Boolean,
-    val values: String,
+    val monsterIndex: String
 )
 
-@Serializable
+internal data class SpeedWithValuesEntity(
+    @Embedded val speed: SpeedEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "speedId",
+    )
+    val values: List<SpeedValueEntity>,
+)
+
+@Entity(primaryKeys = ["type", "speedId"])
 internal data class SpeedValueEntity(
     val type: String,
-    val valueFormatted: String
+    val valueFormatted: String,
+    val speedId: String
 )

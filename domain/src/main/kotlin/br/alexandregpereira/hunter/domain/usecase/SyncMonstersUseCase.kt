@@ -31,9 +31,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
+import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
-class SyncMonstersUseCase internal constructor(
+class SyncMonstersUseCase @Inject internal constructor(
     private val repository: MonsterRepository,
     private val alternativeSourceRepository: AlternativeSourceRepository,
     private val saveMonstersUseCase: SaveMonstersUseCase
@@ -43,10 +44,7 @@ class SyncMonstersUseCase internal constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
-        return repository.deleteMonsters()
-            .flatMapLatest {
-                alternativeSourceRepository.getAlternativeSources()
-            }
+        return alternativeSourceRepository.getAlternativeSources()
             .map { alternativeSources ->
                 alternativeSources.map { it.source }
                     .run { this + srdSource }
@@ -57,7 +55,7 @@ class SyncMonstersUseCase internal constructor(
                     .reduce { accumulator, value -> accumulator + value }
             }
             .flatMapLatest {
-                saveMonstersUseCase(monsters = it)
+                saveMonstersUseCase(monsters = it, isSync = true)
             }
     }
 

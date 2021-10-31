@@ -25,4 +25,31 @@ data class MonsterDetailViewState(
     val monsters: List<MonsterState> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList()
+) {
+
+    companion object {
+        val Initial = MonsterDetailViewState()
+    }
+}
+
+val MonsterDetailViewState.Loading: MonsterDetailViewState
+    get() = this.copy(isLoading = true)
+
+val MonsterDetailViewState.NotLoading: MonsterDetailViewState
+    get() = this.copy(isLoading = false)
+
+val MonsterDetailViewState.ShowOptions: MonsterDetailViewState
+    get() = this.copy(showOptions = true)
+
+val MonsterDetailViewState.HideOptions: MonsterDetailViewState
+    get() = this.copy(showOptions = false)
+
+fun MonsterDetailViewState.complete(
+    initialMonsterIndex: Int,
+    monsters: List<MonsterState>,
+    options: List<MonsterDetailOptionState>
+): MonsterDetailViewState = this.copy(
+    initialMonsterIndex = initialMonsterIndex,
+    monsters = monsters,
+    options = options
 )

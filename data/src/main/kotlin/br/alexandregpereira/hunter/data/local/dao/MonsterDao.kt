@@ -21,17 +21,20 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 
 @Dao
 internal interface MonsterDao {
 
-    @Query("SELECT * FROM monster")
-    suspend fun getMonsters(): List<MonsterEntity>
+    @Transaction
+    @Query("SELECT * FROM MonsterEntity")
+    suspend fun getMonsters(): List<MonsterCompleteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(monsters: List<MonsterEntity>)
 
-    @Query("DELETE FROM monster")
+    @Query("DELETE FROM MonsterEntity")
     suspend fun deleteAll()
 }

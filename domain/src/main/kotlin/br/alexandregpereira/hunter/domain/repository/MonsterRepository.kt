@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterRepository {
 
-    fun deleteMonsters(): Flow<Unit>
-    fun saveMonsters(monsters: List<Monster>): Flow<Unit>
+    fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
     fun getRemoteMonsters(): Flow<List<Monster>>
     fun getRemoteMonsters(source: Source): Flow<List<Monster>>
     fun getLocalMonsters(): Flow<List<Monster>>

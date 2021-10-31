@@ -18,17 +18,20 @@
 package br.alexandregpereira.hunter.detail
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.domain.usecase.MonsterDetail
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
@@ -38,15 +41,20 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-internal class MonsterDetailViewModel(
-    private var monsterIndex: String,
+@HiltViewModel
+internal class MonsterDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _stateLiveData = MutableLiveData(MonsterDetailViewState())
-    val stateLiveData: LiveData<MonsterDetailViewState> = _stateLiveData
+    private val _state = MutableStateFlow(MonsterDetailViewState.Initial)
+    val state: StateFlow<MonsterDetailViewState> = _state
+
+    var monsterIndex: String = savedStateHandle["index"] ?: ""
 
     init {
         getMonstersByInitialIndex()
@@ -56,20 +64,16 @@ internal class MonsterDetailViewModel(
         getMonsterDetailUseCase(monsterIndex).collectDetail()
     }
 
-    fun setMonsterIndex(index: String) {
-        monsterIndex = index
-    }
-
     fun onShowOptionsClicked() {
-        _stateLiveData.value = stateLiveData.value?.copy(showOptions = true)
+        _state.value = state.value.ShowOptions
     }
 
     fun onShowOptionsClosed() {
-        _stateLiveData.value = stateLiveData.value?.copy(showOptions = false)
+        _state.value = state.value.HideOptions
     }
 
     fun onOptionClicked(option: MonsterDetailOptionState) {
-        _stateLiveData.value = stateLiveData.value?.copy(showOptions = false)
+        _state.value = state.value.HideOptions
         when (option) {
             MonsterDetailOptionState.CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
@@ -91,7 +95,7 @@ internal class MonsterDetailViewModel(
         this.map {
             Log.i("MonsterDetailViewModel", "collectDetail")
             val measurementUnit = it.third
-            getState().copy(
+            getState().complete(
                 initialMonsterIndex = it.first,
                 monsters = it.second.asState(),
                 options = when (measurementUnit) {
@@ -101,20 +105,20 @@ internal class MonsterDetailViewModel(
             )
         }.onStart {
             Log.i("MonsterDetailViewModel", "onStart")
-            emit(getState().copy(isLoading = true))
+            emit(getState().Loading)
         }.onCompletion {
             Log.i("MonsterDetailViewModel", "onCompletion")
-            emit(getState().copy(isLoading = false))
-        }.flowOn(Dispatchers.IO)
+            emit(getState().NotLoading)
+        }.flowOn(dispatcher)
             .catch {
                 Log.e("MonsterDetailViewModel", it.message ?: "")
                 it.printStackTrace()
             }.collect { state ->
-                _stateLiveData.value = state
+                _state.value = state
             }
     }
 
     private suspend fun getState(): MonsterDetailViewState = withContext(Dispatchers.Main) {
-        stateLiveData.value!!
+        state.value
     }
 }

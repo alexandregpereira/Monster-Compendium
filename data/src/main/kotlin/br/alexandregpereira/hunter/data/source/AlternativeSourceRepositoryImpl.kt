@@ -22,8 +22,9 @@ import br.alexandregpereira.hunter.domain.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.repository.AlternativeSourceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-internal class AlternativeSourceRepositoryImpl(
+internal class AlternativeSourceRepositoryImpl @Inject constructor(
     private val remoteDataSource: AlternativeSourceRemoteDataSource
 ) : AlternativeSourceRepository {
 

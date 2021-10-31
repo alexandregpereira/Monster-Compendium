@@ -23,6 +23,22 @@ data class MonsterCompendiumViewState(
     val isLoading: Boolean = false,
     val monstersBySection: Map<SectionState, List<MonsterRowState>> = emptyMap(),
     val initialScrollItemPosition: Int = 0,
+) {
+
+    companion object {
+        val Initial = MonsterCompendiumViewState()
+    }
+}
+
+val MonsterCompendiumViewState.Loading: MonsterCompendiumViewState
+    get() = this.copy(isLoading = true)
+
+fun MonsterCompendiumViewState.complete(
+    monstersBySection: Map<SectionState, List<MonsterRowState>>,
+    initialScrollItemPosition: Int
+) = this.copy(
+    monstersBySection = monstersBySection,
+    initialScrollItemPosition = initialScrollItemPosition
 )
 
 data class SectionState(

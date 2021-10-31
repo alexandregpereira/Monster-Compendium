@@ -17,10 +17,15 @@
 
 package br.alexandregpereira.hunter.data.local.entity
 
-import kotlinx.serialization.Serializable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Serializable
-data class DamageDiceEntity(
+@Entity
+internal data class DamageDiceEntity(
+    @PrimaryKey
+    val id: String,
     val dice: String,
-    val damage: String
+    @Embedded val damage: ValueEntity,
+    val actionId: String
 )

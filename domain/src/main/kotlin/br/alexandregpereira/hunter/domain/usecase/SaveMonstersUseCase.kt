@@ -29,20 +29,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
 import java.math.RoundingMode
+import javax.inject.Inject
 
-class SaveMonstersUseCase internal constructor(
+class SaveMonstersUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val monsterRepository: MonsterRepository,
     private val measurementUnitRepository: MeasurementUnitRepository
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(monsters: List<Monster>): Flow<Unit> {
+    operator fun invoke(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit> {
         return getMeasurementUnitUseCase()
             .zip(measurementUnitRepository.getPreviousMeasurementUnit()) { unit, previousUnit ->
                 monsters.changeMeasurementUnit(previousUnit, unit)
             }.flatMapLatest {
-                monsterRepository.saveMonsters(monsters = it)
+                monsterRepository.saveMonsters(monsters = it, isSync)
             }
     }
 

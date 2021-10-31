@@ -18,38 +18,44 @@
 package br.alexandregpereira.hunter.monster.compendium
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.model.Event
+import br.alexandregpereira.hunter.domain.model.asEvent
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class MonsterCompendiumViewModel(
+@HiltViewModel
+internal class MonsterCompendiumViewModel @Inject constructor(
+    private val syncMonstersUseCase: SyncMonstersUseCase,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    loadOnInit: Boolean = true
+    private val dispatcher: CoroutineDispatcher,
+    @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel() {
 
-    private val _stateLiveData = MutableLiveData(MonsterCompendiumViewState())
-    val stateLiveData: LiveData<MonsterCompendiumViewState> = _stateLiveData
+    private val _state = MutableStateFlow(MonsterCompendiumViewState.Initial)
+    val state: StateFlow<MonsterCompendiumViewState> = _state
 
-    private val _actionLiveData = MutableLiveData<Event<MonsterCompendiumAction>>()
-    val actionLiveData: LiveData<Event<MonsterCompendiumAction>> = _actionLiveData
+    private val _action = MutableStateFlow<Event<MonsterCompendiumAction>?>(null)
+    val action: StateFlow<Event<MonsterCompendiumAction>?> = _action
 
     init {
+        startSync()
         if (loadOnInit) loadMonsters()
     }
 
@@ -58,13 +64,13 @@ internal class MonsterCompendiumViewModel(
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
             ) { monstersBySection, scrollItemPosition ->
-                MonsterCompendiumViewState(
+                MonsterCompendiumViewState.Initial.complete(
                     monstersBySection = monstersBySection.asState(),
                     initialScrollItemPosition = scrollItemPosition
                 )
             }
             .onStart {
-                emit(MonsterCompendiumViewState(isLoading = true))
+                emit(MonsterCompendiumViewState.Initial.Loading)
             }
             .flowOn(dispatcher)
             .catch {
@@ -72,15 +78,24 @@ internal class MonsterCompendiumViewModel(
                 it.printStackTrace()
             }
             .collect { state ->
-                _stateLiveData.value = state
+                _state.value = state
             }
     }
 
     fun navigateToDetail(index: String) {
-        _actionLiveData.value = Event(MonsterCompendiumAction.NavigateToDetail(index))
+        _action.value = MonsterCompendiumAction.NavigateToDetail(index).asEvent()
     }
 
     fun saveCompendiumScrollItemPosition(position: Int) = viewModelScope.launch {
         saveCompendiumScrollItemPositionUseCase(position).collect()
+    }
+
+    private fun startSync() = viewModelScope.launch {
+        syncMonstersUseCase()
+            .flowOn(dispatcher)
+            .catch {
+                Log.e("MonsterViewModel", it.message ?: "")
+                it.printStackTrace()
+            }.collect()
     }
 }

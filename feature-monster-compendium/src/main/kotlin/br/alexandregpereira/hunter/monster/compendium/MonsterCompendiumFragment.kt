@@ -25,21 +25,24 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.createComposeView
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MonsterCompendiumFragment : Fragment() {
 
-    private val viewModel: MonsterCompendiumViewModel by viewModel()
-    private val navigator: Navigator by inject()
+    private val viewModel: MonsterCompendiumViewModel by viewModels()
+    @Inject internal lateinit var navigator: Navigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +65,7 @@ internal fun MonsterCompendium(
     navigator: Navigator,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = HunterTheme {
-    val viewState = viewModel.stateLiveData.observeAsState().value ?: return@HunterTheme
+    val viewState by viewModel.state.collectAsState()
 
     CircularLoading(viewState.isLoading) {
         val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewState.initialScrollItemPosition)
@@ -83,7 +86,7 @@ internal fun Action(
     viewModel: MonsterCompendiumViewModel,
     navigator: Navigator
 ) {
-    val action = viewModel.actionLiveData.observeAsState().value?.getContentIfNotHandled() ?: return
+    val action = viewModel.action.collectAsState().value?.content ?: return
     when (action) {
         is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
     }

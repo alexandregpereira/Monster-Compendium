@@ -24,23 +24,22 @@ import android.view.ViewGroup
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.detail.ui.MonsterDetail
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.createComposeView
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MonsterDetailFragment : Fragment() {
 
-    private val viewModel: MonsterDetailViewModel by viewModel {
-        parametersOf(arguments?.getString("index") ?: "")
-    }
+    private val viewModel: MonsterDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +58,7 @@ internal fun MonsterDetail(
     viewModel: MonsterDetailViewModel,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = Window {
-    val viewState by viewModel.stateLiveData.observeAsState(MonsterDetailViewState())
+    val viewState by viewModel.state.collectAsState()
 
     CircularLoading(viewState.isLoading) {
         viewState.monsters.takeIf { it.isNotEmpty() }?.let {
@@ -68,7 +67,7 @@ internal fun MonsterDetail(
                 viewState.initialMonsterIndex,
                 contentPadding,
                 onMonsterChanged = { monster ->
-                    viewModel.setMonsterIndex(monster.index)
+                    viewModel.monsterIndex = monster.index
                 },
                 onOptionsClicked = viewModel::onShowOptionsClicked
             )
