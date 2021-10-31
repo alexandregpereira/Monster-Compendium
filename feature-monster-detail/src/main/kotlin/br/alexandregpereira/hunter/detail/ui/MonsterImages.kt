@@ -43,6 +43,7 @@ fun MonsterImages(
     shape: Shape,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = HorizontalPager(
+    count = images.size,
     state = pagerState
 ) { pagePosition ->
     val image = images[pagePosition]

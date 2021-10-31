@@ -45,11 +45,11 @@ fun MonsterInfo(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = Column(
     modifier
+        .alpha(alpha)
         .fillMaxWidth()
         .background(
             color = MaterialTheme.colors.surface
         )
-        .alpha(alpha)
 ) {
     BlockSection { StatsBlock(stats = monster.stats) }
     BlockSection { SpeedBlock(speed = monster.speed) }

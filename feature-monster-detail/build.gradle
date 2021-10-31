@@ -60,15 +60,15 @@ dependencies {
     implementation "androidx.compose.ui:ui-util:$compose_version"
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
-    implementation "com.google.accompanist:accompanist-coil:$accompanist_version"
+    implementation "io.coil-kt:coil-compose:$coil_compose"
 
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
-    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_test_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_testing_version"
     testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
 }
