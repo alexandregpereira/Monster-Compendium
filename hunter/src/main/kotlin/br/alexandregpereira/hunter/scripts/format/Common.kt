@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.scripts.json
 import br.alexandregpereira.hunter.scripts.readJsonFile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import java.util.Locale
 
@@ -66,6 +67,7 @@ internal fun MonsterDto.formatSubtitle(): MonsterDto {
     )
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 internal fun Flow<MonsterDto>.filterByImages(): Flow<MonsterDto> {
     return this.filter { monster ->
         val webImages = json.decodeFromString<List<WebImageData>>(

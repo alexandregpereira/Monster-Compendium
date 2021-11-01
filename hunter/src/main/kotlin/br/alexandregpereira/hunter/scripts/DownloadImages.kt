@@ -28,11 +28,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.InputStream
 import javax.imageio.ImageIO
 
+@OptIn(ExperimentalSerializationApi::class)
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {

@@ -37,8 +37,6 @@ jobs:
           feature-monster-compendium/build/reports/tests
           data/build/reports/tests
           domain/build/reports/tests
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
     - name:  Upload an APK
       uses: actions/upload-artifact@v2.2.3
       with:

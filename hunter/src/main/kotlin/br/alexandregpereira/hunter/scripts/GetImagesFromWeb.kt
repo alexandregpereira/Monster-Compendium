@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import org.jsoup.Jsoup
@@ -38,6 +39,7 @@ private const val URL =
 private const val FIRST_URL =
         "https://www.dndbeyond.com/monsters"
 
+@OptIn(ExperimentalSerializationApi::class)
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() {
@@ -61,7 +63,7 @@ suspend fun main() {
             oldImages.addAll(images.toHashSet())
             saveJsonFile(oldImages.sortedBy { it.name }, JSON_IMAGES_FILE_NAME, printJson = false)
 
-            val minutes: Long = 1000 * 60 * 1 * 4
+            val minutes: Long = 1000L * 60 * 1 * 4
             println("Waiting $minutes minutes")
             delay(minutes)
         }
