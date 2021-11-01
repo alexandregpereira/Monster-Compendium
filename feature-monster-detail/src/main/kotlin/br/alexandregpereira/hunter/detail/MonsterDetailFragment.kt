@@ -34,6 +34,7 @@ import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.createComposeView
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +53,7 @@ class MonsterDetailFragment : Fragment() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Composable
 internal fun MonsterDetail(
     viewModel: MonsterDetailViewModel,

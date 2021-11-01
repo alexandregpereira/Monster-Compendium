@@ -28,7 +28,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
@@ -38,10 +38,6 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-    }
-
-    lintOptions {
-        abortOnError false
     }
 }
 
@@ -55,6 +51,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "io.coil-kt:coil-compose:$coil_compose"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
 
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
