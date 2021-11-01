@@ -44,7 +44,7 @@ fun MonsterCoilImage(
         painter = rememberImagePainter (
             data = imageUrl,
             builder = {
-                crossfade(true)
+                crossfade(durationMillis = 300)
             }
         ),
         contentDescription = contentDescription,
