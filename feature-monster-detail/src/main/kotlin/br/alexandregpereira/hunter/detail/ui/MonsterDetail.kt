@@ -59,7 +59,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
@@ -334,45 +333,11 @@ private fun MonsterInfo(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
-private fun getAlphaTransitionData(
-    monsters: List<MonsterState>,
-    pagerState: PagerState,
-): AlphaTransitionData {
-    val transitionData = getTransitionData(monsters, pagerState)
-
-    val alpha = lerp(
-        start = 1f,
-        stop = 0f,
-        fraction = transitionData.fraction
-    )
-
-    val nextAlpha = lerp(
-        start = 0f,
-        stop = 1f,
-        fraction = transitionData.fraction
-    )
-
-    return AlphaTransitionData(
-        monster = transitionData.data,
-        nextMonster = transitionData.nextData,
-        alpha,
-        nextAlpha
-    )
-}
-
-private data class AlphaTransitionData(
-    val monster: MonsterState,
-    val nextMonster: MonsterState,
-    val alpha: Float,
-    val nextAlpha: Float,
-)
-
 private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
 private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
 private val IMAGE_HEIGHT = 420.dp
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Preview
 @Composable
 private fun MonsterDetailPreview() = Window {

@@ -55,9 +55,11 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.toList
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import java.util.Locale
 
+@OptIn(ExperimentalSerializationApi::class)
 @FlowPreview
 @ExperimentalCoroutinesApi
 suspend fun main() = start {

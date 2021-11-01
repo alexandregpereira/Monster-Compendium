@@ -18,9 +18,11 @@
 package br.alexandregpereira.hunter.scripts
 
 import br.alexandregpereira.hunter.dndapi.data.model.Monster
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import java.util.Locale
 
+@OptIn(ExperimentalSerializationApi::class)
 suspend fun main() = start {
     json.decodeFromString<List<Monster>>(readJsonFile(JSON_FILE_NAME))
         .asSequence()

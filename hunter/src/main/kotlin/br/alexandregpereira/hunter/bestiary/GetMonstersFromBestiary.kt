@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 
 @FlowPreview
@@ -83,6 +84,7 @@ suspend fun getSourceFromBestiary(): Flow<List<SourceItem>> {
         }
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 private fun getBestiarySources(fileName: String): List<SourceItem> {
     return json.decodeFromString(readJsonFile(fileName))
 }

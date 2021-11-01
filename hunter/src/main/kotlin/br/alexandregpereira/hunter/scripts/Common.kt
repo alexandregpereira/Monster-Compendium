@@ -60,6 +60,7 @@ suspend fun start(block: suspend CoroutineScope.() -> Unit) = coroutineScope {
     println("\nFinished in ${System.currentTimeMillis() - startTime} ms")
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 inline fun <reified T> saveJsonFile(values: T, fileName: String, printJson: Boolean = true) {
     println("\nSaving")
     val json = json.encodeToString(values)
