@@ -56,16 +56,13 @@ fun MonsterCompendium(
         val monsterSection = monsterSectionEntry.key
         val monsterRows = monsterSectionEntry.value
 
-        if (index == 0) {
-            item {
-                TopBottomSpace(height = contentPadding.calculateTopPadding())
-            }
-        }
-
         val sectionTitlePaddingTop = 32.dp
         val sectionTitlePaddingBottom = 16.dp
-        monsterSection.parentTitle?.let {
-            item {
+        item {
+            if (index == 0) {
+                TopBottomSpace(height = contentPadding.calculateTopPadding())
+            }
+            monsterSection.parentTitle?.let {
                 SectionTitle(
                     title = it,
                     isHeader = true,
@@ -75,9 +72,6 @@ fun MonsterCompendium(
                     )
                 )
             }
-        }
-
-        item {
             val paddingTop = when {
                 monsterSection.parentTitle != null -> 0.dp
                 monsterSection.isHeader -> sectionTitlePaddingTop
@@ -101,12 +95,10 @@ fun MonsterCompendium(
                     onItemClick = onItemCLick,
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
-            }
-        }
 
-        if (index == lastIndex) {
-            item {
-                TopBottomSpace(height = contentPadding.calculateBottomPadding())
+                if (index == lastIndex) {
+                    TopBottomSpace(height = contentPadding.calculateBottomPadding())
+                }
             }
         }
     }

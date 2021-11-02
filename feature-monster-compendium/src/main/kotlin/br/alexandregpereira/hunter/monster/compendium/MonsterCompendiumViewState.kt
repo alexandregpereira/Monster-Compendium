@@ -22,6 +22,9 @@ import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = false,
     val monstersBySection: Map<SectionState, List<MonsterRowState>> = emptyMap(),
+    val alphabet: List<Char> = emptyList(),
+    val alphabetIndex: Int = 0,
+    val alphabetOpened: Boolean = false,
     val initialScrollItemPosition: Int = 0,
 ) {
 
@@ -35,10 +38,26 @@ val MonsterCompendiumViewState.Loading: MonsterCompendiumViewState
 
 fun MonsterCompendiumViewState.complete(
     monstersBySection: Map<SectionState, List<MonsterRowState>>,
+    alphabet: List<Char>,
+    alphabetIndex: Int,
     initialScrollItemPosition: Int
 ) = this.copy(
     monstersBySection = monstersBySection,
+    alphabet = alphabet,
+    alphabetIndex = alphabetIndex,
     initialScrollItemPosition = initialScrollItemPosition
+)
+
+fun MonsterCompendiumViewState.alphabetIndex(
+    alphabetIndex: Int,
+) = this.copy(
+    alphabetIndex = alphabetIndex,
+)
+
+fun MonsterCompendiumViewState.alphabetOpened(
+    alphabetOpened: Boolean,
+) = this.copy(
+    alphabetOpened = alphabetOpened,
 )
 
 data class SectionState(

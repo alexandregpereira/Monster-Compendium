@@ -19,11 +19,8 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -31,7 +28,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -44,7 +40,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.MonsterDetailOptionState
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 
@@ -63,31 +59,16 @@ fun MonsterDetailOptionPicker(
     showOptions: Boolean,
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
     onClosed: () -> Unit = {}
-) {
-    Box(Modifier.fillMaxSize()) {
-        AnimatedVisibility(
-            visible = showOptions,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.3f))
-                    .noIndicationClick(onClick = onClosed)
-            )
-        }
-
-        AnimatedVisibility(
-            visible = showOptions,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .noIndicationClick()
-        ) {
-            MonsterDetailOptions(options, onOptionSelected)
-        }
+) = Closeable(opened = showOptions, onClosed = onClosed) {
+    AnimatedVisibility(
+        visible = showOptions,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .noIndicationClick()
+    ) {
+        MonsterDetailOptions(options, onOptionSelected)
     }
 }
 

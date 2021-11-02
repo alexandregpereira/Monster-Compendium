@@ -62,7 +62,7 @@ class MonsterCompendiumViewModelTest {
             index = "",
             type = MonsterType.ABERRATION,
             challengeRating = 0.0f,
-            name = "",
+            name = "A",
             imageData = MonsterImageData(
                 url = "",
                 backgroundColor = Color(light = "", dark = "")
@@ -96,7 +96,7 @@ class MonsterCompendiumViewModelTest {
                     SectionState(title = "Any") to listOf(
                         MonsterCardState(
                             index = "",
-                            name = "",
+                            name = "A",
                             imageState = MonsterImageState(
                                 url = "",
                                 type = MonsterTypeState.ABERRATION,
@@ -106,7 +106,9 @@ class MonsterCompendiumViewModelTest {
                         ) and null
                     )
                 ),
-                initialScrollItemPosition = 1
+                initialScrollItemPosition = 1,
+                alphabet = listOf('A'),
+                alphabetIndex = 0
             ),
             results[2]
         )
@@ -115,6 +117,8 @@ class MonsterCompendiumViewModelTest {
     }
 
     private fun createViewModel() {
+        every { syncMonstersUseCase() } returns flowOf(Unit)
+
         viewModel = MonsterCompendiumViewModel(
             syncMonstersUseCase = syncMonstersUseCase,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,

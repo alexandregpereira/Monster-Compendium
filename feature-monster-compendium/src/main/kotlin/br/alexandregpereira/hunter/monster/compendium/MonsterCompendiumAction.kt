@@ -19,4 +19,5 @@ package br.alexandregpereira.hunter.monster.compendium
 
 sealed class MonsterCompendiumAction {
     data class NavigateToDetail(val index: String): MonsterCompendiumAction()
+    data class NavigateToCompendiumIndex(val index: Int): MonsterCompendiumAction()
 }
