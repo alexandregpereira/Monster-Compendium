@@ -62,7 +62,7 @@ class MonsterCompendiumViewModelTest {
             index = "",
             type = MonsterType.ABERRATION,
             challengeRating = 0.0f,
-            name = "",
+            name = "A",
             imageData = MonsterImageData(
                 url = "",
                 backgroundColor = Color(light = "", dark = "")
@@ -117,6 +117,8 @@ class MonsterCompendiumViewModelTest {
     }
 
     private fun createViewModel() {
+        every { syncMonstersUseCase() } returns flowOf(Unit)
+
         viewModel = MonsterCompendiumViewModel(
             syncMonstersUseCase = syncMonstersUseCase,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
