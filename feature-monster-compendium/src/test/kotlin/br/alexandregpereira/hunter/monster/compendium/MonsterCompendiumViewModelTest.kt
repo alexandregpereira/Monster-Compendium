@@ -96,7 +96,7 @@ class MonsterCompendiumViewModelTest {
                     SectionState(title = "Any") to listOf(
                         MonsterCardState(
                             index = "",
-                            name = "",
+                            name = "A",
                             imageState = MonsterImageState(
                                 url = "",
                                 type = MonsterTypeState.ABERRATION,
@@ -106,7 +106,9 @@ class MonsterCompendiumViewModelTest {
                         ) and null
                     )
                 ),
-                initialScrollItemPosition = 1
+                initialScrollItemPosition = 1,
+                alphabet = listOf('A'),
+                alphabetIndex = 0
             ),
             results[2]
         )
