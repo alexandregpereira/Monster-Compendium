@@ -76,8 +76,9 @@ internal class RetrofitWrapper {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
+        val baseUrl = "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/json/"
         retrofit = Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/alexandregpereira/hunter/main/json/")
+            .baseUrl(baseUrl)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
