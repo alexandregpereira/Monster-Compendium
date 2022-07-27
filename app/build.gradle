@@ -63,13 +63,13 @@ dependencies {
     implementation project(':feature-monster-compendium')
     implementation project(':feature-monster-detail')
 
-    implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation "androidx.appcompat:appcompat:$app_compat_version"
-    implementation "com.google.android.material:material:$material_version"
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.material
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation libs.hilt
+    kapt libs.hilt.compiler
 
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
 }
