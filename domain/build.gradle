@@ -27,11 +27,11 @@ java {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
+    implementation libs.kotlin.coroutines.core
+    implementation libs.dagger
+    kapt libs.dagger.compiler
+    testImplementation libs.mockk
+    testImplementation libs.junit
 }
 
 configure([compileKotlin, compileTestKotlin]) {
