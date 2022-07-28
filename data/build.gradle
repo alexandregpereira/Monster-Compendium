@@ -41,21 +41,20 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofit_serialization_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_logging_interceptor_version"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-
     implementation project(':domain')
     implementation project(':data-remote-model')
 
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "junit:junit:$junit_version"
+    implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.serialization
+
+    implementation libs.hilt
+    kapt libs.hilt.compiler
+
+    implementation libs.bundles.retrofit
+
+    implementation libs.bundles.room
+    kapt libs.room.compiler
+
+    testImplementation libs.mockk
+    testImplementation libs.junit
 }
