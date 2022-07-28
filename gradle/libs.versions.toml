@@ -27,6 +27,7 @@ room_version = "2.4.2"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist_version" }
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist_version" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_version" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "app_compat_version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
