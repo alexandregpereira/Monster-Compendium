@@ -31,8 +31,8 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "app_compat_version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose_version" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose_version" }
-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose_version" }
+compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose_version" }
+compose-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose_version" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose_version" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx_version" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing_version" }
@@ -63,7 +63,7 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room_vers
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle_version" }
 
 [bundles]
-compose = ["compose-ui", "compose-ui-tooling", "compose-material"]
+compose = ["compose-ui", "compose-tooling", "compose-material"]
 instrumentedtest = ["espresso", "junit-ext"]
 retrofit = ["retrofit-core", "retrofit-logging", "retrofit-serialization"]
 room = ["room-ktx", "room-runtime"]
