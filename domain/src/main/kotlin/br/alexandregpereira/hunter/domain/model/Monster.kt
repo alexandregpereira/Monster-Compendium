@@ -37,6 +37,7 @@ data class Monster(
     val languages: String,
     val specialAbilities: List<AbilityDescription>,
     val actions: List<Action>,
+    val reactions: List<AbilityDescription> = emptyList(),
     val source: Source
 ) {
     val index: String

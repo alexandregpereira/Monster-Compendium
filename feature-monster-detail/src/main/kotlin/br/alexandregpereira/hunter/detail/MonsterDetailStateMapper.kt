@@ -80,6 +80,7 @@ private fun Monster.asState(): MonsterState {
         languages = languages,
         specialAbilities = specialAbilities.map { it.asState() },
         actions = actions.map { it.asState() },
+        reactions = reactions.map { it.asState() }
     )
 }
 

@@ -63,6 +63,7 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             languages = it.languages,
             specialAbilities = it.specialAbilities.toDomain(),
             actions = it.actions.toDomain(),
+            reactions = it.reactions.toDomain(),
             source = Source(
                 it.source.name,
                 it.source.acronym

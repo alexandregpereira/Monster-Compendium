@@ -43,6 +43,7 @@ data class MonsterState(
     val languages: String,
     val specialAbilities: List<AbilityDescriptionState>,
     val actions: List<ActionState>,
+    val reactions: List<AbilityDescriptionState>,
 )
 
 data class StatsState(

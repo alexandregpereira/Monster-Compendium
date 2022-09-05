@@ -33,4 +33,5 @@
     <string name="monster_detail_attack">Attack</string>
     <string name="monster_detail_options">Options</string>
     <string name="monster_detail_go_to_top">Go to top</string>
+    <string name="monster_detail_reactions">Reactions</string>
 </resources>

@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.data.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
 import br.alexandregpereira.hunter.data.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
@@ -48,6 +49,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     private val specialAbilityDao: SpecialAbilityDao,
     private val speedDao: SpeedDao,
     private val speedValueDao: SpeedValueDao,
+    private val reactionDao: ReactionDao,
 ) : MonsterLocalDataSource {
 
     private val mutex = Mutex()
@@ -80,6 +82,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
                 speedDao.deleteAll()
                 speedValueDao.deleteAll()
                 monsterDao.deleteAll()
+                reactionDao.deleteAll()
                 Log.d("saveMonsters", "deleteAll in ${System.currentTimeMillis() - startTime} ms")
             }
 
@@ -98,6 +101,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
             damageDao.insertResistance(monsters.map { it.damageResistances }.reduceList())
             damageDao.insertVulnerability(monsters.map { it.damageVulnerabilities }.reduceList())
             conditionDao.insert(monsters.map { it.conditionImmunities }.reduceList())
+            reactionDao.insert(monsters.map { it.reactions }.reduceList())
 
             Log.d("saveMonsters", "insert in ${System.currentTimeMillis() - startTime} ms")
         }

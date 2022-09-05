@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.data.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
 import br.alexandregpereira.hunter.data.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
@@ -180,6 +181,11 @@ object DatabaseModule {
     @Provides
     internal fun provideSpeedValueDao(appDatabase: AppDatabase): SpeedValueDao {
         return appDatabase.speedValueDao()
+    }
+
+    @Provides
+    internal fun provideReactionDao(appDatabase: AppDatabase): ReactionDao {
+        return appDatabase.reactionDao()
     }
 }
 

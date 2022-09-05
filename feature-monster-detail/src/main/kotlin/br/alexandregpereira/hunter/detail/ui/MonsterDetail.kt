@@ -378,6 +378,7 @@ private fun MonsterDetailPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
+                reactions = listOf()
             )
         },
         initialMonsterIndex = 2
@@ -426,6 +427,7 @@ private fun MonsterTopBarPreview() = Window {
                 languages = "Test",
                 specialAbilities = listOf(),
                 actions = listOf(),
+                reactions = listOf()
             )
         ),
         pagerState = rememberPagerState(),
