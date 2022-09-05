@@ -88,6 +88,8 @@ fun MonsterInfo(
     OptionalBlockSection(monster.specialAbilities) { SpecialAbilityBlock(specialAbilities = it) }
     BlockSection { ActionBlock(actions = monster.actions) }
 
+    OptionalBlockSection(monster.reactions) { ReactionBlock(reactions = it) }
+
     Spacer(
         modifier = Modifier
             .height(contentPadding.calculateBottomPadding())
@@ -176,7 +178,8 @@ private fun MonsterInfoPreview() {
                 senses = listOf(),
                 languages = "",
                 specialAbilities = listOf(),
-                actions = listOf()
+                actions = listOf(),
+                reactions = listOf()
             )
         )
     }

@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.data.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
 import br.alexandregpereira.hunter.data.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
@@ -38,6 +39,7 @@ import br.alexandregpereira.hunter.data.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageVulnerabilityEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.local.entity.SkillEntity
 import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
@@ -59,8 +61,9 @@ import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
         SpecialAbilityEntity::class,
         SpeedEntity::class,
         SpeedValueEntity::class,
+        ReactionEntity::class,
     ],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
@@ -75,4 +78,5 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun specialAbilityDao(): SpecialAbilityDao
     abstract fun speedDao(): SpeedDao
     abstract fun speedValueDao(): SpeedValueDao
+    abstract fun reactionDao(): ReactionDao
 }

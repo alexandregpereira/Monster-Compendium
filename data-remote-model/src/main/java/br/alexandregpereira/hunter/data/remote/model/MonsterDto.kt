@@ -76,6 +76,8 @@ data class MonsterDto(
     val specialAbilities: List<SpecialAbilityDto>,
     @SerialName("actions")
     val actions: List<ActionDto>,
+    @SerialName("reactions")
+    val reactions: List<SpecialAbilityDto>,
     @SerialName("source")
     val source: SourceDto
 )

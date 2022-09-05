@@ -17,10 +17,18 @@
 
 package br.alexandregpereira.hunter.data.local.mapper
 
+import br.alexandregpereira.hunter.data.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
 internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
+    return this.map {
+        AbilityDescription(name = it.name, description = it.description)
+    }
+}
+
+@JvmName("toDomainReactionEntity")
+internal fun List<ReactionEntity>.toDomain(): List<AbilityDescription> {
     return this.map {
         AbilityDescription(name = it.name, description = it.description)
     }

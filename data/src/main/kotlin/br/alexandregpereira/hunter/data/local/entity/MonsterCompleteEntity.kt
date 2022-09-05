@@ -57,4 +57,9 @@ internal data class MonsterCompleteEntity(
         entityColumn = "monsterIndex",
     )
     val actions: List<ActionWithDamageDicesEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val reactions: List<ReactionEntity>,
 )

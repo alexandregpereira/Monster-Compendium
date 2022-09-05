@@ -72,6 +72,7 @@ internal fun MonsterCompleteEntity.toDomain(): Monster {
         languages = monster.languages,
         specialAbilities = this.specialAbilities.toDomain(),
         actions = this.actions.toDomain(),
+        reactions = this.reactions.toDomain(),
         source = Source(monster.sourceName, monster.sourceAcronym)
     )
 }
@@ -111,6 +112,7 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
             conditionImmunities = it.conditionImmunities.toEntity(it.index),
             specialAbilities = it.specialAbilities.toEntity(it.index),
             actions = it.actions.toEntity(it.index),
+            reactions = it.reactions.toReactionEntity(it.index)
         )
     }
 }

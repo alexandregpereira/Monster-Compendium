@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import javax.inject.Inject
 
