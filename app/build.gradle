@@ -55,6 +55,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -62,6 +65,8 @@ dependencies {
     implementation project(':data')
     implementation project(':feature-monster-compendium')
     implementation project(':feature-monster-detail')
+    implementation project(':feature-search')
+    implementation project(':feature-settings')
 
     implementation libs.core.ktx
     implementation libs.appcompat

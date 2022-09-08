@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-rootProject.name = 'hunter'
-include ':app'
-include ':data'
-include ':data-remote-model'
-include ':domain'
-include ':feature-monster-compendium'
-include ':feature-monster-detail'
-include ':feature-search'
-include ':feature-settings'
-include ':ui'
+package br.alexandregpereira.hunter.settings
+
+import androidx.fragment.app.Fragment
+
+class SettingsFragment : Fragment()
