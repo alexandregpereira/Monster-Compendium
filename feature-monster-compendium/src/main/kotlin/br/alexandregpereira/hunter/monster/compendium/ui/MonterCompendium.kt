@@ -35,16 +35,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.compendium.MonsterRowState
-import br.alexandregpereira.hunter.monster.compendium.SectionState
-import br.alexandregpereira.hunter.monster.compendium.and
 import br.alexandregpereira.hunter.ui.compose.ColorState
 import br.alexandregpereira.hunter.ui.compose.MonsterImageState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-fun MonsterCompendium(
+internal fun MonsterCompendium(
     monstersBySection: Map<SectionState, List<MonsterRowState>>,
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
