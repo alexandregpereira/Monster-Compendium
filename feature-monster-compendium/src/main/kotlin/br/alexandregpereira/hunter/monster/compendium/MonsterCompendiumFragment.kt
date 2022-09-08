@@ -21,27 +21,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.domain.Navigator
-import br.alexandregpereira.hunter.monster.compendium.ui.AlphabetIndex
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendium
-import br.alexandregpereira.hunter.ui.compose.CircularLoading
-import br.alexandregpereira.hunter.ui.compose.Closeable
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -50,7 +39,9 @@ import javax.inject.Inject
 class MonsterCompendiumFragment : Fragment() {
 
     private val viewModel: MonsterCompendiumViewModel by viewModels()
-    @Inject internal lateinit var navigator: Navigator
+
+    @Inject
+    internal lateinit var navigator: Navigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,50 +49,17 @@ class MonsterCompendiumFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return requireContext().createComposeView { padding ->
-            MonsterCompendium(
-                viewModel = viewModel,
-                navigator = navigator,
-                contentPadding = padding
+            var compendiumIndex by remember { mutableStateOf(-1) }
+            MonsterCompendiumScreen(
+                state = viewModel.state.collectAsState().value,
+                contentPadding = padding,
+                compendiumIndex = compendiumIndex,
+                events = viewModel
             )
-        }
-    }
-}
-
-@Composable
-internal fun MonsterCompendium(
-    viewModel: MonsterCompendiumViewModel,
-    navigator: Navigator,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-) = HunterTheme {
-    val viewState by viewModel.state.collectAsState()
-
-    CircularLoading(viewState.isLoading) {
-        val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewState.initialScrollItemPosition)
-        Box(Modifier.fillMaxSize()) {
-            MonsterCompendium(
-                monstersBySection = viewState.monstersBySection,
-                listState = listState,
-                contentPadding = contentPadding,
-            ) {
-                viewModel.navigateToDetail(index = it)
-            }
-            Closeable(opened = viewState.alphabetOpened, onClosed = viewModel::onAlphabetClosed) {
-                AlphabetIndex(
-                    alphabet = viewState.alphabet,
-                    selectedIndex = viewState.alphabetIndex,
-                    opened = viewState.alphabetOpened,
-                    onOpenButtonClicked = viewModel::onAlphabetOpened,
-                    onCloseButtonClicked = viewModel::onAlphabetClosed,
-                    onAlphabetIndexClicked = viewModel::onAlphabetIndexClicked,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(contentPadding)
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                )
+            Action(viewModel, navigator) { index ->
+                compendiumIndex = index
             }
         }
-        OnFirstVisibleItemChange(viewModel, listState)
-        Action(viewModel, navigator, listState)
     }
 }
 
@@ -109,23 +67,13 @@ internal fun MonsterCompendium(
 internal fun Action(
     viewModel: MonsterCompendiumViewModel,
     navigator: Navigator,
-    listState: LazyListState,
+    onNavigateToCompendiumIndex: (index: Int) -> Unit,
 ) {
-    val action = viewModel.action.collectAsState().value?.content ?: return
+    val action = viewModel.action.collectAsState(null).value ?: return
     when (action) {
         is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
         is MonsterCompendiumAction.NavigateToCompendiumIndex -> {
-            LaunchedEffect(action.index) {
-                listState.scrollToItem(action.index)
-            }
+            onNavigateToCompendiumIndex(action.index)
         }
     }
-}
-
-@Composable
-internal fun OnFirstVisibleItemChange(
-    viewModel: MonsterCompendiumViewModel,
-    listState: LazyListState,
-) {
-    viewModel.saveCompendiumScrollItemPosition(listState.firstVisibleItemIndex)
 }

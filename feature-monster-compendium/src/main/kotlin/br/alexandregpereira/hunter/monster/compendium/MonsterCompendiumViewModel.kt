@@ -20,16 +20,24 @@ package br.alexandregpereira.hunter.monster.compendium
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.model.Event
-import br.alexandregpereira.hunter.domain.model.asEvent
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.monster.compendium.ui.Loading
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterRowState
+import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
+import br.alexandregpereira.hunter.monster.compendium.ui.alphabetIndex
+import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
+import br.alexandregpereira.hunter.monster.compendium.ui.complete
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -42,20 +50,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class MonsterCompendiumViewModel @Inject constructor(
+class MonsterCompendiumViewModel @Inject constructor(
     private val syncMonstersUseCase: SyncMonstersUseCase,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val dispatcher: CoroutineDispatcher,
     @LoadOnInitFlag loadOnInit: Boolean = true,
-) : ViewModel() {
+) : ViewModel(), MonsterCompendiumEvents {
 
     private val _state = MutableStateFlow(MonsterCompendiumViewState.Initial)
     val state: StateFlow<MonsterCompendiumViewState> = _state
 
-    private val _action = MutableStateFlow<Event<MonsterCompendiumAction>?>(null)
-    val action: StateFlow<Event<MonsterCompendiumAction>?> = _action
+    private val _action = MutableSharedFlow<MonsterCompendiumAction>()
+    val action: SharedFlow<MonsterCompendiumAction> = _action
 
     init {
         startSync()
@@ -93,12 +101,41 @@ internal class MonsterCompendiumViewModel @Inject constructor(
             }
     }
 
-    fun navigateToDetail(index: String) {
-        _action.value = MonsterCompendiumAction.NavigateToDetail(index).asEvent()
+    override fun onItemCLick(index: String) {
+        viewModelScope.launch {
+            _action.emit(MonsterCompendiumAction.NavigateToDetail(index))
+        }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun saveCompendiumScrollItemPosition(position: Int) {
+    override fun onFirstVisibleItemChange(position: Int) {
+        saveCompendiumScrollItemPosition(position)
+    }
+
+    override fun onAlphabetOpened() = changeAlphabetOpenState(opened = true)
+
+    override fun onAlphabetClosed() = changeAlphabetOpenState(opened = false)
+
+    override fun onAlphabetIndexClicked(alphabetIndex: Int) {
+        navigateToCompendiumIndex(alphabetIndex)
+    }
+
+    private fun navigateToCompendiumIndex(alphabetIndex: Int) {
+        _state.value = state.value.alphabetOpened(alphabetOpened = false)
+        viewModelScope.launch {
+            flowOf(state.value.monstersBySection)
+                .map { monstersBySection ->
+                    val alphabet = monstersBySection.getAlphabet()
+                    monstersBySection.mapToFirstLetters().indexOf(alphabet[alphabetIndex])
+                }
+                .flowOn(dispatcher)
+                .collect { compendiumIndex ->
+                    _action.emit(MonsterCompendiumAction
+                        .NavigateToCompendiumIndex(compendiumIndex))
+                }
+        }
+    }
+
+    private fun saveCompendiumScrollItemPosition(position: Int) {
         val monstersBySection = state.value.monstersBySection
         val alphabet = state.value.alphabet
         viewModelScope.launch {
@@ -113,16 +150,7 @@ internal class MonsterCompendiumViewModel @Inject constructor(
         }
     }
 
-    fun onAlphabetOpened() = onAlphabetOpenChanged(opened = true)
-
-    fun onAlphabetClosed() = onAlphabetOpenChanged(opened = false)
-
-    fun onAlphabetIndexClicked(alphabetIndex: Int) {
-        _state.value = state.value.alphabetOpened(alphabetOpened = false)
-        navigateToCompendiumIndex(alphabetIndex)
-    }
-
-    private fun onAlphabetOpenChanged(opened: Boolean) {
+    private fun changeAlphabetOpenState(opened: Boolean) {
         _state.value = state.value.alphabetOpened(alphabetOpened = opened)
     }
 
@@ -158,19 +186,5 @@ internal class MonsterCompendiumViewModel @Inject constructor(
         if (monstersBySection.isEmpty()) return 0
         val monsterFirstLetters = monstersBySection.mapToFirstLetters()
         return alphabet.indexOf(monsterFirstLetters[scrollItemPosition])
-    }
-
-    private fun navigateToCompendiumIndex(alphabetIndex: Int) = viewModelScope.launch {
-        flowOf(state.value.monstersBySection)
-            .map { monstersBySection ->
-                val alphabet = monstersBySection.getAlphabet()
-                monstersBySection.mapToFirstLetters().indexOf(alphabet[alphabetIndex])
-            }
-            .flowOn(dispatcher)
-            .collect { compendiumIndex ->
-                _action.value = MonsterCompendiumAction
-                    .NavigateToCompendiumIndex(compendiumIndex)
-                    .asEvent()
-            }
     }
 }
