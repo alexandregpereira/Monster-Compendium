@@ -34,7 +34,6 @@ import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -115,8 +114,8 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     override fun onAlphabetClosed() = changeAlphabetOpenState(opened = false)
 
-    override fun onAlphabetIndexClicked(alphabetIndex: Int) {
-        navigateToCompendiumIndex(alphabetIndex)
+    override fun onAlphabetIndexClicked(position: Int) {
+        navigateToCompendiumIndex(position)
     }
 
     private fun navigateToCompendiumIndex(alphabetIndex: Int) {

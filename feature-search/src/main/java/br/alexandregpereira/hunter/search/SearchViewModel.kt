@@ -25,17 +25,21 @@ import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
     private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase
@@ -44,6 +48,9 @@ internal class SearchViewModel @Inject constructor(
     private val _state = MutableStateFlow(SearchViewState.Initial)
     val state: StateFlow<SearchViewState> = _state
     private val searchQuery = MutableStateFlow(_state.value.searchValue)
+
+    private val _action = MutableSharedFlow<SearchAction>()
+    val action: SharedFlow<SearchAction> = _action
 
     init {
         searchQuery.debounce(500L)
@@ -64,5 +71,11 @@ internal class SearchViewModel @Inject constructor(
     fun onSearchValueChange(value: String) {
         _state.value = state.value.changeSearchValue(value)
         searchQuery.value = value
+    }
+
+    fun onItemClick(index: String) {
+        viewModelScope.launch {
+            _action.emit(SearchAction.NavigateToDetail(index))
+        }
     }
 }

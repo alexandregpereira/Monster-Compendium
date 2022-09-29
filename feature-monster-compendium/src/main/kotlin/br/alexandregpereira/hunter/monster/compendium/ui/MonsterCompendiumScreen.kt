@@ -94,11 +94,3 @@ private fun OnFirstVisibleItemChange(
 ) {
     saveCompendiumScrollItemPosition(listState.firstVisibleItemIndex)
 }
-
-interface MonsterCompendiumEvents {
-    fun onFirstVisibleItemChange(position: Int)
-    fun onItemCLick(index: String)
-    fun onAlphabetClosed()
-    fun onAlphabetOpened()
-    fun onAlphabetIndexClicked(position: Int)
-}

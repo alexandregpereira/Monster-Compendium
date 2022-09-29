@@ -35,6 +35,10 @@ internal interface MonsterDao {
     suspend fun getMonsters(): List<MonsterCompleteEntity>
 
     @Transaction
+    @Query("SELECT * FROM MonsterEntity WHERE `index` == :index")
+    fun getMonster(index: String): MonsterCompleteEntity
+
+    @Transaction
     @RawQuery
     suspend fun getMonstersByQuery(query: SupportSQLiteQuery): List<MonsterCompleteEntity>
 

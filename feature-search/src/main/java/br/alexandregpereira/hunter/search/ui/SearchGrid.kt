@@ -17,6 +17,10 @@
 
 package br.alexandregpereira.hunter.search.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,11 +33,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.MonsterCard
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchGrid(
     monsters: List<MonsterCardState>,
     contentPadding: PaddingValues = PaddingValues(),
-    ) {
+    onCardClick: (String) -> Unit = {},
+) = AnimatedVisibility(
+    visible = monsters.isNotEmpty(),
+    enter = fadeIn(),
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
         contentPadding = PaddingValues(
@@ -42,7 +51,7 @@ fun SearchGrid(
         ),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(monsters) { monsterCardState ->
+        items(monsters, key = { it.index }) { monsterCardState ->
             MonsterCard(
                 name = monsterCardState.name,
                 url = monsterCardState.imageUrl,
@@ -53,7 +62,12 @@ fun SearchGrid(
                     monsterCardState.backgroundColorLight
                 },
                 challengeRating = monsterCardState.challengeRating,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .animateItemPlacement(),
+                onCLick = {
+                    onCardClick(monsterCardState.index)
+                }
             )
         }
     }

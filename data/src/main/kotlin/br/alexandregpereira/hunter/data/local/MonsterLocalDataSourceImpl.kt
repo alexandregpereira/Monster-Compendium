@@ -63,6 +63,10 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun getMonster(index: String): Flow<MonsterCompleteEntity> = flow {
+        emit(monsterDao.getMonster(index))
+    }
+
     override fun getMonstersByQuery(query: String): Flow<List<MonsterCompleteEntity>> = flow {
         mutex.withLock {
             monsterDao.getMonstersByQuery(

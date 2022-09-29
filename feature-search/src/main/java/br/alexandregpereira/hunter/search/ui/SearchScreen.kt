@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.search.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -32,18 +33,28 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 internal fun SearchScreen(
     state: SearchViewState,
     contentPaddingValues: PaddingValues = PaddingValues(),
-    onSearchValueChange: (String) -> Unit = {}
+    onSearchValueChange: (String) -> Unit = {},
+    onCardClick: (String) -> Unit = {},
 ) = HunterTheme {
     Surface {
         Column(Modifier) {
-            Spacer(modifier = Modifier.height(contentPaddingValues.calculateTopPadding()))
-            SearchBar(
-                text = state.searchValue,
-                onValueChange = onSearchValueChange,
-                modifier = Modifier.padding(16.dp)
-            )
+            Box {
+                SearchGrid(
+                    monsters = state.monsters,
+                    contentPadding = PaddingValues(
+                        top = contentPaddingValues.calculateTopPadding() + 56.dp + 40.dp,
+                        bottom = contentPaddingValues.calculateBottomPadding()
+                    ),
+                    onCardClick = onCardClick
+                )
 
-            SearchGrid(monsters = state.monsters, contentPadding = contentPaddingValues)
+                SearchBar(
+                    text = state.searchValue,
+                    onValueChange = onSearchValueChange,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                        .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
+                )
+            }
             Spacer(modifier = Modifier.height(contentPaddingValues.calculateBottomPadding()))
         }
     }

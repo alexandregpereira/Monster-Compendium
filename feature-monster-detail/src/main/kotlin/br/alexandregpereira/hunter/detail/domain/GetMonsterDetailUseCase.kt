@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.detail.domain
 
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
@@ -28,14 +32,20 @@ typealias MonsterDetail = Triple<Int, List<Monster>, MeasurementUnit>
 class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
+    private val getMonsterUseCase: GetMonsterUseCase
 ) {
 
-    operator fun invoke(index: String): Flow<MonsterDetail> {
-        return getMonstersUseCase().zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
-            val monster = monsters.find { monster -> monster.index == index }
-                ?: throw IllegalAccessError("Monster not found")
+    operator fun invoke(index: String, isSingleMonster: Boolean): Flow<MonsterDetail> {
+        return getMonsters(index, isSingleMonster)
+            .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
+                val monster = monsters.find { monster -> monster.index == index }
+                    ?: throw IllegalAccessError("Monster not found")
 
-             Triple(monsters.indexOf(monster), monsters, measurementUnit)
-        }
+                Triple(monsters.indexOf(monster), monsters, measurementUnit)
+            }
+    }
+
+    private fun getMonsters(index: String, isSingleMonster: Boolean): Flow<List<Monster>> {
+        return if (isSingleMonster) getMonsterUseCase(index).map { listOf(it) } else getMonstersUseCase()
     }
 }

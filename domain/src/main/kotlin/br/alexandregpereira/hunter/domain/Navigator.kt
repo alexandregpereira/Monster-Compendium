@@ -18,5 +18,5 @@
 package br.alexandregpereira.hunter.domain
 
 interface Navigator {
-    fun navigateToDetail(index: String)
+    fun navigateToDetail(index: String, disablePageScroll: Boolean = false)
 }
