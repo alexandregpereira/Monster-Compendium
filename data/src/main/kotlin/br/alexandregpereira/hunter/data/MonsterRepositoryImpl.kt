@@ -63,4 +63,8 @@ internal class MonsterRepositoryImpl @Inject constructor(
     override fun getLocalMonsters(): Flow<List<Monster>> {
         return localDataSource.getMonsters().map { it.toDomain() }
     }
+
+    override fun getLocalMonstersByQuery(query: String): Flow<List<Monster>> {
+        return localDataSource.getMonstersByQuery(query).map { it.toDomain() }
+    }
 }

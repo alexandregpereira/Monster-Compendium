@@ -17,6 +17,33 @@
 
 package br.alexandregpereira.hunter.search
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import br.alexandregpereira.hunter.search.ui.SearchScreen
+import br.alexandregpereira.hunter.ui.util.createComposeView
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchFragment : Fragment()
+@AndroidEntryPoint
+class SearchFragment : Fragment() {
+
+    private val viewModel: SearchViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return requireContext().createComposeView(withBottomBar = true) { padding ->
+            SearchScreen(
+                state = viewModel.state.collectAsState().value,
+                contentPaddingValues = padding,
+                onSearchValueChange = viewModel::onSearchValueChange
+            )
+        }
+    }
+}

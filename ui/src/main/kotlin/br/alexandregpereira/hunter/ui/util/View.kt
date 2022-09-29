@@ -22,14 +22,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 
 fun Context.createComposeView(
+    withBottomBar: Boolean = false,
     content: @Composable (PaddingValues) -> Unit
 ): ComposeView {
     return ComposeView(this).apply {
         setContent {
+            val bottomBarNavigationSize = if (withBottomBar) 58.dp else 0.dp
             ProvideWindowInsets {
                 val insets = LocalWindowInsets.current
                 val top = with(LocalDensity.current) { insets.systemBars.top.toDp() }
@@ -37,7 +40,7 @@ fun Context.createComposeView(
                 content(
                     PaddingValues(
                         top = top,
-                        bottom = bottom
+                        bottom = bottom + bottomBarNavigationSize
                     )
                 )
             }

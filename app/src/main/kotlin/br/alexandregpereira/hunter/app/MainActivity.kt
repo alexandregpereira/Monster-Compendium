@@ -20,16 +20,31 @@ package br.alexandregpereira.hunter.app
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import br.alexandregpereira.hunter.app.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-    class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val onDestinationChanged = NavController.OnDestinationChangedListener { _, destination, _ ->
+        val value = if (destination.id != R.id.monsterDetailFragment) 0 else binding.bottomNavigation.height
+        binding.bottomNavigation.animate()
+            .setDuration(150L)
+            .setInterpolator(FastOutLinearInInterpolator())
+            .translationY(value.toFloat())
+    }
+
+    private val navController by lazy {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +56,16 @@ import dagger.hilt.android.AndroidEntryPoint
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
         binding.bottomNavigation.setupWithNavController(navController)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navController.addOnDestinationChangedListener(onDestinationChanged)
+    }
+
+    override fun onPause() {
+        navController.removeOnDestinationChangedListener(onDestinationChanged)
+        super.onPause()
     }
 }

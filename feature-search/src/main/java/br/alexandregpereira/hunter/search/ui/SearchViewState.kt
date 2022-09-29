@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.ui.compose
+package br.alexandregpereira.hunter.search.ui
 
 import androidx.annotation.DrawableRes
-import br.alexandregpereira.hunter.ui.R
+import br.alexandregpereira.hunter.search.R
+
+internal data class SearchViewState(
+    val searchValue: String = "",
+    val monsters: List<MonsterCardState> = emptyList()
+) {
+
+    companion object {
+        val Initial = SearchViewState()
+    }
+}
+
+data class MonsterCardState(
+    val index: String,
+    val name: String,
+    val imageUrl: String,
+    val type: MonsterTypeState,
+    val backgroundColorLight: String,
+    val backgroundColorDark: String,
+    val challengeRating: Float,
+    val contentDescription: String = ""
+)
 
 enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     ABERRATION(R.drawable.ic_aberration),
@@ -35,4 +56,12 @@ enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     OOZE(R.drawable.ic_ooze),
     PLANT(R.drawable.ic_plant),
     UNDEAD(R.drawable.ic_undead)
+}
+
+internal fun SearchViewState.changeSearchValue(value: String): SearchViewState {
+    return this.copy(searchValue = value)
+}
+
+internal fun SearchViewState.changeMonsters(monsters: List<MonsterCardState>): SearchViewState {
+    return this.copy(monsters = monsters)
 }

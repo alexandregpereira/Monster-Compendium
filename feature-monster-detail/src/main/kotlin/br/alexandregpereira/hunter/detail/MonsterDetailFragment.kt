@@ -29,7 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.alexandregpereira.hunter.detail.ui.MonsterDetail
+import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -63,7 +63,7 @@ internal fun MonsterDetail(
 
     CircularLoading(viewState.isLoading) {
         viewState.monsters.takeIf { it.isNotEmpty() }?.let {
-            MonsterDetail(
+            MonsterDetailScreen(
                 it,
                 viewState.initialMonsterIndex,
                 contentPadding,

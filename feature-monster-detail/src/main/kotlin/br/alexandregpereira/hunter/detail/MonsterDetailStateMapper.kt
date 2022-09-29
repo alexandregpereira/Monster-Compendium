@@ -20,12 +20,15 @@ package br.alexandregpereira.hunter.detail
 import br.alexandregpereira.hunter.detail.ui.AbilityDescriptionState
 import br.alexandregpereira.hunter.detail.ui.AbilityScoreState
 import br.alexandregpereira.hunter.detail.ui.ActionState
+import br.alexandregpereira.hunter.detail.ui.ColorState
 import br.alexandregpereira.hunter.detail.ui.ConditionState
 import br.alexandregpereira.hunter.detail.ui.ConditionTypeState
 import br.alexandregpereira.hunter.detail.ui.DamageDiceState
 import br.alexandregpereira.hunter.detail.ui.DamageState
 import br.alexandregpereira.hunter.detail.ui.DamageTypeState
+import br.alexandregpereira.hunter.detail.ui.MonsterImageState
 import br.alexandregpereira.hunter.detail.ui.MonsterState
+import br.alexandregpereira.hunter.detail.ui.MonsterTypeState
 import br.alexandregpereira.hunter.detail.ui.ProficiencyState
 import br.alexandregpereira.hunter.detail.ui.SpeedState
 import br.alexandregpereira.hunter.detail.ui.SpeedTypeState
@@ -42,9 +45,6 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Proficiency
 import br.alexandregpereira.hunter.domain.model.SpeedValue
-import br.alexandregpereira.hunter.ui.compose.ColorState
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 
 internal fun List<Monster>.asState(): List<MonsterState> {
     return this.map { it.asState() }

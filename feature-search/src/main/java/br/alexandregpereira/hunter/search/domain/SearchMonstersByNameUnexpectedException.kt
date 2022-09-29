@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,14 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local
+package br.alexandregpereira.hunter.search.domain
 
-import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
-import kotlinx.coroutines.flow.Flow
-
-internal interface MonsterLocalDataSource {
-
-    fun getMonsters(): Flow<List<MonsterCompleteEntity>>
-    fun getMonstersByQuery(query: String): Flow<List<MonsterCompleteEntity>>
-    fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
-}
+class SearchMonstersByNameUnexpectedException(cause: Throwable) : Throwable(cause)

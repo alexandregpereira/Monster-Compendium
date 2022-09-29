@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.ui.compose
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -32,16 +33,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.ui.compose.ColorState
-import br.alexandregpereira.hunter.ui.compose.MonsterImage
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compose.animatePressed
+import br.alexandregpereira.hunter.ui.R
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun MonsterCard(
-    monsterCardState: MonsterCardState,
+    name: String,
+    url: String,
+    @DrawableRes iconRes: Int,
+    backgroundColor: String,
+    challengeRating: Float,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
 ) {
@@ -61,10 +62,15 @@ fun MonsterCard(
                 onClick = onCLick
             )
     ) {
-        MonsterImage(monsterCardState.imageState)
+        MonsterImage(
+            url = url,
+            iconRes = iconRes,
+            backgroundColor = backgroundColor,
+            challengeRating = challengeRating,
+        )
 
         Text(
-            text = monsterCardState.name,
+            text = name,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
             modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)
@@ -72,27 +78,16 @@ fun MonsterCard(
     }
 }
 
-data class MonsterCardState(
-    val index: String,
-    val name: String,
-    val imageState: MonsterImageState,
-)
-
 @Preview
 @Composable
 private fun MonsterCardPreview() {
     HunterTheme {
-        val imageState = MonsterImageState(
-            url = "asdasdas",
-            backgroundColor = ColorState("#ffe3ee", ""),
-            challengeRating = 18f,
-            type = MonsterTypeState.ABERRATION
-        )
-        val state = MonsterCardState(
-            index = "Monster of the Monsters",
+        MonsterCard(
             name = "Monster of the Monsters",
-            imageState = imageState
+            url = "asdasdas",
+            backgroundColor = "#ffe3ee",
+            challengeRating = 18f,
+            iconRes = R.drawable.ic_aberration
         )
-        MonsterCard(state)
     }
 }

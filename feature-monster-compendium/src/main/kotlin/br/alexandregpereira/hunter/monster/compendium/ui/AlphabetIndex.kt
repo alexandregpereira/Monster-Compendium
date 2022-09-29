@@ -132,7 +132,7 @@ fun AlphabetIndex(
             ) {
                 Text(
                     text = alphabet[selectedIndex].toString(),
-                    color = MaterialTheme.colors.onSecondary,
+                    color = MaterialTheme.colors.primaryVariant,
                     style = TextStyle(fontSize = 24.sp),
                     modifier = Modifier
                         .align(Alignment.Center)
