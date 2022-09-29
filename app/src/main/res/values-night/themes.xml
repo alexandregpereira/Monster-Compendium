@@ -34,4 +34,13 @@
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
     </style>
 
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/gray_scale_900</item>
+        <item name="colorOnPrimary">?attr/colorOnSurface</item>
+    </style>
+
 </resources>

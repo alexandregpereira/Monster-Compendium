@@ -19,9 +19,7 @@ package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -32,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.compose.ColorState
@@ -46,9 +43,7 @@ internal fun MonsterCompendium(
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
-) = LazyColumn(state = listState) {
-
-    val lastIndex = monstersBySection.entries.size - 1
+) = LazyColumn(state = listState, contentPadding = contentPadding) {
     monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
         val monsterSection = monsterSectionEntry.key
         val monsterRows = monsterSectionEntry.value
@@ -56,9 +51,6 @@ internal fun MonsterCompendium(
         val sectionTitlePaddingTop = 32.dp
         val sectionTitlePaddingBottom = 16.dp
         item {
-            if (index == 0) {
-                TopBottomSpace(height = contentPadding.calculateTopPadding())
-            }
             monsterSection.parentTitle?.let {
                 SectionTitle(
                     title = it,
@@ -93,9 +85,6 @@ internal fun MonsterCompendium(
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
 
-                if (index == lastIndex) {
-                    TopBottomSpace(height = contentPadding.calculateBottomPadding())
-                }
             }
         }
     }
@@ -144,19 +133,6 @@ private fun SectionTitle(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-        )
-    }
-}
-
-@Composable
-private fun TopBottomSpace(
-    height: Dp
-) {
-    Surface {
-        Spacer(
-            Modifier
-                .fillMaxWidth()
-                .height(height)
         )
     }
 }

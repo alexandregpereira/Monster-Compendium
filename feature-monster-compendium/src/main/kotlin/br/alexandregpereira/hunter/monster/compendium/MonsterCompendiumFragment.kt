@@ -21,12 +21,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.domain.Navigator
@@ -50,9 +52,14 @@ class MonsterCompendiumFragment : Fragment() {
     ): View {
         return requireContext().createComposeView { padding ->
             var compendiumIndex by remember { mutableStateOf(-1) }
+            val bottomBarNavigationSize = 58.dp
+            val contentPadding = PaddingValues(
+                top = padding.calculateTopPadding(),
+                bottom = padding.calculateBottomPadding() + bottomBarNavigationSize
+            )
             MonsterCompendiumScreen(
                 state = viewModel.state.collectAsState().value,
-                contentPadding = padding,
+                contentPadding = contentPadding,
                 compendiumIndex = compendiumIndex,
                 events = viewModel
             )
