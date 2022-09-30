@@ -26,15 +26,15 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterImageState
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterTypeState
 import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
 import br.alexandregpereira.hunter.monster.compendium.ui.and
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
-import br.alexandregpereira.hunter.ui.compose.ColorState
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -42,7 +42,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -60,7 +61,7 @@ class MonsterCompendiumViewModelTest {
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
-    fun loadMonsters() = runBlockingTest {
+    fun loadMonsters() = runTest {
         // Given
         val section = MonsterSection(title = "Any")
         val monster = MonsterPreview(
@@ -87,6 +88,8 @@ class MonsterCompendiumViewModelTest {
 
         // When
         viewModel.loadMonsters()
+
+        advanceUntilIdle()
 
         // Then
         verify { syncMonstersUseCase() }
