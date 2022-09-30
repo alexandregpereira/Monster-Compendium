@@ -27,4 +27,6 @@ interface MonsterRepository {
     fun getRemoteMonsters(): Flow<List<Monster>>
     fun getRemoteMonsters(source: Source): Flow<List<Monster>>
     fun getLocalMonsters(): Flow<List<Monster>>
+    fun getLocalMonster(index: String): Flow<Monster>
+    fun getLocalMonstersByQuery(query: String): Flow<List<Monster>>
 }

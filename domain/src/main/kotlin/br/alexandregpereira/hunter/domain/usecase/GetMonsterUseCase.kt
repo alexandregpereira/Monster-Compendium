@@ -15,15 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local
+package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-internal interface MonsterLocalDataSource {
+class GetMonsterUseCase @Inject internal constructor(
+    private val repository: MonsterRepository
+) {
 
-    fun getMonsters(): Flow<List<MonsterCompleteEntity>>
-    fun getMonstersByQuery(query: String): Flow<List<MonsterCompleteEntity>>
-    fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
-    fun getMonster(index: String): Flow<MonsterCompleteEntity>
+    operator fun invoke(index: String): Flow<Monster> {
+        return repository.getLocalMonster(index)
+    }
 }

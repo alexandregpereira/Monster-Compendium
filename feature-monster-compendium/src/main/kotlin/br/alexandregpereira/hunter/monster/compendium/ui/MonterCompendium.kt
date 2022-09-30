@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,9 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.ui.compose.ColorState
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.MonsterCard
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
@@ -44,7 +43,8 @@ internal fun MonsterCompendium(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
 ) = LazyColumn(state = listState, contentPadding = contentPadding) {
-    monstersBySection.entries.forEachIndexed { index, monsterSectionEntry ->
+
+    monstersBySection.entries.forEach { monsterSectionEntry ->
         val monsterSection = monsterSectionEntry.key
         val monsterRows = monsterSectionEntry.value
 
@@ -84,7 +84,6 @@ internal fun MonsterCompendium(
                     onItemClick = onItemCLick,
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
-
             }
         }
     }
@@ -100,7 +99,11 @@ fun MonsterRow(
     Row(modifier) {
 
         MonsterCard(
-            monsterCardState = leftMonster,
+            name = leftMonster.name,
+            url = leftMonster.imageState.url,
+            iconRes = leftMonster.imageState.type.iconRes,
+            backgroundColor = leftMonster.imageState.backgroundColor.getColor(isSystemInDarkTheme()),
+            challengeRating = leftMonster.imageState.challengeRating,
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 8.dp),
@@ -108,11 +111,15 @@ fun MonsterRow(
         )
         rightMonster?.let {
             MonsterCard(
-                monsterCardState = it,
+                name = it.name,
+                url = it.imageState.url,
+                iconRes = it.imageState.type.iconRes,
+                backgroundColor = it.imageState.backgroundColor.getColor(isSystemInDarkTheme()),
+                challengeRating = it.imageState.challengeRating,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp),
-                onCLick = { onItemClick(it.index) }
+                onCLick = { onItemClick(it.index) },
             )
         }
     }

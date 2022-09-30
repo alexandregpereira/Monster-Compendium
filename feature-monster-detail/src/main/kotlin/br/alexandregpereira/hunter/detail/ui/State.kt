@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.annotation.DrawableRes
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
 
 data class MonsterState(
     val index: String,
@@ -141,3 +140,37 @@ data class DamageDiceState(
     val dice: String,
     val damage: DamageState
 )
+
+data class MonsterImageState(
+    val url: String,
+    val type: MonsterTypeState,
+    val backgroundColor: ColorState,
+    val challengeRating: Float,
+    val isHorizontal: Boolean = false,
+    val contentDescription: String = ""
+)
+
+data class ColorState(
+    val light: String,
+    val dark: String
+) {
+
+    fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
+}
+
+enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
+    ABERRATION(R.drawable.ic_aberration),
+    BEAST(R.drawable.ic_beast),
+    CELESTIAL(R.drawable.ic_celestial),
+    CONSTRUCT(R.drawable.ic_construct),
+    DRAGON(R.drawable.ic_dragon),
+    ELEMENTAL(R.drawable.ic_elemental),
+    FEY(R.drawable.ic_fey),
+    FIEND(R.drawable.ic_fiend),
+    GIANT(R.drawable.ic_giant),
+    HUMANOID(R.drawable.ic_humanoid),
+    MONSTROSITY(R.drawable.ic_monstrosity),
+    OOZE(R.drawable.ic_ooze),
+    PLANT(R.drawable.ic_plant),
+    UNDEAD(R.drawable.ic_undead)
+}

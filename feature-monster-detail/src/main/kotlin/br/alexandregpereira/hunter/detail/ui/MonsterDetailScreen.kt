@@ -62,10 +62,7 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
-import br.alexandregpereira.hunter.ui.compose.ColorState
-import br.alexandregpereira.hunter.ui.compose.MonsterImageState
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
-import br.alexandregpereira.hunter.ui.compose.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -78,7 +75,7 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MonsterDetail(
+fun MonsterDetailScreen(
     monsters: List<MonsterState>,
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -301,7 +298,7 @@ private fun MonsterTypeIcon(
 ) {
     AlphaTransition(dataList = monsters, pagerState) { data: MonsterState, alpha ->
         MonsterTypeIcon(
-            type = data.imageState.type,
+            iconRes = data.imageState.type.iconRes,
             iconSize = 32.dp,
             modifier.alpha(alpha)
         )
@@ -341,7 +338,7 @@ private val IMAGE_HEIGHT = 420.dp
 @Preview
 @Composable
 private fun MonsterDetailPreview() = Window {
-    MonsterDetail(
+    MonsterDetailScreen(
         monsters = (0..10).map {
             MonsterState(
                 index = "",

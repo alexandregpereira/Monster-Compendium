@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,9 +33,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MonsterTypeIcon(
-    type: MonsterTypeState,
+    @DrawableRes iconRes: Int,
     iconSize: Dp,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentDescription: String = ""
 ) = Box(
     contentAlignment = Alignment.TopEnd,
     modifier = modifier
@@ -42,8 +44,8 @@ fun MonsterTypeIcon(
         .padding(8.dp),
 ) {
     Icon(
-        painter = painterResource(type.iconRes),
-        contentDescription = type.name,
+        painter = painterResource(iconRes),
+        contentDescription = contentDescription,
         modifier = Modifier
             .size(iconSize)
             .alpha(0.7f)

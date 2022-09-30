@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.data.local
 
 import android.util.Log
+import androidx.sqlite.db.SimpleSQLiteQuery
 import br.alexandregpereira.hunter.data.local.dao.AbilityScoreDao
 import br.alexandregpereira.hunter.data.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.local.dao.ConditionDao
@@ -57,6 +58,22 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     override fun getMonsters(): Flow<List<MonsterCompleteEntity>> = flow {
         mutex.withLock {
             monsterDao.getMonsters()
+        }.let { monsters ->
+            emit(monsters)
+        }
+    }
+
+    override fun getMonster(index: String): Flow<MonsterCompleteEntity> = flow {
+        emit(monsterDao.getMonster(index))
+    }
+
+    override fun getMonstersByQuery(query: String): Flow<List<MonsterCompleteEntity>> = flow {
+        mutex.withLock {
+            monsterDao.getMonstersByQuery(
+                SimpleSQLiteQuery(
+                    "SELECT * FROM MonsterEntity WHERE $query"
+                )
+            )
         }.let { monsters ->
             emit(monsters)
         }

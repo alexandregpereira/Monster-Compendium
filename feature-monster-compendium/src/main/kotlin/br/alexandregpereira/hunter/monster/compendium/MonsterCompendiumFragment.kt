@@ -50,13 +50,8 @@ class MonsterCompendiumFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return requireContext().createComposeView { padding ->
+        return requireContext().createComposeView(withBottomBar = true) { contentPadding ->
             var compendiumIndex by remember { mutableStateOf(-1) }
-            val bottomBarNavigationSize = 58.dp
-            val contentPadding = PaddingValues(
-                top = padding.calculateTopPadding(),
-                bottom = padding.calculateBottomPadding() + bottomBarNavigationSize
-            )
             MonsterCompendiumScreen(
                 state = viewModel.state.collectAsState().value,
                 contentPadding = contentPadding,

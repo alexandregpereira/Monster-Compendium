@@ -23,15 +23,7 @@
     <fragment
         android:id="@+id/monsterCompendiumFragment"
         android:name="br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFragment"
-        android:label="MonsterCompendiumFragment" >
-        <action
-            android:id="@+id/action_monsterCompendiumFragment_to_monsterDetailFragment"
-            app:destination="@id/monsterDetailFragment"
-            app:enterAnim="@anim/enter_animation"
-            app:exitAnim="@anim/exit_animation"
-            app:popEnterAnim="@anim/pop_enter_animation"
-            app:popExitAnim="@anim/pop_exit_animation" />
-    </fragment>
+        android:label="MonsterCompendiumFragment" />
     <fragment
         android:id="@+id/monsterDetailFragment"
         android:name="br.alexandregpereira.hunter.detail.MonsterDetailFragment"
@@ -44,4 +36,12 @@
         android:id="@+id/settingsFragment"
         android:name="br.alexandregpereira.hunter.settings.SettingsFragment"
         android:label="SettingsFragment" />
+
+    <action
+        android:id="@+id/action_global_monsterDetailFragment"
+        app:destination="@id/monsterDetailFragment"
+        app:enterAnim="@anim/enter_animation"
+        app:exitAnim="@anim/exit_animation"
+        app:popEnterAnim="@anim/pop_enter_animation"
+        app:popExitAnim="@anim/pop_exit_animation" />
 </navigation>

@@ -21,10 +21,10 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
+import br.alexandregpereira.hunter.detail.domain.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterDetailUseCase
-import br.alexandregpereira.hunter.domain.usecase.MonsterDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -55,13 +54,14 @@ internal class MonsterDetailViewModel @Inject constructor(
     val state: StateFlow<MonsterDetailViewState> = _state
 
     var monsterIndex: String = savedStateHandle["index"] ?: ""
+    private val disablePageScroll: Boolean = savedStateHandle["disablePageScroll"] ?: false
 
     init {
         getMonstersByInitialIndex()
     }
 
     private fun getMonstersByInitialIndex() = viewModelScope.launch {
-        getMonsterDetailUseCase(monsterIndex).collectDetail()
+        getMonsterDetail().collectDetail()
     }
 
     fun onShowOptionsClicked() {
@@ -84,10 +84,14 @@ internal class MonsterDetailViewModel @Inject constructor(
         }
     }
 
+    private fun getMonsterDetail(): Flow<MonsterDetail> {
+        return getMonsterDetailUseCase(monsterIndex, isSingleMonster = disablePageScroll)
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun changeMeasurementUnit(measurementUnit: MeasurementUnit) = viewModelScope.launch {
         changeMonstersMeasurementUnitUseCase(measurementUnit)
-            .flatMapLatest { getMonsterDetailUseCase(monsterIndex) }
+            .flatMapLatest { getMonsterDetail() }
             .collectDetail()
     }
 

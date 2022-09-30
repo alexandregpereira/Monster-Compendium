@@ -21,7 +21,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Transaction
+import androidx.sqlite.db.SupportSQLiteQuery
 import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
 
@@ -31,6 +33,14 @@ internal interface MonsterDao {
     @Transaction
     @Query("SELECT * FROM MonsterEntity")
     suspend fun getMonsters(): List<MonsterCompleteEntity>
+
+    @Transaction
+    @Query("SELECT * FROM MonsterEntity WHERE `index` == :index")
+    fun getMonster(index: String): MonsterCompleteEntity
+
+    @Transaction
+    @RawQuery
+    suspend fun getMonstersByQuery(query: SupportSQLiteQuery): List<MonsterCompleteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(monsters: List<MonsterEntity>)
