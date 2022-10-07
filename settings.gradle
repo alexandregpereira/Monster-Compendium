@@ -25,7 +25,6 @@ dependencyResolutionManagement {
 rootProject.name = 'hunter'
 include ':app'
 include ':data'
-include ':data-remote-model'
 include ':domain'
 include ':feature-monster-compendium'
 include ':feature-monster-detail'
