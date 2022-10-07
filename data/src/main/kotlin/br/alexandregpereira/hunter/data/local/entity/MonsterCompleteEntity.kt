@@ -10,7 +10,7 @@ internal data class MonsterCompleteEntity(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val speed: SpeedWithValuesEntity,
+    val speed: SpeedWithValuesEntity?,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",

@@ -24,6 +24,10 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
@@ -32,6 +36,7 @@ import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetIndex
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
+import br.alexandregpereira.hunter.monster.compendium.ui.showMonsterFolderPreview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -54,6 +59,8 @@ class MonsterCompendiumViewModel @Inject constructor(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
+    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener,
     private val dispatcher: CoroutineDispatcher,
     @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
@@ -65,6 +72,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     val action: SharedFlow<MonsterCompendiumAction> = _action
 
     init {
+        observeEvents()
         startSync()
         if (loadOnInit) loadMonsters()
     }
@@ -76,7 +84,7 @@ class MonsterCompendiumViewModel @Inject constructor(
             ) { monstersBySection, scrollItemPosition ->
                 val monstersBySectionState = monstersBySection.asState()
                 val alphabet = monstersBySectionState.getAlphabet()
-                MonsterCompendiumViewState.Initial.complete(
+                state.value.complete(
                     monstersBySection = monstersBySectionState,
                     alphabet = alphabet,
                     alphabetIndex = getAlphabetIndex(
@@ -88,7 +96,7 @@ class MonsterCompendiumViewModel @Inject constructor(
                 )
             }
             .onStart {
-                emit(MonsterCompendiumViewState.Initial.Loading)
+                emit(state.value.Loading)
             }
             .flowOn(dispatcher)
             .catch {
@@ -103,6 +111,12 @@ class MonsterCompendiumViewModel @Inject constructor(
     override fun onItemCLick(index: String) {
         viewModelScope.launch {
             _action.emit(MonsterCompendiumAction.NavigateToDetail(index))
+        }
+    }
+
+    override fun onItemLongCLick(index: String) {
+        viewModelScope.launch {
+            folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
         }
     }
 
@@ -185,5 +199,19 @@ class MonsterCompendiumViewModel @Inject constructor(
         if (monstersBySection.isEmpty()) return 0
         val monsterFirstLetters = monstersBySection.mapToFirstLetters()
         return alphabet.indexOf(monsterFirstLetters[scrollItemPosition])
+    }
+
+    private fun observeEvents() {
+        viewModelScope.launch {
+            folderPreviewConsumerEventListener.events.collect { event ->
+                when (event) {
+                    is OnFolderPreviewPreviewVisibilityChanges -> showMonsterFolderPreview(event.isShowing)
+                }
+            }
+        }
+    }
+
+    private fun showMonsterFolderPreview(isShowing: Boolean) {
+        _state.value = state.value.showMonsterFolderPreview(isShowing)
     }
 }

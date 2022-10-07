@@ -26,6 +26,8 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
@@ -58,6 +60,8 @@ class MonsterCompendiumViewModelTest {
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
     private val syncMonstersUseCase: SyncMonstersUseCase = mockk(relaxUnitFun = true)
+    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = mockk()
+    private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
@@ -132,6 +136,8 @@ class MonsterCompendiumViewModelTest {
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
+            folderPreviewEventDispatcher = folderPreviewEventDispatcher,
+            folderPreviewConsumerEventListener = folderPreviewConsumerEventListener,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )

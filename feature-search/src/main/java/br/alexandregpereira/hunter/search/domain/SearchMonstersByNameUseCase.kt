@@ -50,7 +50,3 @@ internal class SearchMonstersByNameUseCase @Inject internal constructor(
             }
     }
 }
-
-
-
-

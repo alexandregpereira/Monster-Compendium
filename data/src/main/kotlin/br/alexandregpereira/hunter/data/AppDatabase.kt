@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.data.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
 import br.alexandregpereira.hunter.data.local.dao.SkillDao
@@ -39,6 +40,7 @@ import br.alexandregpereira.hunter.data.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.local.entity.DamageVulnerabilityEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.local.entity.SkillEntity
@@ -56,6 +58,7 @@ import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
         DamageImmunityEntity::class,
         DamageDiceEntity::class,
         MonsterEntity::class,
+        MonsterFolderEntity::class,
         SavingThrowEntity::class,
         SkillEntity::class,
         SpecialAbilityEntity::class,
@@ -63,7 +66,7 @@ import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
         SpeedValueEntity::class,
         ReactionEntity::class,
     ],
-    version = 10,
+    version = 13,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
@@ -73,6 +76,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun damageDao(): DamageDao
     abstract fun damageDiceDao(): DamageDiceDao
     abstract fun monsterDao(): MonsterDao
+    abstract fun monsterFolderDao(): MonsterFolderDao
     abstract fun savingThrowDao(): SavingThrowDao
     abstract fun skillDao(): SkillDao
     abstract fun specialAbilityDao(): SpecialAbilityDao

@@ -63,6 +63,7 @@ android {
 dependencies {
     implementation project(':domain')
     implementation project(':data')
+    implementation project(':feature-folder-preview')
     implementation project(':feature-monster-compendium')
     implementation project(':feature-monster-detail')
     implementation project(':feature-search')

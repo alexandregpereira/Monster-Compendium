@@ -21,14 +21,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import br.alexandregpereira.hunter.domain.Navigator
@@ -71,11 +70,14 @@ internal fun Action(
     navigator: Navigator,
     onNavigateToCompendiumIndex: (index: Int) -> Unit,
 ) {
-    val action = viewModel.action.collectAsState(null).value ?: return
-    when (action) {
-        is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
-        is MonsterCompendiumAction.NavigateToCompendiumIndex -> {
-            onNavigateToCompendiumIndex(action.index)
+    LaunchedEffect(key1 = Unit) {
+        viewModel.action.collect { action ->
+            when (action) {
+                is MonsterCompendiumAction.NavigateToDetail -> navigator.navigateToDetail(action.index)
+                is MonsterCompendiumAction.NavigateToCompendiumIndex -> {
+                    onNavigateToCompendiumIndex(action.index)
+                }
+            }
         }
     }
 }
