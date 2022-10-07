@@ -25,6 +25,9 @@ import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.detail.domain.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +50,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
+    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -55,9 +59,16 @@ internal class MonsterDetailViewModel @Inject constructor(
 
     var monsterIndex: String = savedStateHandle["index"] ?: ""
     private val disablePageScroll: Boolean = savedStateHandle["disablePageScroll"] ?: false
+    private val folderName: String = savedStateHandle["folderName"] ?: ""
 
     init {
+        folderPreviewEventDispatcher.dispatchEvent(HideFolderPreview)
         getMonstersByInitialIndex()
+    }
+
+    override fun onCleared() {
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
+        super.onCleared()
     }
 
     private fun getMonstersByInitialIndex() = viewModelScope.launch {
@@ -85,7 +96,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     private fun getMonsterDetail(): Flow<MonsterDetail> {
-        return getMonsterDetailUseCase(monsterIndex, isSingleMonster = disablePageScroll)
+        return getMonsterDetailUseCase(monsterIndex, isSingleMonster = disablePageScroll, folderName)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

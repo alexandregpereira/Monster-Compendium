@@ -42,6 +42,7 @@ internal fun MonsterCompendium(
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
+    onItemLongCLick: (index: String) -> Unit = {},
 ) = LazyColumn(state = listState, contentPadding = contentPadding) {
 
     monstersBySection.entries.forEach { monsterSectionEntry ->
@@ -82,6 +83,7 @@ internal fun MonsterCompendium(
                     leftMonster = leftMonster,
                     rightMonster = rightMonster,
                     onItemClick = onItemCLick,
+                    onItemLongCLick = onItemLongCLick,
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
             }
@@ -95,6 +97,7 @@ fun MonsterRow(
     modifier: Modifier = Modifier,
     rightMonster: MonsterCardState? = null,
     onItemClick: (index: String) -> Unit = {},
+    onItemLongCLick: (index: String) -> Unit = {},
 ) = Surface {
     Row(modifier) {
 
@@ -107,7 +110,8 @@ fun MonsterRow(
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 8.dp),
-            onCLick = { onItemClick(leftMonster.index) }
+            onCLick = { onItemClick(leftMonster.index) },
+            onLongCLick = { onItemLongCLick(leftMonster.index) }
         )
         rightMonster?.let {
             MonsterCard(
@@ -120,6 +124,7 @@ fun MonsterRow(
                     .weight(1f)
                     .padding(start = 8.dp),
                 onCLick = { onItemClick(it.index) },
+                onLongCLick = { onItemLongCLick(it.index) }
             )
         }
     }

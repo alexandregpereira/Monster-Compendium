@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Source
+import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 
 internal fun List<MonsterCompleteEntity>.toDomain(): List<Monster> {
@@ -60,7 +61,7 @@ internal fun MonsterCompleteEntity.toDomain(): Monster {
             hitPoints = monster.hitPoints,
             hitDice = monster.hitDice
         ),
-        speed = this.speed.toDomain(),
+        speed = this.speed?.toDomain() ?: Speed(hover = false, values = emptyList()),
         abilityScores = this.abilityScores.toDomain(),
         savingThrows = this.savingThrows.toDomain(),
         skills = this.skills.toDomain(),

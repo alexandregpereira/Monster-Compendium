@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,15 +49,19 @@ class SearchFragment : Fragment() {
                 state = viewModel.state.collectAsState().value,
                 contentPaddingValues = padding,
                 onSearchValueChange = viewModel::onSearchValueChange,
-                onCardClick = viewModel::onItemClick
+                onCardClick = viewModel::onItemClick,
+                onCardLongClick = viewModel::onItemLongClick,
             )
 
-            val action = viewModel.action.collectAsState(null).value ?: return@createComposeView
-            when (action) {
-                is SearchAction.NavigateToDetail -> navigator.navigateToDetail(
-                    action.index,
-                    disablePageScroll = true
-                )
+            LaunchedEffect(key1 = Unit) {
+                viewModel.action.collect { action ->
+                    when (action) {
+                        is SearchAction.NavigateToDetail -> navigator.navigateToDetail(
+                            action.index,
+                            disablePageScroll = true
+                        )
+                    }
+                }
             }
         }
     }

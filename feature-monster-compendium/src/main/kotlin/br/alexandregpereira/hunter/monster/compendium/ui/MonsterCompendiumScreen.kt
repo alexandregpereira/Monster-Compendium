@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -67,10 +69,14 @@ private fun MonsterCompendiumScreen(
             monstersBySection = state.monstersBySection,
             listState = listState,
             contentPadding = contentPadding,
-        ) {
-            events.onItemCLick(index = it)
-        }
+            onItemCLick = events::onItemCLick,
+            onItemLongCLick = events::onItemLongCLick,
+        )
         Closeable(opened = state.alphabetOpened, onClosed = events::onAlphabetClosed) {
+            val paddingBottom by animateDpAsState(
+                if (state.isShowingMonsterFolderPreview) 72.dp else 0.dp
+            )
+
             AlphabetIndex(
                 alphabet = state.alphabet,
                 selectedIndex = state.alphabetIndex,
@@ -80,7 +86,7 @@ private fun MonsterCompendiumScreen(
                 onAlphabetIndexClicked = events::onAlphabetIndexClicked,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(contentPadding)
+                    .padding(bottom = contentPadding.calculateBottomPadding() + paddingBottom)
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             )
         }

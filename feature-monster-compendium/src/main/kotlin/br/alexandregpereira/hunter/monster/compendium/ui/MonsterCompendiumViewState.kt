@@ -27,6 +27,7 @@ data class MonsterCompendiumViewState(
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
     val initialScrollItemPosition: Int = 0,
+    val isShowingMonsterFolderPreview: Boolean = false,
 ) {
 
     companion object {
@@ -95,6 +96,7 @@ fun MonsterCompendiumViewState.complete(
     alphabetIndex: Int,
     initialScrollItemPosition: Int
 ) = this.copy(
+    isLoading = false,
     monstersBySection = monstersBySection,
     alphabet = alphabet,
     alphabetIndex = alphabetIndex,
@@ -111,6 +113,12 @@ fun MonsterCompendiumViewState.alphabetOpened(
     alphabetOpened: Boolean,
 ) = this.copy(
     alphabetOpened = alphabetOpened,
+)
+
+fun MonsterCompendiumViewState.showMonsterFolderPreview(
+    isShowing: Boolean,
+) = this.copy(
+    isShowingMonsterFolderPreview = isShowing,
 )
 
 infix fun MonsterCardState.and(that: MonsterCardState?) = MonsterRowState(

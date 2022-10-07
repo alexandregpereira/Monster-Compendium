@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.monster.compendium.ui
 interface MonsterCompendiumEvents {
     fun onFirstVisibleItemChange(position: Int)
     fun onItemCLick(index: String)
+    fun onItemLongCLick(index: String)
     fun onAlphabetClosed()
     fun onAlphabetOpened()
     fun onAlphabetIndexClicked(position: Int)

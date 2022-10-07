@@ -29,8 +29,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
+import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.createComposeView

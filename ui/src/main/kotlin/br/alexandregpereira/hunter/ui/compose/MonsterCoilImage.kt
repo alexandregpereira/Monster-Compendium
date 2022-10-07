@@ -26,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import br.alexandregpereira.hunter.ui.util.toColor
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
 fun MonsterCoilImage(
@@ -40,17 +42,35 @@ fun MonsterCoilImage(
     backgroundColor: String? = null,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
+    MonsterCoilImage(
+        imageUrl,
+        contentDescription,
+        shape,
+        modifier.height(height).fillMaxWidth(),
+        backgroundColor,
+        graphicsLayerBlock
+    )
+}
+
+@Composable
+fun MonsterCoilImage(
+    imageUrl: String,
+    contentDescription: String,
+    shape: Shape,
+    modifier: Modifier = Modifier,
+    backgroundColor: String? = null,
+    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
+) {
     Image(
-        painter = rememberImagePainter (
-            data = imageUrl,
-            builder = {
-                crossfade(durationMillis = 300)
-            }
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(data = imageUrl)
+                .apply(block = fun ImageRequest.Builder.() {
+                    crossfade(durationMillis = 300)
+                }).build()
         ),
         contentDescription = contentDescription,
         modifier = modifier
-            .height(height)
-            .fillMaxWidth()
             .run {
                 backgroundColor?.let {
                     background(

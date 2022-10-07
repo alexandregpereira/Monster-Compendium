@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.detail.domain
 
+import br.alexandregpereira.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
@@ -32,11 +33,16 @@ typealias MonsterDetail = Triple<Int, List<Monster>, MeasurementUnit>
 class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
-    private val getMonsterUseCase: GetMonsterUseCase
+    private val getMonsterUseCase: GetMonsterUseCase,
+    private val getMonstersByFolder: GetMonstersByFolderUseCase
 ) {
 
-    operator fun invoke(index: String, isSingleMonster: Boolean): Flow<MonsterDetail> {
-        return getMonsters(index, isSingleMonster)
+    operator fun invoke(
+        index: String,
+        isSingleMonster: Boolean,
+        folderName: String
+    ): Flow<MonsterDetail> {
+        return getMonsters(index, isSingleMonster, folderName)
             .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw IllegalAccessError("Monster not found")
@@ -45,7 +51,17 @@ class GetMonsterDetailUseCase @Inject internal constructor(
             }
     }
 
-    private fun getMonsters(index: String, isSingleMonster: Boolean): Flow<List<Monster>> {
-        return if (isSingleMonster) getMonsterUseCase(index).map { listOf(it) } else getMonstersUseCase()
+    private fun getMonsters(
+        index: String,
+        isSingleMonster: Boolean,
+        folderName: String
+    ): Flow<List<Monster>> {
+        return if (isSingleMonster) {
+            getMonsterUseCase(index).map { listOf(it) }
+        } else if (folderName.isNotBlank()) {
+            getMonstersByFolder(folderName)
+        } else {
+            getMonstersUseCase()
+        }
     }
 }

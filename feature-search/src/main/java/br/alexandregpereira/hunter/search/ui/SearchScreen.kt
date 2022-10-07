@@ -35,6 +35,7 @@ internal fun SearchScreen(
     contentPaddingValues: PaddingValues = PaddingValues(),
     onSearchValueChange: (String) -> Unit = {},
     onCardClick: (String) -> Unit = {},
+    onCardLongClick: (String) -> Unit = {},
 ) = HunterTheme {
     Surface {
         Column(Modifier) {
@@ -45,7 +46,8 @@ internal fun SearchScreen(
                         top = contentPaddingValues.calculateTopPadding() + 56.dp + 40.dp,
                         bottom = contentPaddingValues.calculateBottomPadding()
                     ),
-                    onCardClick = onCardClick
+                    onCardClick = onCardClick,
+                    onCardLongClick = onCardLongClick
                 )
 
                 SearchBar(

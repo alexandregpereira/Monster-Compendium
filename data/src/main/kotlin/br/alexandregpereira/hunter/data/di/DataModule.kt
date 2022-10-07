@@ -24,6 +24,8 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import br.alexandregpereira.hunter.data.AppDatabase
 import br.alexandregpereira.hunter.data.MonsterRepositoryImpl
+import br.alexandregpereira.hunter.data.local.MonsterFolderLocalDataSource
+import br.alexandregpereira.hunter.data.local.MonsterFolderLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.local.dao.AbilityScoreDao
@@ -32,6 +34,7 @@ import br.alexandregpereira.hunter.data.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
 import br.alexandregpereira.hunter.data.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
 import br.alexandregpereira.hunter.data.local.dao.SkillDao
@@ -159,6 +162,11 @@ object DatabaseModule {
     }
 
     @Provides
+    internal fun provideMonsterFolderDao(appDatabase: AppDatabase): MonsterFolderDao {
+        return appDatabase.monsterFolderDao()
+    }
+
+    @Provides
     internal fun provideSavingThrowDao(appDatabase: AppDatabase): SavingThrowDao {
         return appDatabase.savingThrowDao()
     }
@@ -212,6 +220,11 @@ internal abstract class DataModule {
     abstract fun bindAlternativeSourceRemoteDataSource(
         alternativeSourceRemoteDataSourceImpl: AlternativeSourceRemoteDataSourceImpl
     ): AlternativeSourceRemoteDataSource
+
+    @Binds
+    abstract fun bindMonsterFolderLocalDataSource(
+        monsterFolderLocalDataSourceImpl: MonsterFolderLocalDataSourceImpl
+    ): MonsterFolderLocalDataSource
 }
 
 @Module

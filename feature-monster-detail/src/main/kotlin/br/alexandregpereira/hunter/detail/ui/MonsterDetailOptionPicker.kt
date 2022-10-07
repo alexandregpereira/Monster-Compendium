@@ -21,9 +21,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,12 +32,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +46,6 @@ import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MonsterDetailOptionPicker(
     options: List<MonsterDetailOptionState>,
@@ -78,10 +71,6 @@ private fun MonsterDetailOptions(
     options: List<MonsterDetailOptionState>,
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val scale = animatePressed(pressed = isPressed)
-
     Surface(
         Modifier
             .fillMaxWidth()
@@ -100,13 +89,7 @@ private fun MonsterDetailOptions(
                     Modifier
                         .fillMaxWidth()
                         .padding(all = 16.dp)
-                        .graphicsLayer(
-                            scaleX = scale,
-                            scaleY = scale
-                        )
-                        .clickable(
-                            interactionSource = interactionSource,
-                            indication = null,
+                        .animatePressed(
                             onClick = { onOptionSelected(it) }
                         )
                 ) {

@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.search.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +38,7 @@ fun SearchGrid(
     monsters: List<MonsterCardState>,
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},
+    onCardLongClick: (String) -> Unit = {},
 ) = AnimatedVisibility(
     visible = monsters.isNotEmpty(),
     enter = fadeIn(),
@@ -67,7 +67,8 @@ fun SearchGrid(
                     .animateItemPlacement(),
                 onCLick = {
                     onCardClick(monsterCardState.index)
-                }
+                },
+                onLongCLick = { onCardLongClick(monsterCardState.index) }
             )
         }
     }

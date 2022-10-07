@@ -26,10 +26,18 @@ internal class NavigatorImpl @Inject constructor(
     private val navController: NavController
 ): Navigator {
 
-    override fun navigateToDetail(index: String, disablePageScroll: Boolean) {
+    override fun navigateToDetail(
+        index: String,
+        disablePageScroll: Boolean,
+        folderName: String
+    ) {
         navController.navigate(
             R.id.action_global_monsterDetailFragment,
-            bundleOf("index" to index, "disablePageScroll" to disablePageScroll)
+            bundleOf(
+                "index" to index,
+                "disablePageScroll" to disablePageScroll,
+                "folderName" to folderName
+            )
         )
     }
 }

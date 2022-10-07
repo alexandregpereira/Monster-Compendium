@@ -20,11 +20,14 @@ package br.alexandregpereira.hunter.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,6 +36,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -42,7 +46,9 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
-    private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase
+    private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase,
+    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SearchViewState.Initial)
@@ -65,6 +71,7 @@ internal class SearchViewModel @Inject constructor(
             .onEach { monsters ->
                 _state.value = state.value.changeMonsters(monsters)
             }
+            .flowOn(dispatcher)
             .launchIn(viewModelScope)
     }
 
@@ -77,5 +84,9 @@ internal class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _action.emit(SearchAction.NavigateToDetail(index))
         }
+    }
+
+    fun onItemLongClick(index: String) {
+        folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
     }
 }
