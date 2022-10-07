@@ -42,7 +42,6 @@ android {
 
 dependencies {
     implementation project(':domain')
-    implementation project(':data-remote-model')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
