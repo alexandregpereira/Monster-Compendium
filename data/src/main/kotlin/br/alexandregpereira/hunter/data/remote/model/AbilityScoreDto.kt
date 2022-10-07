@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,27 +21,47 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DamageDto(
+data class AbilityScoreDto(
+    @SerialName("type")
+    val type: AbilityScoreTypeDto,
+    @SerialName("value")
+    val value: Int,
+    @SerialName("modifier")
+    val modifier: Int
+)
+
+@Serializable
+data class SavingThrowDto(
     @SerialName("index")
     val index: String,
     @SerialName("type")
-    val type: DamageTypeDto,
+    val type: AbilityScoreTypeDto,
+    @SerialName("modifier")
+    val modifier: Int
+)
+
+@Serializable
+data class SkillDto(
+    @SerialName("index")
+    val index: String,
+    @SerialName("modifier")
+    val modifier: Int,
     @SerialName("name")
     val name: String
 )
 
-enum class DamageTypeDto {
-    ACID,
-    BLUDGEONING,
-    COLD,
-    FIRE,
-    LIGHTNING,
-    NECROTIC,
-    PIERCING,
-    POISON,
-    PSYCHIC,
-    RADIANT,
-    SLASHING,
-    THUNDER,
-    OTHER,
+@Serializable
+enum class AbilityScoreTypeDto {
+    @SerialName("STRENGTH")
+    STRENGTH,
+    @SerialName("DEXTERITY")
+    DEXTERITY,
+    @SerialName("CONSTITUTION")
+    CONSTITUTION,
+    @SerialName("INTELLIGENCE")
+    INTELLIGENCE,
+    @SerialName("WISDOM")
+    WISDOM,
+    @SerialName("CHARISMA")
+    CHARISMA
 }

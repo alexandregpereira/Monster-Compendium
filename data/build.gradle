@@ -43,7 +43,6 @@ android {
 dependencies {
     implementation project(':domain')
     implementation project(':domain-monster-folder')
-    implementation project(':data-remote-model')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
