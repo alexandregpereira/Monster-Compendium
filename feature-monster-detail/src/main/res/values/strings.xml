@@ -34,4 +34,7 @@
     <string name="monster_detail_options">Options</string>
     <string name="monster_detail_go_to_top">Go to top</string>
     <string name="monster_detail_reactions">Reactions</string>
+    <string name="monster_detail_spells">Spells</string>
+    <string name="monster_detail_spellcasting">Spellcasting</string>
+    <string name="monster_detail_innate_spellcasting">Innate Spellcasting</string>
 </resources>
