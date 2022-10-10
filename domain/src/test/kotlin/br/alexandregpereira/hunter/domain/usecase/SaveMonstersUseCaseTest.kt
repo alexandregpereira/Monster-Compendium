@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
@@ -200,7 +199,7 @@ class SaveMonstersUseCaseTest {
                         )
                     )
                 ),
-                source = Source(name = "", acronym = "")
+                sourceName = ""
             )
         )
     }
@@ -255,7 +254,7 @@ class SaveMonstersUseCaseTest {
                         )
                     )
                 ),
-                source = Source(name = "", acronym = "")
+                sourceName = ""
             )
         )
     }

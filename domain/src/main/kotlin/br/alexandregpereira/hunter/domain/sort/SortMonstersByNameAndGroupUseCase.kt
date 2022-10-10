@@ -27,7 +27,7 @@ internal fun Flow<List<Monster>>.sortMonstersByNameAndGroup(): Flow<List<Monster
     }
 }
 
-internal fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
+fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
     return this.sortedWith { monsterA, monsterB ->
         monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
     }

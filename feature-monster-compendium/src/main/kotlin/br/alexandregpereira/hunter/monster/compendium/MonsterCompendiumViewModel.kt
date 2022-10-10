@@ -21,13 +21,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.SyncMonstersUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
@@ -38,6 +38,7 @@ import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
 import br.alexandregpereira.hunter.monster.compendium.ui.showMonsterFolderPreview
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +52,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MonsterCompendiumViewModel @Inject constructor(

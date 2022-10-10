@@ -19,8 +19,8 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.domain.usecase.MonsterPair
-import br.alexandregpereira.hunter.domain.usecase.MonstersBySection
+import br.alexandregpereira.hunter.monster.compendium.domain.MonsterPair
+import br.alexandregpereira.hunter.monster.compendium.domain.MonstersBySection
 import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterImageState

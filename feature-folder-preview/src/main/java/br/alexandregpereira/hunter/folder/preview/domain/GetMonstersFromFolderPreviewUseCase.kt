@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.folder.preview.domain
 
-import br.alexandregpereira.domain.folder.GetMonstersByFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

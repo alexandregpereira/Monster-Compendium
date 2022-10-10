@@ -25,7 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.alexandregpereira.hunter.domain.Navigator
+import br.alexandregpereira.hunter.navigation.Navigator
 import br.alexandregpereira.hunter.search.ui.SearchScreen
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import dagger.hilt.android.AndroidEntryPoint
