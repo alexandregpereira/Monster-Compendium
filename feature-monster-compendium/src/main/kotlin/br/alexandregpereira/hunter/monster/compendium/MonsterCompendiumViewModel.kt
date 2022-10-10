@@ -27,7 +27,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEve
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
-import br.alexandregpereira.hunter.monster.compendium.domain.SyncMonstersUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.SyncUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MonsterCompendiumViewModel @Inject constructor(
-    private val syncMonstersUseCase: SyncMonstersUseCase,
+    private val sync: SyncUseCase,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -168,7 +168,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     }
 
     private fun startSync() = viewModelScope.launch {
-        syncMonstersUseCase()
+        sync()
             .flowOn(dispatcher)
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")

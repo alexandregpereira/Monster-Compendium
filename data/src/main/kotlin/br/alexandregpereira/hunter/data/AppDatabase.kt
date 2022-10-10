@@ -47,6 +47,8 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
+import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
 
 @Database(
     entities = [
@@ -64,9 +66,10 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
         SpecialAbilityEntity::class,
         SpeedEntity::class,
         SpeedValueEntity::class,
+        SpellEntity::class,
         ReactionEntity::class,
     ],
-    version = 14,
+    version = 16,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
@@ -82,5 +85,6 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun specialAbilityDao(): SpecialAbilityDao
     abstract fun speedDao(): SpeedDao
     abstract fun speedValueDao(): SpeedValueDao
+    abstract fun spellDao(): SpellDao
     abstract fun reactionDao(): ReactionDao
 }

@@ -15,29 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+package br.alexandregpereira.hunter.data.spell.remote
+
+import br.alexandregpereira.hunter.data.spell.remote.model.SpellDto
+import retrofit2.http.GET
+
+internal interface SpellApi {
+
+    @GET("spells.json")
+    suspend fun getSpells(): List<SpellDto>
 }
-rootProject.name = 'hunter'
-include ':app'
-include ':data'
-include ':data-alternative-source'
-include ':data-monster'
-include ':data-monster-folder'
-include ':data-spell'
-include ':domain'
-include ':domain-alternative-source'
-include ':domain-monster-folder'
-include ':domain-spell'
-include ':feature-folder-preview'
-include ':feature-folder-preview-event'
-include ':feature-monster-compendium'
-include ':feature-monster-detail'
-include ':feature-search'
-include ':feature-settings'
-include ':navigation'
-include ':ui'
