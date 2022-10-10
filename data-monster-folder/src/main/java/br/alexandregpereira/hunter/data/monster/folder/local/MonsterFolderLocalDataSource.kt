@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local
+package br.alexandregpereira.hunter.data.monster.folder.local
 
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderCompleteEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
 import kotlinx.coroutines.flow.Flow
 
 internal interface MonsterFolderLocalDataSource {

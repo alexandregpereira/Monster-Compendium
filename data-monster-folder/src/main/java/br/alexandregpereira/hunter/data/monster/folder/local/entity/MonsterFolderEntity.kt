@@ -15,15 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.domain.folder
+package br.alexandregpereira.hunter.data.monster.folder.local.entity
 
-import br.alexandregpereira.domain.folder.model.MonsterFolder
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Entity
 
-interface MonsterFolderRepository {
+@Entity(primaryKeys = ["folderName", "monsterIndex"])
+class MonsterFolderEntity(
+    val folderName: String,
+    val monsterIndex: String,
+    val createdAt: Long
+) {
 
-    fun addMonster(folderName: String, index: String): Flow<Unit>
-    fun removeMonster(folderName: String, index: String): Flow<Unit>
-    fun getMonsterFolders(): Flow<List<MonsterFolder>>
-    fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?>
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MonsterFolderEntity
+
+        if (folderName != other.folderName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return folderName.hashCode()
+    }
 }

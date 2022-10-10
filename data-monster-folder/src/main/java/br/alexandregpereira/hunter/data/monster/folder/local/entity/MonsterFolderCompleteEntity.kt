@@ -15,19 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.folder
+package br.alexandregpereira.hunter.data.monster.folder.local.entity
 
-import br.alexandregpereira.domain.folder.model.MonsterFolder
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderCompleteEntity
-import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 
-internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
-    return this.map { it.asDomain() }
-}
-
-internal fun MonsterFolderCompleteEntity.asDomain(): MonsterFolder {
-    return MonsterFolder(
-        name = monsterFolderEntity.folderName,
-        monsters = monsters.toDomain()
-    )
-}
+data class MonsterFolderCompleteEntity(
+    val monsterFolderEntity: MonsterFolderEntity,
+    val monsters: List<MonsterCompleteEntity>
+)

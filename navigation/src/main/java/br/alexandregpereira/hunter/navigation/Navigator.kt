@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain
+package br.alexandregpereira.hunter.navigation
 
 interface Navigator {
     fun navigateToDetail(index: String, disablePageScroll: Boolean = false, folderName: String = "")

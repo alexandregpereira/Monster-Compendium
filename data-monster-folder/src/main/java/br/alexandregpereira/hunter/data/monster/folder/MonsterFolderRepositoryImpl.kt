@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.folder
+package br.alexandregpereira.hunter.data.monster.folder
 
-import br.alexandregpereira.domain.folder.MonsterFolderRepository
-import br.alexandregpereira.domain.folder.model.MonsterFolder
-import br.alexandregpereira.hunter.data.local.MonsterFolderLocalDataSource
+import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
+import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 internal class MonsterFolderRepositoryImpl @Inject constructor(
     private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource

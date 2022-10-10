@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import br.alexandregpereira.hunter.data.AppDatabase
-import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
+import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.local.dao.AbilityScoreDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao

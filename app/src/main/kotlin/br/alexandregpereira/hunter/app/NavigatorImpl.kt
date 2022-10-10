@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.app
 
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import br.alexandregpereira.hunter.domain.Navigator
+import br.alexandregpereira.hunter.navigation.Navigator
 import javax.inject.Inject
 
 internal class NavigatorImpl @Inject constructor(

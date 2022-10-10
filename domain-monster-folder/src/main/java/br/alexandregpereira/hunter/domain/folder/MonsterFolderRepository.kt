@@ -15,23 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.folder.di
+package br.alexandregpereira.hunter.domain.folder
 
-import br.alexandregpereira.domain.folder.MonsterFolderRepository
-import br.alexandregpereira.hunter.data.folder.MonsterFolderRepositoryImpl
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import kotlinx.coroutines.flow.Flow
 
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class DataModule {
+interface MonsterFolderRepository {
 
-    @ViewModelScoped
-    @Binds
-    internal abstract fun bindMonsterFolderRepository(
-        monsterFolderRepository: MonsterFolderRepositoryImpl
-    ): MonsterFolderRepository
+    fun addMonster(folderName: String, index: String): Flow<Unit>
+    fun removeMonster(folderName: String, index: String): Flow<Unit>
+    fun getMonsterFolders(): Flow<List<MonsterFolder>>
+    fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?>
 }

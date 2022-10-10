@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local
+package br.alexandregpereira.hunter.data.monster.folder.local
 
-import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderCompleteEntity
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import java.util.*
 import javax.inject.Inject

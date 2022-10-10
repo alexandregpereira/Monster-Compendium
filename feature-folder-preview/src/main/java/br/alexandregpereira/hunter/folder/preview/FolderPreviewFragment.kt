@@ -26,9 +26,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewAction.NavigateToDetail
 import br.alexandregpereira.hunter.folder.preview.ui.FolderPreviewScreen
+import br.alexandregpereira.hunter.navigation.Navigator
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

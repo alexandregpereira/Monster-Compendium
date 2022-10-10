@@ -15,11 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local.entity
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
 
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
-internal data class MonsterFolderCompleteEntity(
-    val monsterFolderEntity: MonsterFolderEntity,
-    val monsters: List<MonsterCompleteEntity>
-)
+configure([compileKotlin, compileTestKotlin]) {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
+}

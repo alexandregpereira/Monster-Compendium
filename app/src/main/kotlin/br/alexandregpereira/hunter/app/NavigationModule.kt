@@ -20,7 +20,7 @@ package br.alexandregpereira.hunter.app
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import br.alexandregpereira.hunter.domain.Navigator
+import br.alexandregpereira.hunter.navigation.Navigator
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -15,29 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local.entity
+package br.alexandregpereira.hunter.data.monster.folder
 
-import androidx.room.Entity
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
+import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
 
-@Entity(primaryKeys = ["folderName", "monsterIndex"])
-internal class MonsterFolderEntity(
-    val folderName: String,
-    val monsterIndex: String,
-    val createdAt: Long
-) {
+internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
+    return this.map { it.asDomain() }
+}
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as MonsterFolderEntity
-
-        if (folderName != other.folderName) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return folderName.hashCode()
-    }
+internal fun MonsterFolderCompleteEntity.asDomain(): MonsterFolder {
+    return MonsterFolder(
+        name = monsterFolderEntity.folderName,
+        monsters = monsters.toDomain()
+    )
 }

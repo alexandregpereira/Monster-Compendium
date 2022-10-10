@@ -19,8 +19,8 @@ package br.alexandregpereira.hunter.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.monster.local.dao.AbilityScoreDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao

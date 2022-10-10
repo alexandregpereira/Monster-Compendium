@@ -42,8 +42,6 @@ android {
 
 dependencies {
     implementation project(':data-monster')
-    implementation project(':data-monster-folder')
-    implementation project(':domain')
     implementation project(':domain-monster-folder')
 
     implementation libs.kotlin.coroutines.core

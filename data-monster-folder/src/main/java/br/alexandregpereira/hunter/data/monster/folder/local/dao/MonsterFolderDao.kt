@@ -15,18 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.local.dao
+package br.alexandregpereira.hunter.data.monster.folder.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 
 @Dao
-internal interface MonsterFolderDao {
+interface MonsterFolderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMonsterToFolder(folderCrossRefEntity: MonsterFolderEntity)

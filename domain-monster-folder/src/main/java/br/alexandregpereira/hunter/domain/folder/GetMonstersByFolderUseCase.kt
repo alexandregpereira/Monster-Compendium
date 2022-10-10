@@ -15,11 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.domain.folder.model
+package br.alexandregpereira.hunter.domain.folder
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-data class MonsterFolder(
-    val name: String,
-    val monsters: List<Monster>
-)
+class GetMonstersByFolderUseCase @Inject constructor(
+    private val monsterFolderRepository: MonsterFolderRepository
+) {
+
+    operator fun invoke(folderName: String): Flow<List<Monster>> {
+        return monsterFolderRepository.getMonstersFromFolder(
+            folderName = folderName
+        ).map {
+            it?.monsters ?: emptyList()
+        }
+    }
+}

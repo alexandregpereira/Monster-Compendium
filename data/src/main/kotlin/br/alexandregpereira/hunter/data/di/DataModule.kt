@@ -19,8 +19,6 @@
 
 package br.alexandregpereira.hunter.data.di
 
-import br.alexandregpereira.hunter.data.local.MonsterFolderLocalDataSource
-import br.alexandregpereira.hunter.data.local.MonsterFolderLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.preferences.PreferencesDataSourceImpl
 import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
@@ -49,11 +47,6 @@ internal abstract class DataModule {
     abstract fun bindAlternativeSourceRemoteDataSource(
         alternativeSourceRemoteDataSourceImpl: AlternativeSourceRemoteDataSourceImpl
     ): AlternativeSourceRemoteDataSource
-
-    @Binds
-    abstract fun bindMonsterFolderLocalDataSource(
-        monsterFolderLocalDataSourceImpl: MonsterFolderLocalDataSourceImpl
-    ): MonsterFolderLocalDataSource
 }
 
 @Module
