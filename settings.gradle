@@ -25,6 +25,7 @@ dependencyResolutionManagement {
 rootProject.name = 'hunter'
 include ':app'
 include ':data'
+include ':data-monster'
 include ':domain'
 include ':domain-monster-folder'
 include ':feature-folder-preview'

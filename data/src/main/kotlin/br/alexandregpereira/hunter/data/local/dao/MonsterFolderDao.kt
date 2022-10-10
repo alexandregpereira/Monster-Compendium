@@ -22,8 +22,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 
 @Dao
 internal interface MonsterFolderDao {

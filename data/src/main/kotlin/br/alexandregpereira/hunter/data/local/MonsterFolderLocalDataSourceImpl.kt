@@ -18,14 +18,13 @@
 package br.alexandregpereira.hunter.data.local
 
 import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
-import br.alexandregpereira.hunter.data.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterFolderCompleteEntity
 import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
+import java.util.*
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.Calendar
-import java.util.TimeZone
-import javax.inject.Inject
 
 internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
     private val monsterFolderDao: MonsterFolderDao

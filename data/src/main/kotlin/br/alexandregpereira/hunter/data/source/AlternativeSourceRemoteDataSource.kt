@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.data.remote.model.AlternativeSourceDto
+import br.alexandregpereira.hunter.data.monster.remote.model.AlternativeSourceDto
 import kotlinx.coroutines.flow.Flow
 
 internal interface AlternativeSourceRemoteDataSource {

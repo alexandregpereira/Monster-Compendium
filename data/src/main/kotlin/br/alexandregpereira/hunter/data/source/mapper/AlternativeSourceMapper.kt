@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.data.source.mapper
 
-import br.alexandregpereira.hunter.data.remote.model.AlternativeSourceDto
+import br.alexandregpereira.hunter.data.monster.remote.model.AlternativeSourceDto
 import br.alexandregpereira.hunter.domain.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.model.Source
 

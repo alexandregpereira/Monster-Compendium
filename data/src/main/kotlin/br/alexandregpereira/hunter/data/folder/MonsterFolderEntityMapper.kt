@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.data.folder
 
 import br.alexandregpereira.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.data.local.entity.MonsterFolderCompleteEntity
-import br.alexandregpereira.hunter.data.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
 
 internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
     return this.map { it.asDomain() }
