@@ -15,30 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.local.entity
+package br.alexandregpereira.hunter.data.source.remote
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-@Entity
-data class MonsterEntity(
-    @PrimaryKey val index: String,
-    val type: String,
-    val subtype: String?,
-    val group: String?,
-    val challengeRating: Float,
-    val name: String,
-    val subtitle: String,
-    val imageUrl: String,
-    val backgroundColorLight: String,
-    val backgroundColorDark: String,
-    val isHorizontalImage: Boolean,
-    val size: String,
-    val alignment: String,
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
-    val senses: String,
-    val languages: String,
-    val sourceName: String,
-)
+internal class AlternativeSourceRemoteDataSourceImpl @Inject constructor(
+    private val api: AlternativeSourceApi
+) : AlternativeSourceRemoteDataSource {
+
+    override fun getAlternativeSources(): Flow<List<AlternativeSourceDto>> = flow {
+        emit(api.getAlternativeSources())
+    }
+}

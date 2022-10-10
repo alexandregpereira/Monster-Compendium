@@ -15,30 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.local.entity
+package br.alexandregpereira.hunter.data.source.remote.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Entity
-data class MonsterEntity(
-    @PrimaryKey val index: String,
-    val type: String,
-    val subtype: String?,
-    val group: String?,
-    val challengeRating: Float,
+@Serializable
+data class SourceDto(
+    @SerialName("name")
     val name: String,
-    val subtitle: String,
-    val imageUrl: String,
-    val backgroundColorLight: String,
-    val backgroundColorDark: String,
-    val isHorizontalImage: Boolean,
-    val size: String,
-    val alignment: String,
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
-    val senses: String,
-    val languages: String,
-    val sourceName: String,
+    @SerialName("acronym")
+    val acronym: String
 )

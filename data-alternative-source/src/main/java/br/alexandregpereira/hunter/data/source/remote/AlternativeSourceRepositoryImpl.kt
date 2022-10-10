@@ -15,24 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.sort
+package br.alexandregpereira.hunter.data.source.remote
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.data.source.remote.mapper.toDomain
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
+import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal fun Flow<List<Monster>>.sortMonstersByNameAndGroup(): Flow<List<Monster>> {
-    return this.map {
-        it.sortMonstersByNameAndGroup()
-    }
-}
+internal class AlternativeSourceRepositoryImpl @Inject constructor(
+    private val remoteDataSource: AlternativeSourceRemoteDataSource
+) : AlternativeSourceRepository {
 
-fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
-    return this.sortedWith { monsterA, monsterB ->
-        monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
+    override fun getAlternativeSources(): Flow<List<AlternativeSource>> {
+       return remoteDataSource.getAlternativeSources().map { it.toDomain() }
     }
-}
-
-private fun Monster.getOrderValue(): String {
-    return if (group != null) "$group-$name" else name
 }

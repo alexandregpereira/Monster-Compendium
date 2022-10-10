@@ -38,7 +38,7 @@ data class Monster(
     val specialAbilities: List<AbilityDescription>,
     val actions: List<Action>,
     val reactions: List<AbilityDescription> = emptyList(),
-    val source: Source
+    val sourceName: String
 ) {
     val index: String
         get() = preview.index

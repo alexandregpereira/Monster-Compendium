@@ -24,7 +24,6 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 
@@ -74,7 +73,7 @@ internal fun MonsterCompleteEntity.toDomain(): Monster {
         specialAbilities = this.specialAbilities.toDomain(),
         actions = this.actions.toDomain(),
         reactions = this.reactions.toDomain(),
-        source = Source(monster.sourceName, monster.sourceAcronym)
+        sourceName = monster.sourceName
     )
 }
 
@@ -100,8 +99,7 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
                 hitDice = it.stats.hitDice,
                 senses = it.senses.joinToString(),
                 languages = it.languages,
-                sourceName = it.source.name,
-                sourceAcronym = it.source.acronym
+                sourceName = it.sourceName,
             ),
             speed = it.speed.toEntity(it.index),
             abilityScores = it.toAbilityScoreEntity(),

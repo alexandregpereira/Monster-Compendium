@@ -17,37 +17,28 @@
 
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package br.alexandregpereira.hunter.data.di
+package br.alexandregpereira.hunter.data.source.di
 
-import br.alexandregpereira.hunter.data.preferences.PreferencesDataSource
-import br.alexandregpereira.hunter.data.preferences.PreferencesDataSourceImpl
-import br.alexandregpereira.hunter.data.preferences.PreferencesRepository
-import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
-import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSourceImpl
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRepositoryImpl
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal abstract class DataModule {
 
     @Binds
-    abstract fun bindPreferencesDataSource(
-        preferencesDataSourceImpl: PreferencesDataSourceImpl
-    ): PreferencesDataSource
+    abstract fun bindAlternativeSourceRemoteDataSource(
+        alternativeSourceRemoteDataSourceImpl: AlternativeSourceRemoteDataSourceImpl
+    ): AlternativeSourceRemoteDataSource
 
-    @Singleton
     @Binds
-    abstract fun bindCompendiumRepository(
-        preferencesRepository: PreferencesRepository
-    ): CompendiumRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindMeasurementUnitRepository(
-        preferencesRepository: PreferencesRepository
-    ): MeasurementUnitRepository
+    abstract fun bindAlternativeSourceRepository(
+        alternativeSourceRepositoryImpl: AlternativeSourceRepositoryImpl
+    ): AlternativeSourceRepository
 }

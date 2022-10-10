@@ -15,30 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.local.entity
+package br.alexandregpereira.hunter.domain.source.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
-data class MonsterEntity(
-    @PrimaryKey val index: String,
-    val type: String,
-    val subtype: String?,
-    val group: String?,
-    val challengeRating: Float,
-    val name: String,
-    val subtitle: String,
-    val imageUrl: String,
-    val backgroundColorLight: String,
-    val backgroundColorDark: String,
-    val isHorizontalImage: Boolean,
-    val size: String,
-    val alignment: String,
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
-    val senses: String,
-    val languages: String,
-    val sourceName: String,
+data class AlternativeSource(
+    val source: Source,
+    val totalMonsters: Int,
 )

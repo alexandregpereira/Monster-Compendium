@@ -66,7 +66,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
         SpeedValueEntity::class,
         ReactionEntity::class,
     ],
-    version = 13,
+    version = 14,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {

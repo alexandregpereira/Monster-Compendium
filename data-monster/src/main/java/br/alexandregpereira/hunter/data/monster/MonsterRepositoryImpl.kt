@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceUnexpectedException
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.Source
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -46,15 +45,15 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return remoteDataSource.getMonsters().map { it.toDomain() }
     }
 
-    override fun getRemoteMonsters(source: Source): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters(source.acronym)
+    override fun getRemoteMonsters(sourceAcronym: String): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters(sourceAcronym)
             .map { it.toDomain() }
             .catch { error ->
                 throw when {
                     error is HttpException && error.code() == 404 -> {
-                        MonstersSourceNotFoundedException(source.name)
+                        MonstersSourceNotFoundedException(sourceAcronym)
                     }
-                    else -> MonstersSourceUnexpectedException(source.name, error)
+                    else -> MonstersSourceUnexpectedException(sourceAcronym, error)
                 }
             }
     }

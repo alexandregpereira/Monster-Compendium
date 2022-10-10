@@ -1,6 +1,5 @@
 package br.alexandregpereira.hunter.data.di
 
-import br.alexandregpereira.hunter.data.source.AlternativeSourceApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -33,10 +32,5 @@ internal class NetworkModule {
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
-    }
-
-    @Provides
-    fun provideAlternativeSourceApi(retrofit: Retrofit): AlternativeSourceApi {
-        return retrofit.create(AlternativeSourceApi::class.java)
     }
 }

@@ -23,11 +23,11 @@ import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.SyncMonstersUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
