@@ -41,12 +41,7 @@ android {
 }
 
 dependencies {
-    implementation project(':data-alternative-source')
-    implementation project(':data-monster')
-    implementation project(':data-monster-folder')
-    implementation project(':data-spell')
-    implementation project(':domain')
-    implementation project(':domain-monster-folder')
+    implementation project(':domain-spell')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization

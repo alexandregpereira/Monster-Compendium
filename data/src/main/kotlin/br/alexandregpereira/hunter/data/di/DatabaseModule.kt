@@ -17,6 +17,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpecialAbilityDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedValueDao
+import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -108,5 +109,10 @@ object DatabaseModule {
     @Provides
     internal fun provideReactionDao(appDatabase: AppDatabase): ReactionDao {
         return appDatabase.reactionDao()
+    }
+
+    @Provides
+    internal fun provideSpellDao(appDatabase: AppDatabase): SpellDao {
+        return appDatabase.spellDao()
     }
 }
