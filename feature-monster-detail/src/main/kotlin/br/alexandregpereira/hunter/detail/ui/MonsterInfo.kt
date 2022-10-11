@@ -85,6 +85,8 @@ fun MonsterInfo(
     OptionalBlockSection(monster.specialAbilities) { SpecialAbilityBlock(specialAbilities = it) }
     BlockSection { ActionBlock(actions = monster.actions) }
 
+    OptionalBlockSection(monster.spellcastings) { SpellBlock(spellcastings = it) }
+
     OptionalBlockSection(monster.reactions) { ReactionBlock(reactions = it) }
 
     Spacer(
