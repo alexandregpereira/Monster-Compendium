@@ -22,13 +22,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
-import br.alexandregpereira.hunter.detail.domain.MonsterDetail
+import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,7 +44,6 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltViewModel
 internal class MonsterDetailViewModel @Inject constructor(
@@ -109,10 +109,10 @@ internal class MonsterDetailViewModel @Inject constructor(
     private suspend fun Flow<MonsterDetail>.collectDetail() {
         this.map {
             Log.i("MonsterDetailViewModel", "collectDetail")
-            val measurementUnit = it.third
+            val measurementUnit = it.measurementUnit
             getState().complete(
-                initialMonsterIndex = it.first,
-                monsters = it.second.asState(),
+                initialMonsterIndex = it.monsterIndexSelected,
+                monsters = it.monsters.asState(),
                 options = when (measurementUnit) {
                     MeasurementUnit.FEET -> listOf(MonsterDetailOptionState.CHANGE_TO_METERS)
                     MeasurementUnit.METER -> listOf(MonsterDetailOptionState.CHANGE_TO_FEET)

@@ -30,18 +30,32 @@ data class DamageDto(
     val name: String
 )
 
+@Serializable
 enum class DamageTypeDto {
+    @SerialName("ACID")
     ACID,
+    @SerialName("BLUDGEONING")
     BLUDGEONING,
+    @SerialName("COLD")
     COLD,
+    @SerialName("FIRE")
     FIRE,
+    @SerialName("LIGHTNING")
     LIGHTNING,
+    @SerialName("NECROTIC")
     NECROTIC,
+    @SerialName("PIERCING")
     PIERCING,
+    @SerialName("POISON")
     POISON,
+    @SerialName("PSYCHIC")
     PSYCHIC,
+    @SerialName("RADIANT")
     RADIANT,
+    @SerialName("SLASHING")
     SLASHING,
+    @SerialName("THUNDER")
     THUNDER,
+    @SerialName("OTHER")
     OTHER,
 }

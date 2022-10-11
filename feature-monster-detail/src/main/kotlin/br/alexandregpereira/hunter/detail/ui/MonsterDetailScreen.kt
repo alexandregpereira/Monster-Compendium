@@ -20,8 +20,6 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
@@ -55,7 +53,6 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -313,20 +310,12 @@ private fun MonsterInfo(
     pagerState: PagerState,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    AnimatedVisibility(
-        visible = true,
-        enter = slideIn(
-            initialOffset = { IntOffset(x = 0, y = it.height) },
-            animationSpec = spring(stiffness = 100f, dampingRatio = 0.65f)
+    AlphaTransition(monsters, pagerState) { data: MonsterState, alpha: Float ->
+        MonsterInfo(
+            data,
+            contentPadding = contentPadding,
+            alpha = alpha,
         )
-    ) {
-        AlphaTransition(monsters, pagerState) { data: MonsterState, alpha: Float ->
-            MonsterInfo(
-                data,
-                contentPadding = contentPadding,
-                alpha = alpha,
-            )
-        }
     }
 }
 

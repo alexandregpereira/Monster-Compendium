@@ -47,6 +47,13 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellUsageDao
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellcastingDao
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
 import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
 
@@ -61,15 +68,20 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         DamageDiceEntity::class,
         MonsterEntity::class,
         MonsterFolderEntity::class,
+        ReactionEntity::class,
         SavingThrowEntity::class,
         SkillEntity::class,
         SpecialAbilityEntity::class,
         SpeedEntity::class,
         SpeedValueEntity::class,
         SpellEntity::class,
-        ReactionEntity::class,
+        SpellcastingEntity::class,
+        SpellcastingSpellUsageCrossRefEntity::class,
+        SpellUsageEntity::class,
+        SpellUsageSpellCrossRefEntity::class,
+        SpellPreviewEntity::class,
     ],
-    version = 16,
+    version = 17,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
@@ -80,11 +92,13 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun damageDiceDao(): DamageDiceDao
     abstract fun monsterDao(): MonsterDao
     abstract fun monsterFolderDao(): MonsterFolderDao
+    abstract fun reactionDao(): ReactionDao
     abstract fun savingThrowDao(): SavingThrowDao
     abstract fun skillDao(): SkillDao
     abstract fun specialAbilityDao(): SpecialAbilityDao
     abstract fun speedDao(): SpeedDao
     abstract fun speedValueDao(): SpeedValueDao
+    abstract fun spellcastingDao(): SpellcastingDao
     abstract fun spellDao(): SpellDao
-    abstract fun reactionDao(): ReactionDao
+    abstract fun spellUsageDao(): SpellUsageDao
 }

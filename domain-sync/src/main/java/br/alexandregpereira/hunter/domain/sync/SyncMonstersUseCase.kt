@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.domain
+package br.alexandregpereira.hunter.domain.sync
 
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
 import br.alexandregpereira.hunter.domain.model.Monster

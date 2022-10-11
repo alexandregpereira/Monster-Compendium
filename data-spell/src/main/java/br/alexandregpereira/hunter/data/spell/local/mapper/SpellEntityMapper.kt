@@ -5,10 +5,6 @@ import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 
-internal fun List<SpellEntity>.toDomain(): List<Spell> {
-    return map { it.toDomain() }
-}
-
 internal fun SpellEntity.toDomain(): Spell {
     return Spell(
         index = spellIndex,
@@ -28,7 +24,7 @@ internal fun SpellEntity.toDomain(): Spell {
     )
 }
 
-internal fun List<Spell>.toEntity(): List<SpellEntity> {
+fun List<Spell>.toEntity(): List<SpellEntity> {
     return map {
         SpellEntity(
             spellIndex = it.index,

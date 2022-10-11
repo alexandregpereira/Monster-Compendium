@@ -58,7 +58,7 @@ fun SpellBlock(
         val group = entry.key
         val spells = entry.value
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Spells(group = group, spells = spells)
     }
 }
@@ -77,7 +77,7 @@ private fun Spells(
         fontSize = 14.sp,
     )
 
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(8.dp))
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         items(spells) { spell ->
