@@ -17,18 +17,16 @@
 
 package br.alexandregpereira.hunter.detail.domain
 
+import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
-import javax.inject.Inject
-
-typealias MonsterDetail = Triple<Int, List<Monster>, MeasurementUnit>
 
 class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
@@ -47,7 +45,11 @@ class GetMonsterDetailUseCase @Inject internal constructor(
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw IllegalAccessError("Monster not found")
 
-                Triple(monsters.indexOf(monster), monsters, measurementUnit)
+                MonsterDetail(
+                    monsterIndexSelected = monsters.indexOf(monster),
+                    measurementUnit = measurementUnit,
+                    monsters = monsters
+                )
             }
     }
 

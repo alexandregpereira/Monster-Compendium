@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.monster.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
@@ -63,7 +64,8 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             specialAbilities = it.specialAbilities.toDomain(),
             actions = it.actions.toDomain(),
             reactions = it.reactions.toDomain(),
-            sourceName = it.source.name
+            sourceName = it.source.name,
+            spellcastings = it.spellcastings.toDomain()
         )
     }
 }

@@ -32,6 +32,12 @@ import br.alexandregpereira.hunter.data.monster.local.dao.SpecialAbilityDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedValueDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellUsageDao
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellcastingDao
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.sync.Mutex
@@ -51,9 +57,19 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     private val speedDao: SpeedDao,
     private val speedValueDao: SpeedValueDao,
     private val reactionDao: ReactionDao,
+    private val spellcastingDao: SpellcastingDao,
+    private val spellUsageDao: SpellUsageDao,
 ) : MonsterLocalDataSource {
 
     private val mutex = Mutex()
+
+    override fun getMonsterPreviews(): Flow<List<MonsterEntity>> = flow {
+        mutex.withLock {
+            monsterDao.getMonsterPreviews()
+        }.let { monsters ->
+            emit(monsters)
+        }
+    }
 
     override fun getMonsters(): Flow<List<MonsterCompleteEntity>> = flow {
         mutex.withLock {
@@ -67,7 +83,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         emit(monsterDao.getMonster(index))
     }
 
-    override fun getMonstersByQuery(query: String): Flow<List<MonsterCompleteEntity>> = flow {
+    override fun getMonstersByQuery(query: String): Flow<List<MonsterEntity>> = flow {
         mutex.withLock {
             monsterDao.getMonstersByQuery(
                 SimpleSQLiteQuery(
@@ -85,47 +101,99 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     ): Flow<Unit> = flow {
         mutex.withLock {
             if (isSync) {
-                val startTime = System.currentTimeMillis()
-                abilityScoreDao.deleteAll()
-                actionDao.deleteAll()
-                conditionDao.deleteAll()
-                damageDao.deleteAllResistances()
-                damageDao.deleteAllImmunities()
-                damageDao.deleteAllVulnerabilities()
-                damageDiceDao.deleteAll()
-                savingThrowDao.deleteAll()
-                skillDao.deleteAll()
-                specialAbilityDao.deleteAll()
-                speedDao.deleteAll()
-                speedValueDao.deleteAll()
-                monsterDao.deleteAll()
-                reactionDao.deleteAll()
-                Log.d("saveMonsters", "deleteAll in ${System.currentTimeMillis() - startTime} ms")
+                deleteAll()
             }
 
-            val startTime = System.currentTimeMillis()
-            monsterDao.insert(monsters.map { it.monster })
-            abilityScoreDao.insert(monsters.map { it.abilityScores }.reduceList())
-            actionDao.insert(monsters.map { it.actions }.reduceList().map { it.action })
-            damageDiceDao.insert(monsters.map { it.actions }.reduceList().map { it.damageDices }
-                .reduceList())
-            savingThrowDao.insert(monsters.map { it.savingThrows }.reduceList())
-            skillDao.insert(monsters.map { it.skills }.reduceList())
-            specialAbilityDao.insert(monsters.map { it.specialAbilities }.reduceList())
-            speedDao.insert(monsters.mapNotNull { it.speed?.speed })
-            speedValueDao.insert(monsters.mapNotNull { it.speed?.values }.reduceList())
-            damageDao.insertImmunity(monsters.map { it.damageImmunities }.reduceList())
-            damageDao.insertResistance(monsters.map { it.damageResistances }.reduceList())
-            damageDao.insertVulnerability(monsters.map { it.damageVulnerabilities }.reduceList())
-            conditionDao.insert(monsters.map { it.conditionImmunities }.reduceList())
-            reactionDao.insert(monsters.map { it.reactions }.reduceList())
-
-            Log.d("saveMonsters", "insert in ${System.currentTimeMillis() - startTime} ms")
+            insertAll(monsters)
         }
         emit(Unit)
     }
 
+    private suspend fun deleteAll() {
+        val startTime = System.currentTimeMillis()
+        abilityScoreDao.deleteAll()
+        actionDao.deleteAll()
+        conditionDao.deleteAll()
+        damageDao.deleteAllResistances()
+        damageDao.deleteAllImmunities()
+        damageDao.deleteAllVulnerabilities()
+        damageDiceDao.deleteAll()
+        savingThrowDao.deleteAll()
+        skillDao.deleteAll()
+        specialAbilityDao.deleteAll()
+        speedDao.deleteAll()
+        speedValueDao.deleteAll()
+        monsterDao.deleteAll()
+        reactionDao.deleteAll()
+        spellcastingDao.deleteAll()
+        spellcastingDao.deleteAllSpellUsageCrossReferences()
+        spellUsageDao.deleteAll()
+        spellUsageDao.deleteAllSpellCrossReferences()
+        Log.d("saveMonsters", "deleteAll in ${System.currentTimeMillis() - startTime} ms")
+    }
+
+    private suspend fun insertAll(monsters: List<MonsterCompleteEntity>) {
+        val startTime = System.currentTimeMillis()
+        monsterDao.insert(monsters.map { it.monster })
+        abilityScoreDao.insert(monsters.map { it.abilityScores }.reduceList())
+        actionDao.insert(monsters.map { it.actions }.reduceList().map { it.action })
+        damageDiceDao.insert(monsters.map { it.actions }.reduceList().map { it.damageDices }
+            .reduceList())
+        savingThrowDao.insert(monsters.map { it.savingThrows }.reduceList())
+        skillDao.insert(monsters.map { it.skills }.reduceList())
+        specialAbilityDao.insert(monsters.map { it.specialAbilities }.reduceList())
+        speedDao.insert(monsters.mapNotNull { it.speed?.speed })
+        speedValueDao.insert(monsters.mapNotNull { it.speed?.values }.reduceList())
+        damageDao.insertImmunity(monsters.map { it.damageImmunities }.reduceList())
+        damageDao.insertResistance(monsters.map { it.damageResistances }.reduceList())
+        damageDao.insertVulnerability(monsters.map { it.damageVulnerabilities }.reduceList())
+        conditionDao.insert(monsters.map { it.conditionImmunities }.reduceList())
+        reactionDao.insert(monsters.map { it.reactions }.reduceList())
+
+        spellcastingDao.insert(
+            monsters.map { entity ->
+                entity.spellcastings.map { it.spellcasting }
+            }.reduceList()
+        )
+        spellUsageDao.insert(
+            monsters.map { entity ->
+                entity.spellcastings.map { it.usages }.map { spellUsageEntities ->
+                    spellUsageEntities.map { it.spellUsage }
+                }.reduceList()
+            }.reduceList()
+        )
+
+        monsters.map { entity -> entity.spellcastings }.reduceList().map {
+            it.usages.map { usage ->
+                SpellcastingSpellUsageCrossRefEntity(
+                    spellcastingId = usage.spellUsage.spellcastingId,
+                    spellUsageId = usage.spellUsage.spellUsageId
+                )
+            }
+        }.reduceList().let {
+            spellcastingDao.insertSpellUsageCrossReferences(it)
+        }
+
+        val spellPreviews = mutableListOf<SpellPreviewEntity>()
+        monsters.map { entity -> entity.spellcastings.map { it.usages }.reduceList() }.reduceList()
+            .map {
+                it.spells.map { spell ->
+                    spellPreviews.add(spell)
+                    SpellUsageSpellCrossRefEntity(
+                        spellUsageId = it.spellUsage.spellUsageId,
+                        spellIndex = spell.spellIndex
+                    )
+                }
+            }.reduceList().let {
+                spellUsageDao.insertSpellCrossReferences(it)
+            }
+
+        spellUsageDao.insertSpellPreviews(spellPreviews)
+
+        Log.d("saveMonsters", "insert in ${System.currentTimeMillis() - startTime} ms")
+    }
+
     private fun <T> List<List<T>>.reduceList(): List<T> {
-        return this.reduce { acc, list -> acc + list }
+        return this.reduceOrNull { acc, list -> acc + list } ?: emptyList()
     }
 }

@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
+
 data class Monster(
     val preview: MonsterPreview,
     val subtype: String?,
@@ -25,7 +27,10 @@ data class Monster(
     val size: String,
     val alignment: String,
     val stats: Stats,
-    val speed: Speed,
+    val senses: List<String>,
+    val languages: String,
+    val sourceName: String,
+    val speed: Speed = Speed(hover = false, values = emptyList()),
     val abilityScores: List<AbilityScore> = emptyList(),
     val savingThrows: List<Proficiency> = emptyList(),
     val skills: List<Proficiency> = emptyList(),
@@ -33,12 +38,10 @@ data class Monster(
     val damageResistances: List<Damage> = emptyList(),
     val damageImmunities: List<Damage> = emptyList(),
     val conditionImmunities: List<Condition> = emptyList(),
-    val senses: List<String>,
-    val languages: String,
-    val specialAbilities: List<AbilityDescription>,
-    val actions: List<Action>,
+    val specialAbilities: List<AbilityDescription> = emptyList(),
+    val actions: List<Action> = emptyList(),
     val reactions: List<AbilityDescription> = emptyList(),
-    val sourceName: String
+    val spellcastings: List<Spellcasting> = emptyList(),
 ) {
     val index: String
         get() = preview.index
@@ -49,7 +52,7 @@ data class Monster(
     val challengeRating: Float
         get() = preview.challengeRating
     val imageData: MonsterImageData
-        get() =  preview.imageData
+        get() = preview.imageData
 }
 
 data class MonsterPreview(
