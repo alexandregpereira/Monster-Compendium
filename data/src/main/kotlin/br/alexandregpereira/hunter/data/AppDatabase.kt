@@ -19,34 +19,36 @@ package br.alexandregpereira.hunter.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import br.alexandregpereira.hunter.data.local.dao.AbilityScoreDao
-import br.alexandregpereira.hunter.data.local.dao.ActionDao
-import br.alexandregpereira.hunter.data.local.dao.ConditionDao
-import br.alexandregpereira.hunter.data.local.dao.DamageDao
-import br.alexandregpereira.hunter.data.local.dao.DamageDiceDao
-import br.alexandregpereira.hunter.data.local.dao.MonsterDao
-import br.alexandregpereira.hunter.data.local.dao.MonsterFolderDao
-import br.alexandregpereira.hunter.data.local.dao.ReactionDao
-import br.alexandregpereira.hunter.data.local.dao.SavingThrowDao
-import br.alexandregpereira.hunter.data.local.dao.SkillDao
-import br.alexandregpereira.hunter.data.local.dao.SpecialAbilityDao
-import br.alexandregpereira.hunter.data.local.dao.SpeedDao
-import br.alexandregpereira.hunter.data.local.dao.SpeedValueDao
-import br.alexandregpereira.hunter.data.local.entity.AbilityScoreEntity
-import br.alexandregpereira.hunter.data.local.entity.ActionEntity
-import br.alexandregpereira.hunter.data.local.entity.ConditionEntity
-import br.alexandregpereira.hunter.data.local.entity.DamageDiceEntity
-import br.alexandregpereira.hunter.data.local.entity.DamageImmunityEntity
-import br.alexandregpereira.hunter.data.local.entity.DamageResistanceEntity
-import br.alexandregpereira.hunter.data.local.entity.DamageVulnerabilityEntity
-import br.alexandregpereira.hunter.data.local.entity.MonsterEntity
-import br.alexandregpereira.hunter.data.local.entity.MonsterFolderEntity
-import br.alexandregpereira.hunter.data.local.entity.ReactionEntity
-import br.alexandregpereira.hunter.data.local.entity.SavingThrowEntity
-import br.alexandregpereira.hunter.data.local.entity.SkillEntity
-import br.alexandregpereira.hunter.data.local.entity.SpecialAbilityEntity
-import br.alexandregpereira.hunter.data.local.entity.SpeedEntity
-import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
+import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.local.dao.AbilityScoreDao
+import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
+import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao
+import br.alexandregpereira.hunter.data.monster.local.dao.DamageDao
+import br.alexandregpereira.hunter.data.monster.local.dao.DamageDiceDao
+import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.monster.local.dao.ReactionDao
+import br.alexandregpereira.hunter.data.monster.local.dao.SavingThrowDao
+import br.alexandregpereira.hunter.data.monster.local.dao.SkillDao
+import br.alexandregpereira.hunter.data.monster.local.dao.SpecialAbilityDao
+import br.alexandregpereira.hunter.data.monster.local.dao.SpeedDao
+import br.alexandregpereira.hunter.data.monster.local.dao.SpeedValueDao
+import br.alexandregpereira.hunter.data.monster.local.entity.AbilityScoreEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
+import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
 
 @Database(
     entities = [
@@ -64,9 +66,10 @@ import br.alexandregpereira.hunter.data.local.entity.SpeedValueEntity
         SpecialAbilityEntity::class,
         SpeedEntity::class,
         SpeedValueEntity::class,
+        SpellEntity::class,
         ReactionEntity::class,
     ],
-    version = 13,
+    version = 16,
     exportSchema = false
 )
 internal abstract class AppDatabase : RoomDatabase() {
@@ -82,5 +85,6 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun specialAbilityDao(): SpecialAbilityDao
     abstract fun speedDao(): SpeedDao
     abstract fun speedValueDao(): SpeedValueDao
+    abstract fun spellDao(): SpellDao
     abstract fun reactionDao(): ReactionDao
 }

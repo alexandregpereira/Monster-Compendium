@@ -1,0 +1,60 @@
+/*
+ * Hunter - DnD 5th edition monster compendium application
+ * Copyright (C) 2021 Alexandre Gomes Pereira
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
+
+android {
+    compileSdkVersion buildConfig.compileSdk
+
+    defaultConfig {
+        minSdkVersion buildConfig.minSdk
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
+}
+
+dependencies {
+    implementation project(':data-monster')
+    implementation project(':domain-monster-folder')
+
+    implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.serialization
+
+    implementation libs.hilt
+    kapt libs.hilt.compiler
+
+    implementation libs.bundles.retrofit
+
+    implementation libs.bundles.room
+    kapt libs.room.compiler
+
+    testImplementation libs.mockk
+    testImplementation libs.junit
+}

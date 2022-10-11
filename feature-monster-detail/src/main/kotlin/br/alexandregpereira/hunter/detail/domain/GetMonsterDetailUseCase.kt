@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.detail.domain
 
-import br.alexandregpereira.domain.folder.GetMonstersByFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase

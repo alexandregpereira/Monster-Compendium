@@ -50,7 +50,10 @@ android {
 
 dependencies {
     implementation project(':domain')
+    implementation project(':domain-alternative-source')
+    implementation project(':domain-spell')
     implementation project(':feature-folder-preview-event')
+    implementation project(':navigation')
     implementation project(':ui')
 
     implementation libs.core.ktx

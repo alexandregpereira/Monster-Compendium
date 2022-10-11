@@ -23,11 +23,11 @@ import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.SyncUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
 import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
@@ -59,7 +59,7 @@ class MonsterCompendiumViewModelTest {
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
-    private val syncMonstersUseCase: SyncMonstersUseCase = mockk(relaxUnitFun = true)
+    private val syncUseCase: SyncUseCase = mockk(relaxUnitFun = true)
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = mockk()
     private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
@@ -96,7 +96,7 @@ class MonsterCompendiumViewModelTest {
         advanceUntilIdle()
 
         // Then
-        verify { syncMonstersUseCase() }
+        verify { syncUseCase() }
         verify { getMonsterPreviewsUseCase() }
 
         assertEquals(3, results.size)
@@ -129,10 +129,10 @@ class MonsterCompendiumViewModelTest {
     }
 
     private fun createViewModel() {
-        every { syncMonstersUseCase() } returns flowOf(Unit)
+        every { syncUseCase() } returns flowOf(Unit)
 
         viewModel = MonsterCompendiumViewModel(
-            syncMonstersUseCase = syncMonstersUseCase,
+            sync = syncUseCase,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,

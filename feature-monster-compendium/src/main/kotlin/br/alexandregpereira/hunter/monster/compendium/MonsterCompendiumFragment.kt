@@ -30,8 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.alexandregpereira.hunter.domain.Navigator
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
+import br.alexandregpereira.hunter.navigation.Navigator
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

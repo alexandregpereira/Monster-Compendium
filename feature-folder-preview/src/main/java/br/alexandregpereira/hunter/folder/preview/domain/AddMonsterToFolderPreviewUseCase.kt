@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.folder.preview.domain
 
-import br.alexandregpereira.domain.folder.MonsterFolderRepository
+import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase.Companion.TEMPORARY_FOLDER_NAME
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import kotlinx.coroutines.ExperimentalCoroutinesApi
