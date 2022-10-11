@@ -43,6 +43,7 @@ data class MonsterState(
     val specialAbilities: List<AbilityDescriptionState>,
     val actions: List<ActionState>,
     val reactions: List<AbilityDescriptionState>,
+    val spellcastings: List<SpellcastingState> = emptyList(),
 )
 
 data class StatsState(
@@ -173,4 +174,32 @@ enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     OOZE(R.drawable.ic_ooze),
     PLANT(R.drawable.ic_plant),
     UNDEAD(R.drawable.ic_undead)
+}
+
+data class SpellcastingState(
+    val type: SpellcastingTypeState,
+    val description: String,
+    val spellsByGroup: Map<String, List<SpellPreviewState>>
+)
+
+data class SpellPreviewState(
+    val index: String,
+    val name: String,
+    val school: SchoolOfMagicState
+)
+
+enum class SpellcastingTypeState(val nameRes: Int) {
+    SPELLCASTER(R.string.monster_detail_spellcasting),
+    INNATE(R.string.monster_detail_innate_spellcasting)
+}
+
+enum class SchoolOfMagicState(val iconRes: Int, val iconColorLight: String, val iconColorDark: String) {
+    ABJURATION(iconRes = R.drawable.ic_school_abjuration, iconColorLight = "#0013FF", iconColorDark = "#4A4AFF"),
+    CONJURATION(iconRes = R.drawable.ic_school_conjuration, iconColorLight = "#6633CC", iconColorDark = "#B06CFF"),
+    DIVINATION(iconRes = R.drawable.ic_school_divination, iconColorLight = "#FF9900", iconColorDark = "#FFAC3E"),
+    ENCHANTMENT(iconRes = R.drawable.ic_school_enchantment, iconColorLight = "#CC00CC", iconColorDark = "#FF00FF"),
+    EVOCATION(iconRes = R.drawable.ic_school_evocation, iconColorLight = "#CC0000", iconColorDark = "#F20C0C"),
+    ILLUSION(iconRes = R.drawable.ic_school_illusion, iconColorLight = "#009DC1", iconColorDark = "#5ADCFF"),
+    NECROMANCY(iconRes = R.drawable.ic_school_necromancy, iconColorLight = "#000000", iconColorDark = "#FFFFFF"),
+    TRANSMUTATION(iconRes = R.drawable.ic_school_transmutation, iconColorLight = "#00C100", iconColorDark = "#00FF00"),
 }
