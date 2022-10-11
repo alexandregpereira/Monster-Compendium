@@ -30,6 +30,9 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 @Dao
 interface MonsterDao {
 
+    @Query("SELECT * FROM MonsterEntity")
+    suspend fun getMonsterPreviews(): List<MonsterEntity>
+
     @Transaction
     @Query("SELECT * FROM MonsterEntity")
     suspend fun getMonsters(): List<MonsterCompleteEntity>
@@ -38,9 +41,8 @@ interface MonsterDao {
     @Query("SELECT * FROM MonsterEntity WHERE `index` == :index")
     fun getMonster(index: String): MonsterCompleteEntity
 
-    @Transaction
     @RawQuery
-    suspend fun getMonstersByQuery(query: SupportSQLiteQuery): List<MonsterCompleteEntity>
+    suspend fun getMonstersByQuery(query: SupportSQLiteQuery): List<MonsterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(monsters: List<MonsterEntity>)

@@ -26,7 +26,8 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import br.alexandregpereira.hunter.domain.sync.SyncUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -37,10 +38,10 @@ import org.junit.Test
 
 class GetMonsterPreviewsBySectionUseCaseTest {
 
-    private val syncMonstersUseCase: SyncMonstersUseCase = mockk()
-    private val getMonstersUseCase: GetMonstersUseCase = mockk()
+    private val syncUseCase: SyncUseCase = mockk()
+    private val getMonstersUseCase: GetMonsterPreviewsUseCase = mockk()
     private val useCase =
-        GetMonsterPreviewsBySectionUseCase(syncMonstersUseCase, getMonstersUseCase)
+        GetMonsterPreviewsBySectionUseCase(syncUseCase, getMonstersUseCase)
 
     private fun createMonsters(): List<Monster> {
         return (0..23).map {
@@ -67,7 +68,7 @@ class GetMonsterPreviewsBySectionUseCaseTest {
     fun invoke() = runBlocking {
         // Given
         val monsters = createMonsters().map { it.preview }
-        every { syncMonstersUseCase() } returns flowOf(Unit)
+        every { syncUseCase() } returns flowOf(Unit)
         every { getMonstersUseCase() } returns flowOf(createMonsters().sortMonstersByNameAndGroup())
 
         // When

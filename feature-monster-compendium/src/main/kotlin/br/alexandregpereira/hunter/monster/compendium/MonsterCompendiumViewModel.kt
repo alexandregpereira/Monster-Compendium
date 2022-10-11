@@ -27,8 +27,6 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEve
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
-import br.alexandregpereira.hunter.monster.compendium.domain.SyncUseCase
-import br.alexandregpereira.hunter.monster.compendium.ui.Loading
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumViewState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterRowState
@@ -36,6 +34,7 @@ import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetIndex
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
+import br.alexandregpereira.hunter.monster.compendium.ui.loading
 import br.alexandregpereira.hunter.monster.compendium.ui.showMonsterFolderPreview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -45,7 +44,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -55,7 +53,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MonsterCompendiumViewModel @Inject constructor(
-    private val sync: SyncUseCase,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -73,7 +70,6 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     init {
         observeEvents()
-        startSync()
         if (loadOnInit) loadMonsters()
     }
 
@@ -96,12 +92,13 @@ class MonsterCompendiumViewModel @Inject constructor(
                 )
             }
             .onStart {
-                emit(state.value.Loading)
+                emit(state.value.loading(isLoading = true))
             }
             .flowOn(dispatcher)
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
                 it.printStackTrace()
+                emit(state.value.loading(isLoading = false))
             }
             .collect { state ->
                 _state.value = state
@@ -165,15 +162,6 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     private fun changeAlphabetOpenState(opened: Boolean) {
         _state.value = state.value.alphabetOpened(alphabetOpened = opened)
-    }
-
-    private fun startSync() = viewModelScope.launch {
-        sync()
-            .flowOn(dispatcher)
-            .catch {
-                Log.e("MonsterViewModel", it.message ?: "")
-                it.printStackTrace()
-            }.collect()
     }
 
     private fun Map<SectionState, List<MonsterRowState>>.mapToFirstLetters(): List<Char> {

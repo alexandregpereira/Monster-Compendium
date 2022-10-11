@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.monster.compendium.domain
+package br.alexandregpereira.hunter.domain.sync
 
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import javax.inject.Inject

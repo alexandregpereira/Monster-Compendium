@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.data.monster.remote.model
 
+import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellcastingDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -78,6 +79,8 @@ data class MonsterDto(
     val actions: List<ActionDto>,
     @SerialName("reactions")
     val reactions: List<SpecialAbilityDto>,
+    @SerialName("spellcasting")
+    val spellcastings: List<SpellcastingDto> = emptyList(),
     @SerialName("source")
     val source: SourceDto
 )

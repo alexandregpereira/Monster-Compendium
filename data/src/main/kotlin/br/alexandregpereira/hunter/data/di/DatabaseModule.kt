@@ -17,6 +17,8 @@ import br.alexandregpereira.hunter.data.monster.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpecialAbilityDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedValueDao
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellUsageDao
+import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellcastingDao
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
 import dagger.Module
 import dagger.Provides
@@ -27,7 +29,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+internal class DatabaseModule {
 
     @Singleton
     @Provides
@@ -114,5 +116,15 @@ object DatabaseModule {
     @Provides
     internal fun provideSpellDao(appDatabase: AppDatabase): SpellDao {
         return appDatabase.spellDao()
+    }
+
+    @Provides
+    internal fun provideSpellcastingDao(appDatabase: AppDatabase): SpellcastingDao {
+        return appDatabase.spellcastingDao()
+    }
+
+    @Provides
+    internal fun provideSpellUsageDao(appDatabase: AppDatabase): SpellUsageDao {
+        return appDatabase.spellUsageDao()
     }
 }

@@ -22,21 +22,22 @@ import br.alexandregpereira.hunter.domain.exception.NoMonstersException
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import br.alexandregpereira.hunter.domain.sync.SyncUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
-import javax.inject.Inject
 
 typealias MonsterPair = Pair<MonsterPreview, MonsterPreview?>
 typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
 
 class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
-    private val syncMonstersUseCase: SyncMonstersUseCase,
-    private val getMonstersUseCase: GetMonstersUseCase
+    private val sync: SyncUseCase,
+    private val getMonstersUseCase: GetMonsterPreviewsUseCase
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -44,7 +45,7 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
         return getMonstersUseCase()
             .flatMapLatest { monsters ->
                 if (monsters.isEmpty()) {
-                    syncMonstersUseCase().map {
+                    sync().map {
                         throw NoMonstersException()
                     }
                 } else flowOf(monsters)

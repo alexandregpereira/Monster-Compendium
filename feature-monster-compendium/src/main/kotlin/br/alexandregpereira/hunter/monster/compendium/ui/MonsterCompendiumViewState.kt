@@ -87,8 +87,9 @@ enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     UNDEAD(R.drawable.ic_undead)
 }
 
-val MonsterCompendiumViewState.Loading: MonsterCompendiumViewState
-    get() = this.copy(isLoading = true)
+fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumViewState {
+    return this.copy(isLoading = isLoading)
+}
 
 fun MonsterCompendiumViewState.complete(
     monstersBySection: Map<SectionState, List<MonsterRowState>>,
