@@ -21,7 +21,7 @@ import androidx.annotation.DrawableRes
 import br.alexandregpereira.hunter.monster.compendium.R
 
 data class MonsterCompendiumViewState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val monstersBySection: Map<SectionState, List<MonsterRowState>> = emptyMap(),
     val alphabet: List<Char> = emptyList(),
     val alphabetIndex: Int = 0,
