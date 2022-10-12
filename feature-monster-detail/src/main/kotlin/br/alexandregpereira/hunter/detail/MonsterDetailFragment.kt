@@ -70,7 +70,8 @@ internal fun MonsterDetail(
                 onMonsterChanged = { monster ->
                     viewModel.monsterIndex = monster.index
                 },
-                onOptionsClicked = viewModel::onShowOptionsClicked
+                onOptionsClicked = viewModel::onShowOptionsClicked,
+                onSpellClicked = viewModel::onSpellClicked
             )
 
             MonsterDetailOptionPicker(

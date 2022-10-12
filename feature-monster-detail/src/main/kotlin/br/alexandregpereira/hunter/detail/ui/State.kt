@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.annotation.DrawableRes
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 
 data class MonsterState(
     val index: String,
@@ -191,15 +192,4 @@ data class SpellPreviewState(
 enum class SpellcastingTypeState(val nameRes: Int) {
     SPELLCASTER(R.string.monster_detail_spellcasting),
     INNATE(R.string.monster_detail_innate_spellcasting)
-}
-
-enum class SchoolOfMagicState(val iconRes: Int, val iconColorLight: String, val iconColorDark: String) {
-    ABJURATION(iconRes = R.drawable.ic_school_abjuration, iconColorLight = "#0013FF", iconColorDark = "#4A4AFF"),
-    CONJURATION(iconRes = R.drawable.ic_school_conjuration, iconColorLight = "#6633CC", iconColorDark = "#B06CFF"),
-    DIVINATION(iconRes = R.drawable.ic_school_divination, iconColorLight = "#FF9900", iconColorDark = "#FFAC3E"),
-    ENCHANTMENT(iconRes = R.drawable.ic_school_enchantment, iconColorLight = "#CC00CC", iconColorDark = "#FF00FF"),
-    EVOCATION(iconRes = R.drawable.ic_school_evocation, iconColorLight = "#CC0000", iconColorDark = "#F20C0C"),
-    ILLUSION(iconRes = R.drawable.ic_school_illusion, iconColorLight = "#009DC1", iconColorDark = "#5ADCFF"),
-    NECROMANCY(iconRes = R.drawable.ic_school_necromancy, iconColorLight = "#000000", iconColorDark = "#FFFFFF"),
-    TRANSMUTATION(iconRes = R.drawable.ic_school_transmutation, iconColorLight = "#00C100", iconColorDark = "#00FF00"),
 }

@@ -40,6 +40,7 @@ fun MonsterInfo(
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    onSpellClicked: (String) -> Unit = {}
 ) = Column(
     modifier
         .alpha(alpha)
@@ -85,7 +86,9 @@ fun MonsterInfo(
     OptionalBlockSection(monster.specialAbilities) { SpecialAbilityBlock(specialAbilities = it) }
     BlockSection { ActionBlock(actions = monster.actions) }
 
-    OptionalBlockSection(monster.spellcastings) { SpellBlock(spellcastings = it) }
+    OptionalBlockSection(monster.spellcastings) {
+        SpellBlock(spellcastings = it, onSpellClicked = onSpellClicked)
+    }
 
     OptionalBlockSection(monster.reactions) { ReactionBlock(reactions = it) }
 

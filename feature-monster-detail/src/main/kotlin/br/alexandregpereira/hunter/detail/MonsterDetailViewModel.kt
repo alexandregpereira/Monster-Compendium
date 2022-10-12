@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitU
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -51,6 +53,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -93,6 +96,10 @@ internal class MonsterDetailViewModel @Inject constructor(
                 changeMeasurementUnit(MeasurementUnit.METER)
             }
         }
+    }
+
+    fun onSpellClicked(spellIndex: String) {
+        spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
     private fun getMonsterDetail(): Flow<MonsterDetail> {

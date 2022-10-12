@@ -17,14 +17,11 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
@@ -32,14 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
+import br.alexandregpereira.hunter.ui.compose.HeaderFontSize
+import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.HorizontalSlideTransition
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -64,7 +60,7 @@ fun MonsterTitleCompose(
         pagerState,
         modifier = Modifier.weight(1f).clipToBounds()
     ) { data ->
-        MonsterTitle(
+        ScreenHeader(
             data.title,
             data.subTitle,
             Modifier
@@ -72,7 +68,7 @@ fun MonsterTitleCompose(
                 .padding(
                     end = 8.dp
                 ),
-            titleFontSize = titleFontSize,
+            titleFontSize = HeaderFontSize.valueOf(titleFontSize.name),
             contentPadding = contentPadding
         )
     }
@@ -87,49 +83,6 @@ fun MonsterTitleCompose(
             ),
         onOptionsClicked
     )
-}
-
-@Composable
-private fun MonsterTitle(
-    title: String,
-    subTitle: String?,
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    titleFontSize: MonsterTitleFontSize = MonsterTitleFontSize.LARGE,
-) = Column(modifier) {
-    val titleFontSizeValue = when (titleFontSize) {
-        MonsterTitleFontSize.LARGE -> 24.sp
-        MonsterTitleFontSize.SMALL -> 16.sp
-    }
-    val titleFontWeight = when (titleFontSize) {
-        MonsterTitleFontSize.LARGE -> FontWeight.Bold
-        MonsterTitleFontSize.SMALL -> FontWeight.SemiBold
-    }
-    val titleBottomPadding = if (subTitle != null) 0.dp else {
-        contentPadding.calculateBottomPadding()
-    }
-    Text(
-        text = title,
-        fontSize = titleFontSizeValue,
-        fontWeight = titleFontWeight,
-        modifier = Modifier.padding(
-            top = contentPadding.calculateTopPadding(),
-            bottom = titleBottomPadding,
-            start = contentPadding.calculateStartPadding(LayoutDirection.Rtl)
-        )
-    )
-    subTitle?.let {
-        Text(
-            text = it,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            fontStyle = FontStyle.Italic,
-            modifier = Modifier.padding(
-                bottom = contentPadding.calculateBottomPadding(),
-                start = contentPadding.calculateStartPadding(LayoutDirection.Rtl)
-            )
-        )
-    }
 }
 
 @Composable

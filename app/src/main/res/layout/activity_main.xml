@@ -36,6 +36,14 @@
         app:layout_constraintBottom_toBottomOf="@id/nav_host_fragment"
         app:layout_constraintTop_toTopOf="@id/nav_host_fragment" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/spell_detail_fragment"
+        android:name="br.alexandregpereira.hunter.spell.detail.SpellDetailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@id/nav_host_fragment" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         style="@style/Widget.App.BottomNavigationView"
         android:id="@+id/bottom_navigation"

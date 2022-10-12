@@ -82,6 +82,7 @@ fun MonsterDetailScreen(
     scrollState: ScrollState = rememberScrollState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
+    onSpellClicked: (String) -> Unit = {}
 ) {
     Column(
         Modifier
@@ -121,6 +122,7 @@ fun MonsterDetailScreen(
             monsters = monsters,
             pagerState = pagerState,
             contentPadding = contentPadding,
+            onSpellClicked = onSpellClicked
         )
     }
 
@@ -308,13 +310,15 @@ private fun MonsterTypeIcon(
 private fun MonsterInfo(
     monsters: List<MonsterState>,
     pagerState: PagerState,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    onSpellClicked: (String) -> Unit = {}
 ) {
     AlphaTransition(monsters, pagerState) { data: MonsterState, alpha: Float ->
         MonsterInfo(
             data,
             contentPadding = contentPadding,
             alpha = alpha,
+            onSpellClicked = onSpellClicked
         )
     }
 }

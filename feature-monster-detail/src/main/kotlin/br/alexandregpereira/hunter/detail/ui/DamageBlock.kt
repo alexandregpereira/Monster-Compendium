@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentAlpha
