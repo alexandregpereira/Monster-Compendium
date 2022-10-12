@@ -39,10 +39,12 @@ fun Block(
     title: String? = null,
     contentPaddingBottom: Dp = 0.dp,
     contentTextPaddingBottom: Dp = 16.dp,
+    contentHorizontalPadding: Dp = 16.dp,
     content: @Composable ColumnScope.() -> Unit
 ) = Column(
-    modifier.background(color = MaterialTheme.colors.surface)
-        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp + contentPaddingBottom)
+    modifier
+        .background(color = MaterialTheme.colors.surface)
+        .padding(top = 16.dp, bottom = 16.dp + contentPaddingBottom)
 ) {
 
     title?.let {
@@ -50,11 +52,20 @@ fun Block(
             text = title,
             fontWeight = FontWeight.Normal,
             fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = contentTextPaddingBottom)
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = contentTextPaddingBottom
+            )
         )
     }
 
-    Column(Modifier.fillMaxWidth(), content = content)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = contentHorizontalPadding),
+        content = content
+    )
 }
 
 @Preview

@@ -36,7 +36,7 @@ fun AbilityDescriptionBlock(
     abilityDescriptions: List<AbilityDescriptionState>,
     modifier: Modifier = Modifier,
     content: @Composable (index: Int) -> Unit = {}
-) = Block(title = title, modifier = modifier) {
+) = Block(title = title, horizontalPadding = 0.dp, modifier = modifier) {
 
     abilityDescriptions.forEachIndexed { index, abilityDescription ->
         AbilityDescription(
@@ -63,13 +63,16 @@ private fun AbilityDescription(
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Italic,
         fontSize = 16.sp,
+        modifier = Modifier.padding(horizontal = 16.dp)
     )
 
     Text(
         text = description,
         fontWeight = FontWeight.Light,
         fontSize = 14.sp,
-        modifier = Modifier.padding(top = 4.dp)
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .padding(horizontal = 16.dp)
     )
 
     content()
