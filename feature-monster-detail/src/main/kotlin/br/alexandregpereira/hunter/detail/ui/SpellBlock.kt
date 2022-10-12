@@ -19,7 +19,10 @@ package br.alexandregpereira.hunter.detail.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,14 +39,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
+import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.compose.Window
-import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
 fun SpellBlock(
     spellcastings: List<SpellcastingState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSpellClicked: (String) -> Unit = {}
 ) = AbilityDescriptionBlock(
     title = stringResource(R.string.monster_detail_spells),
     abilityDescriptions = spellcastings.map {
@@ -59,7 +64,7 @@ fun SpellBlock(
         val spells = entry.value
 
         Spacer(modifier = Modifier.height(24.dp))
-        Spells(group = group, spells = spells)
+        Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
     }
 }
 
@@ -68,7 +73,8 @@ fun SpellBlock(
 private fun Spells(
     group: String,
     spells: List<SpellPreviewState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSpellClicked: (String) -> Unit = {}
 ) = Column(modifier = modifier) {
     Text(
         text = group,
@@ -81,28 +87,13 @@ private fun Spells(
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         items(spells) { spell ->
-            Spell(name = spell.name, school = spell.school)
+            SpellIconInfo(
+                name = spell.name,
+                school = spell.school,
+                onClick = { onSpellClicked(spell.index) }
+            )
         }
     }
-}
-
-@Composable
-private fun Spell(
-    name: String,
-    school: SchoolOfMagicState,
-    modifier: Modifier = Modifier
-) {
-    val iconColor = if (isSystemInDarkTheme()) school.iconColorDark else school.iconColorLight
-    IconInfo(
-        title = name,
-        painter = painterResource(school.iconRes),
-        iconColor = iconColor.toColor(),
-        iconAlpha = 1f,
-        modifier = modifier.animatePressed(
-            pressedScale = 0.85f,
-            onClick = {}
-        )
-    )
 }
 
 @Preview

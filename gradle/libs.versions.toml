@@ -1,9 +1,10 @@
 [versions]
 accompanist = "0.24.13-rc"
-android_gradle_plugin = "7.2.1"
+android_gradle_plugin = "7.3.0"
 appcompat = "1.4.2"
 arch_core_testing = "2.1.0"
 coil_compose = "2.1.0"
+compose_activity = '1.5.1'
 compose = '1.1.1'
 compose_compiler = '1.2.0'
 core_ktx = '1.8.0'
@@ -32,6 +33,7 @@ accompanist-insets = { module = "com.google.accompanist:accompanist-insets", ver
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
@@ -68,7 +70,7 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 [bundles]
-compose = ["compose-ui", "compose-tooling", "compose-material"]
+compose = ["compose-ui", "compose-tooling", "compose-material", "compose-activity"]
 instrumentedtest = ["espresso", "junit-ext"]
 retrofit = ["retrofit-core", "retrofit-logging", "retrofit-serialization"]
 room = ["room-ktx", "room-runtime"]

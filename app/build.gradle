@@ -69,6 +69,7 @@ dependencies {
     implementation project(':feature-monster-detail')
     implementation project(':feature-search')
     implementation project(':feature-settings')
+    implementation project(':feature-spell-detail')
     implementation project(':navigation')
 
     implementation libs.core.ktx

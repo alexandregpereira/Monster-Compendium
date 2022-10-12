@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spell_detail_ritual">Ritual</string>
+    <string name="spell_detail_casting_time">Casting Time:</string>
+    <string name="spell_detail_range">Range:</string>
+    <string name="spell_detail_components">Components:</string>
+    <string name="spell_detail_duration">Duration:</string>
+    <string name="spell_detail_save_type">Save Type:</string>
+    <string name="spell_detail_concentration">Concentration</string>
+    <string name="spell_detail_higher_level">At Higher Levels.</string>
+</resources>

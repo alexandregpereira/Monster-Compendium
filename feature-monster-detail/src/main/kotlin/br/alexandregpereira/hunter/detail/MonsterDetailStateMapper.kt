@@ -30,7 +30,6 @@ import br.alexandregpereira.hunter.detail.ui.MonsterImageState
 import br.alexandregpereira.hunter.detail.ui.MonsterState
 import br.alexandregpereira.hunter.detail.ui.MonsterTypeState
 import br.alexandregpereira.hunter.detail.ui.ProficiencyState
-import br.alexandregpereira.hunter.detail.ui.SchoolOfMagicState
 import br.alexandregpereira.hunter.detail.ui.SpeedState
 import br.alexandregpereira.hunter.detail.ui.SpeedTypeState
 import br.alexandregpereira.hunter.detail.ui.SpeedValueState
@@ -50,6 +49,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Proficiency
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
+import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 
 internal fun List<Monster>.asState(): List<MonsterState> {
     return this.map { it.asState() }
