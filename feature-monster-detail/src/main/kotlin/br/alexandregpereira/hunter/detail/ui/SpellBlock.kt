@@ -21,8 +21,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -81,11 +83,15 @@ private fun Spells(
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Italic,
         fontSize = 14.sp,
+        modifier = Modifier.padding(horizontal = 16.dp)
     )
 
     Spacer(modifier = Modifier.height(8.dp))
 
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
         items(spells) { spell ->
             SpellIconInfo(
                 name = spell.name,

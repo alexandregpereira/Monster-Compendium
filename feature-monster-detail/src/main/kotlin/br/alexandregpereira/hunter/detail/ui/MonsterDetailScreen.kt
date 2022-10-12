@@ -121,6 +121,7 @@ fun MonsterDetailScreen(
         MonsterInfo(
             monsters = monsters,
             pagerState = pagerState,
+            scrollState = scrollState,
             contentPadding = contentPadding,
             onSpellClicked = onSpellClicked
         )
@@ -310,17 +311,46 @@ private fun MonsterTypeIcon(
 private fun MonsterInfo(
     monsters: List<MonsterState>,
     pagerState: PagerState,
+    scrollState: ScrollState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onSpellClicked: (String) -> Unit = {}
 ) {
-    AlphaTransition(monsters, pagerState) { data: MonsterState, alpha: Float ->
-        MonsterInfo(
-            data,
-            contentPadding = contentPadding,
-            alpha = alpha,
-            onSpellClicked = onSpellClicked
-        )
+    val imageHeightInPixels = LocalDensity.current.run { IMAGE_HEIGHT.toPx() }
+    val contentPaddingTotalInPixels = LocalDensity.current.run {
+        (MONSTER_IMAGE_COMPOSE_TOP_PADDING + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING +
+                contentPadding.calculateTopPadding() + 200.dp).toPx()
     }
+    val enableGesture = scrollState.value < (imageHeightInPixels + contentPaddingTotalInPixels)
+
+    MonsterInfo(
+        monsters = monsters,
+        pagerState = pagerState,
+        contentPadding = contentPadding,
+        enableGesture = enableGesture,
+        onSpellClicked = onSpellClicked
+    )
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@ExperimentalAnimationApi
+@Composable
+private fun MonsterInfo(
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    enableGesture: Boolean = true,
+    onSpellClicked: (String) -> Unit = {}
+) = AlphaTransition(
+    dataList = monsters,
+    pagerState = pagerState,
+    enableGesture = enableGesture
+) { data: MonsterState, alpha: Float ->
+    MonsterInfo(
+        data,
+        contentPadding = contentPadding,
+        alpha = alpha,
+        onSpellClicked = onSpellClicked
+    )
 }
 
 private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
