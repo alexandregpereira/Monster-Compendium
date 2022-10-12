@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -36,19 +37,23 @@ fun Closeable(
     backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     onClosed: () -> Unit,
     content: @Composable BoxScope.() -> Unit
-) = Box(modifier.fillMaxSize()) {
-    AnimatedVisibility(
-        visible = opened,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(backgroundColor)
-                .noIndicationClick(onClick = onClosed)
-        )
-    }
+) {
+    BackHandler(enabled = opened, onBack = onClosed)
 
-    content()
+    Box(modifier.fillMaxSize()) {
+        AnimatedVisibility(
+            visible = opened,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(backgroundColor)
+                    .noIndicationClick(onClick = onClosed)
+            )
+        }
+
+        content()
+    }
 }

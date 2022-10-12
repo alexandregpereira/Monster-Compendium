@@ -1,16 +1,10 @@
 package br.alexandregpereira.hunter.spell.detail.ui
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewState
-import br.alexandregpereira.hunter.ui.compose.Closeable
+import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
@@ -20,16 +14,8 @@ internal fun SpellDetailScreen(
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {}
 ) = HunterTheme {
-    BackHandler(enabled = state.showDetail, onBack = onClose)
-    Closeable(opened = state.showDetail, onClosed = onClose) {
-        AnimatedVisibility(
-            visible = state.showDetail,
-            enter = slideInVertically { fullHeight -> fullHeight * 2 },
-            exit = slideOutVertically { fullHeight -> fullHeight * 2 },
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
-            state.spell?.let { SpellDetail(it, contentPadding = contentPadding) }
-        }
+    BottomSheet(opened = state.showDetail, contentPadding = contentPadding, onClose = onClose) {
+        state.spell?.let { SpellDetail(it) }
     }
 }
 
