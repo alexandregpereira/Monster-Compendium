@@ -17,10 +17,6 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,13 +24,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,9 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.MonsterDetailOptionState
 import br.alexandregpereira.hunter.detail.R
-import br.alexandregpereira.hunter.ui.compose.Closeable
+import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.animatePressed
-import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 
 @Composable
 fun MonsterDetailOptionPicker(
@@ -52,60 +43,44 @@ fun MonsterDetailOptionPicker(
     showOptions: Boolean,
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
     onClosed: () -> Unit = {}
-) = Closeable(opened = showOptions, onClosed = onClosed) {
-    AnimatedVisibility(
-        visible = showOptions,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
-        modifier = Modifier
-            .align(Alignment.BottomEnd)
-            .noIndicationClick()
-    ) {
-        MonsterDetailOptions(options, onOptionSelected)
-    }
+) = BottomSheet(opened = showOptions, onClose = onClosed) {
+    MonsterDetailOptions(options, onOptionSelected)
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun MonsterDetailOptions(
     options: List<MonsterDetailOptionState>,
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
 ) {
-    Surface(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-    ) {
-        Column {
-            Text(
-                text = stringResource(R.string.monster_detail_options),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(all = 16.dp)
-            )
+    Column {
+        Text(
+            text = stringResource(R.string.monster_detail_options),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(all = 16.dp)
+        )
 
-            options.forEach {
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(all = 16.dp)
-                        .animatePressed(
-                            onClick = { onOptionSelected(it) }
-                        )
-                ) {
-                    Text(
-                        text = it.name,
-                        fontSize = 16.sp,
-                    )
-                }
-            }
-
-            Spacer(
-                modifier = Modifier
-                    .height(PaddingValues(all = 32.dp).calculateBottomPadding())
+        options.forEach {
+            Box(
+                Modifier
                     .fillMaxWidth()
-            )
+                    .padding(all = 16.dp)
+                    .animatePressed(
+                        onClick = { onOptionSelected(it) }
+                    )
+            ) {
+                Text(
+                    text = it.name,
+                    fontSize = 16.sp,
+                )
+            }
         }
+
+        Spacer(
+            modifier = Modifier
+                .height(PaddingValues(all = 32.dp).calculateBottomPadding())
+                .fillMaxWidth()
+        )
     }
 }
 

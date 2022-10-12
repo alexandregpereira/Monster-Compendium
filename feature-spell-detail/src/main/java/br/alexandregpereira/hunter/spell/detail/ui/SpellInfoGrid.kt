@@ -46,7 +46,7 @@ fun SpellInfoGrid(
     } else ""
     SpellTextInfo(
         title = stringResource(R.string.spell_detail_duration),
-        description = "$concentrationLabel${spell.duration}",
+        description = "$concentrationLabel${spell.duration.lowercase()}",
         modifier = Modifier.padding(top = topPadding)
     )
 
@@ -85,7 +85,7 @@ private fun SpellTextInfo(
 
     },
     fontSize = 14.sp,
-    modifier = Modifier.padding(top = 8.dp)
+    modifier = modifier
 )
 
 @Preview

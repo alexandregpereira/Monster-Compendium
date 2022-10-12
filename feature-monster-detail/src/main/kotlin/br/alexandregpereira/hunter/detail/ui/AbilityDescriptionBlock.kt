@@ -36,7 +36,7 @@ fun AbilityDescriptionBlock(
     abilityDescriptions: List<AbilityDescriptionState>,
     modifier: Modifier = Modifier,
     content: @Composable (index: Int) -> Unit = {}
-) = Block(title = title, horizontalPadding = 0.dp, modifier = modifier) {
+) = Block(title = title, contentHorizontalPadding = 0.dp, modifier = modifier) {
 
     abilityDescriptions.forEachIndexed { index, abilityDescription ->
         AbilityDescription(
