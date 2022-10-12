@@ -35,7 +35,6 @@ import br.alexandregpereira.hunter.monster.compendium.ui.MonsterTypeState
 import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
 import br.alexandregpereira.hunter.monster.compendium.ui.and
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
-import br.alexandregpereira.hunter.monster.compendium.ui.loading
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -96,9 +95,8 @@ class MonsterCompendiumViewModelTest {
         // Then
         verify { getMonsterPreviewsUseCase() }
 
-        assertEquals(3, results.size)
+        assertEquals(2, results.size)
         assertEquals(MonsterCompendiumViewState.Initial, results[0])
-        assertEquals(MonsterCompendiumViewState.Initial.loading(true), results[1])
         assertEquals(
             MonsterCompendiumViewState.Initial.complete(
                 monstersBySection = mapOf(
@@ -119,7 +117,7 @@ class MonsterCompendiumViewModelTest {
                 alphabet = listOf('A'),
                 alphabetIndex = 0
             ),
-            results[2]
+            results[1]
         )
 
         job.cancel()
