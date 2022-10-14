@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
@@ -40,20 +41,28 @@ internal fun SearchScreen(
     Surface {
         Column(Modifier) {
             Box {
+                val focusManager = LocalFocusManager.current
                 SearchGrid(
                     monsters = state.monsters,
                     contentPadding = PaddingValues(
                         top = contentPaddingValues.calculateTopPadding() + 56.dp + 40.dp,
                         bottom = contentPaddingValues.calculateBottomPadding()
                     ),
-                    onCardClick = onCardClick,
-                    onCardLongClick = onCardLongClick
+                    onCardClick = {
+                        focusManager.clearFocus()
+                        onCardClick(it)
+                    },
+                    onCardLongClick = {
+                        focusManager.clearFocus()
+                        onCardLongClick(it)
+                    }
                 )
 
                 SearchBar(
                     text = state.searchValue,
                     onValueChange = onSearchValueChange,
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
                         .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
                 )
             }
