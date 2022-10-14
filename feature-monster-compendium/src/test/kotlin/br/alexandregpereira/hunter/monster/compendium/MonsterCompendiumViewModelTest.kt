@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
@@ -54,6 +55,7 @@ class MonsterCompendiumViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
+    private val savedStateHandle: SavedStateHandle = mockk(relaxUnitFun = true)
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsBySectionUseCase = mockk()
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
@@ -80,6 +82,7 @@ class MonsterCompendiumViewModelTest {
         )
         every { getMonsterPreviewsUseCase() } returns flowOf(monstersBySection)
         every { getLastScrollPositionUseCase() } returns flowOf(1)
+        every { savedStateHandle.get<Boolean>(any()) } returns null
         createViewModel()
 
         val results = mutableListOf<MonsterCompendiumViewState>()
@@ -96,9 +99,9 @@ class MonsterCompendiumViewModelTest {
         verify { getMonsterPreviewsUseCase() }
 
         assertEquals(2, results.size)
-        assertEquals(MonsterCompendiumViewState.Initial, results[0])
+        assertEquals(MonsterCompendiumViewState(), results[0])
         assertEquals(
-            MonsterCompendiumViewState.Initial.complete(
+            MonsterCompendiumViewState().complete(
                 monstersBySection = mapOf(
                     SectionState(title = "Any") to listOf(
                         MonsterCardState(
@@ -125,6 +128,7 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
+            savedStateHandle = savedStateHandle,
             getMonsterPreviewsBySectionUseCase = getMonsterPreviewsUseCase,
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
