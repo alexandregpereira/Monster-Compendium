@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.monster.compendium.R
 
 data class MonsterCompendiumViewState(
@@ -28,12 +29,7 @@ data class MonsterCompendiumViewState(
     val alphabetOpened: Boolean = false,
     val initialScrollItemPosition: Int = 0,
     val isShowingMonsterFolderPreview: Boolean = false,
-) {
-
-    companion object {
-        val Initial = MonsterCompendiumViewState()
-    }
-}
+)
 
 data class SectionState(
     val title: String,
@@ -87,6 +83,19 @@ enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     UNDEAD(R.drawable.ic_undead)
 }
 
+internal fun SavedStateHandle.getState(): MonsterCompendiumViewState {
+    return MonsterCompendiumViewState(
+        isShowingMonsterFolderPreview = this["isShowingMonsterFolderPreview"] ?: false
+    )
+}
+
+internal fun MonsterCompendiumViewState.saveState(
+    savedStateHandle: SavedStateHandle
+): MonsterCompendiumViewState {
+    savedStateHandle["isShowingMonsterFolderPreview"] = this.isShowingMonsterFolderPreview
+    return this
+}
+
 fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumViewState {
     return this.copy(isLoading = isLoading)
 }
@@ -118,9 +127,10 @@ fun MonsterCompendiumViewState.alphabetOpened(
 
 fun MonsterCompendiumViewState.showMonsterFolderPreview(
     isShowing: Boolean,
+    savedStateHandle: SavedStateHandle
 ) = this.copy(
     isShowingMonsterFolderPreview = isShowing,
-)
+).saveState(savedStateHandle)
 
 infix fun MonsterCardState.and(that: MonsterCardState?) = MonsterRowState(
     leftMonsterCardState = this,

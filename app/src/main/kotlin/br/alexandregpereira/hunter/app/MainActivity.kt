@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.app
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,7 +34,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val onDestinationChanged = NavController.OnDestinationChangedListener { _, destination, _ ->
-        val value = if (destination.id != R.id.monsterDetailFragment) 0 else binding.bottomNavigation.height
+        val value = if (destination.id != R.id.monsterDetailFragment) {
+            binding.bottomNavigation.isVisible = true
+            0
+        } else {
+            // Workaround when the app is killed in the background
+            if (binding.bottomNavigation.height == 0) binding.bottomNavigation.isVisible = false
+
+            binding.bottomNavigation.height
+        }
         binding.bottomNavigation.animate()
             .setDuration(150L)
             .setInterpolator(FastOutLinearInInterpolator())

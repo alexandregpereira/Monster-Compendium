@@ -17,13 +17,13 @@
 
 package br.alexandregpereira.hunter.folder.preview
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase.Companion.TEMPORARY_FOLDER_NAME
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
-import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideF
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -41,10 +42,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 internal class FolderPreviewViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val folderPreviewEventListener: FolderPreviewEventListener,
     private val folderPreviewConsumerEventDispatcher: FolderPreviewConsumerEventDispatcher,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,
@@ -54,7 +55,7 @@ internal class FolderPreviewViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<FolderPreviewViewState> = MutableStateFlow(
-        FolderPreviewViewState.INITIAL
+        savedStateHandle.getState()
     )
     val state: StateFlow<FolderPreviewViewState> = _state
 
@@ -79,7 +80,7 @@ internal class FolderPreviewViewModel @Inject constructor(
                 when (event) {
                     is AddMonster -> addMonster(event.index)
                     HideFolderPreview -> hideFolderPreview()
-                    ShowFolderPreview -> showFolderPreview()
+                    is ShowFolderPreview -> showFolderPreview(event.force)
                 }
             }
         }
@@ -87,10 +88,10 @@ internal class FolderPreviewViewModel @Inject constructor(
 
     private fun addMonster(index: String) {
         addMonsterToFolderPreview(index)
-            .onEach { monsters ->
-                changeMonsters(monsters)
-            }
             .flowOn(dispatcher)
+            .onEach { monsters ->
+                _state.value = state.value.changeMonsters(monsters)
+            }
             .launchIn(viewModelScope)
     }
 
@@ -98,27 +99,40 @@ internal class FolderPreviewViewModel @Inject constructor(
         getMonstersFromFolderPreview()
             .flowOn(dispatcher)
             .onEach { monsters ->
-                changeMonsters(monsters)
+                val showPreview = if (savedStateHandle.containsState()) {
+                    state.value.showPreview
+                } else {
+                    monsters.isNotEmpty()
+                }
+                _state.value = state.value.changeMonsters(monsters = monsters)
+                    .changeShowPreview(showPreview, savedStateHandle)
+                dispatchFolderPreviewVisibilityChangesEvent()
             }
             .launchIn(viewModelScope)
     }
 
     private fun removeMonster(monsterIndex: String) {
         removeMonsterFromFolderPreview(monsterIndex)
-            .onEach { monsters ->
-                changeMonsters(monsters)
-            }
             .flowOn(dispatcher)
+            .onEach { monsters ->
+                val showPreview = monsters.isNotEmpty()
+                _state.value = state.value.changeMonsters(monsters = monsters)
+                    .changeShowPreview(showPreview, savedStateHandle)
+                if (showPreview.not()) {
+                    dispatchFolderPreviewVisibilityChangesEvent()
+                }
+            }
             .launchIn(viewModelScope)
     }
 
     private fun hideFolderPreview() {
-        _state.value = _state.value.changeShowPreview(show = false)
+        _state.value = _state.value.changeShowPreview(show = false, savedStateHandle)
         dispatchFolderPreviewVisibilityChangesEvent()
     }
 
-    private fun showFolderPreview() {
-        _state.value = _state.value.changeShowPreview(show = state.value.monsters.isNotEmpty())
+    private fun showFolderPreview(force: Boolean) {
+        val show = if (force) true else state.value.monsters.isNotEmpty()
+        _state.value = _state.value.changeShowPreview(show = show, savedStateHandle)
         dispatchFolderPreviewVisibilityChangesEvent()
     }
 
@@ -135,10 +149,5 @@ internal class FolderPreviewViewModel @Inject constructor(
                 monsterIndex = monsterIndex
             )
         )
-    }
-
-    private fun changeMonsters(monsters: List<MonsterFolderPreview>) {
-        _state.value = _state.value.changeMonsters(monsters)
-        dispatchFolderPreviewVisibilityChangesEvent()
     }
 }

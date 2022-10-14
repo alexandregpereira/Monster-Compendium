@@ -70,7 +70,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview(force = false))
         super.onCleared()
     }
 

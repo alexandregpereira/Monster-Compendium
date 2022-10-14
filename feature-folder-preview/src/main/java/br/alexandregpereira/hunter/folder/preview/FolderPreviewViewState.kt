@@ -17,26 +17,38 @@
 
 package br.alexandregpereira.hunter.folder.preview
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 
-data class FolderPreviewViewState(
+internal data class FolderPreviewViewState(
     val showPreview: Boolean = false,
     val monsters: List<MonsterFolderPreview> = emptyList()
-) {
+)
 
-    companion object {
-        val INITIAL = FolderPreviewViewState()
-    }
+internal fun SavedStateHandle.getState(): FolderPreviewViewState {
+    return FolderPreviewViewState(showPreview = this["showPreview"] ?: false)
 }
 
-fun FolderPreviewViewState.changeMonsters(
+internal fun SavedStateHandle.containsState(): Boolean {
+    return this.get<Boolean>("showPreview") != null
+}
+
+internal fun FolderPreviewViewState.saveState(
+    savedStateHandle: SavedStateHandle
+): FolderPreviewViewState {
+    savedStateHandle["showPreview"] = this.showPreview
+    return this
+}
+
+internal fun FolderPreviewViewState.changeMonsters(
     monsters: List<MonsterFolderPreview>
 ): FolderPreviewViewState {
-    return this.copy(monsters = monsters, showPreview = monsters.isNotEmpty())
+    return this.copy(monsters = monsters)
 }
 
-fun FolderPreviewViewState.changeShowPreview(
-    show: Boolean
+internal fun FolderPreviewViewState.changeShowPreview(
+    show: Boolean,
+    savedStateHandle: SavedStateHandle
 ): FolderPreviewViewState {
-    return this.copy(showPreview = show)
+    return this.copy(showPreview = show).saveState(savedStateHandle)
 }
