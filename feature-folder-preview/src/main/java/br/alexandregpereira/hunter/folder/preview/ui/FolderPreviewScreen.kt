@@ -27,10 +27,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewViewState
+import br.alexandregpereira.hunter.folder.preview.getState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
-fun FolderPreviewScreen(
+internal fun FolderPreviewScreen(
     state: FolderPreviewViewState,
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (index: String) -> Unit = {},

@@ -21,12 +21,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
@@ -41,7 +43,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
@@ -88,5 +89,6 @@ internal class SearchViewModel @Inject constructor(
 
     fun onItemLongClick(index: String) {
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview())
     }
 }

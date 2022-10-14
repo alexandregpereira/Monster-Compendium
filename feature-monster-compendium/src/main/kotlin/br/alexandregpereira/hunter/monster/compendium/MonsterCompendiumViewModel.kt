@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.monster.compendium
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
@@ -25,6 +26,7 @@ import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositi
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
@@ -34,6 +36,7 @@ import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetIndex
 import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
+import br.alexandregpereira.hunter.monster.compendium.ui.getState
 import br.alexandregpereira.hunter.monster.compendium.ui.loading
 import br.alexandregpereira.hunter.monster.compendium.ui.showMonsterFolderPreview
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,6 +56,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MonsterCompendiumViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -62,7 +66,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
 
-    private val _state = MutableStateFlow(MonsterCompendiumViewState.Initial)
+    private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterCompendiumViewState> = _state
 
     private val _action = MutableSharedFlow<MonsterCompendiumAction>()
@@ -112,9 +116,8 @@ class MonsterCompendiumViewModel @Inject constructor(
     }
 
     override fun onItemLongCLick(index: String) {
-        viewModelScope.launch {
-            folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
-        }
+        folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview())
     }
 
     override fun onFirstVisibleItemChange(position: Int) {
@@ -200,6 +203,6 @@ class MonsterCompendiumViewModel @Inject constructor(
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
-        _state.value = state.value.showMonsterFolderPreview(isShowing)
+        _state.value = state.value.showMonsterFolderPreview(isShowing, savedStateHandle)
     }
 }
