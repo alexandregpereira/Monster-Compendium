@@ -19,12 +19,20 @@
 
 package br.alexandregpereira.hunter.data.monster.di
 
+import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSourceImpl
+import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
+import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSourceImpl
+import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceImpl
+import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
+import br.alexandregpereira.hunter.domain.repository.ImageBaseUrlRepository
+import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -50,4 +58,31 @@ internal abstract class DataModule {
     abstract fun bindMonsterRepository(
         monsterRepositoryImpl: MonsterRepositoryImpl
     ): MonsterRepository
+
+    @Binds
+    abstract fun bindPreferencesDataSource(
+        preferencesDataSourceImpl: PreferencesDataSourceImpl
+    ): PreferencesDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindCompendiumRepository(
+        preferencesRepository: PreferencesRepository
+    ): CompendiumRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindMeasurementUnitRepository(
+        preferencesRepository: PreferencesRepository
+    ): MeasurementUnitRepository
+
+    @Binds
+    abstract fun bindImageBaseUrlRepository(
+        repository: SettingsMonsterDataRepositoryImpl
+    ): ImageBaseUrlRepository
+
+    @Binds
+    abstract fun bindSettingsMonsterDataRepository(
+        repository: SettingsMonsterDataRepositoryImpl
+    ): SettingsMonsterDataRepository
 }

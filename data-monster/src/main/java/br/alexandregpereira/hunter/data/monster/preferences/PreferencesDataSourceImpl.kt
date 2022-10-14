@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.preferences
+package br.alexandregpereira.hunter.data.monster.preferences
 
 import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow

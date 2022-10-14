@@ -17,6 +17,53 @@
 
 package br.alexandregpereira.hunter.settings
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import br.alexandregpereira.hunter.settings.ui.SettingsScreen
+import br.alexandregpereira.hunter.ui.util.createComposeView
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-class SettingsFragment : Fragment()
+@AndroidEntryPoint
+class SettingsFragment : Fragment() {
+
+    private val viewModel: SettingsViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return requireContext().createComposeView(withBottomBar = true) { contentPadding ->
+            val state by viewModel.state.collectAsState()
+            SettingsScreen(
+                state = state,
+                contentPadding = contentPadding,
+                onImageBaseUrlChange = viewModel::onImageBaseUrlChange,
+                onAlternativeSourceBaseUrlChange = viewModel::onAlternativeSourceBaseUrlChange,
+                onSaveButtonClick = viewModel::onSaveButtonClick,
+            )
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.action.collect { action ->
+                    when (action) {
+                        SettingsAction.CloseApp -> requireActivity().finish()
+                    }
+                }
+            }
+        }
+    }
+}

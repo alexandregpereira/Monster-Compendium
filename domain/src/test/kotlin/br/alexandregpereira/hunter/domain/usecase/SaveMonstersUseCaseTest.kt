@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.hunter.domain.repository.ImageBaseUrlRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import io.mockk.every
@@ -44,11 +45,13 @@ class SaveMonstersUseCaseTest {
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase = mockk()
     private val monsterRepository: MonsterRepository = mockk()
     private val measurementUnitRepository: MeasurementUnitRepository = mockk()
+    private val imageBaseUrlRepository: ImageBaseUrlRepository = mockk()
 
     private val useCase = SaveMonstersUseCase(
         getMeasurementUnitUseCase,
         monsterRepository,
-        measurementUnitRepository
+        measurementUnitRepository,
+        imageBaseUrlRepository
     )
 
     @Test
@@ -59,6 +62,7 @@ class SaveMonstersUseCaseTest {
         every {
             measurementUnitRepository.getPreviousMeasurementUnit()
         } returns flowOf(MeasurementUnit.FEET)
+        every { imageBaseUrlRepository.getImageBaseUrl() } returns flowOf("url/")
         val monsters = createFeetMonsters()
 
         // When
@@ -87,12 +91,16 @@ class SaveMonstersUseCaseTest {
             monsterRepository.saveMonsters(
                 eq(
                     monsters.map {
+                        val expectedImageUrl = "url/${it.imageData.url}"
                         it.copy(
                             speed = speedExpected,
                             senses = listOf(sensesExpected),
                             languages = languagesExpected,
                             specialAbilities = listOf(abilityDescriptionExpected),
-                            actions = listOf(actionExpected)
+                            actions = listOf(actionExpected),
+                            preview = it.preview.copy(
+                                imageData = it.preview.imageData.copy(url = expectedImageUrl)
+                            )
                         )
                     }
                 )
@@ -108,6 +116,7 @@ class SaveMonstersUseCaseTest {
         every {
             measurementUnitRepository.getPreviousMeasurementUnit()
         } returns flowOf(MeasurementUnit.METER)
+        every { imageBaseUrlRepository.getImageBaseUrl() } returns flowOf("url/")
         val monsters = createMetersMonsters()
 
         // When
@@ -136,12 +145,16 @@ class SaveMonstersUseCaseTest {
             monsterRepository.saveMonsters(
                 eq(
                     monsters.map {
+                        val expectedImageUrl = "url/${it.imageData.url}"
                         it.copy(
                             speed = speedExpected,
                             senses = listOf(sensesExpected),
                             languages = languagesExpected,
                             specialAbilities = listOf(abilityDescriptionExpected),
-                            actions = listOf(actionExpected)
+                            actions = listOf(actionExpected),
+                            preview = it.preview.copy(
+                                imageData = it.preview.imageData.copy(url = expectedImageUrl)
+                            )
                         )
                     }
                 )
@@ -158,7 +171,7 @@ class SaveMonstersUseCaseTest {
                     type = MonsterType.CELESTIAL,
                     challengeRating = 0.0f,
                     imageData = MonsterImageData(
-                        url = "",
+                        url = "something.png",
                         backgroundColor = Color(light = "", dark = ""),
                         isHorizontal = false
                     )
@@ -213,7 +226,7 @@ class SaveMonstersUseCaseTest {
                     type = MonsterType.CELESTIAL,
                     challengeRating = 0.0f,
                     imageData = MonsterImageData(
-                        url = "",
+                        url = "something.png",
                         backgroundColor = Color(light = "", dark = ""),
                         isHorizontal = false
                     )

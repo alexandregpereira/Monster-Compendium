@@ -1,10 +1,12 @@
 package br.alexandregpereira.hunter.data.spell.di
 
+import br.alexandregpereira.hunter.data.spell.SettingsSpellDataRepositoryImpl
+import br.alexandregpereira.hunter.data.spell.SpellRepositoryImpl
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSourceImpl
-import br.alexandregpereira.hunter.data.spell.SpellRepositoryImpl
+import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import dagger.Binds
 import dagger.Module
@@ -31,4 +33,9 @@ internal abstract class DataModule {
     internal abstract fun bindSpellRemoteDataSource(
         spellRemoteDataSourceImpl: SpellRemoteDataSourceImpl
     ): SpellRemoteDataSource
+
+    @Binds
+    internal abstract fun bindSettingsSpellDataRepository(
+        repository: SettingsSpellDataRepositoryImpl
+    ): SettingsSpellDataRepository
 }

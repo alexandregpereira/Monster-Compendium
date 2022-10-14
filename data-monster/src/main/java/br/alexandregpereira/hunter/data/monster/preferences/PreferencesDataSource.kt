@@ -15,18 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.local
+package br.alexandregpereira.hunter.data.monster.preferences
 
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import kotlinx.coroutines.flow.Flow
 
-internal interface MonsterLocalDataSource {
+interface PreferencesDataSource {
 
-    fun getMonsterPreviews(): Flow<List<MonsterEntity>>
-    fun getMonsters(): Flow<List<MonsterCompleteEntity>>
-    fun getMonstersByQuery(query: String): Flow<List<MonsterEntity>>
-    fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
-    fun getMonster(index: String): Flow<MonsterCompleteEntity>
-    fun deleteAll(): Flow<Unit>
+    fun getInt(key: String, defaultValue: Int = 0): Flow<Int>
+    fun getString(key: String, defaultValue: String = ""): Flow<String>
+    fun save(key: String, value: Any): Flow<Unit>
 }
