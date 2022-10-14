@@ -101,7 +101,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     ): Flow<Unit> = flow {
         mutex.withLock {
             if (isSync) {
-                deleteAll()
+                deleteAllData()
             }
 
             insertAll(monsters)
@@ -109,7 +109,11 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         emit(Unit)
     }
 
-    private suspend fun deleteAll() {
+    override fun deleteAll(): Flow<Unit> = flow {
+        emit(deleteAllData())
+    }
+
+    private suspend fun deleteAllData() {
         val startTime = System.currentTimeMillis()
         abilityScoreDao.deleteAll()
         actionDao.deleteAll()

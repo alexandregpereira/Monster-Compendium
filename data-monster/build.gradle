@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation project(':domain')
+    implementation project(':domain-settings')
     implementation project(':data-monster-spell')
 
     implementation libs.kotlin.coroutines.core

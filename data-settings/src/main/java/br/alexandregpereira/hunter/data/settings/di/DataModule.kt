@@ -15,13 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.preferences
+@file:Suppress("EXPERIMENTAL_API_USAGE")
 
-import kotlinx.coroutines.flow.Flow
+package br.alexandregpereira.hunter.data.settings.di
 
-interface PreferencesDataSource {
+import br.alexandregpereira.hunter.data.settings.SettingsRepositoryImpl
+import br.alexandregpereira.hunter.domain.settings.SettingsRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-    fun getInt(key: String, defaultValue: Int = 0): Flow<Int>
-    fun getString(key: String, defaultValue: String = ""): Flow<String>
-    fun save(key: String, value: Any): Flow<Unit>
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class DataModule {
+
+    @Binds
+    abstract fun bindSettingsRepository(
+        settingsRepositoryImpl: SettingsRepositoryImpl
+    ): SettingsRepository
 }

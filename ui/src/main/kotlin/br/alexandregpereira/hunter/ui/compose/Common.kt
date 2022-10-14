@@ -28,9 +28,10 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun Window(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = HunterTheme {
-    Surface(content = content)
+    Surface(modifier = modifier, content = content)
 }
 
 fun Modifier.noIndicationClick(onClick: () -> Unit = {}): Modifier = composed {

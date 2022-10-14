@@ -46,6 +46,7 @@ class SyncMonstersUseCase @Inject internal constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
         return getAlternativeSources()
+            .catch { emit(emptyList()) }
             .map { alternativeSources ->
                 alternativeSources.map { it.source }
                     .run { this + srdSource }
