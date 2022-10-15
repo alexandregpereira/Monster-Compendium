@@ -11,12 +11,13 @@ class GetImageBaseUrlUseCase @Inject constructor(
     operator fun invoke(): Flow<String> {
         return settingsRepository.getSettingsValue(
             key = IMAGE_BASE_URL_KEY,
-            defaultValue = DEFAULT_IMAGE_BASE_URL
+            defaultValue = DEFAULT_MONSTER_IMAGES_JSON_URL
         )
     }
 
     companion object {
-        private const val DEFAULT_IMAGE_BASE_URL =
-            "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/"
+        private const val DEFAULT_MONSTER_IMAGES_JSON_URL =
+            "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/json/" +
+                    "monster-images.json"
     }
 }

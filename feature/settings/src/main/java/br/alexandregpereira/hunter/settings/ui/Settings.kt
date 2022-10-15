@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.settings.R
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.Window
 
@@ -26,14 +28,14 @@ fun Settings(
 ) = Column(modifier.padding(16.dp)) {
 
     Text(
-        text = "Base URLs",
+        text = stringResource(R.string.settings_additional_content),
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         modifier = Modifier.padding(bottom = 16.dp)
     )
 
     Text(
-        text = "Images Base URL",
+        text = stringResource(R.string.settings_monster_images_json),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         modifier = Modifier
@@ -46,7 +48,7 @@ fun Settings(
     )
 
     Text(
-        text = "Alternative Source Base URL",
+        text = stringResource(R.string.settings_alternative_sources_json),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         modifier = Modifier.padding(top = 16.dp)
@@ -59,14 +61,14 @@ fun Settings(
     )
 
     AppButton(
-        text = "Save",
+        text = stringResource(R.string.settings_sync),
         enabled = saveButtonEnabled,
         onClick = onSaveButtonClick,
         modifier = Modifier.padding(top = 40.dp)
     )
 
     Text(
-        text = "The app will be close to changes take effect",
+        text = stringResource(R.string.settings_sync_description),
         fontWeight = FontWeight.Light,
         fontStyle = FontStyle.Italic,
         fontSize = 12.sp,

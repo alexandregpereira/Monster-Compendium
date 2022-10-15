@@ -18,10 +18,12 @@
 package br.alexandregpereira.hunter.data.monster.remote
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import kotlinx.coroutines.flow.Flow
 
 interface MonsterRemoteDataSource {
 
     fun getMonsters(): Flow<List<MonsterDto>>
+    fun getMonsterImages(): Flow<List<MonsterImageDto>>
     fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
 }

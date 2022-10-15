@@ -40,11 +40,11 @@ internal class SettingsViewModel @Inject constructor(
     }
 
     fun onImageBaseUrlChange(value: String) {
-        _state.value = state.value.copy(imageBaseUrl = value).changeSaveButtonEnabled()
+        _state.value = state.value.copy(imageBaseUrl = value)
     }
 
     fun onAlternativeSourceBaseUrlChange(value: String) {
-        _state.value = state.value.copy(alternativeSourceBaseUrl = value).changeSaveButtonEnabled()
+        _state.value = state.value.copy(alternativeSourceBaseUrl = value)
     }
 
     fun onSaveButtonClick() {
@@ -72,9 +72,5 @@ internal class SettingsViewModel @Inject constructor(
                 _state.value = state
             }
             .launchIn(viewModelScope)
-    }
-
-    private fun SettingsViewState.changeSaveButtonEnabled(): SettingsViewState {
-        return copy(saveButtonEnabled = (imageBaseUrl + alternativeSourceBaseUrl).isNotBlank())
     }
 }

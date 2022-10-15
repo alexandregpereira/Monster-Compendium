@@ -27,7 +27,7 @@ class SaveBaseUrlsUseCase @Inject constructor(
     }
 
     private fun String.normalizeUrl(): String {
-        return if (lastOrNull() != '/') "$this/" else this
+        return this.removeSuffix("/")
     }
 
     companion object {
