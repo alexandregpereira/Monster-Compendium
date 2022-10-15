@@ -19,7 +19,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -38,36 +38,27 @@ android {
         jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
 }
 
 dependencies {
-    implementation project(':domain')
-    implementation project(':domain-alternative-source')
-    implementation project(':domain-sync')
-    implementation project(':feature-folder-preview-event')
-    implementation project(':navigation')
-    implementation project(':ui')
+    implementation project(':data:alternative-source')
+    implementation project(':data:monster')
+    implementation project(':data:monster-folder')
+    implementation project(':data:monster-spell')
+    implementation project(':data:settings')
+    implementation project(':data:spell')
 
-    implementation libs.core.ktx
-    implementation libs.kotlin.coroutines
-    implementation libs.kotlin.reflect
-    implementation libs.viewmodel
-    implementation libs.fragment
-
-    implementation libs.bundles.compose
-    implementation libs.accompanist.flowlayout
+    implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.serialization
 
     implementation libs.hilt
     kapt libs.hilt.compiler
 
-    testImplementation libs.bundles.unittest
-    androidTestImplementation libs.bundles.instrumentedtest
+    implementation libs.bundles.retrofit
+
+    implementation libs.bundles.room
+    kapt libs.room.compiler
+
+    testImplementation libs.mockk
+    testImplementation libs.junit
 }

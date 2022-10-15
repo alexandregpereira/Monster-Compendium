@@ -41,9 +41,7 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
-    implementation project(':domain-settings')
-    implementation project(':data-monster-spell')
+    implementation project(':domain:settings')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
@@ -52,9 +50,6 @@ dependencies {
     kapt libs.hilt.compiler
 
     implementation libs.bundles.retrofit
-
-    implementation libs.bundles.room
-    kapt libs.room.compiler
 
     testImplementation libs.mockk
     testImplementation libs.junit

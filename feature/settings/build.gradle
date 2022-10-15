@@ -1,6 +1,6 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -38,27 +38,28 @@ android {
         jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
 }
 
 dependencies {
-    implementation project(':data-alternative-source')
-    implementation project(':data-monster')
-    implementation project(':data-monster-folder')
-    implementation project(':data-monster-spell')
-    implementation project(':data-settings')
-    implementation project(':data-spell')
+    implementation project(':domain:monster')
+    implementation project(':domain:settings')
+    implementation project(':event:folder-preview-event')
+    implementation project(':ui')
 
-    implementation libs.kotlin.coroutines.core
-    implementation libs.kotlin.serialization
+    implementation libs.kotlin.coroutines
+
+    implementation libs.viewmodel
+    implementation libs.fragment
+    implementation libs.bundles.compose
 
     implementation libs.hilt
     kapt libs.hilt.compiler
-
-    implementation libs.bundles.retrofit
-
-    implementation libs.bundles.room
-    kapt libs.room.compiler
-
-    testImplementation libs.mockk
-    testImplementation libs.junit
 }

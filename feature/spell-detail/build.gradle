@@ -16,27 +16,47 @@
  */
 
 plugins {
-    id 'java-library'
-    id 'kotlin'
+    id 'com.android.library'
+    id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
+android {
+    compileSdkVersion buildConfig.compileSdk
 
-dependencies {
-    implementation project(":domain")
+    defaultConfig {
+        minSdkVersion buildConfig.minSdk
+    }
 
-    implementation libs.kotlin.coroutines.core
-    implementation libs.dagger
-    kapt libs.dagger.compiler
-}
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
 
-configure([compileKotlin, compileTestKotlin]) {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+}
+
+dependencies {
+    implementation project(':domain:spell')
+    implementation project(':event:spell-detail-event')
+    implementation project(':ui')
+
+    implementation libs.viewmodel
+    implementation libs.fragment
+    implementation libs.bundles.compose
+
+    implementation libs.hilt
+    kapt libs.hilt.compiler
 }

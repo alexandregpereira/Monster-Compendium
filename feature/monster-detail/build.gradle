@@ -19,7 +19,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -38,19 +38,38 @@ android {
         jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
 }
 
 dependencies {
-    implementation project(':domain-settings')
+    implementation project(':domain:monster')
+    implementation project(':domain:monster-folder')
+    implementation project(':event:folder-preview-event')
+    implementation project(':event:spell-detail-event')
+    implementation project(':ui')
 
-    implementation libs.kotlin.coroutines.core
-    implementation libs.kotlin.serialization
+    implementation libs.core.ktx
+    implementation libs.kotlin.coroutines
+    implementation libs.viewmodel
+    implementation libs.fragment
+
+    implementation libs.bundles.compose
+    implementation libs.compose.util
+    implementation libs.accompanist.flowlayout
+    implementation libs.accompanist.pager
+    implementation libs.coil.compose
 
     implementation libs.hilt
     kapt libs.hilt.compiler
+    implementation libs.kotlin.reflect
 
-    implementation libs.bundles.retrofit
-
-    testImplementation libs.mockk
-    testImplementation libs.junit
+    testImplementation libs.bundles.unittest
+    androidTestImplementation libs.bundles.instrumentedtest
 }

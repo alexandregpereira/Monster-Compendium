@@ -41,15 +41,10 @@ android {
 }
 
 dependencies {
-    implementation project(':domain-alternative-source')
+    implementation project(':domain:monster')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
-
-    implementation libs.hilt
-    kapt libs.hilt.compiler
-
-    implementation libs.bundles.retrofit
 
     implementation libs.bundles.room
     kapt libs.room.compiler
