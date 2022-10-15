@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.Speed
-import br.alexandregpereira.hunter.domain.repository.ImageBaseUrlRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import java.math.RoundingMode
@@ -36,7 +35,6 @@ class SaveMonstersUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val monsterRepository: MonsterRepository,
     private val measurementUnitRepository: MeasurementUnitRepository,
-    private val imageBaseUrlRepository: ImageBaseUrlRepository
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -44,9 +42,6 @@ class SaveMonstersUseCase @Inject internal constructor(
         return getMeasurementUnitUseCase()
             .zip(measurementUnitRepository.getPreviousMeasurementUnit()) { unit, previousUnit ->
                 monsters.changeMeasurementUnit(previousUnit, unit)
-            }
-            .zip(imageBaseUrlRepository.getImageBaseUrl()) { monstersChanged, imageBaseUrl ->
-                monstersChanged.appendImageBaseUrl(imageBaseUrl)
             }
             .flatMapLatest {
                 monsterRepository.saveMonsters(monsters = it, isSync)
@@ -191,18 +186,6 @@ class SaveMonstersUseCase @Inject internal constructor(
             value.toString()
         } else {
             intValue.toString()
-        }
-    }
-
-    private fun List<Monster>.appendImageBaseUrl(imageBasUrl: String): List<Monster> {
-        return map {
-            val path = it.imageData.url
-
-            it.copy(
-                preview = it.preview.copy(
-                    imageData = it.imageData.copy(url = imageBasUrl + path)
-                )
-            )
         }
     }
 }
