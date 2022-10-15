@@ -41,8 +41,9 @@ android {
 }
 
 dependencies {
-    implementation project(':domain-settings')
-    implementation project(':domain-spell')
+    implementation project(':domain:monster')
+    implementation project(':domain:settings')
+    implementation project(':data:monster-spell')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization

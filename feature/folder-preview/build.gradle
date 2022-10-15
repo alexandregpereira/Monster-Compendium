@@ -49,12 +49,11 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
-    implementation project(':domain-settings')
-    implementation project(':feature-folder-preview-event')
+    implementation project(':domain:monster')
+    implementation project(':domain:monster-folder')
+    implementation project(':event:folder-preview-event')
+    implementation project(':navigation')
     implementation project(':ui')
-
-    implementation libs.kotlin.coroutines
 
     implementation libs.viewmodel
     implementation libs.fragment

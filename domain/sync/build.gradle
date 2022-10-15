@@ -27,9 +27,9 @@ java {
 }
 
 dependencies {
-    implementation project(':domain')
-    implementation project(':domain-alternative-source')
-    implementation project(':domain-spell')
+    implementation project(':domain:monster')
+    implementation project(':domain:alternative-source')
+    implementation project(':domain:spell')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.dagger
