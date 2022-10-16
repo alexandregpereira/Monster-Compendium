@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceUnexpectedException
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -44,13 +45,16 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
-    override fun getRemoteMonsters(): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters().toMonstersDomain()
+    override fun getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters().toMonstersDomain(monsterImages)
     }
 
-    override fun getRemoteMonsters(sourceAcronym: String): Flow<List<Monster>> {
+    override fun getRemoteMonsters(
+        sourceAcronym: String,
+        monsterImages: List<MonsterImage>
+    ): Flow<List<Monster>> {
         return remoteDataSource.getMonsters(sourceAcronym)
-            .toMonstersDomain()
+            .toMonstersDomain(monsterImages)
             .catch { error ->
                 throw when {
                     error is HttpException && error.code() == 404 -> {
@@ -77,14 +81,17 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.getMonstersByQuery(query).map { it.toDomain() }
     }
 
-    private fun Flow<List<MonsterDto>>.toMonstersDomain(): Flow<List<Monster>> {
-        return zip(getMonsterImages()) { monsterDtos, monsterImageDtos ->
-            monsterDtos.toDomain(monsterImageDtos)
-        }
-    }
-
-    private fun getMonsterImages(): Flow<List<MonsterImageDto>> {
+    override fun getRemoteMonsterImages(): Flow<List<MonsterImage>> {
         return remoteDataSource.getMonsterImages()
             .catch { emit(emptyList()) }
+            .map { it.toDomain() }
+    }
+
+    private fun Flow<List<MonsterDto>>.toMonstersDomain(
+        monsterImages: List<MonsterImage>
+    ): Flow<List<Monster>> {
+        return map { monsterDtos ->
+            monsterDtos.toDomain(monsterImages)
+        }
     }
 }
