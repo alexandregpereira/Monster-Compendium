@@ -23,17 +23,14 @@ import br.alexandregpereira.hunter.data.monster.local.mapper.toEntity
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceUnexpectedException
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.zip
 import retrofit2.HttpException
 
 internal class MonsterRepositoryImpl @Inject constructor(
@@ -45,16 +42,13 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
-    override fun getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters().toMonstersDomain(monsterImages)
+    override fun getRemoteMonsters(): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters().toMonstersDomain()
     }
 
-    override fun getRemoteMonsters(
-        sourceAcronym: String,
-        monsterImages: List<MonsterImage>
-    ): Flow<List<Monster>> {
+    override fun getRemoteMonsters(sourceAcronym: String): Flow<List<Monster>> {
         return remoteDataSource.getMonsters(sourceAcronym)
-            .toMonstersDomain(monsterImages)
+            .toMonstersDomain()
             .catch { error ->
                 throw when {
                     error is HttpException && error.code() == 404 -> {
@@ -81,17 +75,9 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.getMonstersByQuery(query).map { it.toDomain() }
     }
 
-    override fun getRemoteMonsterImages(): Flow<List<MonsterImage>> {
-        return remoteDataSource.getMonsterImages()
-            .catch { emit(emptyList()) }
-            .map { it.toDomain() }
-    }
-
-    private fun Flow<List<MonsterDto>>.toMonstersDomain(
-        monsterImages: List<MonsterImage>
-    ): Flow<List<Monster>> {
+    private fun Flow<List<MonsterDto>>.toMonstersDomain(): Flow<List<Monster>> {
         return map { monsterDtos ->
-            monsterDtos.toDomain(monsterImages)
+            monsterDtos.toDomain()
         }
     }
 }

@@ -19,6 +19,8 @@
 
 package br.alexandregpereira.hunter.data.monster.di
 
+import br.alexandregpereira.hunter.data.monster.MonsterAlternativeSourceRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
@@ -30,6 +32,8 @@ import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
 import dagger.Binds
@@ -79,4 +83,14 @@ internal abstract class DataModule {
     abstract fun bindSettingsMonsterDataRepository(
         repository: SettingsMonsterDataRepositoryImpl
     ): SettingsMonsterDataRepository
+
+    @Binds
+    abstract fun bindMonsterImageRepository(
+        repository: MonsterImageRepositoryImpl
+    ): MonsterImageRepository
+
+    @Binds
+    abstract fun bindMonsterAlternativeSourceRepository(
+        repository: MonsterAlternativeSourceRepositoryImpl
+    ): MonsterAlternativeSourceRepository
 }

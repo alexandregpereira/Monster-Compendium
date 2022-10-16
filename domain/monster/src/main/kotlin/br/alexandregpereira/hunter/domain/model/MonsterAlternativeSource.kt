@@ -15,15 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.remote
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
-import kotlinx.coroutines.flow.Flow
-
-interface MonsterRemoteDataSource {
-
-    fun getMonsters(): Flow<List<MonsterDto>>
-    fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>>
-    fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
-}
+data class MonsterAlternativeSource(
+    val source: MonsterSource,
+    val totalMonsters: Int,
+)

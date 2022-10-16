@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.domain.sync
 
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow

@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation project(':domain:alternative-source')
     implementation project(':domain:monster')
     implementation project(':domain:settings')
     implementation project(':data:monster-spell')

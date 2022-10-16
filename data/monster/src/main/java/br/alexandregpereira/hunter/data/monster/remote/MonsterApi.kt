@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 internal interface MonsterApi {
 
@@ -30,6 +31,6 @@ internal interface MonsterApi {
     @GET("sources/{sourceAcronym}/monsters.json")
     suspend fun getMonsters(@Path("sourceAcronym") sourceAcronym: String): List<MonsterDto>
 
-    @GET("monster-images.json")
-    suspend fun getMonsterImages(): List<MonsterImageDto>
+    @GET
+    suspend fun getMonsterImages(@Url url: String): List<MonsterImageDto>
 }

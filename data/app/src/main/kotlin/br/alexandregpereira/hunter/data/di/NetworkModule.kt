@@ -1,7 +1,7 @@
 package br.alexandregpereira.hunter.data.di
 
 import br.alexandregpereira.hunter.data.settings.DEFAULT_API_BASE_URL
-import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceBaseUrlInterceptor
+import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ internal class NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(
-        alternativeSourceBaseUrlInterceptor: AlternativeSourceBaseUrlInterceptor
+        alternativeSourceUrlInterceptor: AlternativeSourceUrlInterceptor
     ): Retrofit {
         val json = Json {
             ignoreUnknownKeys = true
@@ -30,7 +30,7 @@ internal class NetworkModule {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(alternativeSourceBaseUrlInterceptor)
+            .addInterceptor(alternativeSourceUrlInterceptor)
             .build()
 
         return Retrofit.Builder()
