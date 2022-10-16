@@ -32,8 +32,8 @@ internal class MonsterRemoteDataSourceImpl @Inject constructor(
         emit(monsterApi.getMonsters())
     }
 
-    override fun getMonsterImages(): Flow<List<MonsterImageDto>> = flow {
-        emit(monsterApi.getMonsterImages())
+    override fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>> = flow {
+        emit(monsterApi.getMonsterImages(jsonUrl))
     }
 
     override fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>> = flow {

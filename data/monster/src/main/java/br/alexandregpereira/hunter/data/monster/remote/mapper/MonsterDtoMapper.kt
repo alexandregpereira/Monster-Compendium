@@ -21,24 +21,14 @@ import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.monster.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Stats
 import java.util.Locale
 
-internal fun List<MonsterDto>.toDomain(monsterImages: List<MonsterImage>): List<Monster> {
+internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
-        val monsterImage = monsterImages.firstOrNull { monsterImage ->
-            monsterImage.monsterIndex == it.index
-        } ?: MonsterImage(
-            monsterIndex = it.index,
-            backgroundColor = Color(light = "#e0dfd1", dark = "#e0dfd1"),
-            isHorizontalImage = false,
-            imageUrl = DEFAULT_IMAGE_BASE_URL + "default-${it.type.name.lowercase()}.png"
-        )
-
         Monster(
             preview = MonsterPreview(
                 index = it.index,
@@ -46,9 +36,9 @@ internal fun List<MonsterDto>.toDomain(monsterImages: List<MonsterImage>): List<
                 challengeRating = it.challengeRating,
                 name = it.name,
                 imageData = MonsterImageData(
-                    url = monsterImage.imageUrl,
-                    backgroundColor = monsterImage.backgroundColor,
-                    isHorizontal = monsterImage.isHorizontalImage
+                    url = "",
+                    backgroundColor = Color(light = "", dark = ""),
+                    isHorizontal = false
                 ),
             ),
             subtype = it.subtype,
@@ -80,6 +70,3 @@ internal fun List<MonsterDto>.toDomain(monsterImages: List<MonsterImage>): List<
         )
     }
 }
-
-private const val DEFAULT_IMAGE_BASE_URL =
-    "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/"

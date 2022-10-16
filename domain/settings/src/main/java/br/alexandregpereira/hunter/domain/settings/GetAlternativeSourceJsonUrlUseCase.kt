@@ -1,10 +1,11 @@
 /*
  * Hunter - DnD 5th edition monster compendium application
- * Copyright (C) 2021 Alexandre Gomes Pereira
+ * Copyright (c) 2022. Alexandre Gomes Pereira.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 3.
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,15 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.remote
+package br.alexandregpereira.hunter.domain.settings
 
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
-import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
+import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase.Companion.ALTERNATIVE_SOURCE_BASE_URL_KEY
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-interface MonsterRemoteDataSource {
+class GetAlternativeSourceJsonUrlUseCase @Inject constructor(
+    private val settingsRepository: SettingsRepository
+) {
 
-    fun getMonsters(): Flow<List<MonsterDto>>
-    fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>>
-    fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>>
+    operator fun invoke(): Flow<String> {
+        return settingsRepository.getSettingsValue(ALTERNATIVE_SOURCE_BASE_URL_KEY)
+    }
 }

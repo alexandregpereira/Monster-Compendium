@@ -2,9 +2,9 @@ package br.alexandregpereira.hunter.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceBaseUrlUseCase
-import br.alexandregpereira.hunter.domain.settings.GetImageBaseUrlUseCase
-import br.alexandregpereira.hunter.domain.settings.SaveBaseUrlsUseCase
+import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
+import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
+import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.zip
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
-    private val getImageBaseUrl: GetImageBaseUrlUseCase,
-    private val getAlternativeSourceBaseUrl: GetAlternativeSourceBaseUrlUseCase,
-    private val saveBaseUrls: SaveBaseUrlsUseCase,
+    private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
+    private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase,
+    private val saveUrls: SaveUrlsUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -49,7 +49,7 @@ internal class SettingsViewModel @Inject constructor(
 
     fun onSaveButtonClick() {
         _state.value = state.value.copy(saveButtonEnabled = false)
-        saveBaseUrls(
+        saveUrls(
             imageBaseUrl = state.value.imageBaseUrl,
             alternativeSourceBaseUrl = state.value.alternativeSourceBaseUrl
         ).flowOn(dispatcher)
@@ -60,8 +60,8 @@ internal class SettingsViewModel @Inject constructor(
     }
 
     private fun load() {
-        getImageBaseUrl()
-            .zip(getAlternativeSourceBaseUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->
+        getMonsterImageJsonUrl()
+            .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->
                 state.value.copy(
                     imageBaseUrl = imageBaseUrl,
                     alternativeSourceBaseUrl = alternativeSourceBaseUrl
