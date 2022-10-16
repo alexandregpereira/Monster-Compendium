@@ -17,8 +17,8 @@
 
 package br.alexandregpereira.hunter.domain.sync
 
-import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedException
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.model.Source
@@ -31,8 +31,8 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
+import kotlinx.coroutines.flow.zip
 
 @OptIn(FlowPreview::class)
 class SyncMonstersUseCase @Inject internal constructor(
@@ -47,12 +47,12 @@ class SyncMonstersUseCase @Inject internal constructor(
     operator fun invoke(): Flow<Unit> {
         return getAlternativeSources()
             .catch { emit(emptyList()) }
-            .map { alternativeSources ->
+            .zip(repository.getRemoteMonsterImages()) { alternativeSources, monsterImages ->
                 alternativeSources.map { it.source }
                     .run { this + srdSource }
                     .asFlow()
                     .flatMapMerge { source ->
-                        source.getRemoteMonsters()
+                        source.getRemoteMonsters(monsterImages)
                     }
                     .reduce { accumulator, value -> accumulator + value }
             }
@@ -61,15 +61,15 @@ class SyncMonstersUseCase @Inject internal constructor(
             }
     }
 
-    private fun Source.getRemoteMonsters(): Flow<List<Monster>> {
+    private fun Source.getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
         return if (this == srdSource) {
-            repository.getRemoteMonsters()
+            repository.getRemoteMonsters(monsterImages)
         } else {
-            repository.getRemoteMonsters(sourceAcronym = this.acronym).catch { error ->
-                when (error) {
-                    is MonstersSourceNotFoundedException -> emit(emptyList())
-                    else -> throw error
-                }
+            repository.getRemoteMonsters(
+                sourceAcronym = this.acronym,
+                monsterImages = monsterImages
+            ).catch {
+                emit(emptyList())
             }
         }
     }

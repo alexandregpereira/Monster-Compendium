@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.data.settings.network
 
+import br.alexandregpereira.hunter.data.settings.DEFAULT_API_BASE_URL
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceBaseUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetImageBaseUrlUseCase
 import kotlinx.coroutines.flow.map
@@ -33,6 +34,7 @@ class AlternativeSourceBaseUrlInterceptor(
         return when {
             url.contains("monster-images.json") -> true
             url.contains("alternative-sources.json") -> true
+            url.contains("/sources/") -> true
             else -> false
         }
     }
@@ -41,6 +43,12 @@ class AlternativeSourceBaseUrlInterceptor(
         when {
             currentUrl.contains("monster-images.json") -> getImageBaseUrl()
             currentUrl.contains("alternative-sources.json") -> getAlternativeSourceBaseUrl()
+            currentUrl.contains("/sources/") -> getAlternativeSourceBaseUrl().map { url ->
+                currentUrl.replace(
+                    DEFAULT_API_BASE_URL,
+                    url.replace("alternative-sources.json", "")
+                )
+            }
             else -> null
         }?.map { url ->
             url.ifBlank {
