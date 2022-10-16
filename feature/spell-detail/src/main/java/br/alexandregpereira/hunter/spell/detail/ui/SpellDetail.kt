@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.spell.detail.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,24 +30,26 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 fun SpellDetail(
     spell: SpellState
-) = Column {
-    SpellHeader(spell = spell)
+) = SelectionContainer {
+    Column {
+        SpellHeader(spell = spell)
 
-    SpellInfoGrid(
-        spell = spell,
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 8.dp, top = 16.dp)
-    )
+        SpellInfoGrid(
+            spell = spell,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 8.dp, top = 16.dp)
+        )
 
-    SpellDescription(
-        description = spell.description,
-        higherLevel = spell.higherLevel,
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 8.dp)
-            .padding(bottom = 16.dp)
-    )
+        SpellDescription(
+            description = spell.description,
+            higherLevel = spell.higherLevel,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 8.dp)
+                .padding(bottom = 16.dp)
+        )
+    }
 }
 
 @Preview

@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -56,26 +58,30 @@ private fun AbilityDescription(
     description: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit = {}
-) = Column(modifier = modifier) {
+) = SelectionContainer(modifier = modifier) {
 
-    Text(
-        text = name,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Italic,
-        fontSize = 16.sp,
-        modifier = Modifier.padding(horizontal = 16.dp)
-    )
+    Column {
+        Text(
+            text = name,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Italic,
+            fontSize = 16.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
 
-    Text(
-        text = description,
-        fontWeight = FontWeight.Light,
-        fontSize = 14.sp,
-        modifier = Modifier
-            .padding(top = 4.dp)
-            .padding(horizontal = 16.dp)
-    )
+        Text(
+            text = description,
+            fontWeight = FontWeight.Light,
+            fontSize = 14.sp,
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .padding(horizontal = 16.dp)
+        )
 
-    content()
+        DisableSelection {
+            content()
+        }
+    }
 }
 
 @Preview

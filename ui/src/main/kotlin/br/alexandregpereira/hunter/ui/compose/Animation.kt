@@ -30,14 +30,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.animatePressed(
     pressedScale: Float = 0.96f,
     onClick: () -> Unit = {},
-    onLongClick: () -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
 ): Modifier = composed {
     val interactionSource = remember { MutableInteractionSource() }
+    val haptic = LocalHapticFeedback.current
 
     animatePressed(
         interactionSource = interactionSource,
@@ -46,7 +49,12 @@ fun Modifier.animatePressed(
         interactionSource = interactionSource,
         indication = null,
         onClick = onClick,
-        onLongClick = onLongClick
+        onLongClick = {
+            onLongClick?.run {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                invoke()
+            }
+        }
     )
 }
 
