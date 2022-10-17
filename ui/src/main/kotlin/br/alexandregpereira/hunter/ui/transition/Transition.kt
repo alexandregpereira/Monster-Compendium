@@ -22,6 +22,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -37,19 +38,22 @@ fun <Data> AlphaTransition(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     enableGesture: Boolean = true,
-    content: @Composable (data: Data, alpha: Float) -> Unit
+    content: @Composable (data: Data) -> Unit
 ) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
-    content(
-        data,
-        alpha = lerp(
-            start = if (isTarget) 0f else 1f,
-            stop = if (isTarget) 1f else 0f,
-            fraction = fraction
+    Box(
+        Modifier.alpha(
+            lerp(
+                start = if (isTarget) 0f else 1f,
+                stop = if (isTarget) 1f else 0f,
+                fraction = fraction
+            )
         )
-    )
+    ) {
+        content(data)
+    }
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun <Data> HorizontalSlideTransition(
     dataList: List<Data>,
@@ -68,22 +72,12 @@ fun <Data> HorizontalSlideTransition(
         val width = currentPlaceable.width
         val height = currentPlaceable.height
 
-        val scrollDirection = pagerState.getScrollDirection()
-
         val value = lerp(
             start = if (isTarget) {
-                when (scrollDirection) {
-                    ScrollDirection.LEFT -> width
-                    ScrollDirection.RIGHT -> -width
-                    ScrollDirection.IDLE -> 0
-                }
+                width
             } else 0,
             stop = if (isTarget.not()) {
-                when (scrollDirection) {
-                    ScrollDirection.LEFT -> -width
-                    ScrollDirection.RIGHT -> width
-                    ScrollDirection.IDLE -> 0
-                }
+                -width
             } else 0,
             fraction = fraction
         )
@@ -136,7 +130,7 @@ fun <Data> getTransitionData(
 ): TransitionData<Data> {
     val (currentIndex, nextIndex) = pagerState.getCurrentAndNextIndex()
     val currentPageOffsetDecimal = pagerState.run {
-        currentPageOffset - currentPageOffset.toInt()
+        getPageOffset() - getPageOffset().toInt()
     }
     val fraction = currentPageOffsetDecimal.absoluteValue.coerceIn(0f, 1f)
     return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
@@ -144,30 +138,16 @@ fun <Data> getTransitionData(
 
 @OptIn(ExperimentalPagerApi::class)
 fun PagerState.getCurrentAndNextIndex(): Pair<Int, Int> {
-    val scrollDirection = getScrollDirection()
+    val currentPageOffsetDecimal = this.run {
+        getPageOffset() - getPageOffset().toInt()
+    }
     val pageOffset = getPageOffset()
-    val currentIndex = when (scrollDirection) {
-        ScrollDirection.RIGHT -> pageOffset.toInt() + 1
-        else -> pageOffset.toInt()
-    }
-    val nextIndex = when (scrollDirection) {
-        ScrollDirection.LEFT -> pageOffset.toInt() + 1
-        else -> pageOffset.toInt()
-    }
+    val currentIndex = pageOffset.toInt()
+    val nextIndex = if (currentPageOffsetDecimal > 0f) {
+        pageOffset.toInt() + 1
+    } else pageOffset.toInt()
 
     return currentIndex to nextIndex
-}
-
-@OptIn(ExperimentalPagerApi::class)
-fun PagerState.getScrollDirection(): ScrollDirection {
-    val currentPageOffsetDecimal = this.run {
-        currentPageOffset - currentPageOffset.toInt()
-    }
-    return when {
-        currentPageOffsetDecimal > 0f -> ScrollDirection.LEFT
-        currentPageOffsetDecimal < 0f -> ScrollDirection.RIGHT
-        else -> ScrollDirection.IDLE
-    }
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -180,7 +160,3 @@ data class TransitionData<Data>(
     val nextData: Data,
     val fraction: Float
 )
-
-enum class ScrollDirection {
-    LEFT, RIGHT, IDLE
-}
