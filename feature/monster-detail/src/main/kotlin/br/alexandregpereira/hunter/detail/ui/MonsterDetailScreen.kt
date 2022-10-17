@@ -42,6 +42,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,6 +64,7 @@ import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
+import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -96,7 +100,7 @@ fun MonsterDetailScreen(
         Box(
             Modifier
                 .fillMaxSize()
-                .monsterImageBackground(monsters, pagerState)
+                .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
         ) {
             val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
             MonsterTitleCompose(
@@ -138,17 +142,16 @@ fun MonsterDetailScreen(
         ),
         onOptionsClicked = onOptionsClicked
     )
-    OnMonsterChanged(monsters, pagerState, onMonsterChanged)
+    OnMonsterChanged(monsters, getPageOffset = { pagerState.getPageOffset() }, onMonsterChanged)
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun OnMonsterChanged(
     monsters: List<MonsterState>,
-    pagerState: PagerState,
+    getPageOffset: () -> Float,
     onMonsterChanged: (monster: MonsterState) -> Unit
 ) {
-    val transitionData = getTransitionData(dataList = monsters, pagerState)
+    val transitionData = getTransitionData(dataList = monsters, getPageOffset = getPageOffset)
     onMonsterChanged(transitionData.data)
 }
 
@@ -161,7 +164,7 @@ private fun MonsterImageCompose(
 ) {
     Box(
         Modifier
-            .monsterImageBackground(monsters, pagerState)
+            .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
             .padding(top = contentPadding.calculateTopPadding())
     ) {
         MonsterImages(
@@ -184,12 +187,11 @@ private fun MonsterImageCompose(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 private fun Modifier.monsterImageBackground(
     monsters: List<MonsterState>,
-    pagerState: PagerState,
+    getPageOffset: () -> Float,
 ) = composed {
-    val transitionData = getTransitionData(monsters, pagerState)
+    val transitionData = getTransitionData(monsters, getPageOffset)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val startColor = transitionData.data.imageState.backgroundColor.getColor(isSystemInDarkTheme)
@@ -220,8 +222,14 @@ private fun MonsterTopBar(
                 contentPadding.calculateTopPadding()).toPx()
     }
 
+    val visible by remember {
+        derivedStateOf {
+            scrollState.value >= (imageHeightInPixels + contentPaddingTotalInPixels)
+        }
+    }
+
     AnimatedVisibility(
-        visible = scrollState.value >= (imageHeightInPixels + contentPaddingTotalInPixels),
+        visible = visible,
         enter = slideInVertically(initialOffsetY = { -it }),
         exit = slideOutVertically(targetOffsetY = { -it }),
     ) {
@@ -316,13 +324,18 @@ private fun MonsterInfo(
         (MONSTER_IMAGE_COMPOSE_TOP_PADDING + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING +
                 contentPadding.calculateTopPadding() + 200.dp).toPx()
     }
-    val enableGesture = scrollState.value < (imageHeightInPixels + contentPaddingTotalInPixels)
+
+    val enableGesture by remember {
+        derivedStateOf {
+            scrollState.value < (imageHeightInPixels + contentPaddingTotalInPixels)
+        }
+    }
 
     MonsterInfo(
         monsters = monsters,
         pagerState = pagerState,
         contentPadding = contentPadding,
-        enableGesture = enableGesture,
+        enableGesture = { enableGesture },
         onSpellClicked = onSpellClicked
     )
 }
@@ -334,7 +347,7 @@ private fun MonsterInfo(
     monsters: List<MonsterState>,
     pagerState: PagerState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    enableGesture: Boolean = true,
+    enableGesture: () -> Boolean = { true },
     onSpellClicked: (String) -> Unit = {}
 ) = AlphaTransition(
     dataList = monsters,

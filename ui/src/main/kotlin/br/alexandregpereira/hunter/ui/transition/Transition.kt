@@ -37,7 +37,7 @@ fun <Data> AlphaTransition(
     dataList: List<Data>,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    enableGesture: Boolean = true,
+    enableGesture: () -> Boolean = { true },
     content: @Composable (data: Data) -> Unit
 ) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
     Box(
@@ -59,7 +59,7 @@ fun <Data> HorizontalSlideTransition(
     dataList: List<Data>,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    enableGesture: Boolean = true,
+    enableGesture: () -> Boolean = { true },
     content: @Composable (data: Data) -> Unit
 ) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
     Layout(
@@ -94,12 +94,12 @@ fun <Data> Transition(
     dataList: List<Data>,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    enableGesture: Boolean = true,
+    enableGesture: () -> Boolean = { true },
     content: @Composable (data: Data, fraction: Float, isTarget: Boolean) -> Unit
 ) {
-    val transitionData = getTransitionData(dataList, pagerState)
+    val transitionData = getTransitionData(dataList, getPageOffset = { pagerState.getPageOffset() })
 
-    val boxModifier = if (enableGesture) {
+    val boxModifier = if (enableGesture()) {
         modifier.scrollable(
             orientation = Orientation.Horizontal,
             reverseDirection = true,
@@ -123,35 +123,23 @@ fun <Data> Transition(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 fun <Data> getTransitionData(
     dataList: List<Data>,
-    pagerState: PagerState
+    getPageOffset: () -> Float
 ): TransitionData<Data> {
-    val (currentIndex, nextIndex) = pagerState.getCurrentAndNextIndex()
-    val currentPageOffsetDecimal = pagerState.run {
-        getPageOffset() - getPageOffset().toInt()
-    }
-    val fraction = currentPageOffsetDecimal.absoluteValue.coerceIn(0f, 1f)
-    return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
-}
-
-@OptIn(ExperimentalPagerApi::class)
-fun PagerState.getCurrentAndNextIndex(): Pair<Int, Int> {
-    val currentPageOffsetDecimal = this.run {
-        getPageOffset() - getPageOffset().toInt()
-    }
     val pageOffset = getPageOffset()
+    val currentPageOffsetDecimal = pageOffset - pageOffset.toInt()
     val currentIndex = pageOffset.toInt()
     val nextIndex = if (currentPageOffsetDecimal > 0f) {
         pageOffset.toInt() + 1
     } else pageOffset.toInt()
 
-    return currentIndex to nextIndex
+    val fraction = currentPageOffsetDecimal.absoluteValue.coerceIn(0f, 1f)
+    return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
 }
 
 @OptIn(ExperimentalPagerApi::class)
-private fun PagerState.getPageOffset(): Float {
+fun PagerState.getPageOffset(): Float {
     return (this.currentPage + this.currentPageOffset).coerceAtLeast(0f)
 }
 
