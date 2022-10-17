@@ -15,14 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -35,9 +36,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -52,7 +54,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -66,10 +68,12 @@ import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
+import br.alexandregpereira.hunter.ui.transition.transitionHorizontalScrollable
 import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -82,26 +86,47 @@ fun MonsterDetailScreen(
     pagerState: PagerState = rememberPagerState(
         initialPage = initialMonsterIndex
     ),
-    scrollState: ScrollState = rememberScrollState(),
+    scrollState: LazyListState = rememberLazyListState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
     onSpellClicked: (String) -> Unit = {}
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(
-                state = scrollState,
-            )
-            .animateContentSize()
-    ) {
-        MonsterImageCompose(monsters, pagerState, contentPadding)
 
-        Box(
-            Modifier
-                .fillMaxSize()
-                .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
-        ) {
+    MonsterImageCompose(
+        monsters,
+        pagerState,
+        contentPadding = contentPadding,
+    )
+
+    ScrollableBackground(
+        getScrollPositionOffset = {
+            scrollState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == MONSTER_TITLE_ITEM_KEY }
+                ?.run {
+                    offset.coerceAtLeast(0) + (size / 2)
+                } ?: 0
+        }
+    )
+
+    LazyColumn(
+        state = scrollState,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        item(key = "MonsterImageCompose") {
+            Box(
+                modifier = Modifier
+                    .height(
+                        IMAGE_HEIGHT
+                                + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING
+                                + MONSTER_IMAGE_COMPOSE_TOP_PADDING
+                                + contentPadding.calculateTopPadding()
+                    )
+                    .fillMaxWidth()
+                    .transitionHorizontalScrollable(pagerState)
+                    .animateItemPlacement()
+            )
+        }
+
+        item(key = MONSTER_TITLE_ITEM_KEY) {
             val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
             MonsterTitleCompose(
                 monsterTitleStates = monsters.map {
@@ -118,14 +143,15 @@ fun MonsterDetailScreen(
                         shape = shape,
                         color = MaterialTheme.colors.surface
                     )
+                    .animateItemPlacement()
             )
         }
 
-        MonsterInfo(
+        monsterInfo(
             monsters = monsters,
             pagerState = pagerState,
-            scrollState = scrollState,
             contentPadding = contentPadding,
+            getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
             onSpellClicked = onSpellClicked
         )
     }
@@ -133,16 +159,38 @@ fun MonsterDetailScreen(
     MonsterTopBar(
         monsters,
         pagerState,
-        scrollState,
+        firstVisibleItemIndex = { scrollState.firstVisibleItemIndex },
         contentPadding = PaddingValues(
             top = 16.dp + contentPadding.calculateTopPadding(),
             start = 16.dp,
             end = 16.dp,
             bottom = 16.dp
         ),
-        onOptionsClicked = onOptionsClicked
+        onOptionsClicked = onOptionsClicked,
+        scrollToTop = {
+            scrollState.animateScrollToItem(0)
+        }
     )
     OnMonsterChanged(monsters, getPageOffset = { pagerState.getPageOffset() }, onMonsterChanged)
+}
+
+@Composable
+private fun ScrollableBackground(
+    getScrollPositionOffset: () -> Int
+) = Layout(
+    content = {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.surface)
+        )
+    }
+) { measurables, constraints ->
+    val placeable = measurables.first().measure(constraints)
+    layout(constraints.maxWidth, constraints.maxHeight) {
+        val offset = getScrollPositionOffset()
+        placeable.placeRelative(x = 0, y = offset)
+    }
 }
 
 @Composable
@@ -164,6 +212,7 @@ private fun MonsterImageCompose(
 ) {
     Box(
         Modifier
+            .fillMaxSize()
             .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
             .padding(top = contentPadding.calculateTopPadding())
     ) {
@@ -212,19 +261,14 @@ private fun Modifier.monsterImageBackground(
 private fun MonsterTopBar(
     monsters: List<MonsterState>,
     pagerState: PagerState,
-    scrollState: ScrollState,
     contentPadding: PaddingValues = PaddingValues(16.dp),
+    firstVisibleItemIndex: () -> Int,
+    scrollToTop: suspend CoroutineScope.() -> Unit,
     onOptionsClicked: () -> Unit,
 ) {
-    val imageHeightInPixels = LocalDensity.current.run { IMAGE_HEIGHT.toPx() }
-    val contentPaddingTotalInPixels = LocalDensity.current.run {
-        (MONSTER_IMAGE_COMPOSE_TOP_PADDING + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING +
-                contentPadding.calculateTopPadding()).toPx()
-    }
-
     val visible by remember {
         derivedStateOf {
-            scrollState.value >= (imageHeightInPixels + contentPaddingTotalInPixels)
+            firstVisibleItemIndex() > 0
         }
     }
 
@@ -251,9 +295,7 @@ private fun MonsterTopBar(
                             bottom = contentPadding.calculateBottomPadding(),
                         ),
                     onClicked = {
-                        composableScope.launch {
-                            scrollState.animateScrollTo(value = 0)
-                        }
+                        composableScope.launch(block = scrollToTop)
                     }
                 )
 
@@ -309,61 +351,10 @@ private fun MonsterTypeIcon(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
-@ExperimentalAnimationApi
-@Composable
-private fun MonsterInfo(
-    monsters: List<MonsterState>,
-    pagerState: PagerState,
-    scrollState: ScrollState,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    onSpellClicked: (String) -> Unit = {}
-) {
-    val imageHeightInPixels = LocalDensity.current.run { IMAGE_HEIGHT.toPx() }
-    val contentPaddingTotalInPixels = LocalDensity.current.run {
-        (MONSTER_IMAGE_COMPOSE_TOP_PADDING + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING +
-                contentPadding.calculateTopPadding() + 200.dp).toPx()
-    }
-
-    val enableGesture by remember {
-        derivedStateOf {
-            scrollState.value < (imageHeightInPixels + contentPaddingTotalInPixels)
-        }
-    }
-
-    MonsterInfo(
-        monsters = monsters,
-        pagerState = pagerState,
-        contentPadding = contentPadding,
-        enableGesture = { enableGesture },
-        onSpellClicked = onSpellClicked
-    )
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@ExperimentalAnimationApi
-@Composable
-private fun MonsterInfo(
-    monsters: List<MonsterState>,
-    pagerState: PagerState,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    enableGesture: () -> Boolean = { true },
-    onSpellClicked: (String) -> Unit = {}
-) = AlphaTransition(
-    dataList = monsters,
-    pagerState = pagerState,
-    enableGesture = enableGesture
-) { data: MonsterState ->
-    MonsterInfo(
-        data,
-        contentPadding = contentPadding,
-        onSpellClicked = onSpellClicked
-    )
-}
-
 private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
 private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
 private val IMAGE_HEIGHT = 420.dp
+private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Preview
@@ -459,8 +450,10 @@ private fun MonsterTopBarPreview() = Window {
             )
         ),
         pagerState = rememberPagerState(),
-        scrollState = rememberScrollState(Int.MAX_VALUE)
-    ) {
+        firstVisibleItemIndex = { 0 },
+        onOptionsClicked = {
 
-    }
+        },
+        scrollToTop = {}
+    )
 }

@@ -15,16 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+
 package br.alexandregpereira.hunter.detail.ui
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -44,13 +47,51 @@ import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.transition.getPageOffset
+import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
+
+fun LazyListScope.spellBlock(
+    monsters: List<MonsterState>,
+    pagerState: PagerState,
+    getItemsKeys: () -> List<Any> = { emptyList() },
+    onSpellClicked: (String) -> Unit = {}
+) {
+    val transitionData = getTransitionData(monsters, getPageOffset = { pagerState.getPageOffset() })
+    transitionData.data.spellcastings.forEachIndexed { i, spellcasting ->
+        item(key = "$SPELLCASTING_ITEM_KEY$i") {
+            MonsterRequireSectionAlphaTransition(
+                dataList = monsters,
+                pagerState = pagerState,
+                getItemsKeys = getItemsKeys,
+                modifier = Modifier.animateItemPlacement()
+            ) {
+                SpellBlock(spellcastings = listOf(spellcasting))
+            }
+        }
+
+        spellcasting.spellsByGroup.toList().forEachIndexed { j, (group, spells) ->
+            item(key = "$SPELLCASTING_ITEM_KEY-group$i-$j") {
+                MonsterSectionAlphaTransition(
+                    dataList = monsters,
+                    pagerState = pagerState,
+                    getItemsKeys = getItemsKeys,
+                    modifier = Modifier.animateItemPlacement()
+                ) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
+                }
+            }
+        }
+    }
+}
 
 @Composable
-fun SpellBlock(
+private fun SpellBlock(
     spellcastings: List<SpellcastingState>,
     modifier: Modifier = Modifier,
-    onSpellClicked: (String) -> Unit = {}
 ) = AbilityDescriptionBlock(
     title = stringResource(R.string.monster_detail_spells),
     abilityDescriptions = spellcastings.map {
@@ -60,24 +101,14 @@ fun SpellBlock(
         )
     },
     modifier = modifier
-) { index ->
-    spellcastings[index].spellsByGroup.forEach { entry ->
-        val group = entry.key
-        val spells = entry.value
-
-        Spacer(modifier = Modifier.height(24.dp))
-        Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
-    }
-}
-
+)
 
 @Composable
 private fun Spells(
     group: String,
     spells: List<SpellPreviewState>,
-    modifier: Modifier = Modifier,
     onSpellClicked: (String) -> Unit = {}
-) = Column(modifier = modifier) {
+) {
     Text(
         text = group,
         fontWeight = FontWeight.Normal,
@@ -101,6 +132,8 @@ private fun Spells(
         }
     }
 }
+
+internal const val SPELLCASTING_ITEM_KEY = "spellcasting"
 
 @Preview
 @Composable
