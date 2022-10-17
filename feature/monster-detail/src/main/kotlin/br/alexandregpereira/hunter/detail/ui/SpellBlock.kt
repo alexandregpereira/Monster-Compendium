@@ -88,18 +88,18 @@ private fun Spells(
 
     Spacer(modifier = Modifier.height(8.dp))
 
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    ) {
-        items(spells) { spell ->
-            SpellIconInfo(
-                name = spell.name,
-                school = spell.school,
-                onClick = { onSpellClicked(spell.index) }
-            )
-        }
-    }
+//    LazyRow(
+//        horizontalArrangement = Arrangement.spacedBy(16.dp),
+//        contentPadding = PaddingValues(horizontal = 16.dp)
+//    ) {
+//        items(spells) { spell ->
+//            SpellIconInfo(
+//                name = spell.name,
+//                school = spell.school,
+//                onClick = { onSpellClicked(spell.index) }
+//            )
+//        }
+//    }
 }
 
 @Preview

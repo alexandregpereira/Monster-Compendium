@@ -46,7 +46,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.lerp
@@ -279,12 +278,11 @@ private fun ChallengeRatingCompose(
     monsters: List<MonsterState>,
     pagerState: PagerState,
 ) {
-    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState, alpha: Float ->
+    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState ->
         ChallengeRatingCircle(
             challengeRating = data.imageState.challengeRating,
             size = 56.dp,
             fontSize = 16.sp,
-            modifier = Modifier.alpha(alpha)
         )
     }
 }
@@ -294,13 +292,11 @@ private fun ChallengeRatingCompose(
 private fun MonsterTypeIcon(
     monsters: List<MonsterState>,
     pagerState: PagerState,
-    modifier: Modifier = Modifier,
 ) {
-    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState, alpha ->
+    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState ->
         MonsterTypeIcon(
             iconRes = data.imageState.type.iconRes,
             iconSize = 32.dp,
-            modifier.alpha(alpha)
         )
     }
 }
@@ -344,11 +340,10 @@ private fun MonsterInfo(
     dataList = monsters,
     pagerState = pagerState,
     enableGesture = enableGesture
-) { data: MonsterState, alpha: Float ->
+) { data: MonsterState ->
     MonsterInfo(
         data,
         contentPadding = contentPadding,
-        alpha = alpha,
         onSpellClicked = onSpellClicked
     )
 }
