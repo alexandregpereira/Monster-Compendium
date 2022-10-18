@@ -21,18 +21,23 @@ package br.alexandregpereira.hunter.detail.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,6 +57,7 @@ import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
 
 fun LazyListScope.spellBlock(
     monsters: List<MonsterState>,
@@ -62,13 +68,13 @@ fun LazyListScope.spellBlock(
     val transitionData = getTransitionData(monsters, getPageOffset = { pagerState.getPageOffset() })
     transitionData.data.spellcastings.forEachIndexed { i, spellcasting ->
         item(key = "$SPELLCASTING_ITEM_KEY$i") {
-            MonsterRequireSectionAlphaTransition(
+            MonsterSectionAlphaTransition(
                 dataList = monsters,
                 pagerState = pagerState,
                 getItemsKeys = getItemsKeys,
                 modifier = Modifier.animateItemPlacement()
             ) {
-                SpellBlock(spellcastings = listOf(spellcasting))
+                SpellBlock(spellcasting = spellcasting, index = i)
             }
         }
 
@@ -80,8 +86,8 @@ fun LazyListScope.spellBlock(
                     getItemsKeys = getItemsKeys,
                     modifier = Modifier.animateItemPlacement()
                 ) {
-                    Spacer(modifier = Modifier.height(24.dp))
                     Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
             }
         }
@@ -90,18 +96,32 @@ fun LazyListScope.spellBlock(
 
 @Composable
 private fun SpellBlock(
-    spellcastings: List<SpellcastingState>,
-    modifier: Modifier = Modifier,
-) = AbilityDescriptionBlock(
-    title = stringResource(R.string.monster_detail_spells),
-    abilityDescriptions = spellcastings.map {
-        AbilityDescriptionState(
-            name = stringResource(it.type.nameRes),
-            description = it.description
+    spellcasting: SpellcastingState,
+    index: Int,
+) = Column {
+    if (index == 0) {
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
         )
-    },
-    modifier = modifier
-)
+    }
+
+    if (index == 0 ) {
+        BlockTitle(
+            title = stringResource(R.string.monster_detail_spells),
+            modifier = Modifier.padding(top = 16.dp)
+        )
+    }
+
+    val paddingTop = if (index == 0 ) 16.dp else 0.dp
+    AbilityDescription(
+        name = stringResource(spellcasting.type.nameRes),
+        description = spellcasting.description,
+        modifier = Modifier.padding(top = paddingTop, bottom = 16.dp)
+    )
+}
 
 @Composable
 private fun Spells(
@@ -138,53 +158,63 @@ internal const val SPELLCASTING_ITEM_KEY = "spellcasting"
 @Preview
 @Composable
 private fun SpellBlockPreview() = Window {
-    SpellBlock(
-        spellcastings = listOf(
-            SpellcastingState(
-                type = SpellcastingTypeState.SPELLCASTER,
-                description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
-                spellsByGroup = mapOf(
-                    "At Will" to listOf(
-                        SpellPreviewState(
-                            index = "index",
-                            name = "Detect Evil and Good",
-                            school = SchoolOfMagicState.DIVINATION
-                        ),
-                        SpellPreviewState(
-                            index = "index",
-                            name = "Some Magic",
-                            school = SchoolOfMagicState.CONJURATION
-                        ),
+    val pagerState = rememberPagerState()
+    val spellcastings = listOf(
+        SpellcastingState(
+            type = SpellcastingTypeState.SPELLCASTER,
+            description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
+            spellsByGroup = mapOf(
+                "At Will" to listOf(
+                    SpellPreviewState(
+                        index = "index",
+                        name = "Detect Evil and Good",
+                        school = SchoolOfMagicState.DIVINATION
                     ),
-                    "3/day each" to (0..10).map {
-                        SpellPreviewState(
-                            index = "index",
-                            name = "Some Magic $it",
-                            school = SchoolOfMagicState.ILLUSION
-                        )
-                    }
-                )
-            ),
-            SpellcastingState(
-                type = SpellcastingTypeState.INNATE,
-                description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
-                spellsByGroup = mapOf(
-                    "At Will" to listOf(
-                        SpellPreviewState(
-                            index = "index",
-                            name = "Detect Evil and Good",
-                            school = SchoolOfMagicState.ABJURATION
-                        ),
-                        SpellPreviewState(
-                            index = "index",
-                            name = "Some Magic",
-                            school = SchoolOfMagicState.NECROMANCY
-                        ),
+                    SpellPreviewState(
+                        index = "index",
+                        name = "Some Magic",
+                        school = SchoolOfMagicState.CONJURATION
+                    ),
+                ),
+                "3/day each" to (0..10).map {
+                    SpellPreviewState(
+                        index = "index",
+                        name = "Some Magic $it",
+                        school = SchoolOfMagicState.ILLUSION
                     )
-                )
+                }
             )
         ),
+        SpellcastingState(
+            type = SpellcastingTypeState.INNATE,
+            description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
+            spellsByGroup = mapOf(
+                "At Will" to listOf(
+                    SpellPreviewState(
+                        index = "index",
+                        name = "Detect Evil and Good",
+                        school = SchoolOfMagicState.ABJURATION
+                    ),
+                    SpellPreviewState(
+                        index = "index",
+                        name = "Some Magic",
+                        school = SchoolOfMagicState.NECROMANCY
+                    ),
+                )
+            )
+        )
     )
+
+    LazyColumn {
+        spellBlock(
+            monsters = listOf(
+                MonsterState(
+                    spellcastings = spellcastings,
+                )
+            ),
+            pagerState = pagerState
+        )
+    }
 }
 
 @Preview
