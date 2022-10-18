@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+
 package br.alexandregpereira.hunter.ui.transition
 
 import androidx.compose.foundation.gestures.Orientation
@@ -22,7 +24,8 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -41,13 +44,13 @@ fun <Data> AlphaTransition(
     content: @Composable (data: Data) -> Unit
 ) = Transition(dataList, pagerState, modifier, enableGesture) { data, fraction, isTarget ->
     Box(
-        Modifier.alpha(
-            lerp(
+        Modifier.graphicsLayer {
+            alpha = lerp(
                 start = if (isTarget) 0f else 1f,
                 stop = if (isTarget) 1f else 0f,
-                fraction = fraction
+                fraction = fraction()
             )
-        )
+        }
     ) {
         content(data)
     }
@@ -79,7 +82,7 @@ fun <Data> HorizontalSlideTransition(
             stop = if (isTarget.not()) {
                 -width
             } else 0,
-            fraction = fraction
+            fraction = fraction()
         )
 
         layout(width, height) {
@@ -95,32 +98,38 @@ fun <Data> Transition(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     enableGesture: () -> Boolean = { true },
-    content: @Composable (data: Data, fraction: Float, isTarget: Boolean) -> Unit
+    content: @Composable (data: Data, fraction: () -> Float, isTarget: Boolean) -> Unit
 ) {
     val transitionData = getTransitionData(dataList, getPageOffset = { pagerState.getPageOffset() })
 
     val boxModifier = if (enableGesture()) {
-        modifier.scrollable(
-            orientation = Orientation.Horizontal,
-            reverseDirection = true,
-            flingBehavior = PagerDefaults.flingBehavior(pagerState),
-            state = pagerState
-        )
+        modifier.transitionHorizontalScrollable(pagerState)
     } else modifier
     Box(boxModifier) {
         content(
             transitionData.data,
-            transitionData.fraction,
+            { transitionData.fraction },
             isTarget = false
         )
         if (transitionData.data != transitionData.nextData) {
             content(
                 transitionData.nextData,
-                transitionData.fraction,
+                { transitionData.fraction },
                 isTarget = true
             )
         }
     }
+}
+
+fun Modifier.transitionHorizontalScrollable(
+    pagerState: PagerState
+): Modifier = composed {
+    scrollable(
+        orientation = Orientation.Horizontal,
+        reverseDirection = true,
+        flingBehavior = PagerDefaults.flingBehavior(pagerState),
+        state = pagerState
+    )
 }
 
 fun <Data> getTransitionData(

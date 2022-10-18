@@ -17,12 +17,10 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,21 +40,13 @@ fun Block(
     contentHorizontalPadding: Dp = 16.dp,
     content: @Composable ColumnScope.() -> Unit
 ) = Column(
-    modifier
-        .background(color = MaterialTheme.colors.surface)
-        .padding(top = 16.dp, bottom = 16.dp + contentPaddingBottom)
+    modifier.padding(top = 16.dp, bottom = 16.dp + contentPaddingBottom)
 ) {
 
     title?.let {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Normal,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(
-                start = 16.dp,
-                end = 16.dp,
-                bottom = contentTextPaddingBottom
-            )
+        BlockTitle(
+            title = title,
+            contentTextPaddingBottom = contentTextPaddingBottom
         )
     }
 
@@ -65,6 +55,24 @@ fun Block(
             .fillMaxWidth()
             .padding(horizontal = contentHorizontalPadding),
         content = content
+    )
+}
+
+@Composable
+fun BlockTitle(
+    title: String,
+    modifier: Modifier = Modifier,
+    contentTextPaddingBottom: Dp = 0.dp,
+) {
+    Text(
+        text = title,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        modifier = modifier.padding(
+            start = 16.dp,
+            end = 16.dp,
+            bottom = contentTextPaddingBottom
+        )
     )
 }
 

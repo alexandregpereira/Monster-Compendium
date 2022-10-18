@@ -22,16 +22,26 @@ import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 
 data class MonsterState(
-    val index: String,
-    val name: String,
-    val imageState: MonsterImageState,
-    val subtype: String?,
-    val group: String?,
-    val subtitle: String,
-    val size: String,
-    val alignment: String,
-    val stats: StatsState,
-    val speed: SpeedState,
+    val index: String = "",
+    val name: String = "",
+    val imageState: MonsterImageState = MonsterImageState(
+        url = "",
+        type = MonsterTypeState.ABERRATION,
+        backgroundColor = ColorState(
+            light = "",
+            dark = ""
+        ),
+        challengeRating = 0.0f,
+        isHorizontal = false,
+        contentDescription = ""
+    ),
+    val subtype: String? = null,
+    val group: String? = null,
+    val subtitle: String = "",
+    val size: String = "",
+    val alignment: String = "",
+    val stats: StatsState = StatsState(armorClass = 0, hitPoints = 0, hitDice = ""),
+    val speed: SpeedState = SpeedState(hover = false, values = emptyList()),
     val abilityScores: List<AbilityScoreState> = emptyList(),
     val savingThrows: List<ProficiencyState> = emptyList(),
     val skills: List<ProficiencyState> = emptyList(),
@@ -39,11 +49,11 @@ data class MonsterState(
     val damageResistances: List<DamageState> = emptyList(),
     val damageImmunities: List<DamageState> = emptyList(),
     val conditionImmunities: List<ConditionState> = emptyList(),
-    val senses: List<String>,
-    val languages: String,
-    val specialAbilities: List<AbilityDescriptionState>,
-    val actions: List<ActionState>,
-    val reactions: List<AbilityDescriptionState>,
+    val senses: List<String> = emptyList(),
+    val languages: String = "",
+    val specialAbilities: List<AbilityDescriptionState> = emptyList(),
+    val actions: List<ActionState> = emptyList(),
+    val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
 )
 

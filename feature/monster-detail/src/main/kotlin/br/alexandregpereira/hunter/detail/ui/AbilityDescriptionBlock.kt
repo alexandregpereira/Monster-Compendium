@@ -53,7 +53,7 @@ fun AbilityDescriptionBlock(
 }
 
 @Composable
-private fun AbilityDescription(
+fun AbilityDescription(
     name: String,
     description: String,
     modifier: Modifier = Modifier,
