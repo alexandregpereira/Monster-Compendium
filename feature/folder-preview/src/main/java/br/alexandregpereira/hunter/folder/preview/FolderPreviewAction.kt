@@ -18,7 +18,7 @@ package br.alexandregpereira.hunter.folder.preview
 
 sealed class FolderPreviewAction {
     data class NavigateToDetail(
-        val folderName: String,
+        val monsterIndexes: List<String>,
         val monsterIndex: String
     ): FolderPreviewAction()
 }

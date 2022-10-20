@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
-import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase.Companion.TEMPORARY_FOLDER_NAME
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventDispatcher
@@ -144,7 +143,7 @@ internal class FolderPreviewViewModel @Inject constructor(
     private fun navigateToMonsterDetail(monsterIndex: String) {
         _action.tryEmit(
             FolderPreviewAction.NavigateToDetail(
-                folderName = TEMPORARY_FOLDER_NAME,
+                monsterIndexes = state.value.monsters.map { it.index },
                 monsterIndex = monsterIndex
             )
         )

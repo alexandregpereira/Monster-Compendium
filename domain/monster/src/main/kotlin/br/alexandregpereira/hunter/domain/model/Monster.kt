@@ -20,15 +20,15 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 
 data class Monster(
     val preview: MonsterPreview,
-    val subtype: String?,
-    val group: String?,
-    val subtitle: String,
-    val size: String,
-    val alignment: String,
-    val stats: Stats,
-    val senses: List<String>,
-    val languages: String,
-    val sourceName: String,
+    val subtype: String? = null,
+    val group: String? = null,
+    val subtitle: String = "",
+    val size: String = "",
+    val alignment: String = "",
+    val stats: Stats = Stats(),
+    val senses: List<String> = emptyList(),
+    val languages: String = "",
+    val sourceName: String = "",
     val speed: Speed = Speed(hover = false, values = emptyList()),
     val abilityScores: List<AbilityScore> = emptyList(),
     val savingThrows: List<Proficiency> = emptyList(),
@@ -56,19 +56,19 @@ data class Monster(
 
 data class MonsterPreview(
     val index: String,
-    val name: String,
-    val type: MonsterType,
-    val challengeRating: Float,
-    val imageData: MonsterImageData
+    val name: String = "",
+    val type: MonsterType = MonsterType.ABERRATION,
+    val challengeRating: Float = 0f,
+    val imageData: MonsterImageData = MonsterImageData()
 )
 
 data class MonsterImageData(
-    val url: String,
-    val backgroundColor: Color,
+    val url: String = "",
+    val backgroundColor: Color = Color(),
     val isHorizontal: Boolean = false
 )
 
 data class Color(
-    val light: String,
-    val dark: String
+    val light: String = "",
+    val dark: String = ""
 )

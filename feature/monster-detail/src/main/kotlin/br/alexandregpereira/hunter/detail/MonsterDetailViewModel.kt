@@ -60,8 +60,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     val state: StateFlow<MonsterDetailViewState> = _state
 
     var monsterIndex: String = savedStateHandle["index"] ?: ""
-    private val disablePageScroll: Boolean = savedStateHandle["disablePageScroll"] ?: false
-    private val folderName: String = savedStateHandle["folderName"] ?: ""
+    private val monsterIndexes: List<String> = savedStateHandle["indexes"] ?: emptyList()
 
     init {
         folderPreviewEventDispatcher.dispatchEvent(HideFolderPreview)
@@ -102,7 +101,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     private fun getMonsterDetail(): Flow<MonsterDetail> {
-        return getMonsterDetailUseCase(monsterIndex, isSingleMonster = disablePageScroll, folderName)
+        return getMonsterDetailUseCase(monsterIndex, indexes = monsterIndexes)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

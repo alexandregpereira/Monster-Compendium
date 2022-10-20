@@ -56,8 +56,8 @@ class SearchFragment : Fragment() {
                 viewModel.action.collect { action ->
                     when (action) {
                         is SearchAction.NavigateToDetail -> navigator.navigateToDetail(
-                            action.index,
-                            disablePageScroll = true
+                            index = action.index,
+                            indexes = listOf(action.index)
                         )
                     }
                 }

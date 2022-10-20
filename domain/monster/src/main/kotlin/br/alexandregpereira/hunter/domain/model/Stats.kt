@@ -17,7 +17,7 @@
 package br.alexandregpereira.hunter.domain.model
 
 data class Stats(
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
+    val armorClass: Int = 0,
+    val hitPoints: Int = 0,
+    val hitDice: String = "",
 )

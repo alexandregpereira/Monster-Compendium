@@ -68,7 +68,7 @@ internal fun Action(
             when (action) {
                 is NavigateToDetail -> navigator.navigateToDetail(
                     action.monsterIndex,
-                    folderName = action.folderName
+                    indexes = action.monsterIndexes
                 )
             }
         }
