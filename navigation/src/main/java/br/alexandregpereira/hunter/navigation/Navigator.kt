@@ -17,5 +17,5 @@
 package br.alexandregpereira.hunter.navigation
 
 interface Navigator {
-    fun navigateToDetail(index: String, disablePageScroll: Boolean = false, folderName: String = "")
+    fun navigateToDetail(index: String, indexes: List<String> = emptyList())
 }

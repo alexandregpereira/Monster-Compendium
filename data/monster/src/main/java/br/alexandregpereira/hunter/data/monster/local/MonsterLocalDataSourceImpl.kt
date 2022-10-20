@@ -78,6 +78,10 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun getMonsters(indexes: List<String>): Flow<List<MonsterCompleteEntity>> = flow {
+        emit(monsterDao.getMonsters(indexes))
+    }
+
     override fun getMonster(index: String): Flow<MonsterCompleteEntity> = flow {
         emit(monsterDao.getMonster(index))
     }

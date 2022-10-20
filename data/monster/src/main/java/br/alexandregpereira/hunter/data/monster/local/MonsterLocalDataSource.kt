@@ -24,6 +24,7 @@ internal interface MonsterLocalDataSource {
 
     fun getMonsterPreviews(): Flow<List<MonsterEntity>>
     fun getMonsters(): Flow<List<MonsterCompleteEntity>>
+    fun getMonsters(indexes: List<String>): Flow<List<MonsterCompleteEntity>>
     fun getMonstersByQuery(query: String): Flow<List<MonsterEntity>>
     fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
     fun getMonster(index: String): Flow<MonsterCompleteEntity>

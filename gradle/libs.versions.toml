@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.24.13-rc"
-android_gradle_plugin = "7.3.0"
+android_gradle_plugin = "7.3.1"
 appcompat = "1.4.2"
 arch_core_testing = "2.1.0"
 coil_compose = "2.1.0"

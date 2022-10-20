@@ -17,10 +17,10 @@
 package br.alexandregpereira.hunter.detail.domain
 
 import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
-import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -31,15 +31,14 @@ class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
     private val getMonsterUseCase: GetMonsterUseCase,
-    private val getMonstersByFolder: GetMonstersByFolderUseCase
+    private val getMonstersByIds: GetMonstersByIdsUseCase,
 ) {
 
     operator fun invoke(
         index: String,
-        isSingleMonster: Boolean,
-        folderName: String
+        indexes: List<String>,
     ): Flow<MonsterDetail> {
-        return getMonsters(index, isSingleMonster, folderName)
+        return getMonsters(index, indexes)
             .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw IllegalAccessError("Monster not found")
@@ -54,15 +53,14 @@ class GetMonsterDetailUseCase @Inject internal constructor(
 
     private fun getMonsters(
         index: String,
-        isSingleMonster: Boolean,
-        folderName: String
+        indexes: List<String>,
     ): Flow<List<Monster>> {
-        return if (isSingleMonster) {
-            getMonsterUseCase(index).map { listOf(it) }
-        } else if (folderName.isNotBlank()) {
-            getMonstersByFolder(folderName)
-        } else {
+        return if (indexes.isEmpty()) {
             getMonstersUseCase()
+        } else if (indexes.size == 1){
+            getMonsterUseCase(index).map { listOf(it) }
+        } else {
+            getMonstersByIds(indexes)
         }
     }
 }

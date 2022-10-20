@@ -27,15 +27,13 @@ internal class NavigatorImpl @Inject constructor(
 
     override fun navigateToDetail(
         index: String,
-        disablePageScroll: Boolean,
-        folderName: String
+        indexes: List<String>
     ) {
         navController.navigate(
             R.id.action_global_monsterDetailFragment,
             bundleOf(
                 "index" to index,
-                "disablePageScroll" to disablePageScroll,
-                "folderName" to folderName
+                "indexes" to indexes,
             )
         )
     }

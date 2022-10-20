@@ -66,6 +66,10 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.getMonsters().map { it.toDomain() }
     }
 
+    override fun getLocalMonsters(indexes: List<String>): Flow<List<Monster>> {
+        return localDataSource.getMonsters(indexes).map { it.toDomain() }
+    }
+
     override fun getLocalMonster(index: String): Flow<Monster> {
         return localDataSource.getMonster(index).map { it.toDomain() }
     }
