@@ -1,5 +1,4 @@
 /*
- * Hunter - DnD 5th edition monster compendium application
  * Copyright (C) 2022 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
