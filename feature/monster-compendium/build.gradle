@@ -49,7 +49,6 @@ android {
 
 dependencies {
     implementation project(':domain:monster')
-    implementation project(':domain:alternative-source')
     implementation project(':domain:sync')
     implementation project(':event:folder-preview-event')
     implementation project(':navigation')
