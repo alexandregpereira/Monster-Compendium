@@ -22,7 +22,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 
 @Dao
 interface MonsterFolderDao {
@@ -37,7 +37,7 @@ interface MonsterFolderDao {
                 "on MonsterEntity.`index` == MonsterFolderEntity.`monsterIndex` " +
                 "ORDER BY createdAt"
     )
-    suspend fun getMonsterFolders(): Map<MonsterFolderEntity, List<MonsterCompleteEntity>>
+    suspend fun getMonsterFolders(): Map<MonsterFolderEntity, List<MonsterEntity>>
 
     @Transaction
     @Query(
@@ -47,7 +47,7 @@ interface MonsterFolderDao {
                 "WHERE MonsterFolderEntity.folderName == :folderName " +
                 "ORDER BY createdAt"
     )
-    suspend fun getMonstersFromFolder(folderName: String): Map<MonsterFolderEntity, List<MonsterCompleteEntity>>
+    suspend fun getMonstersFromFolder(folderName: String): Map<MonsterFolderEntity, List<MonsterEntity>>
 
     @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName AND monsterIndex == :monsterIndex")
     suspend fun removeMonsterFromFolder(folderName: String, monsterIndex: String)

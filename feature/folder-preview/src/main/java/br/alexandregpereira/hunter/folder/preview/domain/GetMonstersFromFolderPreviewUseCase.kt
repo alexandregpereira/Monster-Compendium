@@ -18,9 +18,9 @@ package br.alexandregpereira.hunter.folder.preview.domain
 
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 internal class GetMonstersFromFolderPreviewUseCase @Inject constructor(
     private val getMonstersByFolder: GetMonstersByFolderUseCase
@@ -34,9 +34,9 @@ internal class GetMonstersFromFolderPreviewUseCase @Inject constructor(
                 MonsterFolderPreview(
                     index = monster.index,
                     name = monster.name,
-                    imageUrl = monster.imageData.url,
-                    backgroundColorLight = monster.imageData.backgroundColor.light,
-                    backgroundColorDark = monster.imageData.backgroundColor.dark
+                    imageUrl = monster.imageUrl,
+                    backgroundColorLight = monster.backgroundColorLight,
+                    backgroundColorDark = monster.backgroundColorDark
                 )
             }
         }

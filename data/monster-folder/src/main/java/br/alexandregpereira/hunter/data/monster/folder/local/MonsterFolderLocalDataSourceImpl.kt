@@ -19,8 +19,9 @@ package br.alexandregpereira.hunter.data.monster.folder.local
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
-import java.util.*
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import java.util.Calendar
+import java.util.TimeZone
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -58,7 +59,7 @@ internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
         emit(monsterFolderDao.removeMonsterFromFolder(folderName, monsterIndex))
     }
 
-    private fun Map<MonsterFolderEntity, List<MonsterCompleteEntity>>.asMonsterFolderCompleteEntity():
+    private fun Map<MonsterFolderEntity, List<MonsterEntity>>.asMonsterFolderCompleteEntity():
             List<MonsterFolderCompleteEntity> = map { entry ->
         MonsterFolderCompleteEntity(entry.key, entry.value)
     }
