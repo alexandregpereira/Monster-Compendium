@@ -16,9 +16,11 @@
 
 package br.alexandregpereira.hunter.data.monster.folder
 
-import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
-import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderType
 
 internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
     return this.map { it.asDomain() }
@@ -27,6 +29,24 @@ internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
 internal fun MonsterFolderCompleteEntity.asDomain(): MonsterFolder {
     return MonsterFolder(
         name = monsterFolderEntity.folderName,
-        monsters = monsters.toDomain()
+        monsters = monsters.asDomain()
     )
+}
+
+@JvmName("asDomainMonsterPreviewFolderEntity")
+private fun List<MonsterEntity>.asDomain(): List<MonsterPreviewFolder> {
+    return map {
+        it.run {
+            MonsterPreviewFolder(
+                index = index,
+                name = name,
+                type = MonsterPreviewFolderType.valueOf(type),
+                challengeRating = challengeRating,
+                imageUrl = imageUrl,
+                backgroundColorLight = backgroundColorLight,
+                backgroundColorDark = backgroundColorDark,
+                isHorizontalImage = isHorizontalImage,
+            )
+        }
+    }
 }

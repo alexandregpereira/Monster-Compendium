@@ -16,9 +16,9 @@
 
 package br.alexandregpereira.hunter.data.monster.folder.local.entity
 
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 
 data class MonsterFolderCompleteEntity(
     val monsterFolderEntity: MonsterFolderEntity,
-    val monsters: List<MonsterCompleteEntity>
+    val monsters: List<MonsterEntity>
 )
