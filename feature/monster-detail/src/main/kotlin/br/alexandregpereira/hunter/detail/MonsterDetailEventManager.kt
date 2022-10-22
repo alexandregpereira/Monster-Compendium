@@ -27,7 +27,7 @@ internal class MonsterDetailEventManager : MonsterDetailEventListener,
     MonsterDetailEventDispatcher {
 
     private val _events: MutableSharedFlow<MonsterDetailEvent> = MutableSharedFlow(
-        replay = 1,
+        extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     override val events: Flow<MonsterDetailEvent> = _events

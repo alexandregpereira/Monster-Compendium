@@ -28,7 +28,7 @@ internal class FolderPreviewConsumerEventDispatcherImpl :
     FolderPreviewConsumerEventListener {
 
     private val _events: MutableSharedFlow<FolderPreviewConsumerEvent> = MutableSharedFlow(
-        replay = 1,
+        extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     override val events: Flow<FolderPreviewConsumerEvent> = _events
