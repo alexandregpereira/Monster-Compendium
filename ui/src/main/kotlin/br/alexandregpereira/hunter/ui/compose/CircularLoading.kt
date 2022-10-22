@@ -30,9 +30,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CircularLoading(
     isLoading: Boolean,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Crossfade(targetState = isLoading) {
+    Crossfade(targetState = isLoading, modifier = modifier) {
         if (it) {
             CircularLoading()
         } else {

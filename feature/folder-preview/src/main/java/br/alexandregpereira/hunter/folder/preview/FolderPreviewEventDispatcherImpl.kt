@@ -28,7 +28,7 @@ internal class FolderPreviewEventDispatcherImpl :
     FolderPreviewEventListener {
 
     private val _events: MutableSharedFlow<FolderPreviewEvent> = MutableSharedFlow(
-        replay = 1,
+        extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     override val events: Flow<FolderPreviewEvent> = _events

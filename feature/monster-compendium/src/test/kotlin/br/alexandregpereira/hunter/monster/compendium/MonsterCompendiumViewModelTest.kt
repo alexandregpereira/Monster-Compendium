@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
@@ -60,6 +61,7 @@ class MonsterCompendiumViewModelTest {
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = mockk()
     private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener = mockk()
+    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
@@ -133,6 +135,7 @@ class MonsterCompendiumViewModelTest {
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             folderPreviewConsumerEventListener = folderPreviewConsumerEventListener,
+            monsterDetailEventDispatcher = monsterDetailEventDispatcher,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )

@@ -14,9 +14,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.monster.compendium
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
 
-sealed class MonsterCompendiumAction {
-    data class NavigateToDetail(val index: String): MonsterCompendiumAction()
-    data class NavigateToCompendiumIndex(val index: Int): MonsterCompendiumAction()
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+dependencies {
+    implementation libs.kotlin.coroutines.core
+}
+
+configure([compileKotlin, compileTestKotlin]) {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }

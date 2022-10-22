@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.folder.preview
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
@@ -31,10 +33,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventListen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -49,6 +48,7 @@ internal class FolderPreviewViewModel @Inject constructor(
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,
     private val addMonsterToFolderPreview: AddMonsterToFolderPreviewUseCase,
     private val removeMonsterFromFolderPreview: RemoveMonsterFromFolderPreviewUseCase,
+    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -56,12 +56,6 @@ internal class FolderPreviewViewModel @Inject constructor(
         savedStateHandle.getState()
     )
     val state: StateFlow<FolderPreviewViewState> = _state
-
-    private val _action: MutableSharedFlow<FolderPreviewAction> = MutableSharedFlow(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val action: SharedFlow<FolderPreviewAction> = _action
 
     init {
         observeEvents()
@@ -141,11 +135,8 @@ internal class FolderPreviewViewModel @Inject constructor(
     }
 
     private fun navigateToMonsterDetail(monsterIndex: String) {
-        _action.tryEmit(
-            FolderPreviewAction.NavigateToDetail(
-                monsterIndexes = state.value.monsters.map { it.index },
-                monsterIndex = monsterIndex
-            )
+        monsterDetailEventDispatcher.dispatchEvent(
+            Show(index = monsterIndex, indexes = state.value.monsters.map { it.index })
         )
     }
 }

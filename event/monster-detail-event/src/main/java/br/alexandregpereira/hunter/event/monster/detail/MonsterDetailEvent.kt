@@ -14,8 +14,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.navigation
+package br.alexandregpereira.hunter.event.monster.detail
 
-interface Navigator {
-    fun navigateToDetail(index: String, indexes: List<String> = emptyList())
+sealed class MonsterDetailEvent {
+    data class Show(
+        val index: String,
+        val indexes: List<String> = emptyList()
+    ) : MonsterDetailEvent()
+
+    object Hide : MonsterDetailEvent()
 }

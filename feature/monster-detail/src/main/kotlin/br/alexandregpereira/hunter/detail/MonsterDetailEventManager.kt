@@ -3,7 +3,7 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 3.
+ * the Free Software Foundation, either version 3 of the License.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,26 +14,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.folder.preview
+package br.alexandregpereira.hunter.detail
 
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal class FolderPreviewConsumerEventDispatcherImpl :
-    FolderPreviewConsumerEventDispatcher,
-    FolderPreviewConsumerEventListener {
+internal class MonsterDetailEventManager : MonsterDetailEventListener,
+    MonsterDetailEventDispatcher {
 
-    private val _events: MutableSharedFlow<FolderPreviewConsumerEvent> = MutableSharedFlow(
+    private val _events: MutableSharedFlow<MonsterDetailEvent> = MutableSharedFlow(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    override val events: Flow<FolderPreviewConsumerEvent> = _events
+    override val events: Flow<MonsterDetailEvent> = _events
 
-    override fun dispatchEvent(event: FolderPreviewConsumerEvent) {
+    override fun dispatchEvent(event: MonsterDetailEvent) {
         _events.tryEmit(event)
     }
 }

@@ -51,14 +51,13 @@ dependencies {
     implementation project(':domain:monster')
     implementation project(':domain:sync')
     implementation project(':event:folder-preview-event')
-    implementation project(':navigation')
+    implementation project(':event:monster-detail-event')
     implementation project(':ui')
 
     implementation libs.core.ktx
     implementation libs.kotlin.coroutines
     implementation libs.kotlin.reflect
-    implementation libs.viewmodel
-    implementation libs.fragment
+    implementation libs.bundles.viewmodel.bundle
 
     implementation libs.bundles.compose
     implementation libs.accompanist.flowlayout

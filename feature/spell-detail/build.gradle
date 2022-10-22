@@ -52,8 +52,7 @@ dependencies {
     implementation project(':event:spell-detail-event')
     implementation project(':ui')
 
-    implementation libs.viewmodel
-    implementation libs.fragment
+    implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose
 
     implementation libs.hilt

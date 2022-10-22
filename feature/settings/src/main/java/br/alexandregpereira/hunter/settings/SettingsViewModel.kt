@@ -46,7 +46,7 @@ internal class SettingsViewModel @Inject constructor(
     val state: StateFlow<SettingsViewState> = _state
 
     private val _action: MutableSharedFlow<SettingsAction> = MutableSharedFlow(
-        replay = 1,
+        extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     val action: SharedFlow<SettingsAction> = _action

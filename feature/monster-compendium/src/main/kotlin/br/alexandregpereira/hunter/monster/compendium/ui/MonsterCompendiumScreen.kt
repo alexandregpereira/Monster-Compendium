@@ -34,11 +34,10 @@ import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
-fun MonsterCompendiumScreen(
+internal fun MonsterCompendiumScreen(
     state: MonsterCompendiumViewState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
-    compendiumIndex: Int = -1,
 ) = HunterTheme {
     CircularLoading(state.isLoading) {
         val listState = rememberLazyListState(
@@ -48,9 +47,9 @@ fun MonsterCompendiumScreen(
 
         OnFirstVisibleItemChange(listState, events::onFirstVisibleItemChange)
 
-        if (compendiumIndex >= 0) {
-            LaunchedEffect(compendiumIndex) {
-                listState.scrollToItem(compendiumIndex)
+        if (state.compendiumIndex >= 0) {
+            LaunchedEffect(state.compendiumIndex) {
+                listState.scrollToItem(state.compendiumIndex)
             }
         }
     }
@@ -73,7 +72,7 @@ private fun MonsterCompendiumScreen(
         )
         Closeable(opened = state.alphabetOpened, onClosed = events::onAlphabetClosed) {
             val paddingBottom by animateDpAsState(
-                if (state.isShowingMonsterFolderPreview) 72.dp else 0.dp
+                if (state.isShowingMonsterFolderPreview) 72.dp else 8.dp
             )
 
             AlphabetIndex(

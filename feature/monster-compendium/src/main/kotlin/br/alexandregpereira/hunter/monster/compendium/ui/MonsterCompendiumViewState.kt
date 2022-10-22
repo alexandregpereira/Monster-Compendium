@@ -28,6 +28,7 @@ data class MonsterCompendiumViewState(
     val alphabetOpened: Boolean = false,
     val initialScrollItemPosition: Int = 0,
     val isShowingMonsterFolderPreview: Boolean = false,
+    val compendiumIndex: Int = -1
 )
 
 data class SectionState(

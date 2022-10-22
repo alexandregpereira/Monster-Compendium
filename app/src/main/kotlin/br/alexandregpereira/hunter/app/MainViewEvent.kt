@@ -14,19 +14,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id 'java-library'
-    id 'kotlin'
-}
+package br.alexandregpereira.hunter.app
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-configure([compileKotlin, compileTestKotlin]) {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    }
+sealed class MainViewEvent {
+    data class BottomNavigationItemClick(val item: BottomBarItem) : MainViewEvent()
 }

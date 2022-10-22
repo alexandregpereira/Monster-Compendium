@@ -50,13 +50,13 @@ android {
 dependencies {
     implementation project(':domain:monster')
     implementation project(':event:folder-preview-event')
+    implementation project(':event:monster-detail-event')
     implementation project(':event:spell-detail-event')
     implementation project(':ui')
 
     implementation libs.core.ktx
     implementation libs.kotlin.coroutines
-    implementation libs.viewmodel
-    implementation libs.fragment
+    implementation libs.bundles.viewmodel.bundle
 
     implementation libs.bundles.compose
     implementation libs.compose.util

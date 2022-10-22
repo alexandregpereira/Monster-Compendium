@@ -14,11 +14,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.folder.preview
+package br.alexandregpereira.hunter.event.monster.detail
 
-sealed class FolderPreviewAction {
-    data class NavigateToDetail(
-        val monsterIndexes: List<String>,
-        val monsterIndex: String
-    ): FolderPreviewAction()
+import kotlinx.coroutines.flow.Flow
+
+interface MonsterDetailEventListener {
+
+    val events: Flow<MonsterDetailEvent>
 }

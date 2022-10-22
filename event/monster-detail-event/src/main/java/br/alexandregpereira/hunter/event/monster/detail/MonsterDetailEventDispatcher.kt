@@ -14,8 +14,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.search
+package br.alexandregpereira.hunter.event.monster.detail
 
-sealed class SearchAction {
-    data class NavigateToDetail(val index: String): SearchAction()
+interface MonsterDetailEventDispatcher {
+
+    fun dispatchEvent(event: MonsterDetailEvent)
 }
