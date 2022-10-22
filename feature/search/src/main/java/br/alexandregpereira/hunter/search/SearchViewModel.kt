@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -31,9 +33,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
@@ -41,22 +41,19 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
     private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SearchViewState.Initial)
     val state: StateFlow<SearchViewState> = _state
     private val searchQuery = MutableStateFlow(_state.value.searchValue)
-
-    private val _action = MutableSharedFlow<SearchAction>()
-    val action: SharedFlow<SearchAction> = _action
 
     init {
         searchQuery.debounce(500L)
@@ -81,9 +78,9 @@ internal class SearchViewModel @Inject constructor(
     }
 
     fun onItemClick(index: String) {
-        viewModelScope.launch {
-            _action.emit(SearchAction.NavigateToDetail(index))
-        }
+        monsterDetailEventDispatcher.dispatchEvent(
+            Show(index = index, indexes = listOf(index))
+        )
     }
 
     fun onItemLongClick(index: String) {

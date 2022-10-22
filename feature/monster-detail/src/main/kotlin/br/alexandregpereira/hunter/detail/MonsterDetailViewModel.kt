@@ -24,6 +24,10 @@ import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Hide
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -40,52 +44,81 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class MonsterDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
+    private val monsterDetailEventListener: MonsterDetailEventListener,
+    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(MonsterDetailViewState.Initial)
+    private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterDetailViewState> = _state
 
-    var monsterIndex: String = savedStateHandle["index"] ?: ""
-    private val monsterIndexes: List<String> = savedStateHandle["indexes"] ?: emptyList()
+    private var monsterIndex: String
+        get() = savedStateHandle["index"] ?: ""
+        set(value) {
+            savedStateHandle["index"] = value
+        }
+
+    private var monsterIndexes: List<String>
+        get() = savedStateHandle["indexes"] ?: emptyList()
+        set(value) {
+            savedStateHandle["indexes"] = value
+        }
 
     init {
+        observeEvents()
+        state.value.run {
+            if (showDetail && monsters.isEmpty()) {
+                getMonstersByInitialIndex(monsterIndex, monsterIndexes)
+            }
+        }
+    }
+
+    private fun observeEvents() {
+        monsterDetailEventListener.events.onEach { event ->
+            when (event) {
+                is Show -> {
+                    getMonstersByInitialIndex(event.index, event.indexes)
+                    setState { copy(showDetail = true) }
+                }
+                Hide -> setState { copy(showDetail = false) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
         folderPreviewEventDispatcher.dispatchEvent(HideFolderPreview)
-        getMonstersByInitialIndex()
-    }
-
-    override fun onCleared() {
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview(force = false))
-        super.onCleared()
-    }
-
-    private fun getMonstersByInitialIndex() = viewModelScope.launch {
+        onMonsterChanged(monsterIndex)
+        this.monsterIndexes = monsterIndexes
+        setState { savedStateHandle.getState() }
         getMonsterDetail().collectDetail()
     }
 
+    fun onMonsterChanged(monsterIndex: String) {
+        this.monsterIndex = monsterIndex
+    }
+
     fun onShowOptionsClicked() {
-        _state.value = state.value.ShowOptions
+        setState { ShowOptions }
     }
 
     fun onShowOptionsClosed() {
-        _state.value = state.value.HideOptions
+        setState { HideOptions }
     }
 
     fun onOptionClicked(option: MonsterDetailOptionState) {
-        _state.value = state.value.HideOptions
+        setState { HideOptions }
         when (option) {
             MonsterDetailOptionState.CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
@@ -100,18 +133,23 @@ internal class MonsterDetailViewModel @Inject constructor(
         spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
+    fun onClose() {
+        monsterDetailEventDispatcher.dispatchEvent(Hide)
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview(force = false))
+    }
+
     private fun getMonsterDetail(): Flow<MonsterDetail> {
         return getMonsterDetailUseCase(monsterIndex, indexes = monsterIndexes)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private fun changeMeasurementUnit(measurementUnit: MeasurementUnit) = viewModelScope.launch {
+    private fun changeMeasurementUnit(measurementUnit: MeasurementUnit) {
         changeMonstersMeasurementUnitUseCase(measurementUnit)
             .flatMapLatest { getMonsterDetail() }
             .collectDetail()
     }
 
-    private suspend fun Flow<MonsterDetail>.collectDetail() {
+    private fun Flow<MonsterDetail>.collectDetail() {
         this.map {
             Log.i("MonsterDetailViewModel", "collectDetail")
             val measurementUnit = it.measurementUnit
@@ -123,22 +161,21 @@ internal class MonsterDetailViewModel @Inject constructor(
                     MeasurementUnit.METER -> listOf(MonsterDetailOptionState.CHANGE_TO_FEET)
                 }
             )
-        }.onStart {
-            Log.i("MonsterDetailViewModel", "onStart")
-            emit(getState().Loading)
-        }.onCompletion {
-            Log.i("MonsterDetailViewModel", "onCompletion")
-            emit(getState().NotLoading)
         }.flowOn(dispatcher)
             .catch {
                 Log.e("MonsterDetailViewModel", it.message ?: "")
                 it.printStackTrace()
-            }.collect { state ->
-                _state.value = state
+            }.onEach { state ->
+                setState { state }
             }
+            .launchIn(viewModelScope)
     }
 
     private suspend fun getState(): MonsterDetailViewState = withContext(Dispatchers.Main) {
         state.value
+    }
+
+    private fun setState(block: MonsterDetailViewState.() -> MonsterDetailViewState) {
+        _state.value = state.value.block().saveState(savedStateHandle)
     }
 }

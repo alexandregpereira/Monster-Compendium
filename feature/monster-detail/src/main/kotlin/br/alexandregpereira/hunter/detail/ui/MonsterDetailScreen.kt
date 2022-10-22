@@ -40,6 +40,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
@@ -89,7 +90,7 @@ fun MonsterDetailScreen(
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
     onSpellClicked: (String) -> Unit = {}
-) {
+) = Surface {
 
     MonsterImageCompose(
         monsters,

@@ -47,12 +47,14 @@ internal class SpellDetailViewModel @Inject constructor(
             savedStateHandle["spellIndex"] = value
         }
 
-    private val _state = MutableStateFlow(SpellDetailViewState.INITIAL)
+    private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<SpellDetailViewState> = _state
 
     init {
-        loadSpell(spellIndex)
         observeEvents()
+        if (state.value.showDetail && state.value.spell == null) {
+            loadSpell(spellIndex)
+        }
     }
 
     private fun loadSpell(spellIndex: String) {
@@ -60,7 +62,7 @@ internal class SpellDetailViewModel @Inject constructor(
             .map { spell -> spell.asState() }
             .flowOn(dispatcher)
             .onEach { spell ->
-                _state.value = state.value.changeSpell(spell)
+                setState { changeSpell(spell) }
             }
             .catch {}
             .launchIn(viewModelScope)
@@ -80,7 +82,10 @@ internal class SpellDetailViewModel @Inject constructor(
     }
 
     fun onClose() {
-        spellIndex = ""
-        _state.value = state.value.hideDetail()
+        setState { hideDetail() }
+    }
+
+    private fun setState(block: SpellDetailViewState.() -> SpellDetailViewState) {
+        _state.value = state.value.block().saveState(savedStateHandle)
     }
 }

@@ -16,16 +16,25 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.spell.detail.ui.SpellState
 
 internal data class SpellDetailViewState(
     val spell: SpellState? = null,
     val showDetail: Boolean = false,
-) {
+)
 
-    companion object {
-        val INITIAL = SpellDetailViewState()
-    }
+internal fun SavedStateHandle.getState(): SpellDetailViewState {
+    return SpellDetailViewState(
+        showDetail = this["showDetail"] ?: false
+    )
+}
+
+internal fun SpellDetailViewState.saveState(
+    savedStateHandle: SavedStateHandle
+): SpellDetailViewState {
+    savedStateHandle["showDetail"] = showDetail
+    return this
 }
 
 internal fun SpellDetailViewState.changeSpell(spellState: SpellState): SpellDetailViewState {

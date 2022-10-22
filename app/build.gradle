@@ -57,19 +57,27 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
     buildFeatures {
-        viewBinding = true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
 }
 
 dependencies {
     implementation project(':data:app')
+    implementation project(':event:monster-detail-event')
     implementation project(':feature:folder-preview')
     implementation project(':feature:monster-compendium')
     implementation project(':feature:monster-detail')
     implementation project(':feature:search')
     implementation project(':feature:settings')
     implementation project(':feature:spell-detail')
-    implementation project(':navigation')
+    implementation project(':ui')
+
+    implementation libs.bundles.viewmodel.bundle
+    implementation libs.bundles.compose
 
     implementation libs.core.ktx
     implementation libs.appcompat
@@ -77,7 +85,4 @@ dependencies {
 
     implementation libs.hilt
     kapt libs.hilt.compiler
-
-    implementation libs.navigation.fragment
-    implementation libs.navigation.ui
 }

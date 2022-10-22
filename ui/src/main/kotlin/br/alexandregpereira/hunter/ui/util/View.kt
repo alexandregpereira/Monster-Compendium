@@ -30,19 +30,26 @@ fun Context.createComposeView(
     content: @Composable (PaddingValues) -> Unit
 ): ComposeView {
     return ComposeView(this).apply {
-        setContent {
-            val bottomBarNavigationSize = if (withBottomBar) 58.dp else 0.dp
-            ProvideWindowInsets {
-                val insets = LocalWindowInsets.current
-                val top = with(LocalDensity.current) { insets.systemBars.top.toDp() }
-                val bottom = with(LocalDensity.current) { insets.systemBars.bottom.toDp() }
-                content(
-                    PaddingValues(
-                        top = top,
-                        bottom = bottom + bottomBarNavigationSize
-                    )
+        setContentWithPadding(withBottomBar, content)
+    }
+}
+
+fun ComposeView.setContentWithPadding(
+    withBottomBar: Boolean = false,
+    content: @Composable (PaddingValues) -> Unit
+) {
+    setContent {
+        val bottomBarNavigationSize = if (withBottomBar) 58.dp else 0.dp
+        ProvideWindowInsets {
+            val insets = LocalWindowInsets.current
+            val top = with(LocalDensity.current) { insets.systemBars.top.toDp() }
+            val bottom = with(LocalDensity.current) { insets.systemBars.bottom.toDp() }
+            content(
+                PaddingValues(
+                    top = top,
+                    bottom = bottom + bottomBarNavigationSize
                 )
-            }
+            )
         }
     }
 }

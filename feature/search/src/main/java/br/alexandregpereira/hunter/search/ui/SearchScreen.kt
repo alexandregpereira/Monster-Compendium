@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
@@ -37,7 +38,7 @@ internal fun SearchScreen(
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
 ) = HunterTheme {
-    Surface {
+    Surface(Modifier.fillMaxSize()) {
         Column(Modifier) {
             Box {
                 val focusManager = LocalFocusManager.current

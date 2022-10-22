@@ -16,26 +16,31 @@
 
 package br.alexandregpereira.hunter.detail
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.detail.ui.MonsterState
 
 data class MonsterDetailViewState(
-    val isLoading: Boolean = false,
     val initialMonsterIndex: Int = 0,
     val monsters: List<MonsterState> = emptyList(),
     val showOptions: Boolean = false,
-    val options: List<MonsterDetailOptionState> = emptyList()
+    val options: List<MonsterDetailOptionState> = emptyList(),
+    val showDetail: Boolean = false,
 ) {
 
-    companion object {
-        val Initial = MonsterDetailViewState()
-    }
+    val isLoading: Boolean
+        get() = monsters.isEmpty()
 }
 
-val MonsterDetailViewState.Loading: MonsterDetailViewState
-    get() = this.copy(isLoading = true)
+fun SavedStateHandle.getState(): MonsterDetailViewState {
+    return MonsterDetailViewState(
+        showDetail = this["showDetail"] ?: false
+    )
+}
 
-val MonsterDetailViewState.NotLoading: MonsterDetailViewState
-    get() = this.copy(isLoading = false)
+fun MonsterDetailViewState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailViewState {
+    savedStateHandle["showDetail"] = showDetail
+    return this
+}
 
 val MonsterDetailViewState.ShowOptions: MonsterDetailViewState
     get() = this.copy(showOptions = true)

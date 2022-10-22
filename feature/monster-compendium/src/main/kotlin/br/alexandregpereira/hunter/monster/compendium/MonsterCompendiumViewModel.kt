@@ -22,6 +22,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
@@ -37,13 +39,12 @@ import br.alexandregpereira.hunter.monster.compendium.ui.alphabetOpened
 import br.alexandregpereira.hunter.monster.compendium.ui.complete
 import br.alexandregpereira.hunter.monster.compendium.ui.getState
 import br.alexandregpereira.hunter.monster.compendium.ui.loading
+import br.alexandregpereira.hunter.monster.compendium.ui.saveState
 import br.alexandregpereira.hunter.monster.compendium.ui.showMonsterFolderPreview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -61,15 +62,13 @@ class MonsterCompendiumViewModel @Inject constructor(
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener,
+    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterCompendiumViewState> = _state
-
-    private val _action = MutableSharedFlow<MonsterCompendiumAction>()
-    val action: SharedFlow<MonsterCompendiumAction> = _action
 
     init {
         observeEvents()
@@ -109,9 +108,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     }
 
     override fun onItemCLick(index: String) {
-        viewModelScope.launch {
-            _action.emit(MonsterCompendiumAction.NavigateToDetail(index))
-        }
+        monsterDetailEventDispatcher.dispatchEvent(Show(index))
     }
 
     override fun onItemLongCLick(index: String) {
@@ -141,8 +138,7 @@ class MonsterCompendiumViewModel @Inject constructor(
                 }
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
-                    _action.emit(MonsterCompendiumAction
-                        .NavigateToCompendiumIndex(compendiumIndex))
+                    _state.value = state.value.copy(compendiumIndex = compendiumIndex)
                 }
         }
     }
@@ -158,6 +154,8 @@ class MonsterCompendiumViewModel @Inject constructor(
                 .flowOn(dispatcher)
                 .collect { alphabetIndex ->
                     _state.value = state.value.alphabetIndex(alphabetIndex)
+                        .copy(initialScrollItemPosition = position)
+                        .saveState(savedStateHandle)
                 }
         }
     }
