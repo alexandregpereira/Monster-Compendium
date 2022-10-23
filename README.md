@@ -8,6 +8,10 @@
 
 Monsters Compendium is an open source Android application contenting information about monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is from the SRD (System's Reference Document), but it is also possible to add new content to the app.
 
+## Download
+
+You can download the [lastest APK here](https://github.com/alexandregpereira/monster-compendium/releases/latest).
+
 ## Features
 
 <p align="center">
@@ -46,6 +50,10 @@ The app architecture is divided by feature, domain and data modules. The image b
 - **UseCases**: It holds the business logic. Getting data from the Repository interface or over other use cases.
 - **Repository**: It converts the data models (network and database) to domain models.
 - **DataSources**: It transfers data from a single source only.
+
+## Adding New Content
+
+You can add custom image and new monsters to the app. The tutorial can be found [here](CONTENT.md).
 
 ## API
 
