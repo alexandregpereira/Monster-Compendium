@@ -40,5 +40,5 @@ jobs:
     - name:  Upload an APK
       uses: actions/upload-artifact@v2.2.3
       with:
-        name: app-debug
+        name: app-release
         path: app/build/outputs/apk/release/app-release.apk
