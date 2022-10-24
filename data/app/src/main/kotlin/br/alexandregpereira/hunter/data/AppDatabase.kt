@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.data
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
@@ -80,8 +81,8 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         SpellUsageSpellCrossRefEntity::class,
         SpellPreviewEntity::class,
     ],
-    version = 17,
-    exportSchema = false
+    version = 18,
+    autoMigrations = [ AutoMigration(from = 17, to = 18) ]
 )
 internal abstract class AppDatabase : RoomDatabase() {
     abstract fun abilityScoreDao(): AbilityScoreDao

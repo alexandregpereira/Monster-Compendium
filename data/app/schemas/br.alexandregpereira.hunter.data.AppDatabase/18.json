@@ -1,0 +1,968 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 18,
+    "identityHash": "87604e4593e7a3ef92cbd0f99c62aedb",
+    "entities": [
+      {
+        "tableName": "AbilityScoreEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `value` INTEGER NOT NULL, `modifier` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`type`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modifier",
+            "columnName": "modifier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "type",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ActionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `attackBonus` INTEGER, `description` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attackBonus",
+            "columnName": "attackBonus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ConditionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DamageVulnerabilityEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DamageResistanceEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DamageImmunityEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DamageDiceEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `dice` TEXT NOT NULL, `actionId` TEXT NOT NULL, `index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dice",
+            "columnName": "dice",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actionId",
+            "columnName": "actionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damage.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damage.type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damage.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damage.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "MonsterEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `subtype` TEXT, `group` TEXT, `challengeRating` REAL NOT NULL, `name` TEXT NOT NULL, `subtitle` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `backgroundColorLight` TEXT NOT NULL, `backgroundColorDark` TEXT NOT NULL, `isHorizontalImage` INTEGER NOT NULL, `size` TEXT NOT NULL, `alignment` TEXT NOT NULL, `armorClass` INTEGER NOT NULL, `hitPoints` INTEGER NOT NULL, `hitDice` TEXT NOT NULL, `senses` TEXT NOT NULL, `languages` TEXT NOT NULL, `sourceName` TEXT NOT NULL, PRIMARY KEY(`index`))",
+        "fields": [
+          {
+            "fieldPath": "index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subtype",
+            "columnName": "subtype",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "group",
+            "columnName": "group",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "challengeRating",
+            "columnName": "challengeRating",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subtitle",
+            "columnName": "subtitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backgroundColorLight",
+            "columnName": "backgroundColorLight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backgroundColorDark",
+            "columnName": "backgroundColorDark",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHorizontalImage",
+            "columnName": "isHorizontalImage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "size",
+            "columnName": "size",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alignment",
+            "columnName": "alignment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "armorClass",
+            "columnName": "armorClass",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hitPoints",
+            "columnName": "hitPoints",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hitDice",
+            "columnName": "hitDice",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "senses",
+            "columnName": "senses",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "languages",
+            "columnName": "languages",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceName",
+            "columnName": "sourceName",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "MonsterFolderEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folderName` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, PRIMARY KEY(`folderName`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "folderName",
+            "columnName": "folderName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "folderName",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ReactionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SavingThrowEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `modifier` INTEGER NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.modifier",
+            "columnName": "modifier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SkillEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` TEXT NOT NULL, `modifier` INTEGER NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "value.index",
+            "columnName": "index",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.modifier",
+            "columnName": "modifier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "index",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpecialAbilityEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name",
+            "monsterIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpeedEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `hover` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hover",
+            "columnName": "hover",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpeedValueEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `valueFormatted` TEXT NOT NULL, `speedId` TEXT NOT NULL, PRIMARY KEY(`type`, `speedId`))",
+        "fields": [
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "valueFormatted",
+            "columnName": "valueFormatted",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "speedId",
+            "columnName": "speedId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "type",
+            "speedId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellIndex` TEXT NOT NULL, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `castingTime` TEXT NOT NULL, `components` TEXT NOT NULL, `duration` TEXT NOT NULL, `range` TEXT NOT NULL, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `savingThrowType` TEXT, `damageType` TEXT, `school` TEXT NOT NULL, `description` TEXT NOT NULL, `higherLevel` TEXT, PRIMARY KEY(`spellIndex`))",
+        "fields": [
+          {
+            "fieldPath": "spellIndex",
+            "columnName": "spellIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "castingTime",
+            "columnName": "castingTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "components",
+            "columnName": "components",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "range",
+            "columnName": "range",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ritual",
+            "columnName": "ritual",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "concentration",
+            "columnName": "concentration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "savingThrowType",
+            "columnName": "savingThrowType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "damageType",
+            "columnName": "damageType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "school",
+            "columnName": "school",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "higherLevel",
+            "columnName": "higherLevel",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellcastingEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellcastingId` TEXT NOT NULL, `type` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`spellcastingId`))",
+        "fields": [
+          {
+            "fieldPath": "spellcastingId",
+            "columnName": "spellcastingId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterIndex",
+            "columnName": "monsterIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellcastingId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellcastingSpellUsageCrossRefEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellcastingId` TEXT NOT NULL, `spellUsageId` TEXT NOT NULL, PRIMARY KEY(`spellcastingId`, `spellUsageId`))",
+        "fields": [
+          {
+            "fieldPath": "spellcastingId",
+            "columnName": "spellcastingId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spellUsageId",
+            "columnName": "spellUsageId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellcastingId",
+            "spellUsageId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_SpellcastingSpellUsageCrossRefEntity_spellcastingId",
+            "unique": false,
+            "columnNames": [
+              "spellcastingId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_SpellcastingSpellUsageCrossRefEntity_spellcastingId` ON `${TABLE_NAME}` (`spellcastingId`)"
+          },
+          {
+            "name": "index_SpellcastingSpellUsageCrossRefEntity_spellUsageId",
+            "unique": false,
+            "columnNames": [
+              "spellUsageId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_SpellcastingSpellUsageCrossRefEntity_spellUsageId` ON `${TABLE_NAME}` (`spellUsageId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellUsageEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellUsageId` TEXT NOT NULL, `group` TEXT NOT NULL, `spellcastingId` TEXT NOT NULL, PRIMARY KEY(`spellUsageId`))",
+        "fields": [
+          {
+            "fieldPath": "spellUsageId",
+            "columnName": "spellUsageId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "group",
+            "columnName": "group",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spellcastingId",
+            "columnName": "spellcastingId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellUsageId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellUsageSpellCrossRefEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellUsageId` TEXT NOT NULL, `spellIndex` TEXT NOT NULL, PRIMARY KEY(`spellUsageId`, `spellIndex`))",
+        "fields": [
+          {
+            "fieldPath": "spellUsageId",
+            "columnName": "spellUsageId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spellIndex",
+            "columnName": "spellIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellUsageId",
+            "spellIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_SpellUsageSpellCrossRefEntity_spellIndex",
+            "unique": false,
+            "columnNames": [
+              "spellIndex"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_SpellUsageSpellCrossRefEntity_spellIndex` ON `${TABLE_NAME}` (`spellIndex`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SpellPreviewEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spellIndex` TEXT NOT NULL, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `school` TEXT NOT NULL, PRIMARY KEY(`spellIndex`))",
+        "fields": [
+          {
+            "fieldPath": "spellIndex",
+            "columnName": "spellIndex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "school",
+            "columnName": "school",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spellIndex"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '87604e4593e7a3ef92cbd0f99c62aedb')"
+    ]
+  }
+}
