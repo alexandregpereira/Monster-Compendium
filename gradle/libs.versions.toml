@@ -1,29 +1,29 @@
 [versions]
-accompanist = "0.24.13-rc"
+accompanist = "0.25.1"
 android_gradle_plugin = "7.3.1"
-appcompat = "1.4.2"
+appcompat = "1.5.1"
 arch_core_testing = "2.1.0"
 coil_compose = "2.1.0"
-compose_activity = '1.5.1'
-compose = '1.1.1'
-compose_compiler = '1.2.0'
-core_ktx = '1.8.0'
-dagger = "2.43"
+compose_activity = '1.6.1'
+compose = '1.3.0'
+compose_compiler = '1.3.2'
+core_ktx = '1.9.0'
+dagger = "2.44"
 espresso_core = "3.4.0"
-hilt = "2.43"
+hilt = "2.44"
 junit_ext = "1.1.3"
 junit = "4.13.2"
-kotlin = '1.7.0'
+kotlin = '1.7.20'
 kotlin_coroutines_test = '1.6.4'
 kotlin_coroutines = '1.6.4'
-kotlinx_serialization = "1.3.3"
-lifecycle = "2.5.0"
-material = "1.6.1"
-mockk = "1.11.0"
+kotlinx_serialization = "1.4.1"
+lifecycle = "2.5.1"
+material = "1.7.0"
+mockk = "1.13.2"
 okhttp3_logging_interceptor = "4.10.0"
 retrofit = "2.9.0"
 retrofit_serialization = "0.8.0"
-room = "2.4.2"
+room = "2.4.3"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
