@@ -53,7 +53,6 @@ internal class DatabaseModule {
         @ApplicationContext context: Context
     ): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "hunter-database")
-            .fallbackToDestructiveMigration()
             .build()
     }
 
