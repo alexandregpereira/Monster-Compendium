@@ -15,6 +15,6 @@ dependencies {
 configure([compileKotlin, compileTestKotlin]) {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 }

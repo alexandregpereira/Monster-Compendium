@@ -19,7 +19,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
     buildFeatures {
@@ -29,6 +29,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
+    namespace 'br.alexandregpereira.hunter.search'
 }
 
 dependencies {

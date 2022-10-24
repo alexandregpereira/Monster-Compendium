@@ -19,8 +19,9 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
+    namespace 'br.alexandregpereira.hunter.data.monster.folder'
 }
 
 dependencies {
