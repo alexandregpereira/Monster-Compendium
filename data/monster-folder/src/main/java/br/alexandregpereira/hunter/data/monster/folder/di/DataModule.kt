@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.data.monster.folder.MonsterFolderRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
 import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSourceImpl
+import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,6 +36,12 @@ internal abstract class DataModule {
     internal abstract fun bindMonsterFolderRepository(
         monsterFolderRepository: MonsterFolderRepositoryImpl
     ): MonsterFolderRepository
+
+    @ViewModelScoped
+    @Binds
+    internal abstract fun bindFolderMonsterPreviewRepository(
+        monsterFolderRepository: MonsterFolderRepositoryImpl
+    ): FolderMonsterPreviewRepository
 
     @Binds
     abstract fun bindMonsterFolderLocalDataSource(

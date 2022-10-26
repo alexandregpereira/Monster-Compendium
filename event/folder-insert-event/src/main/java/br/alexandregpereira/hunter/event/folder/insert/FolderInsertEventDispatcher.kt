@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.event.folder.insert
 
-interface FolderPreviewConsumerEventDispatcher {
+import kotlinx.coroutines.flow.Flow
 
-    fun dispatchEvent(event: FolderPreviewConsumerEvent)
+interface FolderInsertEventDispatcher {
+
+    fun dispatchEvent(event: FolderInsertEvent): Flow<FolderInsertResult>
 }

@@ -17,18 +17,20 @@
 package br.alexandregpereira.hunter.data.monster.folder
 
 import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
+import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class MonsterFolderRepositoryImpl @Inject constructor(
     private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource
-) : MonsterFolderRepository {
+) : MonsterFolderRepository, FolderMonsterPreviewRepository {
 
-    override fun addMonster(folderName: String, index: String): Flow<Unit> {
-        return monsterFolderLocalDataSource.addMonster(folderName, monsterIndex = index)
+    override fun addMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
+        return monsterFolderLocalDataSource.addMonsters(folderName, monsterIndexes = indexes)
     }
 
     override fun getMonsterFolders(): Flow<List<MonsterFolder>> {
@@ -39,7 +41,18 @@ internal class MonsterFolderRepositoryImpl @Inject constructor(
         return monsterFolderLocalDataSource.getMonstersFromFolder(folderName).map { it?.asDomain() }
     }
 
-    override fun removeMonster(folderName: String, index: String): Flow<Unit> {
-        return monsterFolderLocalDataSource.removeMonster(folderName, monsterIndex = index)
+    override fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
+        return monsterFolderLocalDataSource.removeMonsters(folderName, monsterIndexes = indexes)
+    }
+
+    override fun getFolderMonsterPreviewsByIds(
+        indexes: List<String>
+    ): Flow<List<MonsterPreviewFolder>> {
+        return monsterFolderLocalDataSource.getFolderMonsterPreviewsByIds(indexes)
+            .map { it.asDomain() }
+    }
+
+    override fun removeMonsterFolder(folderName: String): Flow<Unit> {
+        return monsterFolderLocalDataSource.removeMonsterFolder(folderName)
     }
 }

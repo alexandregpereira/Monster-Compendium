@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ScreenHeader(
     title: String,
-    subTitle: String?,
     modifier: Modifier = Modifier,
+    subTitle: String? = null,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     titleFontSize: HeaderFontSize = HeaderFontSize.LARGE,
 ) = Column(modifier) {

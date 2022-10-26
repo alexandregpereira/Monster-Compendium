@@ -18,22 +18,35 @@ package br.alexandregpereira.hunter.folder.preview
 
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal class FolderPreviewEventDispatcherImpl :
+internal class FolderPreviewEventManager :
     FolderPreviewEventDispatcher,
-    FolderPreviewEventListener {
+    FolderPreviewResultListener {
 
     private val _events: MutableSharedFlow<FolderPreviewEvent> = MutableSharedFlow(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    override val events: Flow<FolderPreviewEvent> = _events
+
+    val events: Flow<FolderPreviewEvent> = _events
+
+    private val _result: MutableSharedFlow<FolderPreviewResult> = MutableSharedFlow(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    override val result: Flow<FolderPreviewResult> = _result
 
     override fun dispatchEvent(event: FolderPreviewEvent) {
         _events.tryEmit(event)
+    }
+
+    fun dispatchResult(result: FolderPreviewResult) {
+        _result.tryEmit(result)
     }
 }

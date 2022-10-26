@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.folder.preview.domain
 
+import br.alexandregpereira.hunter.domain.folder.ClearTemporaryFolderUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-interface FolderPreviewEventListener {
+internal class ClearFolderPreviewUseCase @Inject constructor(
+    private val clearTemporaryFolderUseCase: ClearTemporaryFolderUseCase,
+) {
 
-    val events: Flow<FolderPreviewEvent>
+    operator fun invoke(): Flow<Unit> {
+        return clearTemporaryFolderUseCase()
+    }
 }

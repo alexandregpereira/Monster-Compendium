@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.folder.insert.ui
 
-import kotlinx.coroutines.flow.Flow
-
-interface FolderPreviewConsumerEventListener {
-
-    val events: Flow<FolderPreviewConsumerEvent>
-}
+internal data class MonsterPreviewState(
+    val index: String,
+    val name: String = "",
+    val imageUrl: String = "",
+    val backgroundColorLight: String,
+    val backgroundColorDark: String
+)

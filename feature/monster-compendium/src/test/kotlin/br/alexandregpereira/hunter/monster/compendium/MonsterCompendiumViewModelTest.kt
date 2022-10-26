@@ -25,7 +25,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
@@ -60,7 +60,7 @@ class MonsterCompendiumViewModelTest {
     private val getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = mockk()
     private val saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = mockk()
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = mockk()
-    private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener = mockk()
+    private val folderPreviewResultListener: FolderPreviewResultListener = mockk()
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
 
@@ -134,7 +134,7 @@ class MonsterCompendiumViewModelTest {
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
-            folderPreviewConsumerEventListener = folderPreviewConsumerEventListener,
+            folderPreviewResultListener = folderPreviewResultListener,
             monsterDetailEventDispatcher = monsterDetailEventDispatcher,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher

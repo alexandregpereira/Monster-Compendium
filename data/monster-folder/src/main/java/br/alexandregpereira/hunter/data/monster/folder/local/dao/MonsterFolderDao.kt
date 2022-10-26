@@ -28,14 +28,14 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 interface MonsterFolderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMonsterToFolder(folderCrossRefEntity: MonsterFolderEntity)
+    suspend fun addMonstersToFolder(folderCrossRefEntity: List<MonsterFolderEntity>)
 
     @Transaction
     @Query(
         "SELECT  * FROM MonsterFolderEntity " +
                 "INNER JOIN MonsterEntity " +
                 "on MonsterEntity.`index` == MonsterFolderEntity.`monsterIndex` " +
-                "ORDER BY createdAt"
+                "ORDER BY createdAt DESC"
     )
     suspend fun getMonsterFolders(): Map<MonsterFolderEntity, List<MonsterEntity>>
 
@@ -49,6 +49,9 @@ interface MonsterFolderDao {
     )
     suspend fun getMonstersFromFolder(folderName: String): Map<MonsterFolderEntity, List<MonsterEntity>>
 
-    @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName AND monsterIndex == :monsterIndex")
-    suspend fun removeMonsterFromFolder(folderName: String, monsterIndex: String)
+    @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName AND monsterIndex IN (:monsterIndexes)")
+    suspend fun removeMonsterFromFolder(folderName: String, monsterIndexes: List<String>)
+
+    @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName")
+    suspend fun removeMonsterFolder(folderName: String)
 }

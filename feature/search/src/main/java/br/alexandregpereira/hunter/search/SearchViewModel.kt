@@ -85,6 +85,6 @@ internal class SearchViewModel @Inject constructor(
 
     fun onItemLongClick(index: String) {
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview())
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
     }
 }

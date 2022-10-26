@@ -21,8 +21,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterFolderRepository {
 
-    fun addMonster(folderName: String, index: String): Flow<Unit>
-    fun removeMonster(folderName: String, index: String): Flow<Unit>
+    fun addMonsters(folderName: String, indexes: List<String>): Flow<Unit>
+    fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit>
     fun getMonsterFolders(): Flow<List<MonsterFolder>>
     fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?>
+    fun removeMonsterFolder(folderName: String): Flow<Unit>
 }

@@ -35,6 +35,7 @@ internal fun FolderPreviewScreen(
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
+    onSave: () -> Unit = {},
 ) = HunterTheme {
     Box(Modifier.fillMaxSize()) {
         AnimatedVisibility(
@@ -48,6 +49,7 @@ internal fun FolderPreviewScreen(
                 contentPadding = contentPadding,
                 onClick = onClick,
                 onLongClick = onLongClick,
+                onSave = onSave
             )
         }
     }

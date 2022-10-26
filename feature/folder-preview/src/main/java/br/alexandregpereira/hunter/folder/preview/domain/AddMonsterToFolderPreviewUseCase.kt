@@ -16,25 +16,21 @@
 
 package br.alexandregpereira.hunter.folder.preview.domain
 
-import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
-import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase.Companion.TEMPORARY_FOLDER_NAME
+import br.alexandregpereira.hunter.domain.folder.AddMonsterToTemporaryFolderUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
 internal class AddMonsterToFolderPreviewUseCase @Inject constructor(
-    private val monsterFolderRepository: MonsterFolderRepository,
+    private val addMonsterToTemporaryFolder: AddMonsterToTemporaryFolderUseCase,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(index: String): Flow<List<MonsterFolderPreview>> {
-        return monsterFolderRepository.addMonster(
-            folderName = TEMPORARY_FOLDER_NAME,
-            index
-        ).flatMapLatest {
+        return addMonsterToTemporaryFolder(index).flatMapLatest {
             getMonstersFromFolderPreview()
         }
     }
