@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 
@@ -63,5 +64,7 @@ fun MainScreen(
             contentPadding = contentPadding,
             onClick = { onEvent(BottomNavigationItemClick(item = it)) }
         )
+
+        FolderInsertFeature(contentPadding = contentPadding)
     }
 }

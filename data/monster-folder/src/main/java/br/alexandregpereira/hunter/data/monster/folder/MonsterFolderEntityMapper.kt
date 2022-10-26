@@ -34,7 +34,7 @@ internal fun MonsterFolderCompleteEntity.asDomain(): MonsterFolder {
 }
 
 @JvmName("asDomainMonsterPreviewFolderEntity")
-private fun List<MonsterEntity>.asDomain(): List<MonsterPreviewFolder> {
+internal fun List<MonsterEntity>.asDomain(): List<MonsterPreviewFolder> {
     return map {
         it.run {
             MonsterPreviewFolder(

@@ -16,20 +16,18 @@
 
 package br.alexandregpereira.hunter.folder.preview.domain
 
-import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class GetMonstersFromFolderPreviewUseCase @Inject constructor(
-    private val getMonstersByFolder: GetMonstersByFolderUseCase
+    private val getMonstersByTemporaryFolder: GetMonstersByTemporaryFolderUseCase
 ) {
 
     operator fun invoke(): Flow<List<MonsterFolderPreview>> {
-        return getMonstersByFolder(
-            folderName = TEMPORARY_FOLDER_NAME
-        ).map { monsters ->
+        return getMonstersByTemporaryFolder().map { monsters ->
             monsters.map { monster ->
                 MonsterFolderPreview(
                     index = monster.index,
@@ -40,9 +38,5 @@ internal class GetMonstersFromFolderPreviewUseCase @Inject constructor(
                 )
             }
         }
-    }
-
-    companion object {
-        internal const val TEMPORARY_FOLDER_NAME = "TEMPORARY_FOLDER"
     }
 }

@@ -35,5 +35,6 @@ fun FolderPreviewFeature(
         contentPadding = contentPadding,
         onClick = viewModel::onItemClick,
         onLongClick = viewModel::onItemLongClick,
+        onSave = viewModel::onSave
     )
 }

@@ -16,12 +16,9 @@
 
 package br.alexandregpereira.hunter.folder.preview.di
 
-import br.alexandregpereira.hunter.folder.preview.FolderPreviewConsumerEventDispatcherImpl
-import br.alexandregpereira.hunter.folder.preview.FolderPreviewEventDispatcherImpl
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewEventManager
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,14 +32,8 @@ class FolderPreviewEventDispatcherModuleImpl {
 
     @Singleton
     @Provides
-    internal fun provideFolderPreviewEventDispatcherImpl(): FolderPreviewEventDispatcherImpl {
-        return FolderPreviewEventDispatcherImpl()
-    }
-
-    @Singleton
-    @Provides
-    internal fun provideFolderPreviewConsumerEventDispatcherImpl(): FolderPreviewConsumerEventDispatcherImpl {
-        return FolderPreviewConsumerEventDispatcherImpl()
+    internal fun provideFolderPreviewEventManager(): FolderPreviewEventManager {
+        return FolderPreviewEventManager()
     }
 }
 
@@ -53,24 +44,12 @@ abstract class FolderPreviewEventDispatcherModule {
     @Singleton
     @Binds
     internal abstract fun bindFolderPreviewEventDispatcher(
-        folderPreviewEventDispatcher: FolderPreviewEventDispatcherImpl
+        folderPreviewEventDispatcher: FolderPreviewEventManager
     ): FolderPreviewEventDispatcher
 
     @Singleton
     @Binds
-    internal abstract fun bindFolderPreviewEventListener(
-        folderPreviewEventDispatcher: FolderPreviewEventDispatcherImpl
-    ): FolderPreviewEventListener
-
-    @Singleton
-    @Binds
-    internal abstract fun bindFolderPreviewConsumerEventDispatcher(
-        folderPreviewConsumerEventDispatcher: FolderPreviewConsumerEventDispatcherImpl
-    ): FolderPreviewConsumerEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindFolderPreviewConsumerEventListener(
-        folderPreviewConsumerEventListener: FolderPreviewConsumerEventDispatcherImpl
-    ): FolderPreviewConsumerEventListener
+    internal abstract fun bindFolderPreviewResultListener(
+        folderPreviewEventDispatcher: FolderPreviewEventManager
+    ): FolderPreviewResultListener
 }

@@ -32,6 +32,9 @@ interface MonsterDao {
     @Query("SELECT * FROM MonsterEntity")
     suspend fun getMonsterPreviews(): List<MonsterEntity>
 
+    @Query("SELECT * FROM MonsterEntity WHERE `index` IN (:indexes)")
+    suspend fun getMonsterPreviews(indexes: List<String>): List<MonsterEntity>
+
     @Transaction
     @Query("SELECT * FROM MonsterEntity")
     suspend fun getMonsters(): List<MonsterCompleteEntity>

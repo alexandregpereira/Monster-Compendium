@@ -18,19 +18,18 @@ package br.alexandregpereira.hunter.folder.preview.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -40,8 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
-import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
-import br.alexandregpereira.hunter.ui.compose.animatePressed
+import br.alexandregpereira.hunter.ui.compose.AppButton
+import br.alexandregpereira.hunter.ui.compose.CircleImage
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -52,6 +51,7 @@ fun FolderPreview(
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
+    onSave: () -> Unit = {},
 ) {
     Box(modifier.fillMaxWidth()) {
         Card(
@@ -65,24 +65,33 @@ fun FolderPreview(
             backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
         ) {}
         Column {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
-            ) {
-                items(monsters, key = { it.index }) { state ->
-                    CircleImage(
-                        imageUrl = state.imageUrl,
-                        backgroundColor = if (isSystemInDarkTheme()) {
-                            state.backgroundColorDark
-                        } else {
-                            state.backgroundColorLight
-                        },
-                        contentDescription = state.name,
-                        modifier = Modifier.animateItemPlacement(),
-                        onClick = { onClick(state.index) },
-                        onLongClick = { onLongClick(state.index) }
-                    )
+            Row {
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(0.7f),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp)
+                ) {
+                    items(monsters, key = { it.index }) { state ->
+                        CircleImage(
+                            imageUrl = state.imageUrl,
+                            backgroundColor = if (isSystemInDarkTheme()) {
+                                state.backgroundColorDark
+                            } else {
+                                state.backgroundColorLight
+                            },
+                            contentDescription = state.name,
+                            modifier = Modifier.animateItemPlacement(),
+                            onClick = { onClick(state.index) },
+                            onLongClick = { onLongClick(state.index) }
+                        )
+                    }
                 }
+
+                AppButton(
+                    text = "Save",
+                    onClick = onSave,
+                    modifier = Modifier.padding(end = 16.dp)
+                )
             }
 
             Spacer(
@@ -92,53 +101,24 @@ fun FolderPreview(
     }
 }
 
-@Composable
-private fun CircleImage(
-    imageUrl: String,
-    backgroundColor: String,
-    contentDescription: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-    onLongClick: () -> Unit = {},
-) {
-    MonsterCoilImage(
-        imageUrl = imageUrl,
-        contentDescription = contentDescription,
-        shape = CircleShape,
-        backgroundColor = backgroundColor,
-        modifier = modifier
-            .size(48.dp)
-            .animatePressed(
-                pressedScale = 0.8f,
-                onClick = onClick,
-                onLongClick = onLongClick
-            )
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colors.surface,
-                shape = CircleShape
-            )
-    )
-}
-
 @Preview
 @Composable
 private fun FolderPreviewPreview() = HunterTheme {
     FolderPreview(
         listOf(
             MonsterFolderPreview(
-                index = "",
+                index = "index1",
                 name = "",
                 imageUrl = "",
-                backgroundColorLight = "",
-                backgroundColorDark = "",
+                backgroundColorLight = "#e2e2e2",
+                backgroundColorDark = "#e2e2e2",
             ),
             MonsterFolderPreview(
-                index = "",
+                index = "index2",
                 name = "",
                 imageUrl = "",
-                backgroundColorLight = "",
-                backgroundColorDark = "",
+                backgroundColorLight = "#e2e2e2",
+                backgroundColorDark = "#e2e2e2",
             )
         )
     )

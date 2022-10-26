@@ -19,17 +19,22 @@ package br.alexandregpereira.hunter.folder.preview
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.*
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
+import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -43,12 +48,14 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class FolderPreviewViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val folderPreviewEventListener: FolderPreviewEventListener,
-    private val folderPreviewConsumerEventDispatcher: FolderPreviewConsumerEventDispatcher,
+    private val folderPreviewEventManager: FolderPreviewEventManager,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,
     private val addMonsterToFolderPreview: AddMonsterToFolderPreviewUseCase,
     private val removeMonsterFromFolderPreview: RemoveMonsterFromFolderPreviewUseCase,
+    private val clearFolderPreviewUseCase: ClearFolderPreviewUseCase,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterDetailEventListener: MonsterDetailEventListener,
+    private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -59,23 +66,54 @@ internal class FolderPreviewViewModel @Inject constructor(
 
     init {
         observeEvents()
-        loadMonsters()
+        if (!savedStateHandle.containsState()
+            || (state.value.showPreview && state.value.monsters.isEmpty())
+        ) {
+            loadMonsters()
+        }
     }
 
     fun onItemClick(monsterIndex: String) = navigateToMonsterDetail(monsterIndex)
 
     fun onItemLongClick(monsterIndex: String) = removeMonster(monsterIndex)
 
+    fun onSave() {
+        folderInsertEventDispatcher.dispatchEvent(
+            event = Show(monsterIndexes = state.value.monsters.map { it.index })
+        ).onEach { result ->
+            when (result) {
+                is FolderInsertResult.OnSaved -> clear()
+                is OnMonsterRemoved -> removeMonster(result.monsterIndex)
+            }
+        }.launchIn(viewModelScope)
+    }
+
     private fun observeEvents() {
         viewModelScope.launch {
-            folderPreviewEventListener.events.collect { event ->
+            folderPreviewEventManager.events.collect { event ->
                 when (event) {
                     is AddMonster -> addMonster(event.index)
                     HideFolderPreview -> hideFolderPreview()
-                    is ShowFolderPreview -> showFolderPreview(event.force)
+                    is ShowFolderPreview -> loadMonsters()
                 }
             }
         }
+
+        viewModelScope.launch {
+            monsterDetailEventListener.events.collect { event ->
+                when (event) {
+                    MonsterDetailEvent.Hide -> loadMonsters()
+                    is Show -> hideFolderPreview()
+                }
+            }
+        }
+    }
+
+    private fun clear() {
+        hideFolderPreview()
+        clearFolderPreviewUseCase()
+            .flowOn(dispatcher)
+            .launchIn(viewModelScope)
     }
 
     private fun addMonster(index: String) {
@@ -91,11 +129,7 @@ internal class FolderPreviewViewModel @Inject constructor(
         getMonstersFromFolderPreview()
             .flowOn(dispatcher)
             .onEach { monsters ->
-                val showPreview = if (savedStateHandle.containsState()) {
-                    state.value.showPreview
-                } else {
-                    monsters.isNotEmpty()
-                }
+                val showPreview = monsters.isNotEmpty()
                 _state.value = state.value.changeMonsters(monsters = monsters)
                     .changeShowPreview(showPreview, savedStateHandle)
                 dispatchFolderPreviewVisibilityChangesEvent()
@@ -122,14 +156,8 @@ internal class FolderPreviewViewModel @Inject constructor(
         dispatchFolderPreviewVisibilityChangesEvent()
     }
 
-    private fun showFolderPreview(force: Boolean) {
-        val show = if (force) true else state.value.monsters.isNotEmpty()
-        _state.value = _state.value.changeShowPreview(show = show, savedStateHandle)
-        dispatchFolderPreviewVisibilityChangesEvent()
-    }
-
     private fun dispatchFolderPreviewVisibilityChangesEvent() {
-        folderPreviewConsumerEventDispatcher.dispatchEvent(
+        folderPreviewEventManager.dispatchResult(
             OnFolderPreviewPreviewVisibilityChanges(isShowing = _state.value.showPreview)
         )
     }

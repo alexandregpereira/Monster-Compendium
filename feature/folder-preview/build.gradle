@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation project(':domain:monster-folder')
+    implementation project(':event:folder-insert-event')
     implementation project(':event:folder-preview-event')
     implementation project(':event:monster-detail-event')
     implementation project(':ui')

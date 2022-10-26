@@ -17,12 +17,15 @@
 package br.alexandregpereira.hunter.data.monster.folder.local
 
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import kotlinx.coroutines.flow.Flow
 
 internal interface MonsterFolderLocalDataSource {
 
-    fun addMonster(folderName: String, monsterIndex: String): Flow<Unit>
-    fun removeMonster(folderName: String, monsterIndex: String): Flow<Unit>
+    fun addMonsters(folderName: String, monsterIndexes: List<String>): Flow<Unit>
+    fun removeMonsters(folderName: String, monsterIndexes: List<String>): Flow<Unit>
     fun getMonsterFolders(): Flow<List<MonsterFolderCompleteEntity>>
     fun getMonstersFromFolder(folderName: String): Flow<MonsterFolderCompleteEntity?>
+    fun getFolderMonsterPreviewsByIds(monsterIndexes: List<String>): Flow<List<MonsterEntity>>
+    fun removeMonsterFolder(folderName: String): Flow<Unit>
 }

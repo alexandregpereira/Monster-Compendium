@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.monster.folder.local
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
+import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import java.util.Calendar
 import java.util.TimeZone
@@ -27,16 +28,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
-    private val monsterFolderDao: MonsterFolderDao
+    private val monsterFolderDao: MonsterFolderDao,
+    private val monsterDao: MonsterDao
 ) : MonsterFolderLocalDataSource {
 
-    override fun addMonster(folderName: String, monsterIndex: String): Flow<Unit> = flow {
-        monsterFolderDao.addMonsterToFolder(
-            MonsterFolderEntity(
-                folderName = folderName,
-                monsterIndex = monsterIndex,
-                createdAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
-            )
+    override fun addMonsters(folderName: String, monsterIndexes: List<String>): Flow<Unit> = flow {
+        monsterFolderDao.addMonstersToFolder(
+            monsterIndexes.map { monsterIndex ->
+                MonsterFolderEntity(
+                    folderName = folderName,
+                    monsterIndex = monsterIndex,
+                    createdAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
+                )
+            }
         )
         emit(Unit)
     }
@@ -55,12 +59,30 @@ internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
         emit(value)
     }
 
-    override fun removeMonster(folderName: String, monsterIndex: String): Flow<Unit> = flow {
-        emit(monsterFolderDao.removeMonsterFromFolder(folderName, monsterIndex))
+    override fun removeMonsters(
+        folderName: String,
+        monsterIndexes: List<String>
+    ): Flow<Unit> = flow {
+        emit(
+            monsterFolderDao.removeMonsterFromFolder(
+                folderName = folderName,
+                monsterIndexes = monsterIndexes
+            )
+        )
     }
 
     private fun Map<MonsterFolderEntity, List<MonsterEntity>>.asMonsterFolderCompleteEntity():
             List<MonsterFolderCompleteEntity> = map { entry ->
-        MonsterFolderCompleteEntity(entry.key, entry.value)
+        MonsterFolderCompleteEntity(monsterFolderEntity = entry.key, monsters = entry.value)
+    }
+
+    override fun getFolderMonsterPreviewsByIds(
+        monsterIndexes: List<String>
+    ): Flow<List<MonsterEntity>> = flow {
+        emit(monsterDao.getMonsterPreviews(monsterIndexes))
+    }
+
+    override fun removeMonsterFolder(folderName: String): Flow<Unit> = flow {
+        emit(monsterFolderDao.removeMonsterFolder(folderName))
     }
 }

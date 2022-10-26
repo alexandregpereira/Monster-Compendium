@@ -60,9 +60,9 @@ fun MonsterTitleCompose(
         modifier = Modifier.weight(1f).clipToBounds()
     ) { data ->
         ScreenHeader(
-            data.title,
-            data.subTitle,
-            Modifier
+            title = data.title,
+            subTitle = data.subTitle,
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     end = 8.dp

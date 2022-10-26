@@ -20,17 +20,19 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.ADD_TO_FOLDER
+import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.CHANGE_TO_FEET
+import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Hide
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,10 +56,10 @@ internal class MonsterDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
-    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -98,7 +100,6 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
-        folderPreviewEventDispatcher.dispatchEvent(HideFolderPreview)
         onMonsterChanged(monsterIndex)
         this.monsterIndexes = monsterIndexes
         setState { savedStateHandle.getState() }
@@ -120,10 +121,13 @@ internal class MonsterDetailViewModel @Inject constructor(
     fun onOptionClicked(option: MonsterDetailOptionState) {
         setState { HideOptions }
         when (option) {
-            MonsterDetailOptionState.CHANGE_TO_FEET -> {
+            ADD_TO_FOLDER -> folderInsertEventDispatcher.dispatchEvent(
+                FolderInsertEvent.Show(monsterIndexes = listOf(monsterIndex))
+            )
+            CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }
-            MonsterDetailOptionState.CHANGE_TO_METERS -> {
+            CHANGE_TO_METERS -> {
                 changeMeasurementUnit(MeasurementUnit.METER)
             }
         }
@@ -135,7 +139,6 @@ internal class MonsterDetailViewModel @Inject constructor(
 
     fun onClose() {
         monsterDetailEventDispatcher.dispatchEvent(Hide)
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview(force = false))
     }
 
     private fun getMonsterDetail(): Flow<MonsterDetail> {
@@ -157,8 +160,8 @@ internal class MonsterDetailViewModel @Inject constructor(
                 initialMonsterIndex = it.monsterIndexSelected,
                 monsters = it.monsters.asState(),
                 options = when (measurementUnit) {
-                    MeasurementUnit.FEET -> listOf(MonsterDetailOptionState.CHANGE_TO_METERS)
-                    MeasurementUnit.METER -> listOf(MonsterDetailOptionState.CHANGE_TO_FEET)
+                    MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
+                    MeasurementUnit.METER -> listOf(ADD_TO_FOLDER, CHANGE_TO_FEET)
                 }
             )
         }.flowOn(dispatcher)

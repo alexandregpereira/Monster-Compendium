@@ -24,8 +24,8 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEvent.OnFolderPreviewPreviewVisibilityChanges
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewConsumerEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -61,7 +61,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
-    private val folderPreviewConsumerEventListener: FolderPreviewConsumerEventListener,
+    private val folderPreviewResultListener: FolderPreviewResultListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     @LoadOnInitFlag loadOnInit: Boolean = true,
@@ -113,7 +113,7 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     override fun onItemLongCLick(index: String) {
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview())
+        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
     }
 
     override fun onFirstVisibleItemChange(position: Int) {
@@ -191,7 +191,7 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     private fun observeEvents() {
         viewModelScope.launch {
-            folderPreviewConsumerEventListener.events.collect { event ->
+            folderPreviewResultListener.result.collect { event ->
                 when (event) {
                     is OnFolderPreviewPreviewVisibilityChanges -> showMonsterFolderPreview(event.isShowing)
                 }

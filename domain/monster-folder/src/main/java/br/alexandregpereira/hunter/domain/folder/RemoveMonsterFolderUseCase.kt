@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.domain.folder
 
-sealed class FolderPreviewConsumerEvent {
-    data class OnFolderPreviewPreviewVisibilityChanges(
-        val isShowing: Boolean
-    ) : FolderPreviewConsumerEvent()
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+
+class RemoveMonsterFolderUseCase @Inject constructor(
+    private val monsterFolderRepository: MonsterFolderRepository,
+) {
+
+    operator fun invoke(folderName: String): Flow<Unit> {
+        return monsterFolderRepository.removeMonsterFolder(folderName)
+    }
 }

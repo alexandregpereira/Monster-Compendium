@@ -24,5 +24,5 @@ data class MonsterPreviewFolder(
     val imageUrl: String = "",
     val backgroundColorLight: String,
     val backgroundColorDark: String,
-    val isHorizontalImage: Boolean,
+    val isHorizontalImage: Boolean = false,
 )
