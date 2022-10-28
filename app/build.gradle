@@ -63,7 +63,7 @@ dependencies {
     implementation project(':feature:search')
     implementation project(':feature:settings')
     implementation project(':feature:spell-detail')
-    implementation project(':ui')
+    implementation project(':ui:core')
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

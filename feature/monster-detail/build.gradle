@@ -37,7 +37,7 @@ dependencies {
     implementation project(':event:folder-insert-event')
     implementation project(':event:monster-detail-event')
     implementation project(':event:spell-detail-event')
-    implementation project(':ui')
+    implementation project(':ui:core')
 
     implementation libs.core.ktx
     implementation libs.kotlin.coroutines

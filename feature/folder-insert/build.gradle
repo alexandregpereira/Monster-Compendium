@@ -35,7 +35,7 @@ android {
 dependencies {
     implementation project(':domain:monster-folder')
     implementation project(':event:folder-insert-event')
-    implementation project(':ui')
+    implementation project(':ui:core')
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose
