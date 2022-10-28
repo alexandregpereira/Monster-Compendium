@@ -19,11 +19,12 @@ package br.alexandregpereira.hunter.folder.insert
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal class FolderInsertEventManager : FolderInsertEventDispatcher {
+internal class FolderInsertEventManager : FolderInsertEventDispatcher, FolderInsertResultListener {
 
     private val _events: MutableSharedFlow<FolderInsertEvent> = MutableSharedFlow(
         extraBufferCapacity = 1,
@@ -32,18 +33,26 @@ internal class FolderInsertEventManager : FolderInsertEventDispatcher {
 
     val events: Flow<FolderInsertEvent> = _events
 
-    private lateinit var _result: MutableSharedFlow<FolderInsertResult>
+    private val _result: MutableSharedFlow<FolderInsertResult> = MutableSharedFlow(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    override val result: Flow<FolderInsertResult> = _result
+
+    private lateinit var eventResult: MutableSharedFlow<FolderInsertResult>
 
     override fun dispatchEvent(event: FolderInsertEvent): Flow<FolderInsertResult> {
-        _result = MutableSharedFlow(
+        eventResult = MutableSharedFlow(
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
         _events.tryEmit(event)
-        return _result
+        return eventResult
     }
 
     fun dispatchResult(result: FolderInsertResult) {
+        eventResult.tryEmit(result)
         _result.tryEmit(result)
     }
 }

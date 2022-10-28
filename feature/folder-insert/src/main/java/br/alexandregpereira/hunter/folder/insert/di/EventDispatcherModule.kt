@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.folder.insert.di
 
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
+import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.folder.insert.FolderInsertEventManager
 import dagger.Binds
 import dagger.Module
@@ -45,4 +46,10 @@ abstract class EventDispatcherModule {
     internal abstract fun bindFolderPreviewEventDispatcher(
         eventDispatcher: FolderInsertEventManager
     ): FolderInsertEventDispatcher
+
+    @Singleton
+    @Binds
+    internal abstract fun bindResultListener(
+        eventDispatcher: FolderInsertEventManager
+    ): FolderInsertResultListener
 }

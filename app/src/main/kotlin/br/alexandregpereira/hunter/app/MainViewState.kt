@@ -26,6 +26,7 @@ data class MainViewState(
 enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
     COMPENDIUM(iconRes = R.drawable.ic_book, stringRes = R.string.compendium),
     SEARCH(iconRes = R.drawable.ic_search, stringRes = R.string.search),
+    FOLDERS(iconRes = R.drawable.ic_folder, stringRes = R.string.folders),
     SETTINGS(iconRes = R.drawable.ic_settings, stringRes = R.string.settings)
 }
 

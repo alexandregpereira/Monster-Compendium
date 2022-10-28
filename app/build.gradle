@@ -56,6 +56,7 @@ dependencies {
     implementation project(':data:app')
     implementation project(':event:monster-detail-event')
     implementation project(':feature:folder-insert')
+    implementation project(':feature:folder-list')
     implementation project(':feature:folder-preview')
     implementation project(':feature:monster-compendium')
     implementation project(':feature:monster-detail')
