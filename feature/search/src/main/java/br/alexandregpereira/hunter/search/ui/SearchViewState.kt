@@ -16,12 +16,12 @@
 
 package br.alexandregpereira.hunter.search.ui
 
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 
 internal data class SearchViewState(
     val searchValue: String = "",
     val totalResults: Int = 0,
-    val monsterRows: List<MonsterRowState> = emptyList()
+    val monsterRows: List<MonsterCardState> = emptyList()
 ) {
 
     companion object {
@@ -34,7 +34,7 @@ internal fun SearchViewState.changeSearchValue(value: String): SearchViewState {
 }
 
 internal fun SearchViewState.changeMonsters(
-    monsterRows: List<MonsterRowState>,
+    monsterRows: List<MonsterCardState>,
     totalResults: Int
 ): SearchViewState {
     return this.copy(monsterRows = monsterRows, totalResults = totalResults)

@@ -20,23 +20,10 @@ import br.alexandregpereira.hunter.search.domain.SearchMonsterResult
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compendium.monster.and
 
-internal fun List<SearchMonsterResult>.asState(): List<MonsterRowState> {
-    return this.asMonsterCardStates().let { states ->
-        (states.indices step 2).map { i ->
-            val nextState = states.getOrNull(i + 1)
-            val currentState = states[i].let { state ->
-                if (nextState == null) {
-                    state.copy(imageState = state.imageState.copy(isHorizontal = true))
-                } else state
-            }
-
-            currentState and nextState
-        }
-    }
+internal fun List<SearchMonsterResult>.asState(): List<MonsterCardState> {
+    return this.asMonsterCardStates()
 }
 
 internal fun List<SearchMonsterResult>.asMonsterCardStates(): List<MonsterCardState> {
@@ -52,7 +39,7 @@ internal fun List<SearchMonsterResult>.asMonsterCardStates(): List<MonsterCardSt
                     dark = result.backgroundColorDark
                 ),
                 challengeRating = result.challengeRating,
-                isHorizontal = false,
+                isHorizontal = result.isHorizontalImage,
                 contentDescription = result.name
             ),
         )
