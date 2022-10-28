@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -43,7 +43,7 @@ internal fun MonsterCompendiumScreen(
     events: MonsterCompendiumEvents,
 ) = HunterTheme {
     CircularLoading(state.isLoading) {
-        val listState = rememberLazyListState(
+        val listState = rememberLazyGridState(
             initialFirstVisibleItemIndex = state.initialScrollItemPosition
         )
         MonsterCompendiumScreen(state, listState, contentPadding, events)
@@ -61,7 +61,7 @@ internal fun MonsterCompendiumScreen(
 @Composable
 private fun MonsterCompendiumScreen(
     state: MonsterCompendiumViewState,
-    listState: LazyListState,
+    listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) {
@@ -96,7 +96,7 @@ private fun MonsterCompendiumScreen(
 
 @Composable
 private fun OnFirstVisibleItemChange(
-    listState: LazyListState,
+    listState: LazyGridState,
     saveCompendiumScrollItemPosition: (position: Int) -> Unit
 ) {
     val firstVisibleItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }

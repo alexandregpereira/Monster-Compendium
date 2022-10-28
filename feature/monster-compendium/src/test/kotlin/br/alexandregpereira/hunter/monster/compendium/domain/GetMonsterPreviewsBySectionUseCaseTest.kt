@@ -43,22 +43,22 @@ class GetMonsterPreviewsBySectionUseCaseTest {
         GetMonsterPreviewsBySectionUseCase(syncUseCase, getMonstersUseCase)
 
     private fun createMonsters(): List<Monster> {
-        return (0..23).map {
-            val name = when (it) {
-                2 -> "Aztest$it"
-                in 5..6 -> "Aztest$it"
-                in 0..6 -> "A1test$it"
-                in 7..11 -> "B1test$it"
-                in 12..14 -> "C1test$it"
-                in 15..18 -> "D1test$it"
-                22 -> "Hztest$it"
-                else -> "Hatest$it"
+        return (0..23).map { index ->
+            val name = when (index) {
+                2 -> "Aztest$index"
+                in 5..6 -> "Aztest$index"
+                in 0..6 -> "A1test$index"
+                in 7..11 -> "B1test$index"
+                in 12..14 -> "C1test$index"
+                in 15..18 -> "D1test$index"
+                22 -> "Hztest$index"
+                else -> "Hatest$index"
             }
             createMonster(
-                index = it.toString(),
+                index = index.toString(),
                 name = name,
-                group = if (it == 1 || it in 3..4) "Any" else if (it == 10) "Group1" else if (it in 11..12) "Group2" else if (it in 19..20) "Hags" else if (it == 23) "Hxgs1" else null,
-                isHorizontal = it != 0 && it != 7
+                group = if (index == 1 || index in 3..4) "Any" else if (index == 10) "Group1" else if (index in 11..12) "Group2" else if (index in 19..20) "Hags" else if (index == 23) "Hxgs1" else null,
+                isHorizontal = index != 0 && index != 7
             )
         }
     }
@@ -103,89 +103,96 @@ class GetMonsterPreviewsBySectionUseCaseTest {
 
         assertEquals(
             listOf(
-                monsters[0] to null,
+                monsters[0].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected1]
         )
 
         assertEquals(
             listOf(
-                monsters[1] to null,
-                monsters[3] to monsters[4]
+                monsters[1].changeIsHorizontalImage(isHorizontal = true),
+                monsters[3].changeIsHorizontalImage(isHorizontal = false),
+                monsters[4].changeIsHorizontalImage(isHorizontal = false)
             ),
             result[monsterSectionExpected2]
         )
 
         assertEquals(
             listOf(
-                monsters[2] to null,
-                monsters[5] to monsters[6],
+                monsters[2].changeIsHorizontalImage(isHorizontal = true),
+                monsters[5].changeIsHorizontalImage(isHorizontal = false),
+                monsters[6].changeIsHorizontalImage(isHorizontal = false),
             ),
             result[monsterSectionExpected3]
         )
 
         assertEquals(
             listOf(
-                monsters[7] to monsters[8],
-                monsters[9] to null
+                monsters[7].changeIsHorizontalImage(isHorizontal = false),
+                monsters[8].changeIsHorizontalImage(isHorizontal = false),
+                monsters[9].changeIsHorizontalImage(isHorizontal = true)
             ),
             result[monsterSectionExpected4]
         )
 
         assertEquals(
             listOf(
-                monsters[13] to monsters[14],
+                monsters[13].changeIsHorizontalImage(isHorizontal = false),
+                monsters[14].changeIsHorizontalImage(isHorizontal = false),
             ),
             result[monsterSectionExpected5]
         )
 
         assertEquals(
             listOf(
-                monsters[15] to null,
-                monsters[16] to monsters[17],
-                monsters[18] to null,
+                monsters[15].changeIsHorizontalImage(isHorizontal = true),
+                monsters[16].changeIsHorizontalImage(isHorizontal = false),
+                monsters[17].changeIsHorizontalImage(isHorizontal = false),
+                monsters[18].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected6]
         )
 
         assertEquals(
             listOf(
-                monsters[10] to null,
+                monsters[10].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected7]
         )
 
         assertEquals(
             listOf(
-                monsters[11] to monsters[12],
+                monsters[11].changeIsHorizontalImage(isHorizontal = false),
+                monsters[12].changeIsHorizontalImage(isHorizontal = false),
             ),
             result[monsterSectionExpected8]
         )
 
         assertEquals(
             listOf(
-                monsters[19] to monsters[20],
+                monsters[19].changeIsHorizontalImage(isHorizontal = false),
+                monsters[20].changeIsHorizontalImage(isHorizontal = false),
             ),
             result[monsterSectionExpected9]
         )
 
         assertEquals(
             listOf(
-                monsters[21] to null,
+                monsters[21].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected10]
         )
 
         assertEquals(
             listOf(
-                monsters[23] to null,
+                monsters[23].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected11]
         )
 
         assertEquals(
             listOf(
-                monsters[22] to null,
+                monsters[22].changeIsHorizontalImage(isHorizontal = true),
             ),
             result[monsterSectionExpected12]
         )
@@ -238,10 +245,13 @@ class GetMonsterPreviewsBySectionUseCaseTest {
     private fun MonstersBySection.toMonsters(): List<MonsterPreview> {
         val monsters = mutableListOf<MonsterPreview>()
         this.toList().map { it.second }.reduce { acc, list -> acc + list }.toList()
-            .forEach { pair ->
-                monsters.add(pair.first)
-                pair.second?.let { monsters.add(it) }
+            .forEach { monster ->
+                monsters.add(monster)
             }
         return monsters
+    }
+
+    private fun MonsterPreview.changeIsHorizontalImage(isHorizontal: Boolean): MonsterPreview {
+        return copy(imageData = imageData.copy(isHorizontal = isHorizontal))
     }
 }

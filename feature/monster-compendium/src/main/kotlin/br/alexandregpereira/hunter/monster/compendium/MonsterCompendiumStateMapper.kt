@@ -18,18 +18,16 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.monster.compendium.domain.MonsterPair
 import br.alexandregpereira.hunter.monster.compendium.domain.MonstersBySection
 import br.alexandregpereira.hunter.ui.compendium.SectionState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 
-fun MonstersBySection.asState(): Map<SectionState, List<MonsterRowState>> {
-    return this.map {
-        it.key.asState() to it.value.asState()
+fun MonstersBySection.asState(): Map<SectionState, List<MonsterCardState>> {
+    return this.map { (section, monsters) ->
+        section.asState() to monsters.map { it.asState() }
     }.toMap()
 }
 
@@ -40,15 +38,6 @@ private fun MonsterSection.asState(): SectionState {
         parentTitle = parentTitle,
         isHeader = isHeader
     )
-}
-
-private fun List<MonsterPair>.asState(): List<MonsterRowState> {
-    return this.map {
-        MonsterRowState(
-            leftCardState = it.first.asState(),
-            rightCardState = it.second?.asState()
-        )
-    }
 }
 
 private fun MonsterPreview.asState(): MonsterCardState {

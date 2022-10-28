@@ -17,22 +17,22 @@
 package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.SectionState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium as MonsterCompendiumUi
 
 @Composable
 internal fun MonsterCompendium(
-    monstersBySection: Map<SectionState, List<MonsterRowState>>,
-    listState: LazyListState = rememberLazyListState(),
+    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
-) = MonsterCompendium(
+) = MonsterCompendiumUi(
     monstersBySection = monstersBySection,
     listState = listState,
     contentPadding = contentPadding,

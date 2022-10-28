@@ -32,7 +32,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListe
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
 import br.alexandregpereira.hunter.ui.compendium.SectionState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -156,7 +156,7 @@ class MonsterCompendiumViewModel @Inject constructor(
         _state.value = state.value.alphabetOpened(alphabetOpened = opened)
     }
 
-    private fun Map<SectionState, List<MonsterRowState>>.mapToFirstLetters(): List<Char> {
+    private fun Map<SectionState, List<MonsterCardState>>.mapToFirstLetters(): List<Char> {
         val monsterAlphabet = mutableListOf<Char>()
         forEach { entry ->
             monsterAlphabet.add(entry.key.title.first())
@@ -167,14 +167,14 @@ class MonsterCompendiumViewModel @Inject constructor(
         return monsterAlphabet
     }
 
-    private fun Map<SectionState, List<MonsterRowState>>.getAlphabet(): List<Char> {
+    private fun Map<SectionState, List<MonsterCardState>>.getAlphabet(): List<Char> {
         return mapToFirstLetters().toSortedSet().toList()
     }
 
     private fun getAlphabetIndex(
         scrollItemPosition: Int,
         alphabet: List<Char>,
-        monstersBySection: Map<SectionState, List<MonsterRowState>>
+        monstersBySection: Map<SectionState, List<MonsterCardState>>
     ): Int {
         if (monstersBySection.isEmpty()) return 0
         val monsterFirstLetters = monstersBySection.mapToFirstLetters()

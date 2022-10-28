@@ -23,12 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.search.R
 import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
 
 @Composable
 fun SearchGrid(
-    monsterRows: List<MonsterRowState>,
+    monsterRows: List<MonsterCardState>,
     totalResults: Int,
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},

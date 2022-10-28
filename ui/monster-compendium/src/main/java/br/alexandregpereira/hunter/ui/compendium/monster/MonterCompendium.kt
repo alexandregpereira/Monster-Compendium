@@ -18,8 +18,8 @@ package br.alexandregpereira.hunter.ui.compendium.monster
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,8 +32,8 @@ import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 fun MonsterCompendium(
-    monstersBySection: Map<SectionState, List<MonsterRowState>>,
-    listState: LazyListState = rememberLazyListState(),
+    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
@@ -41,7 +41,8 @@ fun MonsterCompendium(
     monstersBySection = monstersBySection,
     listState = listState,
     contentPadding = contentPadding,
-    key = { it.leftCardState.index },
+    key = { it.index },
+    isHorizontalCard = { it.imageState.isHorizontal },
     cardContent = { monsterCardState ->
         MonsterCard(
             name = monsterCardState.name,
@@ -72,57 +73,12 @@ fun MonsterCompendiumPreview() = Window {
     )
     MonsterCompendium(
         monstersBySection = mapOf(
-            SectionState(title = "Any") to (0..10).map {
-                val leftMonster = MonsterCardState(
-                    index = "asdasdasd",
-                    name = "Monster of monsters",
-                    imageState = imageState,
+            SectionState(title = "Any") to (0..10).map { i ->
+                MonsterCardState(
+                    index = "asdasdasd$i",
+                    name = "Monster of monsters $i",
+                    imageState = imageState.copy(isHorizontal = i == 2),
                 )
-                val rightMonster = if (it == 1) {
-                    MonsterCardState(
-                        index = "asdasdasd",
-                        name = "Monster of monsters",
-                        imageState = imageState,
-                    )
-                } else {
-                    null
-                }
-                leftMonster and rightMonster
-            }
-        )
-    )
-}
-
-@Preview
-@Composable
-fun MonsterCompendiumWithSectionTitlePreview() = Window {
-    val imageState = MonsterImageState(
-        url = "",
-        type = MonsterTypeState.ABERRATION,
-        challengeRating = 8.0f,
-        backgroundColor = ColorState(
-            light = "#ffe0e0",
-            dark = "#ffe0e0"
-        )
-    )
-    MonsterCompendium(
-        monstersBySection = mapOf(
-            SectionState(title = "Title") to (0..10).map {
-                val leftMonster = MonsterCardState(
-                    index = "asdasdasd",
-                    name = "Monster of monsters",
-                    imageState = imageState,
-                )
-                val rightMonster = if (it == 1) {
-                    MonsterCardState(
-                        index = "asdasdasd",
-                        name = "Monster of monsters",
-                        imageState = imageState,
-                    )
-                } else {
-                    null
-                }
-                leftMonster and rightMonster
             }
         )
     )

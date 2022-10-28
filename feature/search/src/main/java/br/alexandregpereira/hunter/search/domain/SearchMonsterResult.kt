@@ -26,4 +26,5 @@ internal data class SearchMonsterResult(
     val imageUrl: String,
     val backgroundColorLight: String,
     val backgroundColorDark: String,
+    val isHorizontalImage: Boolean = false
 )

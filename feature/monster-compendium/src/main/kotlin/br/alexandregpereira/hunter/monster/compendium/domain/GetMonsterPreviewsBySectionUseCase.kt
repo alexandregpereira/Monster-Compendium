@@ -31,8 +31,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
 
-typealias MonsterPair = Pair<MonsterPreview, MonsterPreview?>
-typealias MonstersBySection = Map<MonsterSection, List<MonsterPair>>
+typealias MonstersBySection = Map<MonsterSection, List<MonsterPreview>>
 
 class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     private val sync: SyncUseCase,
@@ -53,9 +52,9 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
                 cause is NoMonstersException
             }
             .groupMonsters()
-            .map {
-                it.map { key, value ->
-                    key to value.toMonsterPairs()
+            .map { monstersBySection ->
+                monstersBySection.map { section, monsters ->
+                    section to monsters.appendIsHorizontal().map { it.preview }
                 }
             }
     }
@@ -143,12 +142,12 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
         return this.first().uppercaseChar()
     }
 
-    private fun List<Monster>.toMonsterPairs(): List<MonsterPair> {
-        val map: LinkedHashMap<Monster, Monster?> = linkedMapOf()
+    private fun List<Monster>.appendIsHorizontal(): List<Monster> {
+        val monsterRowsMap: LinkedHashMap<Monster, Monster?> = linkedMapOf()
         var lastMonsterHorizontalIndex = -1
         var mod = 0
         val totalMonsters = this.size
-        this.forEachIndexed { index, monster ->
+        this.mapIndexed { index, monster ->
             if ((index + mod) % 2 == 0) {
                 if (monster.imageData.isHorizontal &&
                     isIndexEligibleToBeHorizontal(index, lastMonsterHorizontalIndex, totalMonsters)
@@ -156,14 +155,17 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
                     lastMonsterHorizontalIndex = index
                     ++mod
                 }
-                map[monster] = null
+                monsterRowsMap[monster] = null
             } else {
                 val lastIndex = index - 1
                 val lastMonster = this[lastIndex]
-                map[lastMonster] = monster
+                monsterRowsMap[lastMonster] = monster
             }
         }
-        return map.toList().map { it.first.preview to it.second?.preview }
+        return this.map { monster ->
+            val isHorizontal = monsterRowsMap.containsKey(monster) && monsterRowsMap[monster] == null
+            monster.changeIsHorizontalImage(isHorizontal = isHorizontal)
+        }
     }
 
     private fun isIndexEligibleToBeHorizontal(
@@ -174,6 +176,10 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
         return (lastMonsterHorizontalIndex == -1 && currentIndex < (totalMonsters - 2)) ||
                 ((currentIndex - lastMonsterHorizontalIndex) >= HORIZONTAL_IMAGE_INTERVAL &&
                         currentIndex < (totalMonsters - 2))
+    }
+
+    private fun Monster.changeIsHorizontalImage(isHorizontal: Boolean): Monster {
+        return copy(preview = preview.copy(imageData = imageData.copy(isHorizontal = isHorizontal)))
     }
 }
 

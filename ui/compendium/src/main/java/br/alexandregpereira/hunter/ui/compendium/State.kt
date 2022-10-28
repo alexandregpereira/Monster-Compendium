@@ -22,8 +22,3 @@ data class SectionState(
     val parentTitle: String? = null,
     val isHeader: Boolean = false,
 )
-
-data class RowState<CardState>(
-    val leftCardState: CardState,
-    val rightCardState: CardState?,
-)

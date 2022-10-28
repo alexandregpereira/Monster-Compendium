@@ -33,7 +33,6 @@ import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compendium.monster.and
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -77,7 +76,7 @@ class MonsterCompendiumViewModelTest {
             ),
         )
         val monstersBySection = mapOf(
-            section to listOf(monster to null)
+            section to listOf(monster)
         )
         every { getMonsterPreviewsUseCase() } returns flowOf(monstersBySection)
         every { getLastScrollPositionUseCase() } returns flowOf(1)
@@ -110,9 +109,9 @@ class MonsterCompendiumViewModelTest {
                                 url = "",
                                 type = MonsterTypeState.ABERRATION,
                                 challengeRating = 0.0f,
-                                backgroundColor = ColorState(light = "", dark = "")
+                                backgroundColor = ColorState(light = "", dark = ""),
                             ),
-                        ) and null
+                        )
                     )
                 ),
                 initialScrollItemPosition = 1,

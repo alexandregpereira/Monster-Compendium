@@ -35,7 +35,7 @@ internal class SearchMonstersByNameUseCase @Inject internal constructor(
                 throw SearchMonstersByNameUnexpectedException(cause = error)
             }
             .map { monsters ->
-                monsters.map { monster ->
+                monsters.mapIndexed { index, monster ->
                     SearchMonsterResult(
                         index = monster.index,
                         name = monster.name,
@@ -43,7 +43,8 @@ internal class SearchMonstersByNameUseCase @Inject internal constructor(
                         challengeRating = monster.challengeRating,
                         imageUrl = monster.imageData.url,
                         backgroundColorLight = monster.imageData.backgroundColor.light,
-                        backgroundColorDark = monster.imageData.backgroundColor.dark
+                        backgroundColorDark = monster.imageData.backgroundColor.dark,
+                        isHorizontalImage = index == 0 && monsters.size % 2 != 0
                     )
                 }
             }

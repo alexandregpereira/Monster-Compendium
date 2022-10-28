@@ -17,12 +17,10 @@
 package br.alexandregpereira.hunter.ui.compendium
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -36,8 +34,6 @@ internal fun SectionTitle(
         text = title,
         fontWeight = FontWeight.Bold,
         fontSize = fontSize,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+        modifier = modifier.fillMaxWidth()
     )
 }

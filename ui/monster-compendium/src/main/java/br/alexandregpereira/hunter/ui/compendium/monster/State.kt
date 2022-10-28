@@ -17,9 +17,6 @@
 package br.alexandregpereira.hunter.ui.compendium.monster
 
 import androidx.annotation.DrawableRes
-import br.alexandregpereira.hunter.ui.compendium.RowState
-
-typealias MonsterRowState = RowState<MonsterCardState>
 
 data class MonsterCardState(
     val index: String,
@@ -60,8 +57,3 @@ enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
     PLANT(R.drawable.ic_plant),
     UNDEAD(R.drawable.ic_undead)
 }
-
-infix fun MonsterCardState.and(that: MonsterCardState?) = MonsterRowState(
-    leftCardState = this,
-    rightCardState = that
-)

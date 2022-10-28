@@ -18,11 +18,11 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.ui.compendium.SectionState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = true,
-    val monstersBySection: Map<SectionState, List<MonsterRowState>> = emptyMap(),
+    val monstersBySection: Map<SectionState, List<MonsterCardState>> = emptyMap(),
     val alphabet: List<Char> = emptyList(),
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
@@ -49,7 +49,7 @@ fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumVie
 }
 
 fun MonsterCompendiumViewState.complete(
-    monstersBySection: Map<SectionState, List<MonsterRowState>>,
+    monstersBySection: Map<SectionState, List<MonsterCardState>>,
     alphabet: List<Char>,
     alphabetIndex: Int,
     initialScrollItemPosition: Int
