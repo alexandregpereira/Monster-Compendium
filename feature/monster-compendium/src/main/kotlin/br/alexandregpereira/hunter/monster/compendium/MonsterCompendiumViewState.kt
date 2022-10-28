@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.monster.compendium
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.compendium.R
+import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
 
 data class MonsterCompendiumViewState(
     val isLoading: Boolean = true,
@@ -30,58 +30,6 @@ data class MonsterCompendiumViewState(
     val isShowingMonsterFolderPreview: Boolean = false,
     val compendiumIndex: Int = -1
 )
-
-data class SectionState(
-    val title: String,
-    val id: String = title,
-    val parentTitle: String? = null,
-    val isHeader: Boolean = false,
-)
-
-data class MonsterRowState(
-    val leftMonsterCardState: MonsterCardState,
-    val rightMonsterCardState: MonsterCardState?,
-)
-
-data class MonsterCardState(
-    val index: String,
-    val name: String,
-    val imageState: MonsterImageState,
-)
-
-data class MonsterImageState(
-    val url: String,
-    val type: MonsterTypeState,
-    val backgroundColor: ColorState,
-    val challengeRating: Float,
-    val isHorizontal: Boolean = false,
-    val contentDescription: String = ""
-)
-
-data class ColorState(
-    val light: String,
-    val dark: String
-) {
-
-    fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
-}
-
-enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
-    ABERRATION(R.drawable.ic_aberration),
-    BEAST(R.drawable.ic_beast),
-    CELESTIAL(R.drawable.ic_celestial),
-    CONSTRUCT(R.drawable.ic_construct),
-    DRAGON(R.drawable.ic_dragon),
-    ELEMENTAL(R.drawable.ic_elemental),
-    FEY(R.drawable.ic_fey),
-    FIEND(R.drawable.ic_fiend),
-    GIANT(R.drawable.ic_giant),
-    HUMANOID(R.drawable.ic_humanoid),
-    MONSTROSITY(R.drawable.ic_monstrosity),
-    OOZE(R.drawable.ic_ooze),
-    PLANT(R.drawable.ic_plant),
-    UNDEAD(R.drawable.ic_undead)
-}
 
 internal fun SavedStateHandle.getState(): MonsterCompendiumViewState {
     return MonsterCompendiumViewState(
@@ -131,8 +79,3 @@ fun MonsterCompendiumViewState.showMonsterFolderPreview(
 ) = this.copy(
     isShowingMonsterFolderPreview = isShowing,
 ).saveState(savedStateHandle)
-
-infix fun MonsterCardState.and(that: MonsterCardState?) = MonsterRowState(
-    leftMonsterCardState = this,
-    rightMonsterCardState = that
-)
