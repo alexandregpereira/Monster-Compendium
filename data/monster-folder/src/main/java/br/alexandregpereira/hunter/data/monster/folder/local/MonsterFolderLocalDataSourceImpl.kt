@@ -33,12 +33,14 @@ internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
 ) : MonsterFolderLocalDataSource {
 
     override fun addMonsters(folderName: String, monsterIndexes: List<String>): Flow<Unit> = flow {
+        val timeInMillis = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
+
         monsterFolderDao.addMonstersToFolder(
-            monsterIndexes.map { monsterIndex ->
+            monsterIndexes.mapIndexed { i, monsterIndex ->
                 MonsterFolderEntity(
                     folderName = folderName,
                     monsterIndex = monsterIndex,
-                    createdAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
+                    createdAt = timeInMillis + i
                 )
             }
         )

@@ -20,6 +20,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.app.BottomBarItem
+import br.alexandregpereira.hunter.folder.list.FolderListFeature
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
 import br.alexandregpereira.hunter.search.SearchScreenFeature
 import br.alexandregpereira.hunter.settings.SettingsFeature
@@ -32,6 +33,9 @@ fun BottomNavigationTransition(
     Crossfade(targetState = bottomBarItemSelected) { index ->
         when (index) {
             BottomBarItem.COMPENDIUM -> MonsterCompendiumFeature(
+                contentPadding = contentPadding,
+            )
+            BottomBarItem.FOLDERS -> FolderListFeature(
                 contentPadding = contentPadding,
             )
             BottomBarItem.SEARCH -> SearchScreenFeature(

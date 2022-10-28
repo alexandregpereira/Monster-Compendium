@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2022 Alexandre Gomes Pereira
   ~
@@ -14,10 +15,4 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <string name="app_name">Hunter</string>
-    <string name="compendium">Compendium</string>
-    <string name="search">Search</string>
-    <string name="folders">Folders</string>
-    <string name="settings">Settings</string>
-</resources>
+<manifest />
