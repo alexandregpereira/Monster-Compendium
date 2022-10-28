@@ -37,7 +37,7 @@ dependencies {
     implementation project(':event:folder-insert-event')
     implementation project(':event:folder-preview-event')
     implementation project(':event:monster-detail-event')
-    implementation project(':ui')
+    implementation project(':ui:core')
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose
