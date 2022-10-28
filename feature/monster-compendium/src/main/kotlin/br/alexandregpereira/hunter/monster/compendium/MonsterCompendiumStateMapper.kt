@@ -20,12 +20,12 @@ import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterPair
 import br.alexandregpereira.hunter.monster.compendium.domain.MonstersBySection
-import br.alexandregpereira.hunter.monster.compendium.ui.ColorState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCardState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterImageState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterRowState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterTypeState
-import br.alexandregpereira.hunter.monster.compendium.ui.SectionState
+import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 
 fun MonstersBySection.asState(): Map<SectionState, List<MonsterRowState>> {
     return this.map {
@@ -45,8 +45,8 @@ private fun MonsterSection.asState(): SectionState {
 private fun List<MonsterPair>.asState(): List<MonsterRowState> {
     return this.map {
         MonsterRowState(
-            leftMonsterCardState = it.first.asState(),
-            rightMonsterCardState = it.second?.asState()
+            leftCardState = it.first.asState(),
+            rightCardState = it.second?.asState()
         )
     }
 }

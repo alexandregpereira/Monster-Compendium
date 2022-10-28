@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
@@ -32,7 +31,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
@@ -58,15 +56,13 @@ internal class SearchViewModel @Inject constructor(
     init {
         searchQuery.debounce(500L)
             .flatMapConcat {
-                delay(200)
-                Log.d("onSearchValueChange", "onSearchValueChange: ")
                 searchMonstersByNameUseCase(state.value.searchValue)
             }
             .map { result ->
-                result.asState()
+                result.size to result.asState()
             }
-            .onEach { monsters ->
-                _state.value = state.value.changeMonsters(monsters)
+            .onEach { (totalResults, monsterRows) ->
+                _state.value = state.value.changeMonsters(monsterRows, totalResults)
             }
             .flowOn(dispatcher)
             .launchIn(viewModelScope)

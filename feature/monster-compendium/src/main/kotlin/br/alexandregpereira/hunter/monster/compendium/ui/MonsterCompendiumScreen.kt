@@ -25,10 +25,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -96,5 +99,6 @@ private fun OnFirstVisibleItemChange(
     listState: LazyListState,
     saveCompendiumScrollItemPosition: (position: Int) -> Unit
 ) {
-    saveCompendiumScrollItemPosition(listState.firstVisibleItemIndex)
+    val firstVisibleItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
+    saveCompendiumScrollItemPosition(firstVisibleItemIndex)
 }

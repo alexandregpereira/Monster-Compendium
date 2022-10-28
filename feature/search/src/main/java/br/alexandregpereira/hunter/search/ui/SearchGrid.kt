@@ -18,57 +18,37 @@ package br.alexandregpereira.hunter.search.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.compose.MonsterCard
+import androidx.compose.ui.res.stringResource
+import br.alexandregpereira.hunter.search.R
+import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterRowState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchGrid(
-    monsters: List<MonsterCardState>,
+    monsterRows: List<MonsterRowState>,
+    totalResults: Int,
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
 ) = AnimatedVisibility(
-    visible = monsters.isNotEmpty(),
+    visible = monsterRows.isNotEmpty(),
     enter = fadeIn(),
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2),
-        contentPadding = PaddingValues(
-            top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding() + 16.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(monsters, key = { it.index }) { monsterCardState ->
-            MonsterCard(
-                name = monsterCardState.name,
-                url = monsterCardState.imageUrl,
-                iconRes = monsterCardState.type.iconRes,
-                backgroundColor = if (isSystemInDarkTheme()) {
-                    monsterCardState.backgroundColorDark
-                } else {
-                    monsterCardState.backgroundColorLight
-                },
-                challengeRating = monsterCardState.challengeRating,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .animateItemPlacement(),
-                onCLick = {
-                    onCardClick(monsterCardState.index)
-                },
-                onLongCLick = { onCardLongClick(monsterCardState.index) }
-            )
-        }
-    }
+    val monstersBySection = mapOf(
+        SectionState(
+            title = if (totalResults == 1) {
+                stringResource(R.string.search_search_result, totalResults)
+            } else stringResource(R.string.search_search_results, totalResults),
+            id = "results",
+        ) to monsterRows
+    )
+    MonsterCompendium(
+        monstersBySection = monstersBySection,
+        contentPadding = contentPadding,
+        onItemCLick = onCardClick,
+        onItemLongCLick = onCardLongClick
+    )
 }

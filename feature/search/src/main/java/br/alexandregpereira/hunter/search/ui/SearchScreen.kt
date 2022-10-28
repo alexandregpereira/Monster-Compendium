@@ -43,9 +43,10 @@ internal fun SearchScreen(
             Box {
                 val focusManager = LocalFocusManager.current
                 SearchGrid(
-                    monsters = state.monsters,
+                    monsterRows = state.monsterRows,
+                    totalResults = state.totalResults,
                     contentPadding = PaddingValues(
-                        top = contentPaddingValues.calculateTopPadding() + 56.dp + 40.dp,
+                        top = contentPaddingValues.calculateTopPadding() + 56.dp + 8.dp,
                         bottom = contentPaddingValues.calculateBottomPadding()
                     ),
                     onCardClick = {
