@@ -128,7 +128,7 @@ private fun FolderCardImageLayout(
     content: @Composable () -> Unit
 ) = Layout(
     modifier = modifier
-        .height(120.dp)
+        .height(140.dp)
         .clip(shape = Shapes.large),
     content = content
 ) { measurables, constraints ->
