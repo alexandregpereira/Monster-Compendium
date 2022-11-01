@@ -16,8 +16,26 @@
 
 package br.alexandregpereira.hunter.folder.list
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.folder.list.ui.FolderCardState
 
 internal data class FolderListViewState(
-    val folders: List<FolderCardState> = emptyList()
-)
+    val folders: List<FolderCardState> = emptyList(),
+    val itemSelection: Set<String> = emptySet(),
+    val isItemSelectionOpen: Boolean = false
+) {
+    val itemSelectionCount = itemSelection.size
+    val itemSelectionEnabled = isItemSelectionOpen
+}
+
+internal fun SavedStateHandle.getState(): FolderListViewState {
+    return FolderListViewState(
+        itemSelection = this["itemSelection"] ?: emptySet(),
+        isItemSelectionOpen = this["isItemSelectionOpen"] ?: false
+    )
+}
+
+internal fun FolderListViewState.saveState(savedStateHandle: SavedStateHandle): FolderListViewState {
+    savedStateHandle["isItemSelectionOpen"] = isItemSelectionOpen
+    return this
+}

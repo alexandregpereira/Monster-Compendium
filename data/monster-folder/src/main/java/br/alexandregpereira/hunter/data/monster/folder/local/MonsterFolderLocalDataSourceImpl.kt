@@ -84,7 +84,7 @@ internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
         emit(monsterDao.getMonsterPreviews(monsterIndexes))
     }
 
-    override fun removeMonsterFolder(folderName: String): Flow<Unit> = flow {
-        emit(monsterFolderDao.removeMonsterFolder(folderName))
+    override fun removeMonsterFolders(folderNames: List<String>): Flow<Unit> = flow {
+        emit(monsterFolderDao.removeMonsterFolders(folderNames))
     }
 }

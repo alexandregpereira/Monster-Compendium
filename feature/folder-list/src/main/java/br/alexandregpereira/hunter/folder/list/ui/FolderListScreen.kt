@@ -29,11 +29,21 @@ internal fun FolderListScreen(
     contentPadding: PaddingValues = PaddingValues(),
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
+    onItemSelectionClose: () -> Unit = {},
+    onItemSelectionDeleteClick: () -> Unit = {}
 ) = Window(Modifier.fillMaxSize()) {
     FolderCardGrid(
         folders = state.folders,
         contentPadding = contentPadding,
         onCLick = onCLick,
         onLongCLick = onLongCLick
+    )
+
+    ItemSelection(
+        itemSelectionCount = state.itemSelectionCount,
+        contentBottomPadding = contentPadding.calculateBottomPadding(),
+        onClose = onItemSelectionClose,
+        onDeleteClick = onItemSelectionDeleteClick,
+        isOpen = state.isItemSelectionOpen
     )
 }

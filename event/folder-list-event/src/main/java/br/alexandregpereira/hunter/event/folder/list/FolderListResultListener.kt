@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.folder
+package br.alexandregpereira.hunter.event.folder.list
 
-import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase.Companion.TEMPORARY_FOLDER_NAME
-import javax.inject.Inject
+import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
-class ClearTemporaryFolderUseCase @Inject constructor(
-    private val removeMonsterFolders: RemoveMonsterFoldersUseCase,
-) {
+interface FolderListResultListener {
 
-    operator fun invoke(): Flow<Unit> {
-        return removeMonsterFolders(listOf(TEMPORARY_FOLDER_NAME))
-    }
+    val result: Flow<FolderListResult>
+}
+
+fun FolderListResultListener.collectOnItemSelectionVisibilityChanges(
+    action: suspend (OnItemSelectionVisibilityChanges) -> Unit
+): Flow<OnItemSelectionVisibilityChanges> {
+    return result.map { it as? OnItemSelectionVisibilityChanges }.filterNotNull().onEach(action)
 }

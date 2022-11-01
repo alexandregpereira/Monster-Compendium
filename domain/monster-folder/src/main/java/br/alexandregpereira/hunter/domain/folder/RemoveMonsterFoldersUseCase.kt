@@ -19,11 +19,11 @@ package br.alexandregpereira.hunter.domain.folder
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class RemoveMonsterFolderUseCase @Inject constructor(
+class RemoveMonsterFoldersUseCase @Inject constructor(
     private val monsterFolderRepository: MonsterFolderRepository,
 ) {
 
-    operator fun invoke(folderName: String): Flow<Unit> {
-        return monsterFolderRepository.removeMonsterFolder(folderName)
+    operator fun invoke(folderNames: List<String>): Flow<Unit> {
+        return monsterFolderRepository.removeMonsterFolders(folderNames)
     }
 }

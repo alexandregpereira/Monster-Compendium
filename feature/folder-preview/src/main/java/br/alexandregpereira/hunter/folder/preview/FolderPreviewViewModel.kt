@@ -23,15 +23,14 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.*
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,7 +52,6 @@ internal class FolderPreviewViewModel @Inject constructor(
     private val removeMonsterFromFolderPreview: RemoveMonsterFromFolderPreviewUseCase,
     private val clearFolderPreviewUseCase: ClearFolderPreviewUseCase,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
-    private val monsterDetailEventListener: MonsterDetailEventListener,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -92,16 +90,8 @@ internal class FolderPreviewViewModel @Inject constructor(
             folderPreviewEventManager.events.collect { event ->
                 when (event) {
                     is AddMonster -> addMonster(event.index)
+                    is HideFolderPreview -> hideFolderPreview()
                     is ShowFolderPreview -> loadMonsters()
-                }
-            }
-        }
-
-        viewModelScope.launch {
-            monsterDetailEventListener.events.collect { event ->
-                when (event) {
-                    MonsterDetailEvent.Hide -> loadMonsters()
-                    is Show -> hideFolderPreview()
                 }
             }
         }

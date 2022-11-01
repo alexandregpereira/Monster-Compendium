@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.folder.list.ui
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,7 +24,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -50,12 +53,21 @@ internal fun FolderCardGrid(
         )
     ) {
         items(folders, key = { it.folderName.lowercase() }) { folder ->
+            val scale by animateFloatAsState(
+                targetValue = if (folder.selected) 0.8f else 1f,
+            )
+
             FolderCard(
                 folderName = folder.folderName,
                 image1 = folder.image1,
                 image2 = folder.image2,
                 image3 = folder.image3,
-                modifier = Modifier.animateItemPlacement(),
+                modifier = Modifier
+                    .animateItemPlacement()
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                    },
                 onCLick = { onCLick(folder.folderName) },
                 onLongCLick = { onLongCLick(folder.folderName) },
             )
@@ -68,6 +80,7 @@ internal data class FolderCardState(
     val image1: FolderCardImageState = FolderCardImageState(),
     val image2: FolderCardImageState? = null,
     val image3: FolderCardImageState? = null,
+    val selected: Boolean = false,
 )
 
 @Preview

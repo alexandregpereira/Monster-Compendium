@@ -55,6 +55,8 @@ android {
 dependencies {
     implementation project(':data:app')
     implementation project(':event:folder-detail-event')
+    implementation project(':event:folder-list-event')
+    implementation project(':event:folder-preview-event')
     implementation project(':event:monster-detail-event')
     implementation project(':feature:folder-detail')
     implementation project(':feature:folder-insert')

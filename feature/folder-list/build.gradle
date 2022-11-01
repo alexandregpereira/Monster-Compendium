@@ -36,6 +36,7 @@ dependencies {
     implementation project(':domain:monster-folder')
     implementation project(':event:folder-detail-event')
     implementation project(':event:folder-insert-event')
+    implementation project(':event:folder-list-event')
     implementation project(':ui:core')
 
     implementation libs.bundles.viewmodel.bundle

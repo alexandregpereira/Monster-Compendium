@@ -52,7 +52,7 @@ internal class MonsterFolderRepositoryImpl @Inject constructor(
             .map { it.asDomain() }
     }
 
-    override fun removeMonsterFolder(folderName: String): Flow<Unit> {
-        return monsterFolderLocalDataSource.removeMonsterFolder(folderName)
+    override fun removeMonsterFolders(folderNames: List<String>): Flow<Unit> {
+        return monsterFolderLocalDataSource.removeMonsterFolders(folderNames)
     }
 }
