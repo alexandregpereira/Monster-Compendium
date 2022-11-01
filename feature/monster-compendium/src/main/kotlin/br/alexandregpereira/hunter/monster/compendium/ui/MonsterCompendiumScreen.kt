@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
+import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -39,14 +41,24 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 internal fun MonsterCompendiumScreen(
     state: MonsterCompendiumViewState,
+    initialScrollItemPosition: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) = HunterTheme {
     CircularLoading(state.isLoading) {
         val listState = rememberLazyGridState(
-            initialFirstVisibleItemIndex = state.initialScrollItemPosition
+            initialFirstVisibleItemIndex = initialScrollItemPosition
         )
-        MonsterCompendiumScreen(state, listState, contentPadding, events)
+        MonsterCompendiumScreen(
+            monstersBySection = state.monstersBySection,
+            isShowingMonsterFolderPreview = state.isShowingMonsterFolderPreview,
+            alphabetOpened = state.alphabetOpened,
+            alphabet = state.alphabet,
+            alphabetIndex = state.alphabetIndex,
+            listState = listState,
+            contentPadding = contentPadding,
+            events = events
+        )
 
         OnFirstVisibleItemChange(listState, events::onFirstVisibleItemChange)
 
@@ -60,37 +72,40 @@ internal fun MonsterCompendiumScreen(
 
 @Composable
 private fun MonsterCompendiumScreen(
-    state: MonsterCompendiumViewState,
+    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    isShowingMonsterFolderPreview: Boolean,
+    alphabetOpened: Boolean,
+    alphabet: List<Char>,
+    alphabetIndex: Int,
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) {
     Box(Modifier.fillMaxSize()) {
         MonsterCompendium(
-            monstersBySection = state.monstersBySection,
+            monstersBySection = monstersBySection,
             listState = listState,
             contentPadding = contentPadding,
             onItemCLick = events::onItemCLick,
             onItemLongCLick = events::onItemLongCLick,
         )
-        Closeable(opened = state.alphabetOpened, onClosed = events::onAlphabetClosed) {
-            val paddingBottom by animateDpAsState(
-                if (state.isShowingMonsterFolderPreview) 72.dp else 8.dp
-            )
+        Closeable(opened = alphabetOpened, onClosed = events::onAlphabetClosed)
+        val paddingBottom by animateDpAsState(
+            if (isShowingMonsterFolderPreview) 72.dp else 8.dp
+        )
 
-            AlphabetIndex(
-                alphabet = state.alphabet,
-                selectedIndex = state.alphabetIndex,
-                opened = state.alphabetOpened,
-                onOpenButtonClicked = events::onAlphabetOpened,
-                onCloseButtonClicked = events::onAlphabetClosed,
-                onAlphabetIndexClicked = events::onAlphabetIndexClicked,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(bottom = contentPadding.calculateBottomPadding() + paddingBottom)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-        }
+        AlphabetIndex(
+            alphabet = alphabet,
+            selectedIndex = alphabetIndex,
+            opened = alphabetOpened,
+            onOpenButtonClicked = events::onAlphabetOpened,
+            onCloseButtonClicked = events::onAlphabetClosed,
+            onAlphabetIndexClicked = events::onAlphabetIndexClicked,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(bottom = contentPadding.calculateBottomPadding() + paddingBottom)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        )
     }
 }
 

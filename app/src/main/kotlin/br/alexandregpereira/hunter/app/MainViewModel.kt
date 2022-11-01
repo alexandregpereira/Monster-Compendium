@@ -20,19 +20,25 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResult.OnVisibilityChanges
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
+import br.alexandregpereira.hunter.event.folder.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val monsterDetailEventListener: MonsterDetailEventListener
+    private val monsterDetailEventListener: MonsterDetailEventListener,
+    private val folderDetailResultListener: FolderDetailResultListener,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
@@ -40,14 +46,21 @@ class MainViewModel @Inject constructor(
 
     init {
         observeMonsterDetailEvents()
+        observeFolderDetailResults()
     }
 
     private fun observeMonsterDetailEvents() {
         monsterDetailEventListener.events.onEach { event ->
             when (event) {
-                is MonsterDetailEvent.Show -> setState { copy(showBottomBar = false) }
-                MonsterDetailEvent.Hide -> setState { copy(showBottomBar = true) }
+                is MonsterDetailEvent.Show -> setState { copy(showMonsterDetail = true) }
+                MonsterDetailEvent.Hide -> setState { copy(showMonsterDetail = false) }
             }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeFolderDetailResults() {
+        folderDetailResultListener.collectOnVisibilityChanges { result ->
+            setState { copy(showFolderDetail = result.isShowing) }
         }.launchIn(viewModelScope)
     }
 

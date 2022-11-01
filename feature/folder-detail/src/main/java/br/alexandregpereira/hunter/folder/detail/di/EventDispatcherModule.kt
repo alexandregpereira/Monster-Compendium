@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.insert.di
+package br.alexandregpereira.hunter.folder.detail.di
 
-import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
-import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
-import br.alexandregpereira.hunter.folder.insert.FolderInsertEventManager
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
+import br.alexandregpereira.hunter.folder.detail.FolderDetailEventManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -32,8 +32,8 @@ class EventDispatcherModuleImpl {
 
     @Singleton
     @Provides
-    internal fun provideEventDispatcherImpl(): FolderInsertEventManager {
-        return FolderInsertEventManager()
+    internal fun provideEventDispatcherImpl(): FolderDetailEventManager {
+        return FolderDetailEventManager()
     }
 }
 
@@ -44,12 +44,12 @@ abstract class EventDispatcherModule {
     @Singleton
     @Binds
     internal abstract fun bindEventDispatcher(
-        eventDispatcher: FolderInsertEventManager
-    ): FolderInsertEventDispatcher
+        eventDispatcher: FolderDetailEventManager
+    ): FolderDetailEventDispatcher
 
     @Singleton
     @Binds
     internal abstract fun bindResultListener(
-        eventDispatcher: FolderInsertEventManager
-    ): FolderInsertResultListener
+        eventDispatcher: FolderDetailEventManager
+    ): FolderDetailResultListener
 }

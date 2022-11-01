@@ -16,12 +16,15 @@
 
 package br.alexandregpereira.hunter.ui.compendium
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun <CardState> Compendium(
     monstersBySection: Map<SectionState, List<CardState>>,
+    animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     key: (CardState) -> Any? = { null },
@@ -46,7 +50,7 @@ fun <CardState> Compendium(
             start = 16.dp,
             end = 16.dp,
             top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding()
+            bottom = contentPadding.calculateBottomPadding() + 64.dp
         ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -60,29 +64,31 @@ fun <CardState> Compendium(
                 key = section.id,
                 span = { GridItemSpan(maxLineSpan) }
             ) {
-                section.parentTitle?.let {
+                Column(Modifier.animateItems(this, animateItems)) {
+                    section.parentTitle?.let {
+                        SectionTitle(
+                            title = it,
+                            isHeader = true,
+                            modifier = Modifier.padding(
+                                top = sectionTitlePaddingTop,
+                                bottom = sectionTitlePaddingBottom
+                            )
+                        )
+                    }
+                    val paddingTop = when {
+                        section.parentTitle != null -> 0.dp
+                        section.isHeader -> sectionTitlePaddingTop
+                        else -> 24.dp
+                    }
                     SectionTitle(
-                        title = it,
-                        isHeader = true,
+                        title = section.title,
+                        isHeader = section.isHeader && section.parentTitle == null,
                         modifier = Modifier.padding(
-                            top = sectionTitlePaddingTop,
+                            top = paddingTop,
                             bottom = sectionTitlePaddingBottom
                         )
                     )
                 }
-                val paddingTop = when {
-                    section.parentTitle != null -> 0.dp
-                    section.isHeader -> sectionTitlePaddingTop
-                    else -> 24.dp
-                }
-                SectionTitle(
-                    title = section.title,
-                    isHeader = section.isHeader && section.parentTitle == null,
-                    modifier = Modifier.padding(
-                        top = paddingTop,
-                        bottom = sectionTitlePaddingBottom
-                    )
-                )
             }
 
             cardStates.forEach { cardState ->
@@ -97,6 +103,7 @@ fun <CardState> Compendium(
                 ) {
                     Box(
                         modifier = Modifier
+                            .animateItems(this, animateItems)
                             .padding(vertical = 8.dp),
                     ) {
                         cardContent(cardState)
@@ -105,4 +112,12 @@ fun <CardState> Compendium(
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun Modifier.animateItems(
+    scope: LazyGridItemScope,
+    animateItems: Boolean
+): Modifier = scope.run {
+    if (animateItems) this@animateItems.animateItemPlacement() else this@animateItems
 }

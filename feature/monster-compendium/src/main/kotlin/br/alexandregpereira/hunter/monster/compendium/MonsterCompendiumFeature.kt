@@ -30,6 +30,7 @@ fun MonsterCompendiumFeature(
     val viewModel: MonsterCompendiumViewModel = viewModel()
     MonsterCompendiumScreen(
         state = viewModel.state.collectAsState().value,
+        initialScrollItemPosition = viewModel.initialScrollItemPosition,
         contentPadding = contentPadding,
         events = viewModel,
     )
