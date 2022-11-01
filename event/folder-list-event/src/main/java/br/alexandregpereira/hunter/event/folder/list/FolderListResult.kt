@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.folder
+package br.alexandregpereira.hunter.event.folder.list
 
-import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase.Companion.TEMPORARY_FOLDER_NAME
-import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
-
-class ClearTemporaryFolderUseCase @Inject constructor(
-    private val removeMonsterFolders: RemoveMonsterFoldersUseCase,
-) {
-
-    operator fun invoke(): Flow<Unit> {
-        return removeMonsterFolders(listOf(TEMPORARY_FOLDER_NAME))
-    }
+sealed class FolderListResult {
+    data class OnItemSelectionVisibilityChanges(
+        val isShowing: Boolean
+    ) : FolderListResult()
 }

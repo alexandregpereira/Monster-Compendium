@@ -20,10 +20,12 @@ import androidx.lifecycle.SavedStateHandle
 
 data class MainViewState(
     val bottomBarItemSelected: BottomBarItem = BottomBarItem.COMPENDIUM,
-    val showFolderDetail: Boolean = false,
-    val showMonsterDetail: Boolean = false,
+    val isFolderDetailShowing: Boolean = false,
+    val isMonsterDetailShowing: Boolean = false,
+    val isFolderListSelectionShowing: Boolean = false,
 ) {
-    val showBottomBar: Boolean = showMonsterDetail.not() && showFolderDetail.not()
+    val showBottomBar: Boolean = isMonsterDetailShowing.not() && isFolderDetailShowing.not()
+            && isFolderListSelectionShowing.not()
 }
 
 enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
@@ -36,8 +38,9 @@ enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
 internal fun SavedStateHandle.getState(): MainViewState {
     return MainViewState(
         bottomBarItemSelected = BottomBarItem.values()[this["bottomBarItemSelected"] ?: 0],
-        showFolderDetail = this["showFolderDetail"] ?: false,
-        showMonsterDetail = this["showMonsterDetail"] ?: false,
+        isFolderDetailShowing = this["isFolderDetailShowing"] ?: false,
+        isMonsterDetailShowing = this["isMonsterDetailShowing"] ?: false,
+        isFolderListSelectionShowing = this["isFolderListSelectionShowing"] ?: false,
     )
 }
 
@@ -45,7 +48,8 @@ internal fun MainViewState.saveState(
     savedStateHandle: SavedStateHandle
 ): MainViewState {
     savedStateHandle["bottomBarItemSelected"] = this.bottomBarItemSelected.ordinal
-    savedStateHandle["showFolderDetail"] = this.showFolderDetail
-    savedStateHandle["showMonsterDetail"] = this.showMonsterDetail
+    savedStateHandle["isFolderDetailShowing"] = this.isFolderDetailShowing
+    savedStateHandle["isMonsterDetailShowing"] = this.isMonsterDetailShowing
+    savedStateHandle["isFolderListSelectionShowing"] = this.isFolderListSelectionShowing
     return this
 }

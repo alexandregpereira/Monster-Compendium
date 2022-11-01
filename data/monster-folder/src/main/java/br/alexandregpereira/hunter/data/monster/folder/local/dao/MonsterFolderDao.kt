@@ -52,6 +52,6 @@ interface MonsterFolderDao {
     @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName AND monsterIndex IN (:monsterIndexes)")
     suspend fun removeMonsterFromFolder(folderName: String, monsterIndexes: List<String>)
 
-    @Query("DELETE FROM MonsterFolderEntity WHERE folderName == :folderName")
-    suspend fun removeMonsterFolder(folderName: String)
+    @Query("DELETE FROM MonsterFolderEntity WHERE folderName IN (:folderNames)")
+    suspend fun removeMonsterFolders(folderNames: List<String>)
 }

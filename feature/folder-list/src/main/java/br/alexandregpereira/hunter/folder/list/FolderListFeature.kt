@@ -30,6 +30,9 @@ fun FolderListFeature(
     FolderListScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,
-        onCLick = viewModel::onItemClick
+        onCLick = viewModel::onItemClick,
+        onLongCLick = viewModel::onItemSelect,
+        onItemSelectionClose = viewModel::onItemSelectionClose,
+        onItemSelectionDeleteClick = viewModel::onItemSelectionDeleteClick
     )
 }
