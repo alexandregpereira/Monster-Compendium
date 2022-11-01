@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'br.alexandregpereira.hunter.folder.list'
+    namespace 'br.alexandregpereira.hunter.folder.detail'
     compileSdkVersion buildConfig.compileSdk
 
     defaultConfig {
@@ -36,7 +36,10 @@ dependencies {
     implementation project(':domain:monster-folder')
     implementation project(':event:folder-detail-event')
     implementation project(':event:folder-insert-event')
+    implementation project(':event:folder-preview-event')
+    implementation project(':event:monster-detail-event')
     implementation project(':ui:core')
+    implementation project(':ui:monster-compendium')
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

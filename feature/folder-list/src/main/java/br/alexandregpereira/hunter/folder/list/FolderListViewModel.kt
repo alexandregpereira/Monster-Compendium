@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.folder.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent.Show
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +38,7 @@ import kotlinx.coroutines.flow.onEach
 internal class FolderListViewModel @Inject constructor(
     private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val folderInsertResultListener: FolderInsertResultListener,
+    private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -47,6 +50,10 @@ internal class FolderListViewModel @Inject constructor(
     init {
         observeFolderInsertResults()
         loadMonsterFolders()
+    }
+
+    fun onItemClick(folderName: String) {
+        folderDetailEventDispatcher.dispatchEvent(Show(folderName = folderName))
     }
 
     private fun loadMonsterFolders() {

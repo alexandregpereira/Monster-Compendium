@@ -114,12 +114,12 @@ class MonsterCompendiumViewModelTest {
                         )
                     )
                 ),
-                initialScrollItemPosition = 1,
                 alphabet = listOf('A'),
                 alphabetIndex = 0
             ),
             results[1]
         )
+        assertEquals(1, viewModel.initialScrollItemPosition)
 
         job.cancel()
     }

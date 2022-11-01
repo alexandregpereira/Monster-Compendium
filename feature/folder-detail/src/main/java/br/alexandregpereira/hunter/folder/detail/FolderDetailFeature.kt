@@ -14,22 +14,28 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.list
+package br.alexandregpereira.hunter.folder.detail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import br.alexandregpereira.hunter.folder.list.ui.FolderListScreen
+import br.alexandregpereira.hunter.folder.detail.ui.FolderDetailScreen
 
 @Composable
-fun FolderListFeature(
+fun FolderDetailFeature(
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    val viewModel: FolderListViewModel = viewModel()
-    FolderListScreen(
-        state = viewModel.state.collectAsState().value,
+    val viewModel: FolderDetailViewModel = viewModel()
+    val state by viewModel.state.collectAsState()
+
+    FolderDetailScreen(
+        state = state,
         contentPadding = contentPadding,
-        onCLick = viewModel::onItemClick
+        onItemCLick = viewModel::onItemClick,
+        onItemLongCLick = viewModel::onItemLongClick,
+        onClose = viewModel::onClose,
     )
 }

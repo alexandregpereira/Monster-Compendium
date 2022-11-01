@@ -33,12 +33,14 @@ import br.alexandregpereira.hunter.ui.compose.Window
 @Composable
 fun MonsterCompendium(
     monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
 ) = Compendium(
     monstersBySection = monstersBySection,
+    animateItems = animateItems,
     listState = listState,
     contentPadding = contentPadding,
     key = { it.index },
@@ -61,7 +63,7 @@ fun MonsterCompendium(
 
 @Preview
 @Composable
-fun MonsterCompendiumPreview() = Window {
+private fun MonsterCompendiumPreview() = Window {
     val imageState = MonsterImageState(
         url = "",
         type = MonsterTypeState.ABERRATION,
@@ -86,7 +88,7 @@ fun MonsterCompendiumPreview() = Window {
 
 @Preview
 @Composable
-fun MonsterSection2ItemsPreview() = Window {
+private fun MonsterSection2ItemsPreview() = Window {
     val imageState = MonsterImageState(
         url = "",
         type = MonsterTypeState.ABERRATION,
@@ -123,7 +125,7 @@ fun MonsterSection2ItemsPreview() = Window {
 
 @Preview
 @Composable
-fun MonsterSection1ItemPreview() = Window {
+private fun MonsterSection1ItemPreview() = Window {
     val imageState = MonsterImageState(
         url = "",
         type = MonsterTypeState.ABERRATION,

@@ -16,14 +16,17 @@
 
 package br.alexandregpereira.hunter.app.ui
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
@@ -35,7 +38,9 @@ fun MainScreen(
     onEvent: (MainViewEvent) -> Unit
 ) {
     Box {
-        val bottomBarNavigationSize = 56.dp
+        val bottomBarNavigationSize by animateDpAsState(
+            targetValue = if (state.showBottomBar) 56.dp else 0.dp
+        )
         val contentPaddingWithBottomBar = PaddingValues(
             top = contentPadding.calculateTopPadding(),
             bottom = contentPadding.calculateBottomPadding() + bottomBarNavigationSize,
@@ -44,6 +49,10 @@ fun MainScreen(
         BottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
+        )
+
+        FolderDetailFeature(
+            contentPadding = contentPadding
         )
 
         MonsterDetailFeature(

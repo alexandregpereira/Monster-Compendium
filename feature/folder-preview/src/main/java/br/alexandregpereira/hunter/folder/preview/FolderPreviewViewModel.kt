@@ -32,7 +32,6 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -93,7 +92,6 @@ internal class FolderPreviewViewModel @Inject constructor(
             folderPreviewEventManager.events.collect { event ->
                 when (event) {
                     is AddMonster -> addMonster(event.index)
-                    HideFolderPreview -> hideFolderPreview()
                     is ShowFolderPreview -> loadMonsters()
                 }
             }

@@ -26,7 +26,6 @@ data class MonsterCompendiumViewState(
     val alphabet: List<Char> = emptyList(),
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
-    val initialScrollItemPosition: Int = 0,
     val isShowingMonsterFolderPreview: Boolean = false,
     val compendiumIndex: Int = -1
 )
@@ -51,14 +50,12 @@ fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumVie
 fun MonsterCompendiumViewState.complete(
     monstersBySection: Map<SectionState, List<MonsterCardState>>,
     alphabet: List<Char>,
-    alphabetIndex: Int,
-    initialScrollItemPosition: Int
+    alphabetIndex: Int
 ) = this.copy(
     isLoading = false,
     monstersBySection = monstersBySection,
     alphabet = alphabet,
-    alphabetIndex = alphabetIndex,
-    initialScrollItemPosition = initialScrollItemPosition
+    alphabetIndex = alphabetIndex
 )
 
 fun MonsterCompendiumViewState.alphabetIndex(

@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewViewState
-import br.alexandregpereira.hunter.folder.preview.getState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -37,19 +36,19 @@ internal fun FolderPreviewScreen(
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
 ) = HunterTheme {
-    Box(Modifier.fillMaxSize()) {
-        AnimatedVisibility(
-            visible = state.showPreview,
-            enter = slideInVertically { fullHeight -> fullHeight * 2 },
-            exit = slideOutVertically { fullHeight -> fullHeight * 2 },
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
+    AnimatedVisibility(
+        visible = state.showPreview,
+        enter = slideInVertically { fullHeight -> fullHeight * 2 },
+        exit = slideOutVertically { fullHeight -> fullHeight * 2 },
+    ) {
+        Box(Modifier.fillMaxSize()) {
             FolderPreview(
                 monsters = state.monsters,
                 contentPadding = contentPadding,
                 onClick = onClick,
                 onLongClick = onLongClick,
-                onSave = onSave
+                onSave = onSave,
+                modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
     }

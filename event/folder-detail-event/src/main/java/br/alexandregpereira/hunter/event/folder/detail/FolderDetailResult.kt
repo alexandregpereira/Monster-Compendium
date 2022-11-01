@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.event.folder.detail
 
-sealed class FolderPreviewEvent {
-    data class AddMonster(val index: String) : FolderPreviewEvent()
-    object ShowFolderPreview : FolderPreviewEvent()
+sealed class FolderDetailResult {
+    data class OnVisibilityChanges(
+        val isShowing: Boolean
+    ) : FolderDetailResult()
 }

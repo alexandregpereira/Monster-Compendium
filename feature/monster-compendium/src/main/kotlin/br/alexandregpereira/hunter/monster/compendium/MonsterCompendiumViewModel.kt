@@ -59,6 +59,9 @@ class MonsterCompendiumViewModel @Inject constructor(
     @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
 
+    var initialScrollItemPosition: Int = 0
+        private set
+
     private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterCompendiumViewState> = _state
 
@@ -82,19 +85,19 @@ class MonsterCompendiumViewModel @Inject constructor(
                         alphabet,
                         monstersBySectionState
                     ),
-                    initialScrollItemPosition = scrollItemPosition
-                )
+                ) to scrollItemPosition
             }
             .onStart {
-                emit(state.value.loading(isLoading = true))
+                emit(state.value.loading(isLoading = true) to initialScrollItemPosition)
             }
             .flowOn(dispatcher)
             .catch {
                 Log.e("MonsterViewModel", it.message ?: "")
                 it.printStackTrace()
-                emit(state.value.loading(isLoading = false))
+                emit(state.value.loading(isLoading = false) to initialScrollItemPosition)
             }
-            .collect { state ->
+            .collect { (state, scrollItemPosition) ->
+                initialScrollItemPosition = scrollItemPosition
                 _state.value = state
             }
     }
@@ -145,8 +148,8 @@ class MonsterCompendiumViewModel @Inject constructor(
                 }
                 .flowOn(dispatcher)
                 .collect { alphabetIndex ->
+                    initialScrollItemPosition = position
                     _state.value = state.value.alphabetIndex(alphabetIndex)
-                        .copy(initialScrollItemPosition = position)
                         .saveState(savedStateHandle)
                 }
         }

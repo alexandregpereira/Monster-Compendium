@@ -19,11 +19,13 @@ package br.alexandregpereira.hunter.ui.compose
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,39 +48,43 @@ fun BottomSheet(
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
-) = Closeable(
-    opened = opened,
-    backgroundColor = backgroundColor,
-    onClosed = onClose,
 ) {
+    Closeable(
+        opened = opened,
+        backgroundColor = backgroundColor,
+        onClosed = onClose,
+    )
+
     AnimatedVisibility(
         visible = opened,
         enter = slideInVertically { fullHeight -> fullHeight * 2 },
         exit = slideOutVertically { fullHeight -> fullHeight * 2 },
-        modifier = Modifier.align(Alignment.BottomCenter)
     ) {
-        Column(
-            modifier = Modifier.verticalScroll(state = rememberScrollState())
-        ) {
-            val topSpaceHeight = 288.dp
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                    .noIndicationClick(onClick = onClose)
-            )
-            Card(
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                modifier = Modifier.fillMaxWidth()
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.verticalScroll(state = rememberScrollState())
+                    .align(Alignment.BottomCenter)
             ) {
-                Column(
-                    modifier = Modifier.padding(
-                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
-                    )
+                val topSpaceHeight = 288.dp
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(topSpaceHeight + contentPadding.calculateTopPadding())
+                        .noIndicationClick(onClick = onClose)
+                )
+                Card(
+                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    content()
-                    Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
+                    Column(
+                        modifier = Modifier.padding(
+                            start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                            end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                        )
+                    ) {
+                        content()
+                        Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
+                    }
                 }
             }
         }
