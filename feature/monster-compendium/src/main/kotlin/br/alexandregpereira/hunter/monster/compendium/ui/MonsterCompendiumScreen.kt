@@ -42,6 +42,7 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 internal fun MonsterCompendiumScreen(
     state: MonsterCompendiumViewState,
     initialScrollItemPosition: Int,
+    compendiumIndex: Int = -1,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) = HunterTheme {
@@ -62,9 +63,9 @@ internal fun MonsterCompendiumScreen(
 
         OnFirstVisibleItemChange(listState, events::onFirstVisibleItemChange)
 
-        if (state.compendiumIndex >= 0) {
-            LaunchedEffect(state.compendiumIndex) {
-                listState.scrollToItem(state.compendiumIndex)
+        if (compendiumIndex >= 0) {
+            LaunchedEffect(compendiumIndex) {
+                listState.scrollToItem(compendiumIndex)
             }
         }
     }

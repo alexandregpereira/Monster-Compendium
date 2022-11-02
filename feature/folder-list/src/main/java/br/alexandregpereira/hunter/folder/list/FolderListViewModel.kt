@@ -71,13 +71,8 @@ internal class FolderListViewModel @Inject constructor(
     fun onItemSelectionClose() {
         setState {
             copy(
-                isItemSelectionOpen = false,
-                folders = folders.map {
-                    it.copy(
-                        selected = false
-                    )
-                }
-            )
+                isItemSelectionOpen = false
+            ).changeSelectedFolders(folders)
         }
         folderListEventManager.dispatchResult(OnItemSelectionVisibilityChanges(isShowing = false))
     }
@@ -109,12 +104,7 @@ internal class FolderListViewModel @Inject constructor(
             copy(
                 itemSelection = newItemSelection,
                 isItemSelectionOpen = isItemSelectionOpen,
-                folders = folders.map {
-                    it.copy(
-                        selected = isItemSelectionOpen && newItemSelection.contains(it.folderName)
-                    )
-                }
-            )
+            ).changeSelectedFolders(folders)
         }
         folderListEventManager.dispatchResult(
             OnItemSelectionVisibilityChanges(isShowing = state.value.isItemSelectionOpen)
@@ -126,7 +116,7 @@ internal class FolderListViewModel @Inject constructor(
             .map { it.asState() }
             .flowOn(dispatcher)
             .onEach { folders ->
-                setState { copy(folders = folders) }
+                setState { changeSelectedFolders(folders) }
             }
             .launchIn(viewModelScope)
     }

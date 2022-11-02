@@ -36,7 +36,10 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -64,6 +67,12 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterCompendiumViewState> = _state
+
+    private val _action = MutableSharedFlow<MonsterCompendiumViewAction>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val action: SharedFlow<MonsterCompendiumViewAction> = _action
 
     init {
         observeEvents()
@@ -133,7 +142,7 @@ class MonsterCompendiumViewModel @Inject constructor(
                 }
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
-                    _state.value = state.value.copy(compendiumIndex = compendiumIndex)
+                    sendAction(MonsterCompendiumViewAction.GoToCompendiumIndex(compendiumIndex))
                 }
         }
     }
@@ -196,5 +205,9 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
         _state.value = state.value.showMonsterFolderPreview(isShowing, savedStateHandle)
+    }
+
+    private fun sendAction(action: MonsterCompendiumViewAction) {
+        _action.tryEmit(action)
     }
 }

@@ -27,7 +27,6 @@ data class MonsterCompendiumViewState(
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
     val isShowingMonsterFolderPreview: Boolean = false,
-    val compendiumIndex: Int = -1
 )
 
 internal fun SavedStateHandle.getState(): MonsterCompendiumViewState {
