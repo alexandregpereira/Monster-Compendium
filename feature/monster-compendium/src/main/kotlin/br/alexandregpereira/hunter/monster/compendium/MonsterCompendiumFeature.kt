@@ -18,9 +18,15 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
 
 @Composable
@@ -28,10 +34,22 @@ fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val viewModel: MonsterCompendiumViewModel = viewModel()
+    var compendiumIndex by remember {
+        mutableStateOf(-1)
+    }
     MonsterCompendiumScreen(
         state = viewModel.state.collectAsState().value,
         initialScrollItemPosition = viewModel.initialScrollItemPosition,
+        compendiumIndex = compendiumIndex,
         contentPadding = contentPadding,
         events = viewModel,
     )
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.action.collect { action ->
+            when (action) {
+                is GoToCompendiumIndex -> compendiumIndex = action.index
+            }
+        }
+    }
 }

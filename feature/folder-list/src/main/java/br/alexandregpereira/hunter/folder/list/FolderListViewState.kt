@@ -36,6 +36,19 @@ internal fun SavedStateHandle.getState(): FolderListViewState {
 }
 
 internal fun FolderListViewState.saveState(savedStateHandle: SavedStateHandle): FolderListViewState {
+    savedStateHandle["itemSelection"] = itemSelection
     savedStateHandle["isItemSelectionOpen"] = isItemSelectionOpen
     return this
+}
+
+internal fun FolderListViewState.changeSelectedFolders(
+    folders: List<FolderCardState>
+): FolderListViewState {
+    return copy(
+        folders = folders.map {
+            it.copy(
+                selected = isItemSelectionOpen && itemSelection.contains(it.folderName)
+            )
+        }
+    )
 }
