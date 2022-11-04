@@ -275,6 +275,20 @@ private fun LazyListScope.monsterInfoPart5(
             ActionBlock(actions = monster.actions)
         }
     }
+
+    item(key = "legendaryActions") {
+        MonsterOptionalSectionAlphaTransition(
+            valueToValidate = { it.legendaryActions },
+            dataList = monsters,
+            pagerState = pagerState,
+            getItemsKeys = getItemsKeys,
+        ) { legendaryActions ->
+            ActionBlock(
+                title = stringResource(R.string.monster_detail_legendary_actions),
+                actions = legendaryActions
+            )
+        }
+    }
 }
 
 @Composable

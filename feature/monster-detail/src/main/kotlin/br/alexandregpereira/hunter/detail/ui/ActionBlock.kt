@@ -27,9 +27,10 @@ import br.alexandregpereira.hunter.detail.R
 @Composable
 fun ActionBlock(
     actions: List<ActionState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    title: String = stringResource(R.string.monster_detail_actions),
 ) = AbilityDescriptionBlock(
-    title = stringResource(R.string.monster_detail_actions),
+    title = title,
     abilityDescriptions = actions.map { it.abilityDescription },
     modifier = modifier
 ) { index ->

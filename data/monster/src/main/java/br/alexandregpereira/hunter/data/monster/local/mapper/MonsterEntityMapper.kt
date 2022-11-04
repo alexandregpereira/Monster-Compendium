@@ -55,7 +55,8 @@ internal fun MonsterCompleteEntity.toDomain(): Monster {
         specialAbilities = this.specialAbilities.toDomain(),
         actions = this.actions.toDomain(),
         reactions = this.reactions.toDomain(),
-        spellcastings = this.spellcastings.toDomain()
+        spellcastings = this.spellcastings.toDomain(),
+        legendaryActions = this.legendaryActions.toDomain()
     )
 }
 
@@ -94,7 +95,8 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
             specialAbilities = it.specialAbilities.toEntity(it.index),
             actions = it.actions.toEntity(it.index),
             reactions = it.reactions.toReactionEntity(it.index),
-            spellcastings = it.spellcastings.toEntity(it.index)
+            spellcastings = it.spellcastings.toEntity(it.index),
+            legendaryActions = it.legendaryActions.toLegendaryActionEntity(it.index)
         )
     }
 }

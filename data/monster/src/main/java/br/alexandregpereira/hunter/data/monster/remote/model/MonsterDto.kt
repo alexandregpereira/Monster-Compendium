@@ -70,6 +70,8 @@ data class MonsterDto(
     val specialAbilities: List<SpecialAbilityDto>,
     @SerialName("actions")
     val actions: List<ActionDto>,
+    @SerialName("legendary_actions")
+    val legendaryActions: List<ActionDto> = emptyList(),
     @SerialName("reactions")
     val reactions: List<SpecialAbilityDto>,
     @SerialName("spellcasting")

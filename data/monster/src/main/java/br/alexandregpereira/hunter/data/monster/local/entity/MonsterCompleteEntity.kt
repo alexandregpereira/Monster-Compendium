@@ -76,6 +76,12 @@ data class MonsterCompleteEntity(
     )
     val actions: List<ActionWithDamageDicesEntity>,
     @Relation(
+        entity = LegendaryActionEntity::class,
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val legendaryActions: List<LegendaryActionWithDamageDicesEntity>,
+    @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
