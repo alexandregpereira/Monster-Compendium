@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDiceDao
+import br.alexandregpereira.hunter.data.monster.local.dao.LegendaryActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SavingThrowDao
@@ -58,6 +59,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
     private val reactionDao: ReactionDao,
     private val spellcastingDao: SpellcastingDao,
     private val spellUsageDao: SpellUsageDao,
+    private val legendaryActionDao: LegendaryActionDao,
 ) : MonsterLocalDataSource {
 
     private val mutex = Mutex()
@@ -136,6 +138,7 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         spellcastingDao.deleteAllSpellUsageCrossReferences()
         spellUsageDao.deleteAll()
         spellUsageDao.deleteAllSpellCrossReferences()
+        legendaryActionDao.deleteAll()
         Log.d("saveMonsters", "deleteAll in ${System.currentTimeMillis() - startTime} ms")
     }
 
@@ -156,6 +159,9 @@ internal class MonsterLocalDataSourceImpl @Inject constructor(
         damageDao.insertVulnerability(monsters.map { it.damageVulnerabilities }.reduceList())
         conditionDao.insert(monsters.map { it.conditionImmunities }.reduceList())
         reactionDao.insert(monsters.map { it.reactions }.reduceList())
+        legendaryActionDao.insert(
+            monsters.map { it.legendaryActions }.reduceList().map { it.action }
+        )
 
         spellcastingDao.insert(
             monsters.map { entity ->

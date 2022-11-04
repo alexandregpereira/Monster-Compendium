@@ -29,6 +29,7 @@
     <string name="monster_detail_languages">Languages</string>
     <string name="monster_detail_special_abilities">Special Abilities</string>
     <string name="monster_detail_actions">Actions</string>
+    <string name="monster_detail_legendary_actions">Legendary Actions</string>
     <string name="monster_detail_attack">Attack</string>
     <string name="monster_detail_options">Options</string>
     <string name="monster_detail_go_to_top">Go to top</string>

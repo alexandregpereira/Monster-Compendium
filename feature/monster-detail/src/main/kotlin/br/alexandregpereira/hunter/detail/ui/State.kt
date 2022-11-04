@@ -52,6 +52,7 @@ data class MonsterState(
     val languages: String = "",
     val specialAbilities: List<AbilityDescriptionState> = emptyList(),
     val actions: List<ActionState> = emptyList(),
+    val legendaryActions: List<ActionState> = emptyList(),
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
 )

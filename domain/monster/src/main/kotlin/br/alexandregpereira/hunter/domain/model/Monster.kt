@@ -39,6 +39,7 @@ data class Monster(
     val conditionImmunities: List<Condition> = emptyList(),
     val specialAbilities: List<AbilityDescription> = emptyList(),
     val actions: List<Action> = emptyList(),
+    val legendaryActions: List<Action> = emptyList(),
     val reactions: List<AbilityDescription> = emptyList(),
     val spellcastings: List<Spellcasting> = emptyList(),
 ) {

@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDiceDao
+import br.alexandregpereira.hunter.data.monster.local.dao.LegendaryActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SavingThrowDao
@@ -40,6 +41,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
@@ -66,6 +68,7 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         DamageResistanceEntity::class,
         DamageImmunityEntity::class,
         DamageDiceEntity::class,
+        LegendaryActionEntity::class,
         MonsterEntity::class,
         MonsterFolderEntity::class,
         ReactionEntity::class,
@@ -81,8 +84,8 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         SpellUsageSpellCrossRefEntity::class,
         SpellPreviewEntity::class,
     ],
-    version = 18,
-    autoMigrations = [ AutoMigration(from = 17, to = 18) ]
+    version = 19,
+    autoMigrations = [ AutoMigration(from = 17, to = 18), AutoMigration(from = 18, to = 19) ]
 )
 internal abstract class AppDatabase : RoomDatabase() {
     abstract fun abilityScoreDao(): AbilityScoreDao
@@ -90,6 +93,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun conditionDao(): ConditionDao
     abstract fun damageDao(): DamageDao
     abstract fun damageDiceDao(): DamageDiceDao
+    abstract fun legendaryActionDao(): LegendaryActionDao
     abstract fun monsterDao(): MonsterDao
     abstract fun monsterFolderDao(): MonsterFolderDao
     abstract fun reactionDao(): ReactionDao

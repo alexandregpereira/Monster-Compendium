@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.ActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ConditionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDao
 import br.alexandregpereira.hunter.data.monster.local.dao.DamageDiceDao
+import br.alexandregpereira.hunter.data.monster.local.dao.LegendaryActionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.dao.ReactionDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SavingThrowDao
@@ -86,6 +87,11 @@ internal class DatabaseModule {
     @Provides
     internal fun provideDamageDiceDao(appDatabase: AppDatabase): DamageDiceDao {
         return appDatabase.damageDiceDao()
+    }
+
+    @Provides
+    internal fun provideLegendaryActionDao(appDatabase: AppDatabase): LegendaryActionDao {
+        return appDatabase.legendaryActionDao()
     }
 
     @Provides
