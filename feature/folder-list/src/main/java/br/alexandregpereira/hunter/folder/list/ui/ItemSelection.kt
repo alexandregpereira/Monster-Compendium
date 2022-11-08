@@ -27,7 +27,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.BottomCenter
@@ -39,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.list.R
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
+import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -57,28 +60,34 @@ internal fun ItemSelection(
         enter = slideInVertically { fullHeight -> fullHeight * 2 },
         exit = slideOutVertically { fullHeight -> fullHeight * 2 },
     ) {
-        Box(modifier.fillMaxHeight()) {
-            Card(
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .align(BottomCenter)
-            ) {
-                Column(Modifier.padding(16.dp)) {
-                    val titleRes = if (itemSelectionCount == 1) {
-                        R.string.folder_list_item_selected
-                    } else R.string.folder_list_items_selected
-                    ScreenHeader(
-                        title = stringResource(titleRes, itemSelectionCount),
-                    )
+        SwipeVerticalToDismiss(
+            swipeTriggerDistance = 60.dp,
+            onClose = onClose,
+        ) {
+            Box(modifier.fillMaxHeight()) {
+                Card(
+                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(BottomCenter)
+                        .verticalScroll(state = rememberScrollState())
+                ) {
+                    Column(Modifier.padding(16.dp)) {
+                        val titleRes = if (itemSelectionCount == 1) {
+                            R.string.folder_list_item_selected
+                        } else R.string.folder_list_items_selected
+                        ScreenHeader(
+                            title = stringResource(titleRes, itemSelectionCount),
+                        )
 
-                    AppButton(
-                        text = stringResource(R.string.folder_list_delete),
-                        modifier = Modifier.padding(top = 24.dp),
-                        onClick = onDeleteClick
-                    )
+                        AppButton(
+                            text = stringResource(R.string.folder_list_delete),
+                            modifier = Modifier.padding(top = 24.dp),
+                            onClick = onDeleteClick
+                        )
 
-                    Spacer(modifier = Modifier.height(contentBottomPadding))
+                        Spacer(modifier = Modifier.height(contentBottomPadding))
+                    }
                 }
             }
         }
