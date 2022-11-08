@@ -35,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
+import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -54,28 +55,30 @@ fun MonsterDetailFeature(
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight },
     ) {
-        CircularLoading(
-            isLoading = viewState.isLoading,
-            modifier = Modifier.background(MaterialTheme.colors.surface)
-        ) {
-            if (viewState.monsters.isEmpty()) return@CircularLoading
-            MonsterDetailScreen(
-                viewState.monsters,
-                viewState.initialMonsterIndex,
-                contentPadding,
-                onMonsterChanged = { monster ->
-                    viewModel.onMonsterChanged(monster.index)
-                },
-                onOptionsClicked = viewModel::onShowOptionsClicked,
-                onSpellClicked = viewModel::onSpellClicked
-            )
+        SwipeVerticalToDismiss(onClose = viewModel::onClose) {
+            CircularLoading(
+                isLoading = viewState.isLoading,
+                modifier = Modifier.background(MaterialTheme.colors.surface)
+            ) {
+                if (viewState.monsters.isEmpty()) return@CircularLoading
+                MonsterDetailScreen(
+                    viewState.monsters,
+                    viewState.initialMonsterIndex,
+                    contentPadding,
+                    onMonsterChanged = { monster ->
+                        viewModel.onMonsterChanged(monster.index)
+                    },
+                    onOptionsClicked = viewModel::onShowOptionsClicked,
+                    onSpellClicked = viewModel::onSpellClicked
+                )
 
-            MonsterDetailOptionPicker(
-                options = viewState.options,
-                showOptions = viewState.showOptions,
-                onOptionSelected = viewModel::onOptionClicked,
-                onClosed = viewModel::onShowOptionsClosed
-            )
+                MonsterDetailOptionPicker(
+                    options = viewState.options,
+                    showOptions = viewState.showOptions,
+                    onOptionSelected = viewModel::onOptionClicked,
+                    onClosed = viewModel::onShowOptionsClosed
+                )
+            }
         }
     }
 }

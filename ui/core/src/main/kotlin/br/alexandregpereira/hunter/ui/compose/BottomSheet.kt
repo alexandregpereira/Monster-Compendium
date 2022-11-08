@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
@@ -46,6 +47,7 @@ fun BottomSheet(
     opened: Boolean = false,
     backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     contentPadding: PaddingValues = PaddingValues(),
+    swipeTriggerDistance: Dp = 120.dp,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
@@ -60,30 +62,36 @@ fun BottomSheet(
         enter = slideInVertically { fullHeight -> fullHeight * 2 },
         exit = slideOutVertically { fullHeight -> fullHeight * 2 },
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.verticalScroll(state = rememberScrollState())
-                    .align(Alignment.BottomCenter)
-            ) {
-                val topSpaceHeight = 288.dp
-                Spacer(
+        SwipeVerticalToDismiss(
+            swipeTriggerDistance = swipeTriggerDistance,
+            onClose = onClose
+        ) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                        .noIndicationClick(onClick = onClose)
-                )
-                Card(
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                    modifier = Modifier.fillMaxWidth()
+                        .verticalScroll(state = rememberScrollState())
+                        .align(Alignment.BottomCenter)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(
-                            start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                            end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
-                        )
+                    val topSpaceHeight = 288.dp
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(topSpaceHeight + contentPadding.calculateTopPadding())
+                            .noIndicationClick(onClick = onClose)
+                    )
+                    Card(
+                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        content()
-                        Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
+                        Column(
+                            modifier = Modifier.padding(
+                                start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                                end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                            )
+                        ) {
+                            content()
+                            Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
+                        }
                     }
                 }
             }
