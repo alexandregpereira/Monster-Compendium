@@ -17,13 +17,12 @@
 package br.alexandregpereira.hunter.folder.list.ui
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -45,7 +44,7 @@ import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
-internal fun ItemSelection(
+internal fun BoxScope.ItemSelection(
     itemSelectionCount: Int,
     modifier: Modifier = Modifier,
     isOpen: Boolean = true,
@@ -55,40 +54,32 @@ internal fun ItemSelection(
 ) {
     BackHandler(enabled = isOpen, onBack = onClose)
 
-    AnimatedVisibility(
+    SwipeVerticalToDismiss(
         visible = isOpen,
-        enter = slideInVertically { fullHeight -> fullHeight * 2 },
-        exit = slideOutVertically { fullHeight -> fullHeight * 2 },
+        onClose = onClose,
+        modifier = Modifier.align(BottomCenter)
     ) {
-        SwipeVerticalToDismiss(
-            swipeTriggerDistance = 60.dp,
-            onClose = onClose,
+        Card(
+            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .verticalScroll(state = rememberScrollState())
         ) {
-            Box(modifier.fillMaxHeight()) {
-                Card(
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .align(BottomCenter)
-                        .verticalScroll(state = rememberScrollState())
-                ) {
-                    Column(Modifier.padding(16.dp)) {
-                        val titleRes = if (itemSelectionCount == 1) {
-                            R.string.folder_list_item_selected
-                        } else R.string.folder_list_items_selected
-                        ScreenHeader(
-                            title = stringResource(titleRes, itemSelectionCount),
-                        )
+            Column(Modifier.padding(16.dp)) {
+                val titleRes = if (itemSelectionCount == 1) {
+                    R.string.folder_list_item_selected
+                } else R.string.folder_list_items_selected
+                ScreenHeader(
+                    title = stringResource(titleRes, itemSelectionCount),
+                )
 
-                        AppButton(
-                            text = stringResource(R.string.folder_list_delete),
-                            modifier = Modifier.padding(top = 24.dp),
-                            onClick = onDeleteClick
-                        )
+                AppButton(
+                    text = stringResource(R.string.folder_list_delete),
+                    modifier = Modifier.padding(top = 24.dp),
+                    onClick = onDeleteClick
+                )
 
-                        Spacer(modifier = Modifier.height(contentBottomPadding))
-                    }
-                }
+                Spacer(modifier = Modifier.height(contentBottomPadding))
             }
         }
     }
@@ -97,7 +88,9 @@ internal fun ItemSelection(
 @Preview
 @Composable
 private fun ItemSelectionPreview() = HunterTheme {
-    ItemSelection(
-        itemSelectionCount = 2,
-    )
+    Box(Modifier.fillMaxSize()) {
+        ItemSelection(
+            itemSelectionCount = 2,
+        )
+    }
 }

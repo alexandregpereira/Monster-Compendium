@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.folder.list.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -31,19 +32,21 @@ internal fun FolderListScreen(
     onLongCLick: (String) -> Unit = {},
     onItemSelectionClose: () -> Unit = {},
     onItemSelectionDeleteClick: () -> Unit = {}
-) = Window(Modifier.fillMaxSize()) {
-    FolderCardGrid(
-        folders = state.folders,
-        contentPadding = contentPadding,
-        onCLick = onCLick,
-        onLongCLick = onLongCLick
-    )
+) = Window {
+    Box(Modifier.fillMaxSize()) {
+        FolderCardGrid(
+            folders = state.folders,
+            contentPadding = contentPadding,
+            onCLick = onCLick,
+            onLongCLick = onLongCLick
+        )
 
-    ItemSelection(
-        itemSelectionCount = state.itemSelectionCount,
-        contentBottomPadding = contentPadding.calculateBottomPadding(),
-        onClose = onItemSelectionClose,
-        onDeleteClick = onItemSelectionDeleteClick,
-        isOpen = state.isItemSelectionOpen
-    )
+        ItemSelection(
+            itemSelectionCount = state.itemSelectionCount,
+            contentBottomPadding = contentPadding.calculateBottomPadding(),
+            onClose = onItemSelectionClose,
+            onDeleteClick = onItemSelectionDeleteClick,
+            isOpen = state.isItemSelectionOpen,
+        )
+    }
 }

@@ -16,32 +16,40 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun SwipeVerticalToDismiss(
-    swipeTriggerDistance: Dp = 200.dp,
+    visible: Boolean,
+    modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    val swipeVerticalState = rememberSwipeVerticalState()
-    SwipeVertical(
-        state = swipeVerticalState,
-        onSwipeTriggered = onClose,
-        swipeTriggerDistance = swipeTriggerDistance,
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically { fullHeight -> fullHeight },
+        exit = slideOutVertically { fullHeight -> fullHeight },
+        modifier = modifier
     ) {
-        Box(
-            modifier = Modifier
-                .graphicsLayer {
-                    this.translationY = swipeVerticalState.offset
-                }
+        val swipeVerticalState = rememberSwipeVerticalState()
+        SwipeVertical(
+            state = swipeVerticalState,
+            onSwipeTriggered = onClose,
         ) {
-            content()
+            Box(
+                modifier = Modifier
+                    .graphicsLayer {
+                        this.translationY = swipeVerticalState.offset
+                    }
+            ) {
+                content()
+            }
         }
     }
 }
