@@ -17,9 +17,6 @@
 package br.alexandregpereira.hunter.folder.detail.ui
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -40,27 +37,21 @@ internal fun FolderDetailScreen(
 ) {
     BackHandler(enabled = state.isOpen, onBack = onClose)
 
-    AnimatedVisibility(
-        visible = state.isOpen,
-        enter = slideInVertically { fullHeight -> fullHeight },
-        exit = slideOutVertically { fullHeight -> fullHeight }
-    ) {
-        SwipeVerticalToDismiss(onClose = onClose) {
-            Window(Modifier.fillMaxSize()) {
-                val monstersBySection = mapOf(
-                    SectionState(
-                        title = state.folderName,
-                        isHeader = true
-                    ) to state.monsters
-                )
-                MonsterCompendium(
-                    monstersBySection = monstersBySection,
-                    animateItems = true,
-                    contentPadding = contentPadding,
-                    onItemCLick = onItemCLick,
-                    onItemLongCLick = onItemLongCLick
-                )
-            }
+    SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
+        Window(Modifier.fillMaxSize()) {
+            val monstersBySection = mapOf(
+                SectionState(
+                    title = state.folderName,
+                    isHeader = true
+                ) to state.monsters
+            )
+            MonsterCompendium(
+                monstersBySection = monstersBySection,
+                animateItems = true,
+                contentPadding = contentPadding,
+                onItemCLick = onItemCLick,
+                onItemLongCLick = onItemLongCLick
+            )
         }
     }
 }

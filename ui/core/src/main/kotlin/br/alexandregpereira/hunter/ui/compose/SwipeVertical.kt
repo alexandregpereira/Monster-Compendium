@@ -33,10 +33,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.Velocity
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -51,16 +49,14 @@ fun SwipeVertical(
     onSwipeTriggered: () -> Unit,
     modifier: Modifier = Modifier,
     swipeEnabled: Boolean = true,
-    swipeTriggerDistance: Dp = 200.dp,
     content: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val updatedOnSwipeTriggered = rememberUpdatedState(onSwipeTriggered)
-    val swipeTriggerPx = with(LocalDensity.current) { swipeTriggerDistance.toPx() }
 
     // Our LaunchedEffect, which animates the content to its resting position
     LaunchedEffect(state.isSwipeInProgress) {
-        if (!state.isSwipeInProgress && state.offset < swipeTriggerPx) {
+        if (!state.isSwipeInProgress && state.isSwipeTriggered().not()) {
             // If there's not a swipe in progress, rest the indicator at 0f
             state.animateOffsetTo(0f)
         }
@@ -74,24 +70,39 @@ fun SwipeVertical(
         }
     }.apply {
         this.enabled = swipeEnabled
-        this.swipeTrigger = swipeTriggerPx
     }
 
-    Box(modifier.nestedScroll(connection = nestedScrollConnection)) {
+    Box(
+        modifier
+            .nestedScroll(connection = nestedScrollConnection)
+            .onGloballyPositioned {
+                state.height = it.size.height.toFloat()
+            }
+    ) {
         content()
     }
 }
 
 @Composable
-fun rememberSwipeVerticalState(): SwipeVerticalState {
+fun rememberSwipeVerticalState(
+    swipeTriggerPercentage: Float = 0.1f
+): SwipeVerticalState {
     return remember {
-        SwipeVerticalState()
+        SwipeVerticalState(swipeTriggerPercentage)
     }
 }
 
-class SwipeVerticalState {
+class SwipeVerticalState(
+    private val swipeTriggerPercentage: Float
+) {
     private val _offset = Animatable(0f)
     private val mutatorMutex = MutatorMutex()
+
+    private val swipeTrigger: Float
+        get() = height * swipeTriggerPercentage
+
+    var height: Float by mutableStateOf(0f)
+        internal set
 
     /**
      * Whether a swipe/drag is currently in progress.
@@ -118,6 +129,8 @@ class SwipeVerticalState {
             _offset.snapTo(_offset.value + delta)
         }
     }
+
+    fun isSwipeTriggered(): Boolean = offset >= swipeTrigger
 }
 
 private class SwipeVerticalNestedScrollConnection(
@@ -126,7 +139,6 @@ private class SwipeVerticalNestedScrollConnection(
     private val onSwipeTriggered: () -> Unit,
 ) : NestedScrollConnection {
     var enabled: Boolean = false
-    var swipeTrigger: Float = 0f
 
     override fun onPreScroll(
         available: Offset,
@@ -174,7 +186,7 @@ private class SwipeVerticalNestedScrollConnection(
 
     override suspend fun onPreFling(available: Velocity): Velocity {
         // If we're dragging and scrolled past the trigger point, trigger.
-        if (state.offset >= swipeTrigger) {
+        if (state.isSwipeTriggered()) {
             onSwipeTriggered()
         }
 

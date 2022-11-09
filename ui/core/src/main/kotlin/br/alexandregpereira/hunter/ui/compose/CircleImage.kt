@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -30,6 +31,7 @@ fun CircleImage(
     backgroundColor: String,
     contentDescription: String,
     modifier: Modifier = Modifier,
+    size: Dp = 48.dp,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {},
 ) {
@@ -39,7 +41,7 @@ fun CircleImage(
         shape = CircleShape,
         backgroundColor = backgroundColor,
         modifier = modifier
-            .size(48.dp)
+            .size(size)
             .animatePressed(
                 pressedScale = 0.8f,
                 onClick = onClick,

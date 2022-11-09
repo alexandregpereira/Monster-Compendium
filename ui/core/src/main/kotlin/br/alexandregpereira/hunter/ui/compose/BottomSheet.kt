@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -57,41 +54,35 @@ fun BottomSheet(
         onClosed = onClose,
     )
 
-    AnimatedVisibility(
+    SwipeVerticalToDismiss(
         visible = opened,
-        enter = slideInVertically { fullHeight -> fullHeight * 2 },
-        exit = slideOutVertically { fullHeight -> fullHeight * 2 },
+        onClose = onClose
     ) {
-        SwipeVerticalToDismiss(
-            swipeTriggerDistance = swipeTriggerDistance,
-            onClose = onClose
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Column(
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(state = rememberScrollState())
+                    .align(Alignment.BottomCenter)
+            ) {
+                val topSpaceHeight = 288.dp
+                Spacer(
                     modifier = Modifier
-                        .verticalScroll(state = rememberScrollState())
-                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .height(topSpaceHeight + contentPadding.calculateTopPadding())
+                        .noIndicationClick(onClick = onClose)
+                )
+                Card(
+                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    val topSpaceHeight = 288.dp
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                            .noIndicationClick(onClick = onClose)
-                    )
-                    Card(
-                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                        modifier = Modifier.fillMaxWidth()
+                    Column(
+                        modifier = Modifier.padding(
+                            start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                            end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                        )
                     ) {
-                        Column(
-                            modifier = Modifier.padding(
-                                start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                                end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
-                            )
-                        ) {
-                            content()
-                            Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
-                        }
+                        content()
+                        Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
                     }
                 }
             }
