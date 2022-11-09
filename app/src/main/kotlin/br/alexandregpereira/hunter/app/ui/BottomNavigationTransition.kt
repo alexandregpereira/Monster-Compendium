@@ -20,6 +20,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.app.BottomBarItem
+import br.alexandregpereira.hunter.app.BuildConfig
 import br.alexandregpereira.hunter.folder.list.FolderListFeature
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
 import br.alexandregpereira.hunter.search.SearchScreenFeature
@@ -42,6 +43,7 @@ fun BottomNavigationTransition(
                 contentPadding = contentPadding,
             )
             BottomBarItem.SETTINGS -> SettingsFeature(
+                versionName = BuildConfig.VERSION_NAME,
                 contentPadding = contentPadding,
             )
         }
