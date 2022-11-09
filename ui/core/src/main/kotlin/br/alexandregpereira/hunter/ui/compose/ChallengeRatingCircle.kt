@@ -18,8 +18,8 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -42,14 +42,18 @@ fun ChallengeRatingCircle(
     challengeRating: Float,
     size: Dp,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 14.sp
+    fontSize: TextUnit = 14.sp,
+    contentTopPadding: Dp = 0.dp
 ) = Box(
     contentAlignment = Alignment.CenterStart,
-    modifier = modifier.size(size)
+    modifier = modifier
+        .width(size)
+        .height(size + contentTopPadding)
 ) {
     DrawChallengeRatingCircle(
         color = MaterialTheme.colors.surface,
-        canvasSize = size
+        canvasSize = size,
+        contentTopPadding = contentTopPadding
     )
     Text(
         challengeRating.getChallengeRatingFormatted(),
@@ -59,8 +63,11 @@ fun ChallengeRatingCircle(
         textAlign = TextAlign.Center,
         maxLines = 1,
         modifier = Modifier
-            .width(size - 20.dp)
-            .padding(bottom = 16.dp)
+            .width(size - 16.dp)
+            .padding(
+                bottom = 16.dp,
+                top = contentTopPadding + 4.dp
+            )
     )
 }
 
@@ -68,17 +75,24 @@ fun ChallengeRatingCircle(
 private fun DrawChallengeRatingCircle(
     color: Color,
     modifier: Modifier = Modifier,
-    canvasSize: Dp = 48.dp
-) = Canvas(modifier.size(canvasSize)) {
+    canvasSize: Dp = 48.dp,
+    contentTopPadding: Dp = 0.dp
+) = Canvas(
+    modifier
+        .width(canvasSize)
+        .height(canvasSize + contentTopPadding)
+) {
     val width = size.width - 8.dp.toPx()
     val height = size.height - 8.dp.toPx()
+    val topPadding = contentTopPadding.toPx()
     drawPath(
         path = Path().apply {
             lineTo(0f, 0f)
             lineTo(width, 0f)
+            lineTo(width, topPadding)
             cubicTo(
-                x1 = width, y1 = height / 2,
-                x2 = width / 2, y2 = height,
+                x1 = width, y1 = height * 0.7f,
+                x2 = width * 0.7f, y2 = height,
                 x3 = 0f, y3 = height
             )
             close()
@@ -113,7 +127,8 @@ private fun ChallengeRatingPreviewWithDifferentSize() {
         ChallengeRatingCircle(
             10f,
             size = 56.dp,
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            contentTopPadding = 24.dp
         )
     }
 }

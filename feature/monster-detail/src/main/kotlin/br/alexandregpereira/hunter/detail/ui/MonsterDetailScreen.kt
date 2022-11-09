@@ -57,6 +57,7 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -214,7 +215,6 @@ private fun MonsterImageCompose(
         Modifier
             .fillMaxSize()
             .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
-            .padding(top = contentPadding.calculateTopPadding())
     ) {
         MonsterImages(
             images = monsters.map { ImageState(it.imageState.url, it.name) },
@@ -222,16 +222,21 @@ private fun MonsterImageCompose(
             height = IMAGE_HEIGHT,
             shape = RectangleShape,
             contentPadding = PaddingValues(
-                top = MONSTER_IMAGE_COMPOSE_TOP_PADDING,
+                top = MONSTER_IMAGE_COMPOSE_TOP_PADDING + contentPadding.calculateTopPadding(),
                 bottom = MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING
             )
         )
 
-        ChallengeRatingCompose(monsters, pagerState)
+        ChallengeRatingCompose(
+            monsters,
+            pagerState,
+            contentTopPadding = contentPadding.calculateTopPadding()
+        )
 
         MonsterTypeIcon(
             monsters = monsters,
-            pagerState = pagerState
+            pagerState = pagerState,
+            modifier = Modifier.padding(top = contentPadding.calculateTopPadding())
         )
     }
 }
@@ -327,12 +332,15 @@ private fun MonsterTopBar(
 private fun ChallengeRatingCompose(
     monsters: List<MonsterState>,
     pagerState: PagerState,
+    modifier: Modifier = Modifier,
+    contentTopPadding: Dp = 0.dp
 ) {
-    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState ->
+    AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         ChallengeRatingCircle(
             challengeRating = data.imageState.challengeRating,
             size = 56.dp,
             fontSize = 16.sp,
+            contentTopPadding = contentTopPadding
         )
     }
 }
@@ -342,8 +350,9 @@ private fun ChallengeRatingCompose(
 private fun MonsterTypeIcon(
     monsters: List<MonsterState>,
     pagerState: PagerState,
+    modifier: Modifier = Modifier,
 ) {
-    AlphaTransition(dataList = monsters, pagerState) { data: MonsterState ->
+    AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
             iconRes = data.imageState.type.iconRes,
             iconSize = 32.dp,
