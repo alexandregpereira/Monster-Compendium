@@ -27,12 +27,14 @@ import br.alexandregpereira.hunter.settings.ui.SettingsScreen
 
 @Composable
 fun SettingsFeature(
+    versionName: String,
     contentPadding: PaddingValues,
 ) {
     val viewModel: SettingsViewModel = viewModel()
     val context = LocalContext.current
     SettingsScreen(
         state = viewModel.state.collectAsState().value,
+        versionName = versionName,
         contentPadding = contentPadding,
         onImageBaseUrlChange = viewModel::onImageBaseUrlChange,
         onAlternativeSourceBaseUrlChange = viewModel::onAlternativeSourceBaseUrlChange,

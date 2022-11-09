@@ -16,32 +16,61 @@
 
 package br.alexandregpereira.hunter.settings.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.SettingsViewState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun SettingsScreen(
     state: SettingsViewState,
-    contentPadding: PaddingValues,
+    versionName: String,
+    contentPadding: PaddingValues = PaddingValues(),
     onImageBaseUrlChange: (String) -> Unit = {},
     onAlternativeSourceBaseUrlChange: (String) -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
-) = Window(modifier = Modifier.fillMaxSize()) {
-    Settings(
-        imageBaseUrl = state.imageBaseUrl,
-        alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
-        saveButtonEnabled = state.saveButtonEnabled,
-        onImageBaseUrlChange = onImageBaseUrlChange,
-        onAlternativeSourceBaseUrlChange = onAlternativeSourceBaseUrlChange,
-        onSaveButtonClick = onSaveButtonClick,
-        modifier = Modifier.padding(
-            top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding()
+) = Window {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Settings(
+            imageBaseUrl = state.imageBaseUrl,
+            alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
+            saveButtonEnabled = state.saveButtonEnabled,
+            onImageBaseUrlChange = onImageBaseUrlChange,
+            onAlternativeSourceBaseUrlChange = onAlternativeSourceBaseUrlChange,
+            onSaveButtonClick = onSaveButtonClick,
+            modifier = Modifier.padding(
+                top = contentPadding.calculateTopPadding(),
+                bottom = contentPadding.calculateBottomPadding()
+            )
         )
+
+        Text(
+            text = "v$versionName",
+            fontWeight = FontWeight.Light,
+            fontSize = 12.sp,
+            modifier = Modifier.align(Alignment.BottomEnd)
+                .padding(contentPadding)
+                .padding(8.dp)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsScreenPreview() {
+    SettingsScreen(
+        state = SettingsViewState(),
+        versionName = "1.20.1"
     )
 }
+
