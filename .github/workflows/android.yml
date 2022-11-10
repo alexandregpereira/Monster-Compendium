@@ -13,22 +13,27 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.5.0
+    
     - name: set up JDK 11
       uses: actions/setup-java@v3.6.0
       with:
         java-version: '11'
         distribution: 'adopt'
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2.3.3
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      
     - name: Build with Gradle
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
       run: ./gradlew build
+      
     - name: Upload the test report
       if: failure()
       uses: actions/upload-artifact@v3.1.1
@@ -38,6 +43,7 @@ jobs:
           feature-monster-compendium/build/reports/tests
           data/build/reports/tests
           domain/build/reports/tests
+          
     - name:  Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
