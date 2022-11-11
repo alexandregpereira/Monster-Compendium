@@ -32,7 +32,7 @@ jobs:
     - name: Build with Gradle
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew build --scan
+      run: ./gradlew build
       
     - name: Upload the test report
       if: failure()

@@ -44,7 +44,6 @@ fun BottomSheet(
     opened: Boolean = false,
     backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     contentPadding: PaddingValues = PaddingValues(),
-    swipeTriggerDistance: Dp = 120.dp,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
