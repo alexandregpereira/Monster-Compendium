@@ -45,7 +45,6 @@ fun MonsterDetailOptionPicker(
 ) = BottomSheet(
     opened = showOptions,
     onClose = onClosed,
-    swipeTriggerDistance = 80.dp
 ) {
     MonsterDetailOptions(options, onOptionSelected)
 }
