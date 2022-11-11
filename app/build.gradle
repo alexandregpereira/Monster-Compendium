@@ -28,9 +28,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('monster-keystore.jks')
+            storePassword System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+            keyAlias 'monster'
+            keyPassword System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
