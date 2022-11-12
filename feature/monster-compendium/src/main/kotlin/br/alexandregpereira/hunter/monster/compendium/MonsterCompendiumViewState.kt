@@ -17,16 +17,23 @@
 package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
 import br.alexandregpereira.hunter.ui.compendium.SectionState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Error
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Loading
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
 
 data class MonsterCompendiumViewState(
-    val isLoading: Boolean = true,
+    val loadingState: CircularLoadingState = Loading,
     val monstersBySection: Map<SectionState, List<MonsterCardState>> = emptyMap(),
     val alphabet: List<Char> = emptyList(),
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
     val isShowingMonsterFolderPreview: Boolean = false,
+    val errorState: MonsterCompendiumErrorState? = null
 )
 
 internal fun SavedStateHandle.getState(): MonsterCompendiumViewState {
@@ -43,7 +50,7 @@ internal fun MonsterCompendiumViewState.saveState(
 }
 
 fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumViewState {
-    return this.copy(isLoading = isLoading)
+    return this.copy(loadingState = if (isLoading) Loading else Success)
 }
 
 fun MonsterCompendiumViewState.complete(
@@ -51,11 +58,15 @@ fun MonsterCompendiumViewState.complete(
     alphabet: List<Char>,
     alphabetIndex: Int
 ) = this.copy(
-    isLoading = false,
+    loadingState = Success,
     monstersBySection = monstersBySection,
     alphabet = alphabet,
     alphabetIndex = alphabetIndex
 )
+
+fun MonsterCompendiumViewState.error(): MonsterCompendiumViewState {
+    return this.copy(loadingState = Error(NO_INTERNET_CONNECTION))
+}
 
 fun MonsterCompendiumViewState.alphabetIndex(
     alphabetIndex: Int,
