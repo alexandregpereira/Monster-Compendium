@@ -16,12 +16,14 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
-interface MonsterCompendiumEvents {
-    fun onFirstVisibleItemChange(position: Int)
-    fun onItemCLick(index: String)
-    fun onItemLongCLick(index: String)
-    fun onAlphabetClosed()
-    fun onAlphabetOpened()
-    fun onAlphabetIndexClicked(position: Int)
-    fun onErrorButtonClick()
+import br.alexandregpereira.hunter.monster.compendium.R
+
+enum class MonsterCompendiumErrorState(
+    val titleRes: Int,
+    val buttonTextRes: Int
+) {
+    NO_INTERNET_CONNECTION(
+        titleRes = R.string.monster_compendium_error_no_internet_connection,
+        buttonTextRes = R.string.monster_compendium_error_try_again
+    )
 }

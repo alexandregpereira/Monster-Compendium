@@ -100,10 +100,10 @@ class MonsterCompendiumViewModel @Inject constructor(
                 emit(state.value.loading(isLoading = true) to initialScrollItemPosition)
             }
             .flowOn(dispatcher)
-            .catch {
-                Log.e("MonsterViewModel", it.message ?: "")
-                it.printStackTrace()
-                emit(state.value.loading(isLoading = false) to initialScrollItemPosition)
+            .catch { error ->
+                Log.e("MonsterViewModel", error.message ?: "")
+                error.printStackTrace()
+                emit(state.value.error() to initialScrollItemPosition)
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
@@ -130,6 +130,10 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     override fun onAlphabetIndexClicked(position: Int) {
         navigateToCompendiumIndex(position)
+    }
+
+    override fun onErrorButtonClick() {
+        loadMonsters()
     }
 
     private fun navigateToCompendiumIndex(alphabetIndex: Int) {

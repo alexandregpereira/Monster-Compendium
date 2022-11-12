@@ -26,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Error
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Loading
+import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
 
 @Composable
 fun CircularLoading(
@@ -33,17 +36,37 @@ fun CircularLoading(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Crossfade(targetState = isLoading, modifier = modifier) {
-        if (it) {
-            CircularLoading()
-        } else {
-            content()
+    CircularLoading<Unit>(
+        state = if (isLoading) Loading else Success,
+        modifier = modifier,
+        content = content
+    )
+}
+
+@Composable
+inline fun <reified ErrorState> CircularLoading(
+    state: CircularLoadingState,
+    modifier: Modifier = Modifier,
+    crossinline errorContent: @Composable (ErrorState) -> Unit = {},
+    crossinline content: @Composable () -> Unit
+) {
+    Crossfade(targetState = state, modifier = modifier) {
+        when (it) {
+            Loading -> CircularLoadingIndicator()
+            Success -> content()
+            is Error<*> -> if (it.errorState is ErrorState) errorContent(it.errorState)
         }
     }
 }
 
+sealed class CircularLoadingState {
+    object Loading : CircularLoadingState()
+    object Success : CircularLoadingState()
+    data class Error<ErrorState>(val errorState: ErrorState) : CircularLoadingState()
+}
+
 @Composable
-fun CircularLoading() = Box(
+fun CircularLoadingIndicator() = Box(
     contentAlignment = Alignment.Center,
     modifier = Modifier.fillMaxSize()
 ) {
