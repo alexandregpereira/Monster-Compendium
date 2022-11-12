@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">Hunter</string>
+    <string name="app_name">Compendium</string>
     <string name="compendium">Compendium</string>
     <string name="search">Search</string>
     <string name="folders">Folders</string>
