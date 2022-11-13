@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "br.alexandregpereira.hunter.app"
         minSdkVersion buildConfig.minSdk
-        targetSdkVersion buildConfig.targeSdk
+        targetSdkVersion buildConfig.targetSdk
         versionCode 5
         versionName "1.2.0"
 
