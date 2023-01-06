@@ -18,17 +18,12 @@ package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.domain.model.Proficiency
-import java.util.Locale
 
 internal fun List<SavingThrowDto>.toDomain(): List<Proficiency> {
     return this.map {
-        val name = it.type.name.lowercase(Locale.ROOT)
-            .substring(0..2)
-            .replaceFirstChar { char -> char.titlecase(Locale.ROOT) }
-
         Proficiency(
             index = it.index,
-            name = name,
+            name = it.type.name,
             modifier = it.modifier
         )
     }

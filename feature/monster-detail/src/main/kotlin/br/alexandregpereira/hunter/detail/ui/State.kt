@@ -42,7 +42,7 @@ data class MonsterState(
     val stats: StatsState = StatsState(armorClass = 0, hitPoints = 0, hitDice = ""),
     val speed: SpeedState = SpeedState(hover = false, values = emptyList()),
     val abilityScores: List<AbilityScoreState> = emptyList(),
-    val savingThrows: List<ProficiencyState> = emptyList(),
+    val savingThrows: List<SavingThrowState> = emptyList(),
     val skills: List<ProficiencyState> = emptyList(),
     val damageVulnerabilities: List<DamageState> = emptyList(),
     val damageResistances: List<DamageState> = emptyList(),
@@ -82,15 +82,30 @@ enum class SpeedTypeState(@DrawableRes val iconRes: Int) {
 }
 
 data class AbilityScoreState(
-    val name: String,
+    val type: AbilityScoreTypeState,
     val value: Int,
     val modifier: Int
 )
+
+enum class AbilityScoreTypeState(val stringRes: Int) {
+    STRENGTH(R.string.monster_detail_saving_throw_strength),
+    DEXTERITY(R.string.monster_detail_saving_throw_dexterity),
+    CONSTITUTION(R.string.monster_detail_saving_throw_constitution),
+    INTELLIGENCE(R.string.monster_detail_saving_throw_intelligence),
+    WISDOM(R.string.monster_detail_saving_throw_wisdom),
+    CHARISMA(R.string.monster_detail_saving_throw_charisma)
+}
 
 data class ProficiencyState(
     val index: String,
     val modifier: Int,
     val name: String
+)
+
+data class SavingThrowState(
+    val index: String,
+    val modifier: Int,
+    val type: AbilityScoreTypeState
 )
 
 data class DamageState(

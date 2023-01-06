@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.spell.remote
+package br.alexandregpereira.hunter.domain.settings
 
-import br.alexandregpereira.hunter.data.spell.remote.model.SpellDto
+import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase.Companion.SETTING_LANGUAGE_KEY
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-internal interface SpellRemoteDataSource {
+class SaveLanguageUseCase @Inject constructor(
+    private val settingsRepository: SettingsRepository
+) {
 
-    fun getSpells(lang: String): Flow<List<SpellDto>>
+    operator fun invoke(lang: String): Flow<Unit> {
+        if (IsLanguageSupported(lang).not()) return flowOf(Unit)
+        return settingsRepository.saveSettings(mapOf(SETTING_LANGUAGE_KEY to lang))
+    }
 }

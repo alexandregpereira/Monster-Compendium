@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2023 Alexandre Gomes Pereira
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="monster_detail_armor_class">Classe de Armadura</string>
+    <string name="monster_detail_speed_title">Deslocamento</string>
+    <string name="monster_detail_speed_hover">Pairar</string>
+    <string name="monster_detail_vulnerabilities">Vulnerabilidades</string>
+    <string name="monster_detail_resistances">Resistências</string>
+    <string name="monster_detail_immunities">Imunidades</string>
+    <string name="monster_detail_condition_immunities">Imunidades à Condição</string>
+    <string name="monster_detail_saving_throws">Salvaguardas</string>
+    <string name="monster_detail_skills">Perícias</string>
+    <string name="monster_detail_senses">Sentidos</string>
+    <string name="monster_detail_languages">Idiomas</string>
+    <string name="monster_detail_special_abilities">Habilidades Especiais</string>
+    <string name="monster_detail_actions">Ações</string>
+    <string name="monster_detail_legendary_actions">Ações Lendárias</string>
+    <string name="monster_detail_attack">Ataque</string>
+    <string name="monster_detail_options">Opções</string>
+    <string name="monster_detail_go_to_top">Ir para o Topo</string>
+    <string name="monster_detail_reactions">Reações</string>
+    <string name="monster_detail_spells">Magias</string>
+    <string name="monster_detail_spellcasting">Conjuração</string>
+    <string name="monster_detail_innate_spellcasting">Conjuração Inata</string>
+    <string name="monster_detail_ability_scores">Atributos</string>
+    <string name="monster_detail_options_add_to_folder">Adicionar à Pasta</string>
+    <string name="monster_detail_options_change_to_feet">Mudar para Pés</string>
+    <string name="monster_detail_options_change_to_meters">Mudar para Metros</string>
+    <string name="monster_detail_saving_throw_strength">Força</string>
+    <string name="monster_detail_saving_throw_dexterity">Destreza</string>
+    <string name="monster_detail_saving_throw_constitution">Constituição</string>
+    <string name="monster_detail_saving_throw_intelligence">Inteligência</string>
+    <string name="monster_detail_saving_throw_wisdom">Sabedoria</string>
+    <string name="monster_detail_saving_throw_charisma">Carisma</string>
+</resources>

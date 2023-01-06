@@ -69,7 +69,7 @@ fun SpellInfoGrid(
     spell.savingThrowType?.let {
         SpellTextInfo(
             title = stringResource(R.string.spell_detail_save_type),
-            description = it.name,
+            description = stringResource(id = it.stringRes),
             modifier = Modifier.padding(top = topPadding)
         )
     }

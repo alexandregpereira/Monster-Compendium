@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.spell.detail.ui
 
+import br.alexandregpereira.hunter.spell.detail.R
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 
 data class SpellState(
@@ -35,11 +36,11 @@ data class SpellState(
     val damageType: String? = null,
 )
 
-enum class SavingThrowTypeState {
-    STRENGTH,
-    DEXTERITY,
-    CONSTITUTION,
-    INTELLIGENCE,
-    WISDOM,
-    CHARISMA
+enum class SavingThrowTypeState(val stringRes: Int) {
+    STRENGTH(R.string.spell_detail_saving_throw_strength),
+    DEXTERITY(R.string.spell_detail_saving_throw_dexterity),
+    CONSTITUTION(R.string.spell_detail_saving_throw_constitution),
+    INTELLIGENCE(R.string.spell_detail_saving_throw_intelligence),
+    WISDOM(R.string.spell_detail_saving_throw_wisdom),
+    CHARISMA(R.string.spell_detail_saving_throw_charisma)
 }

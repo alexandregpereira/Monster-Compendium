@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
+import br.alexandregpereira.hunter.domain.sync.HandleLanguageUseCase
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import io.mockk.every
@@ -39,8 +40,9 @@ class GetMonsterPreviewsBySectionUseCaseTest {
 
     private val syncUseCase: SyncUseCase = mockk()
     private val getMonstersUseCase: GetMonsterPreviewsUseCase = mockk()
+    private val handleLanguageUseCase: HandleLanguageUseCase = mockk()
     private val useCase =
-        GetMonsterPreviewsBySectionUseCase(syncUseCase, getMonstersUseCase)
+        GetMonsterPreviewsBySectionUseCase(syncUseCase, getMonstersUseCase, handleLanguageUseCase)
 
     private fun createMonsters(): List<Monster> {
         return (0..23).map { index ->
@@ -67,6 +69,7 @@ class GetMonsterPreviewsBySectionUseCaseTest {
     fun invoke() = runBlocking {
         // Given
         val monsters = createMonsters().map { it.preview }
+        every { handleLanguageUseCase() } returns flowOf(Unit)
         every { syncUseCase() } returns flowOf(Unit)
         every { getMonstersUseCase() } returns flowOf(createMonsters().sortMonstersByNameAndGroup())
 

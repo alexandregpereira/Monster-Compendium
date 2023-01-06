@@ -25,7 +25,7 @@ internal class SpellRemoteDataSourceImpl @Inject constructor(
     private val api: SpellApi
 ) : SpellRemoteDataSource {
 
-    override fun getSpells(): Flow<List<SpellDto>> = flow {
-        emit(api.getSpells())
+    override fun getSpells(lang: String): Flow<List<SpellDto>> = flow {
+        emit(api.getSpells(lang))
     }
 }

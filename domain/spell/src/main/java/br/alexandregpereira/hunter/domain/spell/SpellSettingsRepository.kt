@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.spell.remote
+package br.alexandregpereira.hunter.domain.spell
 
-import br.alexandregpereira.hunter.data.spell.remote.model.SpellDto
-import retrofit2.http.GET
-import retrofit2.http.Path
+import kotlinx.coroutines.flow.Flow
 
-internal interface SpellApi {
+interface SpellSettingsRepository {
 
-    @GET("{lang}/spells.json")
-    suspend fun getSpells(@Path("lang") lang: String): List<SpellDto>
+    fun getLanguage(): Flow<String>
 }

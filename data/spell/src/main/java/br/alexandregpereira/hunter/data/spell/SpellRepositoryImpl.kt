@@ -36,8 +36,8 @@ internal class SpellRepositoryImpl @Inject constructor(
         return localDataSource.saveSpells(spells.toEntity())
     }
 
-    override fun getRemoteSpells(): Flow<List<Spell>> {
-        return remoteDataSource.getSpells().map { it.toDomain() }
+    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
+        return remoteDataSource.getSpells(lang).map { it.toDomain() }
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {

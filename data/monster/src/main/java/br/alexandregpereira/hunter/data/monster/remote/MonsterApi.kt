@@ -24,11 +24,14 @@ import retrofit2.http.Url
 
 internal interface MonsterApi {
 
-    @GET("monsters.json")
-    suspend fun getMonsters(): List<MonsterDto>
+    @GET("{lang}/monsters.json")
+    suspend fun getMonsters(@Path("lang") lang: String = "en-us"): List<MonsterDto>
 
-    @GET("sources/{sourceAcronym}/monsters.json")
-    suspend fun getMonsters(@Path("sourceAcronym") sourceAcronym: String): List<MonsterDto>
+    @GET("{lang}/sources/{sourceAcronym}/monsters.json")
+    suspend fun getMonsters(
+        @Path("sourceAcronym") sourceAcronym: String,
+        @Path("lang") lang: String = "en-us"
+    ): List<MonsterDto>
 
     @GET
     suspend fun getMonsterImages(@Url url: String): List<MonsterImageDto>

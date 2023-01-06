@@ -153,7 +153,13 @@ private fun LazyListScope.monsterInfoPart2(
             getItemsKeys = getItemsKeys,
         ) {
             ProficiencyBlock(
-                proficiencies = it,
+                proficiencies = it.map { saving ->
+                    ProficiencyState(
+                        index = saving.index,
+                        modifier = saving.modifier,
+                        name = stringResource(saving.type.stringRes)
+                    )
+                },
                 title = stringResource(R.string.monster_detail_saving_throws)
             )
         }

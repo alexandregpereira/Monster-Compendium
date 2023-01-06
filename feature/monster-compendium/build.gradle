@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation project(':domain:monster')
+    implementation project(':domain:settings')
     implementation project(':domain:sync')
     implementation project(':event:folder-preview-event')
     implementation project(':event:monster-detail-event')

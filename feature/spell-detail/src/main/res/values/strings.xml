@@ -24,4 +24,10 @@
     <string name="spell_detail_save_type">Save Type:</string>
     <string name="spell_detail_concentration">Concentration</string>
     <string name="spell_detail_higher_level">At Higher Levels.</string>
+    <string name="spell_detail_saving_throw_strength">Strength</string>
+    <string name="spell_detail_saving_throw_dexterity">Dexterity</string>
+    <string name="spell_detail_saving_throw_constitution">Constitution</string>
+    <string name="spell_detail_saving_throw_intelligence">Intelligence</string>
+    <string name="spell_detail_saving_throw_wisdom">Wisdom</string>
+    <string name="spell_detail_saving_throw_charisma">Charisma</string>
 </resources>

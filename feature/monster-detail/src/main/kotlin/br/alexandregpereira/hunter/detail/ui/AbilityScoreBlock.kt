@@ -20,8 +20,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
@@ -30,7 +32,7 @@ fun AbilityScoreBlock(
     abilityScores: List<AbilityScoreState>,
     modifier: Modifier = Modifier,
 ) = Block(
-    title = "Ability Scores",
+    title = stringResource(R.string.monster_detail_ability_scores),
     modifier = modifier,
 ) {
 
@@ -74,7 +76,7 @@ fun AbilityScoreBlockPreview() = HunterTheme {
     AbilityScoreBlock(
         abilityScores = (0..5).map {
             AbilityScoreState(
-                name = "CHARISMA",
+                type = AbilityScoreTypeState.CHARISMA,
                 value = 20,
                 modifier = 5
             )
@@ -88,7 +90,7 @@ fun AbilityScoreGridPreview() = Window {
     AbilityScoreGrid(
         abilityScores = (0..5).map {
             AbilityScoreState(
-                name = "CHARISMA",
+                type = AbilityScoreTypeState.CHARISMA,
                 value = 20,
                 modifier = 5
             )
