@@ -40,4 +40,10 @@
     <string name="monster_detail_options_add_to_folder">Adicionar à Pasta</string>
     <string name="monster_detail_options_change_to_feet">Mudar para Pés</string>
     <string name="monster_detail_options_change_to_meters">Mudar para Metros</string>
+    <string name="monster_detail_saving_throw_strength">Força</string>
+    <string name="monster_detail_saving_throw_dexterity">Destreza</string>
+    <string name="monster_detail_saving_throw_constitution">Constituição</string>
+    <string name="monster_detail_saving_throw_intelligence">Inteligência</string>
+    <string name="monster_detail_saving_throw_wisdom">Sabedoria</string>
+    <string name="monster_detail_saving_throw_charisma">Carisma</string>
 </resources>

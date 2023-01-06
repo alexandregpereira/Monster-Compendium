@@ -23,4 +23,10 @@
     <string name="spell_detail_save_type">Tipo de Salvaguarda:</string>
     <string name="spell_detail_concentration">Concentração:</string>
     <string name="spell_detail_higher_level">Em Níveis Superiores.</string>
+    <string name="spell_detail_saving_throw_strength">Força</string>
+    <string name="spell_detail_saving_throw_dexterity">Destreza</string>
+    <string name="spell_detail_saving_throw_constitution">Constituição</string>
+    <string name="spell_detail_saving_throw_intelligence">Inteligência</string>
+    <string name="spell_detail_saving_throw_wisdom">Sabedoria</string>
+    <string name="spell_detail_saving_throw_charisma">Carisma</string>
 </resources>

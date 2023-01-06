@@ -27,15 +27,15 @@ internal class MonsterRemoteDataSourceImpl @Inject constructor(
     private val monsterApi: MonsterApi
 ) : MonsterRemoteDataSource {
 
-    override fun getMonsters(): Flow<List<MonsterDto>> = flow {
-        emit(monsterApi.getMonsters())
+    override fun getMonsters(lang: String): Flow<List<MonsterDto>> = flow {
+        emit(monsterApi.getMonsters(lang))
     }
 
     override fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>> = flow {
         emit(monsterApi.getMonsterImages(jsonUrl))
     }
 
-    override fun getMonsters(sourceAcronym: String): Flow<List<MonsterDto>> = flow {
-        emit(monsterApi.getMonsters(sourceAcronym.lowercase(Locale.ROOT)))
+    override fun getMonsters(sourceAcronym: String, lang: String): Flow<List<MonsterDto>> = flow {
+        emit(monsterApi.getMonsters(sourceAcronym.lowercase(Locale.ROOT), lang = lang))
     }
 }

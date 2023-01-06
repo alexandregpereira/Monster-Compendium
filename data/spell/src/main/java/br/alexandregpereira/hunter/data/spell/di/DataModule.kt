@@ -18,12 +18,14 @@ package br.alexandregpereira.hunter.data.spell.di
 
 import br.alexandregpereira.hunter.data.spell.SettingsSpellDataRepositoryImpl
 import br.alexandregpereira.hunter.data.spell.SpellRepositoryImpl
+import br.alexandregpereira.hunter.data.spell.SpellSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
+import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -54,4 +56,9 @@ internal abstract class DataModule {
     internal abstract fun bindSettingsSpellDataRepository(
         repository: SettingsSpellDataRepositoryImpl
     ): SettingsSpellDataRepository
+
+    @Binds
+    internal abstract fun bindSpellSettingsRepository(
+        repository: SpellSettingsRepositoryImpl
+    ): SpellSettingsRepository
 }

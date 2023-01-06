@@ -21,6 +21,7 @@ package br.alexandregpereira.hunter.data.monster.di
 import br.alexandregpereira.hunter.data.monster.MonsterAlternativeSourceRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSourceImpl
@@ -34,6 +35,7 @@ import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
 import dagger.Binds
 import dagger.Module
@@ -60,6 +62,11 @@ internal abstract class DataModule {
     abstract fun bindMonsterRepository(
         monsterRepositoryImpl: MonsterRepositoryImpl
     ): MonsterRepository
+
+    @Binds
+    abstract fun bindMonsterSettingsRepository(
+        monsterSettingsRepositoryImpl: MonsterSettingsRepositoryImpl
+    ): MonsterSettingsRepository
 
     @Binds
     abstract fun bindPreferencesDataSource(

@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ fun AbilityScore(
 ) {
     Icon(
         painter = painterResource(id = R.drawable.ic_ability_score),
-        contentDescription = abilityScore.name,
+        contentDescription = stringResource(id = abilityScore.type.stringRes),
         modifier = Modifier
             .width(69.dp)
             .height(89.dp)
@@ -57,7 +58,8 @@ fun AbilityScore(
         modifier = Modifier.height(89.dp)
     ) {
         Text(
-            text = abilityScore.name.substring(0..2),
+            text = stringResource(id = abilityScore.type.stringRes).uppercase()
+                .substring(0..2),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             modifier = Modifier.padding(top = 8.dp)
@@ -85,7 +87,7 @@ fun AbilityScore(
 private fun AbilityScorePreview() = Window {
     AbilityScore(
         abilityScore = AbilityScoreState(
-            name ="CHARISMA",
+            type = AbilityScoreTypeState.CHARISMA,
             value = 20,
             modifier = 5
         ),

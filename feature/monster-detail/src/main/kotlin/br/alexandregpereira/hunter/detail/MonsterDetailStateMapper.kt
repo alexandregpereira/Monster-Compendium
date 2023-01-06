@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail
 
 import br.alexandregpereira.hunter.detail.ui.AbilityDescriptionState
 import br.alexandregpereira.hunter.detail.ui.AbilityScoreState
+import br.alexandregpereira.hunter.detail.ui.AbilityScoreTypeState
 import br.alexandregpereira.hunter.detail.ui.ActionState
 import br.alexandregpereira.hunter.detail.ui.ColorState
 import br.alexandregpereira.hunter.detail.ui.ConditionState
@@ -29,6 +30,7 @@ import br.alexandregpereira.hunter.detail.ui.MonsterImageState
 import br.alexandregpereira.hunter.detail.ui.MonsterState
 import br.alexandregpereira.hunter.detail.ui.MonsterTypeState
 import br.alexandregpereira.hunter.detail.ui.ProficiencyState
+import br.alexandregpereira.hunter.detail.ui.SavingThrowState
 import br.alexandregpereira.hunter.detail.ui.SpeedState
 import br.alexandregpereira.hunter.detail.ui.SpeedTypeState
 import br.alexandregpereira.hunter.detail.ui.SpeedValueState
@@ -74,7 +76,7 @@ private fun Monster.asState(): MonsterState {
             values = speed.values.map { it.asState() }
         ),
         abilityScores = abilityScores.map { it.asState() },
-        savingThrows = savingThrows.map { it.asState() },
+        savingThrows = savingThrows.map { it.asSavingThrowState() },
         skills = skills.map { it.asState() },
         damageVulnerabilities = damageVulnerabilities.map { it.asState() },
         damageResistances = damageResistances.map { it.asState() },
@@ -117,7 +119,7 @@ private fun SpeedValue.asState(): SpeedValueState {
 
 private fun AbilityScore.asState(): AbilityScoreState {
     return AbilityScoreState(
-        name = type.name,
+        type = AbilityScoreTypeState.valueOf(type.name),
         value = value,
         modifier = modifier
     )
@@ -128,6 +130,14 @@ private fun Proficiency.asState(): ProficiencyState {
         index = index,
         modifier = modifier,
         name = name
+    )
+}
+
+private fun Proficiency.asSavingThrowState(): SavingThrowState {
+    return SavingThrowState(
+        index = index,
+        modifier = modifier,
+        type = AbilityScoreTypeState.valueOf(name)
     )
 }
 

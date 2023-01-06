@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 interface SpellRepository {
 
     fun saveSpells(spells: List<Spell>): Flow<Unit>
-    fun getRemoteSpells(): Flow<List<Spell>>
+    fun getRemoteSpells(lang: String): Flow<List<Spell>>
     fun getLocalSpell(index: String): Flow<Spell>
     fun deleteLocalSpells(): Flow<Unit>
 }

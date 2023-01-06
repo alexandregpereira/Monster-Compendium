@@ -17,11 +17,22 @@
 package br.alexandregpereira.hunter.data.monster.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.Proficiency
 
 internal fun List<SavingThrowEntity>.toDomain(): List<Proficiency> {
     return this.map {
-        it.value.toDomain()
+        it.value.copy(
+            name = when (it.value.name) {
+                "Str" -> AbilityScoreType.STRENGTH.name
+                "Dex" -> AbilityScoreType.DEXTERITY.name
+                "Con" -> AbilityScoreType.CONSTITUTION.name
+                "Int" -> AbilityScoreType.INTELLIGENCE.name
+                "Wis" -> AbilityScoreType.WISDOM.name
+                "Cha" -> AbilityScoreType.CHARISMA.name
+                else -> it.value.name
+            }
+        ).toDomain()
     }
 }
 

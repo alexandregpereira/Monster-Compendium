@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.spell.remote
+package br.alexandregpereira.hunter.domain.repository
 
-import br.alexandregpereira.hunter.data.spell.remote.model.SpellDto
-import retrofit2.http.GET
-import retrofit2.http.Path
+import kotlinx.coroutines.flow.Flow
 
-internal interface SpellApi {
+interface MonsterSettingsRepository {
 
-    @GET("{lang}/spells.json")
-    suspend fun getSpells(@Path("lang") lang: String): List<SpellDto>
+    fun getLanguage(): Flow<String>
 }

@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.exception.NoMonstersException
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterSection
+import br.alexandregpereira.hunter.domain.sync.HandleLanguageUseCase
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import javax.inject.Inject
@@ -35,12 +36,14 @@ typealias MonstersBySection = Map<MonsterSection, List<MonsterPreview>>
 
 class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     private val sync: SyncUseCase,
-    private val getMonstersUseCase: GetMonsterPreviewsUseCase
+    private val getMonstersUseCase: GetMonsterPreviewsUseCase,
+    private val handleLanguageUseCase: HandleLanguageUseCase
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<MonstersBySection> {
-        return getMonstersUseCase()
+        return handleLanguageUseCase()
+            .flatMapLatest { getMonstersUseCase() }
             .flatMapLatest { monsters ->
                 if (monsters.isEmpty()) {
                     sync().map {

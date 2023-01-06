@@ -76,7 +76,7 @@ fun AbilityScoreBlockPreview() = HunterTheme {
     AbilityScoreBlock(
         abilityScores = (0..5).map {
             AbilityScoreState(
-                name = "CHARISMA",
+                type = AbilityScoreTypeState.CHARISMA,
                 value = 20,
                 modifier = 5
             )
@@ -90,7 +90,7 @@ fun AbilityScoreGridPreview() = Window {
     AbilityScoreGrid(
         abilityScores = (0..5).map {
             AbilityScoreState(
-                name = "CHARISMA",
+                type = AbilityScoreTypeState.CHARISMA,
                 value = 20,
                 modifier = 5
             )

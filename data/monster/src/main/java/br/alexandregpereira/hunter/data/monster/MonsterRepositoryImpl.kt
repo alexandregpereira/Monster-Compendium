@@ -41,12 +41,12 @@ internal class MonsterRepositoryImpl @Inject constructor(
         return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
-    override fun getRemoteMonsters(): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters().toMonstersDomain()
+    override fun getRemoteMonsters(lang: String): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters(lang).toMonstersDomain()
     }
 
-    override fun getRemoteMonsters(sourceAcronym: String): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters(sourceAcronym)
+    override fun getRemoteMonsters(sourceAcronym: String, lang: String): Flow<List<Monster>> {
+        return remoteDataSource.getMonsters(sourceAcronym, lang)
             .toMonstersDomain()
             .catch { error ->
                 throw when {

@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterSource
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -39,6 +40,7 @@ import kotlinx.coroutines.flow.zip
 class SyncMonstersUseCase @Inject internal constructor(
     private val repository: MonsterRepository,
     private val alternativeSourceRepository: MonsterAlternativeSourceRepository,
+    private val monsterSettingsRepository: MonsterSettingsRepository,
     private val getMonsterImages: GetMonsterImagesUseCase,
     private val saveMonstersUseCase: SaveMonstersUseCase
 ) {
@@ -63,14 +65,20 @@ class SyncMonstersUseCase @Inject internal constructor(
             }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun MonsterSource.getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
         return if (this == srdSource) {
-            repository.getRemoteMonsters()
+            monsterSettingsRepository.getLanguage().flatMapLatest {
+                repository.getRemoteMonsters(lang = it)
+            }
         } else {
-            repository.getRemoteMonsters(
-                sourceAcronym = this.acronym
-            ).catch {
-                emit(emptyList())
+            monsterSettingsRepository.getLanguage().flatMapLatest {
+                repository.getRemoteMonsters(
+                    sourceAcronym = this.acronym,
+                    lang = it
+                ).catch {
+                    emit(emptyList())
+                }
             }
         }.appendMonsterImages(monsterImages)
     }
