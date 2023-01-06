@@ -72,7 +72,7 @@ private fun MonsterDetailOptions(
                     )
             ) {
                 Text(
-                    text = it.name,
+                    text = stringResource(it.stringRes),
                     fontSize = 16.sp,
                 )
             }

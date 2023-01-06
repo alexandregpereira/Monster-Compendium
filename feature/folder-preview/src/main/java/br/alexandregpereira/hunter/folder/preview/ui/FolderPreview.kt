@@ -36,8 +36,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.folder.preview.R
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.CircleImage
@@ -88,7 +90,7 @@ fun FolderPreview(
                 }
 
                 AppButton(
-                    text = "Save",
+                    text = stringResource(R.string.folder_preview_save),
                     onClick = onSave,
                     modifier = Modifier.padding(end = 16.dp)
                 )
