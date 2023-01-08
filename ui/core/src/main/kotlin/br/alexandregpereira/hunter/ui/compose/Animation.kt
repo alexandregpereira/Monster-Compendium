@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.animatePressed(
     pressedScale: Float = 0.96f,
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
     onLongClick: (() -> Unit)? = null,
 ): Modifier = composed {
@@ -47,6 +48,7 @@ fun Modifier.animatePressed(
     ).combinedClickable(
         interactionSource = interactionSource,
         indication = null,
+        enabled = enabled,
         onClick = onClick,
         onLongClick = {
             onLongClick?.run {

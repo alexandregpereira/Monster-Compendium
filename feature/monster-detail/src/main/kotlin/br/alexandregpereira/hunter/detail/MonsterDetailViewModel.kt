@@ -137,6 +137,10 @@ internal class MonsterDetailViewModel @Inject constructor(
         spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
+    fun onLoreClicked(monsterIndex: String) {
+//        spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
+    }
+
     fun onClose() {
         monsterDetailEventDispatcher.dispatchEvent(Hide)
     }

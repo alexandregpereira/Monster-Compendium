@@ -88,7 +88,12 @@ private fun Monster.asState(): MonsterState {
         actions = actions.map { it.asState() },
         legendaryActions = legendaryActions.map { it.asState() },
         reactions = reactions.map { it.asState() },
-        spellcastings = spellcastings.map { it.asState() }
+        spellcastings = spellcastings.map { it.asState() },
+        lore = lore?.run {
+            val loreSize = 180
+            val ellipse = if (length > loreSize) "..." else ""
+            substring(0, loreSize.coerceAtMost(length)) + ellipse
+        }.orEmpty()
     )
 }
 

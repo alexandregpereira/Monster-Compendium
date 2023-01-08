@@ -55,6 +55,7 @@ data class MonsterState(
     val legendaryActions: List<ActionState> = emptyList(),
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
+    val lore: String = "",
 )
 
 data class StatsState(

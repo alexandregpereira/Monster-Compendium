@@ -65,7 +65,8 @@ fun MonsterDetailFeature(
                     viewModel.onMonsterChanged(monster.index)
                 },
                 onOptionsClicked = viewModel::onShowOptionsClicked,
-                onSpellClicked = viewModel::onSpellClicked
+                onSpellClicked = viewModel::onSpellClicked,
+                onLoreClicked = viewModel::onLoreClicked,
             )
 
             MonsterDetailOptionPicker(
