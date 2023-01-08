@@ -33,4 +33,7 @@ interface SpellDao {
 
     @Query("DELETE FROM SpellEntity")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM SpellEntity WHERE spellIndex IN (:indexes)")
+    fun getSpells(indexes: List<String>): List<SpellEntity>
 }

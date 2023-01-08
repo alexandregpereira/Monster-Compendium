@@ -44,6 +44,12 @@ internal class SpellRepositoryImpl @Inject constructor(
         return localDataSource.getSpell(index).map { it.toDomain() }
     }
 
+    override fun getLocalSpells(indexes: List<String>): Flow<List<Spell>> {
+        return localDataSource.getSpells(indexes).map { spells ->
+            spells.map { it.toDomain() }
+        }
+    }
+
     override fun deleteLocalSpells(): Flow<Unit> {
         return localDataSource.deleteSpells()
     }

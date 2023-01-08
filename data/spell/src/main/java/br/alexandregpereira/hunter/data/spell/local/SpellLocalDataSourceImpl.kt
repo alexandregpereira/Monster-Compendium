@@ -37,4 +37,8 @@ internal class SpellLocalDataSourceImpl @Inject constructor(
     override fun deleteSpells(): Flow<Unit> = flow {
         emit(spellDao.deleteAll())
     }
+
+    override fun getSpells(indexes: List<String>): Flow<List<SpellEntity>> = flow {
+        emit(spellDao.getSpells(indexes))
+    }
 }
