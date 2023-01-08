@@ -33,6 +33,8 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Hide
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
+import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,6 +61,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -138,7 +141,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     fun onLoreClicked(monsterIndex: String) {
-//        spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
+        monsterLoreDetailEventDispatcher.dispatchEvent(MonsterLoreDetailEvent.Show(monsterIndex))
     }
 
     fun onClose() {

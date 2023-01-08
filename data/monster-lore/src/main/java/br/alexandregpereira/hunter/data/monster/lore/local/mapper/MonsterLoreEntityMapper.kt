@@ -48,7 +48,7 @@ internal fun MonsterLore.toEntity(): MonsterLoreCompleteEntity {
 
 internal fun MonsterLoreEntry.toEntity(monsterLoreIndex: String): MonsterLoreEntryEntity {
     return MonsterLoreEntryEntity(
-        id = title ?: ("lore-$monsterLoreIndex"),
+        id = monsterLoreIndex + "-" + (title ?: "lore"),
         title = title,
         description = description,
         monsterIndex = monsterLoreIndex

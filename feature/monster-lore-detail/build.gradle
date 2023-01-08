@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'br.alexandregpereira.hunter.monster.lore.detail'
     compileSdkVersion buildConfig.compileSdk
 
     defaultConfig {
@@ -29,32 +30,17 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
-    namespace 'br.alexandregpereira.hunter.detail'
 }
 
 dependencies {
     implementation project(':domain:monster')
     implementation project(':domain:monster-lore')
-    implementation project(':event:folder-insert-event')
-    implementation project(':event:monster-detail-event')
     implementation project(':event:monster-lore-detail-event')
-    implementation project(':event:spell-detail-event')
     implementation project(':ui:core')
 
-    implementation libs.core.ktx
-    implementation libs.kotlin.coroutines
     implementation libs.bundles.viewmodel.bundle
-
     implementation libs.bundles.compose
-    implementation libs.compose.util
-    implementation libs.accompanist.flowlayout
-    implementation libs.accompanist.pager
-    implementation libs.coil.compose
 
     implementation libs.hilt
     kapt libs.hilt.compiler
-    implementation libs.kotlin.reflect
-
-    testImplementation libs.bundles.unittest
-    androidTestImplementation libs.bundles.instrumentedtest
 }

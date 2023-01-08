@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.detail.MonsterDetailFeature
 import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
+import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 
 @Composable
@@ -58,6 +59,8 @@ fun MainScreen(
         MonsterDetailFeature(
             contentPadding = contentPadding,
         )
+
+        MonsterLoreDetailFeature(contentPadding = contentPadding)
 
         SpellDetailFeature(
             contentPadding = contentPadding,
