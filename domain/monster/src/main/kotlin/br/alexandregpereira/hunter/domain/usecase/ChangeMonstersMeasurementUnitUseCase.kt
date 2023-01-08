@@ -30,8 +30,8 @@ class ChangeMonstersMeasurementUnitUseCase @Inject internal constructor(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(measurementUnit: MeasurementUnit): Flow<Unit> {
-        return getMonstersUseCase()
+    operator fun invoke(monsterIndex: String, measurementUnit: MeasurementUnit): Flow<Unit> {
+        return getMonstersUseCase(monsterIndex)
             .zip(saveMeasurementUnitUseCase(measurementUnit)) { monsters, _ ->
                 monsters
             }.flatMapLatest { monsters ->

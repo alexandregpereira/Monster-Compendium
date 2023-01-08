@@ -123,7 +123,7 @@ class GetMonsterDetailUseCase @Inject internal constructor(
         indexes: List<String>,
     ): Flow<List<Monster>> {
         return if (indexes.isEmpty()) {
-            getMonstersUseCase()
+            getMonstersUseCase(index)
         } else if (indexes.size == 1) {
             getMonsterUseCase(index).map { listOf(it) }
         } else {
