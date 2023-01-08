@@ -46,12 +46,14 @@ fun LazyListScope.monsterInfo(
     pagerState: PagerState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     getItemsKeys: () -> List<Any> = { emptyList() },
-    onSpellClicked: (String) -> Unit = {}
+    onSpellClicked: (String) -> Unit = {},
+    onLoreClick: (String) -> Unit = {}
 ) {
     monsterInfoPart1(
         monsters = monsters,
         pagerState = pagerState,
         getItemsKeys = getItemsKeys,
+        onLoreClick = onLoreClick
     )
 
     monsterInfoPart2(
@@ -110,7 +112,20 @@ private fun LazyListScope.monsterInfoPart1(
     monsters: List<MonsterState>,
     pagerState: PagerState,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    onLoreClick: (String) -> Unit = {}
 ) {
+    item(key = "lore") {
+        MonsterRequireSectionAlphaTransition(
+            dataList = monsters,
+            pagerState = pagerState,
+            getItemsKeys = getItemsKeys,
+            showDivider = false
+        ) { monster ->
+            monster.lore.takeIf { it.isNotBlank() }?.let {
+                LoreBlock(text = it) { onLoreClick(monster.index) }
+            }
+        }
+    }
     item(key = "stats") {
         MonsterRequireSectionAlphaTransition(
             monsters,
@@ -329,11 +344,12 @@ fun LazyItemScope.MonsterRequireSectionAlphaTransition(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    showDivider: Boolean = true,
     content: @Composable ColumnScope.(MonsterState) -> Unit
 ) = MonsterSectionAlphaTransition(
     dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
 ) { monster ->
-    BlockSection {
+    BlockSection(showDivider = showDivider) {
         content(monster)
     }
 }
@@ -345,11 +361,12 @@ fun <T> LazyItemScope.MonsterOptionalSectionAlphaTransition(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    showDivider: Boolean = true,
     content: @Composable ColumnScope.(T) -> Unit
 ) = MonsterSectionAlphaTransition(
     dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
 ) { monster ->
-    OptionalBlockSection(valueToValidate(monster)) { value ->
+    OptionalBlockSection(valueToValidate(monster), showDivider = showDivider) { value ->
         content(value)
     }
 }
@@ -366,24 +383,28 @@ private fun MonsterInfoSectionColumn(
 @Composable
 private fun <T> ColumnScope.OptionalBlockSection(
     value: T,
+    showDivider: Boolean = true,
     content: @Composable ColumnScope.(T) -> Unit,
 ) {
     if ((value is String && value.trim().isEmpty()) || (value is List<*> && value.isEmpty())) return
-    BlockSection {
+    BlockSection(showDivider = showDivider) {
         content(value)
     }
 }
 
 @Composable
 private fun ColumnScope.BlockSection(
+    showDivider: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Spacer(
-        modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.background)
-    )
+    if (showDivider) {
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
+        )
+    }
 
     content()
 }

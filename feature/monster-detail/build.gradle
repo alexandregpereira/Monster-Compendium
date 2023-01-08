@@ -34,8 +34,10 @@ android {
 
 dependencies {
     implementation project(':domain:monster')
+    implementation project(':domain:monster-lore')
     implementation project(':event:folder-insert-event')
     implementation project(':event:monster-detail-event')
+    implementation project(':event:monster-lore-detail-event')
     implementation project(':event:spell-detail-event')
     implementation project(':ui:core')
 

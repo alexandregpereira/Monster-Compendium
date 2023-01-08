@@ -35,6 +35,7 @@ dependencies {
     implementation project(':data:alternative-source')
     implementation project(':data:monster')
     implementation project(':data:monster-folder')
+    implementation project(':data:monster-lore')
     implementation project(':data:monster-spell')
     implementation project(':data:settings')
     implementation project(':data:spell')

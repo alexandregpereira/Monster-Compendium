@@ -49,6 +49,9 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
+import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntity
+import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntryEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellUsageDao
 import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellcastingDao
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
@@ -71,6 +74,8 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         LegendaryActionEntity::class,
         MonsterEntity::class,
         MonsterFolderEntity::class,
+        MonsterLoreEntity::class,
+        MonsterLoreEntryEntity::class,
         ReactionEntity::class,
         SavingThrowEntity::class,
         SkillEntity::class,
@@ -84,8 +89,12 @@ import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
         SpellUsageSpellCrossRefEntity::class,
         SpellPreviewEntity::class,
     ],
-    version = 19,
-    autoMigrations = [ AutoMigration(from = 17, to = 18), AutoMigration(from = 18, to = 19) ]
+    version = 20,
+    autoMigrations = [
+        AutoMigration(from = 17, to = 18),
+        AutoMigration(from = 18, to = 19),
+        AutoMigration(from = 19, to = 20),
+    ]
 )
 internal abstract class AppDatabase : RoomDatabase() {
     abstract fun abilityScoreDao(): AbilityScoreDao
@@ -96,6 +105,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun legendaryActionDao(): LegendaryActionDao
     abstract fun monsterDao(): MonsterDao
     abstract fun monsterFolderDao(): MonsterFolderDao
+    abstract fun monsterLoreDao(): MonsterLoreDao
     abstract fun reactionDao(): ReactionDao
     abstract fun savingThrowDao(): SavingThrowDao
     abstract fun skillDao(): SkillDao

@@ -28,4 +28,8 @@ internal class AlternativeSourceRemoteDataSourceImpl @Inject constructor(
     override fun getAlternativeSources(): Flow<List<AlternativeSourceDto>> = flow {
         emit(api.getAlternativeSources())
     }
+
+    override fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>> = flow {
+        emit(api.getMonsterLoreSources())
+    }
 }

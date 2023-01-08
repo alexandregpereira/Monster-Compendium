@@ -90,7 +90,8 @@ fun MonsterDetailScreen(
     scrollState: LazyListState = rememberLazyListState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
-    onSpellClicked: (String) -> Unit = {}
+    onSpellClicked: (String) -> Unit = {},
+    onLoreClicked: (String) -> Unit = {}
 ) = Surface {
 
     MonsterImageCompose(
@@ -153,7 +154,8 @@ fun MonsterDetailScreen(
             pagerState = pagerState,
             contentPadding = contentPadding,
             getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
-            onSpellClicked = onSpellClicked
+            onSpellClicked = onSpellClicked,
+            onLoreClick = onLoreClicked
         )
     }
 
