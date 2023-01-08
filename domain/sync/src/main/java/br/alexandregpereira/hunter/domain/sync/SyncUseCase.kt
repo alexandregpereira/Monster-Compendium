@@ -20,9 +20,12 @@ import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import javax.inject.Inject
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class SyncUseCase @Inject constructor(
     private val syncMonsters: SyncMonstersUseCase,
@@ -30,9 +33,16 @@ class SyncUseCase @Inject constructor(
     private val syncMonstersLoreUseCase: SyncMonstersLoreUseCase
 ) {
 
-    @OptIn(FlowPreview::class)
     operator fun invoke(): Flow<Unit> {
-        return syncMonsters().flatMapMerge { syncSpells() }
-            .flatMapMerge { syncMonstersLoreUseCase() }
+        return flow {
+            coroutineScope {
+                awaitAll(
+                    async { syncMonsters().collect() },
+                    async { syncSpells().collect() },
+                    async { syncMonstersLoreUseCase().collect() },
+                )
+            }
+            emit(Unit)
+        }
     }
 }
