@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.sync
 
+import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import javax.inject.Inject
@@ -25,11 +26,13 @@ import kotlinx.coroutines.flow.flatMapMerge
 
 class SyncUseCase @Inject constructor(
     private val syncMonsters: SyncMonstersUseCase,
-    private val syncSpells: SyncSpellsUseCase
+    private val syncSpells: SyncSpellsUseCase,
+    private val syncMonstersLoreUseCase: SyncMonstersLoreUseCase
 ) {
 
     @OptIn(FlowPreview::class)
     operator fun invoke(): Flow<Unit> {
         return syncMonsters().flatMapMerge { syncSpells() }
+            .flatMapMerge { syncMonstersLoreUseCase() }
     }
 }

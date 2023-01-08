@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.domain.source
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
+import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-internal interface AlternativeSourceRemoteDataSource {
+class GetMonsterLoreSourcesUseCase @Inject constructor(
+    private val repository: AlternativeSourceRepository
+) {
 
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
+    operator fun invoke(): Flow<List<AlternativeSource>> {
+        return repository.getMonsterLoreSources()
+    }
 }

@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.domain.monster.lore
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreSource
 import kotlinx.coroutines.flow.Flow
 
-internal interface AlternativeSourceRemoteDataSource {
+interface MonsterLoreSourceRepository {
 
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
+    fun getMonsterLoreSources(): Flow<List<MonsterLoreSource>>
 }

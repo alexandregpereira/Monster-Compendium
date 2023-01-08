@@ -23,4 +23,7 @@ internal interface AlternativeSourceApi {
 
     @GET("alternative-sources.json")
     suspend fun getAlternativeSources(): List<AlternativeSourceDto>
+
+    @GET("monster-lore-sources.json")
+    suspend fun getMonsterLoreSources(): List<AlternativeSourceDto>
 }

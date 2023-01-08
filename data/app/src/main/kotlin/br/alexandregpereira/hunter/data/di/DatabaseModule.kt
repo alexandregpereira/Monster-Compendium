@@ -34,6 +34,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.SkillDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpecialAbilityDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedDao
 import br.alexandregpereira.hunter.data.monster.local.dao.SpeedValueDao
+import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
 import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellUsageDao
 import br.alexandregpereira.hunter.data.monster.spell.local.dao.SpellcastingDao
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
@@ -102,6 +103,11 @@ internal class DatabaseModule {
     @Provides
     internal fun provideMonsterFolderDao(appDatabase: AppDatabase): MonsterFolderDao {
         return appDatabase.monsterFolderDao()
+    }
+
+    @Provides
+    internal fun provideMonsterLoreDao(appDatabase: AppDatabase): MonsterLoreDao {
+        return appDatabase.monsterLoreDao()
     }
 
     @Provides

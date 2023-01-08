@@ -30,4 +30,8 @@ internal class AlternativeSourceRepositoryImpl @Inject constructor(
     override fun getAlternativeSources(): Flow<List<AlternativeSource>> {
        return remoteDataSource.getAlternativeSources().map { it.toDomain() }
     }
+
+    override fun getMonsterLoreSources(): Flow<List<AlternativeSource>> {
+        return remoteDataSource.getMonsterLoreSources().map { it.toDomain() }
+    }
 }

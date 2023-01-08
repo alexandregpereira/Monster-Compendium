@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.data.monster.lore.di
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreApi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 
-internal interface AlternativeSourceRemoteDataSource {
+@Module
+@InstallIn(SingletonComponent::class)
+internal class NetworkModule {
 
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
+    @Provides
+    fun provideMonsterLoreApi(retrofit: Retrofit): MonsterLoreApi {
+        return retrofit.create(MonsterLoreApi::class.java)
+    }
 }

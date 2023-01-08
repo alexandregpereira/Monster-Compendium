@@ -42,6 +42,7 @@ data class Monster(
     val legendaryActions: List<Action> = emptyList(),
     val reactions: List<AbilityDescription> = emptyList(),
     val spellcastings: List<Spellcasting> = emptyList(),
+    val lore: String? = null,
 ) {
     val index: String
         get() = preview.index

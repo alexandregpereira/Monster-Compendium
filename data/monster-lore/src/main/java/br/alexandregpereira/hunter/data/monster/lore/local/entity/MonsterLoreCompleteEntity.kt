@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.data.monster.lore.local.entity
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Embedded
+import androidx.room.Relation
 
-internal interface AlternativeSourceRemoteDataSource {
-
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
-}
+data class MonsterLoreCompleteEntity(
+    @Embedded val monsterLore: MonsterLoreEntity,
+    @Relation(
+        parentColumn = "monsterLoreIndex",
+        entityColumn = "monsterIndex",
+    )
+    val entries: List<MonsterLoreEntryEntity>,
+)

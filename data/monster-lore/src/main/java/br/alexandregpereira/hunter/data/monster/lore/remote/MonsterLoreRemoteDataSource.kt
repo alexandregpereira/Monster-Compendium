@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.data.monster.lore.remote
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
+import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreDto
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-internal interface AlternativeSourceRemoteDataSource {
+internal class MonsterLoreRemoteDataSource @Inject constructor(
+    private val api: MonsterLoreApi
+) {
 
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
+    fun getMonstersLore(sourceAcronym: String, lang: String): Flow<List<MonsterLoreDto>> {
+        return flow {
+            emit(api.getMonstersLore(sourceAcronym = sourceAcronym, lang = lang))
+        }
+    }
 }

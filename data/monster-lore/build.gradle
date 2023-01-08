@@ -6,17 +6,11 @@ plugins {
 }
 
 android {
+    namespace 'br.alexandregpereira.hunter.data.monster.lore'
     compileSdkVersion buildConfig.compileSdk
 
     defaultConfig {
         minSdkVersion buildConfig.minSdk
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation":
-                                      "$projectDir/schemas".toString()]
-            }
-        }
     }
 
     compileOptions {
@@ -28,17 +22,12 @@ android {
         jvmTarget = JavaVersion.VERSION_11
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
-    namespace 'br.alexandregpereira.hunter.data'
 }
 
 dependencies {
-    implementation project(':data:alternative-source')
-    implementation project(':data:monster')
-    implementation project(':data:monster-folder')
-    implementation project(':data:monster-lore')
-    implementation project(':data:monster-spell')
-    implementation project(':data:settings')
-    implementation project(':data:spell')
+    implementation project(':domain:alternative-source')
+    implementation project(':domain:monster-lore')
+    implementation project(':domain:settings')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
@@ -46,10 +35,10 @@ dependencies {
     implementation libs.hilt
     kapt libs.hilt.compiler
 
-    implementation libs.bundles.retrofit
-
     implementation libs.bundles.room
     kapt libs.room.compiler
+
+    implementation libs.bundles.retrofit
 
     testImplementation libs.mockk
     testImplementation libs.junit

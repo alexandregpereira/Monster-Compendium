@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail.domain
 
 import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
@@ -25,6 +26,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
 
 class GetMonsterDetailUseCase @Inject internal constructor(
@@ -32,6 +34,7 @@ class GetMonsterDetailUseCase @Inject internal constructor(
     private val getMonstersUseCase: GetMonstersUseCase,
     private val getMonsterUseCase: GetMonsterUseCase,
     private val getMonstersByIds: GetMonstersByIdsUseCase,
+    private val getMonstersLoreByIdsUseCase: GetMonstersLoreByIdsUseCase
 ) {
 
     operator fun invoke(
@@ -42,11 +45,18 @@ class GetMonsterDetailUseCase @Inject internal constructor(
             .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw IllegalAccessError("Monster not found")
+                val loreList = getMonstersLoreByIdsUseCase(monsters.map { it.index }).single()
 
                 MonsterDetail(
                     monsterIndexSelected = monsters.indexOf(monster),
                     measurementUnit = measurementUnit,
-                    monsters = monsters
+                    monsters = monsters.map { monsterWithLore ->
+                        monsterWithLore.copy(
+                            lore = loreList.find {
+                                it.index == monsterWithLore.index
+                            }?.entries?.firstOrNull()?.description
+                        )
+                    }
                 )
             }
     }
@@ -57,7 +67,7 @@ class GetMonsterDetailUseCase @Inject internal constructor(
     ): Flow<List<Monster>> {
         return if (indexes.isEmpty()) {
             getMonstersUseCase()
-        } else if (indexes.size == 1){
+        } else if (indexes.size == 1) {
             getMonsterUseCase(index).map { listOf(it) }
         } else {
             getMonstersByIds(indexes)

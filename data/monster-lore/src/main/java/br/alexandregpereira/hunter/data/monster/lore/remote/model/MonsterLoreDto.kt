@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2021-2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.data.monster.lore.remote.model
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
-import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-internal interface AlternativeSourceRemoteDataSource {
-
-    fun getAlternativeSources(): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
-}
+@Serializable
+data class MonsterLoreDto(
+    @SerialName("index")
+    val index: String,
+    @SerialName("entries")
+    val entries: List<MonsterLoreEntryDto>,
+)

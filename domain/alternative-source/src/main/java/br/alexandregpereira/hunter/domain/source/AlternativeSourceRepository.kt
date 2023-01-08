@@ -22,4 +22,6 @@ import kotlinx.coroutines.flow.Flow
 interface AlternativeSourceRepository {
 
     fun getAlternativeSources(): Flow<List<AlternativeSource>>
+
+    fun getMonsterLoreSources(): Flow<List<AlternativeSource>>
 }
