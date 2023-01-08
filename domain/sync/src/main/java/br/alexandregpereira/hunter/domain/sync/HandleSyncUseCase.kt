@@ -16,8 +16,10 @@
 
 package br.alexandregpereira.hunter.domain.sync
 
+import br.alexandregpereira.hunter.domain.settings.GetContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.IsLanguageSupported
+import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import java.util.Locale
 import javax.inject.Inject
@@ -25,22 +27,52 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
 
-class HandleLanguageUseCase @Inject internal constructor(
+@OptIn(ExperimentalCoroutinesApi::class)
+class HandleSyncUseCase @Inject internal constructor(
     private val sync: SyncUseCase,
     private val getLanguageUseCase: GetLanguageUseCase,
-    private val saveLanguageUseCase: SaveLanguageUseCase
+    private val saveLanguageUseCase: SaveLanguageUseCase,
+    private val getContentVersionUseCase: GetContentVersionUseCase,
+    private val saveContentVersionUseCase: SaveContentVersionUseCase
 ) {
+
+    private val contentVersion = 1
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
+        return isToSync().flatMapLatest { isToSync ->
+            if (isToSync) sync() else flowOf(Unit)
+        }
+    }
+
+    private fun isToSync(): Flow<Boolean> {
+        return isLangSyncScenario()
+            .zip(isContentVersionSyncScenario()) { isLangSyncScenario, isContentVersionSyncScenario ->
+                isLangSyncScenario || isContentVersionSyncScenario
+            }
+    }
+
+    private fun isLangSyncScenario(): Flow<Boolean> {
         return getLanguageUseCase().flatMapLatest { lang ->
             val deviceLang = Locale.getDefault().toLanguageTag().lowercase()
             if (deviceLang != lang && IsLanguageSupported(deviceLang)) {
-                saveLanguageUseCase(deviceLang).flatMapLatest {
-                    sync()
+                saveLanguageUseCase(deviceLang).map {
+                    true
                 }
-            } else flowOf(Unit)
+            } else flowOf(false)
+        }
+    }
+
+    private fun isContentVersionSyncScenario(): Flow<Boolean> {
+        return getContentVersionUseCase().flatMapLatest { lastContentVersion ->
+            if (contentVersion != lastContentVersion) {
+                saveContentVersionUseCase(contentVersion).map {
+                    true
+                }
+            } else flowOf(false)
         }
     }
 }
