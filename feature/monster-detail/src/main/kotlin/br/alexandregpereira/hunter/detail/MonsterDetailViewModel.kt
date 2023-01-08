@@ -154,7 +154,7 @@ internal class MonsterDetailViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun changeMeasurementUnit(measurementUnit: MeasurementUnit) {
-        changeMonstersMeasurementUnitUseCase(measurementUnit)
+        changeMonstersMeasurementUnitUseCase(monsterIndex, measurementUnit)
             .flatMapLatest { getMonsterDetail() }
             .collectDetail()
     }

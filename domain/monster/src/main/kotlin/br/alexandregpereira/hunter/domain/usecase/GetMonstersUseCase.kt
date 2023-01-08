@@ -17,16 +17,37 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.single
 
 class GetMonstersUseCase @Inject internal constructor(
-    private val repository: MonsterRepository
+    private val getMonsterPreviewsUseCase: GetMonsterPreviewsUseCase,
+    private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
 ) {
 
-    operator fun invoke(): Flow<List<Monster>> {
-        return repository.getLocalMonsters().sortMonstersByNameAndGroup()
+    private val monsterPagerScrollLimit = 100
+
+    operator fun invoke(monsterIndex: String): Flow<List<Monster>> {
+        return getMonsterPreviewsUseCase()
+            .sortMonstersByNameAndGroup()
+            .mapNotNull { monstersPreview ->
+                val monsterIndexes = monstersPreview.map { it.index }
+
+                monsterIndexes.indexOf(monsterIndex)
+                    .takeIf { it >= 0 }
+                    ?.let { position ->
+                        val fromIndex = position - monsterPagerScrollLimit
+                        val toIndex = position + monsterPagerScrollLimit
+                        monsterIndexes.subList(
+                            fromIndex.coerceAtLeast(0),
+                            toIndex.coerceAtMost(monstersPreview.lastIndex)
+                        )
+                    }?.let { monsterIndexesSubList ->
+                        getMonstersByIdsUseCase(monsterIndexesSubList).single()
+                    }
+            }
     }
 }
