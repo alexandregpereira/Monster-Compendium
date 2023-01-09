@@ -16,14 +16,13 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
-import br.alexandregpereira.hunter.domain.collections.map
 import br.alexandregpereira.hunter.domain.exception.NoMonstersException
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.sync.HandleSyncUseCase
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -32,8 +31,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
 
-typealias MonstersBySection = Map<MonsterSection, List<MonsterPreview>>
-
 class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     private val sync: SyncUseCase,
     private val getMonstersUseCase: GetMonsterPreviewsUseCase,
@@ -41,7 +38,7 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(): Flow<MonstersBySection> {
+    operator fun invoke(): Flow<List<MonsterCompendiumItem>> {
         return handleSyncUseCase()
             .flatMapLatest { getMonstersUseCase() }
             .flatMapLatest { monsters ->
@@ -54,91 +51,7 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
             .retry(retries = 1) { cause: Throwable ->
                 cause is NoMonstersException
             }
-            .groupMonsters()
-            .map { monstersBySection ->
-                monstersBySection.map { section, monsters ->
-                    section to monsters.appendIsHorizontal().map { it.preview }
-                }
-            }
-    }
-
-    private fun Flow<List<Monster>>.groupMonsters(): Flow<Map<MonsterSection, List<Monster>>> {
-        return this.map { monsters ->
-            val map = linkedMapOf<MonsterSection, MutableList<Monster>>()
-            val letterGroupCountMap = hashMapOf<String, Int>()
-            var previousSection: MonsterSection? = null
-            var previousSectionHasGroup = false
-            monsters.forEach { monster ->
-                val monsterGroup = monster.group
-                val monsterSection = if (monsterGroup != null) {
-                    MonsterSection(
-                        title = monsterGroup,
-                        parentTitle = getParentTitle(
-                            title = monsterGroup,
-                            monsterSection = previousSection
-                        ),
-                    )
-                } else {
-                    val group = monster.getFirstLetter()
-
-                    val letterGroupCount = letterGroupCountMap.getOrPut(group) { 0 }
-                    if (previousSectionHasGroup) {
-                        letterGroupCountMap[group] = letterGroupCount + 1
-                    }
-
-                    MonsterSection(
-                        id = group + letterGroupCountMap[group],
-                        title = group,
-                        isHeader = isHeader(
-                            title = group,
-                            previousSection = previousSection,
-                        )
-                    )
-                }
-                map.getOrPut(monsterSection) { mutableListOf() }.run {
-                    add(monster)
-                }
-                previousSection = monsterSection
-                previousSectionHasGroup = monster.group != null
-            }
-            map
-        }
-    }
-
-    private fun getParentTitle(
-        title: String,
-        monsterSection: MonsterSection?
-    ): String? {
-        return if (
-            isParentTitleEligible(title, previousSection = monsterSection)
-        ) {
-            title.getFirstLetter().toString()
-        } else {
-            null
-        }
-    }
-
-    private fun isParentTitleEligible(
-        title: String,
-        previousSection: MonsterSection?
-    ): Boolean {
-        return previousSection == null
-                || title.getFirstLetter() != previousSection.title.getFirstLetter()
-                || (title == previousSection.title
-                && title.getFirstLetter() == previousSection.parentTitle?.getFirstLetter())
-    }
-
-    private fun isHeader(
-        title: String,
-        previousSection: MonsterSection?,
-    ): Boolean {
-        return previousSection == null
-                || title.getFirstLetter() != previousSection.title.getFirstLetter()
-                || previousSection.isHeader
-    }
-
-    private fun Monster.getFirstLetter(): String {
-        return this.name.getFirstLetter().toString()
+            .toMonsterCompendiumItems()
     }
 
     private fun String.getFirstLetter(): Char {
@@ -166,7 +79,8 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
             }
         }
         return this.map { monster ->
-            val isHorizontal = monsterRowsMap.containsKey(monster) && monsterRowsMap[monster] == null
+            val isHorizontal =
+                monsterRowsMap.containsKey(monster) && monsterRowsMap[monster] == null
             monster.changeIsHorizontalImage(isHorizontal = isHorizontal)
         }
     }
@@ -183,6 +97,64 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
 
     private fun Monster.changeIsHorizontalImage(isHorizontal: Boolean): Monster {
         return copy(preview = preview.copy(imageData = imageData.copy(isHorizontal = isHorizontal)))
+    }
+
+    private fun Flow<List<Monster>>.toMonsterCompendiumItems(): Flow<List<MonsterCompendiumItem>> {
+        return map { monsters ->
+            val items = mutableListOf<MonsterCompendiumItem>()
+            monsters.forEach { monster ->
+                val title = monster.group ?: monster.name.getFirstLetter().toString()
+                val lastTitle = items.lastOrNull { it is Title }?.let { it as Title }?.value
+                if (title != lastTitle) {
+                    items.add(
+                        Title(
+                            id = title + items.count { it is Title && it.value == title },
+                            value = title,
+                            isHeader = items.find {
+                                it is Title && it.value == title.getFirstLetter().toString()
+                            } == null
+                        )
+                    )
+                }
+
+                items.add(
+                    MonsterCompendiumItem.Item(monster = monster)
+                )
+            }
+            items.appendIsMonsterImageHorizontal()
+        }
+    }
+
+    private fun List<MonsterCompendiumItem>.appendIsMonsterImageHorizontal(): List<MonsterCompendiumItem> {
+        val monsters = mutableListOf<Monster>()
+        val monstersBySection = mutableListOf<List<Monster>>()
+        val lastIndex = lastIndex
+        forEachIndexed { i, item ->
+            if (item is MonsterCompendiumItem.Item) {
+                monsters.add(item.monster)
+            }
+
+            if ((item is Title || lastIndex == i) && monsters.isNotEmpty()) {
+                monstersBySection.add(monsters.appendIsHorizontal())
+                monsters.clear()
+            }
+        }
+
+        val newMonsters = monstersBySection
+            .takeIf { it.isNotEmpty() }
+            ?.reduce { acc, value -> acc + value }
+            .orEmpty()
+
+        return map { item ->
+            when (item) {
+                is Title -> item
+                is MonsterCompendiumItem.Item -> item.copy(
+                    monster = newMonsters.firstOrNull {
+                        it.index == item.monster.index
+                    } ?: throw IllegalArgumentException("appendIsMonsterImageHorizontal error")
+                )
+            }
+        }
     }
 }
 

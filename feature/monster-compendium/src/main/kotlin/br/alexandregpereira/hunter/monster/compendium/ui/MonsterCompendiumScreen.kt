@@ -33,8 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
-import br.alexandregpereira.hunter.ui.compendium.SectionState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
@@ -64,7 +63,7 @@ internal fun MonsterCompendiumScreen(
             initialFirstVisibleItemIndex = initialScrollItemPosition
         )
         MonsterCompendiumScreen(
-            monstersBySection = state.monstersBySection,
+            items = state.items,
             isShowingMonsterFolderPreview = state.isShowingMonsterFolderPreview,
             alphabetOpened = state.alphabetOpened,
             alphabet = state.alphabet,
@@ -86,7 +85,7 @@ internal fun MonsterCompendiumScreen(
 
 @Composable
 private fun MonsterCompendiumScreen(
-    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    items: List<CompendiumItemState>,
     isShowingMonsterFolderPreview: Boolean,
     alphabetOpened: Boolean,
     alphabet: List<Char>,
@@ -97,7 +96,7 @@ private fun MonsterCompendiumScreen(
 ) {
     Box(Modifier.fillMaxSize()) {
         MonsterCompendium(
-            monstersBySection = monstersBySection,
+            items = items,
             listState = listState,
             contentPadding = contentPadding,
             onItemCLick = events::onItemCLick,

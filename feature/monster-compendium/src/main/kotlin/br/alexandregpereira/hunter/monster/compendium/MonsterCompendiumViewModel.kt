@@ -22,16 +22,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterPageChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
-import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -44,7 +48,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
@@ -58,6 +64,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val folderPreviewResultListener: FolderPreviewResultListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterDetailEventListener: MonsterDetailEventListener,
     private val dispatcher: CoroutineDispatcher,
     @LoadOnInitFlag loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
@@ -83,16 +90,16 @@ class MonsterCompendiumViewModel @Inject constructor(
         getMonsterPreviewsBySectionUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
-            ) { monstersBySection, scrollItemPosition ->
-                val monstersBySectionState = monstersBySection.asState()
-                val alphabet = monstersBySectionState.getAlphabet()
+            ) { items, scrollItemPosition ->
+                val itemsState = items.asState()
+                val alphabet = itemsState.getAlphabet()
                 state.value.complete(
-                    monstersBySection = monstersBySectionState,
+                    items = itemsState,
                     alphabet = alphabet,
                     alphabetIndex = getAlphabetIndex(
                         scrollItemPosition,
                         alphabet,
-                        monstersBySectionState
+                        itemsState
                     ),
                 ) to scrollItemPosition
             }
@@ -129,35 +136,35 @@ class MonsterCompendiumViewModel @Inject constructor(
     override fun onAlphabetClosed() = changeAlphabetOpenState(opened = false)
 
     override fun onAlphabetIndexClicked(position: Int) {
-        navigateToCompendiumIndex(position)
+        navigateToCompendiumIndexFromAlphabetIndex(position)
     }
 
     override fun onErrorButtonClick() {
         loadMonsters()
     }
 
-    private fun navigateToCompendiumIndex(alphabetIndex: Int) {
+    private fun navigateToCompendiumIndexFromAlphabetIndex(alphabetIndex: Int) {
         _state.value = state.value.alphabetOpened(alphabetOpened = false)
         viewModelScope.launch {
-            flowOf(state.value.monstersBySection)
-                .map { monstersBySection ->
-                    val alphabet = monstersBySection.getAlphabet()
-                    monstersBySection.mapToFirstLetters().indexOf(alphabet[alphabetIndex])
+            flowOf(state.value.items)
+                .map { items ->
+                    val letter = items.getAlphabet()[alphabetIndex]
+                    items.indexOfFirst { it is Title && it.value == letter.toString() }
                 }
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
-                    sendAction(MonsterCompendiumViewAction.GoToCompendiumIndex(compendiumIndex))
+                    sendAction(GoToCompendiumIndex(compendiumIndex))
                 }
         }
     }
 
     private fun saveCompendiumScrollItemPosition(position: Int) {
-        val monstersBySection = state.value.monstersBySection
+        val items = state.value.items
         val alphabet = state.value.alphabet
         viewModelScope.launch {
             saveCompendiumScrollItemPositionUseCase(position)
                 .map {
-                    getAlphabetIndex(position, alphabet, monstersBySection)
+                    getAlphabetIndex(position, alphabet, items)
                 }
                 .flowOn(dispatcher)
                 .collect { alphabetIndex ->
@@ -172,30 +179,49 @@ class MonsterCompendiumViewModel @Inject constructor(
         _state.value = state.value.alphabetOpened(alphabetOpened = opened)
     }
 
-    private fun Map<SectionState, List<MonsterCardState>>.mapToFirstLetters(): List<Char> {
-        val monsterAlphabet = mutableListOf<Char>()
-        forEach { entry ->
-            monsterAlphabet.add(entry.key.title.first())
-            monsterAlphabet.addAll(
-                entry.value.map { entry.key.title.first() }
-            )
+    private fun List<CompendiumItemState>.mapToFirstLetters(): List<Char> {
+        var lastLetter: Char? = null
+        return map { item ->
+            when (item) {
+                is Title -> {
+                    item.value.first().also { lastLetter = it }
+                }
+                is CompendiumItemState.Item -> lastLetter
+                    ?: throw IllegalArgumentException("Letter not initialized")
+            }
         }
-        return monsterAlphabet
     }
 
-    private fun Map<SectionState, List<MonsterCardState>>.getAlphabet(): List<Char> {
+    private fun List<CompendiumItemState>.getAlphabet(): List<Char> {
         return mapToFirstLetters().toSortedSet().toList()
     }
 
     private fun getAlphabetIndex(
         scrollItemPosition: Int,
         alphabet: List<Char>,
-        monstersBySection: Map<SectionState, List<MonsterCardState>>
+        items: List<CompendiumItemState>
     ): Int {
-        if (monstersBySection.isEmpty()) return 0
-        val monsterFirstLetters = monstersBySection.mapToFirstLetters()
+        if (items.isEmpty()) return 0
+        val monsterFirstLetters = items.mapToFirstLetters()
         return alphabet.indexOf(monsterFirstLetters[scrollItemPosition])
     }
+
+    private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
+        flowOf(state.value.items)
+            .map { items ->
+                items.indexOfFirst {
+                    it is CompendiumItemState.Item
+                            && it.getMonsterCardState().index == monsterIndex
+                }
+            }
+            .flowOn(dispatcher)
+            .onEach { compendiumIndex ->
+                sendAction(GoToCompendiumIndex(compendiumIndex))
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun CompendiumItemState.Item.getMonsterCardState() = this.value as MonsterCardState
 
     private fun observeEvents() {
         viewModelScope.launch {
@@ -205,6 +231,10 @@ class MonsterCompendiumViewModel @Inject constructor(
                 }
             }
         }
+
+        monsterDetailEventListener.collectOnMonsterPageChanges { event ->
+            navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex)
+        }.launchIn(viewModelScope)
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {

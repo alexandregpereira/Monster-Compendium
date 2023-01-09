@@ -22,7 +22,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.detail.FolderDetailViewState
-import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -39,14 +40,16 @@ internal fun FolderDetailScreen(
 
     SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
         Window(Modifier.fillMaxSize()) {
-            val monstersBySection = mapOf(
-                SectionState(
-                    title = state.folderName,
+            val items = listOf(
+                Title(
+                    value = state.folderName,
                     isHeader = true
-                ) to state.monsters
-            )
+                ),
+            ) + state.monsters.map {
+                Item(value = it)
+            }
             MonsterCompendium(
-                monstersBySection = monstersBySection,
+                items = items,
                 animateItems = true,
                 contentPadding = contentPadding,
                 onItemCLick = onItemCLick,

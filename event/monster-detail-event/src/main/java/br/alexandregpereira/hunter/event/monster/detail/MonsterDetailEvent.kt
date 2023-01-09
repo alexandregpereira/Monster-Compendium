@@ -17,10 +17,17 @@
 package br.alexandregpereira.hunter.event.monster.detail
 
 sealed class MonsterDetailEvent {
-    data class Show(
-        val index: String,
-        val indexes: List<String> = emptyList()
-    ) : MonsterDetailEvent()
 
-    object Hide : MonsterDetailEvent()
+    sealed class OnVisibilityChanges : MonsterDetailEvent() {
+        data class Show(
+            val index: String,
+            val indexes: List<String> = emptyList()
+        ) : OnVisibilityChanges()
+
+        object Hide : OnVisibilityChanges()
+    }
+
+    data class OnMonsterPageChanges(
+        val monsterIndex: String
+    ) : MonsterDetailEvent()
 }

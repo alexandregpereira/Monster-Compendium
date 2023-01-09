@@ -29,10 +29,12 @@ import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Hide
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Hide
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
@@ -50,7 +52,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
@@ -68,6 +72,8 @@ internal class MonsterDetailViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MonsterDetailViewState> = _state
+
+    private var monsterChangeDispatchEnabled = false
 
     private var monsterIndex: String
         get() = savedStateHandle["index"] ?: ""
@@ -91,7 +97,7 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     private fun observeEvents() {
-        monsterDetailEventListener.events.onEach { event ->
+        monsterDetailEventListener.collectOnVisibilityChanges { event ->
             when (event) {
                 is Show -> {
                     getMonstersByInitialIndex(event.index, event.indexes)
@@ -103,13 +109,16 @@ internal class MonsterDetailViewModel @Inject constructor(
     }
 
     private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
-        onMonsterChanged(monsterIndex)
+        onMonsterChanged(monsterIndex, scrolled = false)
         this.monsterIndexes = monsterIndexes
         setState { savedStateHandle.getState() }
         getMonsterDetail().collectDetail()
     }
 
-    fun onMonsterChanged(monsterIndex: String) {
+    fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
+        if (scrolled && monsterIndex != this.monsterIndex) {
+            monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
+        }
         this.monsterIndex = monsterIndex
     }
 
@@ -178,6 +187,8 @@ internal class MonsterDetailViewModel @Inject constructor(
             }.onEach { state ->
                 setState { state }
             }
+            .onStart { monsterChangeDispatchEnabled = false }
+            .onCompletion { monsterChangeDispatchEnabled = true }
             .launchIn(viewModelScope)
     }
 

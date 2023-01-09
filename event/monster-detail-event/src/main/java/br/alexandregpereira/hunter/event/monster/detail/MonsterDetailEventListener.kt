@@ -16,9 +16,26 @@
 
 package br.alexandregpereira.hunter.event.monster.detail
 
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 interface MonsterDetailEventListener {
 
     val events: Flow<MonsterDetailEvent>
+}
+
+fun MonsterDetailEventListener.collectOnVisibilityChanges(
+    action: suspend (OnVisibilityChanges) -> Unit
+): Flow<OnVisibilityChanges> {
+    return events.map { it as? OnVisibilityChanges }.filterNotNull().onEach(action)
+}
+
+fun MonsterDetailEventListener.collectOnMonsterPageChanges(
+    action: (OnMonsterPageChanges) -> Unit
+): Flow<Unit> {
+    return events.map { it as? OnMonsterPageChanges }.filterNotNull().map(action)
 }

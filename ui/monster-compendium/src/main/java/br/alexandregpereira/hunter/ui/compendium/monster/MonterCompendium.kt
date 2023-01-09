@@ -25,27 +25,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
-import br.alexandregpereira.hunter.ui.compendium.CompendiumRow
-import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compose.MonsterCard
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 fun MonsterCompendium(
-    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    items: List<CompendiumItemState>,
     animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
 ) = Compendium(
-    monstersBySection = monstersBySection,
+    items = items,
     animateItems = animateItems,
     listState = listState,
     contentPadding = contentPadding,
-    key = { it.index },
-    isHorizontalCard = { it.imageState.isHorizontal },
-    cardContent = { monsterCardState ->
+    key = { it.getMonsterCardState().index },
+    isHorizontalCard = { it.getMonsterCardState().imageState.isHorizontal },
+    cardContent = { item ->
+        val monsterCardState = item.getMonsterCardState()
         MonsterCard(
             name = monsterCardState.name,
             url = monsterCardState.imageState.url,
@@ -61,6 +61,8 @@ fun MonsterCompendium(
     }
 )
 
+private fun CompendiumItemState.Item.getMonsterCardState() = this.value as MonsterCardState
+
 @Preview
 @Composable
 private fun MonsterCompendiumPreview() = Window {
@@ -74,83 +76,20 @@ private fun MonsterCompendiumPreview() = Window {
         )
     )
     MonsterCompendium(
-        monstersBySection = mapOf(
-            SectionState(title = "Any") to (0..10).map { i ->
-                MonsterCardState(
-                    index = "asdasdasd$i",
-                    name = "Monster of monsters $i",
-                    imageState = imageState.copy(isHorizontal = i == 2),
-                )
-            }
-        )
+        items = mutableListOf<CompendiumItemState>(
+            CompendiumItemState.Title(value = "Any"),
+        ).also {
+            it.addAll(
+                (0..10).map { i ->
+                    CompendiumItemState.Item(
+                        value = MonsterCardState(
+                            index = "asdasdasd$i",
+                            name = "Monster of monsters $i",
+                            imageState = imageState.copy(isHorizontal = i == 2),
+                        )
+                    )
+                }
+            )
+        }
     )
-}
-
-@Preview
-@Composable
-private fun MonsterSection2ItemsPreview() = Window {
-    val imageState = MonsterImageState(
-        url = "",
-        type = MonsterTypeState.ABERRATION,
-        challengeRating = 8.0f,
-        backgroundColor = ColorState(
-            light = "#ffe0e0",
-            dark = "#ffe0e0"
-        )
-    )
-    CompendiumRow(
-        leftCard = MonsterCardState(
-            index = "asdasdasd",
-            name = "Monster of monsters",
-            imageState = imageState
-        ),
-        rightCard = MonsterCardState(
-            index = "asdasdasd",
-            name = "Monster of monsters",
-            imageState = imageState
-        )
-    ) { monsterCardState ->
-        MonsterCard(
-            name = monsterCardState.name,
-            url = monsterCardState.imageState.url,
-            iconRes = monsterCardState.imageState.type.iconRes,
-            backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
-                isSystemInDarkTheme()
-            ),
-            challengeRating = monsterCardState.imageState.challengeRating,
-            modifier = Modifier,
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MonsterSection1ItemPreview() = Window {
-    val imageState = MonsterImageState(
-        url = "",
-        type = MonsterTypeState.ABERRATION,
-        challengeRating = 8.0f,
-        backgroundColor = ColorState(
-            light = "#ffe0e0",
-            dark = "#ffe0e0"
-        )
-    )
-    CompendiumRow(
-        leftCard = MonsterCardState(
-            index = "asdasdasd",
-            name = "Monster of monsters",
-            imageState = imageState
-        )
-    ) { monsterCardState ->
-        MonsterCard(
-            name = monsterCardState.name,
-            url = monsterCardState.imageState.url,
-            iconRes = monsterCardState.imageState.type.iconRes,
-            backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
-                isSystemInDarkTheme()
-            ),
-            challengeRating = monsterCardState.imageState.challengeRating,
-            modifier = Modifier,
-        )
-    }
 }

@@ -19,8 +19,7 @@ package br.alexandregpereira.hunter.monster.compendium
 import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
-import br.alexandregpereira.hunter.ui.compendium.SectionState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compose.CircularLoadingState
 import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Error
 import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Loading
@@ -28,7 +27,7 @@ import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
 
 data class MonsterCompendiumViewState(
     val loadingState: CircularLoadingState = Loading,
-    val monstersBySection: Map<SectionState, List<MonsterCardState>> = emptyMap(),
+    val items: List<CompendiumItemState> = emptyList(),
     val alphabet: List<Char> = emptyList(),
     val alphabetIndex: Int = 0,
     val alphabetOpened: Boolean = false,
@@ -54,12 +53,12 @@ fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumVie
 }
 
 fun MonsterCompendiumViewState.complete(
-    monstersBySection: Map<SectionState, List<MonsterCardState>>,
+    items: List<CompendiumItemState>,
     alphabet: List<Char>,
     alphabetIndex: Int
 ) = this.copy(
     loadingState = Success,
-    monstersBySection = monstersBySection,
+    items = items,
     alphabet = alphabet,
     alphabetIndex = alphabetIndex
 )
