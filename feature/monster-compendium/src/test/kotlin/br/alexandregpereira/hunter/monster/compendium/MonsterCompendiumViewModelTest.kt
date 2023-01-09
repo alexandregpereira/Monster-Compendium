@@ -18,17 +18,20 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.domain.model.Color
+import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
-import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
@@ -59,12 +62,13 @@ class MonsterCompendiumViewModelTest {
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = mockk()
     private val folderPreviewResultListener: FolderPreviewResultListener = mockk()
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher = mockk()
+    private val monsterDetailEventListener: MonsterDetailEventListener = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Test
     fun loadMonsters() = runTest {
         // Given
-        val section = MonsterSection(title = "Any")
+        val section = Title(value = "Any", id = "da", isHeader = true)
         val monster = MonsterPreview(
             index = "",
             type = MonsterType.ABERRATION,
@@ -74,10 +78,15 @@ class MonsterCompendiumViewModelTest {
                 url = "",
                 backgroundColor = Color(light = "", dark = "")
             ),
+        ).let {
+            Monster(preview = it)
+        }
+        val monstersBySection = listOf(
+            section,
+            MonsterCompendiumItem.Item(monster)
         )
-        val monstersBySection = mapOf(
-            section to listOf(monster)
-        )
+        every { folderPreviewResultListener.result } returns flowOf()
+        every { monsterDetailEventListener.events } returns flowOf()
         every { getMonsterPreviewsUseCase() } returns flowOf(monstersBySection)
         every { getLastScrollPositionUseCase() } returns flowOf(1)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -100,9 +109,10 @@ class MonsterCompendiumViewModelTest {
         assertEquals(MonsterCompendiumViewState(), results[0])
         assertEquals(
             MonsterCompendiumViewState().complete(
-                monstersBySection = mapOf(
-                    SectionState(title = "Any") to listOf(
-                        MonsterCardState(
+                items = listOf(
+                    CompendiumItemState.Title(value = "Any", id = "da", isHeader = true),
+                    CompendiumItemState.Item(
+                        value = MonsterCardState(
                             index = "",
                             name = "A",
                             imageState = MonsterImageState(
@@ -133,6 +143,7 @@ class MonsterCompendiumViewModelTest {
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             folderPreviewResultListener = folderPreviewResultListener,
             monsterDetailEventDispatcher = monsterDetailEventDispatcher,
+            monsterDetailEventListener = monsterDetailEventListener,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )

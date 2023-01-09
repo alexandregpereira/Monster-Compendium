@@ -16,31 +16,30 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
-import br.alexandregpereira.hunter.domain.model.MonsterSection
-import br.alexandregpereira.hunter.monster.compendium.domain.MonstersBySection
-import br.alexandregpereira.hunter.ui.compendium.SectionState
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 
-fun MonstersBySection.asState(): Map<SectionState, List<MonsterCardState>> {
-    return this.map { (section, monsters) ->
-        section.asState() to monsters.map { it.asState() }
-    }.toMap()
+fun List<MonsterCompendiumItem>.asState(): List<CompendiumItemState> {
+    return this.map { item ->
+        when (item) {
+            is MonsterCompendiumItem.Title -> CompendiumItemState.Title(
+                value = item.value,
+                id = item.id,
+                isHeader = item.isHeader
+            )
+            is MonsterCompendiumItem.Item -> CompendiumItemState.Item(
+                value = item.monster.asState()
+            )
+        }
+    }
 }
 
-private fun MonsterSection.asState(): SectionState {
-    return SectionState(
-        id = id,
-        title = title,
-        parentTitle = parentTitle,
-        isHeader = isHeader
-    )
-}
-
-private fun MonsterPreview.asState(): MonsterCardState {
+private fun Monster.asState(): MonsterCardState {
     return MonsterCardState(
         index = index,
         name = name,

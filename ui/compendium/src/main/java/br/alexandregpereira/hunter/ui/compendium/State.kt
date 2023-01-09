@@ -16,9 +16,15 @@
 
 package br.alexandregpereira.hunter.ui.compendium
 
-data class SectionState(
-    val title: String,
-    val id: String = title,
-    val parentTitle: String? = null,
-    val isHeader: Boolean = false,
-)
+sealed class CompendiumItemState {
+
+    data class Title(
+        val value: String,
+        val id: String = value,
+        val isHeader: Boolean = false
+    ) : CompendiumItemState()
+
+    data class Item(
+        val value: Any
+    ) : CompendiumItemState()
+}

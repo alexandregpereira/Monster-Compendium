@@ -24,8 +24,10 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListene
 import br.alexandregpereira.hunter.event.folder.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
 import br.alexandregpereira.hunter.event.folder.list.collectOnItemSelectionVisibilityChanges
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Hide
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +35,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -54,10 +55,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun observeMonsterDetailEvents() {
-        monsterDetailEventListener.events.onEach { event ->
+        monsterDetailEventListener.collectOnVisibilityChanges { event ->
             when (event) {
-                is MonsterDetailEvent.Show -> setState { copy(isMonsterDetailShowing = true) }
-                MonsterDetailEvent.Hide -> setState { copy(isMonsterDetailShowing = false) }
+                is Show -> setState { copy(isMonsterDetailShowing = true) }
+                Hide -> setState { copy(isMonsterDetailShowing = false) }
             }
             dispatchFolderPreviewEvent(show = state.value.isMonsterDetailShowing.not())
         }.launchIn(viewModelScope)

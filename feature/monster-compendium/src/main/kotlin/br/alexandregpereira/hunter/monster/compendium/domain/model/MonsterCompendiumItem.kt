@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.monster.compendium.domain.model
 
-data class MonsterSection(
-    val title: String,
-    val id: String = title,
-    val parentTitle: String? = null,
-    val isHeader: Boolean = false
-)
+import br.alexandregpereira.hunter.domain.model.Monster
+
+sealed class MonsterCompendiumItem {
+
+    data class Title(
+        val id: String,
+        val value: String,
+        val isHeader: Boolean
+    ) : MonsterCompendiumItem()
+
+    data class Item(
+        val monster: Monster
+    ) : MonsterCompendiumItem()
+}

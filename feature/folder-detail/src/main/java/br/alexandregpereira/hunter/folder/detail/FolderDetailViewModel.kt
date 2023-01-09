@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResult.OnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher

@@ -23,7 +23,7 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.*
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.Show
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
