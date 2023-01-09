@@ -65,9 +65,13 @@ internal fun MonsterCompendiumScreen(
         MonsterCompendiumScreen(
             items = state.items,
             isShowingMonsterFolderPreview = state.isShowingMonsterFolderPreview,
-            alphabetOpened = state.alphabetOpened,
+            popupOpened = state.popupOpened,
             alphabet = state.alphabet,
-            alphabetIndex = state.alphabetIndex,
+            tableContent = state.tableContent,
+            tableContentIndex = state.tableContentIndex,
+            tableContentInitialIndex = state.tableContentInitialIndex,
+            alphabetSelectedIndex = state.alphabetSelectedIndex,
+            tableContentOpened = state.tableContentOpened,
             listState = listState,
             contentPadding = contentPadding,
             events = events
@@ -87,9 +91,13 @@ internal fun MonsterCompendiumScreen(
 private fun MonsterCompendiumScreen(
     items: List<CompendiumItemState>,
     isShowingMonsterFolderPreview: Boolean,
-    alphabetOpened: Boolean,
-    alphabet: List<Char>,
-    alphabetIndex: Int,
+    popupOpened: Boolean,
+    alphabet: List<String>,
+    alphabetSelectedIndex: Int,
+    tableContent: List<TableContentItemState>,
+    tableContentIndex: Int,
+    tableContentInitialIndex: Int,
+    tableContentOpened: Boolean,
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
@@ -102,21 +110,30 @@ private fun MonsterCompendiumScreen(
             onItemCLick = events::onItemCLick,
             onItemLongCLick = events::onItemLongCLick,
         )
-        Closeable(opened = alphabetOpened, onClosed = events::onAlphabetClosed)
+        Closeable(opened = popupOpened, onClosed = events::onPopupClosed)
         val paddingBottom by animateDpAsState(
             if (isShowingMonsterFolderPreview) 72.dp else 8.dp
         )
 
-        AlphabetIndex(
+        TableContentPopup(
             alphabet = alphabet,
-            selectedIndex = alphabetIndex,
-            opened = alphabetOpened,
-            onOpenButtonClicked = events::onAlphabetOpened,
-            onCloseButtonClicked = events::onAlphabetClosed,
+            tableContent = tableContent,
+            alphabetSelectedIndex = alphabetSelectedIndex,
+            tableContentSelectedIndex = tableContentIndex,
+            tableContentInitialIndex = tableContentInitialIndex,
+            opened = popupOpened,
+            tableContentOpened = tableContentOpened,
+            onOpenButtonClicked = events::onPopupOpened,
+            onCloseButtonClicked = events::onPopupClosed,
+            onTableContentClicked = events::onTableContentIndexClicked,
             onAlphabetIndexClicked = events::onAlphabetIndexClicked,
+            onTableContentClosed = events::onTableContentClosed,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = contentPadding.calculateBottomPadding() + paddingBottom)
+                .padding(
+                    top = contentPadding.calculateTopPadding(),
+                    bottom = contentPadding.calculateBottomPadding() + paddingBottom
+                )
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }

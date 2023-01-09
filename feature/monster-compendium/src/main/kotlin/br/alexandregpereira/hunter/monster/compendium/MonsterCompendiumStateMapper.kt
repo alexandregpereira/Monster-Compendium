@@ -18,6 +18,9 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
+import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
@@ -54,4 +57,15 @@ private fun Monster.asState(): MonsterCardState {
             isHorizontal = imageData.isHorizontal
         )
     )
+}
+
+@JvmName("asStateTableContentItem")
+fun List<TableContentItem>.asState(): List<TableContentItemState> {
+    return this.map {
+        TableContentItemState(
+            id = it.id,
+            text = it.text,
+            type = TableContentItemTypeState.valueOf(it.type.name)
+        )
+    }
 }

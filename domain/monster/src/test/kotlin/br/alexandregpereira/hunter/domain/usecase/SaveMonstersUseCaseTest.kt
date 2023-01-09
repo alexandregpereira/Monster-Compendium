@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.SpeedType
@@ -93,9 +92,7 @@ class SaveMonstersUseCaseTest {
                             languages = languagesExpected,
                             specialAbilities = listOf(abilityDescriptionExpected),
                             actions = listOf(actionExpected),
-                            preview = it.preview.copy(
-                                imageData = it.preview.imageData.copy(url = expectedImageUrl)
-                            )
+                            imageData = it.imageData.copy(url = expectedImageUrl)
                         )
                     }
                 )
@@ -146,9 +143,7 @@ class SaveMonstersUseCaseTest {
                             languages = languagesExpected,
                             specialAbilities = listOf(abilityDescriptionExpected),
                             actions = listOf(actionExpected),
-                            preview = it.preview.copy(
-                                imageData = it.preview.imageData.copy(url = expectedImageUrl)
-                            )
+                            imageData = it.imageData.copy(url = expectedImageUrl)
                         )
                     }
                 )
@@ -159,16 +154,14 @@ class SaveMonstersUseCaseTest {
     private fun createFeetMonsters(): List<Monster> {
         return listOf(
             Monster(
-                preview = MonsterPreview(
-                    index = "",
-                    name = "",
-                    type = MonsterType.CELESTIAL,
-                    challengeRating = 0.0f,
-                    imageData = MonsterImageData(
-                        url = "something.png",
-                        backgroundColor = Color(light = "", dark = ""),
-                        isHorizontal = false
-                    )
+                index = "",
+                name = "",
+                type = MonsterType.CELESTIAL,
+                challengeRating = 0.0f,
+                imageData = MonsterImageData(
+                    url = "something.png",
+                    backgroundColor = Color(light = "", dark = ""),
+                    isHorizontal = false
                 ),
                 subtype = null,
                 group = null,
@@ -214,16 +207,14 @@ class SaveMonstersUseCaseTest {
     private fun createMetersMonsters(): List<Monster> {
         return listOf(
             Monster(
-                preview = MonsterPreview(
-                    index = "",
-                    name = "",
-                    type = MonsterType.CELESTIAL,
-                    challengeRating = 0.0f,
-                    imageData = MonsterImageData(
-                        url = "something.png",
-                        backgroundColor = Color(light = "", dark = ""),
-                        isHorizontal = false
-                    )
+                index = "",
+                name = "",
+                type = MonsterType.CELESTIAL,
+                challengeRating = 0.0f,
+                imageData = MonsterImageData(
+                    url = "something.png",
+                    backgroundColor = Color(light = "", dark = ""),
+                    isHorizontal = false
                 ),
                 subtype = null,
                 group = null,

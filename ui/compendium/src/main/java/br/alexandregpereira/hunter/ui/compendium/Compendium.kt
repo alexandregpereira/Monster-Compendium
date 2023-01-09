@@ -53,7 +53,7 @@ fun Compendium(
         ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items.forEachIndexed { i, item ->
+        items.forEach { item ->
             val sectionTitlePaddingTop = 32.dp
             val sectionTitlePaddingBottom = 16.dp
 

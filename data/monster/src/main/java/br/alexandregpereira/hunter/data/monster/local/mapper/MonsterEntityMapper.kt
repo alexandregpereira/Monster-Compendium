@@ -23,7 +23,6 @@ import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.model.MonsterPreview
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
@@ -104,19 +103,17 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
 private fun MonsterEntity.toDomain(): Monster {
     val monster = this
     return Monster(
-        preview = MonsterPreview(
-            index = monster.index,
-            type = MonsterType.valueOf(monster.type),
-            challengeRating = monster.challengeRating,
-            name = monster.name,
-            imageData = MonsterImageData(
-                url = monster.imageUrl,
-                backgroundColor = Color(
-                    light = monster.backgroundColorLight,
-                    dark = monster.backgroundColorDark
-                ),
-                isHorizontal = monster.isHorizontalImage
-            )
+        index = monster.index,
+        type = MonsterType.valueOf(monster.type),
+        challengeRating = monster.challengeRating,
+        name = monster.name,
+        imageData = MonsterImageData(
+            url = monster.imageUrl,
+            backgroundColor = Color(
+                light = monster.backgroundColorLight,
+                dark = monster.backgroundColorDark
+            ),
+            isHorizontal = monster.isHorizontalImage
         ),
         subtype = monster.subtype,
         group = monster.group,

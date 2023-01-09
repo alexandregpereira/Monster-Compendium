@@ -53,6 +53,7 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3_logging_interceptor" }
@@ -70,7 +71,7 @@ compose = ["compose-ui", "compose-tooling", "compose-material", "compose-activit
 instrumentedtest = ["espresso", "junit-ext"]
 retrofit = ["retrofit-core", "retrofit-logging", "retrofit-serialization"]
 room = ["room-ktx", "room-runtime"]
-unittest = ["kotlin-coroutines-test", "core-testing", "mockk", "junit"]
+unittest = ["kotlin-coroutines-test", "core-testing", "mockk", "junit", "kotlin-test"]
 viewmodel-bundle = ["viewmodel", "viewmodel-compose"]
 
 [plugins]
