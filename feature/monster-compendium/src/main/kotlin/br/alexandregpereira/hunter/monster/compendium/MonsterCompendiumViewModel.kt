@@ -32,8 +32,9 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispat
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
-import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
+import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
@@ -58,7 +59,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MonsterCompendiumViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
+    private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
@@ -87,20 +88,28 @@ class MonsterCompendiumViewModel @Inject constructor(
     }
 
     fun loadMonsters() = viewModelScope.launch {
-        getMonsterPreviewsBySectionUseCase()
+        getMonsterCompendiumUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
-            ) { items, scrollItemPosition ->
+            ) { compendium, scrollItemPosition ->
+                val items = compendium.items
                 val itemsState = items.asState()
-                val alphabet = itemsState.getAlphabet()
+                val alphabet = compendium.alphabet
+                val tableContent = compendium.tableContent.asState()
                 state.value.complete(
                     items = itemsState,
                     alphabet = alphabet,
-                    alphabetIndex = getAlphabetIndex(
+                    tableContent = tableContent,
+                    tableContentIndex = getTableContentIndexFromCompendiumItemIndex(
                         scrollItemPosition,
-                        alphabet,
-                        itemsState
+                        itemsState,
+                        tableContent
                     ),
+                    alphabetSelectedIndex = getAlphabetIndexFromCompendiumItemIndex(
+                        scrollItemPosition,
+                        itemsState,
+                        alphabet
+                    )
                 ) to scrollItemPosition
             }
             .onStart {
@@ -131,79 +140,71 @@ class MonsterCompendiumViewModel @Inject constructor(
         saveCompendiumScrollItemPosition(position)
     }
 
-    override fun onAlphabetOpened() = changeAlphabetOpenState(opened = true)
+    override fun onPopupOpened() {
+        _state.value = state.value.popupOpened(popupOpened = true)
+            .tableContentOpened(false)
+    }
 
-    override fun onAlphabetClosed() = changeAlphabetOpenState(opened = false)
+    override fun onPopupClosed() {
+        _state.value = state.value.popupOpened(popupOpened = false)
+    }
 
     override fun onAlphabetIndexClicked(position: Int) {
-        navigateToCompendiumIndexFromAlphabetIndex(position)
+        navigateToTableContentFromAlphabetIndex(position)
+    }
+
+    override fun onTableContentIndexClicked(position: Int) {
+        navigateToCompendiumIndexFromTableContentIndex(position)
+    }
+
+    override fun onTableContentClosed() {
+        _state.value = state.value.tableContentOpened(false)
     }
 
     override fun onErrorButtonClick() {
         loadMonsters()
     }
 
-    private fun navigateToCompendiumIndexFromAlphabetIndex(alphabetIndex: Int) {
-        _state.value = state.value.alphabetOpened(alphabetOpened = false)
-        viewModelScope.launch {
-            flowOf(state.value.items)
-                .map { items ->
-                    val letter = items.getAlphabet()[alphabetIndex]
-                    items.indexOfFirst { it is Title && it.value == letter.toString() }
-                }
-                .flowOn(dispatcher)
-                .collect { compendiumIndex ->
-                    sendAction(GoToCompendiumIndex(compendiumIndex))
-                }
-        }
-    }
-
     private fun saveCompendiumScrollItemPosition(position: Int) {
         val items = state.value.items
         val alphabet = state.value.alphabet
+        val tableContent = state.value.tableContent
         viewModelScope.launch {
             saveCompendiumScrollItemPositionUseCase(position)
                 .map {
-                    getAlphabetIndex(position, alphabet, items)
+                    getTableContentIndexFromCompendiumItemIndex(position, items, tableContent) to
+                            getAlphabetIndexFromCompendiumItemIndex(position, items, alphabet)
                 }
                 .flowOn(dispatcher)
-                .collect { alphabetIndex ->
+                .collect { (tableContentIndex, alphabetLetter) ->
                     initialScrollItemPosition = position
-                    _state.value = state.value.alphabetIndex(alphabetIndex)
+                    _state.value = state.value.tableContentIndex(tableContentIndex, alphabetLetter)
                         .saveState(savedStateHandle)
                 }
         }
     }
 
-    private fun changeAlphabetOpenState(opened: Boolean) {
-        _state.value = state.value.alphabetOpened(alphabetOpened = opened)
-    }
-
-    private fun List<CompendiumItemState>.mapToFirstLetters(): List<Char> {
+    private fun List<CompendiumItemState>.mapToFirstLetters(): List<String> {
         var lastLetter: Char? = null
         return map { item ->
             when (item) {
                 is Title -> {
-                    item.value.first().also { lastLetter = it }
+                    item.value.first().also { lastLetter = it }.toString()
                 }
-                is CompendiumItemState.Item -> lastLetter
+                is CompendiumItemState.Item -> lastLetter?.toString()
                     ?: throw IllegalArgumentException("Letter not initialized")
             }
         }
     }
 
-    private fun List<CompendiumItemState>.getAlphabet(): List<Char> {
-        return mapToFirstLetters().toSortedSet().toList()
-    }
-
-    private fun getAlphabetIndex(
-        scrollItemPosition: Int,
-        alphabet: List<Char>,
-        items: List<CompendiumItemState>
+    private fun getAlphabetIndexFromCompendiumItemIndex(
+        itemIndex: Int,
+        items: List<CompendiumItemState>,
+        alphabet: List<String>
     ): Int {
-        if (items.isEmpty()) return 0
+        if (items.isEmpty()) return -1
         val monsterFirstLetters = items.mapToFirstLetters()
-        return alphabet.indexOf(monsterFirstLetters[scrollItemPosition])
+        return alphabet.indexOf(monsterFirstLetters[itemIndex])
     }
 
     private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
@@ -243,5 +244,63 @@ class MonsterCompendiumViewModel @Inject constructor(
 
     private fun sendAction(action: MonsterCompendiumViewAction) {
         _action.tryEmit(action)
+    }
+
+    private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {
+        val alphabet = state.value.alphabet
+        val currentAlphabetIndex = state.value.alphabetSelectedIndex
+        val currentTableContentIndex = state.value.tableContentIndex
+        flowOf(state.value.tableContent)
+            .map { tableContent ->
+                val letter = alphabet[alphabetIndex]
+                if (currentAlphabetIndex == alphabetIndex) {
+                    currentTableContentIndex
+                } else {
+                    tableContent.indexOfFirst { it.text == letter }
+                }
+            }
+            .flowOn(dispatcher)
+            .onEach { tableContentIndex ->
+                _state.value = state.value.tableContentOpened(tableContentOpened = true)
+                    .copy(tableContentInitialIndex = tableContentIndex)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun navigateToCompendiumIndexFromTableContentIndex(tableContentIndex: Int) {
+        _state.value = state.value.popupOpened(popupOpened = false)
+        val tableContent = state.value.tableContent
+        viewModelScope.launch {
+            flowOf(state.value.items)
+                .map { items ->
+                    val content = tableContent[tableContentIndex]
+                    items.indexOfFirst { item ->
+                        val value = when (item) {
+                            is Title -> item.id
+                            is CompendiumItemState.Item -> item.getMonsterCardState().index
+                        }
+                        content.id == value
+                    }
+                }
+                .flowOn(dispatcher)
+                .collect { compendiumIndex ->
+                    sendAction(GoToCompendiumIndex(compendiumIndex))
+                }
+        }
+    }
+
+    private fun getTableContentIndexFromCompendiumItemIndex(
+        itemIndex: Int,
+        items: List<CompendiumItemState>,
+        tableContent: List<TableContentItemState>
+    ): Int {
+        val compendiumItem = items.getOrNull(itemIndex) ?: return -1
+        return tableContent.indexOfFirst { content ->
+            val value = when (compendiumItem) {
+                is Title -> compendiumItem.id
+                is CompendiumItemState.Item -> compendiumItem.getMonsterCardState().index
+            }
+            content.id == value
+        }
     }
 }

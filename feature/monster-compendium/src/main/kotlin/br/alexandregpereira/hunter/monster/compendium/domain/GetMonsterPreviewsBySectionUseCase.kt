@@ -54,8 +54,8 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
             .toMonsterCompendiumItems()
     }
 
-    private fun String.getFirstLetter(): Char {
-        return this.first().uppercaseChar()
+    private fun String.getFirstLetter(): String {
+        return this.first().uppercaseChar().toString()
     }
 
     private fun List<Monster>.appendIsHorizontal(): List<Monster> {
@@ -96,25 +96,41 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     }
 
     private fun Monster.changeIsHorizontalImage(isHorizontal: Boolean): Monster {
-        return copy(preview = preview.copy(imageData = imageData.copy(isHorizontal = isHorizontal)))
+        return copy(imageData = imageData.copy(isHorizontal = isHorizontal))
     }
 
     private fun Flow<List<Monster>>.toMonsterCompendiumItems(): Flow<List<MonsterCompendiumItem>> {
         return map { monsters ->
             val items = mutableListOf<MonsterCompendiumItem>()
             monsters.forEach { monster ->
-                val title = monster.group ?: monster.name.getFirstLetter().toString()
+                val title = monster.group ?: monster.name.getFirstLetter()
                 val lastTitle = items.lastOrNull { it is Title }?.let { it as Title }?.value
                 if (title != lastTitle) {
-                    items.add(
-                        Title(
-                            id = title + items.count { it is Title && it.value == title },
-                            value = title,
-                            isHeader = items.find {
-                                it is Title && it.value == title.getFirstLetter().toString()
-                            } == null
+                    val titleFirstLetter = title.getFirstLetter()
+                    if (titleFirstLetter != lastTitle?.getFirstLetter()) {
+                        items.add(
+                            Title(
+                                id = titleFirstLetter + items.count {
+                                    it is Title && it.value == titleFirstLetter
+                                },
+                                value = titleFirstLetter,
+                                isHeader = true
+                            )
                         )
-                    )
+                    }
+
+                    val lastItem = items.lastOrNull()
+                    if (lastItem !is Title || lastItem.value != title) {
+                        items.add(
+                            Title(
+                                id = title + items.count { it is Title && it.value == title },
+                                value = title,
+                                isHeader = items.find {
+                                    it is Title && it.value == titleFirstLetter
+                                } == null
+                            )
+                        )
+                    }
                 }
 
                 items.add(

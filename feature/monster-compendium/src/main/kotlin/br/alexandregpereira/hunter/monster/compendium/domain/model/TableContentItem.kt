@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.monster.compendium.domain.model
 
-interface MonsterCompendiumEvents {
-    fun onFirstVisibleItemChange(position: Int)
-    fun onItemCLick(index: String)
-    fun onItemLongCLick(index: String)
-    fun onAlphabetIndexClicked(position: Int)
-    fun onPopupClosed()
-    fun onPopupOpened()
-    fun onTableContentIndexClicked(position: Int)
-    fun onTableContentClosed()
-    fun onErrorButtonClick()
+data class TableContentItem(
+    val text: String,
+    val type: TableContentItemType,
+    val id: String = text
+)
+
+enum class TableContentItemType {
+    HEADER1, HEADER2, BODY
 }

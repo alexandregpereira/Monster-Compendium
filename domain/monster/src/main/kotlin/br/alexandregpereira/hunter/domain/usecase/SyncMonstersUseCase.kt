@@ -97,12 +97,10 @@ class SyncMonstersUseCase @Inject internal constructor(
             )
 
             monster.copy(
-                preview = monster.preview.copy(
-                    imageData = MonsterImageData(
-                        url = monsterImage.imageUrl,
-                        backgroundColor = monsterImage.backgroundColor,
-                        isHorizontal = monsterImage.isHorizontalImage
-                    )
+                imageData = MonsterImageData(
+                    url = monsterImage.imageUrl,
+                    backgroundColor = monsterImage.backgroundColor,
+                    isHorizontal = monsterImage.isHorizontalImage
                 )
             )
         }
