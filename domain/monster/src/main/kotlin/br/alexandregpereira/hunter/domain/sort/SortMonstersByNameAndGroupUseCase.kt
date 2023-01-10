@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.sort
 
+import br.alexandregpereira.hunter.domain.collections.removeSpecialCharacters
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -28,7 +29,10 @@ internal fun Flow<List<Monster>>.sortMonstersByNameAndGroup(): Flow<List<Monster
 
 fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
     return this.sortedWith { monsterA, monsterB ->
-        monsterA.getOrderValue().compareTo(monsterB.getOrderValue())
+        monsterA.getOrderValue()
+            .removeSpecialCharacters()
+            .lowercase()
+            .compareTo(monsterB.getOrderValue().removeSpecialCharacters().lowercase())
     }
 }
 
