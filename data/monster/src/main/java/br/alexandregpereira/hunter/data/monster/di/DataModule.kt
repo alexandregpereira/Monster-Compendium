@@ -19,7 +19,10 @@
 package br.alexandregpereira.hunter.data.monster.di
 
 import br.alexandregpereira.hunter.data.monster.MonsterAlternativeSourceRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.MonsterCacheRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.MonsterLocalRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
@@ -33,7 +36,10 @@ import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceIm
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
@@ -47,21 +53,37 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal abstract class DataModule {
 
+    @Singleton
     @Binds
     abstract fun bindMonsterRemoteDataSource(
         monsterRemoteDataSourceImpl: MonsterRemoteDataSourceImpl
     ): MonsterRemoteDataSource
 
+    @Singleton
     @Binds
     abstract fun bindMonsterLocalDataSource(
         monsterLocalDataSourceImpl: MonsterLocalDataSourceImpl
     ): MonsterLocalDataSource
 
-    @Singleton
     @Binds
     abstract fun bindMonsterRepository(
         monsterRepositoryImpl: MonsterRepositoryImpl
     ): MonsterRepository
+
+    @Binds
+    abstract fun bindMonsterLocalRepository(
+        repository: MonsterLocalRepositoryImpl
+    ): MonsterLocalRepository
+
+    @Binds
+    abstract fun bindMonsterRemoteRepository(
+        repository: MonsterRemoteRepositoryImpl
+    ): MonsterRemoteRepository
+
+    @Binds
+    abstract fun bindMonsterCacheRepository(
+        repository: MonsterCacheRepositoryImpl
+    ): MonsterCacheRepository
 
     @Binds
     abstract fun bindMonsterSettingsRepository(

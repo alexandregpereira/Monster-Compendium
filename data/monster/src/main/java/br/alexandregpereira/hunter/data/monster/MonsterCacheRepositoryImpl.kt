@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package br.alexandregpereira.hunter.data.monster
 
+import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
-import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
-import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.single
 
-class GetMonsterPreviewsUseCase @Inject internal constructor(
-    private val repository: MonsterLocalRepository,
-    private val cacheRepository: MonsterCacheRepository
-) {
+internal class MonsterCacheRepositoryImpl @Inject constructor(
+    private val cacheDataSource: MonsterCacheDataSource
+) : MonsterCacheRepository {
 
-    operator fun invoke(): Flow<List<Monster>> {
-        return repository.getMonsterPreviews().sortMonstersByNameAndGroup()
-            .onEach {
-                cacheRepository.saveMonsters(it).single()
-            }
+    override fun saveMonsters(monsters: List<Monster>): Flow<Unit> {
+        return cacheDataSource.saveMonsters(monsters)
+    }
+
+    override fun getMonsters(): Flow<List<Monster>> {
+        return cacheDataSource.getMonsters()
     }
 }
