@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.data.settings.network
 
-import br.alexandregpereira.hunter.data.settings.DEFAULT_API_BASE_URL
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -57,10 +56,14 @@ class AlternativeSourceUrlInterceptor @Inject constructor(
         when {
             currentUrl.contains("alternative-sources.json") -> getAlternativeSourceJsonUrl()
             currentUrl.contains("/sources/") -> getAlternativeSourceJsonUrl().map { url ->
-                currentUrl.replace(
-                    DEFAULT_API_BASE_URL,
-                    url.replace("alternative-sources.json", "")
-                )
+                val path = currentUrl.split("/")
+                    .run { subList(size - 4, size) }
+                    .joinToString("/")
+                val urlFormatted = url.split("/")
+                    .run { subList(0, size - 1) }
+                    .joinToString("/")
+
+                "$urlFormatted/$path"
             }
             else -> null
         }?.appendLocalHostIfEmpty()?.single()
