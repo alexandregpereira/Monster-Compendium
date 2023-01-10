@@ -23,6 +23,8 @@ import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
+import br.alexandregpereira.hunter.domain.collections.equalsWithNoSpecialChar
+import br.alexandregpereira.hunter.domain.collections.removeSpecialCharacters
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -55,7 +57,7 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
     }
 
     private fun String.getFirstLetter(): String {
-        return this.first().uppercaseChar().toString()
+        return this.first().uppercaseChar().toString().removeSpecialCharacters()
     }
 
     private fun List<Monster>.appendIsHorizontal(): List<Monster> {
@@ -105,13 +107,14 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
             monsters.forEach { monster ->
                 val title = monster.group ?: monster.name.getFirstLetter()
                 val lastTitle = items.lastOrNull { it is Title }?.let { it as Title }?.value
-                if (title != lastTitle) {
+                if (title.equalsWithNoSpecialChar(lastTitle).not()) {
                     val titleFirstLetter = title.getFirstLetter()
-                    if (titleFirstLetter != lastTitle?.getFirstLetter()) {
+                    if (titleFirstLetter.equalsWithNoSpecialChar(lastTitle?.getFirstLetter()).not()) {
                         items.add(
                             Title(
                                 id = titleFirstLetter + items.count {
-                                    it is Title && it.value == titleFirstLetter
+                                    it is Title &&
+                                            it.value.equalsWithNoSpecialChar(titleFirstLetter)
                                 },
                                 value = titleFirstLetter,
                                 isHeader = true
@@ -120,13 +123,16 @@ class GetMonsterPreviewsBySectionUseCase @Inject internal constructor(
                     }
 
                     val lastItem = items.lastOrNull()
-                    if (lastItem !is Title || lastItem.value != title) {
+                    if (lastItem !is Title || lastItem.value.equalsWithNoSpecialChar(title).not()) {
                         items.add(
                             Title(
-                                id = title + items.count { it is Title && it.value == title },
+                                id = title + items.count {
+                                    it is Title && it.value.equalsWithNoSpecialChar(title)
+                                },
                                 value = title,
                                 isHeader = items.find {
-                                    it is Title && it.value == titleFirstLetter
+                                    it is Title && it.value
+                                        .equalsWithNoSpecialChar(titleFirstLetter)
                                 } == null
                             )
                         )

@@ -43,7 +43,7 @@ class GetMonstersUseCase @Inject internal constructor(
                         val toIndex = position + monsterPagerScrollLimit
                         monsterIndexes.subList(
                             fromIndex.coerceAtLeast(0),
-                            toIndex.coerceAtMost(monstersPreview.lastIndex)
+                            toIndex.coerceAtMost(monstersPreview.size)
                         )
                     }?.let { monsterIndexesSubList ->
                         getMonstersByIdsUseCase(monsterIndexesSubList).single()
