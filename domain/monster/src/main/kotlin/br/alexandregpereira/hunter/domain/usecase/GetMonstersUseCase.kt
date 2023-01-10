@@ -24,14 +24,14 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.single
 
 class GetMonstersUseCase @Inject internal constructor(
-    private val getMonsterPreviewsUseCase: GetMonsterPreviewsUseCase,
+    private val getMonsterPreviewsCacheUseCase: GetMonsterPreviewsCacheUseCase,
     private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
 ) {
 
     private val monsterPagerScrollLimit = 100
 
     operator fun invoke(monsterIndex: String): Flow<List<Monster>> {
-        return getMonsterPreviewsUseCase()
+        return getMonsterPreviewsCacheUseCase()
             .sortMonstersByNameAndGroup()
             .mapNotNull { monstersPreview ->
                 val monsterIndexes = monstersPreview.map { it.index }

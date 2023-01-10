@@ -18,22 +18,19 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
-import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
-import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 
-class GetMonsterPreviewsUseCase @Inject internal constructor(
-    private val repository: MonsterLocalRepository,
+class GetMonsterPreviewsCacheUseCase @Inject internal constructor(
+    private val getMonsterPreviewsUseCase: GetMonsterPreviewsUseCase,
     private val cacheRepository: MonsterCacheRepository
 ) {
 
     operator fun invoke(): Flow<List<Monster>> {
-        return repository.getMonsterPreviews().sortMonstersByNameAndGroup()
-            .onEach {
-                cacheRepository.saveMonsters(it).single()
-            }
+        return cacheRepository.getMonsters().map { monsters ->
+            monsters.ifEmpty { getMonsterPreviewsUseCase().single() }
+        }
     }
 }
