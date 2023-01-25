@@ -44,6 +44,33 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import org.koin.dsl.module
+
+val databaseModule = module {
+    single {
+        Room.databaseBuilder(get(), AppDatabase::class.java, "hunter-database")
+            .build()
+    }
+    factory { get<Context>().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
+    factory { get<AppDatabase>().abilityScoreDao() }
+    factory { get<AppDatabase>().actionDao() }
+    factory { get<AppDatabase>().conditionDao() }
+    factory { get<AppDatabase>().damageDao() }
+    factory { get<AppDatabase>().damageDiceDao() }
+    factory { get<AppDatabase>().legendaryActionDao() }
+    factory { get<AppDatabase>().monsterDao() }
+    factory { get<AppDatabase>().monsterFolderDao() }
+    factory { get<AppDatabase>().monsterLoreDao() }
+    factory { get<AppDatabase>().savingThrowDao() }
+    factory { get<AppDatabase>().skillDao() }
+    factory { get<AppDatabase>().specialAbilityDao() }
+    factory { get<AppDatabase>().speedDao() }
+    factory { get<AppDatabase>().speedValueDao() }
+    factory { get<AppDatabase>().reactionDao() }
+    factory { get<AppDatabase>().spellDao() }
+    factory { get<AppDatabase>().spellcastingDao() }
+    factory { get<AppDatabase>().spellUsageDao() }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

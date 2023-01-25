@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium
+package br.alexandregpereira.hunter.domain.monster.lore.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object MonsterCompendiumModule {
-
-    @LoadOnInitFlag
-    @Provides
-    fun provideLoadOnInit(): Boolean = true
+val monsterLoreDomainModule = module {
+    factory { GetMonsterLoreUseCase(get()) }
+    factory { GetMonstersLoreByIdsUseCase(get()) }
+    factory { SyncMonstersLoreUseCase(get(), get(), get()) }
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class LoadOnInitFlag

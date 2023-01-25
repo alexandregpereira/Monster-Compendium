@@ -25,15 +25,24 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.dsl.module
+
+val monsterDetailModule = module {
+    single { MonsterDetailEventManager() }
+    single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
+    single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class EventDispatcherModuleImpl {
+internal class EventDispatcherModuleImpl : KoinComponent {
 
     @Singleton
     @Provides
     internal fun provideEventDispatcherImpl(): MonsterDetailEventManager {
-        return MonsterDetailEventManager()
+        return get()
     }
 }
 

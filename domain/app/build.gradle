@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+dependencies {
+    implementation project(":domain:alternative-source")
+    implementation project(":domain:monster")
+    implementation project(":domain:monster-folder")
+    implementation project(":domain:monster-lore")
+    implementation project(":domain:settings")
+    implementation project(":domain:spell")
+    implementation project(":domain:sync")
+    implementation libs.koin.core
+}
+
+configure([compileKotlin, compileTestKotlin]) {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+}

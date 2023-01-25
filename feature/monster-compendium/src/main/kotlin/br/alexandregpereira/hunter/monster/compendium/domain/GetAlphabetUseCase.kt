@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetAlphabetUseCase @Inject constructor() {
+class GetAlphabetUseCase internal constructor() {
 
     operator fun invoke(items: List<MonsterCompendiumItem>): Flow<List<String>> {
         return flow {

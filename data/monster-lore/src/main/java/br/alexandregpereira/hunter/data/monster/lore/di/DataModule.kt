@@ -21,6 +21,9 @@ package br.alexandregpereira.hunter.data.monster.lore.di
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSourceRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
+import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreApi
+import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSettingsRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSourceRepository
@@ -29,6 +32,17 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import org.koin.dsl.module
+import retrofit2.Retrofit
+
+val monsterLoreDataModule = module {
+    factory { MonsterLoreLocalDataSource(get()) }
+    factory { MonsterLoreRemoteDataSource(get()) }
+    single<MonsterLoreRepository> { MonsterLoreRepositoryImpl(get(), get()) }
+    factory<MonsterLoreSettingsRepository> { MonsterLoreSettingsRepositoryImpl(get()) }
+    factory<MonsterLoreSourceRepository> { MonsterLoreSourceRepositoryImpl(get()) }
+    factory { get<Retrofit>().create(MonsterLoreApi::class.java) }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

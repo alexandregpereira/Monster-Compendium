@@ -12,6 +12,7 @@ java {
 dependencies {
     implementation project(":domain:monster")
 
+    implementation libs.koin.core
     implementation libs.kotlin.coroutines.core
     implementation libs.dagger
     kapt libs.dagger.compiler

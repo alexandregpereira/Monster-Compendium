@@ -25,15 +25,24 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.dsl.module
+
+val folderPreviewModule = module {
+    single { FolderPreviewEventManager() }
+    single<FolderPreviewEventDispatcher> { get<FolderPreviewEventManager>() }
+    single<FolderPreviewResultListener> { get<FolderPreviewEventManager>() }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FolderPreviewEventDispatcherModuleImpl {
+class FolderPreviewEventDispatcherModuleImpl : KoinComponent {
 
     @Singleton
     @Provides
     internal fun provideFolderPreviewEventManager(): FolderPreviewEventManager {
-        return FolderPreviewEventManager()
+        return get()
     }
 }
 

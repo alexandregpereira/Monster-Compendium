@@ -26,6 +26,13 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import org.koin.dsl.module
+
+val monsterFolderDataModule = module {
+    factory<MonsterFolderRepository> { MonsterFolderRepositoryImpl(get()) }
+    factory<FolderMonsterPreviewRepository> { MonsterFolderRepositoryImpl(get()) }
+    factory<MonsterFolderLocalDataSource> { MonsterFolderLocalDataSourceImpl(get(), get()) }
+}
 
 @Module
 @InstallIn(ViewModelComponent::class)

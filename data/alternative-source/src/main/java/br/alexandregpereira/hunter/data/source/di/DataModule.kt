@@ -18,6 +18,7 @@
 
 package br.alexandregpereira.hunter.data.source.di
 
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceApi
 import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
 import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSourceImpl
 import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRepositoryImpl
@@ -26,6 +27,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.koin.dsl.module
+import retrofit2.Retrofit
+
+val alternativeSourceDataModule = module {
+    factory<AlternativeSourceRemoteDataSource> { AlternativeSourceRemoteDataSourceImpl(get()) }
+    factory<AlternativeSourceRepository> { AlternativeSourceRepositoryImpl(get()) }
+    factory<AlternativeSourceApi> { get<Retrofit>().create(AlternativeSourceApi::class.java) }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -63,6 +63,7 @@ android {
 
 dependencies {
     implementation project(':data:app')
+    implementation project(':domain:app')
     implementation project(':event:folder-detail-event')
     implementation project(':event:folder-list-event')
     implementation project(':event:folder-preview-event')
@@ -88,4 +89,8 @@ dependencies {
 
     implementation libs.hilt
     kapt libs.hilt.compiler
+
+    implementation libs.koin.android
+    testImplementation libs.bundles.unittest
+    testImplementation libs.koin.test
 }

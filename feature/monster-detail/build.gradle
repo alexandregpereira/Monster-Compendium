@@ -52,6 +52,7 @@ dependencies {
     implementation libs.accompanist.pager
     implementation libs.coil.compose
 
+    implementation libs.koin.core
     implementation libs.hilt
     kapt libs.hilt.compiler
     implementation libs.kotlin.reflect

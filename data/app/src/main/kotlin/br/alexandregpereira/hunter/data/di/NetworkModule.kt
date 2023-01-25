@@ -29,7 +29,28 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module
 import retrofit2.Retrofit
+
+val networkModule = module {
+    single {
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addInterceptor(get<AlternativeSourceUrlInterceptor>())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl(DEFAULT_API_BASE_URL)
+            .client(client)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

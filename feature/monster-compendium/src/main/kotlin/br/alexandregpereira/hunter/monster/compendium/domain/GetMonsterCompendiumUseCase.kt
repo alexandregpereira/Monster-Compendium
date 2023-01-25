@@ -17,14 +17,13 @@
 package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
-import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 
-class GetMonsterCompendiumUseCase @Inject constructor(
+class GetMonsterCompendiumUseCase internal constructor(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
     private val getTableContentUseCase: GetTableContentUseCase,
     private val getAlphabetUseCase: GetAlphabetUseCase

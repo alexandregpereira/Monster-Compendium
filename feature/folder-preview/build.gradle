@@ -42,6 +42,9 @@ dependencies {
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose
 
+    implementation libs.koin.core
     implementation libs.hilt
     kapt libs.hilt.compiler
+
+    testImplementation libs.bundles.unittest
 }

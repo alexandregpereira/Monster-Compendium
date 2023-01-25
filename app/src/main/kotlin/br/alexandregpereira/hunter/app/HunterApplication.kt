@@ -17,7 +17,47 @@
 package br.alexandregpereira.hunter.app
 
 import android.app.Application
+import br.alexandregpereira.hunter.data.di.dataModules
+import br.alexandregpereira.hunter.detail.di.monsterDetailModule
+import br.alexandregpereira.hunter.domain.di.domainModules
+import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
+import br.alexandregpereira.hunter.monster.compendium.di.monsterCompendiumModule
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.KoinApplication
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 @HiltAndroidApp
-class HunterApplication : Application()
+class HunterApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        initKoin()
+    }
+
+    private fun initKoin() {
+        startKoin {
+            androidContext(this@HunterApplication)
+            initKoinModules()
+        }
+    }
+
+    internal companion object {
+        private val appModule = module {
+            factory { Dispatchers.Default }
+        }
+
+        fun KoinApplication.initKoinModules() {
+            modules(domainModules)
+            modules(dataModules)
+            modules(
+                appModule,
+                folderPreviewModule,
+                monsterCompendiumModule,
+                monsterDetailModule,
+            )
+        }
+    }
+}
