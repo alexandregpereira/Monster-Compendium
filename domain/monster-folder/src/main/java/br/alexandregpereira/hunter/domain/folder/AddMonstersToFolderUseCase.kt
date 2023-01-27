@@ -16,10 +16,9 @@
 
 package br.alexandregpereira.hunter.domain.folder
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class AddMonstersToFolderUseCase @Inject constructor(
+class AddMonstersToFolderUseCase(
     private val monsterFolderRepository: MonsterFolderRepository,
 ) {
 

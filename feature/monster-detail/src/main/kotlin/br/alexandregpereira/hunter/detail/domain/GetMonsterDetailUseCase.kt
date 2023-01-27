@@ -27,7 +27,6 @@ import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -35,7 +34,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
 
-class GetMonsterDetailUseCase @Inject internal constructor(
+class GetMonsterDetailUseCase internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
     private val getMonsterUseCase: GetMonsterUseCase,

@@ -20,11 +20,10 @@ import br.alexandregpereira.hunter.domain.model.MonsterAlternativeSource
 import br.alexandregpereira.hunter.domain.model.MonsterSource
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterAlternativeSourceRepositoryImpl @Inject constructor(
+internal class MonsterAlternativeSourceRepositoryImpl(
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
 ) : MonsterAlternativeSourceRepository {
 

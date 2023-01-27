@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,4 +16,14 @@
 
 package br.alexandregpereira.hunter.search.di
 
+import br.alexandregpereira.hunter.search.SearchViewModel
+import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
+val searchModule = module {
+    factory { SearchMonstersByNameUseCase(get()) }
+    viewModel {
+        SearchViewModel(get(), get(), get(), get())
+    }
+}

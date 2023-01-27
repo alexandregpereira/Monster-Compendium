@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.domain.folder
 
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetMonstersByFolderUseCase @Inject constructor(
+class GetMonstersByFolderUseCase(
     private val monsterFolderRepository: MonsterFolderRepository
 ) {
 

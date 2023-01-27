@@ -22,8 +22,6 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,8 +31,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-@HiltViewModel
-internal class MonsterLoreDetailViewModel @Inject constructor(
+internal class MonsterLoreDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getMonsterLoreUseCase: GetMonsterLoreDetailUseCase,
     private val monsterLoreDetailEventListener: MonsterLoreDetailEventListener,

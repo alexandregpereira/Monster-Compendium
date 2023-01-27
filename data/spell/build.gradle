@@ -32,8 +32,6 @@ dependencies {
     implementation libs.kotlin.serialization
 
     implementation libs.koin.core
-    implementation libs.hilt
-    kapt libs.hilt.compiler
 
     implementation libs.bundles.retrofit
 

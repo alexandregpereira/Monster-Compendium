@@ -29,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.ui.compose.CircularLoading
@@ -37,12 +36,13 @@ import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
 import com.google.accompanist.pager.ExperimentalPagerApi
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MonsterDetailFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = HunterTheme {
-    val viewModel: MonsterDetailViewModel = viewModel()
+    val viewModel: MonsterDetailViewModel = koinViewModel()
     val viewState by viewModel.state.collectAsState()
 
     BackHandler(enabled = viewState.showDetail) {

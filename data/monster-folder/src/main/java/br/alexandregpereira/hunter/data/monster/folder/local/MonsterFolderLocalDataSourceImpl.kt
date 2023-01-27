@@ -23,11 +23,10 @@ import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import java.util.Calendar
 import java.util.TimeZone
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class MonsterFolderLocalDataSourceImpl @Inject constructor(
+internal class MonsterFolderLocalDataSourceImpl(
     private val monsterFolderDao: MonsterFolderDao,
     private val monsterDao: MonsterDao
 ) : MonsterFolderLocalDataSource {

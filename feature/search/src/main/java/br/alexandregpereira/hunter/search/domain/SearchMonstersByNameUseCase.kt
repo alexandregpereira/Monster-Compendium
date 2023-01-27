@@ -21,9 +21,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class SearchMonstersByNameUseCase @Inject internal constructor(
+internal class SearchMonstersByNameUseCase internal constructor(
     private val monsterRepository: MonsterRepository
 ) {
 

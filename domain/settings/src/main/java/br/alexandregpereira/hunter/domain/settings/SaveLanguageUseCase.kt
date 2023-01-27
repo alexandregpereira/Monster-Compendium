@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase.Companion.SETTING_LANGUAGE_KEY
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class SaveLanguageUseCase @Inject constructor(
+class SaveLanguageUseCase(
     private val settingsRepository: SettingsRepository
 ) {
 

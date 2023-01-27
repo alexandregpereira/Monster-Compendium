@@ -18,13 +18,12 @@ package br.alexandregpereira.hunter.data.monster.lore.local
 
 import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreCompleteEntity
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-internal class MonsterLoreLocalDataSource @Inject constructor(
+internal class MonsterLoreLocalDataSource(
     private val monsterLoreDao: MonsterLoreDao
 ) {
     private val mutex = Mutex()

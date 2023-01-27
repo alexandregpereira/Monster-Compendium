@@ -18,12 +18,11 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.single
 
-class GetMonstersUseCase @Inject internal constructor(
+class GetMonstersUseCase internal constructor(
     private val getMonsterPreviewsCacheUseCase: GetMonsterPreviewsCacheUseCase,
     private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
 ) {

@@ -47,7 +47,6 @@ dependencies {
     implementation libs.bundles.compose
     implementation libs.accompanist.flowlayout
 
-    implementation libs.koin.android
     implementation libs.koin.compose
 
     testImplementation libs.bundles.unittest

@@ -18,10 +18,9 @@ package br.alexandregpereira.hunter.data.monster.lore
 
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSettingsRepository
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-internal class MonsterLoreSettingsRepositoryImpl @Inject constructor(
+internal class MonsterLoreSettingsRepositoryImpl(
     private val getLanguageUseCase: GetLanguageUseCase
 ) : MonsterLoreSettingsRepository {
 

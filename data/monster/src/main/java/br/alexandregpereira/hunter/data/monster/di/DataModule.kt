@@ -45,11 +45,6 @@ import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -88,78 +83,4 @@ val monsterDataModule = module {
     factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
     factory<MonsterApi> { get<Retrofit>().create(MonsterApi::class.java) }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal abstract class DataModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindMonsterRemoteDataSource(
-        monsterRemoteDataSourceImpl: MonsterRemoteDataSourceImpl
-    ): MonsterRemoteDataSource
-
-    @Singleton
-    @Binds
-    abstract fun bindMonsterLocalDataSource(
-        monsterLocalDataSourceImpl: MonsterLocalDataSourceImpl
-    ): MonsterLocalDataSource
-
-    @Binds
-    abstract fun bindMonsterRepository(
-        monsterRepositoryImpl: MonsterRepositoryImpl
-    ): MonsterRepository
-
-    @Binds
-    abstract fun bindMonsterLocalRepository(
-        repository: MonsterLocalRepositoryImpl
-    ): MonsterLocalRepository
-
-    @Binds
-    abstract fun bindMonsterRemoteRepository(
-        repository: MonsterRemoteRepositoryImpl
-    ): MonsterRemoteRepository
-
-    @Binds
-    abstract fun bindMonsterCacheRepository(
-        repository: MonsterCacheRepositoryImpl
-    ): MonsterCacheRepository
-
-    @Binds
-    abstract fun bindMonsterSettingsRepository(
-        monsterSettingsRepositoryImpl: MonsterSettingsRepositoryImpl
-    ): MonsterSettingsRepository
-
-    @Binds
-    abstract fun bindPreferencesDataSource(
-        preferencesDataSourceImpl: PreferencesDataSourceImpl
-    ): PreferencesDataSource
-
-    @Singleton
-    @Binds
-    abstract fun bindCompendiumRepository(
-        preferencesRepository: PreferencesRepository
-    ): CompendiumRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindMeasurementUnitRepository(
-        preferencesRepository: PreferencesRepository
-    ): MeasurementUnitRepository
-
-    @Binds
-    abstract fun bindSettingsMonsterDataRepository(
-        repository: SettingsMonsterDataRepositoryImpl
-    ): SettingsMonsterDataRepository
-
-    @Binds
-    abstract fun bindMonsterImageRepository(
-        repository: MonsterImageRepositoryImpl
-    ): MonsterImageRepository
-
-    @Binds
-    abstract fun bindMonsterAlternativeSourceRepository(
-        repository: MonsterAlternativeSourceRepositoryImpl
-    ): MonsterAlternativeSourceRepository
 }

@@ -21,12 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.folder.insert.ui.FolderInsertScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FolderInsertFeature(
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    val viewModel: FolderInsertViewModel = viewModel()
+    val viewModel: FolderInsertViewModel = koinViewModel()
 
     FolderInsertScreen(
         state = viewModel.state.collectAsState().value,

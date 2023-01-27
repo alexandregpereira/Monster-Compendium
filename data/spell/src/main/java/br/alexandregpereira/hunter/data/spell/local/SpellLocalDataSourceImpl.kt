@@ -18,11 +18,10 @@ package br.alexandregpereira.hunter.data.spell.local
 
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
 import br.alexandregpereira.hunter.data.spell.local.model.SpellEntity
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class SpellLocalDataSourceImpl @Inject constructor(
+internal class SpellLocalDataSourceImpl(
     private val spellDao: SpellDao
 ) : SpellLocalDataSource {
 

@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.data.settings.network
 
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
@@ -25,7 +24,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AlternativeSourceUrlInterceptor @Inject constructor(
+class AlternativeSourceUrlInterceptor(
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase
 ) : Interceptor {
 

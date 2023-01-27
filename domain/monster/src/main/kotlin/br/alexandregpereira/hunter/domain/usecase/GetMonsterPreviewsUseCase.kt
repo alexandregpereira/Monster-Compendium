@@ -20,12 +20,11 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 
-class GetMonsterPreviewsUseCase @Inject internal constructor(
+class GetMonsterPreviewsUseCase internal constructor(
     private val repository: MonsterLocalRepository,
     private val cacheRepository: MonsterCacheRepository
 ) {

@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.domain.monster.lore
 
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.flow.single
 
-class SyncMonstersLoreUseCase @Inject constructor(
+class SyncMonstersLoreUseCase(
     private val repository: MonsterLoreRepository,
     private val alternativeSourceRepository: MonsterLoreSourceRepository,
     private val settingsRepository: MonsterLoreSettingsRepository,

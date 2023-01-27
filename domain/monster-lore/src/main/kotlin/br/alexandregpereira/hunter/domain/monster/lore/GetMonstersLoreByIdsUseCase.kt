@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.monster.lore
 
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetMonstersLoreByIdsUseCase @Inject constructor(
+class GetMonstersLoreByIdsUseCase(
     private val repository: MonsterLoreRepository
 ) {
 

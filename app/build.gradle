@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -87,10 +85,8 @@ dependencies {
     implementation libs.appcompat
     implementation libs.material
 
-    implementation libs.hilt
-    kapt libs.hilt.compiler
-
     implementation libs.koin.android
+    implementation libs.koin.compose
     testImplementation libs.bundles.unittest
     testImplementation libs.koin.test
 }

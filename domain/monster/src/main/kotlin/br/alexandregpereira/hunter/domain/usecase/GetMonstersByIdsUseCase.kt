@@ -18,11 +18,10 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetMonstersByIdsUseCase @Inject internal constructor(
+class GetMonstersByIdsUseCase internal constructor(
     private val repository: MonsterRepository
 ) {
 

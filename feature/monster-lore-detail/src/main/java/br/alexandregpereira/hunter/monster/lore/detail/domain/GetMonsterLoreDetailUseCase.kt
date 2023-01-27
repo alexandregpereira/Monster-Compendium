@@ -19,11 +19,10 @@ package br.alexandregpereira.hunter.monster.lore.detail.domain
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
 
-class GetMonsterLoreDetailUseCase @Inject constructor(
+class GetMonsterLoreDetailUseCase(
     private val getMonsterLoreUseCase: GetMonsterLoreUseCase,
     private val getMonsterUseCase: GetMonsterUseCase
 ) {

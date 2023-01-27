@@ -23,7 +23,7 @@ Monsters Compendium is an open source Android application contenting information
 - [Jetpack Compose](https://developer.android.com/jetpack/compose): Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html): A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
 - [Kotlin Flow](): Stream of data that can be computed asynchronously. Built in top of the Kotlin Coroutines.
-- [Hilt](https://dagger.dev/hilt): Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.
+- [Koin](https://github.com/InsertKoinIO/koin): A pragmatic lightweight dependency injection framework for Kotlin & Kotlin Multiplatform.
 - [Room](https://developer.android.com/training/data-storage/room): The Room persistence library provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
 - [Retrofit](https://square.github.io/retrofit): A type-safe HTTP client for Android and Java.
 - [Accompanist](https://github.com/google/accompanist): A group of libraries that aim to supplement Jetpack Compose with features that are commonly required by developers but not yet available.

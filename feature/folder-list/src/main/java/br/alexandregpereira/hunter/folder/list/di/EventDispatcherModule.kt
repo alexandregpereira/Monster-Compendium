@@ -18,31 +18,15 @@ package br.alexandregpereira.hunter.folder.list.di
 
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
 import br.alexandregpereira.hunter.folder.list.FolderListEventManager
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import br.alexandregpereira.hunter.folder.list.FolderListViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-class EventDispatcherModuleImpl {
+val folderListModule = module {
+    single { FolderListEventManager() }
+    single<FolderListResultListener> { get<FolderListEventManager>() }
 
-    @Singleton
-    @Provides
-    internal fun provideEventDispatcherImpl(): FolderListEventManager {
-        return FolderListEventManager()
+    viewModel {
+        FolderListViewModel(get(), get(), get(), get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class EventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindResultListener(
-        eventDispatcher: FolderListEventManager
-    ): FolderListResultListener
 }

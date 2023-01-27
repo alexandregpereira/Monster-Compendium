@@ -17,39 +17,18 @@
 package br.alexandregpereira.hunter.spell.detail.di
 
 import br.alexandregpereira.hunter.spell.detail.SpellDetailEventManager
+import br.alexandregpereira.hunter.spell.detail.SpellDetailViewModel
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class EventDispatcherModuleImpl {
+val spellDetailModule = module {
+    single { SpellDetailEventManager() }
+    single<SpellDetailEventDispatcher> { get<SpellDetailEventManager>() }
+    single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
 
-    @Singleton
-    @Provides
-    internal fun provideEventDispatcherImpl(): SpellDetailEventManager {
-        return SpellDetailEventManager()
+    viewModel {
+        SpellDetailViewModel(get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal abstract class EventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventDispatcher(
-        spellDetailEventManager: SpellDetailEventManager
-    ): SpellDetailEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventListener(
-        spellDetailEventManager: SpellDetailEventManager
-    ): SpellDetailEventListener
 }

@@ -19,9 +19,8 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class GetMonsterUseCase @Inject internal constructor(
+class GetMonsterUseCase internal constructor(
     private val repository: MonsterRepository
 ) {
 

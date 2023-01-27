@@ -21,12 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.search.ui.SearchScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SearchScreenFeature(
     contentPadding: PaddingValues = PaddingValues(),
 ) {
-    val viewModel: SearchViewModel = viewModel()
+    val viewModel: SearchViewModel = koinViewModel()
 
     SearchScreen(
         state = viewModel.state.collectAsState().value,

@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.data.monster.lore.remote
 
 import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreDto
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class MonsterLoreRemoteDataSource @Inject constructor(
+internal class MonsterLoreRemoteDataSource(
     private val api: MonsterLoreApi
 ) {
 

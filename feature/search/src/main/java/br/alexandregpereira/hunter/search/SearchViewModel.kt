@@ -27,8 +27,6 @@ import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,8 +39,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @OptIn(FlowPreview::class)
-@HiltViewModel
-internal class SearchViewModel @Inject constructor(
+internal class SearchViewModel(
     private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,

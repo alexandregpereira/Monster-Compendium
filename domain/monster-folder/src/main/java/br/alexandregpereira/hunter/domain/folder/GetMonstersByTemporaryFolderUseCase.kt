@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.folder
 
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetMonstersByTemporaryFolderUseCase @Inject constructor(
+class GetMonstersByTemporaryFolderUseCase(
     private val getMonstersByFolder: GetMonstersByFolderUseCase
 ) {
 

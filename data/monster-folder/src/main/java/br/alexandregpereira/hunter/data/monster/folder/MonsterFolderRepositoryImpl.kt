@@ -21,11 +21,10 @@ import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterFolderRepositoryImpl @Inject constructor(
+internal class MonsterFolderRepositoryImpl(
     private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource
 ) : MonsterFolderRepository, FolderMonsterPreviewRepository {
 

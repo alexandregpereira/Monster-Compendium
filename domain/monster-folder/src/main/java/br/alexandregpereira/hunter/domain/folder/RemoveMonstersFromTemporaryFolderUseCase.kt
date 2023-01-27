@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.folder
 
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase.Companion.TEMPORARY_FOLDER_NAME
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class RemoveMonstersFromTemporaryFolderUseCase @Inject constructor(
+class RemoveMonstersFromTemporaryFolderUseCase(
     private val monsterFolderRepository: MonsterFolderRepository,
 ) {
 

@@ -22,15 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.settings.ui.SettingsScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsFeature(
     versionName: String,
     contentPadding: PaddingValues,
 ) {
-    val viewModel: SettingsViewModel = viewModel()
+    val viewModel: SettingsViewModel = koinViewModel()
     val context = LocalContext.current
     SettingsScreen(
         state = viewModel.state.collectAsState().value,

@@ -18,12 +18,11 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 
-class GetMonsterPreviewsCacheUseCase @Inject internal constructor(
+class GetMonsterPreviewsCacheUseCase internal constructor(
     private val getMonsterPreviewsUseCase: GetMonsterPreviewsUseCase,
     private val cacheRepository: MonsterCacheRepository
 ) {

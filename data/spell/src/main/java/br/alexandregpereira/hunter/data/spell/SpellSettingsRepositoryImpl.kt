@@ -18,10 +18,9 @@ package br.alexandregpereira.hunter.data.spell
 
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-internal class SpellSettingsRepositoryImpl @Inject constructor(
+internal class SpellSettingsRepositoryImpl(
     private val getLanguageUseCase: GetLanguageUseCase
 ) : SpellSettingsRepository {
 

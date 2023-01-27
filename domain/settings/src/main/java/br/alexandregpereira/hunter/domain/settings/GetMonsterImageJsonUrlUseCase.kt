@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase.Companion.IMAGE_BASE_URL_KEY
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetMonsterImageJsonUrlUseCase @Inject constructor(
+class GetMonsterImageJsonUrlUseCase(
     private val settingsRepository: SettingsRepository
 ) {
 

@@ -28,8 +28,6 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVis
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,8 +37,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-@HiltViewModel
-internal class FolderDetailViewModel @Inject constructor(
+internal class FolderDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getMonstersByFolder: GetMonstersByFolderUseCase,
     private val folderDetailEventManager: FolderDetailEventManager,

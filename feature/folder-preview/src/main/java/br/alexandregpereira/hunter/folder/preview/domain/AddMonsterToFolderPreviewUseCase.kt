@@ -18,12 +18,11 @@ package br.alexandregpereira.hunter.folder.preview.domain
 
 import br.alexandregpereira.hunter.domain.folder.AddMonsterToTemporaryFolderUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-internal class AddMonsterToFolderPreviewUseCase @Inject constructor(
+internal class AddMonsterToFolderPreviewUseCase(
     private val addMonsterToTemporaryFolder: AddMonsterToTemporaryFolderUseCase,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase
 ) {

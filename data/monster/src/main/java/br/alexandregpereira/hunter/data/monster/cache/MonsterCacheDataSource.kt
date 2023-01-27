@@ -17,13 +17,10 @@
 package br.alexandregpereira.hunter.data.monster.cache
 
 import br.alexandregpereira.hunter.domain.model.Monster
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-@Singleton
-class MonsterCacheDataSource @Inject constructor() {
+class MonsterCacheDataSource() {
 
     private val monsters: MutableList<Monster> = mutableListOf()
 

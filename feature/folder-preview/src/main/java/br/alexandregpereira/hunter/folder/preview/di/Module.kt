@@ -17,48 +17,26 @@
 package br.alexandregpereira.hunter.folder.preview.di
 
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewEventManager
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewViewModel
+import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
+import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
+import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
+import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val folderPreviewModule = module {
     single { FolderPreviewEventManager() }
     single<FolderPreviewEventDispatcher> { get<FolderPreviewEventManager>() }
     single<FolderPreviewResultListener> { get<FolderPreviewEventManager>() }
-}
+    factory { GetMonstersFromFolderPreviewUseCase(get()) }
+    factory { AddMonsterToFolderPreviewUseCase(get(), get()) }
+    factory { ClearFolderPreviewUseCase(get()) }
+    factory { RemoveMonsterFromFolderPreviewUseCase(get(), get()) }
 
-@Module
-@InstallIn(SingletonComponent::class)
-class FolderPreviewEventDispatcherModuleImpl : KoinComponent {
-
-    @Singleton
-    @Provides
-    internal fun provideFolderPreviewEventManager(): FolderPreviewEventManager {
-        return get()
+    viewModel {
+        FolderPreviewViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FolderPreviewEventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindFolderPreviewEventDispatcher(
-        folderPreviewEventDispatcher: FolderPreviewEventManager
-    ): FolderPreviewEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindFolderPreviewResultListener(
-        folderPreviewEventDispatcher: FolderPreviewEventManager
-    ): FolderPreviewResultListener
 }

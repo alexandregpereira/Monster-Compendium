@@ -23,13 +23,12 @@ import br.alexandregpereira.hunter.domain.exception.MonstersSourceNotFoundedExce
 import br.alexandregpereira.hunter.domain.exception.MonstersSourceUnexpectedException
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 
-internal class MonsterRemoteRepositoryImpl @Inject constructor(
+internal class MonsterRemoteRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
 ) : MonsterRemoteRepository {
 

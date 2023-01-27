@@ -1,7 +1,6 @@
 plugins {
     id 'java-library'
     id 'kotlin'
-    id 'kotlin-kapt'
 }
 
 java {
@@ -12,8 +11,6 @@ java {
 dependencies {
     implementation libs.koin.core
     implementation libs.kotlin.coroutines.core
-    implementation libs.dagger
-    kapt libs.dagger.compiler
 }
 
 configure([compileKotlin, compileTestKotlin]) {

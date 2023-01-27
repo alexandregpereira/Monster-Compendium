@@ -24,13 +24,12 @@ import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import java.math.RoundingMode
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
 
-class SaveMonstersUseCase @Inject internal constructor(
+class SaveMonstersUseCase internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val monsterRepository: MonsterRepository,
     private val measurementUnitRepository: MeasurementUnitRepository,

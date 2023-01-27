@@ -19,37 +19,18 @@ package br.alexandregpereira.hunter.monster.lore.detail.di
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailEventManager
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailViewModel
+import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class EventDispatcherModuleImpl {
+val monsterLoreDetailModule = module {
+    single { MonsterLoreDetailEventManager() }
+    single<MonsterLoreDetailEventDispatcher> { get<MonsterLoreDetailEventManager>() }
+    single<MonsterLoreDetailEventListener> { get<MonsterLoreDetailEventManager>() }
+    factory { GetMonsterLoreDetailUseCase(get(), get()) }
 
-    @Singleton
-    @Provides
-    internal fun provideEventDispatcherImpl(): MonsterLoreDetailEventManager {
-        return MonsterLoreDetailEventManager()
+    viewModel {
+        MonsterLoreDetailViewModel(get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal abstract class EventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventDispatcher(
-        eventManager: MonsterLoreDetailEventManager
-    ): MonsterLoreDetailEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventListener(
-        eventManager: MonsterLoreDetailEventManager
-    ): MonsterLoreDetailEventListener
 }

@@ -19,11 +19,10 @@ package br.alexandregpereira.hunter.data.monster.lore
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSourceRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreSource
 import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterLoreSourceRepositoryImpl @Inject constructor(
+internal class MonsterLoreSourceRepositoryImpl(
     private val getMonsterLoreSourcesUseCase: GetMonsterLoreSourcesUseCase
 ) : MonsterLoreSourceRepository {
 

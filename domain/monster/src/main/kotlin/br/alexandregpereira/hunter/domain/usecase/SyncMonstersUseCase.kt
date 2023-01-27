@@ -24,7 +24,6 @@ import br.alexandregpereira.hunter.domain.model.MonsterSource
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +36,7 @@ import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.flow.zip
 
 @OptIn(FlowPreview::class)
-class SyncMonstersUseCase @Inject internal constructor(
+class SyncMonstersUseCase internal constructor(
     private val repository: MonsterRepository,
     private val alternativeSourceRepository: MonsterAlternativeSourceRepository,
     private val monsterSettingsRepository: MonsterSettingsRepository,

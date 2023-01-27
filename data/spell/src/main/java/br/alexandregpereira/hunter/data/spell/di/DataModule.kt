@@ -27,11 +27,6 @@ import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -42,35 +37,4 @@ val spellDataModule = module {
     factory<SettingsSpellDataRepository> { SettingsSpellDataRepositoryImpl(get()) }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
     single { get<Retrofit>().create(SpellApi::class.java) }
-}
-
-@Module
-@InstallIn(ViewModelComponent::class)
-internal abstract class DataModule {
-
-    @ViewModelScoped
-    @Binds
-    internal abstract fun bindMonsterFolderRepository(
-        spellRepositoryImpl: SpellRepositoryImpl
-    ): SpellRepository
-
-    @Binds
-    internal abstract fun bindSpellLocalDataSource(
-        spellLocalDataSourceImpl: SpellLocalDataSourceImpl
-    ): SpellLocalDataSource
-
-    @Binds
-    internal abstract fun bindSpellRemoteDataSource(
-        spellRemoteDataSourceImpl: SpellRemoteDataSourceImpl
-    ): SpellRemoteDataSource
-
-    @Binds
-    internal abstract fun bindSettingsSpellDataRepository(
-        repository: SettingsSpellDataRepositoryImpl
-    ): SettingsSpellDataRepository
-
-    @Binds
-    internal abstract fun bindSpellSettingsRepository(
-        repository: SpellSettingsRepositoryImpl
-    ): SpellSettingsRepository
 }

@@ -18,14 +18,13 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.single
 
-class GetMonsterImagesUseCase @Inject constructor(
+class GetMonsterImagesUseCase(
     private val repository: MonsterImageRepository,
 ) {
 

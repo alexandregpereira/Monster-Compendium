@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.data.source.remote
 
 import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class AlternativeSourceRemoteDataSourceImpl @Inject constructor(
+internal class AlternativeSourceRemoteDataSourceImpl(
     private val api: AlternativeSourceApi
 ) : AlternativeSourceRemoteDataSource {
 

@@ -16,42 +16,15 @@
 
 package br.alexandregpereira.hunter.data.monster.folder.di
 
-import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.data.monster.folder.MonsterFolderRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
 import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSourceImpl
 import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import org.koin.dsl.module
 
 val monsterFolderDataModule = module {
     factory<MonsterFolderRepository> { MonsterFolderRepositoryImpl(get()) }
     factory<FolderMonsterPreviewRepository> { MonsterFolderRepositoryImpl(get()) }
     factory<MonsterFolderLocalDataSource> { MonsterFolderLocalDataSourceImpl(get(), get()) }
-}
-
-@Module
-@InstallIn(ViewModelComponent::class)
-internal abstract class DataModule {
-
-    @ViewModelScoped
-    @Binds
-    internal abstract fun bindMonsterFolderRepository(
-        monsterFolderRepository: MonsterFolderRepositoryImpl
-    ): MonsterFolderRepository
-
-    @ViewModelScoped
-    @Binds
-    internal abstract fun bindFolderMonsterPreviewRepository(
-        monsterFolderRepository: MonsterFolderRepositoryImpl
-    ): FolderMonsterPreviewRepository
-
-    @Binds
-    abstract fun bindMonsterFolderLocalDataSource(
-        monsterFolderLocalDataSourceImpl: MonsterFolderLocalDataSourceImpl
-    ): MonsterFolderLocalDataSource
 }

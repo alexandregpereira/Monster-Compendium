@@ -23,11 +23,10 @@ import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDat
 import br.alexandregpereira.hunter.data.monster.lore.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterLoreRepositoryImpl @Inject constructor(
+internal class MonsterLoreRepositoryImpl(
     private val monsterLoreLocalDataSource: MonsterLoreLocalDataSource,
     private val monsterLoreRemoteDataSource: MonsterLoreRemoteDataSource
 ) : MonsterLoreRepository {

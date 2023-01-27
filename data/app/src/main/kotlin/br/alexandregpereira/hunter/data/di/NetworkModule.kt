@@ -19,12 +19,6 @@ package br.alexandregpereira.hunter.data.di
 import br.alexandregpereira.hunter.data.settings.DEFAULT_API_BASE_URL
 import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -45,34 +39,6 @@ val networkModule = module {
             .build()
 
         Retrofit.Builder()
-            .baseUrl(DEFAULT_API_BASE_URL)
-            .client(client)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .build()
-    }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal class NetworkModule {
-
-    @OptIn(ExperimentalSerializationApi::class)
-    @Singleton
-    @Provides
-    fun provideRetrofit(
-        alternativeSourceUrlInterceptor: AlternativeSourceUrlInterceptor
-    ): Retrofit {
-        val json = Json {
-            ignoreUnknownKeys = true
-        }
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .addInterceptor(alternativeSourceUrlInterceptor)
-            .build()
-
-        return Retrofit.Builder()
             .baseUrl(DEFAULT_API_BASE_URL)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))

@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.spell
 
 import br.alexandregpereira.hunter.domain.spell.model.Spell
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetSpellsByIdsUseCase @Inject constructor(
+class GetSpellsByIdsUseCase(
     private val spellRepository: SpellRepository
 ) {
 
