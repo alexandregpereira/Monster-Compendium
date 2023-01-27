@@ -19,14 +19,14 @@ package br.alexandregpereira.hunter.folder.list
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.folder.list.ui.FolderListScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FolderListFeature(
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    val viewModel: FolderListViewModel = viewModel()
+    val viewModel: FolderListViewModel = koinViewModel()
     FolderListScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,

@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.source
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetMonsterLoreSourcesUseCase @Inject constructor(
+class GetMonsterLoreSourcesUseCase(
     private val repository: AlternativeSourceRepository
 ) {
 

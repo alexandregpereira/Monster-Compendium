@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.spell.di
+package br.alexandregpereira.hunter.domain.sync.di
 
-import br.alexandregpereira.hunter.data.spell.remote.SpellApi
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import retrofit2.Retrofit
+import br.alexandregpereira.hunter.domain.sync.HandleSyncUseCase
+import br.alexandregpereira.hunter.domain.sync.SyncUseCase
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class NetworkModule {
-
-    @Singleton
-    @Provides
-    fun provideSpellApi(retrofit: Retrofit): SpellApi {
-        return retrofit.create(SpellApi::class.java)
-    }
+val syncDomainModule = module {
+    factory { HandleSyncUseCase(get(), get(), get(), get(), get()) }
+    factory { SyncUseCase(get(), get(), get()) }
 }

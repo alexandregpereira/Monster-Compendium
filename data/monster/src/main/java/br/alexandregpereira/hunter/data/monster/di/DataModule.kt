@@ -26,11 +26,13 @@ import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSourceImpl
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
+import br.alexandregpereira.hunter.data.monster.remote.MonsterApi
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceImpl
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
@@ -43,82 +45,42 @@ import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
+import retrofit2.Retrofit
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal abstract class DataModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindMonsterRemoteDataSource(
-        monsterRemoteDataSourceImpl: MonsterRemoteDataSourceImpl
-    ): MonsterRemoteDataSource
-
-    @Singleton
-    @Binds
-    abstract fun bindMonsterLocalDataSource(
-        monsterLocalDataSourceImpl: MonsterLocalDataSourceImpl
-    ): MonsterLocalDataSource
-
-    @Binds
-    abstract fun bindMonsterRepository(
-        monsterRepositoryImpl: MonsterRepositoryImpl
-    ): MonsterRepository
-
-    @Binds
-    abstract fun bindMonsterLocalRepository(
-        repository: MonsterLocalRepositoryImpl
-    ): MonsterLocalRepository
-
-    @Binds
-    abstract fun bindMonsterRemoteRepository(
-        repository: MonsterRemoteRepositoryImpl
-    ): MonsterRemoteRepository
-
-    @Binds
-    abstract fun bindMonsterCacheRepository(
-        repository: MonsterCacheRepositoryImpl
-    ): MonsterCacheRepository
-
-    @Binds
-    abstract fun bindMonsterSettingsRepository(
-        monsterSettingsRepositoryImpl: MonsterSettingsRepositoryImpl
-    ): MonsterSettingsRepository
-
-    @Binds
-    abstract fun bindPreferencesDataSource(
-        preferencesDataSourceImpl: PreferencesDataSourceImpl
-    ): PreferencesDataSource
-
-    @Singleton
-    @Binds
-    abstract fun bindCompendiumRepository(
-        preferencesRepository: PreferencesRepository
-    ): CompendiumRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindMeasurementUnitRepository(
-        preferencesRepository: PreferencesRepository
-    ): MeasurementUnitRepository
-
-    @Binds
-    abstract fun bindSettingsMonsterDataRepository(
-        repository: SettingsMonsterDataRepositoryImpl
-    ): SettingsMonsterDataRepository
-
-    @Binds
-    abstract fun bindMonsterImageRepository(
-        repository: MonsterImageRepositoryImpl
-    ): MonsterImageRepository
-
-    @Binds
-    abstract fun bindMonsterAlternativeSourceRepository(
-        repository: MonsterAlternativeSourceRepositoryImpl
-    ): MonsterAlternativeSourceRepository
+val monsterDataModule = module {
+    single<MonsterRemoteDataSource> { MonsterRemoteDataSourceImpl(get()) }
+    single<MonsterLocalDataSource> {
+        MonsterLocalDataSourceImpl(
+            abilityScoreDao = get(),
+            actionDao = get(),
+            conditionDao = get(),
+            damageDao = get(),
+            damageDiceDao = get(),
+            monsterDao = get(),
+            savingThrowDao = get(),
+            skillDao = get(),
+            specialAbilityDao = get(),
+            speedDao = get(),
+            speedValueDao = get(),
+            reactionDao = get(),
+            spellcastingDao = get(),
+            spellUsageDao = get(),
+            legendaryActionDao = get()
+        )
+    }
+    single { MonsterCacheDataSource() }
+    factory<MonsterRepository> { MonsterRepositoryImpl(get(), get()) }
+    factory<MonsterLocalRepository> { MonsterLocalRepositoryImpl(get()) }
+    factory<MonsterRemoteRepository> { MonsterRemoteRepositoryImpl(get()) }
+    factory<MonsterCacheRepository> { MonsterCacheRepositoryImpl(get()) }
+    factory<MonsterSettingsRepository> { MonsterSettingsRepositoryImpl(get()) }
+    factory<PreferencesDataSource> { PreferencesDataSourceImpl(get()) }
+    single { PreferencesRepository(get()) }
+    single<CompendiumRepository> { get<PreferencesRepository>() }
+    single<MeasurementUnitRepository> { get<PreferencesRepository>() }
+    factory<SettingsMonsterDataRepository> { SettingsMonsterDataRepositoryImpl(get(), get()) }
+    factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
+    factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
+    factory<MonsterApi> { get<Retrofit>().create(MonsterApi::class.java) }
 }

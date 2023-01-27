@@ -25,15 +25,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    val viewModel: MonsterCompendiumViewModel = viewModel()
+    val viewModel: MonsterCompendiumViewModel = koinViewModel()
     var compendiumIndex by remember {
         mutableStateOf(-1)
     }

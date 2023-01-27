@@ -18,11 +18,10 @@ package br.alexandregpereira.hunter.domain.folder
 
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase.Companion.TEMPORARY_FOLDER_NAME
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetMonsterFoldersUseCase @Inject constructor(
+class GetMonsterFoldersUseCase(
     private val repository: MonsterFolderRepository
 ) {
 

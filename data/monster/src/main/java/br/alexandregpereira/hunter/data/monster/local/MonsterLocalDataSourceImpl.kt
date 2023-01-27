@@ -42,9 +42,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import javax.inject.Inject
 
-internal class MonsterLocalDataSourceImpl @Inject constructor(
+internal class MonsterLocalDataSourceImpl(
     private val abilityScoreDao: AbilityScoreDao,
     private val actionDao: ActionDao,
     private val conditionDao: ConditionDao,

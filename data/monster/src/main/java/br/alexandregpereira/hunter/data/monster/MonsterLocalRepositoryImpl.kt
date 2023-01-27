@@ -21,11 +21,10 @@ import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterLocalRepositoryImpl @Inject constructor(
+internal class MonsterLocalRepositoryImpl(
     private val localDataSource: MonsterLocalDataSource,
 ) : MonsterLocalRepository {
 

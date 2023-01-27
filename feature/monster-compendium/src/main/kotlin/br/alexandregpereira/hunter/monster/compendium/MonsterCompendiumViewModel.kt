@@ -38,8 +38,6 @@ import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -56,8 +54,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class MonsterCompendiumViewModel @Inject constructor(
+internal class MonsterCompendiumViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
@@ -67,7 +64,7 @@ class MonsterCompendiumViewModel @Inject constructor(
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val dispatcher: CoroutineDispatcher,
-    @LoadOnInitFlag loadOnInit: Boolean = true,
+    loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
 
     var initialScrollItemPosition: Int = 0

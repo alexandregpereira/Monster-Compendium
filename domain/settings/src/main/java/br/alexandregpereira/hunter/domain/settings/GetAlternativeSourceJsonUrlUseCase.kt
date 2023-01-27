@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase.Companion.ALTERNATIVE_SOURCE_BASE_URL_KEY
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetAlternativeSourceJsonUrlUseCase @Inject constructor(
+class GetAlternativeSourceJsonUrlUseCase(
     private val settingsRepository: SettingsRepository
 ) {
 

@@ -17,10 +17,9 @@
 package br.alexandregpereira.hunter.folder.preview.domain
 
 import br.alexandregpereira.hunter.domain.folder.ClearTemporaryFolderUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-internal class ClearFolderPreviewUseCase @Inject constructor(
+internal class ClearFolderPreviewUseCase(
     private val clearTemporaryFolderUseCase: ClearTemporaryFolderUseCase,
 ) {
 

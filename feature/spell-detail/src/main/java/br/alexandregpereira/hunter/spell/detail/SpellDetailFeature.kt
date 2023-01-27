@@ -21,13 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.spell.detail.ui.SpellDetailScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SpellDetailFeature(
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {}
 ) {
-    val viewModel: SpellDetailViewModel = viewModel()
+    val viewModel: SpellDetailViewModel = koinViewModel()
     SpellDetailScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,

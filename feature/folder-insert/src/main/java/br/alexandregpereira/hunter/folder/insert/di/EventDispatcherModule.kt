@@ -19,37 +19,16 @@ package br.alexandregpereira.hunter.folder.insert.di
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.folder.insert.FolderInsertEventManager
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import br.alexandregpereira.hunter.folder.insert.FolderInsertViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-class EventDispatcherModuleImpl {
+val folderInsertModule = module {
+    single { FolderInsertEventManager() }
+    single<FolderInsertEventDispatcher> { get<FolderInsertEventManager>() }
+    single<FolderInsertResultListener> { get<FolderInsertEventManager>() }
 
-    @Singleton
-    @Provides
-    internal fun provideEventDispatcherImpl(): FolderInsertEventManager {
-        return FolderInsertEventManager()
+    viewModel {
+        FolderInsertViewModel(get(), get(), get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class EventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventDispatcher(
-        eventDispatcher: FolderInsertEventManager
-    ): FolderInsertEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindResultListener(
-        eventDispatcher: FolderInsertEventManager
-    ): FolderInsertResultListener
 }

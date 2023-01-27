@@ -16,14 +16,13 @@
 
 package br.alexandregpereira.hunter.domain.settings
 
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
 
-class SaveUrlsUseCase @Inject constructor(
+class SaveUrlsUseCase(
     private val settingsRepository: SettingsRepository,
     private val settingsMonsterDataRepository: SettingsMonsterDataRepository,
     private val settingsSpellDataRepository: SettingsSpellDataRepository

@@ -33,8 +33,6 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMo
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,8 +41,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-internal class FolderPreviewViewModel @Inject constructor(
+internal class FolderPreviewViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val folderPreviewEventManager: FolderPreviewEventManager,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,

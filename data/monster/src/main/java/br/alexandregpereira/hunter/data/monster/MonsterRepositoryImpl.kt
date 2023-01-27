@@ -20,14 +20,13 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Just a delegate to avoid changes when removing it.
  * Use [MonsterRemoteRepository] and [MonsterLocalRepository] instead.
  */
-internal class MonsterRepositoryImpl @Inject constructor(
+internal class MonsterRepositoryImpl(
     private val remoteRepository: MonsterRemoteRepository,
     private val localRepository: MonsterLocalRepository,
 ) : MonsterRepository {

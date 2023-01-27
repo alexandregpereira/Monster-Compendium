@@ -16,12 +16,11 @@
 
 package br.alexandregpereira.hunter.domain.spell
 
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class SyncSpellsUseCase @Inject constructor(
+class SyncSpellsUseCase(
     private val repository: SpellRepository,
     private val spellSettingsRepository: SpellSettingsRepository
 ) {

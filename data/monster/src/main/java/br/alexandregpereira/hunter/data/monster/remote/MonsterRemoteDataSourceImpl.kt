@@ -19,11 +19,10 @@ package br.alexandregpereira.hunter.data.monster.remote
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class MonsterRemoteDataSourceImpl @Inject constructor(
+internal class MonsterRemoteDataSourceImpl(
     private val monsterApi: MonsterApi
 ) : MonsterRemoteDataSource {
 

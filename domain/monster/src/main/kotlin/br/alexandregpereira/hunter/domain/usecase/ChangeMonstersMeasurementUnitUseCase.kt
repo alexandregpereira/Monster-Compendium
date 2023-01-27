@@ -21,9 +21,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
-import javax.inject.Inject
 
-class ChangeMonstersMeasurementUnitUseCase @Inject internal constructor(
+class ChangeMonstersMeasurementUnitUseCase internal constructor(
     private val saveMeasurementUnitUseCase: SaveMeasurementUnitUseCase,
     private val saveMonstersUseCase: SaveMonstersUseCase,
     private val getMonstersUseCase: GetMonstersUseCase

@@ -19,11 +19,10 @@ package br.alexandregpereira.hunter.data.monster.preferences
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class PreferencesRepository @Inject constructor(
+internal class PreferencesRepository(
     private val preferencesDataSource: PreferencesDataSource
 ) : CompendiumRepository, MeasurementUnitRepository {
 

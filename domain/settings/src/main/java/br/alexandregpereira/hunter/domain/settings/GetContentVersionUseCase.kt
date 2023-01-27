@@ -17,11 +17,10 @@
 package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase.Companion.CONTENT_VERSION_KEY
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetContentVersionUseCase @Inject constructor(
+class GetContentVersionUseCase(
     private val settingsRepository: SettingsRepository
 ) {
 

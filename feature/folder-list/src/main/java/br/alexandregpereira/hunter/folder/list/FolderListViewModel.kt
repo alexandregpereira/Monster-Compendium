@@ -26,8 +26,6 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatch
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,8 +37,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-@HiltViewModel
-internal class FolderListViewModel @Inject constructor(
+internal class FolderListViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val removeMonsterFolders: RemoveMonsterFoldersUseCase,

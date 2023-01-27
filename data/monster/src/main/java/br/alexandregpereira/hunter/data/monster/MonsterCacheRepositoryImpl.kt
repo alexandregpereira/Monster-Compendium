@@ -19,10 +19,9 @@ package br.alexandregpereira.hunter.data.monster
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-internal class MonsterCacheRepositoryImpl @Inject constructor(
+internal class MonsterCacheRepositoryImpl(
     private val cacheDataSource: MonsterCacheDataSource
 ) : MonsterCacheRepository {
 

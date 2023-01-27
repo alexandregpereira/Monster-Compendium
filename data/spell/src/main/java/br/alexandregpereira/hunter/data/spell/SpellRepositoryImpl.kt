@@ -23,11 +23,10 @@ import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.data.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import br.alexandregpereira.hunter.domain.spell.model.Spell
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class SpellRepositoryImpl @Inject constructor(
+internal class SpellRepositoryImpl(
     private val remoteDataSource: SpellRemoteDataSource,
     private val localDataSource: SpellLocalDataSource
 ) : SpellRepository {

@@ -20,14 +20,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.folder.preview.ui.FolderPreviewScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FolderPreviewFeature(
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    val viewModel: FolderPreviewViewModel = viewModel()
+    val viewModel: FolderPreviewViewModel = koinViewModel()
     val state by viewModel.state.collectAsState()
 
     FolderPreviewScreen(

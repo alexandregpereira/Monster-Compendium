@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium
+package br.alexandregpereira.hunter.settings.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
+import br.alexandregpereira.hunter.settings.SettingsViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object MonsterCompendiumModule {
-
-    @LoadOnInitFlag
-    @Provides
-    fun provideLoadOnInit(): Boolean = true
+val settingsModule = module {
+    viewModel {
+        SettingsViewModel(get(), get(), get(), get())
+    }
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class LoadOnInitFlag

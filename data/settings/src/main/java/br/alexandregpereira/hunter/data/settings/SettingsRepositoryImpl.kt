@@ -18,11 +18,10 @@ package br.alexandregpereira.hunter.data.settings
 
 import android.content.SharedPreferences
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class SettingsRepositoryImpl @Inject constructor(
+internal class SettingsRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : SettingsRepository {
 

@@ -16,10 +16,9 @@
 
 package br.alexandregpereira.hunter.domain.settings
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class GetLanguageUseCase @Inject constructor(
+class GetLanguageUseCase(
     private val settingsRepository: SettingsRepository
 ) {
 

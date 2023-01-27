@@ -19,9 +19,8 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class GetMeasurementUnitUseCase @Inject internal constructor(
+class GetMeasurementUnitUseCase internal constructor(
     private val repository: MeasurementUnitRepository
 ) {
 

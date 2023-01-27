@@ -21,8 +21,6 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,8 +32,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.zip
 
-@HiltViewModel
-internal class SettingsViewModel @Inject constructor(
+internal class SettingsViewModel(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase,
     private val saveUrls: SaveUrlsUseCase,

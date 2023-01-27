@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster.di
+package br.alexandregpereira.hunter.domain.spell.di
 
-import br.alexandregpereira.hunter.data.monster.remote.MonsterApi
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
+import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
+import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
+import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class NetworkModule {
-
-    @Provides
-    fun provideMonsterApi(retrofit: Retrofit): MonsterApi {
-        return retrofit.create(MonsterApi::class.java)
-    }
+val spellDomainModule = module {
+    factory { GetSpellsByIdsUseCase(get()) }
+    factory { GetSpellUseCase(get()) }
+    factory { SyncSpellsUseCase(get(), get()) }
 }

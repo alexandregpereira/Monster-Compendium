@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.domain.sync
 import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -27,7 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class SyncUseCase @Inject constructor(
+class SyncUseCase(
     private val syncMonsters: SyncMonstersUseCase,
     private val syncSpells: SyncSpellsUseCase,
     private val syncMonstersLoreUseCase: SyncMonstersLoreUseCase

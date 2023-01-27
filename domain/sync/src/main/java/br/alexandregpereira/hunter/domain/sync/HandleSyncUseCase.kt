@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.domain.settings.IsLanguageSupported
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -31,7 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class HandleSyncUseCase @Inject internal constructor(
+class HandleSyncUseCase internal constructor(
     private val sync: SyncUseCase,
     private val getLanguageUseCase: GetLanguageUseCase,
     private val saveLanguageUseCase: SaveLanguageUseCase,

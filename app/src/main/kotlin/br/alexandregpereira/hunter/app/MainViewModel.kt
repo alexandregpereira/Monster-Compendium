@@ -30,14 +30,11 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val folderDetailResultListener: FolderDetailResultListener,

@@ -21,12 +21,11 @@ import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentI
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType.HEADER1
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType.HEADER2
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
-class GetTableContentUseCase @Inject constructor() {
+class GetTableContentUseCase internal constructor() {
 
     operator fun invoke(items: List<MonsterCompendiumItem>): Flow<List<TableContentItem>> {
         return flowOf(items).map {

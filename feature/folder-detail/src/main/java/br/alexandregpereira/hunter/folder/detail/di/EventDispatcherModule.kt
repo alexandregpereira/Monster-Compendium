@@ -19,37 +19,16 @@ package br.alexandregpereira.hunter.folder.detail.di
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
 import br.alexandregpereira.hunter.folder.detail.FolderDetailEventManager
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import br.alexandregpereira.hunter.folder.detail.FolderDetailViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-class EventDispatcherModuleImpl {
+val folderDetailModule = module {
+    single { FolderDetailEventManager() }
+    single<FolderDetailEventDispatcher> { get<FolderDetailEventManager>() }
+    single<FolderDetailResultListener> { get<FolderDetailEventManager>() }
 
-    @Singleton
-    @Provides
-    internal fun provideEventDispatcherImpl(): FolderDetailEventManager {
-        return FolderDetailEventManager()
+    viewModel {
+        FolderDetailViewModel(get(), get(), get(), get(), get(), get(), get())
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class EventDispatcherModule {
-
-    @Singleton
-    @Binds
-    internal abstract fun bindEventDispatcher(
-        eventDispatcher: FolderDetailEventManager
-    ): FolderDetailEventDispatcher
-
-    @Singleton
-    @Binds
-    internal abstract fun bindResultListener(
-        eventDispatcher: FolderDetailEventManager
-    ): FolderDetailResultListener
 }

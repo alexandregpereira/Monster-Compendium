@@ -19,18 +19,11 @@
 package br.alexandregpereira.hunter.data.settings.di
 
 import br.alexandregpereira.hunter.data.settings.SettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlInterceptor
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal abstract class DataModule {
-
-    @Binds
-    abstract fun bindSettingsRepository(
-        settingsRepositoryImpl: SettingsRepositoryImpl
-    ): SettingsRepository
+val settingsDataModule = module {
+    factory<SettingsRepository> { SettingsRepositoryImpl(get()) }
+    factory { AlternativeSourceUrlInterceptor(get()) }
 }

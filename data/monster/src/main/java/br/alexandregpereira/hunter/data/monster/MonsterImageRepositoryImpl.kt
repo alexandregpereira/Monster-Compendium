@@ -21,11 +21,10 @@ import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class MonsterImageRepositoryImpl @Inject constructor(
+internal class MonsterImageRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
     private val getMonsterImageJsonUrlUseCase: GetMonsterImageJsonUrlUseCase
 ) : MonsterImageRepository {
