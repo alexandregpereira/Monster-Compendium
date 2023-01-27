@@ -1,5 +1,4 @@
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
@@ -40,6 +39,7 @@ include ':event:folder-preview-event'
 include ':event:monster-detail-event'
 include ':event:monster-lore-detail-event'
 include ':event:spell-detail-event'
+include ':shared'
 include ':ui:compendium'
 include ':ui:core'
 include ':ui:monster-compendium'

@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.domain.collections
 import java.text.Normalizer
 import java.util.regex.Pattern
 
-fun String.removeSpecialCharacters(): String {
+actual fun String.removeSpecialCharacters(): String {
     val nfdNormalizedString = Normalizer.normalize(this, Normalizer.Form.NFD)
     val pattern: Pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
     return pattern.matcher(nfdNormalizedString).replaceAll("")

@@ -23,11 +23,11 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
-import java.math.RoundingMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
+import kotlin.math.roundToInt
 
 class SaveMonstersUseCase internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
@@ -39,38 +39,38 @@ class SaveMonstersUseCase internal constructor(
     operator fun invoke(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit> {
         return getMeasurementUnitUseCase()
             .zip(measurementUnitRepository.getPreviousMeasurementUnit()) { unit, previousUnit ->
-                monsters.changeMeasurementUnit(previousUnit, unit)
+                monsters.changeMonstersMeasurementUnit(previousUnit, unit)
             }
             .flatMapLatest {
                 monsterRepository.saveMonsters(monsters = it, isSync)
             }
     }
 
-    private fun List<Monster>.changeMeasurementUnit(
+    private fun List<Monster>.changeMonstersMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): List<Monster> {
         if (previousUnit == unit) return this
 
         return this.map { monster ->
-            monster.changeMeasurementUnit(previousUnit, unit)
+            monster.changeMonsterMeasurementUnit(previousUnit, unit)
         }
     }
 
-    private fun Monster.changeMeasurementUnit(
+    private fun Monster.changeMonsterMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): Monster {
         return this.copy(
-            speed = this.speed.changeMeasurementUnit(previousUnit, unit),
-            senses = this.senses.changeMeasurementUnit(previousUnit, unit),
+            speed = this.speed.changeSpeedMeasurementUnit(previousUnit, unit),
+            senses = this.senses.changeStringsMeasurementUnit(previousUnit, unit),
             languages = this.languages.changeMeasurementUnit(previousUnit, unit),
-            specialAbilities = this.specialAbilities.changeMeasurementUnit(previousUnit, unit),
-            actions = this.actions.changeMeasurementUnit(previousUnit, unit)
+            specialAbilities = this.specialAbilities.changeAbilitiesMeasurementUnit(previousUnit, unit),
+            actions = this.actions.changeActionMeasurementUnit(previousUnit, unit)
         )
     }
 
-    private fun Speed.changeMeasurementUnit(
+    private fun Speed.changeSpeedMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): Speed {
@@ -84,17 +84,16 @@ class SaveMonstersUseCase internal constructor(
         )
     }
 
-    @JvmName("changeMeasurementUnitAbilityDescription")
-    private fun List<AbilityDescription>.changeMeasurementUnit(
+    private fun List<AbilityDescription>.changeAbilitiesMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): List<AbilityDescription> {
         return this.map {
-            it.changeMeasurementUnit(previousUnit, unit)
+            it.changeAbilityMeasurementUnit(previousUnit, unit)
         }
     }
 
-    private fun AbilityDescription.changeMeasurementUnit(
+    private fun AbilityDescription.changeAbilityMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): AbilityDescription {
@@ -103,20 +102,18 @@ class SaveMonstersUseCase internal constructor(
         )
     }
 
-    @JvmName("changeMeasurementUnitAction")
-    private fun List<Action>.changeMeasurementUnit(
+    private fun List<Action>.changeActionMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): List<Action> {
         return this.map {
             it.copy(
-                abilityDescription = it.abilityDescription.changeMeasurementUnit(previousUnit, unit)
+                abilityDescription = it.abilityDescription.changeAbilityMeasurementUnit(previousUnit, unit)
             )
         }
     }
 
-    @JvmName("changeMeasurementUnitString")
-    private fun List<String>.changeMeasurementUnit(
+    private fun List<String>.changeStringsMeasurementUnit(
         previousUnit: MeasurementUnit,
         unit: MeasurementUnit
     ): List<String> {
@@ -153,7 +150,7 @@ class SaveMonstersUseCase internal constructor(
             matchString.endsWith(it)
         }?.let {
             matchString.removeSuffix(it)
-        } ?: throw IllegalAccessException("Value not found")
+        } ?: throw RuntimeException("Value not found")
     }
 
     private fun getUnitValue(
@@ -170,20 +167,19 @@ class SaveMonstersUseCase internal constructor(
 
     private fun Int.toMeters(): Double = this / 3.281
 
-    private fun Double.toFeet(): Int = (this * 3.281)
-        .toBigDecimal()
-        .setScale(0, RoundingMode.UP)
-        .toInt()
+    private fun Double.toFeet(): Int = (this * 3.281).run {
+        val value = this
+        val intValue = this.toInt()
+        (value - intValue).let {
+            if (it < 0.1) intValue else intValue + 1
+        }
+    }
 
     private fun Double.formatMeters(): String {
-        val value = this.toBigDecimal().setScale(1, RoundingMode.DOWN)
-        val intValue = value.toInt()
-        val decimalValue = (value - intValue.toBigDecimal()).toDouble()
-
-        return if (decimalValue == 0.5) {
-            value.toString()
-        } else {
-            intValue.toString()
-        }
+        val value = this
+        val intValue = this.toInt()
+        return (value - intValue).let {
+            if (it < 0.6) intValue else intValue + 1
+        }.toString()
     }
 }

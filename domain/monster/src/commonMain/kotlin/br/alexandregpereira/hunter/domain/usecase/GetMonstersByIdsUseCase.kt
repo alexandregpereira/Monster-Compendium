@@ -31,7 +31,7 @@ class GetMonstersByIdsUseCase internal constructor(
             ids.forEach { monsterIndex ->
                 aggregator.add(
                     monsters.find { it.index == monsterIndex }
-                        ?: throw IllegalAccessError("$monsterIndex not found")
+                        ?: throw RuntimeException("$monsterIndex not found")
                 )
             }
             aggregator
