@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package usecase
+package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
@@ -29,8 +29,6 @@ import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
-import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
-import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
