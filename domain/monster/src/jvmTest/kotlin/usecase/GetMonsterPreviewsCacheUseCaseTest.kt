@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsCacheUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

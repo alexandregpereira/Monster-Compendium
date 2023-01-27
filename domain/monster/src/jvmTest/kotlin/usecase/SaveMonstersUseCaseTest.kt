@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.usecase
+package usecase
 
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
@@ -29,6 +29,8 @@ import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -63,17 +65,17 @@ class SaveMonstersUseCaseTest {
         useCase(monsters).single()
 
         // Then
+        val sensesExpected = "9m/9 meters/9m"
         val speedExpected = Speed(
             hover = false,
             values = listOf(
                 SpeedValue(type = SpeedType.WALK, valueFormatted = "15m")
             )
         )
-        val sensesExpected = "9m/9 meters/9m"
-        val languagesExpected = "something, telepathy 36.5m"
+        val languagesExpected = "something, telepathy 36m"
         val abilityDescriptionExpected = AbilityDescription(
             name = "",
-            description = "ASDAS sada 1.5m//asdqweqweqw 9m-asd-6m 3m"
+            description = "ASDAS sada 1m//asdqweqweqw 9m-asd-6m 3m"
         )
         val actionExpected = Action(
             damageDices = listOf(),
@@ -114,14 +116,14 @@ class SaveMonstersUseCaseTest {
         useCase(monsters).single()
 
         // Then
+        val sensesExpected = "30 ft./30 feet/30 ft."
+        val languagesExpected = "something, telepathy 120 ft."
         val speedExpected = Speed(
             hover = false,
             values = listOf(
                 SpeedValue(type = SpeedType.WALK, valueFormatted = "50 ft.")
             )
         )
-        val sensesExpected = "30 ft./30 feet/30 ft."
-        val languagesExpected = "something, telepathy 120 ft."
         val abilityDescriptionExpected = AbilityDescription(
             name = "",
             description = "ASDAS sada 5 ft.//asdqweqweqw 30 ft.-asd-20 ft. 10 ft."
