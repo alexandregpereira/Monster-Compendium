@@ -20,10 +20,10 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 data class ActionWithDamageDicesEntity(
-    @Embedded val action: br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity,
+    @Embedded val action: ActionEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "actionId",
     )
-    val damageDices: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity>,
+    val damageDices: List<DamageDiceEntity>,
 )

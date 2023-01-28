@@ -24,68 +24,68 @@ import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEn
 data class MonsterCompleteEntity(
     @Embedded val monster: MonsterEntity,
     @Relation(
-        entity = br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity::class,
+        entity = SpeedEntity::class,
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val speed: br.alexandregpereira.hunter.data.monster.local.entity.SpeedWithValuesEntity?,
+    val speed: SpeedWithValuesEntity?,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val abilityScores: List<br.alexandregpereira.hunter.data.monster.local.entity.AbilityScoreEntity>,
+    val abilityScores: List<AbilityScoreEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val savingThrows: List<br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity>,
+    val savingThrows: List<SavingThrowEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val skills: List<br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity>,
+    val skills: List<SkillEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val damageVulnerabilities: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity>,
+    val damageVulnerabilities: List<DamageVulnerabilityEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val damageResistances: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity>,
+    val damageResistances: List<DamageResistanceEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val damageImmunities: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity>,
+    val damageImmunities: List<DamageImmunityEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val conditionImmunities: List<br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity>,
+    val conditionImmunities: List<ConditionEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val specialAbilities: List<br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity>,
+    val specialAbilities: List<SpecialAbilityEntity>,
     @Relation(
-        entity = br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity::class,
+        entity = ActionEntity::class,
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val actions: List<br.alexandregpereira.hunter.data.monster.local.entity.ActionWithDamageDicesEntity>,
+    val actions: List<ActionWithDamageDicesEntity>,
     @Relation(
-        entity = br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionEntity::class,
+        entity = LegendaryActionEntity::class,
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val legendaryActions: List<br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionWithDamageDicesEntity>,
+    val legendaryActions: List<LegendaryActionWithDamageDicesEntity>,
     @Relation(
         parentColumn = "index",
         entityColumn = "monsterIndex",
     )
-    val reactions: List<br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity>,
+    val reactions: List<ReactionEntity>,
     @Relation(
         entity = SpellcastingEntity::class,
         parentColumn = "index",

@@ -21,5 +21,5 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["index", "monsterIndex"])
 data class ConditionEntity(
-    @Embedded val value: br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity,
+    @Embedded val value: ValueEntity,
 )

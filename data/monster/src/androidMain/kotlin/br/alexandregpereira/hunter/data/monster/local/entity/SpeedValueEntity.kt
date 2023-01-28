@@ -30,12 +30,12 @@ data class SpeedEntity(
 )
 
 data class SpeedWithValuesEntity(
-    @Embedded val speed: br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity,
+    @Embedded val speed: SpeedEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "speedId",
     )
-    val values: List<br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity>,
+    val values: List<SpeedValueEntity>,
 )
 
 @Entity(primaryKeys = ["type", "speedId"])

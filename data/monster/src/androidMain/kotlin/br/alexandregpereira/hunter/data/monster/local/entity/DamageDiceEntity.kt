@@ -25,6 +25,6 @@ data class DamageDiceEntity(
     @PrimaryKey
     val id: String,
     val dice: String,
-    @Embedded val damage: br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity,
+    @Embedded val damage: ValueEntity,
     val actionId: String
 )

@@ -21,5 +21,5 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["index", "monsterIndex"])
 data class SkillEntity(
-    @Embedded val value: br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
+    @Embedded val value: ProficiencyEntity
 )
