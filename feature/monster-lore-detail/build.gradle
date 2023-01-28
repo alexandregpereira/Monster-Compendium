@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace 'br.alexandregpereira.hunter.monster.lore.detail'
-    compileSdkVersion buildConfig.compileSdk
+    compileSdkVersion project.findProperty('compileSdk')
 
     defaultConfig {
-        minSdkVersion buildConfig.minSdk
+        minSdkVersion project.findProperty('minSdk')
     }
 
     compileOptions {
