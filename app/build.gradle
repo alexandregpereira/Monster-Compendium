@@ -60,7 +60,7 @@ android {
 }
 
 dependencies {
-    implementation project(':data:app')
+    implementation project(':data:data-app')
     implementation project(':domain:app')
     implementation project(':event:folder-detail-event')
     implementation project(':event:folder-list-event')

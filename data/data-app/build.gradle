@@ -32,12 +32,12 @@ android {
 }
 
 dependencies {
-    implementation project(':data:alternative-source')
+    implementation project(':data:data-alternative-source')
     implementation project(':data:data-monster')
-    implementation project(':data:monster-folder')
-    implementation project(':data:monster-lore')
-    implementation project(':data:settings')
-    implementation project(':data:spell')
+    implementation project(':data:data-monster-folder')
+    implementation project(':data:data-monster-lore')
+    implementation project(':data:data-settings')
+    implementation project(':data:data-spell')
 
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.serialization
