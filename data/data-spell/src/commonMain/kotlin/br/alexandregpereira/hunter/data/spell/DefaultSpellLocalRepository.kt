@@ -16,34 +16,46 @@
 
 package br.alexandregpereira.hunter.data.spell
 
+import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
-import br.alexandregpereira.hunter.domain.spell.SpellRemoteRepository
-import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-internal class DefaultSpellRepository(
-    private val localRepository: SpellLocalRepository,
-    private val remoteRepository: SpellRemoteRepository
-) : SpellRepository {
+//TODO Implement SQLDelight
+internal class DefaultSpellLocalRepository : SpellLocalRepository, SettingsSpellDataRepository {
+
+    private val cache = mutableListOf<Spell>()
 
     override fun saveSpells(spells: List<Spell>): Flow<Unit> {
-        return localRepository.saveSpells(spells)
-    }
-
-    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
-        return remoteRepository.getRemoteSpells(lang)
+        return flow {
+            cache.clear()
+            cache.addAll(spells)
+            emit(Unit)
+        }
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {
-        return localRepository.getLocalSpell(index)
+        return flow {
+            emit(
+                cache.find { it.index == index }
+                    ?: throw RuntimeException("Spell with index $index not found")
+            )
+        }
     }
 
     override fun getLocalSpells(indexes: List<String>): Flow<List<Spell>> {
-        return localRepository.getLocalSpells(indexes)
+        return flow { emit(cache.toList()) }
     }
 
     override fun deleteLocalSpells(): Flow<Unit> {
-        return localRepository.deleteLocalSpells()
+        return flow {
+            cache.clear()
+            emit(Unit)
+        }
+    }
+
+    override fun deleteData(): Flow<Unit> {
+        return deleteLocalSpells()
     }
 }

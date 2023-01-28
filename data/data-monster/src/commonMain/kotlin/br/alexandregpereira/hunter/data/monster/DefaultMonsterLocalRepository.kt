@@ -14,38 +14,52 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster;
+package br.alexandregpereira.hunter.data.monster
 
+import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-internal class DefaultMonsterLocalRepository : MonsterLocalRepository {
+//TODO Implement SQLDelight
+internal class DefaultMonsterLocalRepository(
+    private val cacheDataSource: MonsterCacheDataSource
+) : MonsterLocalRepository {
+
     override fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
-        TODO("Not yet implemented")
+        return cacheDataSource.saveMonsters(monsters)
     }
 
     override fun getMonsterPreviews(): Flow<List<Monster>> {
-        TODO("Not yet implemented")
+        return cacheDataSource.getMonsters()
     }
 
     override fun getMonsters(): Flow<List<Monster>> {
-        TODO("Not yet implemented")
+        return cacheDataSource.getMonsters()
     }
 
     override fun getMonsters(indexes: List<String>): Flow<List<Monster>> {
-        TODO("Not yet implemented")
+        return cacheDataSource.getMonsters()
     }
 
     override fun getMonster(index: String): Flow<Monster> {
-        TODO("Not yet implemented")
+        return cacheDataSource.getMonsters().map { monsters ->
+            monsters.find { it.index == index }
+                ?: throw RuntimeException("Monster $index not found")
+        }
     }
 
     override fun getMonstersByQuery(query: String): Flow<List<Monster>> {
-        TODO("Not yet implemented")
+        return cacheDataSource.getMonsters().map { monsters ->
+            val name = query.substring(
+                range = query.indexOfFirst { it == '%' }..query.indexOfLast { it == '%' }
+            )
+            monsters.filter { it.name.contains(name) }
+        }
     }
 
     override fun deleteAll(): Flow<Unit> {
-        TODO("Not yet implemented")
+        return cacheDataSource.clear()
     }
 }

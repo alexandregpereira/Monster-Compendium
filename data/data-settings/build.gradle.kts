@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -23,22 +22,12 @@ kotlin {
             dependencies {
                 implementation(project(":domain:settings"))
                 implementation(libs.kotlin.coroutines.core)
-                implementation(libs.kotlin.serialization)
                 implementation(libs.koin.core)
                 implementation(libs.ktor.core)
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.bundles.retrofit)
-                implementation(libs.ktor.okhttp)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.ktor.okhttp)
-            }
-        }
+        val androidMain by getting
+        val jvmMain by getting
 
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -48,9 +37,6 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.ktor.darwin)
-            }
         }
     }
 }

@@ -18,28 +18,24 @@
 
 package br.alexandregpereira.hunter.data.monster.lore.di
 
-import br.alexandregpereira.hunter.data.monster.lore.AndroidMonsterLoreRepository
+import br.alexandregpereira.hunter.data.monster.lore.AndroidMonsterLoreLocalRepository
 import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
-import br.alexandregpereira.hunter.data.monster.lore.remote.AndroidMonsterLoreRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreApi
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
+import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
-import retrofit2.Retrofit
 
 internal actual fun getAdditionalModule(): Module {
     return module {
-        factory { get<Retrofit>().create(MonsterLoreApi::class.java) }
         factory { MonsterLoreLocalDataSource(get()) }
     }
 }
 
 internal actual fun Scope.createRemoteDataSource(): MonsterLoreRemoteDataSource? {
-    return AndroidMonsterLoreRemoteDataSource(get())
+    return null
 }
 
-internal actual fun Scope.createRepository(): MonsterLoreRepository? {
-    return AndroidMonsterLoreRepository(get(), get())
+internal actual fun Scope.createLocalRepository(): MonsterLoreLocalRepository? {
+    return AndroidMonsterLoreLocalRepository(get())
 }

@@ -19,24 +19,17 @@ package br.alexandregpereira.hunter.data.spell
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.spell.local.mapper.toEntity
-import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
-import br.alexandregpereira.hunter.data.spell.remote.mapper.toDomain
-import br.alexandregpereira.hunter.domain.spell.SpellRepository
+import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class AndroidSpellRepository(
-    private val remoteDataSource: SpellRemoteDataSource,
+internal class AndroidSpellLocalRepository(
     private val localDataSource: SpellLocalDataSource
-) : SpellRepository {
+) : SpellLocalRepository {
 
     override fun saveSpells(spells: List<Spell>): Flow<Unit> {
         return localDataSource.saveSpells(spells.toEntity())
-    }
-
-    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
-        return remoteDataSource.getSpells(lang).map { it.toDomain() }
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {

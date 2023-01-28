@@ -28,7 +28,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(libs.bundles.retrofit)
                 implementation(libs.ktor.okhttp)
             }
         }

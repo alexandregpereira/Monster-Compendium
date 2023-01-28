@@ -17,17 +17,19 @@
 package br.alexandregpereira.hunter.data.monster.preferences
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
+//TODO Implement Preferences to multiplatform
 internal class DefaultPreferencesDataSource : PreferencesDataSource {
     override fun getInt(key: String, defaultValue: Int): Flow<Int> {
-        TODO("Not yet implemented")
+        return flowOf(defaultValue)
     }
 
     override fun getString(key: String, defaultValue: String): Flow<String> {
-        TODO("Not yet implemented")
+        return flowOf(defaultValue)
     }
 
     override fun save(key: String, value: Any): Flow<Unit> {
-        TODO("Not yet implemented")
+        return flowOf(Unit)
     }
 }

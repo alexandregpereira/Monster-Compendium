@@ -16,12 +16,15 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
-import br.alexandregpereira.hunter.data.spell.DefaultSettingsSpellDataRepository
+import br.alexandregpereira.hunter.data.spell.DefaultSpellLocalRepository
+import br.alexandregpereira.hunter.data.spell.DefaultSpellRemoteRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRepository
 import br.alexandregpereira.hunter.data.spell.SpellSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.spell.remote.DefaultSpellRemoteDataSource
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
+import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
+import br.alexandregpereira.hunter.domain.spell.SpellRemoteRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
 import org.koin.core.module.Module
@@ -29,16 +32,17 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val spellDataModule = module {
-    factory { createRepository() ?: DefaultSpellRepository(get()) }
-    factory { createRemoteDataSource() ?: DefaultSpellRemoteDataSource() }
-    factory { createSettingsRepository() ?: DefaultSettingsSpellDataRepository() }
+    factory<SpellRepository> { DefaultSpellRepository(get(), get()) }
+    single { DefaultSpellLocalRepository() }
+    factory { createLocalRepository() ?: get<DefaultSpellLocalRepository>() }
+    factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
+    factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
+    factory { createSettingsRepository() ?: get<DefaultSpellLocalRepository>() }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
 }.apply { includes(getAdditionalModule()) }
 
 internal expect fun getAdditionalModule(): Module
 
-internal expect fun Scope.createRepository(): SpellRepository?
+internal expect fun Scope.createLocalRepository(): SpellLocalRepository?
 
 internal expect fun Scope.createSettingsRepository(): SettingsSpellDataRepository?
-
-internal expect fun Scope.createRemoteDataSource(): SpellRemoteDataSource?

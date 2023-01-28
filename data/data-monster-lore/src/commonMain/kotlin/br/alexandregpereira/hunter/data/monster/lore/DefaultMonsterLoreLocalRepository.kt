@@ -17,32 +17,33 @@
 package br.alexandregpereira.hunter.data.monster.lore
 
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRemoteRepository
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-internal class DefaultMonsterLoreRepository(
-    private val remoteRepository: MonsterLoreRemoteRepository,
-    private val localRepository: MonsterLoreLocalRepository
-) : MonsterLoreRepository {
+//TODO Implement SQLDelight
+internal class DefaultMonsterLoreLocalRepository : MonsterLoreLocalRepository {
+
+    private val cache = mutableListOf<MonsterLore>()
 
     override fun getMonsterLore(index: String): Flow<MonsterLore> {
-        return localRepository.getMonsterLore(index)
+        return flow {
+            emit(
+                cache.find { it.index == index }
+                    ?: throw RuntimeException("Monster lore with index $index not found")
+            )
+        }
     }
 
     override fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>> {
-        return localRepository.getLocalMonstersLore(indexes)
+        return flow { emit(cache.toList()) }
     }
 
     override fun save(monstersLore: List<MonsterLore>): Flow<Unit> {
-        return localRepository.save(monstersLore)
-    }
-
-    override fun getRemoteMonstersLore(
-        sourceAcronym: String,
-        lang: String
-    ): Flow<List<MonsterLore>> {
-        return remoteRepository.getRemoteMonstersLore(sourceAcronym, lang)
+        return flow {
+            cache.clear()
+            cache.addAll(monstersLore)
+            emit(Unit)
+        }
     }
 }

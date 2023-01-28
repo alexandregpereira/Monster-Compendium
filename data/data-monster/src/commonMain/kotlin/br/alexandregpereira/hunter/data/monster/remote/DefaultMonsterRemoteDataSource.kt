@@ -18,18 +18,48 @@ package br.alexandregpereira.hunter.data.monster.remote
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
-internal class DefaultMonsterRemoteDataSource : MonsterRemoteDataSource {
+internal class DefaultMonsterRemoteDataSource(
+    private val client: HttpClient,
+    private val json: Json
+) : MonsterRemoteDataSource, MonsterRemoteDataSourceErrorHandler  {
+
     override fun getMonsters(lang: String): Flow<List<MonsterDto>> {
-        TODO("Not yet implemented")
+        return flow {
+            emit(json.decodeFromString(client.get("$lang/monsters.json").bodyAsText()))
+        }
     }
 
     override fun getMonsters(sourceAcronym: String, lang: String): Flow<List<MonsterDto>> {
-        TODO("Not yet implemented")
+        return flow {
+            val response = client.get(
+                urlString = "$lang/sources/${sourceAcronym.lowercase()}/monsters.json"
+            )
+
+            if (response.status.value != 200) {
+                throw HttpError(code = response.status.value, message = response.bodyAsText())
+            }
+
+            emit(json.decodeFromString(response.bodyAsText()))
+        }
     }
 
     override fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>> {
-        TODO("Not yet implemented")
+        return flow {
+            emit(json.decodeFromString(client.get(jsonUrl).bodyAsText()))
+        }
     }
+
+    override fun isHttpNotFoundException(error: Throwable): Boolean {
+        return error is HttpError && error.code == 404
+    }
+
+    private class HttpError(val code: Int, message: String) : Throwable(message = message)
 }

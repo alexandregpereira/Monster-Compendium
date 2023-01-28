@@ -22,8 +22,6 @@ lifecycle = "2.5.1"
 material = "1.7.0"
 mockk = "1.13.2"
 okhttp3_logging_interceptor = "4.10.0"
-retrofit = "2.9.0"
-retrofit_serialization = "0.8.0"
 room = "2.4.3"
 
 [libraries]
@@ -61,9 +59,6 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3_logging_interceptor" }
-retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3_logging_interceptor" }
-retrofit-serialization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit_serialization" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -72,7 +67,6 @@ viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref
 [bundles]
 compose = ["compose-ui", "compose-tooling", "compose-material", "compose-activity", "compose-util"]
 instrumentedtest = ["espresso", "junit-ext"]
-retrofit = ["retrofit-core", "retrofit-logging", "retrofit-serialization"]
 room = ["room-ktx", "room-runtime"]
 unittest = ["kotlin-coroutines-test", "core-testing", "mockk", "junit", "kotlin-test"]
 viewmodel-bundle = ["viewmodel"]

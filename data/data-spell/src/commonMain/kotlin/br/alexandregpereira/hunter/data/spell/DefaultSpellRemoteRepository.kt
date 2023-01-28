@@ -16,12 +16,18 @@
 
 package br.alexandregpereira.hunter.data.spell
 
-import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
+import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
+import br.alexandregpereira.hunter.data.spell.remote.mapper.toDomain
+import br.alexandregpereira.hunter.domain.spell.SpellRemoteRepository
+import br.alexandregpereira.hunter.domain.spell.model.Spell
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-internal class DefaultSettingsSpellDataRepository : SettingsSpellDataRepository {
+internal class DefaultSpellRemoteRepository(
+    private val remoteDataSource: SpellRemoteDataSource
+) : SpellRemoteRepository {
 
-    override fun deleteData(): Flow<Unit> {
-        TODO()
+    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
+        return remoteDataSource.getSpells(lang).map { it.toDomain() }
     }
 }

@@ -16,30 +16,17 @@
 
 package br.alexandregpereira.hunter.data.monster.lore
 
-import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
-import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toDomain
-import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toEntity
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.lore.remote.mapper.toDomain
+import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRemoteRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class AndroidMonsterLoreRepository(
-    private val monsterLoreLocalDataSource: MonsterLoreLocalDataSource,
+internal class DefaultMonsterLoreRemoteRepository(
     private val monsterLoreRemoteDataSource: MonsterLoreRemoteDataSource
-) : MonsterLoreRepository {
-
-    override fun getMonsterLore(index: String): Flow<MonsterLore> {
-        return monsterLoreLocalDataSource.getMonsterLore(index).map { it.toDomain() }
-    }
-
-    override fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>> {
-        return monsterLoreLocalDataSource.getMonstersLore(indexes).map { monsters ->
-            monsters.map { it.toDomain() }
-        }
-    }
+) : MonsterLoreRemoteRepository {
 
     override fun getRemoteMonstersLore(
         sourceAcronym: String,
@@ -48,9 +35,5 @@ internal class AndroidMonsterLoreRepository(
         return monsterLoreRemoteDataSource.getMonstersLore(sourceAcronym, lang).map { monsters ->
             monsters.map { it.toDomain() }
         }
-    }
-
-    override fun save(monstersLore: List<MonsterLore>): Flow<Unit> {
-        return monsterLoreLocalDataSource.save(monstersLore.map { it.toEntity() })
     }
 }

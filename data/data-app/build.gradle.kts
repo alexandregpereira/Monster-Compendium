@@ -37,7 +37,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.retrofit)
                 implementation(libs.ktor.okhttp)
                 implementation(libs.bundles.room)
                 configurations["kapt"]

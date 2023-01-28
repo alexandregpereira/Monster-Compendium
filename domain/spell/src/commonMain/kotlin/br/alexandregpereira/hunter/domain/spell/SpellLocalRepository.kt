@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Alexandre Gomes Pereira
+ * Copyright 2022 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster.lore.remote
+package br.alexandregpereira.hunter.domain.spell
 
-import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreDto
-import retrofit2.http.GET
-import retrofit2.http.Path
+import br.alexandregpereira.hunter.domain.spell.model.Spell
+import kotlinx.coroutines.flow.Flow
 
-internal interface MonsterLoreApi {
+interface SpellLocalRepository {
 
-    @GET("{lang}/lore/{sourceAcronym}/monster-lore.json")
-    suspend fun getMonstersLore(
-        @Path("sourceAcronym") sourceAcronym: String,
-        @Path("lang") lang: String = "en-us"
-    ): List<MonsterLoreDto>
+    fun saveSpells(spells: List<Spell>): Flow<Unit>
+    fun getLocalSpell(index: String): Flow<Spell>
+    fun getLocalSpells(indexes: List<String>): Flow<List<Spell>>
+    fun deleteLocalSpells(): Flow<Unit>
 }

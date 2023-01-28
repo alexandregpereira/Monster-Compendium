@@ -17,7 +17,7 @@
 package br.alexandregpereira.hunter.data.monster.lore.di
 
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
+import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
@@ -30,6 +30,6 @@ internal actual fun Scope.createRemoteDataSource(): MonsterLoreRemoteDataSource?
     return null
 }
 
-internal actual fun Scope.createRepository(): MonsterLoreRepository? {
+internal actual fun Scope.createLocalRepository(): MonsterLoreLocalRepository? {
     return null
 }

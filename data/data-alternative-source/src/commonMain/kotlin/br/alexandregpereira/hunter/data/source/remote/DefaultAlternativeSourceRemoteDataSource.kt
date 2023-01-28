@@ -17,16 +17,24 @@
 package br.alexandregpereira.hunter.data.source.remote
 
 import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
-internal class DefaultAlternativeSourceRemoteDataSource : AlternativeSourceRemoteDataSource {
+internal class DefaultAlternativeSourceRemoteDataSource(
+    private val client: HttpClient,
+    private val json: Json
+) : AlternativeSourceRemoteDataSource {
 
     override fun getAlternativeSources(): Flow<List<AlternativeSourceDto>> = flow {
-        TODO()
+        emit(json.decodeFromString(client.get("alternative-sources.json").bodyAsText()))
     }
 
     override fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>> = flow {
-        TODO()
+        emit(json.decodeFromString(client.get("monster-lore-sources.json").bodyAsText()))
     }
 }
