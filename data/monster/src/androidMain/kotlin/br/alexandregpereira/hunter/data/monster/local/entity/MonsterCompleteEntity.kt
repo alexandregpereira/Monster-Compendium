@@ -1,0 +1,95 @@
+/*
+ * Copyright 2023 Alexandre Gomes Pereira
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package br.alexandregpereira.hunter.data.monster.local.entity
+
+import androidx.room.Embedded
+import androidx.room.Relation
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingCompleteEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
+
+data class MonsterCompleteEntity(
+    @Embedded val monster: MonsterEntity,
+    @Relation(
+        entity = br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity::class,
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val speed: br.alexandregpereira.hunter.data.monster.local.entity.SpeedWithValuesEntity?,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val abilityScores: List<br.alexandregpereira.hunter.data.monster.local.entity.AbilityScoreEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val savingThrows: List<br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val skills: List<br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val damageVulnerabilities: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val damageResistances: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val damageImmunities: List<br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val conditionImmunities: List<br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val specialAbilities: List<br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity>,
+    @Relation(
+        entity = br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity::class,
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val actions: List<br.alexandregpereira.hunter.data.monster.local.entity.ActionWithDamageDicesEntity>,
+    @Relation(
+        entity = br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionEntity::class,
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val legendaryActions: List<br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionWithDamageDicesEntity>,
+    @Relation(
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val reactions: List<br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity>,
+    @Relation(
+        entity = SpellcastingEntity::class,
+        parentColumn = "index",
+        entityColumn = "monsterIndex",
+    )
+    val spellcastings: List<SpellcastingCompleteEntity>,
+)
