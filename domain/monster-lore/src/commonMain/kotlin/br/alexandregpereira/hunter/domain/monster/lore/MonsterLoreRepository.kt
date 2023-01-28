@@ -16,19 +16,4 @@
 
 package br.alexandregpereira.hunter.domain.monster.lore
 
-import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
-import kotlinx.coroutines.flow.Flow
-
-interface MonsterLoreRepository {
-
-    fun getMonsterLore(index: String): Flow<MonsterLore>
-
-    fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>>
-
-    fun getRemoteMonstersLore(
-        sourceAcronym: String,
-        lang: String
-    ): Flow<List<MonsterLore>>
-
-    fun save(monstersLore: List<MonsterLore>): Flow<Unit>
-}
+interface MonsterLoreRepository : MonsterLoreLocalRepository, MonsterLoreRemoteRepository

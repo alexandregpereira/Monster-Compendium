@@ -20,7 +20,7 @@ import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
 
 class GetMonstersLoreByIdsUseCase(
-    private val repository: MonsterLoreRepository
+    private val repository: MonsterLoreLocalRepository
 ) {
 
     operator fun invoke(indexes: List<String>): Flow<List<MonsterLore>> {

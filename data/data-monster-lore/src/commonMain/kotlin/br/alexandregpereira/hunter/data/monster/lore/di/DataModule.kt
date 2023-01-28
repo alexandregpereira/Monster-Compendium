@@ -18,11 +18,15 @@
 
 package br.alexandregpereira.hunter.data.monster.lore.di
 
+import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreLocalRepository
+import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRemoteRepository
 import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRepository
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSourceRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.lore.remote.DefaultMonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
+import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
+import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRemoteRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSettingsRepository
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreSourceRepository
@@ -31,8 +35,10 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val monsterLoreDataModule = module {
-    single { createRemoteDataSource() ?: DefaultMonsterLoreRemoteDataSource() }
-    factory { createRepository() ?: DefaultMonsterLoreRepository(get()) }
+    factory<MonsterLoreRepository> { DefaultMonsterLoreRepository(get(), get()) }
+    single { createRemoteDataSource() ?: DefaultMonsterLoreRemoteDataSource(get(), get()) }
+    single { createLocalRepository() ?: DefaultMonsterLoreLocalRepository() }
+    factory<MonsterLoreRemoteRepository> { DefaultMonsterLoreRemoteRepository(get()) }
     factory<MonsterLoreSettingsRepository> { MonsterLoreSettingsRepositoryImpl(get()) }
     factory<MonsterLoreSourceRepository> { MonsterLoreSourceRepositoryImpl(get()) }
 }.apply { includes(getAdditionalModule()) }
@@ -41,4 +47,4 @@ internal expect fun getAdditionalModule(): Module
 
 internal expect fun Scope.createRemoteDataSource(): MonsterLoreRemoteDataSource?
 
-internal expect fun Scope.createRepository(): MonsterLoreRepository?
+internal expect fun Scope.createLocalRepository(): MonsterLoreLocalRepository?

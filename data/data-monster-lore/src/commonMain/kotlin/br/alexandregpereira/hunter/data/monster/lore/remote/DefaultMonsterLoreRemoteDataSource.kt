@@ -17,11 +17,26 @@
 package br.alexandregpereira.hunter.data.monster.lore.remote
 
 import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreDto
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
-internal class DefaultMonsterLoreRemoteDataSource : MonsterLoreRemoteDataSource {
+internal class DefaultMonsterLoreRemoteDataSource(
+    private val client: HttpClient,
+    private val json: Json
+) : MonsterLoreRemoteDataSource {
 
     override fun getMonstersLore(sourceAcronym: String, lang: String): Flow<List<MonsterLoreDto>> {
-        TODO()
+        return flow {
+            emit(
+                client.get("$lang/lore/${sourceAcronym.lowercase()}/monster-lore.json")
+                    .bodyAsText()
+                    .let { json.decodeFromString(it) }
+            )
+        }
     }
 }

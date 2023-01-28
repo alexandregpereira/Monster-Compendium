@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package br.alexandregpereira.hunter.data.settings.di
 
 import br.alexandregpereira.hunter.data.settings.DefaultSettingsRepository
+import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlBuilder
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val settingsDataModule = module {
+    factory { AlternativeSourceUrlBuilder(get()) }
     factory { createRepository() ?: DefaultSettingsRepository() }
-}.apply { includes(getAdditionalModule()) }
-
-internal expect fun getAdditionalModule(): Module
+}
 
 internal expect fun Scope.createRepository(): SettingsRepository?

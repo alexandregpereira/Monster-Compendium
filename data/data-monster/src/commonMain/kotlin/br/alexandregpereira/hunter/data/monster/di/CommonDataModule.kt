@@ -31,7 +31,6 @@ import br.alexandregpereira.hunter.data.monster.preferences.DefaultPreferencesDa
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
 import br.alexandregpereira.hunter.data.monster.remote.DefaultMonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.DefaultMonsterRemoteDataSourceErrorHandler
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceErrorHandler
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
@@ -49,16 +48,17 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val monsterDataModule = module {
-    single {
-        createRemoteDataSource() ?: DefaultMonsterRemoteDataSource()
+    single { DefaultMonsterRemoteDataSource(get(), get()) }
+    single<MonsterRemoteDataSource> {
+        get<DefaultMonsterRemoteDataSource>()
     }
-    factory {
-        createRemoteDataSourceErrorHandler() ?: DefaultMonsterRemoteDataSourceErrorHandler()
+    factory<MonsterRemoteDataSourceErrorHandler> {
+        get<DefaultMonsterRemoteDataSource>()
     }
     single { MonsterCacheDataSource() }
     factory<MonsterRepository> { MonsterRepositoryImpl(get(), get()) }
     factory {
-        createMonsterLocalRepository() ?: DefaultMonsterLocalRepository()
+        createMonsterLocalRepository() ?: DefaultMonsterLocalRepository(get())
     }
     factory<MonsterRemoteRepository> { MonsterRemoteRepositoryImpl(get(), get()) }
     factory<MonsterCacheRepository> { MonsterCacheRepositoryImpl(get()) }
@@ -75,10 +75,6 @@ val monsterDataModule = module {
 }.apply { includes(getAdditionalModule()) }
 
 internal expect fun getAdditionalModule(): Module
-
-internal expect fun Scope.createRemoteDataSource(): MonsterRemoteDataSource?
-
-internal expect fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler?
 
 internal expect fun Scope.createPreferencesDataSource(): PreferencesDataSource?
 

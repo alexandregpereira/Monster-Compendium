@@ -21,19 +21,13 @@ import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.monster.preferences.AndroidPreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
-import br.alexandregpereira.hunter.data.monster.remote.AndroidMonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.MonsterApi
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceErrorHandler
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
-import retrofit2.Retrofit
 
 internal actual fun getAdditionalModule(): Module {
     return module {
-        factory<MonsterApi> { get<Retrofit>().create(MonsterApi::class.java) }
         single<MonsterLocalDataSource> {
             MonsterLocalDataSourceImpl(
                 abilityScoreDao = get(),
@@ -53,16 +47,7 @@ internal actual fun getAdditionalModule(): Module {
                 legendaryActionDao = get()
             )
         }
-        single { AndroidMonsterRemoteDataSource(get()) }
     }
-}
-
-actual fun Scope.createRemoteDataSource(): MonsterRemoteDataSource? {
-    return get<AndroidMonsterRemoteDataSource>()
-}
-
-internal actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
-    return null
 }
 
 internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? {

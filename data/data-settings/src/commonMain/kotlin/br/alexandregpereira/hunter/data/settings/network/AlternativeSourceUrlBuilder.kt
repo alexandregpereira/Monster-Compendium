@@ -17,30 +17,31 @@
 package br.alexandregpereira.hunter.data.settings.network
 
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.runBlocking
-import okhttp3.Interceptor
-import okhttp3.Response
 
-class AlternativeSourceUrlInterceptor(
+class AlternativeSourceUrlBuilder(
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase
-) : Interceptor {
+) {
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
+    suspend fun execute(
+        requestBuilder: HttpRequestBuilder
+    ): HttpRequestBuilder {
+        val currentUrl = requestBuilder.url.buildString()
+        val newRequestBuilder = if (isToInterceptUrl(currentUrl)) {
+            val newUrl = getNewUrl(currentUrl).orEmpty()
+            requestBuilder.apply {
+                url {
+                    host = newUrl.split("/").dropLast(1).joinToString(separator = "/")
+                    path(newUrl.split("/").last())
+                }
+            }
+        } else requestBuilder
 
-        val currentUrl = request.url.toString()
-        val newRequest = currentUrl.takeIf { url ->
-            isToInterceptUrl(url)
-        }?.let { url ->
-            getNewUrl(url)
-        }?.let { newUrl ->
-            request.newBuilder().url(newUrl).build()
-        }
-
-        return chain.proceed(newRequest ?: request)
+        return newRequestBuilder
     }
 
     private fun isToInterceptUrl(url: String): Boolean {
@@ -51,21 +52,23 @@ class AlternativeSourceUrlInterceptor(
         }
     }
 
-    private fun getNewUrl(currentUrl: String): String? = runBlocking {
-        when {
+    private suspend fun getNewUrl(currentUrl: String): String? {
+        return when {
             currentUrl.contains("alternative-sources.json") -> getAlternativeSourceJsonUrl()
             currentUrl.contains("/sources/") -> getAlternativeSourceJsonUrl().map { url ->
                 val path = currentUrl.split("/")
                     .run { subList(size - 4, size) }
                     .joinToString("/")
-                val urlFormatted = url.split("/")
+                val host = url.split("/")
                     .run { subList(0, size - 1) }
                     .joinToString("/")
 
-                "$urlFormatted/$path"
+                "$host/$path"
             }
             else -> null
         }?.appendLocalHostIfEmpty()?.single()
+            ?.replace("https://", "")
+            ?.replace("http://", "")
     }
 
     private fun Flow<String>.appendLocalHostIfEmpty(): Flow<String> {

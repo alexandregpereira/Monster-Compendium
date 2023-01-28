@@ -17,34 +17,26 @@
 package br.alexandregpereira.hunter.data.spell.di
 
 import br.alexandregpereira.hunter.data.spell.AndroidSettingsSpellDataRepository
-import br.alexandregpereira.hunter.data.spell.AndroidSpellRepository
+import br.alexandregpereira.hunter.data.spell.AndroidSpellLocalRepository
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSourceImpl
-import br.alexandregpereira.hunter.data.spell.remote.AndroidSpellRemoteDataSource
-import br.alexandregpereira.hunter.data.spell.remote.SpellApi
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
-import br.alexandregpereira.hunter.domain.spell.SpellRepository
+import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
-import retrofit2.Retrofit
 
 internal actual fun getAdditionalModule(): Module {
     return module {
         factory<SpellLocalDataSource> { SpellLocalDataSourceImpl(get()) }
-        single { get<Retrofit>().create(SpellApi::class.java) }
     }
 }
 
-internal actual fun Scope.createRepository(): SpellRepository? {
-    return AndroidSpellRepository(get(), get())
+internal actual fun Scope.createLocalRepository(): SpellLocalRepository? {
+    return AndroidSpellLocalRepository(get())
 }
 
 internal actual fun Scope.createSettingsRepository(): SettingsSpellDataRepository? {
     return AndroidSettingsSpellDataRepository(get())
-}
-
-internal actual fun Scope.createRemoteDataSource(): SpellRemoteDataSource? {
-    return AndroidSpellRemoteDataSource(get())
 }

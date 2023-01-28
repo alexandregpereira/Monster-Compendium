@@ -16,33 +16,29 @@
 
 package br.alexandregpereira.hunter.data.monster.lore
 
+import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
+import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRemoteRepository
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-internal class DefaultMonsterLoreRepository(
-    private val remoteRepository: MonsterLoreRemoteRepository,
-    private val localRepository: MonsterLoreLocalRepository
-) : MonsterLoreRepository {
+internal class AndroidMonsterLoreLocalRepository(
+    private val monsterLoreLocalDataSource: MonsterLoreLocalDataSource,
+) : MonsterLoreLocalRepository {
 
     override fun getMonsterLore(index: String): Flow<MonsterLore> {
-        return localRepository.getMonsterLore(index)
+        return monsterLoreLocalDataSource.getMonsterLore(index).map { it.toDomain() }
     }
 
     override fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>> {
-        return localRepository.getLocalMonstersLore(indexes)
+        return monsterLoreLocalDataSource.getMonstersLore(indexes).map { monsters ->
+            monsters.map { it.toDomain() }
+        }
     }
 
     override fun save(monstersLore: List<MonsterLore>): Flow<Unit> {
-        return localRepository.save(monstersLore)
-    }
-
-    override fun getRemoteMonstersLore(
-        sourceAcronym: String,
-        lang: String
-    ): Flow<List<MonsterLore>> {
-        return remoteRepository.getRemoteMonstersLore(sourceAcronym, lang)
+        return monsterLoreLocalDataSource.save(monstersLore.map { it.toEntity() })
     }
 }

@@ -18,14 +18,16 @@ package br.alexandregpereira.hunter.data.settings
 
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
+//TODO Implement SQLDelight
 internal class DefaultSettingsRepository : SettingsRepository {
 
     override fun saveSettings(values: Map<String, String>): Flow<Unit> {
-        TODO()
+        return flowOf(Unit)
     }
 
     override fun getSettingsValue(key: String, defaultValue: String): Flow<String> {
-        TODO()
+        return flowOf(defaultValue)
     }
 }

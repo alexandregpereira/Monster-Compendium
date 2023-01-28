@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package br.alexandregpereira.hunter.data.settings.di
 
 import br.alexandregpereira.hunter.data.settings.AndroidSettingsRepository
-import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlInterceptor
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import org.koin.core.module.Module
 import org.koin.core.scope.Scope
-import org.koin.dsl.module
-
-internal actual fun getAdditionalModule(): Module {
-    return module {
-        factory { AlternativeSourceUrlInterceptor(get()) }
-    }
-}
 
 internal actual fun Scope.createRepository(): SettingsRepository? {
     return AndroidSettingsRepository(get())

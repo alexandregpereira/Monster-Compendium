@@ -20,11 +20,39 @@ import br.alexandregpereira.hunter.data.monster.di.monsterDataModule
 import br.alexandregpereira.hunter.data.monster.folder.di.monsterFolderDataModule
 import br.alexandregpereira.hunter.data.monster.lore.di.monsterLoreDataModule
 import br.alexandregpereira.hunter.data.settings.di.settingsDataModule
+import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlBuilder
 import br.alexandregpereira.hunter.data.source.di.alternativeSourceDataModule
 import br.alexandregpereira.hunter.data.spell.di.spellDataModule
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.plugins.plugin
+import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
 val dataModules = listOf(
+    module {
+        single {
+            HttpClient {
+                defaultRequest {
+                    url("https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/json/")
+                }
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                }
+            }.apply {
+                plugin(HttpSend).intercept { request ->
+                    val newRequestBuilder = get<AlternativeSourceUrlBuilder>().execute(request)
+                    execute(newRequestBuilder)
+                }
+            }
+        }
+        single { Json { ignoreUnknownKeys = true } }
+    },
     alternativeSourceDataModule,
     monsterDataModule,
     monsterFolderDataModule,

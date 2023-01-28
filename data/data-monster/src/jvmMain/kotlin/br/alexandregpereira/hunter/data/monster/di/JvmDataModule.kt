@@ -17,8 +17,6 @@
 package br.alexandregpereira.hunter.data.monster.di
 
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
-import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceErrorHandler
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
@@ -26,12 +24,6 @@ import org.koin.dsl.module
 
 internal actual fun getAdditionalModule(): Module {
     return module {  }
-}
-
-internal actual fun Scope.createRemoteDataSource(): MonsterRemoteDataSource? = null
-
-internal actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
-    return null
 }
 
 internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? = null

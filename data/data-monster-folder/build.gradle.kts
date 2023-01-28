@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("kapt")
-    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -25,26 +24,18 @@ kotlin {
                 implementation(project(":data:data-monster"))
                 implementation(project(":domain:monster-folder"))
                 implementation(libs.kotlin.coroutines.core)
-                implementation(libs.kotlin.serialization)
                 implementation(libs.koin.core)
-                implementation(libs.ktor.core)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.retrofit)
-                implementation(libs.ktor.okhttp)
                 implementation(libs.bundles.room)
                 configurations["kapt"]
                     .dependencies
                     .add(project.dependencies.create(libs.room.compiler.get().toString()))
             }
         }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.ktor.okhttp)
-            }
-        }
+        val jvmMain by getting
 
         val iosX64Main by getting
         val iosArm64Main by getting

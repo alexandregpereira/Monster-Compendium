@@ -21,6 +21,5 @@ import org.koin.core.module.Module
 internal actual fun getAdditionalModule(): List<Module> {
     return listOf(
         databaseModule,
-        networkModule,
     )
 }

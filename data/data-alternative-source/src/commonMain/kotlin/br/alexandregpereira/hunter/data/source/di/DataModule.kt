@@ -22,15 +22,11 @@ import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDat
 import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRepositoryImpl
 import br.alexandregpereira.hunter.data.source.remote.DefaultAlternativeSourceRemoteDataSource
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
-import org.koin.core.module.Module
-import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val alternativeSourceDataModule = module {
-    factory { createRemoteDataSource() ?: DefaultAlternativeSourceRemoteDataSource() }
+    factory<AlternativeSourceRemoteDataSource> {
+        DefaultAlternativeSourceRemoteDataSource(get(), get())
+    }
     factory<AlternativeSourceRepository> { AlternativeSourceRepositoryImpl(get()) }
-}.apply { includes(getAdditionalModule()) }
-
-internal expect fun getAdditionalModule(): Module
-
-internal expect fun Scope.createRemoteDataSource(): AlternativeSourceRemoteDataSource?
+}

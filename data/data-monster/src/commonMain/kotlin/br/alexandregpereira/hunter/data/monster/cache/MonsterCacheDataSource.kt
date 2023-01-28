@@ -35,4 +35,11 @@ class MonsterCacheDataSource {
             emit(Unit)
         }
     }
+
+    fun clear(): Flow<Unit> {
+        return flow {
+            monsters.clear()
+            emit(Unit)
+        }
+    }
 }
