@@ -24,16 +24,16 @@ import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
-actual fun getAdditionalModule(): Module {
+internal actual fun getAdditionalModule(): Module {
     return module {  }
 }
 
-actual fun Scope.createRemoteDataSource(): MonsterRemoteDataSource? = null
+internal actual fun Scope.createRemoteDataSource(): MonsterRemoteDataSource? = null
 
-actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
+internal actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
     return null
 }
 
-actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? = null
+internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? = null
 
-actual fun Scope.createMonsterLocalRepository(): MonsterLocalRepository? = null
+internal actual fun Scope.createMonsterLocalRepository(): MonsterLocalRepository? = null
