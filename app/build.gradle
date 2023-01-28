@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'br.alexandregpereira.hunter.app'
-    compileSdkVersion buildConfig.compileSdk
+    compileSdkVersion project.findProperty('compileSdk')
 
     packagingOptions {
         jniLibs {
@@ -18,8 +18,8 @@ android {
 
     defaultConfig {
         applicationId "br.alexandregpereira.hunter.app"
-        minSdkVersion buildConfig.minSdk
-        targetSdkVersion buildConfig.targetSdk
+        minSdkVersion project.findProperty('minSdk')
+        targetSdkVersion project.findProperty('targetSdk')
         versionCode 10
         versionName "1.2.5"
 

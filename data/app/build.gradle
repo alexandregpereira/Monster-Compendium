@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion buildConfig.compileSdk
+    compileSdkVersion project.findProperty('compileSdk')
 
     defaultConfig {
-        minSdkVersion buildConfig.minSdk
+        minSdkVersion project.findProperty('minSdk')
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -33,10 +33,9 @@ android {
 
 dependencies {
     implementation project(':data:alternative-source')
-    implementation project(':data:monster')
+    implementation project(':data:data-monster')
     implementation project(':data:monster-folder')
     implementation project(':data:monster-lore')
-    implementation project(':data:monster-spell')
     implementation project(':data:settings')
     implementation project(':data:spell')
 

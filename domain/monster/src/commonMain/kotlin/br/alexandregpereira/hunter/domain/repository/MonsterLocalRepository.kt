@@ -28,4 +28,5 @@ interface MonsterLocalRepository {
     fun getMonsters(indexes: List<String>): Flow<List<Monster>>
     fun getMonster(index: String): Flow<Monster>
     fun getMonstersByQuery(query: String): Flow<List<Monster>>
+    fun deleteAll(): Flow<Unit>
 }

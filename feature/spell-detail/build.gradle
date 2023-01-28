@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion buildConfig.compileSdk
+    compileSdkVersion project.findProperty('compileSdk')
 
     defaultConfig {
-        minSdkVersion buildConfig.minSdk
+        minSdkVersion project.findProperty('minSdk')
     }
 
     compileOptions {
