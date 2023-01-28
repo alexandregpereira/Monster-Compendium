@@ -31,7 +31,7 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-actual fun getAdditionalModule(): Module {
+internal actual fun getAdditionalModule(): Module {
     return module {
         factory<MonsterApi> { get<Retrofit>().create(MonsterApi::class.java) }
         single<MonsterLocalDataSource> {
@@ -61,14 +61,14 @@ actual fun Scope.createRemoteDataSource(): MonsterRemoteDataSource? {
     return get<AndroidMonsterRemoteDataSource>()
 }
 
-actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
-    return get<AndroidMonsterRemoteDataSource>()
+internal actual fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler? {
+    return null
 }
 
-actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? {
+internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? {
     return AndroidPreferencesDataSource(get())
 }
 
-actual fun Scope.createMonsterLocalRepository(): MonsterLocalRepository? {
+internal actual fun Scope.createMonsterLocalRepository(): MonsterLocalRepository? {
     return AndroidMonsterLocalRepository(get())
 }

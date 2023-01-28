@@ -28,11 +28,13 @@ kotlin {
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.koin.core)
+                implementation(libs.ktor.core)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(libs.bundles.retrofit)
+                implementation(libs.ktor.okhttp)
                 implementation(libs.bundles.room)
                 configurations["kapt"]
                     .dependencies
@@ -53,6 +55,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.darwin)
+            }
         }
     }
 }

@@ -18,13 +18,13 @@
 
 package br.alexandregpereira.hunter.data.monster.di
 
+import br.alexandregpereira.hunter.data.monster.DefaultMonsterLocalRepository
 import br.alexandregpereira.hunter.data.monster.MonsterAlternativeSourceRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterCacheRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
-import br.alexandregpereira.hunter.data.monster.DefaultMonsterLocalRepository
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.DefaultPreferencesDataSource
@@ -74,12 +74,12 @@ val monsterDataModule = module {
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
 }.apply { includes(getAdditionalModule()) }
 
-expect fun getAdditionalModule(): Module
+internal expect fun getAdditionalModule(): Module
 
-expect fun Scope.createRemoteDataSource(): MonsterRemoteDataSource?
+internal expect fun Scope.createRemoteDataSource(): MonsterRemoteDataSource?
 
-expect fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler?
+internal expect fun Scope.createRemoteDataSourceErrorHandler(): MonsterRemoteDataSourceErrorHandler?
 
-expect fun Scope.createPreferencesDataSource(): PreferencesDataSource?
+internal expect fun Scope.createPreferencesDataSource(): PreferencesDataSource?
 
-expect fun Scope.createMonsterLocalRepository(): MonsterLocalRepository?
+internal expect fun Scope.createMonsterLocalRepository(): MonsterLocalRepository?
