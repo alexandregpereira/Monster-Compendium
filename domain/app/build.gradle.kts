@@ -10,6 +10,7 @@ kotlin {
             dependencies {
                 implementation(project(":domain:alternative-source"))
                 implementation(project(":domain:monster"))
+                implementation(project(":domain:monster-compendium"))
                 implementation(project(":domain:monster-folder"))
                 implementation(project(":domain:monster-lore"))
                 implementation(project(":domain:settings"))

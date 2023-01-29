@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.collections
+package br.alexandregpereira.hunter.shared.di
 
-expect fun String.removeSpecialCharacters(): String
+import br.alexandregpereira.hunter.data.di.dataModules
+import br.alexandregpereira.hunter.domain.di.domainModules
+import org.koin.core.module.Module
 
-fun String.equalsWithNoSpecialChar(str: String?): Boolean {
-    return removeSpecialCharacters().lowercase() == str?.removeSpecialCharacters()?.lowercase()
-}
+fun appModules(): List<Module> = domainModules + dataModules

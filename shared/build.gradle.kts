@@ -25,7 +25,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":domain:monster"))
+                implementation(project(":domain:monster-compendium"))
+                implementation(project(":data:data-app"))
+                implementation(project(":domain:app"))
+                implementation(project(":domain:sync"))
+                implementation(libs.koin.core)
             }
         }
         if (isMac()) {

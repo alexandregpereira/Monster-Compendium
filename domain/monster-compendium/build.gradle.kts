@@ -14,10 +14,29 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.collections
+plugins {
+    kotlin("multiplatform")
+}
 
-expect fun String.removeSpecialCharacters(): String
+configureJvmTargets()
 
-fun String.equalsWithNoSpecialChar(str: String?): Boolean {
-    return removeSpecialCharacters().lowercase() == str?.removeSpecialCharacters()?.lowercase()
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(project(":domain:monster"))
+                implementation(project(":domain:sync"))
+                implementation(libs.koin.core)
+                implementation(libs.kotlin.coroutines.core)
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.bundles.unittest)
+            }
+        }
+        if (isMac()) {
+            val iosMain by getting
+        }
+    }
 }
