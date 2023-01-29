@@ -19,22 +19,43 @@ package br.alexandregpereira.hunter.shared
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.shared.di.appModules
 import kotlinx.coroutines.flow.single
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 
-class IosAppModuleHelper : KoinComponent {
+class MonsterCompendiumFeature : KoinComponent {
 
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase by inject()
 
-    suspend fun getMonsters(): List<Monster> {
-        return getMonsterCompendiumUseCase().single().items.mapNotNull {
-            (it as? MonsterCompendiumItem.Item)?.monster
+    suspend fun getMonsterCompendium(): MonsterCompendiumIos {
+        return getMonsterCompendiumUseCase().single().run {
+            MonsterCompendiumIos(
+                items = items.map {
+                    MonsterCompendiumItemIos(
+                        title = it as? MonsterCompendiumItem.Title,
+                        monster = (it as? MonsterCompendiumItem.Item)?.monster
+                    )
+                },
+                tableContent = tableContent,
+                alphabet = alphabet
+            )
         }
     }
 }
+
+data class MonsterCompendiumIos(
+    val items: List<MonsterCompendiumItemIos>,
+    val tableContent: List<TableContentItem>,
+    val alphabet: List<String>,
+)
+
+data class MonsterCompendiumItemIos(
+    val title: MonsterCompendiumItem.Title?,
+    val monster: Monster?
+)
 
 fun initKoin() {
     startKoin {

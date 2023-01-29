@@ -16,12 +16,13 @@ struct MonsterCompendiumScreenView: View {
     }
     
     var body: some View {
+        let state = viewModel.state
         if viewModel.isLoading {
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle())
                 .transition(.opacity.animation(.spring()))
         } else {
-            MonsterCompendiumView(monsters: viewModel.monsters, onMonsterItemClick: { $0 })
+            MonsterCompendiumView(items: state.items, onMonsterItemClick: { $0 })
                 .transition(.opacity.animation(.spring()))
         }
     }
