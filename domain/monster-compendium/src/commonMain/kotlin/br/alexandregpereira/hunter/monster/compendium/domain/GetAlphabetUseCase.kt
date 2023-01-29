@@ -24,7 +24,7 @@ class GetAlphabetUseCase internal constructor() {
 
     operator fun invoke(items: List<MonsterCompendiumItem>): Flow<List<String>> {
         return flow {
-            emit(items.mapToFirstLetters().distinct())
+            emit(items.mapToFirstLetters().sorted().distinct())
         }
     }
 
