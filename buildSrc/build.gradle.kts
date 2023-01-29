@@ -15,29 +15,17 @@
  */
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
+    kotlin("jvm") version "1.7.20"
 }
 
-configureTargets(hasJvm = false)
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":domain:monster"))
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
-    }
+repositories {
+    google()
+    gradlePluginPortal()
+    mavenCentral()
 }
 
-android {
-    namespace = "br.alexandregpereira.hunter.shared"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
+dependencies {
+    implementation(kotlin("gradle-plugin"))
+    implementation("com.android.tools.build:gradle:7.3.0")
+    implementation(kotlin("compiler-embeddable"))
 }
