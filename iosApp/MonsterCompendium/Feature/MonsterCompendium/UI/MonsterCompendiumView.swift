@@ -14,24 +14,37 @@ struct MonsterCompendiumView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading) {
+            let gridItems = [
+                GridItem(.fixed(UIScreen.main.bounds.size.width / 2), spacing: 0, alignment: .leading),
+                GridItem(.fixed(UIScreen.main.bounds.size.width / 2), spacing: 0, alignment: .leading)
+            ]
+
+            LazyVGrid(columns: gridItems) {
                 ForEach(items) { item in
-                    switch item {
-                    case .title (let title):
-                        let font = title.isHeader ? Font.largeTitle : Font.title
-                        let topPadding = title.isHeader ? 16.0 : 8
-                        let bottomPadding = title.isHeader ? 32.0 : 16
-                        Text(title.value)
-                            .font(font)
-                            .padding(EdgeInsets(top: 16, leading: 16, bottom: bottomPadding, trailing: 16))
-                    case .item (let item):
-                        let monster = item.value
-                        MonsterCardView(monster: monster)
-                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                            .onTapGesture {
-                                onMonsterItemClick(monster.index)
-                            }
+                    
+                    ZStack(alignment: .leading) {
+                        switch item {
+                        case .title (let title):
+                            let font = title.isHeader ? Font.system(size: 48) : Font.title
+                            let bottomPadding = title.isHeader ? 32.0 : 16
+                            Text(title.value)
+                                .font(font)
+                            .padding(EdgeInsets(top: 40, leading: 16, bottom: bottomPadding, trailing: 16))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        case .item (let item):
+                            let monster = item.value
+                            MonsterCardView(monster: monster)
+                                .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                                .onTapGesture {
+                                    onMonsterItemClick(monster.index)
+                                }
+                        }
                     }
+                    .frame(
+                        width: item.isHorizontal() ? UIScreen.main.bounds.size.width : (UIScreen.main.bounds.size.width) / 2
+                    )
+                    
+                    if item.isHorizontal() { Color.clear }
                 }
             }
         }

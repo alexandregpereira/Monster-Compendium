@@ -16,6 +16,13 @@ enum MonsterCompendiumItemUiState : Identifiable {
         }
     }
     
+    func isHorizontal() -> Bool {
+        switch self {
+        case .title: return true
+        case .item (let item): return item.value.isImageHorizontal
+        }
+    }
+    
     struct Title {
         let value: String
         let id: String
@@ -45,7 +52,7 @@ extension MonsterCompendiumItemUiState {
                     imageUrl: "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/aboleth.png",
                     backgroundColorLight: "#d3dedc",
                     backgroundColorDark: "#d3dedc",
-                    isImageHorizontal: $0 % 5 == 0
+                    isImageHorizontal: $0 == 5 || $0 == 7
                 )
             ))
         }
