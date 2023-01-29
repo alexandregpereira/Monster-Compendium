@@ -17,18 +17,10 @@
 package br.alexandregpereira.hunter.monster.compendium.di
 
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
-import br.alexandregpereira.hunter.monster.compendium.domain.GetAlphabetUseCase
-import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
-import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
-import br.alexandregpereira.hunter.monster.compendium.domain.GetTableContentUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val monsterCompendiumModule = module {
-    factory { GetAlphabetUseCase() }
-    factory { GetMonsterCompendiumUseCase(get(), get(), get()) }
-    factory { GetMonsterPreviewsBySectionUseCase(get(), get(), get()) }
-    factory { GetTableContentUseCase() }
     viewModel {
         MonsterCompendiumViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
     }

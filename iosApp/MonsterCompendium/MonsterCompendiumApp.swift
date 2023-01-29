@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import shared
 
 @main
 struct MonsterCompendiumApp: App {
+    
+    init() {
+        IosAppModuleKt.doInitKoin()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MonsterCompendiumScreenView()
         }
     }
 }

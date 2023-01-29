@@ -24,7 +24,3 @@ actual fun String.removeSpecialCharacters(): String {
     val pattern: Pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
     return pattern.matcher(nfdNormalizedString).replaceAll("")
 }
-
-fun String.equalsWithNoSpecialChar(str: String?): Boolean {
-    return removeSpecialCharacters().lowercase() == str?.removeSpecialCharacters()?.lowercase()
-}

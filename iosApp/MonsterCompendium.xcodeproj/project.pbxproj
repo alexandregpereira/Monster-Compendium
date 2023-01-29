@@ -14,6 +14,12 @@
 		C1BC0E9429847A85002F517C /* MonsterCompendiumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E9329847A85002F517C /* MonsterCompendiumTests.swift */; };
 		C1BC0E9E29847A85002F517C /* MonsterCompendiumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E9D29847A85002F517C /* MonsterCompendiumUITests.swift */; };
 		C1BC0EA029847A85002F517C /* MonsterCompendiumUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E9F29847A85002F517C /* MonsterCompendiumUITestsLaunchTests.swift */; };
+		C1D25EB22985DD3700F0EBF9 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */; };
+		C1D25EB429862B4E00F0EBF9 /* MonsterCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EB329862B4E00F0EBF9 /* MonsterCardView.swift */; };
+		C1D25EB829862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EB729862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift */; };
+		C1D25EBB29862E0400F0EBF9 /* UiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EBA29862E0400F0EBF9 /* UiState.swift */; };
+		C1D25EBD29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EBC29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift */; };
+		C1D25EBF29862ED300F0EBF9 /* MonsterCompendiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EBE29862ED300F0EBF9 /* MonsterCompendiumView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,11 @@
 		C1BC0E9929847A85002F517C /* MonsterCompendiumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonsterCompendiumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E9D29847A85002F517C /* MonsterCompendiumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumUITests.swift; sourceTree = "<group>"; };
 		C1BC0E9F29847A85002F517C /* MonsterCompendiumUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C1D25EB329862B4E00F0EBF9 /* MonsterCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCardView.swift; sourceTree = "<group>"; };
+		C1D25EB729862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumViewModel.swift; sourceTree = "<group>"; };
+		C1D25EBA29862E0400F0EBF9 /* UiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiState.swift; sourceTree = "<group>"; };
+		C1D25EBC29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumScreenView.swift; sourceTree = "<group>"; };
+		C1D25EBE29862ED300F0EBF9 /* MonsterCompendiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1D25EB22985DD3700F0EBF9 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +106,8 @@
 		C1BC0E8129847A84002F517C /* MonsterCompendium */ = {
 			isa = PBXGroup;
 			children = (
+				C1D25EB529862D7700F0EBF9 /* Feature */,
+				C1D25EAD2985DCE600F0EBF9 /* UI */,
 				C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */,
 				C1BC0E8429847A84002F517C /* ContentView.swift */,
 				C1BC0E8629847A85002F517C /* Assets.xcassets */,
@@ -127,6 +141,41 @@
 			path = MonsterCompendiumUITests;
 			sourceTree = "<group>";
 		};
+		C1D25EAD2985DCE600F0EBF9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C1D25EBA29862E0400F0EBF9 /* UiState.swift */,
+				C1D25EB329862B4E00F0EBF9 /* MonsterCardView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C1D25EB529862D7700F0EBF9 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				C1D25EB629862D9300F0EBF9 /* MonsterCompendium */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		C1D25EB629862D9300F0EBF9 /* MonsterCompendium */ = {
+			isa = PBXGroup;
+			children = (
+				C1D25EB929862DEC00F0EBF9 /* UI */,
+				C1D25EB729862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift */,
+			);
+			path = MonsterCompendium;
+			sourceTree = "<group>";
+		};
+		C1D25EB929862DEC00F0EBF9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C1D25EBC29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift */,
+				C1D25EBE29862ED300F0EBF9 /* MonsterCompendiumView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,6 +193,9 @@
 			dependencies = (
 			);
 			name = MonsterCompendium;
+			packageProductDependencies = (
+				C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */,
+			);
 			productName = MonsterCompendium;
 			productReference = C1BC0E7F29847A84002F517C /* MonsterCompendium.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +268,9 @@
 				Base,
 			);
 			mainGroup = C1BC0E7629847A83002F517C;
+			packageReferences = (
+				C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = C1BC0E8029847A84002F517C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -280,7 +335,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1D25EB829862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift in Sources */,
 				C1BC0E8529847A84002F517C /* ContentView.swift in Sources */,
+				C1D25EB429862B4E00F0EBF9 /* MonsterCardView.swift in Sources */,
+				C1D25EBB29862E0400F0EBF9 /* UiState.swift in Sources */,
+				C1D25EBF29862ED300F0EBF9 /* MonsterCompendiumView.swift in Sources */,
+				C1D25EBD29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift in Sources */,
 				C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,6 +672,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C1BC0E7729847A83002F517C /* Project object */;
 }
