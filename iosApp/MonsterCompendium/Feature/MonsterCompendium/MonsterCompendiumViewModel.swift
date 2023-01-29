@@ -9,11 +9,14 @@ import Foundation
 import shared
 
 @MainActor class MonsterCompendiumViewModel : ObservableObject {
+    
+    private let monsterCompendiumFeature: MonsterCompendiumFeature
 
     @Published var isLoading: Bool = false
-    @Published var monsters: [MonsterUiState] = []
+    @Published var state: MonsterCompendiumUiState = MonsterCompendiumUiState()
     
     init() {
+        monsterCompendiumFeature = MonsterCompendiumFeature()
         loadData()
     }
     
@@ -21,44 +24,42 @@ import shared
         isLoading = true
         Task {
             do {
-                let domainMosters = try await IosAppModuleHelper().getMonsters()
-                
-                self.monsters = domainMosters.map({ monster in
-                    var type: MonsterTypeUiState
-                    switch monster.type {
-                    case MonsterMonsterType.aberration:
-                        type = MonsterTypeUiState.ABERRATION
-                    case MonsterMonsterType.beast:
-                        type = MonsterTypeUiState.BEAST
-                    case MonsterMonsterType.celestial:
-                        type = MonsterTypeUiState.CELESTIAL
-                    case MonsterMonsterType.construct:
-                        type = MonsterTypeUiState.CONSTRUCT
-                    case MonsterMonsterType.dragon:
-                        type = MonsterTypeUiState.DRAGON
-                    case MonsterMonsterType.elemental:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.fey:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.fiend:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.giant:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.humanoid:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.monstrosity:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    case MonsterMonsterType.ooze:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    default:
-                        type = MonsterTypeUiState.ELEMENTAL
-                    }
-                    return MonsterUiState(index: monster.index, name: monster.name, type: type, challengeRating: monster.challengeRating, imageUrl: monster.imageData.url, backgroundColorLight: monster.imageData.backgroundColor.light, backgroundColorDark: monster.imageData.backgroundColor.dark)
-                })
+                self.state = MonsterCompendiumUiState(
+                    items: try await monsterCompendiumFeature.getMonsterCompendium().asUiState()
+                )
             } catch {
                 print(error)
             }
             isLoading = false
         }
+    }
+}
+
+extension MonsterCompendiumIos {
+    
+    func asUiState() -> [MonsterCompendiumItemUiState] {
+        self.items.map { item in
+            if (item.title != nil) {
+                return MonsterCompendiumItemUiState.title(MonsterCompendiumItemUiState.Title(value: item.title!.value, id: item.title!.id, isHeader: item.title!.isHeader))
+            } else {
+                return MonsterCompendiumItemUiState.item(MonsterCompendiumItemUiState.Item(value: item.monster!.asUiState()))
+            }
+        }
+    }
+}
+
+extension MonsterMonster {
+
+    func asUiState() -> MonsterUiState {
+        let monster = self
+        return MonsterUiState(
+            index: monster.index,
+            name: monster.name,
+            challengeRating: monster.challengeRating,
+            imageUrl: monster.imageData.url,
+            backgroundColorLight: monster.imageData.backgroundColor.light,
+            backgroundColorDark: monster.imageData.backgroundColor.dark,
+            isImageHorizontal: monster.imageData.isHorizontal
+        )
     }
 }
