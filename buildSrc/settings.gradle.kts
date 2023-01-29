@@ -14,30 +14,10 @@
  * limitations under the License.
  */
 
-plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-}
-
-configureTargets(hasJvm = false)
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":domain:monster"))
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.shared"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+pluginManagement {
+    repositories {
+        google()
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
