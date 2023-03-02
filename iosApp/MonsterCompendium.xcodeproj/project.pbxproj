@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */; };
+		C15BF14929B1018100F47375 /* MonsterDetailUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */; };
+		C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */; };
+		C15BF14E29B1061F00F47375 /* MonsterCompendiumAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14D29B1061F00F47375 /* MonsterCompendiumAppViewModel.swift */; };
+		C15BF15029B1064300F47375 /* MonsterCompendiumAppUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14F29B1064300F47375 /* MonsterCompendiumAppUiState.swift */; };
+		C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */; };
+		C15BF15429B118D800F47375 /* MonsterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15329B118D800F47375 /* MonsterDetailView.swift */; };
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
 		C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8629847A85002F517C /* Assets.xcassets */; };
 		C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8929847A85002F517C /* Preview Assets.xcassets */; };
@@ -41,6 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailViewModel.swift; sourceTree = "<group>"; };
+		C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailUiState.swift; sourceTree = "<group>"; };
+		C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailScreenView.swift; sourceTree = "<group>"; };
+		C15BF14D29B1061F00F47375 /* MonsterCompendiumAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumAppViewModel.swift; sourceTree = "<group>"; };
+		C15BF14F29B1064300F47375 /* MonsterCompendiumAppUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumAppUiState.swift; sourceTree = "<group>"; };
+		C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailItemUiState.swift; sourceTree = "<group>"; };
+		C15BF15329B118D800F47375 /* MonsterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailView.swift; sourceTree = "<group>"; };
 		C1BC0E7F29847A84002F517C /* MonsterCompendium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonsterCompendium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumApp.swift; sourceTree = "<group>"; };
 		C1BC0E8629847A85002F517C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +99,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C15BF14529B1014D00F47375 /* MonsterDetail */ = {
+			isa = PBXGroup;
+			children = (
+				C15BF14A29B1018C00F47375 /* UI */,
+				C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */,
+				C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */,
+			);
+			path = MonsterDetail;
+			sourceTree = "<group>";
+		};
+		C15BF14A29B1018C00F47375 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */,
+				C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */,
+				C15BF15329B118D800F47375 /* MonsterDetailView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		C1BC0E7629847A83002F517C = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +145,8 @@
 				C1D25EB529862D7700F0EBF9 /* Feature */,
 				C1D25EAD2985DCE600F0EBF9 /* UI */,
 				C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */,
+				C15BF14D29B1061F00F47375 /* MonsterCompendiumAppViewModel.swift */,
+				C15BF14F29B1064300F47375 /* MonsterCompendiumAppUiState.swift */,
 				C1BC0E8629847A85002F517C /* Assets.xcassets */,
 				C1BC0E8829847A85002F517C /* Preview Content */,
 			);
@@ -154,6 +190,7 @@
 		C1D25EB529862D7700F0EBF9 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				C15BF14529B1014D00F47375 /* MonsterDetail */,
 				C1D25EB629862D9300F0EBF9 /* MonsterCompendium */,
 			);
 			path = Feature;
@@ -342,8 +379,15 @@
 				C1FC491629870A2600C18252 /* MonsterCompendiumUiState.swift in Sources */,
 				C1D25EB429862B4E00F0EBF9 /* MonsterCardView.swift in Sources */,
 				C1FC49122986F13600C18252 /* MonsterCompendiumItemUiState.swift in Sources */,
+				C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */,
+				C15BF14E29B1061F00F47375 /* MonsterCompendiumAppViewModel.swift in Sources */,
+				C15BF15029B1064300F47375 /* MonsterCompendiumAppUiState.swift in Sources */,
 				C1D25EBF29862ED300F0EBF9 /* MonsterCompendiumView.swift in Sources */,
 				C1D25EBD29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift in Sources */,
+				C15BF15429B118D800F47375 /* MonsterDetailView.swift in Sources */,
+				C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */,
+				C15BF14929B1018100F47375 /* MonsterDetailUiState.swift in Sources */,
+				C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */,
 				C1FC49142986F15000C18252 /* MonsterUiState.swift in Sources */,
 				C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */,
 			);

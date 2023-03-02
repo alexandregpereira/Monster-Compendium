@@ -10,9 +10,11 @@ import SwiftUI
 struct MonsterCompendiumScreenView: View {
     
     @ObservedObject var viewModel: MonsterCompendiumViewModel
+    let onMonsterItemClick: (String) -> Void
     
-    init() {
+    init(onMonsterItemClick: @escaping (String) -> Void) {
         self.viewModel = MonsterCompendiumViewModel()
+        self.onMonsterItemClick = onMonsterItemClick
     }
     
     var body: some View {
@@ -22,7 +24,7 @@ struct MonsterCompendiumScreenView: View {
                 .progressViewStyle(CircularProgressViewStyle())
                 .transition(.opacity.animation(.spring()))
         } else {
-            MonsterCompendiumView(items: state.items, onMonsterItemClick: { $0 })
+            MonsterCompendiumView(items: state.items, onMonsterItemClick: onMonsterItemClick)
                 .transition(.opacity.animation(.spring()))
         }
     }
