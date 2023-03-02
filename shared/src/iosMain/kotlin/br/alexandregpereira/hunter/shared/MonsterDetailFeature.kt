@@ -16,11 +16,16 @@
 
 package br.alexandregpereira.hunter.shared
 
-import br.alexandregpereira.hunter.shared.di.appModules
-import org.koin.core.context.startKoin
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-fun initKoin() {
-    startKoin {
-        modules(appModules())
+class MonsterDetailFeature : KoinComponent {
+
+    private val getMonsterUseCase: GetMonsterUseCase by inject()
+
+    fun getMonster(monsterIndex: String): CFlow<Monster> {
+        return getMonsterUseCase(monsterIndex).wrap()
     }
 }
