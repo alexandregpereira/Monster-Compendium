@@ -14,30 +14,28 @@ import shared
 
     @Published var isLoading: Bool = false
     @Published var state: MonsterCompendiumUiState = MonsterCompendiumUiState()
+    private var stateWatcher : Closeable? = nil
     
     init() {
         monsterCompendiumFeature = MonsterCompendiumFeature()
-        loadData()
+        stateWatcher = monsterCompendiumFeature.state.collect { (state: MonsterCompendiumStateIos) -> Void in
+            self.isLoading = state.isLoading
+            self.state = state.asMonsterCompendiumUiState()
+        }
     }
     
-    func loadData() {
-        isLoading = true
-        Task {
-            do {
-                self.state = MonsterCompendiumUiState(
-                    items: try await monsterCompendiumFeature.getMonsterCompendium().asUiState()
-                )
-            } catch {
-                print(error)
-            }
-            isLoading = false
-        }
+    func onItemCLick(index: String) {
+        
+    }
+    
+    deinit {
+        stateWatcher?.close()
     }
 }
 
-extension MonsterCompendiumIos {
+extension MonsterCompendiumStateIos {
     
-    func asUiState() -> [MonsterCompendiumItemUiState] {
+    func asMonsterCompendiumItemUiState() -> [MonsterCompendiumItemUiState] {
         self.items.map { item in
             if (item.title != nil) {
                 return MonsterCompendiumItemUiState.title(MonsterCompendiumItemUiState.Title(value: item.title!.value, id: item.title!.id, isHeader: item.title!.isHeader))
@@ -45,6 +43,12 @@ extension MonsterCompendiumIos {
                 return MonsterCompendiumItemUiState.item(MonsterCompendiumItemUiState.Item(value: item.monster!.asUiState()))
             }
         }
+    }
+    
+    func asMonsterCompendiumUiState() -> MonsterCompendiumUiState {
+        return MonsterCompendiumUiState(
+            items: asMonsterCompendiumItemUiState()
+        )
     }
 }
 

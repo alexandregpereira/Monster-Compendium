@@ -17,37 +17,56 @@
 package br.alexandregpereira.hunter.shared
 
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
-import kotlinx.coroutines.flow.single
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MonsterCompendiumFeature : KoinComponent {
 
-    private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase by inject()
+    private val stateHolder: MonsterCompendiumStateHolder by inject()
 
-    suspend fun getMonsterCompendium(): MonsterCompendiumIos {
-        return getMonsterCompendiumUseCase().single().run {
-            MonsterCompendiumIos(
-                items = items.map {
-                    MonsterCompendiumItemIos(
-                        title = it as? MonsterCompendiumItem.Title,
-                        monster = (it as? MonsterCompendiumItem.Item)?.monster
-                    )
-                },
-                tableContent = tableContent,
-                alphabet = alphabet
-            )
-        }
+    val state: CFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
+        it.asMonsterCompendiumStateIos()
+    }.wrap()
+
+    private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
+        return MonsterCompendiumStateIos(
+            isLoading = isLoading,
+            items = items.map { it.asMonsterCompendiumItemIos() },
+            alphabet = alphabet,
+            alphabetSelectedIndex = alphabetSelectedIndex,
+            popupOpened = popupOpened,
+            tableContent = tableContent,
+            tableContentIndex = tableContentIndex,
+            tableContentInitialIndex = tableContentInitialIndex,
+            tableContentOpened = tableContentOpened,
+            isShowingMonsterFolderPreview = isShowingMonsterFolderPreview,
+        )
+    }
+
+    private fun MonsterCompendiumItem.asMonsterCompendiumItemIos(): MonsterCompendiumItemIos {
+        return MonsterCompendiumItemIos(
+            title = this as? MonsterCompendiumItem.Title,
+            monster = (this as? MonsterCompendiumItem.Item)?.monster
+        )
     }
 }
 
-data class MonsterCompendiumIos(
-    val items: List<MonsterCompendiumItemIos>,
-    val tableContent: List<TableContentItem>,
-    val alphabet: List<String>,
+data class MonsterCompendiumStateIos(
+    val isLoading: Boolean = false,
+    val items: List<MonsterCompendiumItemIos> = emptyList(),
+    val alphabet: List<String> = emptyList(),
+    val alphabetSelectedIndex: Int = -1,
+    val popupOpened: Boolean = false,
+    val tableContent: List<TableContentItem> = emptyList(),
+    val tableContentIndex: Int = -1,
+    val tableContentInitialIndex: Int = 0,
+    val tableContentOpened: Boolean = false,
+    val isShowingMonsterFolderPreview: Boolean = false,
 )
 
 data class MonsterCompendiumItemIos(

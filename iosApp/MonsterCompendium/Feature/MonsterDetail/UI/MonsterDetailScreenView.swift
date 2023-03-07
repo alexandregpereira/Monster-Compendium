@@ -22,11 +22,8 @@ struct MonsterDetailScreenView : View {
         ZStack(alignment: .topLeading) {
             MonsterDetailView(monster: state.monster)
             
-            Button {
-                onCloseClick()
-            } label: {
-                Image(systemName: "x.circle.fill")
-            }.frame(width: 40, height: 40)
+            AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: onCloseClick)
+                    .padding()
         }.frame(
             minWidth: 0,
             maxWidth: .infinity,

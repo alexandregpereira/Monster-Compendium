@@ -18,6 +18,45 @@ package br.alexandregpereira.hunter.shared.di
 
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.domain.di.domainModules
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
+import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
-fun appModules(): List<Module> = domainModules + dataModules
+fun appModules(): List<Module> = domainModules + dataModules +
+        monsterCompendiumStateModule +
+        module {
+            factory { Dispatchers.Default }
+            // TODO Remove later
+            factory<MonsterDetailEventListener> {
+                object : MonsterDetailEventListener {
+                    override val events: Flow<MonsterDetailEvent>
+                        get() = emptyFlow()
+                }
+            }
+            factory<MonsterDetailEventDispatcher> {
+                object : MonsterDetailEventDispatcher {
+                    override fun dispatchEvent(event: MonsterDetailEvent) {}
+                }
+            }
+            factory<FolderPreviewResultListener> {
+                object : FolderPreviewResultListener {
+                    override val result: Flow<FolderPreviewResult>
+                        get() = emptyFlow()
+                }
+            }
+            factory<FolderPreviewEventDispatcher> {
+                object : FolderPreviewEventDispatcher {
+                    override fun dispatchEvent(event: FolderPreviewEvent) {}
+                }
+            }
+        }
