@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion project.findProperty('compileSdk')
+
+    defaultConfig {
+        minSdkVersion project.findProperty('minSdk')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+    namespace 'br.alexandregpereira.hunter.monster.compendium'
+}
+
+dependencies {
+    implementation project(':event:folder-preview-event')
+    implementation project(':event:monster-detail-event')
+    implementation project(':feature:monster-compendium')
+    implementation project(':ui:core')
+    implementation project(':ui:monster-compendium')
+
+    implementation libs.core.ktx
+    implementation libs.kotlin.coroutines
+    implementation libs.kotlin.reflect
+    implementation libs.bundles.viewmodel.bundle
+
+    implementation libs.bundles.compose
+    implementation libs.accompanist.flowlayout
+
+    implementation libs.koin.compose
+
+    testImplementation libs.bundles.unittest
+    androidTestImplementation libs.bundles.instrumentedtest
+}

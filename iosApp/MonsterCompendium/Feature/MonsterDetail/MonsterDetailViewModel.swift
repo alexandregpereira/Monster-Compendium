@@ -41,7 +41,9 @@ extension MonsterMonster {
         return MonsterDetailItemUiState(
             id: monster.index,
             imageUrl: monster.imageData.url,
-            backgroundColorLight: monster.imageData.backgroundColor.light
+            backgroundColorLight: monster.imageData.backgroundColor.light,
+            name: monster.name,
+            subtitle: monster.subtitle
         )
     }
 }

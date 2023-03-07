@@ -16,35 +16,19 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
-configureTargets(hasJvm = false)
+configureJvmTargets()
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":data:data-app"))
-                implementation(project(":domain:app"))
-                implementation(project(":domain:sync"))
-                implementation(project(":event:folder-preview-event")) // TODO Remove later
-                implementation(project(":event:monster-detail-event")) // TODO Remove later
-                implementation(project(":feature:monster-compendium"))
                 implementation(libs.kotlin.coroutines.core)
-                implementation(libs.koin.core)
             }
         }
         if (isMac()) {
             val iosMain by getting
         }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.shared"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

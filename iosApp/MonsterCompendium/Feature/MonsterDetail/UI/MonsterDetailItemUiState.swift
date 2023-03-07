@@ -11,4 +11,6 @@ struct MonsterDetailItemUiState {
     var id: String = ""
     var imageUrl: String = ""
     var backgroundColorLight: String = ""
+    var name: String = ""
+    var subtitle: String = ""
 }

@@ -70,7 +70,7 @@ dependencies {
     implementation project(':feature:folder-insert')
     implementation project(':feature:folder-list')
     implementation project(':feature:folder-preview')
-    implementation project(':feature:monster-compendium')
+    implementation project(':android:monster-compendium')
     implementation project(':feature:monster-detail')
     implementation project(':feature:monster-lore-detail')
     implementation project(':feature:search')
