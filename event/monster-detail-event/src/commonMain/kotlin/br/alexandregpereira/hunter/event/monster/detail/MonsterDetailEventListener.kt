@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.event.monster.detail
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +27,13 @@ import kotlinx.coroutines.flow.onEach
 interface MonsterDetailEventListener {
 
     val events: Flow<MonsterDetailEvent>
+}
+
+fun emptyMonsterDetailEventListener(): MonsterDetailEventListener {
+    return object : MonsterDetailEventListener {
+        override val events: Flow<MonsterDetailEvent>
+            get() = emptyFlow()
+    }
 }
 
 fun MonsterDetailEventListener.collectOnVisibilityChanges(

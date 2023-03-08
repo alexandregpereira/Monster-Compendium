@@ -17,8 +17,16 @@
 package br.alexandregpereira.hunter.folder.preview.event
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 interface FolderPreviewResultListener {
 
     val result: Flow<FolderPreviewResult>
+}
+
+fun emptyFolderPreviewResultListener(): FolderPreviewResultListener {
+    return object : FolderPreviewResultListener {
+        override val result: Flow<FolderPreviewResult>
+            get() = emptyFlow()
+    }
 }
