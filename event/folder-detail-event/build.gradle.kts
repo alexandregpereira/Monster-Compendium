@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.event.monster.detail
-
-interface MonsterDetailEventDispatcher {
-
-    fun dispatchEvent(event: MonsterDetailEvent)
+plugins {
+    kotlin("multiplatform")
 }
 
-fun emptyMonsterDetailEventDispatcher(): MonsterDetailEventDispatcher {
-    return object : MonsterDetailEventDispatcher {
-        override fun dispatchEvent(event: MonsterDetailEvent) {}
+configureJvmTargets()
+
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlin.coroutines.core)
+            }
+        }
+        if (isMac()) {
+            val iosMain by getting
+        }
     }
 }
