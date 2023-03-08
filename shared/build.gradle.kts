@@ -16,7 +16,6 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
 configureJvmTargets()
@@ -47,13 +46,5 @@ kotlin {
         if (isMac()) {
             val iosMain by getting
         }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.shared"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }
