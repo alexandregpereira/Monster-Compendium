@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,24 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.event.monster.lore.detail
+package br.alexandregpereira.hunter.state
 
-interface MonsterLoreDetailEventDispatcher {
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-    fun dispatchEvent(event: MonsterLoreDetailEvent)
+interface StateHolder<State> {
+
+    val state: StateFlow<State>
 }
 
-fun emptyMonsterLoreDetailEventDispatcher(): MonsterLoreDetailEventDispatcher {
-    return object : MonsterLoreDetailEventDispatcher {
-        override fun dispatchEvent(event: MonsterLoreDetailEvent) {}
+class DefaultStateHolder<State>(
+    initialState: State
+): StateHolder<State> {
+
+    private val _state = MutableStateFlow(initialState)
+    override val state: StateFlow<State> = _state
+
+    fun setState(block: State.() -> State) {
+        _state.value = state.value.block()
     }
 }

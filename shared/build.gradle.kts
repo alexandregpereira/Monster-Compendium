@@ -19,7 +19,7 @@ plugins {
     id("com.android.library")
 }
 
-configureTargets(hasJvm = false)
+configureJvmTargets()
 
 kotlin {
     sourceSets {
@@ -28,11 +28,20 @@ kotlin {
                 implementation(project(":data:data-app"))
                 implementation(project(":domain:app"))
                 implementation(project(":domain:sync"))
+                implementation(project(":event:folder-insert-event")) // TODO Remove later
                 implementation(project(":event:folder-preview-event")) // TODO Remove later
-                implementation(project(":event:monster-detail-event")) // TODO Remove later
+                implementation(project(":event:monster-lore-detail-event")) // TODO Remove later
+                implementation(project(":event:spell-detail-event")) // TODO Remove later
                 implementation(project(":feature:monster-compendium"))
+                implementation(project(":feature:monster-detail"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.bundles.unittest)
+                implementation(libs.koin.test)
             }
         }
         if (isMac()) {

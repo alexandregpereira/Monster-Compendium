@@ -26,19 +26,17 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
+import br.alexandregpereira.hunter.state.ActionListener
+import br.alexandregpereira.hunter.state.DefaultActionDispatcher
+import br.alexandregpereira.hunter.state.DefaultStateHolder
+import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -62,23 +60,16 @@ class MonsterCompendiumStateHolder(
     private val dispatcher: CoroutineDispatcher,
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
     loadOnInit: Boolean = true,
-) {
+) : ScopeManager(), StateHolder<MonsterCompendiumState>, ActionListener<MonsterCompendiumAction> {
 
     var initialScrollItemPosition: Int = 0
         private set
 
-    private val _state = MutableStateFlow(initialState)
-    val state: StateFlow<MonsterCompendiumState> = _state
+    private val stateHolder = DefaultStateHolder(initialState)
+    private val actionDispatcher = DefaultActionDispatcher<MonsterCompendiumAction>()
 
-    private val _action = MutableSharedFlow<MonsterCompendiumAction>(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val action: SharedFlow<MonsterCompendiumAction> = _action
-
-    private val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Main.immediate
-    )
+    override val state: StateFlow<MonsterCompendiumState> = stateHolder.state
+    override val action: SharedFlow<MonsterCompendiumAction> = actionDispatcher.action
 
     init {
         observeEvents()
@@ -119,7 +110,7 @@ class MonsterCompendiumStateHolder(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                _state.value = state
+                setState { state }
             }
     }
 
@@ -137,12 +128,14 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onPopupOpened() {
-        _state.value = state.value.popupOpened(popupOpened = true)
-            .tableContentOpened(false)
+        setState {
+            popupOpened(popupOpened = true)
+                .tableContentOpened(false)
+        }
     }
 
     fun onPopupClosed() {
-        _state.value = state.value.popupOpened(popupOpened = false)
+        setState { popupOpened(popupOpened = false) }
     }
 
     fun onAlphabetIndexClicked(position: Int) {
@@ -154,7 +147,7 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onTableContentClosed() {
-        _state.value = state.value.tableContentOpened(false)
+        setState { tableContentOpened(false) }
     }
 
     fun onErrorButtonClick() {
@@ -174,7 +167,7 @@ class MonsterCompendiumStateHolder(
                 .flowOn(dispatcher)
                 .collect { (tableContentIndex, alphabetLetter) ->
                     initialScrollItemPosition = position
-                    _state.value = state.value.tableContentIndex(tableContentIndex, alphabetLetter)
+                    setState { tableContentIndex(tableContentIndex, alphabetLetter) }
                 }
         }
     }
@@ -221,7 +214,9 @@ class MonsterCompendiumStateHolder(
         scope.launch {
             folderPreviewResultListener.result.collect { event ->
                 when (event) {
-                    is FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges -> showMonsterFolderPreview(event.isShowing)
+                    is FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges -> showMonsterFolderPreview(
+                        event.isShowing
+                    )
                 }
             }
         }
@@ -232,11 +227,11 @@ class MonsterCompendiumStateHolder(
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
-        _state.value = state.value.showMonsterFolderPreview(isShowing)
+        setState { showMonsterFolderPreview(isShowing) }
     }
 
     private fun sendAction(action: MonsterCompendiumAction) {
-        _action.tryEmit(action)
+        actionDispatcher.sendAction(action)
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {
@@ -254,14 +249,16 @@ class MonsterCompendiumStateHolder(
             }
             .flowOn(dispatcher)
             .onEach { tableContentIndex ->
-                _state.value = state.value.tableContentOpened(tableContentOpened = true)
-                    .copy(tableContentInitialIndex = tableContentIndex)
+                setState {
+                    tableContentOpened(tableContentOpened = true)
+                        .copy(tableContentInitialIndex = tableContentIndex)
+                }
             }
             .launchIn(scope)
     }
 
     private fun navigateToCompendiumIndexFromTableContentIndex(tableContentIndex: Int) {
-        _state.value = state.value.popupOpened(popupOpened = false)
+        setState { popupOpened(popupOpened = false) }
         val tableContent = state.value.tableContent
         scope.launch {
             flowOf(state.value.items)
@@ -296,8 +293,8 @@ class MonsterCompendiumStateHolder(
             content.id == value
         }
     }
-    
-    fun onCleared() {
-        scope.cancel()
+
+    private fun setState(block: MonsterCompendiumState.() -> MonsterCompendiumState) {
+        stateHolder.setState(block)
     }
 }

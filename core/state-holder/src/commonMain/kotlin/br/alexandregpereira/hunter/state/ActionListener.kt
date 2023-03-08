@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.shared
+package br.alexandregpereira.hunter.state
 
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
-class MonsterDetailFeature : KoinComponent {
+interface ActionListener<Action> {
 
-    private val stateHolder: MonsterDetailStateHolder by inject()
+    val action: SharedFlow<Action>
+}
 
-    val state: CFlow<MonsterDetailState> = stateHolder.state.wrap()
+class DefaultActionDispatcher<Action> : ActionListener<Action> {
 
-    fun onClose() {
-        stateHolder.onClose()
+    private val _action = MutableSharedFlow<Action>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    override val action: SharedFlow<Action> = _action
+
+    fun sendAction(action: Action) {
+        _action.tryEmit(action)
     }
 }

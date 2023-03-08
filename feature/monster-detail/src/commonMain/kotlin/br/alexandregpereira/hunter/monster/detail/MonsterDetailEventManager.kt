@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail
+package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher

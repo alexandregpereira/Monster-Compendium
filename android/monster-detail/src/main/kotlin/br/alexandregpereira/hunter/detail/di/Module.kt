@@ -16,20 +16,11 @@
 
 package br.alexandregpereira.hunter.detail.di
 
-import br.alexandregpereira.hunter.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.detail.MonsterDetailViewModel
-import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
 
-val monsterDetailModule = module {
-    single { MonsterDetailEventManager() }
-    single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
-    single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
-    factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
-
+val monsterDetailModule = monsterDetailStateModule.apply {
     viewModel {
         MonsterDetailViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
     }

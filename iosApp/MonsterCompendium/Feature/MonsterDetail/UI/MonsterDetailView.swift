@@ -10,35 +10,34 @@ import SDWebImageSwiftUI
 
 struct MonsterDetailView : View {
     
+    @State var isAnimating = true
     let monster: MonsterDetailItemUiState
     
     var body: some View {
-        ZStack {
-            Color(hex: monster.backgroundColorLight)?.ignoresSafeArea()
-            WebImage(url: URL(string: monster.imageUrl))
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(
-                  minWidth: 0,
-                  maxWidth: .infinity,
-                  minHeight: 0,
-                  maxHeight: .infinity,
-                  alignment: .topLeading
-                )
-                .frame(height: 600)
-                .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
-            
-            ScrollView {
-                LazyVStack {
-                    Spacer().frame(maxWidth: .infinity)
-                        .frame(height: 600)
-                        .id(0)
-                    
-                    MonsterTitleView(title: monster.name, subTitle: monster.subtitle)
-                        .background(Color.white)
-                        .id(1)
-                    
-                    
+        GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                Color(hex: monster.backgroundColorLight)?.ignoresSafeArea()
+                AsyncImage(
+                    url: URL(string: monster.imageUrl)
+                ) { phase in
+                    if let image = phase.image {
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+                    }
+                }
+                .frame(width: geometry.size.width, height: 500, alignment: .center)
+                
+                ScrollView {
+                    LazyVStack {
+                        Spacer().frame(maxWidth: .infinity)
+                            .frame(height: 500)
+                            .id(0)
+                        
+                        MonsterTitleView(title: monster.name, subTitle: monster.subtitle)
+                            .background(Color.white)
+                            .id(1)
+                    }
                 }
             }
         }
@@ -56,5 +55,6 @@ struct MonsterDetailView_Previews: PreviewProvider {
                 subtitle: "Lawful evil, creature medium"
             )
         )
+        .previewLayout(.sizeThatFits)
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail
+package br.alexandregpereira.hunter.monster.detail
 
-import android.util.Log
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.ADD_TO_FOLDER
-import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.CHANGE_TO_FEET
-import br.alexandregpereira.hunter.detail.MonsterDetailOptionState.CHANGE_TO_METERS
-import br.alexandregpereira.hunter.detail.domain.GetMonsterDetailUseCase
-import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
@@ -37,13 +28,20 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_TO_FOLDER
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
+import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.state.DefaultStateHolder
+import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
@@ -55,8 +53,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 
-internal class MonsterDetailViewModel(
-    private val savedStateHandle: SavedStateHandle,
+class MonsterDetailStateHolder(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
@@ -64,25 +61,20 @@ internal class MonsterDetailViewModel(
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
-    private val dispatcher: CoroutineDispatcher
-) : ViewModel() {
+    private val dispatcher: CoroutineDispatcher,
+    private val initialState: MonsterDetailState = MonsterDetailState()
+) : ScopeManager(), StateHolder<MonsterDetailState> {
 
-    private val _state = MutableStateFlow(savedStateHandle.getState())
-    val state: StateFlow<MonsterDetailViewState> = _state
+    private val stateHolder = DefaultStateHolder(initialState)
+    override val state: StateFlow<MonsterDetailState> = stateHolder.state
 
     private var monsterChangeDispatchEnabled = false
 
-    private var monsterIndex: String
-        get() = savedStateHandle["index"] ?: ""
-        set(value) {
-            savedStateHandle["index"] = value
-        }
+    private val monsterIndex: String
+        get() = state.value.monsterIndex
 
-    private var monsterIndexes: List<String>
-        get() = savedStateHandle["indexes"] ?: emptyList()
-        set(value) {
-            savedStateHandle["indexes"] = value
-        }
+    private val monsterIndexes: List<String>
+        get() = state.value.monsterIndexes
 
     init {
         observeEvents()
@@ -102,13 +94,12 @@ internal class MonsterDetailViewModel(
                 }
                 Hide -> setState { copy(showDetail = false) }
             }
-        }.launchIn(viewModelScope)
+        }.launchIn(scope)
     }
 
     private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
+        setState { initialState.copy(monsterIndexes = monsterIndexes) }
         onMonsterChanged(monsterIndex, scrolled = false)
-        this.monsterIndexes = monsterIndexes
-        setState { savedStateHandle.getState() }
         getMonsterDetail().collectDetail()
     }
 
@@ -116,7 +107,7 @@ internal class MonsterDetailViewModel(
         if (scrolled && monsterIndex != this.monsterIndex) {
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
-        this.monsterIndex = monsterIndex
+        setState { copy(monsterIndex = monsterIndex) }
     }
 
     fun onShowOptionsClicked() {
@@ -167,11 +158,10 @@ internal class MonsterDetailViewModel(
 
     private fun Flow<MonsterDetail>.collectDetail() {
         this.map {
-            Log.i("MonsterDetailViewModel", "collectDetail")
             val measurementUnit = it.measurementUnit
             getState().complete(
                 initialMonsterIndex = it.monsterIndexSelected,
-                monsters = it.monsters.asState(),
+                monsters = it.monsters,
                 options = when (measurementUnit) {
                     MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
                     MeasurementUnit.METER -> listOf(ADD_TO_FOLDER, CHANGE_TO_FEET)
@@ -179,21 +169,20 @@ internal class MonsterDetailViewModel(
             )
         }.flowOn(dispatcher)
             .catch {
-                Log.e("MonsterDetailViewModel", it.message ?: "")
                 it.printStackTrace()
             }.onEach { state ->
                 setState { state }
             }
             .onStart { monsterChangeDispatchEnabled = false }
             .onCompletion { monsterChangeDispatchEnabled = true }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
-    private suspend fun getState(): MonsterDetailViewState = withContext(Dispatchers.Main) {
+    private suspend fun getState(): MonsterDetailState = withContext(Dispatchers.Main) {
         state.value
     }
 
-    private fun setState(block: MonsterDetailViewState.() -> MonsterDetailViewState) {
-        _state.value = state.value.block().saveState(savedStateHandle)
+    private fun setState(block: MonsterDetailState.() -> MonsterDetailState) {
+        stateHolder.setState(block)
     }
 }

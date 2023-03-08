@@ -33,6 +33,10 @@ class MonsterCompendiumFeature : KoinComponent {
         it.asMonsterCompendiumStateIos()
     }.wrap()
 
+    fun onItemClick(index: String) {
+        stateHolder.onItemCLick(index)
+    }
+
     private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
         return MonsterCompendiumStateIos(
             isLoading = isLoading,

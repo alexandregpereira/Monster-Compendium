@@ -20,3 +20,9 @@ interface SpellDetailEventDispatcher {
 
     fun dispatchEvent(event: SpellDetailEvent)
 }
+
+fun emptySpellDetailEventDispatcher(): SpellDetailEventDispatcher {
+    return object : SpellDetailEventDispatcher {
+        override fun dispatchEvent(event: SpellDetailEvent) {}
+    }
+}

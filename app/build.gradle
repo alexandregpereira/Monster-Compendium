@@ -71,7 +71,7 @@ dependencies {
     implementation project(':feature:folder-list')
     implementation project(':feature:folder-preview')
     implementation project(':android:monster-compendium')
-    implementation project(':feature:monster-detail')
+    implementation project(':android:monster-detail')
     implementation project(':feature:monster-lore-detail')
     implementation project(':feature:search')
     implementation project(':feature:settings')

@@ -24,8 +24,8 @@ import shared
         }
     }
     
-    func onItemCLick(index: String) {
-        
+    func onItemClick(index: String) {
+        monsterCompendiumFeature.onItemClick(index: index)
     }
     
     deinit {

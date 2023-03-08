@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.event.monster.lore.detail
+package br.alexandregpereira.hunter.monster.detail.domain.model
 
-interface MonsterLoreDetailEventDispatcher {
+import br.alexandregpereira.hunter.domain.model.MeasurementUnit
+import br.alexandregpereira.hunter.domain.model.Monster
 
-    fun dispatchEvent(event: MonsterLoreDetailEvent)
-}
-
-fun emptyMonsterLoreDetailEventDispatcher(): MonsterLoreDetailEventDispatcher {
-    return object : MonsterLoreDetailEventDispatcher {
-        override fun dispatchEvent(event: MonsterLoreDetailEvent) {}
-    }
-}
+data class MonsterDetail(
+    val monsterIndexSelected: Int,
+    val measurementUnit: MeasurementUnit,
+    val monsters: List<Monster>
+)
