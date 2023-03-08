@@ -38,6 +38,7 @@ dependencies {
     implementation project(':event:monster-detail-event')
     implementation project(':event:monster-lore-detail-event')
     implementation project(':event:spell-detail-event')
+    implementation project(':feature:monster-detail')
     implementation project(':ui:core')
 
     implementation libs.core.ktx

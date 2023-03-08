@@ -17,10 +17,19 @@ struct MonsterCardView: View {
         VStack(alignment: .leading) {
             ZStack {
                 Color(hex: monster.backgroundColorLight)
-                WebImage(url: URL(string: monster.imageUrl))
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipped()
+                AsyncImage(
+                    url: URL(string: monster.imageUrl),
+                    scale: 1,
+                    transaction: Transaction(animation: .spring())
+                ) { phase in
+                    if let image = phase.image {
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+                    } else {
+                        Color(hex: monster.backgroundColorLight)?.opacity(0.1)
+                    }
+                }.clipped()
                     .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
                 
                 Circle()

@@ -18,24 +18,30 @@ package br.alexandregpereira.hunter.shared.di
 
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.domain.di.domainModules
-import br.alexandregpereira.hunter.event.monster.detail.emptyMonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.emptyMonsterDetailEventListener
+import br.alexandregpereira.hunter.event.folder.insert.emptyFolderInsertEventDispatcher
+import br.alexandregpereira.hunter.event.monster.lore.detail.emptyMonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewResultListener
 import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
+import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
+import br.alexandregpereira.hunter.spell.detail.event.emptySpellDetailEventDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 fun appModules(): List<Module> = domainModules + dataModules +
         monsterCompendiumStateModule +
+        monsterDetailStateModule +
         module {
             factory { Dispatchers.Default }
             factory {
-                emptyMonsterDetailEventListener()
+                emptySpellDetailEventDispatcher()
             }
             factory {
-                emptyMonsterDetailEventDispatcher()
+                emptyMonsterLoreDetailEventDispatcher()
+            }
+            factory {
+                emptyFolderInsertEventDispatcher()
             }
             factory {
                 emptyFolderPreviewResultListener()

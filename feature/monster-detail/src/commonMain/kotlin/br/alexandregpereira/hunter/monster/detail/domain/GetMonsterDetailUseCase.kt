@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail.domain
+package br.alexandregpereira.hunter.monster.detail.domain
 
-import br.alexandregpereira.hunter.detail.domain.model.MonsterDetail
+import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
@@ -50,7 +50,7 @@ class GetMonsterDetailUseCase internal constructor(
         return getMonsters(index, indexes)
             .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
                 val monster = monsters.find { monster -> monster.index == index }
-                    ?: throw IllegalAccessError("Monster not found")
+                    ?: throw RuntimeException("Monster not found")
 
                 val (loreList, spells) = coroutineScope {
                     val loreListDeferred = async {

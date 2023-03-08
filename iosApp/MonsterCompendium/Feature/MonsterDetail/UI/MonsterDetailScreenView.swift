@@ -10,26 +10,29 @@ import SwiftUI
 struct MonsterDetailScreenView : View {
     
     @ObservedObject var viewModel: MonsterDetailViewModel
-    private let onCloseClick: () -> Void
     
-    init(monsterId: String, onCloseClick: @escaping () -> Void) {
-        self.viewModel = MonsterDetailViewModel(monsterId: monsterId)
-        self.onCloseClick = onCloseClick
+    init() {
+        self.viewModel = MonsterDetailViewModel()
     }
     
     var body: some View {
         let state = viewModel.state
-        ZStack(alignment: .topLeading) {
-            MonsterDetailView(monster: state.monster)
-            
-            AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: onCloseClick)
+        GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                MonsterDetailView(monster: state.monster)
+                
+                AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
                     .padding()
-        }.frame(
-            minWidth: 0,
-            maxWidth: .infinity,
-            minHeight: 0,
-            maxHeight: .infinity,
-            alignment: .topLeading
-          )
+            }.frame(
+                minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
+            .offset(y: state.isShowing ? 0 : geometry.size.height + 40)
+            .animation(Animation.easeInOut(duration: 0.2), value: state.isShowing ? 0 : geometry.size.height + 40)
+            .transition(.move(edge: .bottom))
+        }
     }
 }

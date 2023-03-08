@@ -7,7 +7,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'hunter'
 include ':android:monster-compendium'
+include ':android:monster-detail'
 include ':app'
+include ':core:state-holder'
 include ':data:data-app'
 include ':data:data-alternative-source'
 include ':data:data-monster'

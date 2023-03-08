@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,45 +14,35 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail
+package br.alexandregpereira.hunter.monster.detail
 
-import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.detail.ui.MonsterState
+import br.alexandregpereira.hunter.domain.model.Monster
 
-data class MonsterDetailViewState(
+data class MonsterDetailState(
     val initialMonsterIndex: Int = 0,
-    val monsters: List<MonsterState> = emptyList(),
+    val monsters: List<Monster> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
+    val monsterIndex: String = "",
+    val monsterIndexes: List<String> = emptyList()
 ) {
 
     val isLoading: Boolean
         get() = monsters.isEmpty()
 }
 
-fun SavedStateHandle.getState(): MonsterDetailViewState {
-    return MonsterDetailViewState(
-        showDetail = this["showDetail"] ?: false
-    )
-}
-
-fun MonsterDetailViewState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailViewState {
-    savedStateHandle["showDetail"] = showDetail
-    return this
-}
-
-val MonsterDetailViewState.ShowOptions: MonsterDetailViewState
+val MonsterDetailState.ShowOptions: MonsterDetailState
     get() = this.copy(showOptions = true)
 
-val MonsterDetailViewState.HideOptions: MonsterDetailViewState
+val MonsterDetailState.HideOptions: MonsterDetailState
     get() = this.copy(showOptions = false)
 
-fun MonsterDetailViewState.complete(
+fun MonsterDetailState.complete(
     initialMonsterIndex: Int,
-    monsters: List<MonsterState>,
+    monsters: List<Monster>,
     options: List<MonsterDetailOptionState>
-): MonsterDetailViewState = this.copy(
+): MonsterDetailState = this.copy(
     initialMonsterIndex = initialMonsterIndex,
     monsters = monsters,
     options = options

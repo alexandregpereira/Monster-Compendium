@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.event.monster.lore.detail
+package br.alexandregpereira.hunter.state
 
-interface MonsterLoreDetailEventDispatcher {
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 
-    fun dispatchEvent(event: MonsterLoreDetailEvent)
-}
+abstract class ScopeManager {
 
-fun emptyMonsterLoreDetailEventDispatcher(): MonsterLoreDetailEventDispatcher {
-    return object : MonsterLoreDetailEventDispatcher {
-        override fun dispatchEvent(event: MonsterLoreDetailEvent) {}
+    protected val scope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main.immediate
+    )
+
+    fun onCleared() {
+        scope.cancel()
     }
 }

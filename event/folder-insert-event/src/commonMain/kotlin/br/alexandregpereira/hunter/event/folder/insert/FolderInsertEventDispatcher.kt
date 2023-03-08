@@ -17,8 +17,17 @@
 package br.alexandregpereira.hunter.event.folder.insert
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 interface FolderInsertEventDispatcher {
 
     fun dispatchEvent(event: FolderInsertEvent): Flow<FolderInsertResult>
+}
+
+fun emptyFolderInsertEventDispatcher(): FolderInsertEventDispatcher {
+    return object : FolderInsertEventDispatcher {
+        override fun dispatchEvent(event: FolderInsertEvent): Flow<FolderInsertResult> {
+            return emptyFlow()
+        }
+    }
 }

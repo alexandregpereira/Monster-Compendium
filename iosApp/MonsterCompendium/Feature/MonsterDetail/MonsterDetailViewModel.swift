@@ -12,27 +12,28 @@ import shared
     
     @Published var isLoading: Bool = false
     @Published var state: MonsterDetailUiState = MonsterDetailUiState()
-    private var monsterId: String
     private let monsterDetailFeature: MonsterDetailFeature
     private var stateWatcher : Closeable? = nil
     
-    init(monsterId: String) {
-        self.monsterId = monsterId
+    init() {
         monsterDetailFeature = MonsterDetailFeature()
-        loadData()
+        stateWatcher = monsterDetailFeature.state.collect { (state: Monster_detailMonsterDetailState) -> Void in
+            self.state.isShowing = state.showDetail
+            if !state.monsters.isEmpty {
+                self.state.monster = state.monsters[Int(state.initialMonsterIndex)].asMonsterDetailItemUiState()
+            }
+        }
     }
     
-    func loadData() {
-        stateWatcher = monsterDetailFeature.getMonster(monsterIndex: monsterId).collect { (monster: MonsterMonster) -> Void in
-            
-            self.state.monster = monster.asMonsterDetailItemUiState()
-        }
+    func onClose() {
+        monsterDetailFeature.onClose()
     }
     
     deinit {
         stateWatcher?.close()
     }
 }
+
 
 extension MonsterMonster {
     

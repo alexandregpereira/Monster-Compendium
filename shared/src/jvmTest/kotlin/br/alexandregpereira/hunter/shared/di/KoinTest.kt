@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,25 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.event.monster.lore.detail
+package br.alexandregpereira.hunter.shared.di
 
-interface MonsterLoreDetailEventDispatcher {
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Rule
+import org.junit.Test
+import org.koin.dsl.koinApplication
+import org.koin.test.check.checkModules
 
-    fun dispatchEvent(event: MonsterLoreDetailEvent)
-}
+@OptIn(ExperimentalCoroutinesApi::class)
+class KoinTest {
 
-fun emptyMonsterLoreDetailEventDispatcher(): MonsterLoreDetailEventDispatcher {
-    return object : MonsterLoreDetailEventDispatcher {
-        override fun dispatchEvent(event: MonsterLoreDetailEvent) {}
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
+
+    @Test
+    fun verifyKoinApp() {
+        koinApplication {
+            modules(appModules())
+            checkModules()
+        }
     }
 }
