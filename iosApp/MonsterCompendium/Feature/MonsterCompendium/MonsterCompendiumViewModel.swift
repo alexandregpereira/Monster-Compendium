@@ -10,22 +10,48 @@ import shared
 
 @MainActor class MonsterCompendiumViewModel : ObservableObject {
     
-    private let monsterCompendiumFeature: MonsterCompendiumFeature
+    private let feature: MonsterCompendiumFeature
 
     @Published var isLoading: Bool = false
     @Published var state: MonsterCompendiumUiState = MonsterCompendiumUiState()
     private var stateWatcher : Closeable? = nil
     
     init() {
-        monsterCompendiumFeature = MonsterCompendiumFeature()
-        stateWatcher = monsterCompendiumFeature.state.collect { (state: MonsterCompendiumStateIos) -> Void in
+        feature = MonsterCompendiumFeature()
+        stateWatcher = feature.state.collect { (state: MonsterCompendiumStateIos) -> Void in
             self.isLoading = state.isLoading
             self.state = state.asMonsterCompendiumUiState()
+            self.state.alphabet = state.alphabet
+            self.state.tableContent = state.asTableContentItemState()
+            self.state.tableContentPopupScreenType = state.popupOpened && state.tableContentOpened ? .tableContent : (state.popupOpened ? .alphabetGrid : .circleLetter)
+            self.state.alphabetSelectedIndex = Int(state.alphabetSelectedIndex)
+            self.state.tableContentSelectedIndex = Int(state.tableContentIndex)
+            self.state.tableContentInitialIndex = Int(state.tableContentInitialIndex)
         }
     }
     
     func onItemClick(index: String) {
-        monsterCompendiumFeature.onItemClick(index: index)
+        feature.onItemClick(index: index)
+    }
+    
+    func onFirstVisibleItemChange(position: Int) {
+        feature.onFirstVisibleItemChange(position: Int32(position))
+    }
+
+    func onPopupOpened() {
+        feature.onPopupOpened()
+    }
+
+    func onPopupClosed() {
+        feature.onPopupClosed()
+    }
+
+    func onAlphabetIndexClicked(position: Int) {
+        feature.onAlphabetIndexClicked(position: Int32(position))
+    }
+
+    func onTableContentIndexClicked(position: Int) {
+        feature.onTableContentIndexClicked(position: Int32(position))
     }
     
     deinit {
@@ -49,6 +75,27 @@ extension MonsterCompendiumStateIos {
         return MonsterCompendiumUiState(
             items: asMonsterCompendiumItemUiState()
         )
+    }
+    
+    func asTableContentItemState() -> [TableContentItemState] {
+        self.tableContent.map { itemIos in
+            TableContentItemState(
+                id: itemIos.id,
+                text: itemIos.text,
+                type: {
+                    switch itemIos.type {
+                    case Monster_compendiumTableContentItemType.header1:
+                        return .HEADER1
+                    case Monster_compendiumTableContentItemType.header2:
+                        return .HEADER2
+                    case Monster_compendiumTableContentItemType.body:
+                        return .BODY
+                    default:
+                        return .BODY
+                    }
+                }()
+            )
+        }
     }
 }
 

@@ -37,6 +37,30 @@ class MonsterCompendiumFeature : KoinComponent {
         stateHolder.onItemCLick(index)
     }
 
+    fun onFirstVisibleItemChange(position: Int) {
+        stateHolder.onFirstVisibleItemChange(position)
+    }
+
+    fun onPopupOpened() {
+        stateHolder.onPopupOpened()
+    }
+
+    fun onPopupClosed() {
+        stateHolder.onPopupClosed()
+    }
+
+    fun onAlphabetIndexClicked(position: Int) {
+        stateHolder.onAlphabetIndexClicked(position)
+    }
+
+    fun onTableContentIndexClicked(position: Int) {
+        stateHolder.onTableContentIndexClicked(position)
+    }
+
+    fun onTableContentClosed() {
+        stateHolder.onTableContentClosed()
+    }
+
     private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
         return MonsterCompendiumStateIos(
             isLoading = isLoading,
