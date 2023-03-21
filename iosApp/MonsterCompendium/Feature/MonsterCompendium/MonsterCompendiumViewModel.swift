@@ -14,7 +14,9 @@ import shared
 
     @Published var isLoading: Bool = false
     @Published var state: MonsterCompendiumUiState = MonsterCompendiumUiState()
+    @Published var compendiumIndex: Int = -1
     private var stateWatcher : Closeable? = nil
+    private var actionWatcher : Closeable? = nil
     
     init() {
         feature = MonsterCompendiumFeature()
@@ -27,6 +29,10 @@ import shared
             self.state.alphabetSelectedIndex = Int(state.alphabetSelectedIndex)
             self.state.tableContentSelectedIndex = Int(state.tableContentIndex)
             self.state.tableContentInitialIndex = Int(state.tableContentInitialIndex)
+        }
+        actionWatcher = feature.action.collect{ (action: MonsterCompendiumActionIos) -> Void in
+            guard let compendiumIndex = action.compendiumIndex else { return }
+            self.compendiumIndex = compendiumIndex.intValue
         }
     }
     
@@ -56,6 +62,7 @@ import shared
     
     deinit {
         stateWatcher?.close()
+        actionWatcher?.close()
     }
 }
 

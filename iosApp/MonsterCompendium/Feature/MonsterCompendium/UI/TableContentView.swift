@@ -25,22 +25,15 @@ struct TableContent: View {
                             onTap(index)
                         }) {
                             VStack(alignment: .leading, spacing: 8) {
-                                switch item.type {
-                                case .HEADER1:
-                                    Text(item.text)
-                                        .font(.system(size: 32, weight: .bold))
-                                        .foregroundColor(.black)
-                                case .HEADER2:
-                                    Text(item.text)
-                                        .font(.system(size: 18, weight: .bold))
-                                        .foregroundColor(.black)
-                                case .BODY:
-                                    Text(item.text)
-                                        .font(.system(size: 14, weight: .regular))
-                                        .foregroundColor(.black)
-                                }
+                                Text(item.text)
+                                    .font(fontForType(item.type))
+                                    .foregroundColor(.black)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
-                            .frame(width: 160)
+                            .frame(width: 120)
                             .padding(16)
                             .background(color)
                             .cornerRadius(16)
@@ -51,10 +44,8 @@ struct TableContent: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .onAppear() {
-                    print("teste = \(initialIndex)")
                     withAnimation {
-                        
-                        proxy.scrollTo(initialIndex, anchor: .center)
+                        proxy.scrollTo(items[initialIndex].id, anchor: .leading)
                     }
                 }
             }
@@ -62,6 +53,17 @@ struct TableContent: View {
             .background(Color.white)
             .cornerRadius(16)
             .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+        }
+    }
+    
+    func fontForType(_ type: TableContentItemTypeState) -> Font {
+        switch type {
+        case .HEADER1:
+            return .system(size: 32, weight: .bold)
+        case .HEADER2:
+            return .system(size: 18, weight: .bold)
+        case .BODY:
+            return .system(size: 14, weight: .regular)
         }
     }
 }

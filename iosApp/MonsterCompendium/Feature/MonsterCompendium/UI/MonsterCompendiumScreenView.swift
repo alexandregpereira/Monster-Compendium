@@ -26,6 +26,7 @@ struct MonsterCompendiumScreenView: View {
                 ZStack {
                     MonsterCompendiumView(
                         items: state.items,
+                        compendiumIndex: viewModel.compendiumIndex,
                         onMonsterItemClick: { viewModel.onItemClick(index: $0) },
                         onFirstVisibleIndexChange: { viewModel.onFirstVisibleItemChange(position: $0) }
                     )

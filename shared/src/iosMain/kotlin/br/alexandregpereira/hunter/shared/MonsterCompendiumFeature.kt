@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.shared
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import kotlinx.coroutines.flow.map
@@ -31,6 +32,14 @@ class MonsterCompendiumFeature : KoinComponent {
 
     val state: CFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
         it.asMonsterCompendiumStateIos()
+    }.wrap()
+
+    val action: CFlow<MonsterCompendiumActionIos> = stateHolder.action.map { action ->
+        when (action) {
+            is MonsterCompendiumAction.GoToCompendiumIndex -> MonsterCompendiumActionIos(
+                compendiumIndex = action.index
+            )
+        }
     }.wrap()
 
     fun onItemClick(index: String) {
@@ -100,4 +109,8 @@ data class MonsterCompendiumStateIos(
 data class MonsterCompendiumItemIos(
     val title: MonsterCompendiumItem.Title?,
     val monster: Monster?
+)
+
+data class MonsterCompendiumActionIos(
+    val compendiumIndex: Int?
 )
