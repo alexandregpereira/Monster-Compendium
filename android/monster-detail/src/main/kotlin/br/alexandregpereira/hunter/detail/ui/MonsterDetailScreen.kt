@@ -41,7 +41,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
@@ -101,6 +100,12 @@ fun MonsterDetailScreen(
         contentPadding = contentPadding,
     )
 
+    /*
+    To avoid seeing the image below LazyColumn when horizontal pager transition is happening,
+    a background was added at the bottom of the Monster title and below LazyColumn.
+    When the scrolls changes and the Monster title moves, the background offset is updated to
+    follow the scroll.
+    */
     ScrollableBackground(
         getScrollPositionOffset = {
             scrollState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == MONSTER_TITLE_ITEM_KEY }

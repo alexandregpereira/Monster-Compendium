@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct MonsterDetailView : View {
-    
-    @State var isAnimating = true
     let monster: MonsterDetailItemUiState
     
     var body: some View {
