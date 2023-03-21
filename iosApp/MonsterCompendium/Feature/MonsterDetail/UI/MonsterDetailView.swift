@@ -18,7 +18,9 @@ struct MonsterDetailView : View {
             ZStack(alignment: .topLeading) {
                 Color(hex: monster.backgroundColorLight)?.ignoresSafeArea()
                 AsyncImage(
-                    url: URL(string: monster.imageUrl)
+                    url: URL(string: monster.imageUrl),
+                    scale: 1,
+                    transaction: Transaction(animation: .spring())
                 ) { phase in
                     if let image = phase.image {
                         image.resizable()
@@ -27,6 +29,7 @@ struct MonsterDetailView : View {
                     }
                 }
                 .frame(width: geometry.size.width, height: 500, alignment: .center)
+                .id(monster.id)
                 
                 ScrollView {
                     LazyVStack {

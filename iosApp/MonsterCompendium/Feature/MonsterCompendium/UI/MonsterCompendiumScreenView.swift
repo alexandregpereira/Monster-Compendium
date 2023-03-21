@@ -17,13 +17,36 @@ struct MonsterCompendiumScreenView: View {
     
     var body: some View {
         let state = viewModel.state
-        if viewModel.isLoading {
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-                .transition(.opacity.animation(.spring()))
-        } else {
-            MonsterCompendiumView(items: state.items, onMonsterItemClick: { viewModel.onItemClick(index: $0) })
-                .transition(.opacity.animation(.spring()))
+        ZStack {
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .transition(.opacity)
+            } else {
+                ZStack {
+                    MonsterCompendiumView(
+                        items: state.items,
+                        compendiumIndex: viewModel.compendiumIndex,
+                        onMonsterItemClick: { viewModel.onItemClick(index: $0) },
+                        onFirstVisibleIndexChange: { viewModel.onFirstVisibleItemChange(position: $0) }
+                    )
+                    
+                    TableContentPopup(
+                        tableContent: state.tableContent,
+                        alphabet: state.alphabet,
+                        alphabetSelectedIndex: state.alphabetSelectedIndex,
+                        tableContentSelectedIndex: state.tableContentSelectedIndex,
+                        tableContentInitialIndex: state.tableContentInitialIndex,
+                        screen: state.tableContentPopupScreenType,
+                        onOpenButtonClicked: { viewModel.onPopupOpened() },
+                        onCloseButtonClicked: { viewModel.onPopupClosed() },
+                        onTableContentClicked: { viewModel.onTableContentIndexClicked(position: $0) },
+                        onAlphabetIndexClicked: { viewModel.onAlphabetIndexClicked(position: $0) }
+                    )
+                }
+                .transition(.opacity)
+            }
         }
+        .animation(.spring(), value: viewModel.isLoading)
     }
 }

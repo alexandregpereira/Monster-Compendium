@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.shared
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import kotlinx.coroutines.flow.map
@@ -33,8 +34,40 @@ class MonsterCompendiumFeature : KoinComponent {
         it.asMonsterCompendiumStateIos()
     }.wrap()
 
+    val action: CFlow<MonsterCompendiumActionIos> = stateHolder.action.map { action ->
+        when (action) {
+            is MonsterCompendiumAction.GoToCompendiumIndex -> MonsterCompendiumActionIos(
+                compendiumIndex = action.index
+            )
+        }
+    }.wrap()
+
     fun onItemClick(index: String) {
         stateHolder.onItemCLick(index)
+    }
+
+    fun onFirstVisibleItemChange(position: Int) {
+        stateHolder.onFirstVisibleItemChange(position)
+    }
+
+    fun onPopupOpened() {
+        stateHolder.onPopupOpened()
+    }
+
+    fun onPopupClosed() {
+        stateHolder.onPopupClosed()
+    }
+
+    fun onAlphabetIndexClicked(position: Int) {
+        stateHolder.onAlphabetIndexClicked(position)
+    }
+
+    fun onTableContentIndexClicked(position: Int) {
+        stateHolder.onTableContentIndexClicked(position)
+    }
+
+    fun onTableContentClosed() {
+        stateHolder.onTableContentClosed()
     }
 
     private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
@@ -76,4 +109,8 @@ data class MonsterCompendiumStateIos(
 data class MonsterCompendiumItemIos(
     val title: MonsterCompendiumItem.Title?,
     val monster: Monster?
+)
+
+data class MonsterCompendiumActionIos(
+    val compendiumIndex: Int?
 )

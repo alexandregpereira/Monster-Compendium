@@ -133,20 +133,10 @@ fun TableContentPopup(
                 exit = fadeOut(),
                 modifier = Modifier.align(Alignment.BottomEnd)
             ) {
-                Box(
-                    Modifier
-                        .size(56.dp)
-                        .clip(CircleShape)
-                        .clickableWithRippleEffect(onClick = onOpenButtonClicked)
-                ) {
-                    Text(
-                        text = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
-                        color = MaterialTheme.colors.primaryVariant,
-                        style = TextStyle(fontSize = 24.sp),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+                CircleLetter(
+                    letter = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
+                    onClick = onOpenButtonClicked
+                )
             }
 
             AnimatedVisibility(
@@ -194,26 +184,29 @@ fun TableContentPopup(
             exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {
-            Box(
-                Modifier
-                    .padding(
-                        bottom = 16.dp,
-                        end = 16.dp,
-                        top = 8.dp
-                    )
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(secondaryColor)
-                    .clickable(onClick = onCloseButtonClicked)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = "Close",
-                    tint = MaterialTheme.colors.onBackground.copy(alpha = 0.7f),
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
+            CloseButton(backgroundColor = secondaryColor, onClick = onCloseButtonClicked)
         }
+    }
+}
+
+@Composable
+private fun CircleLetter(
+    letter: String,
+    onClick: () -> Unit
+) {
+    Box(
+        Modifier
+            .size(56.dp)
+            .clip(CircleShape)
+            .clickableWithRippleEffect(onClick = onClick)
+    ) {
+        Text(
+            text = letter,
+            color = MaterialTheme.colors.primaryVariant,
+            style = TextStyle(fontSize = 24.sp),
+            modifier = Modifier
+                .align(Alignment.Center)
+        )
     }
 }
 
@@ -251,6 +244,29 @@ private fun AlphabetGrid(
                     .align(Alignment.Center)
             )
         }
+    }
+}
+
+@Composable
+private fun CloseButton(backgroundColor: Color, onClick: () -> Unit) {
+    Box(
+        Modifier
+            .padding(
+                bottom = 16.dp,
+                end = 16.dp,
+                top = 8.dp
+            )
+            .size(40.dp)
+            .clip(CircleShape)
+            .background(backgroundColor)
+            .clickable(onClick = onClick)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Close,
+            contentDescription = "Close",
+            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.7f),
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 

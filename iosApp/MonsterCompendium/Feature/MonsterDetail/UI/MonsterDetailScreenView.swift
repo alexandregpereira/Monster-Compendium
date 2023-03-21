@@ -19,10 +19,15 @@ struct MonsterDetailScreenView : View {
         let state = viewModel.state
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
-                MonsterDetailView(monster: state.monster)
-                
-                AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
-                    .padding()
+                if state.isShowing {
+                    ZStack(alignment: .topLeading) {
+                        MonsterDetailView(monster: state.monster)
+                        
+                        AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
+                            .padding()
+                    }
+                    .transition(.offset(y: geometry.size.height + geometry.safeAreaInsets.bottom))
+                }
             }.frame(
                 minWidth: 0,
                 maxWidth: .infinity,
@@ -30,9 +35,7 @@ struct MonsterDetailScreenView : View {
                 maxHeight: .infinity,
                 alignment: .topLeading
             )
-            .offset(y: state.isShowing ? 0 : geometry.size.height + 40)
-            .animation(Animation.easeInOut(duration: 0.2), value: state.isShowing ? 0 : geometry.size.height + 40)
-            .transition(.move(edge: .bottom))
+            .animation(.spring(response: 0.3), value: state.isShowing)
         }
     }
 }
