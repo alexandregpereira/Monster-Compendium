@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS ActionEntity (`id` TEXT NOT NULL, `attackBonus` INTEGER, `description` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
+
+insert:
+INSERT OR REPLACE INTO ActionEntity VALUES ?;
+
+deleteAll:
+DELETE FROM ActionEntity;
+
+getByMonterIndex:
+SELECT * FROM ActionEntity WHERE monsterIndex = ?;

@@ -1,0 +1,15 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SpellEntity (`spellIndex` TEXT NOT NULL, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `castingTime` TEXT NOT NULL, `components` TEXT NOT NULL, `duration` TEXT NOT NULL, `range` TEXT NOT NULL, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `savingThrowType` TEXT, `damageType` TEXT, `school` TEXT NOT NULL, `description` TEXT NOT NULL, `higherLevel` TEXT, PRIMARY KEY(`spellIndex`));
+
+insert:
+INSERT OR REPLACE INTO SpellEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpellEntity;
+
+getSpell:
+SELECT * FROM SpellEntity WHERE spellIndex == ?;
+
+getSpells:
+SELECT * FROM SpellEntity WHERE spellIndex IN ?;

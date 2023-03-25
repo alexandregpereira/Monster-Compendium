@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SpeedEntity (`id` TEXT NOT NULL, `hover` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
+
+insert:
+INSERT OR REPLACE INTO SpeedEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpeedEntity;
+
+getByMonterIndex:
+SELECT * FROM SpeedEntity WHERE monsterIndex = ?;

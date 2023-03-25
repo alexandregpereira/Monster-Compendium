@@ -16,35 +16,42 @@
 
 package br.alexandregpereira.hunter.data.monster.folder
 
+import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
 import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-internal class DefaultFolderRepository : MonsterFolderRepository, FolderMonsterPreviewRepository {
-
-    override fun getFolderMonsterPreviewsByIds(indexes: List<String>): Flow<List<MonsterPreviewFolder>> {
-        TODO("Not yet implemented")
-    }
+internal class DefaultFolderRepository(
+    private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource
+) : MonsterFolderRepository, FolderMonsterPreviewRepository {
 
     override fun addMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
-        TODO("Not yet implemented")
+        return monsterFolderLocalDataSource.addMonsters(folderName, monsterIndexes = indexes)
     }
 
     override fun getMonsterFolders(): Flow<List<MonsterFolder>> {
-        TODO("Not yet implemented")
+        return monsterFolderLocalDataSource.getMonsterFolders().map { it.asDomain() }
     }
 
     override fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?> {
-        TODO("Not yet implemented")
+        return monsterFolderLocalDataSource.getMonstersFromFolder(folderName).map { it?.asDomain() }
+    }
+
+    override fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
+        return monsterFolderLocalDataSource.removeMonsters(folderName, monsterIndexes = indexes)
+    }
+
+    override fun getFolderMonsterPreviewsByIds(
+        indexes: List<String>
+    ): Flow<List<MonsterPreviewFolder>> {
+        return monsterFolderLocalDataSource.getFolderMonsterPreviewsByIds(indexes)
+            .map { it.asDomainMonsterPreviewFolderEntity() }
     }
 
     override fun removeMonsterFolders(folderNames: List<String>): Flow<Unit> {
-        TODO("Not yet implemented")
+        return monsterFolderLocalDataSource.removeMonsterFolders(folderNames)
     }
 }

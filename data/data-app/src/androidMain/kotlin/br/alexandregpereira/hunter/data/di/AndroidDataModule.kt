@@ -16,10 +16,19 @@
 
 package br.alexandregpereira.hunter.data.di
 
+import android.content.Context
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
 internal actual fun getAdditionalModule(): List<Module> {
     return listOf(
-        databaseModule,
+        module {
+            factory { get<Context>().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
+            factory { DriverFactory(get()) }
+        }
     )
 }
+
+actual fun getDispatcherIO(): CoroutineDispatcher = Dispatchers.IO

@@ -18,7 +18,7 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
+configureJvmTargets(iosFramework = { linkerOpts("-l", "sqlite3") })
 
 kotlin {
     sourceSets {

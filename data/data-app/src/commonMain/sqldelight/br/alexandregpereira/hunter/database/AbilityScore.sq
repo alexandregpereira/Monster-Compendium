@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS AbilityScoreEntity (`type` TEXT NOT NULL, `value` INTEGER NOT NULL, `modifier` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`type`, `monsterIndex`));
+
+insert:
+INSERT OR REPLACE INTO AbilityScoreEntity VALUES ?;
+
+deleteAll:
+DELETE FROM AbilityScoreEntity;
+
+getByMonterIndex:
+SELECT * FROM AbilityScoreEntity WHERE monsterIndex = ?;

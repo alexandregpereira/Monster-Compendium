@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SavingThrowEntity (`index` TEXT NOT NULL, `modifier` INTEGER NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
+
+insert:
+INSERT OR REPLACE INTO SavingThrowEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SavingThrowEntity;
+
+getByMonterIndex:
+SELECT * FROM SavingThrowEntity WHERE monsterIndex = ?;

@@ -16,10 +16,8 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
-import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
-import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module

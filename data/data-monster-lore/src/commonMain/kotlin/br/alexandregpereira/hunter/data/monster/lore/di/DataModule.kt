@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRemoteRep
 import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRepository
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.lore.MonsterLoreSourceRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
 import br.alexandregpereira.hunter.data.monster.lore.remote.DefaultMonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
@@ -36,8 +37,9 @@ import org.koin.dsl.module
 
 val monsterLoreDataModule = module {
     factory<MonsterLoreRepository> { DefaultMonsterLoreRepository(get(), get()) }
-    single { createRemoteDataSource() ?: DefaultMonsterLoreRemoteDataSource(get(), get()) }
-    single { createLocalRepository() ?: DefaultMonsterLoreLocalRepository() }
+    single { MonsterLoreLocalDataSource(get()) }
+    factory { createRemoteDataSource() ?: DefaultMonsterLoreRemoteDataSource(get(), get()) }
+    factory { createLocalRepository() ?: DefaultMonsterLoreLocalRepository(get()) }
     factory<MonsterLoreRemoteRepository> { DefaultMonsterLoreRemoteRepository(get()) }
     factory<MonsterLoreSettingsRepository> { MonsterLoreSettingsRepositoryImpl(get()) }
     factory<MonsterLoreSourceRepository> { MonsterLoreSourceRepositoryImpl(get()) }

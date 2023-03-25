@@ -1,0 +1,9 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SpellPreviewEntity (`spellIndex` TEXT NOT NULL, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `school` TEXT NOT NULL, PRIMARY KEY(`spellIndex`));
+
+insert:
+INSERT OR REPLACE INTO SpellPreviewEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpellPreviewEntity;

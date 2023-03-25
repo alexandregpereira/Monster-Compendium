@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS ReactionEntity (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`));
+
+insert:
+INSERT OR REPLACE INTO ReactionEntity VALUES ?;
+
+deleteAll:
+DELETE FROM ReactionEntity;
+
+getByMonterIndex:
+SELECT * FROM ReactionEntity WHERE monsterIndex = ?;

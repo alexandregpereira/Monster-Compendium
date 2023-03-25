@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SpellcastingEntity (`spellcastingId` TEXT NOT NULL, `type` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`spellcastingId`));
+
+insert:
+INSERT OR REPLACE INTO SpellcastingEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpellcastingEntity;
+
+getByMonterIndex:
+SELECT * FROM SpellcastingEntity WHERE monsterIndex = ?;

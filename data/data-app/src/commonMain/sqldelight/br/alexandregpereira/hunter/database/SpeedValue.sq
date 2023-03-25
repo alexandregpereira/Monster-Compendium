@@ -1,0 +1,12 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS SpeedValueEntity (`type` TEXT NOT NULL, `valueFormatted` TEXT NOT NULL, `speedId` TEXT NOT NULL, PRIMARY KEY(`type`, `speedId`));
+
+insert:
+INSERT OR REPLACE INTO SpeedValueEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpeedValueEntity;
+
+getBySpeedId:
+SELECT * FROM SpeedValueEntity WHERE speedId = ?;

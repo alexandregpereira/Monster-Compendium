@@ -1,0 +1,23 @@
+PRAGMA user_version = 21;
+
+CREATE TABLE IF NOT EXISTS MonsterLoreEntity (`monsterLoreIndex` TEXT NOT NULL, PRIMARY KEY(`monsterLoreIndex`));
+
+insert:
+INSERT OR REPLACE INTO MonsterLoreEntity VALUES ?;
+
+deleteAll:
+DELETE FROM MonsterLoreEntity;
+
+getMonstersLore:
+SELECT * FROM MonsterLoreCompleteEntityView
+WHERE monsterLoreIndex IN ?
+;
+
+getMonsterLore:
+SELECT * FROM MonsterLoreCompleteEntityView WHERE monsterLoreIndex == ?;
+
+CREATE VIEW MonsterLoreCompleteEntityView AS
+SELECT * FROM MonsterLoreEntity
+INNER JOIN MonsterLoreEntryEntity
+ON MonsterLoreEntryEntity.monsterIndex = MonsterLoreEntity.monsterLoreIndex
+;

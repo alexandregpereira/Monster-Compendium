@@ -16,11 +16,6 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
-import br.alexandregpereira.hunter.data.spell.AndroidSettingsSpellDataRepository
-import br.alexandregpereira.hunter.data.spell.AndroidSpellLocalRepository
-import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
-import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSourceImpl
-import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import org.koin.core.module.Module
@@ -28,15 +23,13 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 internal actual fun getAdditionalModule(): Module {
-    return module {
-        factory<SpellLocalDataSource> { SpellLocalDataSourceImpl(get()) }
-    }
+    return module {  }
 }
 
 internal actual fun Scope.createLocalRepository(): SpellLocalRepository? {
-    return AndroidSpellLocalRepository(get())
+    return null
 }
 
 internal actual fun Scope.createSettingsRepository(): SettingsSpellDataRepository? {
-    return AndroidSettingsSpellDataRepository(get())
+    return null
 }

@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("kapt")
     kotlin("plugin.serialization")
 }
 
@@ -22,10 +21,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.okhttp)
-                implementation(libs.bundles.room)
-                configurations["kapt"]
-                    .dependencies
-                    .add(project.dependencies.create(libs.room.compiler.get().toString()))
             }
         }
         val jvmMain by getting {
