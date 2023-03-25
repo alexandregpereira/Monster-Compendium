@@ -4,7 +4,9 @@
     <img src="media/hunter-icon-border.svg" width ="30%"  align="center"/>
 </p>
 
-[![Android CI](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml)
+[![Android CI](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml) <a href="https://devlibrary.withgoogle.com/products/android/repos/alexandregpereira-monster-compendium" target="_blank"><img alt="Android Dev Library" src="https://img.shields.io/badge/Google%20Dev%20Library-alexandregpereira-blue?style=flat&logo=android"/></a>
+
+
 
 Monsters Compendium is an open source Android application containing information about monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is from the SRD (System's Reference Document), but it is also possible to add new content to the app.
 
