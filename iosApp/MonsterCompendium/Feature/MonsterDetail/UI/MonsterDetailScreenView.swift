@@ -23,10 +23,20 @@ struct MonsterDetailScreenView : View {
                     ZStack(alignment: .topLeading) {
                         MonsterDetailView(monster: state.monster)
                         
+                        ZStack {
+                            if viewModel.isLoading {
+                                Color.white.ignoresSafeArea()
+                                .transition(.loadingTransition)
+                            }
+                        }
+                        .animation(.spring(response: 3), value: viewModel.isLoading)
+                        
                         AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
-                            .padding()
+                            .padding(4)
+                            .padding(.top, geometry.safeAreaInsets.top)
                     }
-                    .transition(.offset(y: geometry.size.height + geometry.safeAreaInsets.bottom))
+                    .clipped()
+                    .transition(.offset(y: geometry.size.height + geometry.safeAreaInsets.bottom + geometry.safeAreaInsets.top))
                 }
             }.frame(
                 minWidth: 0,
@@ -35,7 +45,18 @@ struct MonsterDetailScreenView : View {
                 maxHeight: .infinity,
                 alignment: .topLeading
             )
-            .animation(.spring(response: 0.3), value: state.isShowing)
+            .ignoresSafeArea()
+            .animation(.spring(response: 0.3, dampingFraction: 0.98), value: state.isShowing)
         }
+    }
+}
+
+private extension AnyTransition {
+    
+    static var loadingTransition: AnyTransition {
+        .asymmetric(
+            insertion: .opacity.animation(.spring(response: 0.1)),
+            removal: .opacity.animation(.spring(response: 0.3))
+        )
     }
 }

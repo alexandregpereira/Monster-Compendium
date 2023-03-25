@@ -10,7 +10,7 @@ import shared
 
 @MainActor class MonsterDetailViewModel : ObservableObject {
     
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool = true
     @Published var state: MonsterDetailUiState = MonsterDetailUiState()
     private let monsterDetailFeature: MonsterDetailFeature
     private var stateWatcher : Closeable? = nil
@@ -19,8 +19,9 @@ import shared
         monsterDetailFeature = MonsterDetailFeature()
         stateWatcher = monsterDetailFeature.state.collect { (state: Monster_detailMonsterDetailState) -> Void in
             self.state.isShowing = state.showDetail
+            self.isLoading = state.isLoading
             if !state.monsters.isEmpty {
-                self.state.monster = state.monsters[Int(state.initialMonsterIndex)].asMonsterDetailItemUiState()
+                self.state.monster = state.monsters[Int(state.initialMonsterListPositionIndex)].asMonsterDetailItemUiState()
             }
         }
     }

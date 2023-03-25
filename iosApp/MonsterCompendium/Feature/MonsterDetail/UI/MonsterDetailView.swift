@@ -22,16 +22,18 @@ struct MonsterDetailView : View {
                     if let image = phase.image {
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+                            .padding(16)
                     }
                 }
-                .frame(width: geometry.size.width, height: 500, alignment: .center)
+                .frame(width: geometry.size.width, height: 600, alignment: .center)
+                .padding(.top, geometry.safeAreaInsets.top + 32)
                 .id(monster.id)
                 
                 ScrollView {
                     LazyVStack {
                         Spacer().frame(maxWidth: .infinity)
-                            .frame(height: 500)
+                            .frame(height: 600)
+                            .padding(.top, geometry.safeAreaInsets.top + 32)
                             .id(0)
                         
                         MonsterTitleView(title: monster.name, subTitle: monster.subtitle)

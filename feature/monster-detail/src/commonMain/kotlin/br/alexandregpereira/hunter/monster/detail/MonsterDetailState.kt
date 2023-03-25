@@ -19,18 +19,13 @@ package br.alexandregpereira.hunter.monster.detail
 import br.alexandregpereira.hunter.domain.model.Monster
 
 data class MonsterDetailState(
-    val initialMonsterIndex: Int = 0,
+    val isLoading: Boolean = true,
+    val initialMonsterListPositionIndex: Int = 0,
     val monsters: List<Monster> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
-    val monsterIndex: String = "",
-    val monsterIndexes: List<String> = emptyList()
-) {
-
-    val isLoading: Boolean
-        get() = monsters.isEmpty()
-}
+)
 
 val MonsterDetailState.ShowOptions: MonsterDetailState
     get() = this.copy(showOptions = true)
@@ -43,7 +38,8 @@ fun MonsterDetailState.complete(
     monsters: List<Monster>,
     options: List<MonsterDetailOptionState>
 ): MonsterDetailState = this.copy(
-    initialMonsterIndex = initialMonsterIndex,
+    isLoading = false,
+    initialMonsterListPositionIndex = initialMonsterIndex,
     monsters = monsters,
     options = options
 )

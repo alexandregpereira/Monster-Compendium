@@ -25,12 +25,10 @@ struct MonsterCardView: View {
                     if let image = phase.image {
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
                     } else {
                         Color(hex: monster.backgroundColorLight)?.opacity(0.1)
                     }
                 }.clipped()
-                    .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
                 
                 Circle()
                     .fill(.white)
@@ -59,6 +57,7 @@ struct MonsterCardView: View {
                 .frame(height: 208)
             Text(monster.name)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
+                .lineLimit(1)
         }
     }
 }
