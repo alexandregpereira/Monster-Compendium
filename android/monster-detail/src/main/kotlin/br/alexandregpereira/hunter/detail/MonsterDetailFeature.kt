@@ -59,7 +59,7 @@ fun MonsterDetailFeature(
             if (viewState.monsters.isEmpty()) return@CircularLoading
             MonsterDetailScreen(
                 viewState.monsters,
-                viewState.initialMonsterIndex,
+                viewState.initialMonsterListPositionIndex,
                 contentPadding,
                 onMonsterChanged = { monster ->
                     viewModel.onMonsterChanged(monster.index)

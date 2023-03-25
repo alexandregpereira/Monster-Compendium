@@ -20,16 +20,13 @@ import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.detail.ui.MonsterState
 
 data class MonsterDetailViewState(
-    val initialMonsterIndex: Int = 0,
+    val initialMonsterListPositionIndex: Int = 0,
     val monsters: List<MonsterState> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
-) {
-
-    val isLoading: Boolean
-        get() = monsters.isEmpty()
-}
+    val isLoading: Boolean = true,
+)
 
 fun SavedStateHandle.getState(): MonsterDetailViewState {
     return MonsterDetailViewState(

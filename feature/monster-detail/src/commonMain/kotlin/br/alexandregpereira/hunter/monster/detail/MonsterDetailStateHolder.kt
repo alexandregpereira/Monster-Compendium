@@ -41,14 +41,15 @@ import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
@@ -62,19 +63,21 @@ class MonsterDetailStateHolder(
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
-    private val initialState: MonsterDetailState = MonsterDetailState()
+    initialState: MonsterDetailState = MonsterDetailState(),
+    monsterIndex: String = "",
+    monsterIndexes: List<String> = emptyList()
 ) : ScopeManager(), StateHolder<MonsterDetailState> {
 
     private val stateHolder = DefaultStateHolder(initialState)
     override val state: StateFlow<MonsterDetailState> = stateHolder.state
 
-    private var monsterChangeDispatchEnabled = false
+    var monsterIndex: String = ""
+        private set
 
-    private val monsterIndex: String
-        get() = state.value.monsterIndex
+    var monsterIndexes: List<String> = emptyList()
+        private set
 
-    private val monsterIndexes: List<String>
-        get() = state.value.monsterIndexes
+    private var currentJob: Job? = null
 
     init {
         observeEvents()
@@ -98,7 +101,7 @@ class MonsterDetailStateHolder(
     }
 
     private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
-        setState { initialState.copy(monsterIndexes = monsterIndexes) }
+        this.monsterIndexes = monsterIndexes
         onMonsterChanged(monsterIndex, scrolled = false)
         getMonsterDetail().collectDetail()
     }
@@ -107,7 +110,7 @@ class MonsterDetailStateHolder(
         if (scrolled && monsterIndex != this.monsterIndex) {
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
-        setState { copy(monsterIndex = monsterIndex) }
+        this.monsterIndex = monsterIndex
     }
 
     fun onShowOptionsClicked() {
@@ -157,24 +160,28 @@ class MonsterDetailStateHolder(
     }
 
     private fun Flow<MonsterDetail>.collectDetail() {
-        this.map {
-            val measurementUnit = it.measurementUnit
-            getState().complete(
-                initialMonsterIndex = it.monsterIndexSelected,
-                monsters = it.monsters,
-                options = when (measurementUnit) {
-                    MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
-                    MeasurementUnit.METER -> listOf(ADD_TO_FOLDER, CHANGE_TO_FEET)
-                }
-            )
-        }.flowOn(dispatcher)
+        currentJob?.cancel()
+        currentJob = this.cancellable()
+            .map {
+                val measurementUnit = it.measurementUnit
+                getState().complete(
+                    initialMonsterIndex = it.monsterIndexSelected,
+                    monsters = it.monsters,
+                    options = when (measurementUnit) {
+                        MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
+                        MeasurementUnit.METER -> listOf(ADD_TO_FOLDER, CHANGE_TO_FEET)
+                    }
+                )
+            }.flowOn(dispatcher)
+            .onStart {
+                setState { copy(isLoading = true) }
+            }
             .catch {
+                setState { copy(isLoading = false) }
                 it.printStackTrace()
             }.onEach { state ->
                 setState { state }
             }
-            .onStart { monsterChangeDispatchEnabled = false }
-            .onCompletion { monsterChangeDispatchEnabled = true }
             .launchIn(scope)
     }
 

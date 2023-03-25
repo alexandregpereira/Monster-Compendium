@@ -56,7 +56,9 @@ internal class MonsterDetailViewModel(
         monsterLoreDetailEventDispatcher,
         folderInsertEventDispatcher,
         dispatcher,
-        initialState = savedStateHandle.getState().asMonsterDetailState()
+        initialState = savedStateHandle.getState().asMonsterDetailState(),
+        monsterIndex = savedStateHandle["index"] ?: "",
+        monsterIndexes = savedStateHandle["indexes"] ?: emptyList()
     )
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
@@ -66,8 +68,8 @@ internal class MonsterDetailViewModel(
         stateHolder.state
             .onEach {
                 _state.value = it.also {
-                    savedStateHandle["index"] = it.monsterIndex
-                    savedStateHandle["indexes"] = it.monsterIndexes
+                    savedStateHandle["index"] = stateHolder.monsterIndex
+                    savedStateHandle["indexes"] = stateHolder.monsterIndexes
                 }.asMonsterDetailViewState().saveState(savedStateHandle)
             }
             .launchIn(viewModelScope)
@@ -102,18 +104,17 @@ internal class MonsterDetailViewModel(
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
             showDetail = showDetail,
-            monsterIndex = savedStateHandle["index"] ?: "",
-            monsterIndexes = savedStateHandle["indexes"] ?: emptyList()
         )
     }
 
     private fun MonsterDetailState.asMonsterDetailViewState(): MonsterDetailViewState {
         return MonsterDetailViewState(
-            initialMonsterIndex = initialMonsterIndex,
+            initialMonsterListPositionIndex = initialMonsterListPositionIndex,
             monsters = monsters.asState(),
             showOptions = showOptions,
             options = options.map { MonsterDetailOptionState.valueOf(it.name) },
-            showDetail = showDetail
+            showDetail = showDetail,
+            isLoading = isLoading,
         )
     }
 }
