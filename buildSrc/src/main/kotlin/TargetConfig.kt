@@ -17,15 +17,22 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 
 private val Project.kotlin: KotlinMultiplatformExtension
     get() = extensions.getByType(KotlinMultiplatformExtension::class.java)
 
 fun Project.isMac(): Boolean = Os.isFamily(Os.FAMILY_MAC) && !hasProperty("disableIos")
 
-fun Project.configureJvmTargets() = configureTargets(hasAndroid = false)
+fun Project.configureJvmTargets(
+    iosFramework: Framework.() -> Unit = {}
+) = configureTargets(hasAndroid = false, iosFramework = iosFramework)
 
-fun Project.configureTargets(hasAndroid: Boolean = true, hasJvm: Boolean = true) {
+fun Project.configureTargets(
+    hasAndroid: Boolean = true,
+    hasJvm: Boolean = true,
+    iosFramework: Framework.() -> Unit = {}
+) {
     kotlin.apply {
         if (hasAndroid) {
             android()
@@ -47,6 +54,7 @@ fun Project.configureTargets(hasAndroid: Boolean = true, hasJvm: Boolean = true)
             }.onEach {
                 it.binaries.framework {
                     baseName = project.name
+                    iosFramework()
                 }
             }
         }

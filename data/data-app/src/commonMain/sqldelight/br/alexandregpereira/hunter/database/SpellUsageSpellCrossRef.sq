@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS SpellUsageSpellCrossRefEntity (`spellUsageId` TEXT NOT NULL, `spellIndex` TEXT NOT NULL, PRIMARY KEY(`spellUsageId`, `spellIndex`));
+
+CREATE INDEX IF NOT EXISTS `index_SpellUsageSpellCrossRefEntity_spellIndex` ON SpellUsageSpellCrossRefEntity (`spellIndex`);
+
+insert:
+INSERT OR REPLACE INTO SpellUsageSpellCrossRefEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpellUsageSpellCrossRefEntity;
+
+getBySpellusageIdAndSpellIndex:
+SELECT
+    SpellPreviewEntity.spellIndex AS spellIndex,
+    SpellPreviewEntity.level AS level,
+    SpellPreviewEntity.name AS name,
+    SpellPreviewEntity.school AS school
+FROM SpellUsageSpellCrossRefEntity
+INNER JOIN SpellUsageEntity ON SpellUsageEntity.spellUsageId = SpellUsageSpellCrossRefEntity.spellUsageId
+INNER JOIN SpellPreviewEntity ON SpellPreviewEntity.spellIndex = SpellUsageSpellCrossRefEntity.spellIndex
+WHERE SpellUsageSpellCrossRefEntity.spellUsageId = ?
+;

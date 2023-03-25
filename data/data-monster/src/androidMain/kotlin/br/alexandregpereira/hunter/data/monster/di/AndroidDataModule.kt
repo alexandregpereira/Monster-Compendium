@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.data.monster.di
 
-import br.alexandregpereira.hunter.data.monster.AndroidMonsterLocalRepository
-import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
-import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.monster.preferences.AndroidPreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
@@ -27,27 +24,7 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 internal actual fun getAdditionalModule(): Module {
-    return module {
-        single<MonsterLocalDataSource> {
-            MonsterLocalDataSourceImpl(
-                abilityScoreDao = get(),
-                actionDao = get(),
-                conditionDao = get(),
-                damageDao = get(),
-                damageDiceDao = get(),
-                monsterDao = get(),
-                savingThrowDao = get(),
-                skillDao = get(),
-                specialAbilityDao = get(),
-                speedDao = get(),
-                speedValueDao = get(),
-                reactionDao = get(),
-                spellcastingDao = get(),
-                spellUsageDao = get(),
-                legendaryActionDao = get()
-            )
-        }
-    }
+    return module {  }
 }
 
 internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? {
@@ -55,5 +32,5 @@ internal actual fun Scope.createPreferencesDataSource(): PreferencesDataSource? 
 }
 
 internal actual fun Scope.createMonsterLocalRepository(): MonsterLocalRepository? {
-    return AndroidMonsterLocalRepository(get())
+    return null
 }

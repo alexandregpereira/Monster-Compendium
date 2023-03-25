@@ -1,0 +1,34 @@
+CREATE TABLE IF NOT EXISTS MonsterFolderEntity (
+`folderName` TEXT NOT NULL,
+`monsterIndex` TEXT NOT NULL,
+`createdAt` INTEGER NOT NULL,
+PRIMARY KEY(`folderName`, `monsterIndex`)
+);
+
+insert:
+INSERT OR REPLACE INTO MonsterFolderEntity VALUES ?;
+
+getMonsterFolders:
+SELECT * FROM MonsterFolderCompleteEntityView
+ORDER BY createdAt DESC
+;
+
+getMonstersFromFolder:
+SELECT * FROM MonsterFolderCompleteEntityView
+WHERE folderName == ?
+ORDER BY createdAt
+;
+
+removeMonsterFromFolder:
+DELETE FROM MonsterFolderEntity
+WHERE folderName == ? AND monsterIndex IN ?
+;
+
+removeMonsterFolders:
+DELETE FROM MonsterFolderEntity WHERE folderName IN ?;
+
+CREATE VIEW MonsterFolderCompleteEntityView AS
+SELECT * FROM MonsterFolderEntity
+INNER JOIN MonsterEntity
+ON MonsterEntity.`index` == MonsterFolderEntity.`monsterIndex`
+;

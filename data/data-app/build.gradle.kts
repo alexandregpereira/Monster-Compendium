@@ -1,8 +1,8 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("kapt")
     kotlin("plugin.serialization")
+    alias(libs.plugins.sqldelight)
 }
 
 configureTargets()
@@ -27,10 +27,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.okhttp)
-                implementation(libs.bundles.room)
-                configurations["kapt"]
-                    .dependencies
-                    .add(project.dependencies.create(libs.room.compiler.get().toString()))
+                implementation(libs.sqldelight.android)
             }
         }
         val androidTest by getting {
@@ -41,12 +38,14 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(libs.ktor.okhttp)
+                implementation(libs.sqldelight.jvm)
             }
         }
         if (isMac()) {
             val iosMain by getting {
                 dependencies {
                     implementation(libs.ktor.darwin)
+                    implementation(libs.sqldelight.ios)
                 }
             }
         }
@@ -58,11 +57,12 @@ android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
+    }
+}
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-            }
-        }
+sqldelight {
+    database("Database") {
+        packageName = "br.alexandregpereira.hunter.data"
+        schemaOutputDirectory = file("src/commonMain/sqldelight/databases")
     }
 }

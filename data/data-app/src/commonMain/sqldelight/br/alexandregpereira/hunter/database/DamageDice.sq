@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS DamageDiceEntity (
+`id` TEXT NOT NULL,
+`dice` TEXT NOT NULL,
+`actionId` TEXT NOT NULL,
+`index` TEXT NOT NULL,
+`type` TEXT NOT NULL,
+`name` TEXT NOT NULL,
+`monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`)
+);
+
+insert:
+INSERT OR REPLACE INTO DamageDiceEntity VALUES ?;
+
+deleteAll:
+DELETE FROM DamageDiceEntity;
+
+getByActionId:
+SELECT * FROM DamageDiceEntity WHERE actionId = ?;

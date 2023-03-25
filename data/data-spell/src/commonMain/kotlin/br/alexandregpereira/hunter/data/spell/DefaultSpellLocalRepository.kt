@@ -16,46 +16,33 @@
 
 package br.alexandregpereira.hunter.data.spell
 
-import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
+import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
+import br.alexandregpereira.hunter.data.spell.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
-//TODO Implement SQLDelight
-internal class DefaultSpellLocalRepository : SpellLocalRepository, SettingsSpellDataRepository {
-
-    private val cache = mutableListOf<Spell>()
+internal class DefaultSpellLocalRepository(
+    private val localDataSource: SpellLocalDataSource
+) : SpellLocalRepository {
 
     override fun saveSpells(spells: List<Spell>): Flow<Unit> {
-        return flow {
-            cache.clear()
-            cache.addAll(spells)
-            emit(Unit)
-        }
+        return localDataSource.saveSpells(spells.toEntity())
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {
-        return flow {
-            emit(
-                cache.find { it.index == index }
-                    ?: throw RuntimeException("Spell with index $index not found")
-            )
-        }
+        return localDataSource.getSpell(index).map { it.toDomain() }
     }
 
     override fun getLocalSpells(indexes: List<String>): Flow<List<Spell>> {
-        return flow { emit(cache.toList()) }
-    }
-
-    override fun deleteLocalSpells(): Flow<Unit> {
-        return flow {
-            cache.clear()
-            emit(Unit)
+        return localDataSource.getSpells(indexes).map { spells ->
+            spells.map { it.toDomain() }
         }
     }
 
-    override fun deleteData(): Flow<Unit> {
-        return deleteLocalSpells()
+    override fun deleteLocalSpells(): Flow<Unit> {
+        return localDataSource.deleteSpells()
     }
 }

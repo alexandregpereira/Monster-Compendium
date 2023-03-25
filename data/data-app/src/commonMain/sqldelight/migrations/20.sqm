@@ -1,0 +1,11 @@
+CREATE VIEW MonsterFolderCompleteEntityView AS
+SELECT * FROM MonsterFolderEntity
+INNER JOIN MonsterEntity
+ON MonsterEntity.`index` == MonsterFolderEntity.`monsterIndex`
+;
+
+CREATE VIEW MonsterLoreCompleteEntityView AS
+SELECT * FROM MonsterLoreEntity
+INNER JOIN MonsterLoreEntryEntity
+ON MonsterLoreEntryEntity.monsterIndex = MonsterLoreEntity.monsterLoreIndex
+;

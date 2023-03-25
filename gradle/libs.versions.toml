@@ -17,13 +17,14 @@ koin_compose = '3.4.2'
 kotlin = '1.8.10'
 kotlin_coroutines_test = '1.6.4'
 kotlin_coroutines = '1.6.4'
+kotlin_datetime = '0.4.0'
 kotlinx_serialization = "1.5.0"
 ktor = "2.2.4"
 lifecycle = "2.5.1"
 material = "1.8.0"
 mockk = "1.13.4"
 okhttp3_logging_interceptor = "4.10.0"
-room = "2.5.0"
+sqldelight = "1.5.5"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -41,6 +42,7 @@ core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso_core" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android_gradle_plugin" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-sqldelight = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit_ext" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -50,6 +52,7 @@ koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
+kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin_datetime" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -60,17 +63,17 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3_logging_interceptor" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 [bundles]
 compose = ["compose-ui", "compose-tooling", "compose-material", "compose-activity", "compose-util"]
 instrumentedtest = ["espresso", "junit-ext"]
-room = ["room-ktx", "room-runtime"]
 unittest = ["kotlin-coroutines-test", "core-testing", "mockk", "junit", "kotlin-test"]
 viewmodel-bundle = ["viewmodel"]
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }

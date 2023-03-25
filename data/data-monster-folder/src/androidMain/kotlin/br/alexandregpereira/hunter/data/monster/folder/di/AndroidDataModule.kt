@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.data.monster.folder.di
 
-import br.alexandregpereira.hunter.data.monster.folder.MonsterFolderRepositoryImpl
-import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSource
-import br.alexandregpereira.hunter.data.monster.folder.local.MonsterFolderLocalDataSourceImpl
 import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import org.koin.core.module.Module
@@ -26,15 +23,13 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 actual fun getAdditionalModule(): Module {
-    return module {
-        factory<MonsterFolderLocalDataSource> { MonsterFolderLocalDataSourceImpl(get(), get()) }
-    }
+    return module {  }
 }
 
 actual fun Scope.createMonsterFolderRepository(): MonsterFolderRepository? {
-    return MonsterFolderRepositoryImpl(get())
+    return null
 }
 
 actual fun Scope.createFolderMonsterPreviewRepository(): FolderMonsterPreviewRepository? {
-    return MonsterFolderRepositoryImpl(get())
+    return null
 }

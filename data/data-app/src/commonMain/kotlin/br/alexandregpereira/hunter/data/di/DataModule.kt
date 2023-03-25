@@ -53,6 +53,7 @@ val dataModules = listOf(
         }
         single { Json { ignoreUnknownKeys = true } }
     },
+    databaseModule,
     alternativeSourceDataModule,
     monsterDataModule,
     monsterFolderDataModule,

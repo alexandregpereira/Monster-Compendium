@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS SpellUsageEntity (`spellUsageId` TEXT NOT NULL, `group` TEXT NOT NULL, `spellcastingId` TEXT NOT NULL, PRIMARY KEY(`spellUsageId`));
+
+insert:
+INSERT OR REPLACE INTO SpellUsageEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpellUsageEntity;
+
+getBySpellcastingId:
+SELECT * FROM SpellUsageEntity WHERE spellcastingId = ?;

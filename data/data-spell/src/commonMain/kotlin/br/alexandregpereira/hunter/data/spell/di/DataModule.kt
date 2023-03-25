@@ -16,10 +16,13 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
+import br.alexandregpereira.hunter.data.spell.DefaultSettingsSpellDataRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellLocalRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRemoteRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRepository
 import br.alexandregpereira.hunter.data.spell.SpellSettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.spell.local.DefaultSpellLocalDataSource
+import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.remote.DefaultSpellRemoteDataSource
 import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
@@ -32,12 +35,12 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val spellDataModule = module {
+    factory<SpellLocalDataSource> { DefaultSpellLocalDataSource(get()) }
     factory<SpellRepository> { DefaultSpellRepository(get(), get()) }
-    single { DefaultSpellLocalRepository() }
-    factory { createLocalRepository() ?: get<DefaultSpellLocalRepository>() }
+    factory { createLocalRepository() ?: DefaultSpellLocalRepository(get()) }
     factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
     factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
-    factory { createSettingsRepository() ?: get<DefaultSpellLocalRepository>() }
+    factory { createSettingsRepository() ?: DefaultSettingsSpellDataRepository(get()) }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
 }.apply { includes(getAdditionalModule()) }
 

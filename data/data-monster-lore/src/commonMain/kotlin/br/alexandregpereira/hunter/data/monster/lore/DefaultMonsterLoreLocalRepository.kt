@@ -16,34 +16,29 @@
 
 package br.alexandregpereira.hunter.data.monster.lore
 
+import br.alexandregpereira.hunter.data.monster.lore.local.MonsterLoreLocalDataSource
+import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.lore.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreLocalRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
-//TODO Implement SQLDelight
-internal class DefaultMonsterLoreLocalRepository : MonsterLoreLocalRepository {
-
-    private val cache = mutableListOf<MonsterLore>()
+internal class DefaultMonsterLoreLocalRepository(
+    private val monsterLoreLocalDataSource: MonsterLoreLocalDataSource,
+) : MonsterLoreLocalRepository {
 
     override fun getMonsterLore(index: String): Flow<MonsterLore> {
-        return flow {
-            emit(
-                cache.find { it.index == index }
-                    ?: throw RuntimeException("Monster lore with index $index not found")
-            )
-        }
+        return monsterLoreLocalDataSource.getMonsterLore(index).map { it.toDomain() }
     }
 
     override fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>> {
-        return flow { emit(cache.toList()) }
+        return monsterLoreLocalDataSource.getMonstersLore(indexes).map { monsters ->
+            monsters.map { it.toDomain() }
+        }
     }
 
     override fun save(monstersLore: List<MonsterLore>): Flow<Unit> {
-        return flow {
-            cache.clear()
-            cache.addAll(monstersLore)
-            emit(Unit)
-        }
+        return monsterLoreLocalDataSource.save(monstersLore.map { it.toEntity() })
     }
 }

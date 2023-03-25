@@ -16,50 +16,44 @@
 
 package br.alexandregpereira.hunter.data.monster
 
-import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
+import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
+import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.local.mapper.toDomainMonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-//TODO Implement SQLDelight
 internal class DefaultMonsterLocalRepository(
-    private val cacheDataSource: MonsterCacheDataSource
+    private val localDataSource: MonsterLocalDataSource
 ) : MonsterLocalRepository {
 
     override fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
-        return cacheDataSource.saveMonsters(monsters)
+        return localDataSource.saveMonsters(monsters.toEntity(), isSync)
     }
 
     override fun getMonsterPreviews(): Flow<List<Monster>> {
-        return cacheDataSource.getMonsters()
+        return localDataSource.getMonsterPreviews().map { it.toDomainMonsterEntity() }
     }
 
     override fun getMonsters(): Flow<List<Monster>> {
-        return cacheDataSource.getMonsters()
+        return localDataSource.getMonsters().map { it.toDomain() }
     }
 
     override fun getMonsters(indexes: List<String>): Flow<List<Monster>> {
-        return cacheDataSource.getMonsters()
+        return localDataSource.getMonsters(indexes).map { it.toDomain() }
     }
 
     override fun getMonster(index: String): Flow<Monster> {
-        return cacheDataSource.getMonsters().map { monsters ->
-            monsters.find { it.index == index }
-                ?: throw RuntimeException("Monster $index not found")
-        }
+        return localDataSource.getMonster(index).map { it.toDomain() }
     }
 
     override fun getMonstersByQuery(query: String): Flow<List<Monster>> {
-        return cacheDataSource.getMonsters().map { monsters ->
-            val name = query.substring(
-                range = query.indexOfFirst { it == '%' }..query.indexOfLast { it == '%' }
-            )
-            monsters.filter { it.name.contains(name) }
-        }
+        return localDataSource.getMonstersByQuery(query).map { it.toDomainMonsterEntity() }
     }
 
     override fun deleteAll(): Flow<Unit> {
-        return cacheDataSource.clear()
+        return localDataSource.deleteAll()
     }
 }

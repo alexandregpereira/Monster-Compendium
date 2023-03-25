@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS DamageImmunityEntity (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
+
+insert:
+INSERT OR REPLACE INTO DamageImmunityEntity VALUES ?;
+
+deleteAll:
+DELETE FROM DamageImmunityEntity;
+
+getByMonterIndex:
+SELECT * FROM DamageImmunityEntity WHERE monsterIndex = ?;

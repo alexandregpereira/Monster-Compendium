@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS SpecialAbilityEntity (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`));
+
+insert:
+INSERT OR REPLACE INTO SpecialAbilityEntity VALUES ?;
+
+deleteAll:
+DELETE FROM SpecialAbilityEntity;
+
+getByMonterIndex:
+SELECT * FROM SpecialAbilityEntity WHERE monsterIndex = ?;

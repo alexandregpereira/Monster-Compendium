@@ -1,0 +1,2 @@
+-- Don`t remove it, it is necessary because of the way sqldelight migration works.
+-- The Room database was reused and the database version was 20 at the time.

@@ -27,6 +27,8 @@ import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
+import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
+import br.alexandregpereira.hunter.data.monster.local.DefaultMonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.DefaultPreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
 import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
@@ -72,6 +74,9 @@ val monsterDataModule = module {
     factory<SettingsMonsterDataRepository> { SettingsMonsterDataRepositoryImpl(get(), get()) }
     factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
+    single<MonsterLocalDataSource> {
+        DefaultMonsterLocalDataSource(get())
+    }
 }.apply { includes(getAdditionalModule()) }
 
 internal expect fun getAdditionalModule(): Module
