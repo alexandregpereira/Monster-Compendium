@@ -1,5 +1,3 @@
-PRAGMA user_version = 21;
-
 CREATE TABLE IF NOT EXISTS SkillEntity (`index` TEXT NOT NULL, `modifier` INTEGER NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
 
 insert:

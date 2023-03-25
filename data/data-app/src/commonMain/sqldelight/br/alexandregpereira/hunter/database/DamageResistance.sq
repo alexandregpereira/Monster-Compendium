@@ -1,5 +1,3 @@
-PRAGMA user_version = 21;
-
 CREATE TABLE IF NOT EXISTS DamageResistanceEntity (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
 
 insert:
