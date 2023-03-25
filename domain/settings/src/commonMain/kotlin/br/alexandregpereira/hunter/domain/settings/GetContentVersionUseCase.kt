@@ -25,7 +25,7 @@ class GetContentVersionUseCase(
 ) {
 
     operator fun invoke(): Flow<Int> {
-        return settingsRepository.getSettingsValue(
+        return settingsRepository.getValue(
             key = CONTENT_VERSION_KEY,
             defaultValue = "0"
         ).map { it.toInt() }

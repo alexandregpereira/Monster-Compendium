@@ -36,28 +36,32 @@ import shared
         }
     }
     
+    func getInitialScrollItemPosition() -> Int {
+        return Int(feature.stateHolder.initialScrollItemPosition)
+    }
+    
     func onItemClick(index: String) {
-        feature.onItemClick(index: index)
+        feature.stateHolder.onItemClick(index: index)
     }
     
     func onFirstVisibleItemChange(position: Int) {
-        feature.onFirstVisibleItemChange(position: Int32(position))
+        feature.stateHolder.onFirstVisibleItemChange(position: Int32(position))
     }
 
     func onPopupOpened() {
-        feature.onPopupOpened()
+        feature.stateHolder.onPopupOpened()
     }
 
     func onPopupClosed() {
-        feature.onPopupClosed()
+        feature.stateHolder.onPopupClosed()
     }
 
     func onAlphabetIndexClicked(position: Int) {
-        feature.onAlphabetIndexClicked(position: Int32(position))
+        feature.stateHolder.onAlphabetIndexClicked(position: Int32(position))
     }
 
     func onTableContentIndexClicked(position: Int) {
-        feature.onTableContentIndexClicked(position: Int32(position))
+        feature.stateHolder.onTableContentIndexClicked(position: Int32(position))
     }
     
     deinit {

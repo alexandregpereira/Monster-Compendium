@@ -24,6 +24,6 @@ class GetAlternativeSourceJsonUrlUseCase(
 ) {
 
     operator fun invoke(): Flow<String> {
-        return settingsRepository.getSettingsValue(ALTERNATIVE_SOURCE_BASE_URL_KEY)
+        return settingsRepository.getValue(ALTERNATIVE_SOURCE_BASE_URL_KEY)
     }
 }

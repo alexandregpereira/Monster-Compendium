@@ -16,7 +16,7 @@
 
 package br.alexandregpereira.hunter.data.monster
 
-import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
+import br.alexandregpereira.hunter.data.monster.preferences.MonsterPreferencesRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
 import kotlinx.coroutines.FlowPreview
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 
 internal class SettingsMonsterDataRepositoryImpl(
-    private val preferencesRepository: PreferencesRepository,
+    private val preferencesRepository: MonsterPreferencesRepository,
     private val localRepository: MonsterLocalRepository
 ) : SettingsMonsterDataRepository {
 

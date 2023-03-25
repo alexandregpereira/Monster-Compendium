@@ -16,9 +16,10 @@
 
 package br.alexandregpereira.hunter.data.settings.di
 
-import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import org.koin.core.scope.Scope
+import com.russhwolf.settings.NSUserDefaultsSettings
+import com.russhwolf.settings.Settings
+import org.koin.core.module.Module
 
-internal actual fun Scope.createRepository(): SettingsRepository? {
-    return null
+internal actual fun Module.getAdditionalSettingsModule() {
+    factory<Settings.Factory> { NSUserDefaultsSettings.Factory() }
 }

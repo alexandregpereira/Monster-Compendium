@@ -41,6 +41,7 @@ class KoinTest {
     @Test
     fun verifyKoinApp() {
         every { context.getSharedPreferences(any(), any()) } returns sharedPreferences
+        every { context.applicationContext } returns context
         every { savedStateHandle.get<Any>(any()) } returns null
         koinApplication {
             initKoinModules()

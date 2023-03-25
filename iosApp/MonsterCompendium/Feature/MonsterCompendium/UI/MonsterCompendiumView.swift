@@ -10,17 +10,20 @@ import SwiftUI
 struct MonsterCompendiumView: View {
     
     let items: [MonsterCompendiumItemUiState]
+    let initialCompendiumIndex: Int
     let compendiumIndex: Int
     let onMonsterItemClick: (String) -> Void
     let onFirstVisibleIndexChange: ((Int) -> Void)?
     
     init(
         items: [MonsterCompendiumItemUiState],
+        initialCompendiumIndex: Int = 0,
         compendiumIndex: Int = -1,
         onMonsterItemClick: @escaping (String) -> Void,
         onFirstVisibleIndexChange: ((Int) -> Void)? = nil
     ) {
         self.items = items
+        self.initialCompendiumIndex = initialCompendiumIndex
         self.compendiumIndex = compendiumIndex
         self.onMonsterItemClick = onMonsterItemClick
         self.onFirstVisibleIndexChange = onFirstVisibleIndexChange
@@ -63,6 +66,9 @@ struct MonsterCompendiumView: View {
                     withAnimation {
                         scrollProxy.scrollTo(items[newIndex].id, anchor: .top)
                     }
+                }
+                .onAppear {
+                    scrollProxy.scrollTo(items[initialCompendiumIndex].id, anchor: .top)
                 }
             }
         }

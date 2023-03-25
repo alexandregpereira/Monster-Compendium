@@ -10,15 +10,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":domain:settings"))
+                implementation(libs.multiplatform.settings)
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
                 implementation(libs.ktor.core)
             }
-        }
-        val androidMain by getting
-        val jvmMain by getting
-        if (isMac()) {
-            val iosMain by getting
         }
     }
 }

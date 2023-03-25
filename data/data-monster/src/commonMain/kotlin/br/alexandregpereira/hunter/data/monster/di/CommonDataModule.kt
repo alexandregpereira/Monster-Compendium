@@ -27,11 +27,9 @@ import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
-import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.DefaultMonsterLocalDataSource
-import br.alexandregpereira.hunter.data.monster.preferences.DefaultPreferencesDataSource
-import br.alexandregpereira.hunter.data.monster.preferences.PreferencesDataSource
-import br.alexandregpereira.hunter.data.monster.preferences.PreferencesRepository
+import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
+import br.alexandregpereira.hunter.data.monster.preferences.MonsterPreferencesRepository
 import br.alexandregpereira.hunter.data.monster.remote.DefaultMonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceErrorHandler
@@ -65,12 +63,9 @@ val monsterDataModule = module {
     factory<MonsterRemoteRepository> { MonsterRemoteRepositoryImpl(get(), get()) }
     factory<MonsterCacheRepository> { MonsterCacheRepositoryImpl(get()) }
     factory<MonsterSettingsRepository> { MonsterSettingsRepositoryImpl(get()) }
-    factory {
-        createPreferencesDataSource() ?: DefaultPreferencesDataSource()
-    }
-    single { PreferencesRepository(get()) }
-    single<CompendiumRepository> { get<PreferencesRepository>() }
-    single<MeasurementUnitRepository> { get<PreferencesRepository>() }
+    single { MonsterPreferencesRepository(get()) }
+    single<CompendiumRepository> { get<MonsterPreferencesRepository>() }
+    single<MeasurementUnitRepository> { get<MonsterPreferencesRepository>() }
     factory<SettingsMonsterDataRepository> { SettingsMonsterDataRepositoryImpl(get(), get()) }
     factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
@@ -80,7 +75,5 @@ val monsterDataModule = module {
 }.apply { includes(getAdditionalModule()) }
 
 internal expect fun getAdditionalModule(): Module
-
-internal expect fun Scope.createPreferencesDataSource(): PreferencesDataSource?
 
 internal expect fun Scope.createMonsterLocalRepository(): MonsterLocalRepository?

@@ -19,12 +19,15 @@ package br.alexandregpereira.hunter.data.settings.di
 import br.alexandregpereira.hunter.data.settings.DefaultSettingsRepository
 import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlBuilder
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import org.koin.core.scope.Scope
+import com.russhwolf.settings.Settings
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val settingsDataModule = module {
     factory { AlternativeSourceUrlBuilder(get()) }
-    factory { createRepository() ?: DefaultSettingsRepository() }
+    single { get<Settings.Factory>().create("preferences") }
+    factory<SettingsRepository> { DefaultSettingsRepository(get()) }
+    getAdditionalSettingsModule()
 }
 
-internal expect fun Scope.createRepository(): SettingsRepository?
+internal expect fun Module.getAdditionalSettingsModule()
