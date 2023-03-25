@@ -56,12 +56,15 @@ internal fun CoroutineScope.getSpeedAsync(
     monster: MonsterEntity,
     speedQueries: SpeedQueries,
     speedValueQueries: SpeedValueQueries
-): Deferred<SpeedWithValuesEntity> = async {
-    val speedEntity = speedQueries.getByMonterIndex(monster.index).executeAsOne().toLocalEntity()
+): Deferred<SpeedWithValuesEntity?> = async {
+    val speedEntity = speedQueries.getByMonterIndex(monster.index).executeAsList()
+        .firstOrNull()?.toLocalEntity() ?: return@async null
+    val speedValues = speedValueQueries.getBySpeedId(speedEntity.id).executeAsList()
+        .map { it.toLocalEntity() }.takeIf { it.isNotEmpty() } ?: return@async null
+
     SpeedWithValuesEntity(
         speed = speedEntity,
-        values = speedValueQueries.getBySpeedId(speedEntity.id).executeAsList()
-            .map { it.toLocalEntity() }
+        values = speedValues
     )
 }
 
