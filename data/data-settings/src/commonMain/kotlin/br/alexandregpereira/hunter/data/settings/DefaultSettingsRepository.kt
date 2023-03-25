@@ -17,17 +17,38 @@
 package br.alexandregpereira.hunter.data.settings
 
 import br.alexandregpereira.hunter.domain.settings.SettingsRepository
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.get
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.single
 
-//TODO Implement SQLDelight
-internal class DefaultSettingsRepository : SettingsRepository {
+internal class DefaultSettingsRepository(
+    private val settings: Settings
+) : SettingsRepository {
 
-    override fun saveSettings(values: Map<String, String>): Flow<Unit> {
-        return flowOf(Unit)
+    override fun saveString(key: String, value: String): Flow<Unit> = flow {
+        emit(settings.putString(key, value))
     }
 
-    override fun getSettingsValue(key: String, defaultValue: String): Flow<String> {
-        return flowOf(defaultValue)
+    override fun saveInt(key: String, value: Int): Flow<Unit> = flow {
+        emit(settings.putInt(key, value))
+    }
+
+    override fun saveSettings(values: Map<String, String>): Flow<Unit> {
+        return flow {
+            values.forEach { entry ->
+                saveString(entry.key, entry.value).single()
+            }
+            emit(Unit)
+        }
+    }
+
+    override fun getInt(key: String): Flow<Int?> = flow {
+        emit(settings[key])
+    }
+
+    override fun getString(key: String): Flow<String?> = flow {
+        emit(settings[key])
     }
 }

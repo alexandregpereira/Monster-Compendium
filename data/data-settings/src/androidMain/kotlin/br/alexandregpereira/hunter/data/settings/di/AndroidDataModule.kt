@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 package br.alexandregpereira.hunter.data.settings.di
 
-import br.alexandregpereira.hunter.data.settings.AndroidSettingsRepository
-import br.alexandregpereira.hunter.domain.settings.SettingsRepository
-import org.koin.core.scope.Scope
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.SharedPreferencesSettings
+import org.koin.core.module.Module
 
-internal actual fun Scope.createRepository(): SettingsRepository? {
-    return AndroidSettingsRepository(get())
+internal actual fun Module.getAdditionalSettingsModule() {
+    factory<Settings.Factory> { SharedPreferencesSettings.Factory(get()) }
 }

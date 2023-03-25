@@ -24,6 +24,6 @@ class GetMonsterImageJsonUrlUseCase(
 ) {
 
     operator fun invoke(): Flow<String> {
-        return settingsRepository.getSettingsValue(key = IMAGE_BASE_URL_KEY)
+        return settingsRepository.getValue(key = IMAGE_BASE_URL_KEY)
     }
 }

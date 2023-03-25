@@ -19,19 +19,22 @@ package br.alexandregpereira.hunter.data.monster.preferences
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
+import br.alexandregpereira.hunter.domain.settings.SettingsRepository
+import br.alexandregpereira.hunter.domain.settings.getValue
+import br.alexandregpereira.hunter.domain.settings.saveValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class PreferencesRepository(
-    private val preferencesDataSource: PreferencesDataSource
+internal class MonsterPreferencesRepository(
+    private val settingsRepository: SettingsRepository
 ) : CompendiumRepository, MeasurementUnitRepository {
 
     override fun getLastCompendiumScrollItemPosition(): Flow<Int> {
-        return preferencesDataSource.getInt(COMPENDIUM_SCROLL_ITEM_POSITION_KEY)
+        return settingsRepository.getValue(COMPENDIUM_SCROLL_ITEM_POSITION_KEY)
     }
 
     override fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit> {
-        return preferencesDataSource.save(COMPENDIUM_SCROLL_ITEM_POSITION_KEY, position)
+        return settingsRepository.saveValue(COMPENDIUM_SCROLL_ITEM_POSITION_KEY, position)
     }
 
     override fun saveMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit> {
@@ -51,11 +54,11 @@ internal class PreferencesRepository(
     }
 
     private fun saveMeasurementUnit(key: String, measurementUnit: MeasurementUnit): Flow<Unit> {
-        return preferencesDataSource.save(key, measurementUnit.name)
+        return settingsRepository.saveString(key, measurementUnit.name)
     }
 
     private fun getMeasurementUnit(key: String): Flow<MeasurementUnit> {
-        return preferencesDataSource.getString(
+        return settingsRepository.getValue(
             key,
             defaultValue = MeasurementUnit.FEET.name
         ).map {

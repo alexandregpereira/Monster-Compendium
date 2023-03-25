@@ -23,7 +23,7 @@ class GetLanguageUseCase(
 ) {
 
     operator fun invoke(): Flow<String> {
-        return settingsRepository.getSettingsValue(
+        return settingsRepository.getValue(
             key = SETTING_LANGUAGE_KEY,
             defaultValue = "en-us"
         )

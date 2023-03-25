@@ -28,7 +28,7 @@ import org.koin.core.component.inject
 
 class MonsterCompendiumFeature : KoinComponent {
 
-    private val stateHolder: MonsterCompendiumStateHolder by inject()
+    val stateHolder: MonsterCompendiumStateHolder by inject()
 
     val state: CFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
         it.asMonsterCompendiumStateIos()
@@ -41,34 +41,6 @@ class MonsterCompendiumFeature : KoinComponent {
             )
         }
     }.wrap()
-
-    fun onItemClick(index: String) {
-        stateHolder.onItemCLick(index)
-    }
-
-    fun onFirstVisibleItemChange(position: Int) {
-        stateHolder.onFirstVisibleItemChange(position)
-    }
-
-    fun onPopupOpened() {
-        stateHolder.onPopupOpened()
-    }
-
-    fun onPopupClosed() {
-        stateHolder.onPopupClosed()
-    }
-
-    fun onAlphabetIndexClicked(position: Int) {
-        stateHolder.onAlphabetIndexClicked(position)
-    }
-
-    fun onTableContentIndexClicked(position: Int) {
-        stateHolder.onTableContentIndexClicked(position)
-    }
-
-    fun onTableContentClosed() {
-        stateHolder.onTableContentClosed()
-    }
 
     private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
         return MonsterCompendiumStateIos(

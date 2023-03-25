@@ -89,7 +89,7 @@ internal class MonsterCompendiumViewModel(
     fun loadMonsters() = stateHolder.loadMonsters()
 
     override fun onItemCLick(index: String) {
-        stateHolder.onItemCLick(index)
+        stateHolder.onItemClick(index)
     }
 
     override fun onItemLongCLick(index: String) {

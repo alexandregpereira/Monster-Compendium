@@ -114,7 +114,7 @@ class MonsterCompendiumStateHolder(
             }
     }
 
-    fun onItemCLick(index: String) {
+    fun onItemClick(index: String) {
         monsterDetailEventDispatcher.dispatchEvent(MonsterDetailEvent.OnVisibilityChanges.Show(index))
     }
 
