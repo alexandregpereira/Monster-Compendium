@@ -55,6 +55,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -123,7 +124,7 @@ fun MonsterDetailScreen(
             Box(
                 modifier = Modifier
                     .height(
-                        IMAGE_HEIGHT
+                        getImageHeightInDp()
                                 + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING
                                 + MONSTER_IMAGE_COMPOSE_TOP_PADDING
                                 + contentPadding.calculateTopPadding()
@@ -227,7 +228,7 @@ private fun MonsterImageCompose(
         MonsterImages(
             images = monsters.map { ImageState(it.imageState.url, it.name) },
             pagerState = pagerState,
-            height = IMAGE_HEIGHT,
+            height = getImageHeightInDp(),
             shape = RectangleShape,
             contentPadding = PaddingValues(
                 top = MONSTER_IMAGE_COMPOSE_TOP_PADDING + contentPadding.calculateTopPadding(),
@@ -368,9 +369,14 @@ private fun MonsterTypeIcon(
     }
 }
 
+@Composable
+private fun getImageHeightInDp(): Dp {
+    val configuration = LocalConfiguration.current
+    return (configuration.screenHeightDp * 0.75).dp
+}
+
 private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
 private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
-private val IMAGE_HEIGHT = 420.dp
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
