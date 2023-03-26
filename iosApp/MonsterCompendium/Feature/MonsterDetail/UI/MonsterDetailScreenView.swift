@@ -21,7 +21,9 @@ struct MonsterDetailScreenView : View {
             ZStack(alignment: .topLeading) {
                 if state.isShowing {
                     ZStack(alignment: .topLeading) {
-                        MonsterDetailView(monster: state.monster)
+                        if !state.monsters.isEmpty {
+                            MonsterDetailView(monster: state.monsters[viewModel.initialMonsterListPositionIndex])
+                        }
                         
                         ZStack {
                             if viewModel.isLoading {
@@ -29,7 +31,7 @@ struct MonsterDetailScreenView : View {
                                 .transition(.loadingTransition)
                             }
                         }
-                        .animation(.spring(response: 3), value: viewModel.isLoading)
+                        .animation(.spring(), value: viewModel.isLoading)
                         
                         AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
                             .padding(4)
@@ -56,7 +58,7 @@ private extension AnyTransition {
     static var loadingTransition: AnyTransition {
         .asymmetric(
             insertion: .opacity.animation(.spring(response: 0.1)),
-            removal: .opacity.animation(.spring(response: 0.3))
+            removal: .opacity.animation(.spring(response: 0.5))
         )
     }
 }

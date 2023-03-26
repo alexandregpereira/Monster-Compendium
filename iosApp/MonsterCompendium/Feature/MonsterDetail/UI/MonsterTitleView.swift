@@ -22,13 +22,10 @@ struct MonsterTitleView: View {
                 .padding()
             
             Spacer()
-            
-            OptionIconView(onOptionsClicked: {})
         }
         .frame(maxWidth: .infinity)
     }
 }
-
 
 private struct OptionIconView: View {
     let onOptionsClicked: (() -> Void)?
