@@ -7,9 +7,11 @@ on:
       - dev
     paths-ignore:
       - '**.md'
+      - 'media/**'
   pull_request:
     paths-ignore:
       - '**.md'
+      - 'media/**'
 
 jobs:
   build:
