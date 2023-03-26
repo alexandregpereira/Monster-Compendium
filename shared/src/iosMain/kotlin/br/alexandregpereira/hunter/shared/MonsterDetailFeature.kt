@@ -23,11 +23,7 @@ import org.koin.core.component.inject
 
 class MonsterDetailFeature : KoinComponent {
 
-    private val stateHolder: MonsterDetailStateHolder by inject()
+    val stateHolder: MonsterDetailStateHolder by inject()
 
     val state: CFlow<MonsterDetailState> = stateHolder.state.wrap()
-
-    fun onClose() {
-        stateHolder.onClose()
-    }
 }

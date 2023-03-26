@@ -12,40 +12,34 @@ import shared
     
     @Published var isLoading: Bool = true
     @Published var state: MonsterDetailUiState = MonsterDetailUiState()
-    private let monsterDetailFeature: MonsterDetailFeature
+    @Published var initialMonsterListPositionIndex: Int = 0
+    private let feature: MonsterDetailFeature
     private var stateWatcher : Closeable? = nil
     
     init() {
-        monsterDetailFeature = MonsterDetailFeature()
-        stateWatcher = monsterDetailFeature.state.collect { (state: Monster_detailMonsterDetailState) -> Void in
+        feature = MonsterDetailFeature()
+        stateWatcher = feature.state.collect { (state: Monster_detailMonsterDetailState) -> Void in
             self.state.isShowing = state.showDetail
             self.isLoading = state.isLoading
-            if !state.monsters.isEmpty {
-                self.state.monster = state.monsters[Int(state.initialMonsterListPositionIndex)].asMonsterDetailItemUiState()
-            }
+            self.state.monsters = state.monsters.asUiState()
+            self.initialMonsterListPositionIndex = Int(state.initialMonsterListPositionIndex)
+            print("monsterIndex = \(self.feature.stateHolder.monsterIndex)")
+            print("initialMonsterListPositionIndex = \(state.initialMonsterListPositionIndex)")
+            print("isLoading = \(state.isLoading)")
+            print("showDetail = \(state.showDetail)\n")
+            print("-----------------------------------\n")
         }
     }
     
     func onClose() {
-        monsterDetailFeature.onClose()
+        feature.stateHolder.onClose()
+    }
+    
+    func onPagerChanged(_ newPagePosition: Int) {
+        feature.stateHolder.onMonsterChanged(monsterIndex: self.state.monsters[newPagePosition].id, scrolled: true)
     }
     
     deinit {
         stateWatcher?.close()
-    }
-}
-
-
-extension MonsterMonster {
-    
-    func asMonsterDetailItemUiState() -> MonsterDetailItemUiState {
-        let monster = self
-        return MonsterDetailItemUiState(
-            id: monster.index,
-            imageUrl: monster.imageData.url,
-            backgroundColorLight: monster.imageData.backgroundColor.light,
-            name: monster.name,
-            subtitle: monster.subtitle
-        )
     }
 }

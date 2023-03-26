@@ -9,5 +9,5 @@ import Foundation
 
 struct MonsterDetailUiState {
     var isShowing: Bool = false
-    var monster: MonsterDetailItemUiState = MonsterDetailItemUiState()
+    var monsters: [MonsterDetailItemUiState] = []
 }
