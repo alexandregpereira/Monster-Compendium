@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.zip
 class ChangeMonstersMeasurementUnitUseCase internal constructor(
     private val saveMeasurementUnitUseCase: SaveMeasurementUnitUseCase,
     private val saveMonstersUseCase: SaveMonstersUseCase,
-    private val getMonstersUseCase: GetMonstersUseCase
+    private val getMonstersUseCase: GetMonstersAroundIndexUseCase
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)

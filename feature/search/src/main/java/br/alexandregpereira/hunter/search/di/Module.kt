@@ -17,12 +17,12 @@
 package br.alexandregpereira.hunter.search.di
 
 import br.alexandregpereira.hunter.search.SearchViewModel
-import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
+import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val searchModule = module {
-    factory { SearchMonstersByNameUseCase(get()) }
+    factory { SearchMonstersByUseCase(get(), get(), get()) }
     viewModel {
         SearchViewModel(get(), get(), get(), get())
     }

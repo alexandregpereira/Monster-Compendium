@@ -23,7 +23,7 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispat
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.search.domain.SearchMonstersByNameUseCase
+import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
@@ -40,7 +40,7 @@ import kotlinx.coroutines.flow.onEach
 
 @OptIn(FlowPreview::class)
 internal class SearchViewModel(
-    private val searchMonstersByNameUseCase: SearchMonstersByNameUseCase,
+    private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     dispatcher: CoroutineDispatcher
