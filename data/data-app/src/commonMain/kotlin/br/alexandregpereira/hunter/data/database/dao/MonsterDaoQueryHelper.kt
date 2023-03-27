@@ -48,137 +48,135 @@ import br.alexandregpereira.hunter.database.SpeedValueQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 
-internal fun CoroutineScope.getSpeedAsync(
+fun getSpeed(
     monster: MonsterEntity,
     speedQueries: SpeedQueries,
     speedValueQueries: SpeedValueQueries
-): Deferred<SpeedWithValuesEntity?> = async {
+): SpeedWithValuesEntity? {
     val speedEntity = speedQueries.getByMonterIndex(monster.index).executeAsList()
-        .firstOrNull()?.toLocalEntity() ?: return@async null
+        .firstOrNull()?.toLocalEntity() ?: return null
     val speedValues = speedValueQueries.getBySpeedId(speedEntity.id).executeAsList()
-        .map { it.toLocalEntity() }.takeIf { it.isNotEmpty() } ?: return@async null
+        .map { it.toLocalEntity() }.takeIf { it.isNotEmpty() } ?: return null
 
-    SpeedWithValuesEntity(
+    return SpeedWithValuesEntity(
         speed = speedEntity,
         values = speedValues
     )
 }
 
-internal fun CoroutineScope.getAbilityScoresAsync(
+
+fun getAbilityScores(
     monster: MonsterEntity,
     abilityScoreQueries: AbilityScoreQueries
-): Deferred<List<AbilityScoreEntity>> = async {
-    abilityScoreQueries.getByMonterIndex(monster.index).executeAsList()
+): List<AbilityScoreEntity> {
+    return abilityScoreQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getSavingThrowsAsync(
+fun getSavingThrows(
     monster: MonsterEntity,
     savingThrowQueries: SavingThrowQueries
-): Deferred<List<SavingThrowEntity>> = async {
-    savingThrowQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SavingThrowEntity> {
+    return savingThrowQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getSkillsAsync(
+fun getSkills(
     monster: MonsterEntity,
     skillQueries: SkillQueries
-): Deferred<List<SkillEntity>> = async {
-    skillQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SkillEntity> {
+    return skillQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getDamageVulnerabilitiesAsync(
-    monster: MonsterEntity,
-    damageVulnerabilityQueries: DamageVulnerabilityQueries
-): Deferred<List<DamageVulnerabilityEntity>> = async {
-    damageVulnerabilityQueries.getByMonterIndex(monster.index).executeAsList()
-        .map { it.toLocalEntity() }
-}
-
-internal fun CoroutineScope.getDamageResistancesAsync(
-    monster: MonsterEntity,
-    damageResistanceQueries: DamageResistanceQueries
-): Deferred<List<DamageResistanceEntity>> = async {
-    damageResistanceQueries.getByMonterIndex(monster.index).executeAsList()
-        .map { it.toLocalEntity() }
-}
-
-internal fun CoroutineScope.getDamageImmunitiesAsync(
+fun getDamageImmunities(
     monster: MonsterEntity,
     damageImmunityQueries: DamageImmunityQueries
-): Deferred<List<DamageImmunityEntity>> = async {
-    damageImmunityQueries.getByMonterIndex(monster.index).executeAsList()
+): List<DamageImmunityEntity> {
+    return damageImmunityQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getConditionImmunitiesAsync(
+fun getDamageResistances(
+    monster: MonsterEntity,
+    damageResistanceQueries: DamageResistanceQueries
+): List<DamageResistanceEntity> {
+    return damageResistanceQueries.getByMonterIndex(monster.index).executeAsList()
+        .map { it.toLocalEntity() }
+}
+
+fun getDamageVulnerabilities(
+    monster: MonsterEntity,
+    damageVulnerabilityQueries: DamageVulnerabilityQueries
+): List<DamageVulnerabilityEntity> {
+    return damageVulnerabilityQueries.getByMonterIndex(monster.index).executeAsList()
+        .map { it.toLocalEntity() }
+}
+
+fun getConditionImmunities(
     monster: MonsterEntity,
     conditionQueries: ConditionQueries
-): Deferred<List<ConditionEntity>> = async {
-    conditionQueries.getByMonterIndex(monster.index).executeAsList()
+): List<ConditionEntity> {
+    return conditionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getSpecialAbilitiesAsync(
+fun getSpecialAbilities(
     monster: MonsterEntity,
     specialAbilityQueries: SpecialAbilityQueries
-): Deferred<List<SpecialAbilityEntity>> = async {
-    specialAbilityQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SpecialAbilityEntity> {
+    return specialAbilityQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getActionsAsync(
+fun getActions(
     monster: MonsterEntity,
     actionQueries: ActionQueries,
     damageDiceQueries: DamageDiceQueries
-): Deferred<List<ActionWithDamageDicesEntity>> = async {
-    actionQueries.getByMonterIndex(monster.index).executeAsList()
-        .map { it.toLocalEntity() }
+): List<ActionWithDamageDicesEntity> {
+    return actionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { action ->
+            val damageDices = damageDiceQueries.getByActionId(action.id).executeAsList()
+                .map { it.toLocalEntity() }
             ActionWithDamageDicesEntity(
-                action = action,
-                damageDices = damageDiceQueries.getByActionId(action.id)
-                    .executeAsList().map { it.toLocalEntity() }
+                action = action.toLocalEntity(),
+                damageDices = damageDices
             )
         }
 }
 
-internal fun CoroutineScope.getLegendaryActionsAsync(
+fun getLegendaryActions(
     monster: MonsterEntity,
     legendaryActionQueries: LegendaryActionQueries,
     damageDiceQueries: DamageDiceQueries
-): Deferred<List<LegendaryActionWithDamageDicesEntity>> = async {
-    legendaryActionQueries.getByMonterIndex(monster.index).executeAsList()
-        .map { it.toLocalEntity() }
-        .map { action ->
+): List<LegendaryActionWithDamageDicesEntity> {
+    return legendaryActionQueries.getByMonterIndex(monster.index).executeAsList()
+        .map { legendaryAction ->
+            val damageDices = damageDiceQueries.getByActionId(legendaryAction.id).executeAsList()
+                .map { it.toLocalEntity() }
             LegendaryActionWithDamageDicesEntity(
-                action = action,
-                damageDices = damageDiceQueries.getByActionId(action.id)
-                    .executeAsList().map { it.toLocalEntity() }
+                action = legendaryAction.toLocalEntity(),
+                damageDices = damageDices
             )
         }
 }
 
-internal fun CoroutineScope.getReactionsAsync(
+fun getReactions(
     monster: MonsterEntity,
-    reactionQueries: ReactionQueries
-): Deferred<List<ReactionEntity>> = async {
-    reactionQueries.getByMonterIndex(monster.index).executeAsList()
+    reactionQueries: ReactionQueries,
+): List<ReactionEntity> {
+    return reactionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-internal fun CoroutineScope.getSpellcastingsAsync(
+fun getSpellcastings(
     monster: MonsterEntity,
     spellcastingQueries: SpellcastingQueries,
     spellUsageQueries: SpellUsageQueries,
     spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries
-): Deferred<List<SpellcastingCompleteEntity>> = async {
-    spellcastingQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SpellcastingCompleteEntity> {
+    return spellcastingQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
         .map { spellcasting ->
             val spellUsages = spellUsageQueries.getBySpellcastingId(spellcasting.spellcastingId)

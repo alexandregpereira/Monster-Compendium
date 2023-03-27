@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
-import br.alexandregpereira.hunter.ui.compose.CircularLoading
+import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -47,7 +47,7 @@ internal fun MonsterCompendiumScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) = HunterTheme {
-    CircularLoading<MonsterCompendiumErrorState>(
+    LoadingScreen<MonsterCompendiumErrorState>(
         state = state.loadingState,
         errorContent = { errorState ->
             EmptyScreenMessage(

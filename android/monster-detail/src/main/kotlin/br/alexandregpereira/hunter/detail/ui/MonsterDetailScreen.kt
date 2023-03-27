@@ -44,10 +44,14 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -181,7 +185,7 @@ fun MonsterDetailScreen(
             scrollState.animateScrollToItem(0)
         }
     )
-    OnMonsterChanged(monsters, getPageOffset = { pagerState.getPageOffset() }, onMonsterChanged)
+    OnMonsterChanged(monsters, initialMonsterIndex, pagerState, onMonsterChanged)
 }
 
 @Composable
@@ -206,11 +210,25 @@ private fun ScrollableBackground(
 @Composable
 private fun OnMonsterChanged(
     monsters: List<MonsterState>,
-    getPageOffset: () -> Float,
+    initialMonsterIndex: Int,
+    pagerState: PagerState,
     onMonsterChanged: (monster: MonsterState) -> Unit
 ) {
-    val transitionData = getTransitionData(dataList = monsters, getPageOffset = getPageOffset)
-    onMonsterChanged(transitionData.data)
+    var initialMonsterIndexState by remember { mutableStateOf(initialMonsterIndex) }
+
+    LaunchedEffect(key1 = initialMonsterIndex) {
+        pagerState.scrollToPage(initialMonsterIndex)
+    }
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            if (initialMonsterIndexState == initialMonsterIndex) {
+                onMonsterChanged(monsters[page])
+            } else {
+                initialMonsterIndexState = initialMonsterIndex
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalPagerApi::class)

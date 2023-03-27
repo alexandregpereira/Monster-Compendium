@@ -26,52 +26,59 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Error
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Loading
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Error
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Success
 
 @Composable
-fun CircularLoading(
+fun LoadingScreen(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
+    showCircularLoading: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CircularLoading<Unit>(
-        state = if (isLoading) Loading else Success,
+    LoadingScreen<Unit>(
+        state = if (isLoading) LoadingScreen else Success,
         modifier = modifier,
+        showCircularLoading = showCircularLoading,
         content = content
     )
 }
 
 @Composable
-inline fun <reified ErrorState> CircularLoading(
-    state: CircularLoadingState,
+inline fun <reified ErrorState> LoadingScreen(
+    state: LoadingScreenState,
     modifier: Modifier = Modifier,
+    showCircularLoading: Boolean = true,
     crossinline errorContent: @Composable (ErrorState) -> Unit = {},
     crossinline content: @Composable () -> Unit
 ) {
     Crossfade(targetState = state, modifier = modifier) {
         when (it) {
-            Loading -> CircularLoadingIndicator()
+            LoadingScreen -> LoadingIndicator(showCircularLoading)
             Success -> content()
             is Error<*> -> if (it.errorState is ErrorState) errorContent(it.errorState)
         }
     }
 }
 
-sealed class CircularLoadingState {
-    object Loading : CircularLoadingState()
-    object Success : CircularLoadingState()
-    data class Error<ErrorState>(val errorState: ErrorState) : CircularLoadingState()
+sealed class LoadingScreenState {
+    object LoadingScreen : LoadingScreenState()
+    object Success : LoadingScreenState()
+    data class Error<ErrorState>(val errorState: ErrorState) : LoadingScreenState()
 }
 
 @Composable
-fun CircularLoadingIndicator() = Box(
+fun LoadingIndicator(
+    showCircularLoading: Boolean = true,
+) = Box(
     contentAlignment = Alignment.Center,
     modifier = Modifier.fillMaxSize()
 ) {
-    CircularProgressIndicator(
-        color = MaterialTheme.colors.onBackground,
-        modifier = Modifier.size(40.dp)
-    )
+    if (showCircularLoading) {
+        CircularProgressIndicator(
+            color = MaterialTheme.colors.onBackground,
+            modifier = Modifier.size(40.dp)
+        )
+    }
 }

@@ -31,7 +31,7 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAct
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -132,9 +132,9 @@ internal class MonsterCompendiumViewModel(
     private fun MonsterCompendiumState.asMonsterCompendiumViewState(): MonsterCompendiumViewState {
         return MonsterCompendiumViewState(
             loadingState = when {
-                this.errorState != null -> CircularLoadingState.Error(this.errorState)
-                this.isLoading -> CircularLoadingState.Loading
-                else -> CircularLoadingState.Success
+                this.errorState != null -> LoadingScreenState.Error(this.errorState)
+                this.isLoading -> LoadingScreenState.LoadingScreen
+                else -> LoadingScreenState.Success
             },
             items = this.items.asState(),
             alphabet = this.alphabet,

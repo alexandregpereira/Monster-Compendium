@@ -39,7 +39,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Success
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

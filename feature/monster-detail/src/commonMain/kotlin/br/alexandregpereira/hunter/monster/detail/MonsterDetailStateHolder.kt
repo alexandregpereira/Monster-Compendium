@@ -39,7 +39,6 @@ import br.alexandregpereira.hunter.state.DefaultStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -52,7 +51,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.withContext
 
 class MonsterDetailStateHolder(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
@@ -164,8 +162,8 @@ class MonsterDetailStateHolder(
         currentJob = this.cancellable()
             .map {
                 val measurementUnit = it.measurementUnit
-                getState().complete(
-                    initialMonsterIndex = it.monsterIndexSelected,
+                MonsterDetailState(
+                    initialMonsterListPositionIndex = it.monsterIndexSelected,
                     monsters = it.monsters,
                     options = when (measurementUnit) {
                         MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
@@ -180,13 +178,15 @@ class MonsterDetailStateHolder(
                 setState { copy(isLoading = false) }
                 it.printStackTrace()
             }.onEach { state ->
-                setState { state }
+                setState {
+                    complete(
+                        initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,
+                        monsters = state.monsters,
+                        options = state.options
+                    )
+                }
             }
             .launchIn(scope)
-    }
-
-    private suspend fun getState(): MonsterDetailState = withContext(Dispatchers.Main) {
-        state.value
     }
 
     private fun setState(block: MonsterDetailState.() -> MonsterDetailState) {

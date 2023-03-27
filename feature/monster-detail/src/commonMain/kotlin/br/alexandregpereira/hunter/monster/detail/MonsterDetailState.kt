@@ -34,12 +34,12 @@ val MonsterDetailState.HideOptions: MonsterDetailState
     get() = this.copy(showOptions = false)
 
 fun MonsterDetailState.complete(
-    initialMonsterIndex: Int,
+    initialMonsterListPositionIndex: Int,
     monsters: List<Monster>,
     options: List<MonsterDetailOptionState>
 ): MonsterDetailState = this.copy(
     isLoading = false,
-    initialMonsterListPositionIndex = initialMonsterIndex,
+    initialMonsterListPositionIndex = initialMonsterListPositionIndex,
     monsters = monsters,
     options = options
 )

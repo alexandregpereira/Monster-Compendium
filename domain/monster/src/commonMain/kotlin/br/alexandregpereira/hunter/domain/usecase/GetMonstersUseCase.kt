@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.single
 
 class GetMonstersUseCase internal constructor(
@@ -27,26 +27,50 @@ class GetMonstersUseCase internal constructor(
     private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
 ) {
 
-    private val monsterPagerScrollLimit = 100
+    operator fun invoke(monsterIndex: String): Flow<List<Monster>> = flow {
+        val monsterPreviews = getMonsterPreviewsCacheUseCase().sortMonstersByNameAndGroup().single()
+        val position = monsterPreviews.indexOfFirst { it.index == monsterIndex }
+        val initialMonsterPagerScrollLimit = 5
+        val completeMonsters = getCompleteMonsters(
+            monsterPreviews = monsterPreviews,
+            monsterPosition = position,
+            monsterPagerScrollLimit = initialMonsterPagerScrollLimit
+        )
+        emit(completeMonsters)
 
-    operator fun invoke(monsterIndex: String): Flow<List<Monster>> {
-        return getMonsterPreviewsCacheUseCase()
-            .sortMonstersByNameAndGroup()
-            .mapNotNull { monstersPreview ->
-                val monsterIndexes = monstersPreview.map { it.index }
+        val newMonsterPagerScrollLimit = 250
+        val newMonsterPosition =
+            (position + 1 + initialMonsterPagerScrollLimit + newMonsterPagerScrollLimit)
+                .coerceIn(0..monsterPreviews.lastIndex)
+        emit(
+            getCompleteMonsters(
+                monsterPreviews = completeMonsters,
+                monsterPosition = newMonsterPosition,
+                monsterPagerScrollLimit = newMonsterPagerScrollLimit
+            )
+        )
+    }
 
-                monsterIndexes.indexOf(monsterIndex)
-                    .takeIf { it >= 0 }
-                    ?.let { position ->
-                        val fromIndex = position - monsterPagerScrollLimit
-                        val toIndex = position + monsterPagerScrollLimit
-                        monsterIndexes.subList(
-                            fromIndex.coerceAtLeast(0),
-                            toIndex.coerceAtMost(monstersPreview.size)
-                        )
-                    }?.let { monsterIndexesSubList ->
-                        getMonstersByIdsUseCase(monsterIndexesSubList).single()
-                    }
+    private suspend fun getCompleteMonsters(
+        monsterPreviews: List<Monster>, monsterPosition: Int, monsterPagerScrollLimit: Int
+    ): List<Monster> {
+        val monsterIndexes = monsterPreviews.map { it.index }
+
+        val fromIndex = monsterPosition - monsterPagerScrollLimit
+        val toIndex = monsterPosition + monsterPagerScrollLimit + 1
+        val monsterIndexesSubList = monsterIndexes.subList(
+            fromIndex.coerceAtLeast(0), toIndex.coerceAtMost(monsterPreviews.size)
+        )
+
+        return getMonstersByIdsUseCase(monsterIndexesSubList).single().toSet()
+            .let { completeMonsters ->
+                val newMonsters = monsterPreviews.toMutableList()
+                completeMonsters.forEach { completeMonster ->
+                    newMonsters[monsterPreviews.indexOfFirst {
+                        it.index == completeMonster.index
+                    }] = completeMonster
+                }
+                newMonsters
             }
     }
 }
