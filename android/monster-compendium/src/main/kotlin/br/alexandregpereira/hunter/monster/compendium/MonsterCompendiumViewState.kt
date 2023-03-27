@@ -17,17 +17,13 @@
 package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
 import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Error
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Loading
-import br.alexandregpereira.hunter.ui.compose.CircularLoadingState.Success
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
 
 data class MonsterCompendiumViewState(
-    val loadingState: CircularLoadingState = Loading,
+    val loadingState: LoadingScreenState = LoadingScreen,
     val items: List<CompendiumItemState> = emptyList(),
     val alphabet: List<String> = emptyList(),
     val alphabetSelectedIndex: Int = -1,
@@ -51,53 +47,3 @@ internal fun MonsterCompendiumViewState.saveState(
     savedStateHandle["isShowingMonsterFolderPreview"] = this.isShowingMonsterFolderPreview
     return this
 }
-
-fun MonsterCompendiumViewState.loading(isLoading: Boolean): MonsterCompendiumViewState {
-    return this.copy(loadingState = if (isLoading) Loading else Success)
-}
-
-fun MonsterCompendiumViewState.complete(
-    items: List<CompendiumItemState>,
-    alphabet: List<String>,
-    tableContent: List<TableContentItemState>,
-    alphabetSelectedIndex: Int,
-    tableContentIndex: Int,
-) = this.copy(
-    loadingState = Success,
-    items = items,
-    alphabet = alphabet,
-    tableContent = tableContent,
-    alphabetSelectedIndex = alphabetSelectedIndex,
-    tableContentIndex = tableContentIndex,
-)
-
-fun MonsterCompendiumViewState.error(): MonsterCompendiumViewState {
-    return this.copy(loadingState = Error(NO_INTERNET_CONNECTION))
-}
-
-fun MonsterCompendiumViewState.tableContentIndex(
-    tableContentIndex: Int,
-    alphabetSelectedIndex: Int,
-) = this.copy(
-    tableContentIndex = tableContentIndex,
-    alphabetSelectedIndex = alphabetSelectedIndex
-)
-
-fun MonsterCompendiumViewState.popupOpened(
-    popupOpened: Boolean,
-) = this.copy(
-    popupOpened = popupOpened,
-)
-
-fun MonsterCompendiumViewState.tableContentOpened(
-    tableContentOpened: Boolean,
-) = this.copy(
-    tableContentOpened = tableContentOpened,
-)
-
-fun MonsterCompendiumViewState.showMonsterFolderPreview(
-    isShowing: Boolean,
-    savedStateHandle: SavedStateHandle
-) = this.copy(
-    isShowingMonsterFolderPreview = isShowing,
-).saveState(savedStateHandle)

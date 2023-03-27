@@ -85,8 +85,12 @@ internal class MonsterDaoImpl(
 
     override suspend fun getMonsters(indexes: List<String>): List<MonsterCompleteEntity> =
         withContext(dispatcher) {
-            monsterQueries.getMonsterPreviewsByIndexes(indexes).executeAsList()
-        }.queryMonsterCompleteEntities()
+            monsterQueries.transactionWithResult {
+                monsterQueries.getMonsterPreviewsByIndexes(indexes).executeAsList().run {
+                    queryMonsterCompleteEntities()
+                }
+            }
+        }
 
     override suspend fun getMonster(index: String): MonsterCompleteEntity =
         withContext(dispatcher) {
@@ -180,45 +184,43 @@ internal class MonsterDaoImpl(
         return this.map(transform).reduceList()
     }
 
-    private suspend fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> =
-        withContext(dispatcher) {
-            map { monster ->
-                val speed = getSpeedAsync(monster, speedQueries, speedValueQueries)
-                val abilityScores = getAbilityScoresAsync(monster, abilityScoreQueries)
-                val actions = getActionsAsync(monster, actionQueries, damageDiceQueries)
-                val reactions = getReactionsAsync(monster, reactionQueries)
-                val specialAbilities = getSpecialAbilitiesAsync(monster, specialAbilityQueries)
-                val legendaryActions = getLegendaryActionsAsync(
-                    monster, legendaryActionQueries, damageDiceQueries
-                )
-                val spellcastings = getSpellcastingsAsync(
-                    monster, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries
-                )
-                val savingThrows = getSavingThrowsAsync(monster, savingThrowQueries)
-                val skills = getSkillsAsync(monster, skillQueries)
-                val damageVulnerabilities = getDamageVulnerabilitiesAsync(
-                    monster, damageVulnerabilityQueries
-                )
-                val damageResistances = getDamageResistancesAsync(monster, damageResistanceQueries)
-                val damageImmunities = getDamageImmunitiesAsync(monster, damageImmunityQueries)
-                val conditionImmunities = getConditionImmunitiesAsync(monster, conditionQueries)
+    private fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> =
+        map { monster ->
+            val speed = getSpeed(monster, speedQueries, speedValueQueries)
+            val abilityScores = getAbilityScores(monster, abilityScoreQueries)
+            val actions = getActions(monster, actionQueries, damageDiceQueries)
+            val reactions = getReactions(monster, reactionQueries)
+            val specialAbilities = getSpecialAbilities(monster, specialAbilityQueries)
+            val legendaryActions = getLegendaryActions(
+                monster, legendaryActionQueries, damageDiceQueries
+            )
+            val spellcastings = getSpellcastings(
+                monster, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries
+            )
+            val savingThrows = getSavingThrows(monster, savingThrowQueries)
+            val skills = getSkills(monster, skillQueries)
+            val damageVulnerabilities = getDamageVulnerabilities(
+                monster, damageVulnerabilityQueries
+            )
+            val damageResistances = getDamageResistances(monster, damageResistanceQueries)
+            val damageImmunities = getDamageImmunities(monster, damageImmunityQueries)
+            val conditionImmunities = getConditionImmunities(monster, conditionQueries)
 
-                MonsterCompleteEntity(
-                    monster = monster.toLocalEntity(),
-                    speed = speed.await(),
-                    abilityScores = abilityScores.await(),
-                    actions = actions.await(),
-                    reactions = reactions.await(),
-                    specialAbilities = specialAbilities.await(),
-                    legendaryActions = legendaryActions.await(),
-                    spellcastings = spellcastings.await(),
-                    savingThrows = savingThrows.await(),
-                    skills = skills.await(),
-                    damageVulnerabilities = damageVulnerabilities.await(),
-                    damageResistances = damageResistances.await(),
-                    damageImmunities = damageImmunities.await(),
-                    conditionImmunities = conditionImmunities.await()
-                )
-            }
+            MonsterCompleteEntity(
+                monster = monster.toLocalEntity(),
+                speed = speed,
+                abilityScores = abilityScores,
+                actions = actions,
+                reactions = reactions,
+                specialAbilities = specialAbilities,
+                legendaryActions = legendaryActions,
+                spellcastings = spellcastings,
+                savingThrows = savingThrows,
+                skills = skills,
+                damageVulnerabilities = damageVulnerabilities,
+                damageResistances = damageResistances,
+                damageImmunities = damageImmunities,
+                conditionImmunities = conditionImmunities
+            )
         }
 }

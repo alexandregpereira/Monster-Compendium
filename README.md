@@ -44,7 +44,7 @@ The following is an overview of the key technologies and libraries used in this 
 
 ## App Architecture
 
-The app's architecture is organized into feature, domain, and data layers, as illustrated in the image below:
+The app's architecture is based on the Model-View-Intent (MVI) pattern with Clean Architecture principles, implemented in a multi-module project, as illustrated in the image below:
 
 ![](media/app-architecture.jpg)
 

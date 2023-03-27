@@ -27,12 +27,13 @@ import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.zip
 
 class GetMonsterDetailUseCase internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
@@ -43,12 +44,13 @@ class GetMonsterDetailUseCase internal constructor(
     private val getSpellsByIdsUseCase: GetSpellsByIdsUseCase,
 ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(
         index: String,
         indexes: List<String>,
     ): Flow<MonsterDetail> {
-        return getMonsters(index, indexes)
-            .zip(getMeasurementUnitUseCase()) { monsters, measurementUnit ->
+        return getMeasurementUnitUseCase().flatMapLatest { measurementUnit ->
+            getMonsters(index, indexes).map { monsters ->
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw RuntimeException("Monster not found")
 
@@ -81,6 +83,7 @@ class GetMonsterDetailUseCase internal constructor(
                     monsters = monsters.appendLore(loreList).appendSpells(spells)
                 )
             }
+        }
     }
 
     private fun List<Monster>.appendLore(loreList: List<MonsterLore>): List<Monster> {

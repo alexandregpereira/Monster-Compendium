@@ -31,7 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
-import br.alexandregpereira.hunter.ui.compose.CircularLoading
+import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
@@ -50,13 +50,14 @@ fun MonsterDetailFeature(
     }
 
     SwipeVerticalToDismiss(visible = viewState.showDetail, onClose = viewModel::onClose) {
-        CircularLoading(
+        LoadingScreen(
             isLoading = viewState.isLoading,
+            showCircularLoading = false,
             modifier = Modifier
                 .background(MaterialTheme.colors.surface)
                 .clip(Shapes.large)
         ) {
-            if (viewState.monsters.isEmpty()) return@CircularLoading
+            if (viewState.monsters.isEmpty()) return@LoadingScreen
             MonsterDetailScreen(
                 viewState.monsters,
                 viewState.initialMonsterListPositionIndex,
