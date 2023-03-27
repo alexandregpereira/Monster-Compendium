@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.monster.detail.domain
 
-import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
@@ -25,8 +24,9 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersAroundIndexUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.single
 
 class GetMonsterDetailUseCase internal constructor(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
-    private val getMonstersUseCase: GetMonstersUseCase,
+    private val getMonstersUseCase: GetMonstersAroundIndexUseCase,
     private val getMonsterUseCase: GetMonsterUseCase,
     private val getMonstersByIds: GetMonstersByIdsUseCase,
     private val getMonstersLoreByIdsUseCase: GetMonstersLoreByIdsUseCase,
