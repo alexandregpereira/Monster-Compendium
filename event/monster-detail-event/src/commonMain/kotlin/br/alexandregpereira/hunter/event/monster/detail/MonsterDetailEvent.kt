@@ -21,7 +21,8 @@ sealed class MonsterDetailEvent {
     sealed class OnVisibilityChanges : MonsterDetailEvent() {
         data class Show(
             val index: String,
-            val indexes: List<String> = emptyList()
+            val indexes: List<String> = emptyList(),
+            val enableMonsterPageChangesEventDispatch: Boolean = false
         ) : OnVisibilityChanges()
 
         object Hide : OnVisibilityChanges()

@@ -18,7 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium.state
 
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterPageChanges
@@ -115,7 +115,9 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onItemClick(index: String) {
-        monsterDetailEventDispatcher.dispatchEvent(MonsterDetailEvent.OnVisibilityChanges.Show(index))
+        monsterDetailEventDispatcher.dispatchEvent(
+            Show(index, enableMonsterPageChangesEventDispatch = true)
+        )
     }
 
     fun onItemLongCLick(index: String) {
