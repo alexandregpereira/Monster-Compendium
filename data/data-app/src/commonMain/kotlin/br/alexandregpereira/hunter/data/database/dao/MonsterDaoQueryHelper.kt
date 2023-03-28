@@ -48,94 +48,105 @@ import br.alexandregpereira.hunter.database.SpeedValueQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
-fun getSpeed(
+internal suspend fun getSpeed(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     speedQueries: SpeedQueries,
     speedValueQueries: SpeedValueQueries
-): SpeedWithValuesEntity? {
+): SpeedWithValuesEntity? = withContext(dispatcher) {
     val speedEntity = speedQueries.getByMonterIndex(monster.index).executeAsList()
-        .firstOrNull()?.toLocalEntity() ?: return null
+        .firstOrNull()?.toLocalEntity() ?: return@withContext null
     val speedValues = speedValueQueries.getBySpeedId(speedEntity.id).executeAsList()
-        .map { it.toLocalEntity() }.takeIf { it.isNotEmpty() } ?: return null
+        .map { it.toLocalEntity() }.takeIf { it.isNotEmpty() } ?: return@withContext null
 
-    return SpeedWithValuesEntity(
+    SpeedWithValuesEntity(
         speed = speedEntity,
         values = speedValues
     )
 }
 
-
-fun getAbilityScores(
+internal suspend fun getAbilityScores(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     abilityScoreQueries: AbilityScoreQueries
-): List<AbilityScoreEntity> {
-    return abilityScoreQueries.getByMonterIndex(monster.index).executeAsList()
+): List<AbilityScoreEntity> = withContext(dispatcher) {
+    abilityScoreQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getSavingThrows(
+internal suspend fun getSavingThrows(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     savingThrowQueries: SavingThrowQueries
-): List<SavingThrowEntity> {
-    return savingThrowQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SavingThrowEntity> = withContext(dispatcher) {
+    savingThrowQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getSkills(
+internal suspend fun getSkills(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     skillQueries: SkillQueries
-): List<SkillEntity> {
-    return skillQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SkillEntity> = withContext(dispatcher) {
+    skillQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getDamageImmunities(
+internal suspend fun getDamageImmunities(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     damageImmunityQueries: DamageImmunityQueries
-): List<DamageImmunityEntity> {
-    return damageImmunityQueries.getByMonterIndex(monster.index).executeAsList()
+): List<DamageImmunityEntity> = withContext(dispatcher) {
+    damageImmunityQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getDamageResistances(
+internal suspend fun getDamageResistances(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     damageResistanceQueries: DamageResistanceQueries
-): List<DamageResistanceEntity> {
-    return damageResistanceQueries.getByMonterIndex(monster.index).executeAsList()
+): List<DamageResistanceEntity> = withContext(dispatcher) {
+    damageResistanceQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getDamageVulnerabilities(
+internal suspend fun getDamageVulnerabilities(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     damageVulnerabilityQueries: DamageVulnerabilityQueries
-): List<DamageVulnerabilityEntity> {
-    return damageVulnerabilityQueries.getByMonterIndex(monster.index).executeAsList()
+): List<DamageVulnerabilityEntity> = withContext(dispatcher) {
+    damageVulnerabilityQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getConditionImmunities(
+internal suspend fun getConditionImmunities(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     conditionQueries: ConditionQueries
-): List<ConditionEntity> {
-    return conditionQueries.getByMonterIndex(monster.index).executeAsList()
+): List<ConditionEntity> = withContext(dispatcher) {
+    conditionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getSpecialAbilities(
+internal suspend fun getSpecialAbilities(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     specialAbilityQueries: SpecialAbilityQueries
-): List<SpecialAbilityEntity> {
-    return specialAbilityQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SpecialAbilityEntity> = withContext(dispatcher) {
+    specialAbilityQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getActions(
+internal suspend fun getActions(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     actionQueries: ActionQueries,
     damageDiceQueries: DamageDiceQueries
-): List<ActionWithDamageDicesEntity> {
-    return actionQueries.getByMonterIndex(monster.index).executeAsList()
+): List<ActionWithDamageDicesEntity> = withContext(dispatcher) {
+    actionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { action ->
             val damageDices = damageDiceQueries.getByActionId(action.id).executeAsList()
                 .map { it.toLocalEntity() }
@@ -146,12 +157,13 @@ fun getActions(
         }
 }
 
-fun getLegendaryActions(
+internal suspend fun getLegendaryActions(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     legendaryActionQueries: LegendaryActionQueries,
     damageDiceQueries: DamageDiceQueries
-): List<LegendaryActionWithDamageDicesEntity> {
-    return legendaryActionQueries.getByMonterIndex(monster.index).executeAsList()
+): List<LegendaryActionWithDamageDicesEntity> = withContext(dispatcher) {
+    legendaryActionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { legendaryAction ->
             val damageDices = damageDiceQueries.getByActionId(legendaryAction.id).executeAsList()
                 .map { it.toLocalEntity() }
@@ -162,21 +174,23 @@ fun getLegendaryActions(
         }
 }
 
-fun getReactions(
+internal suspend fun getReactions(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     reactionQueries: ReactionQueries,
-): List<ReactionEntity> {
-    return reactionQueries.getByMonterIndex(monster.index).executeAsList()
+): List<ReactionEntity> = withContext(dispatcher) {
+    reactionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
 }
 
-fun getSpellcastings(
+internal suspend fun getSpellcastings(
+    dispatcher: CoroutineDispatcher,
     monster: MonsterEntity,
     spellcastingQueries: SpellcastingQueries,
     spellUsageQueries: SpellUsageQueries,
     spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries
-): List<SpellcastingCompleteEntity> {
-    return spellcastingQueries.getByMonterIndex(monster.index).executeAsList()
+): List<SpellcastingCompleteEntity> = withContext(dispatcher) {
+    spellcastingQueries.getByMonterIndex(monster.index).executeAsList()
         .map { it.toLocalEntity() }
         .map { spellcasting ->
             val spellUsages = spellUsageQueries.getBySpellcastingId(spellcasting.spellcastingId)

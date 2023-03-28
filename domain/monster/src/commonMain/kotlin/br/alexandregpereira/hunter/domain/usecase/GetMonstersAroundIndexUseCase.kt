@@ -38,7 +38,7 @@ class GetMonstersAroundIndexUseCase internal constructor(
         )
         emit(completeMonsters)
 
-        val newMonsterPagerScrollLimit = 250
+        val newMonsterPagerScrollLimit = 100
         val newMonsterPosition =
             (position + 1 + initialMonsterPagerScrollLimit + newMonsterPagerScrollLimit)
                 .coerceIn(0..monsterPreviews.lastIndex)

@@ -85,11 +85,8 @@ internal class MonsterDaoImpl(
 
     override suspend fun getMonsters(indexes: List<String>): List<MonsterCompleteEntity> =
         withContext(dispatcher) {
-            monsterQueries.transactionWithResult {
-                monsterQueries.getMonsterPreviewsByIndexes(indexes).executeAsList().run {
-                    queryMonsterCompleteEntities()
-                }
-            }
+            monsterQueries.getMonsterPreviewsByIndexes(indexes).executeAsList()
+                .queryMonsterCompleteEntities()
         }
 
     override suspend fun getMonster(index: String): MonsterCompleteEntity =
@@ -184,27 +181,32 @@ internal class MonsterDaoImpl(
         return this.map(transform).reduceList()
     }
 
-    private fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> =
+    private suspend fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> =
         map { monster ->
-            val speed = getSpeed(monster, speedQueries, speedValueQueries)
-            val abilityScores = getAbilityScores(monster, abilityScoreQueries)
-            val actions = getActions(monster, actionQueries, damageDiceQueries)
-            val reactions = getReactions(monster, reactionQueries)
-            val specialAbilities = getSpecialAbilities(monster, specialAbilityQueries)
+            val speed = getSpeed(dispatcher, monster, speedQueries, speedValueQueries)
+            val abilityScores = getAbilityScores(dispatcher, monster, abilityScoreQueries)
+            val actions = getActions(dispatcher, monster, actionQueries, damageDiceQueries)
+            val reactions = getReactions(dispatcher, monster, reactionQueries)
+            val specialAbilities = getSpecialAbilities(dispatcher, monster, specialAbilityQueries)
             val legendaryActions = getLegendaryActions(
-                monster, legendaryActionQueries, damageDiceQueries
+                dispatcher, monster, legendaryActionQueries, damageDiceQueries
             )
             val spellcastings = getSpellcastings(
-                monster, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries
+                dispatcher,
+                monster,
+                spellcastingQueries,
+                spellUsageQueries,
+                spellUsageCrossRefQueries
             )
-            val savingThrows = getSavingThrows(monster, savingThrowQueries)
-            val skills = getSkills(monster, skillQueries)
+            val savingThrows = getSavingThrows(dispatcher, monster, savingThrowQueries)
+            val skills = getSkills(dispatcher, monster, skillQueries)
             val damageVulnerabilities = getDamageVulnerabilities(
-                monster, damageVulnerabilityQueries
+                dispatcher, monster, damageVulnerabilityQueries
             )
-            val damageResistances = getDamageResistances(monster, damageResistanceQueries)
-            val damageImmunities = getDamageImmunities(monster, damageImmunityQueries)
-            val conditionImmunities = getConditionImmunities(monster, conditionQueries)
+            val damageResistances =
+                getDamageResistances(dispatcher, monster, damageResistanceQueries)
+            val damageImmunities = getDamageImmunities(dispatcher, monster, damageImmunityQueries)
+            val conditionImmunities = getConditionImmunities(dispatcher, monster, conditionQueries)
 
             MonsterCompleteEntity(
                 monster = monster.toLocalEntity(),
