@@ -76,6 +76,7 @@ class MonsterDetailStateHolder(
         private set
 
     private var currentJob: Job? = null
+    private var enableMonsterPageChangesEventDispatch = false
 
     init {
         observeEvents()
@@ -90,6 +91,7 @@ class MonsterDetailStateHolder(
         monsterDetailEventListener.collectOnVisibilityChanges { event ->
             when (event) {
                 is Show -> {
+                    enableMonsterPageChangesEventDispatch = event.enableMonsterPageChangesEventDispatch
                     getMonstersByInitialIndex(event.index, event.indexes)
                     setState { copy(showDetail = true) }
                 }
@@ -105,7 +107,7 @@ class MonsterDetailStateHolder(
     }
 
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
-        if (scrolled && monsterIndex != this.monsterIndex) {
+        if (enableMonsterPageChangesEventDispatch && scrolled && monsterIndex != this.monsterIndex) {
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
         this.monsterIndex = monsterIndex
