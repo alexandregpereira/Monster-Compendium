@@ -46,8 +46,7 @@ android {
         val versionCodePerSeconds = 60 // Seconds to increment the version code
         versionCode = (timestampDiff / versionCodePerSeconds).toInt()
 
-        val versionNameTimestamp = localDateTime.format(DateTimeFormatter.ofPattern("yyMMddHHmm"))
-        versionName = versionNameTimestamp.chunked(2).joinToString(".")
+        versionName = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd.HHmm"))
         versionNameSuffix = when {
             hasProperty("dev") -> {
                 "-dev"

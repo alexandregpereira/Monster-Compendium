@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS LegendaryActionEntity (`id` TEXT NOT NULL, `attackBonus` INTEGER, `description` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
 
+CREATE INDEX index_LegendaryActionEntity_monsterIndex ON LegendaryActionEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO LegendaryActionEntity VALUES ?;
 

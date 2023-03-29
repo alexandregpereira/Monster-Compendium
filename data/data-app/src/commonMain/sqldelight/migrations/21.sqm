@@ -1,0 +1,31 @@
+CREATE INDEX index_AbilityScoreEntity_monsterIndex ON AbilityScoreEntity (monsterIndex);
+
+CREATE INDEX index_ActionEntity_monsterIndex ON ActionEntity (monsterIndex);
+
+CREATE INDEX index_ConditionEntity_monsterIndex ON ConditionEntity (monsterIndex);
+
+CREATE INDEX index_DamageDiceEntity_actionId ON DamageDiceEntity (actionId);
+
+CREATE INDEX index_DamageImmunityEntity_monsterIndex ON DamageImmunityEntity (monsterIndex);
+
+CREATE INDEX index_DamageResistanceEntity_monsterIndex ON DamageResistanceEntity (monsterIndex);
+
+CREATE INDEX index_DamageVulnerabilityEntity_monsterIndex ON DamageVulnerabilityEntity (monsterIndex);
+
+CREATE INDEX index_LegendaryActionEntity_monsterIndex ON LegendaryActionEntity (monsterIndex);
+
+CREATE INDEX index_ReactionEntity_monsterIndex ON ReactionEntity (monsterIndex);
+
+CREATE INDEX index_SavingThrowEntity_monsterIndex ON SavingThrowEntity (monsterIndex);
+
+CREATE INDEX index_SkillEntity_monsterIndex ON SkillEntity (monsterIndex);
+
+CREATE INDEX index_SpecialAbilityEntity_monsterIndex ON SpecialAbilityEntity (monsterIndex);
+
+CREATE INDEX index_SpeedEntity_monsterIndex ON SpeedEntity (monsterIndex);
+
+CREATE INDEX index_SpeedValueEntity_speedId ON SpeedValueEntity (speedId);
+
+CREATE INDEX index_SpellcastingEntity_monsterIndex ON SpellcastingEntity (monsterIndex);
+
+CREATE INDEX index_SpellUsageEntity_spellcastingId ON SpellUsageEntity (spellcastingId);

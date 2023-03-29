@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS SavingThrowEntity (`index` TEXT NOT NULL, `modifier` INTEGER NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
 
+CREATE INDEX index_SavingThrowEntity_monsterIndex ON SavingThrowEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO SavingThrowEntity VALUES ?;
 

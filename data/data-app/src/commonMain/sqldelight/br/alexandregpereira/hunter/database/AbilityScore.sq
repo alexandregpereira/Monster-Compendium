@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS AbilityScoreEntity (`type` TEXT NOT NULL, `value` INTEGER NOT NULL, `modifier` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`type`, `monsterIndex`));
 
+CREATE INDEX index_AbilityScoreEntity_monsterIndex ON AbilityScoreEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO AbilityScoreEntity VALUES ?;
 

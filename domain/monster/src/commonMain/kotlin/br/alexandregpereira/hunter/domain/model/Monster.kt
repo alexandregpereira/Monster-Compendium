@@ -59,3 +59,5 @@ data class Color(
     val light: String = "",
     val dark: String = ""
 )
+
+fun Monster.isComplete() = abilityScores.isNotEmpty()
