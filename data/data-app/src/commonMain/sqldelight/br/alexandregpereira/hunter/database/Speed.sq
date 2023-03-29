@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS SpeedEntity (`id` TEXT NOT NULL, `hover` INTEGER NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
 
+CREATE INDEX index_SpeedEntity_monsterIndex ON SpeedEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO SpeedEntity VALUES ?;
 

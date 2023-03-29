@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS SpellcastingEntity (`spellcastingId` TEXT NOT NULL, `type` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`spellcastingId`));
 
+CREATE INDEX index_SpellcastingEntity_monsterIndex ON SpellcastingEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO SpellcastingEntity VALUES ?;
 

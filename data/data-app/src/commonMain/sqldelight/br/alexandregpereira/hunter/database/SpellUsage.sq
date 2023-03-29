@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS SpellUsageEntity (`spellUsageId` TEXT NOT NULL, `group` TEXT NOT NULL, `spellcastingId` TEXT NOT NULL, PRIMARY KEY(`spellUsageId`));
 
+CREATE INDEX index_SpellUsageEntity_spellcastingId ON SpellUsageEntity (spellcastingId);
+
 insert:
 INSERT OR REPLACE INTO SpellUsageEntity VALUES ?;
 

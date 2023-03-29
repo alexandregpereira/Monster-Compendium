@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS DamageResistanceEntity (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
 
+CREATE INDEX index_DamageResistanceEntity_monsterIndex ON DamageResistanceEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO DamageResistanceEntity VALUES ?;
 

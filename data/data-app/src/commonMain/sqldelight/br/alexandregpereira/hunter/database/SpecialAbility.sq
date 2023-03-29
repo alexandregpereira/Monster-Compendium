@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS SpecialAbilityEntity (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`));
 
+CREATE INDEX index_SpecialAbilityEntity_monsterIndex ON SpecialAbilityEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO SpecialAbilityEntity VALUES ?;
 
