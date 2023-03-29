@@ -34,7 +34,7 @@ jobs:
     - name: Build with Gradle
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew build
+      run: ./gradlew build -Pdev
       
     - name: Upload the test report
       if: failure()
@@ -49,5 +49,5 @@ jobs:
     - name:  Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-release
-        path: app/build/outputs/apk/release/app-release.apk
+        name: app-dev-release
+        path: app/build/outputs/apk/release/app-dev-release.apk
