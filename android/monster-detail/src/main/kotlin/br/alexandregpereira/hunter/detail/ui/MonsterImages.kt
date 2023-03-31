@@ -16,8 +16,11 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
@@ -25,15 +28,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import kotlin.math.absoluteValue
 
 data class ImageState(val url: String, val contentDescription: String)
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MonsterImages(
     images: List<ImageState>,
@@ -42,7 +41,7 @@ fun MonsterImages(
     shape: Shape,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = HorizontalPager(
-    count = images.size,
+    pageCount = images.size,
     state = pagerState
 ) { pagePosition ->
     val image = images[pagePosition]
@@ -53,7 +52,7 @@ fun MonsterImages(
         shape = shape,
         graphicsLayerBlock = {
             val fraction =
-                1f - calculateCurrentOffsetForPage(pagePosition).absoluteValue.coerceIn(0f, 1f)
+                1f - pagerState.calculateCurrentOffsetForPage(pagePosition).absoluteValue.coerceIn(0f, 1f)
 
             lerp(
                 start = 0.4f,
@@ -66,4 +65,9 @@ fun MonsterImages(
         },
         modifier = Modifier.padding(contentPadding)
     )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun PagerState.calculateCurrentOffsetForPage(page: Int): Float {
+    return (this.currentPage - page) + this.currentPageOffsetFraction
 }

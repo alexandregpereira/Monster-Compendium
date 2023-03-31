@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 
 package br.alexandregpereira.hunter.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
@@ -35,7 +36,6 @@ import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
-import com.google.accompanist.pager.ExperimentalPagerApi
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

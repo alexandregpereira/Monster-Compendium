@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
 package br.alexandregpereira.hunter.ui.transition
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerDefaults
-import com.google.accompanist.pager.PagerState
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> AlphaTransition(
     dataList: List<Data>,
@@ -55,7 +55,7 @@ fun <Data> AlphaTransition(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> HorizontalSlideTransition(
     dataList: List<Data>,
@@ -90,7 +90,7 @@ fun <Data> HorizontalSlideTransition(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalSnapperApi::class)
 @Composable
 fun <Data> Transition(
     dataList: List<Data>,
@@ -120,6 +120,7 @@ fun <Data> Transition(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.transitionHorizontalScrollable(
     pagerState: PagerState
 ): Modifier = composed {
@@ -146,9 +147,9 @@ fun <Data> getTransitionData(
     return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 fun PagerState.getPageOffset(): Float {
-    return (this.currentPage + this.currentPageOffset).coerceAtLeast(0f)
+    return (this.currentPage + this.currentPageOffsetFraction).coerceAtLeast(0f)
 }
 
 data class TransitionData<Data>(

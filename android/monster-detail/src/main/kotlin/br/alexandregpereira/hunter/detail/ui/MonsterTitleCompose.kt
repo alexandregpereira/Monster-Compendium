@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -37,11 +38,10 @@ import br.alexandregpereira.hunter.ui.compose.HeaderFontSize
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.HorizontalSlideTransition
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MonsterTitleCompose(
     monsterTitleStates: List<MonsterTitleState>,
@@ -108,7 +108,7 @@ data class MonsterTitleState(
 
 @Preview
 @Composable
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 private fun MonsterTitleWithSubtitlePreview() = Window {
     MonsterTitleCompose(
         listOf(
@@ -122,7 +122,7 @@ private fun MonsterTitleWithSubtitlePreview() = Window {
 
 @Preview
 @Composable
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 private fun MonsterTitleComposePreview() = Window {
     MonsterTitleCompose(
         monsterTitleStates = listOf(
