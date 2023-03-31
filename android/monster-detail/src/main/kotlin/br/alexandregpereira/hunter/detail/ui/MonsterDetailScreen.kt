@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
 package br.alexandregpereira.hunter.detail.ui
 
@@ -38,6 +38,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -76,14 +78,11 @@ import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.transition.transitionHorizontalScrollable
 import br.alexandregpereira.hunter.ui.util.toColor
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MonsterDetailScreen(
     monsters: List<MonsterState>,
@@ -231,7 +230,7 @@ private fun OnMonsterChanged(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterImageCompose(
     monsters: List<MonsterState>,
@@ -288,7 +287,7 @@ private fun Modifier.monsterImageBackground(
 }
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterTopBar(
     monsters: List<MonsterState>,
@@ -354,7 +353,7 @@ private fun MonsterTopBar(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChallengeRatingCompose(
     monsters: List<MonsterState>,
@@ -372,7 +371,7 @@ private fun ChallengeRatingCompose(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterTypeIcon(
     monsters: List<MonsterState>,
@@ -397,7 +396,7 @@ private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
 private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun MonsterDetailPreview() = Window {
@@ -446,7 +445,7 @@ private fun MonsterDetailPreview() = Window {
 }
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun MonsterTopBarPreview() = Window {
