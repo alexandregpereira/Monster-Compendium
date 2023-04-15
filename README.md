@@ -1,7 +1,7 @@
 # Monster Compendium - D&D 5th Edition Bestiary
 
 <p align="center" >
-    <img src="media/hunter-icon-border.svg" width ="30%"  align="center"/>
+    <img src="media/icon-monster-compendium.png" width ="40%"  align="center"/>
 </p>
 
 [![Android CI](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/android.yml) <a href="https://devlibrary.withgoogle.com/products/android/repos/alexandregpereira-monster-compendium" target="_blank"><img alt="Android Dev Library" src="https://img.shields.io/badge/Google%20Dev%20Library-alexandregpereira-blue?style=flat&logo=android"/></a>
@@ -13,10 +13,12 @@ Monsters Compendium is an open-source Kotlin Multiplatform application for both 
 ## Preview
 
 <p align="center">
-    <img src="media/monster-compendium.gif" width ="20%" />
-    <img src="media/monster-detail-pager.gif" width ="20%" />
-    <img src="media/monster-detail.gif" width ="20%" />
+    <img src="media/monster-compendium.gif" width ="32%" />
+    <img src="media/monster-detail-pager.gif" width ="32%" />
+    <img src="media/monster-detail.gif" width ="32%" />
 </p>
+
+Check the full app video [here](media/app-recording.mov).
 
 ## Key features:
 
