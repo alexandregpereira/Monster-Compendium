@@ -12,6 +12,7 @@ struct MonsterDetailView : View {
     
     var body: some View {
         GeometryReader { geometry in
+            let imageHeigh = geometry.size.height * 0.75
             ZStack(alignment: .topLeading) {
                 Color(hex: monster.backgroundColorLight)?.ignoresSafeArea()
                 AsyncImage(
@@ -25,14 +26,14 @@ struct MonsterDetailView : View {
                             .padding(16)
                     }
                 }
-                .frame(width: geometry.size.width, height: 600, alignment: .center)
+                .frame(width: geometry.size.width, height: imageHeigh, alignment: .center)
                 .padding(.top, geometry.safeAreaInsets.top + 32)
                 .id(monster.id)
                 
                 ScrollView {
                     LazyVStack(spacing: 1) {
                         Spacer().frame(maxWidth: .infinity)
-                            .frame(height: 600)
+                            .frame(height: imageHeigh)
                             .padding(.top, geometry.safeAreaInsets.top + 32)
                             .id(0)
                         
@@ -60,6 +61,27 @@ struct MonsterDetailView : View {
                             .background(Color.white)
                             .cornerRadius(10)
                             .id(5)
+                        
+                        ProficiencyBlock(
+                            title: NSLocalizedString("monster_detail_saving_throws", comment: "monster_detail_saving_throws"),
+                            proficiencies: monster.savingThrows.map{
+                                ProficiencyUiState(
+                                    index: $0.index,
+                                    modifier: $0.modifier,
+                                    name: NSLocalizedString("monster_detail_saving_throw_\($0.name.lowercased())", comment: "monster_detail_saving_throw_\($0.name.lowercased())")
+                                )
+                                
+                            }
+                        ).background(Color.white)
+                            .cornerRadius(10)
+                            .id(6)
+                        
+                        ProficiencyBlock(
+                            title: NSLocalizedString("monster_detail_skills", comment: "monster_detail_skills"),
+                            proficiencies: monster.skills
+                        ).background(Color.white)
+                            .cornerRadius(10)
+                            .id(7)
                     }
                 }
             }
@@ -170,14 +192,14 @@ struct AbilityScoreBlock: View {
         
         Block(title: title) {
             VStack {
-                HStack(spacing: 24) {
+                HStack(spacing: 48) {
                     AbilityScore(abilityScore: abilityScores[0])
                     AbilityScore(abilityScore: abilityScores[1])
                     AbilityScore(abilityScore: abilityScores[2])
                 }
                 .padding(.bottom, 24)
                 
-                HStack(spacing: 24) {
+                HStack(spacing: 48) {
                     AbilityScore(abilityScore: abilityScores[3])
                     AbilityScore(abilityScore: abilityScores[4])
                     AbilityScore(abilityScore: abilityScores[5])
@@ -216,6 +238,86 @@ struct AbilityScore: View {
     }
 }
 
+struct ProficiencyBlock: View {
+    let title: String
+    let proficiencies: [ProficiencyUiState]
+    
+    var body: some View {
+        OptionalBlock(value: proficiencies, title: title) { proficiencies in
+            Grid(size: proficiencies.count) { index in
+                Bonus(
+                    value: proficiencies[index].modifier,
+                    name: proficiencies[index].name
+                )
+            }
+        }
+    }
+}
+
+struct Grid<Content: View>: View {
+    let size: Int
+    let content: (Int) -> Content
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            let rowCount: Int = (size + 2) / 3
+            ForEach(0..<rowCount, id: \.self) { rowIndex in
+                HStack(spacing: 16) {
+                    ForEach(0..<3) { columnIndex in
+                        let index = rowIndex * 3 + columnIndex
+                        if index < size {
+                            content(index)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct Bonus: View {
+    let value: Int
+    let name: String
+    let iconSize: CGFloat = 56
+    let alpha: CGFloat = 0.7
+    
+    var body: some View {
+        VStack {
+            ZStack(alignment: .center) {
+                BonusImage(size: iconSize)
+                Text("+\(value)")
+                    .fontWeight(.regular)
+                    .font(.system(size: 18))
+            }
+
+            Text(name)
+                .fontWeight(.regular)
+                .font(.system(size: 14))
+                .lineLimit(1)
+                .padding(4)
+        }
+        .frame(maxWidth: 120)
+        .opacity(alpha)
+    }
+}
+
+struct BonusImage: View {
+    let size: CGFloat
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 2)
+                .foregroundColor(Color.black)
+
+            Circle()
+                .stroke(lineWidth: 1)
+                .foregroundColor(Color.black)
+                .padding(4)
+        }
+        .frame(width: size, height: size)
+    }
+}
 
 struct BlockTitle: View {
     let title: String
@@ -254,6 +356,33 @@ struct Block<Content: View>: View {
     }
 }
 
+struct OptionalBlock<Content: View, T>: View {
+    let value: T
+    let title: String?
+    let content: (T) -> Content
+    
+    init(
+        value: T,
+        title: String? = nil,
+        @ViewBuilder content: @escaping (T) -> Content
+    ) {
+        self.value = value
+        self.title = title
+        self.content = content
+    }
+    
+    var body: some View {
+        if let valueStr = value as? String, valueStr.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            EmptyView()
+        } else if let valueList = value as? [Any], valueList.isEmpty {
+            EmptyView()
+        } else {
+            Block(title: title) {
+                content(value)
+            }
+        }
+    }
+}
 
 struct MonsterDetailView_Previews: PreviewProvider {
     static var previews: some View {
@@ -284,6 +413,9 @@ struct MonsterDetailView_Previews: PreviewProvider {
                     AbilityScoreUiState(type: "Constitution", value: 16, modifier: 3)
                 ],
                 savingThrows: [
+                    SavingThrowUiState(index: "0", modifier: 5, name: "Constitution"),
+                    SavingThrowUiState(index: "0", modifier: 5, name: "Strength"),
+                    SavingThrowUiState(index: "0", modifier: 5, name: "Strength"),
                     SavingThrowUiState(index: "0", modifier: 5, name: "Strength"),
                     SavingThrowUiState(index: "1", modifier: 3, name: "Dexterity")
                 ],
