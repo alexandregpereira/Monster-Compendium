@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
@@ -49,7 +49,7 @@ fun Bonus(
     Column(
         modifier
             .alpha(alpha)
-            .width(80.dp),
+            .widthIn(max = 120.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(contentAlignment = Alignment.Center) {
@@ -96,7 +96,7 @@ fun BonusImage(
 @Preview
 @Composable
 fun BonusPreview() {
-    Bonus(value = 10, name = "Des")
+    Bonus(value = 10, name = "Constitution")
 }
 
 @Preview
