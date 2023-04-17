@@ -49,7 +49,7 @@ struct SpeedValueUiState {
 }
 
 struct AbilityScoreUiState {
-    var name: String
+    var type: String
     var value: Int
     var modifier: Int
 }

@@ -66,7 +66,7 @@ private extension MonsterSpeedValue {
 private extension MonsterAbilityScore {
     func asUiState() -> AbilityScoreUiState {
         return AbilityScoreUiState(
-            name: type.name,
+            type: type.name,
             value: Int(value),
             modifier: Int(modifier)
         )

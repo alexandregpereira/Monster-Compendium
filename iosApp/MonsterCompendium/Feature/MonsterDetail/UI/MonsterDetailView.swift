@@ -55,6 +55,11 @@ struct MonsterDetailView : View {
                             .background(Color.white)
                             .cornerRadius(10)
                             .id(4)
+                    
+                        AbilityScoreBlock(abilityScores: monster.abilityScores)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .id(5)
                     }
                 }
             }
@@ -103,15 +108,15 @@ private struct StatsGrid: View {
     var body: some View {
         HStack(spacing: 64) {
             IconInfo(
-                image: "shield.fill",
+                image: Image(systemName: "shield.fill"),
                 iconColor: .blue,
                 iconAlpha: 1.0,
-                title: "Armor Class",
+                title: NSLocalizedString("monster_detail_armor_class", comment: "monster_detail_armor_class"),
                 iconText: "\(stats.armorClass)"
             )
 
             IconInfo(
-                image: "heart.fill",
+                image: Image(systemName: "heart.fill"),
                 iconColor: .red,
                 iconAlpha: 1.0,
                 title: stats.hitDice,
@@ -125,14 +130,15 @@ struct SpeedBlock: View {
     let speed: SpeedUiState
     
     var body: some View {
-        let prefixTitle = "Speed"
-        let title = speed.hover ? "\(prefixTitle) (hover)" : prefixTitle
+        let prefixTitle = NSLocalizedString("monster_detail_speed_title", comment: "monster_detail_speed_title")
+        let hoverText = NSLocalizedString("monster_detail_speed_hover", comment: "monster_detail_speed_hover")
+        let title = speed.hover ? "\(prefixTitle) (\(hoverText))" : prefixTitle
         
         Block(title: title) {
             HStack(alignment: .center, spacing: 32) {
                 ForEach(speed.values, id: \.name) { speedValue in
                     let image = getImageName(speedValue.name)
-                    IconInfo(image: image, title: speedValue.valueFormatted)
+                    IconInfo(image: Image(image), title: speedValue.valueFormatted)
                 }
             }
         }
@@ -141,20 +147,75 @@ struct SpeedBlock: View {
     private func getImageName(_ speedType: String) -> String {
         switch speedType.lowercased() {
         case "burrow":
-            return "ant.fill"
+            return "ghost"
         case "climb":
-            return "figure.walk.circle.fill"
+            return "climbing"
         case "fly":
-            return "airplane.circle.fill"
+            return "superhero"
         case "walk":
-            return "figure.walk.circle.fill"
+            return "running"
         case "swim":
-            return "lungs.fill"
+            return "swimmer"
         default:
-            return "lungs.fill"
+            return "running"
         }
     }
 }
+
+struct AbilityScoreBlock: View {
+    let abilityScores: [AbilityScoreUiState]
+    
+    var body: some View {
+        let title = NSLocalizedString("monster_detail_ability_scores", comment: "monster_detail_ability_scores")
+        
+        Block(title: title) {
+            VStack {
+                HStack(spacing: 24) {
+                    AbilityScore(abilityScore: abilityScores[0])
+                    AbilityScore(abilityScore: abilityScores[1])
+                    AbilityScore(abilityScore: abilityScores[2])
+                }
+                .padding(.bottom, 24)
+                
+                HStack(spacing: 24) {
+                    AbilityScore(abilityScore: abilityScores[3])
+                    AbilityScore(abilityScore: abilityScores[4])
+                    AbilityScore(abilityScore: abilityScores[5])
+                }
+            }
+        }
+    }
+    
+}
+
+struct AbilityScore: View {
+    let abilityScore: AbilityScoreUiState
+    
+    var body: some View {
+        ZStack(alignment: .center) {
+            Image("ic-ability-score")
+                .resizable()
+                .frame(width: 69, height: 89)
+                .opacity(0.7)
+            
+            VStack(spacing: 1) {
+                let name = NSLocalizedString("monster_detail_saving_throw_\(abilityScore.type.lowercased())", comment: "monster_detail_saving_throw_\(abilityScore.type.lowercased())")
+                Text(String(name.prefix(3)).uppercased())
+                    .font(.system(size: 12, weight: .regular))
+                
+                Text("\(abilityScore.value)")
+                    .font(.system(size: 28, weight: .bold))
+                
+                let abilityScoreModifier = abilityScore.modifier > 0 ? "+\(abilityScore.modifier)" : abilityScore.modifier.description
+                Text(abilityScoreModifier)
+                    .font(.system(size: 12, weight: .regular))
+                    .padding(.top, 4)
+            }
+            .frame(height: 89)
+        }
+    }
+}
+
 
 struct BlockTitle: View {
     let title: String
@@ -215,9 +276,12 @@ struct MonsterDetailView_Previews: PreviewProvider {
                     ]
                 ),
                 abilityScores: [
-                    AbilityScoreUiState(name: "Strength", value: 18, modifier: 4),
-                    AbilityScoreUiState(name: "Dexterity", value: 14, modifier: 2),
-                    AbilityScoreUiState(name: "Constitution", value: 16, modifier: 3)
+                    AbilityScoreUiState(type: "Strength", value: 18, modifier: 4),
+                    AbilityScoreUiState(type: "Dexterity", value: 14, modifier: 2),
+                    AbilityScoreUiState(type: "Constitution", value: 16, modifier: 3),
+                    AbilityScoreUiState(type: "Constitution", value: 16, modifier: 3),
+                    AbilityScoreUiState(type: "Constitution", value: 16, modifier: 3),
+                    AbilityScoreUiState(type: "Constitution", value: 16, modifier: 3)
                 ],
                 savingThrows: [
                     SavingThrowUiState(index: "0", modifier: 5, name: "Strength"),
