@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct IconInfo: View {
-    var image: String
+    var image: Image
     var iconSize: CGFloat = 56
     var iconColor: Color = .primary
     var iconAlpha: Double = 0.7
@@ -19,7 +19,7 @@ struct IconInfo: View {
     var body: some View {
         VStack(alignment: .center) {
             ZStack {
-                Image(systemName: image)
+                image
                     .resizable()
                     .frame(width: iconSize, height: iconSize)
                     .foregroundColor(iconColor)
@@ -48,6 +48,6 @@ struct IconInfo: View {
 
 struct IconInfo_Previews: PreviewProvider {
     static var previews: some View {
-        IconInfo(image: "star", title: "Example", iconText: "1")
+        IconInfo(image: Image(systemName: "star"), title: "Example", iconText: "1")
     }
 }
