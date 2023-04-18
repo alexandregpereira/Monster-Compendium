@@ -96,6 +96,7 @@ private extension MonsterDamage {
     func asUiState() -> DamageUiState {
         return DamageUiState(
             index: index,
+            type: type.name,
             name: name
         )
     }

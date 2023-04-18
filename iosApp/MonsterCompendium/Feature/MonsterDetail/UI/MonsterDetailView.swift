@@ -42,50 +42,88 @@ struct MonsterDetailView : View {
                             .cornerRadius(10)
                             .id(1)
                         
-                        LoreBlock(text: monster.lore)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .id(2)
+                        MonsterInfoPart1(monster: monster)
                         
-                        StatsBlock(stats: monster.stats)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .id(3)
+                        MonsterInfoPart2(monster: monster)
                         
-                        SpeedBlock(speed: monster.speed)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .id(4)
-                    
-                        AbilityScoreBlock(abilityScores: monster.abilityScores)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .id(5)
-                        
-                        ProficiencyBlock(
-                            title: NSLocalizedString("monster_detail_saving_throws", comment: "monster_detail_saving_throws"),
-                            proficiencies: monster.savingThrows.map{
-                                ProficiencyUiState(
-                                    index: $0.index,
-                                    modifier: $0.modifier,
-                                    name: NSLocalizedString("monster_detail_saving_throw_\($0.name.lowercased())", comment: "monster_detail_saving_throw_\($0.name.lowercased())")
-                                )
-                                
-                            }
-                        ).background(Color.white)
-                            .cornerRadius(10)
-                            .id(6)
-                        
-                        ProficiencyBlock(
-                            title: NSLocalizedString("monster_detail_skills", comment: "monster_detail_skills"),
-                            proficiencies: monster.skills
-                        ).background(Color.white)
-                            .cornerRadius(10)
-                            .id(7)
+                        MonsterInfoPart3(monster: monster)
                     }
                 }
             }
         }
+    }
+}
+
+struct MonsterInfoPart1: View {
+    let monster: MonsterDetailItemUiState
+    
+    var body: some View {
+        LoreBlock(text: monster.lore)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(2)
+        
+        StatsBlock(stats: monster.stats)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(3)
+        
+        SpeedBlock(speed: monster.speed)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(4)
+    
+        AbilityScoreBlock(abilityScores: monster.abilityScores)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(5)
+    }
+}
+
+struct MonsterInfoPart2: View {
+    let monster: MonsterDetailItemUiState
+    
+    var body: some View {
+        ProficiencyBlock(
+            title: NSLocalizedString("monster_detail_saving_throws", comment: "monster_detail_saving_throws"),
+            proficiencies: monster.savingThrows.map{
+                ProficiencyUiState(
+                    index: $0.index,
+                    modifier: $0.modifier,
+                    name: NSLocalizedString("monster_detail_saving_throw_\($0.name.lowercased())", comment: "monster_detail_saving_throw_\($0.name.lowercased())")
+                )
+            }
+        ).background(Color.white)
+            .cornerRadius(10)
+            .id(6)
+        
+        ProficiencyBlock(
+            title: NSLocalizedString("monster_detail_skills", comment: "monster_detail_skills"),
+            proficiencies: monster.skills
+        ).background(Color.white)
+            .cornerRadius(10)
+            .id(7)
+    }
+}
+
+struct MonsterInfoPart3: View {
+    let monster: MonsterDetailItemUiState
+    
+    var body: some View {
+        DamageBlock(title: NSLocalizedString("monster_detail_vulnerabilities", comment: "monster_detail_vulnerabilities"), damages: monster.damageVulnerabilities)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(8)
+        
+        DamageBlock(title: NSLocalizedString("monster_detail_resistances", comment: "monster_detail_resistances"), damages: monster.damageResistances)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(9)
+        
+        DamageBlock(title: NSLocalizedString("monster_detail_immunities", comment: "monster_detail_immunities"), damages: monster.damageImmunities)
+            .background(Color.white)
+            .cornerRadius(10)
+            .id(10)
     }
 }
 
@@ -145,6 +183,7 @@ private struct StatsGrid: View {
                 iconText: "\(stats.hitPoints)"
             )
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -157,11 +196,11 @@ struct SpeedBlock: View {
         let title = speed.hover ? "\(prefixTitle) (\(hoverText))" : prefixTitle
         
         Block(title: title) {
-            HStack(alignment: .center, spacing: 32) {
-                ForEach(speed.values, id: \.name) { speedValue in
-                    let image = getImageName(speedValue.name)
-                    IconInfo(image: Image(image), title: speedValue.valueFormatted)
-                }
+            Grid(size: speed.values.count) { i in
+                IconInfo(
+                    image: Image(getImageName(speed.values[i].name)),
+                    title: speed.values[i].valueFormatted
+                )
             }
         }
     }
@@ -191,23 +230,88 @@ struct AbilityScoreBlock: View {
         let title = NSLocalizedString("monster_detail_ability_scores", comment: "monster_detail_ability_scores")
         
         Block(title: title) {
-            VStack {
-                HStack(spacing: 48) {
-                    AbilityScore(abilityScore: abilityScores[0])
-                    AbilityScore(abilityScore: abilityScores[1])
-                    AbilityScore(abilityScore: abilityScores[2])
-                }
-                .padding(.bottom, 24)
-                
-                HStack(spacing: 48) {
-                    AbilityScore(abilityScore: abilityScores[3])
-                    AbilityScore(abilityScore: abilityScores[4])
-                    AbilityScore(abilityScore: abilityScores[5])
-                }
+            HStack(spacing: 48) {
+                AbilityScore(abilityScore: abilityScores[0])
+                AbilityScore(abilityScore: abilityScores[1])
+                AbilityScore(abilityScore: abilityScores[2])
+            }
+            .padding(.bottom, 24)
+            .frame(maxWidth: .infinity)
+            
+            HStack(spacing: 48) {
+                AbilityScore(abilityScore: abilityScores[3])
+                AbilityScore(abilityScore: abilityScores[4])
+                AbilityScore(abilityScore: abilityScores[5])
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+    
+}
+
+struct DamageBlock: View {
+    let title: String
+    let damages: [DamageUiState]
+    
+    var body: some View {
+        let damagesWithoutOtherType = damages.filter { $0.type.lowercased() != "other" }
+        OptionalBlock(title: title, value: damages) { damages in
+            Grid(size: damagesWithoutOtherType.count) { i in
+                IconInfo(
+                    image: Image(getImageName(damagesWithoutOtherType[i].type)),
+                    iconColor: getImageColor(damagesWithoutOtherType[i].type),
+                    iconAlpha: 1,
+                    title: damagesWithoutOtherType[i].name
+                )
+            }
+            
+            ForEach(damages.filter { $0.type.lowercased() == "other" }, id: \.index) { damage in
+                Text(damage.name)
+                    .font(.system(size: 14, weight: .light))
+                    .padding(.top, 16)
+                    .padding(.horizontal, 16)
             }
         }
     }
     
+    private func getImageName(_ type: String) -> String {
+        return type.lowercased() == "necrotic" ? "human-skull" : type.lowercased()
+    }
+    
+    private func getImageColor(_ type: String) -> Color {
+        let colors = DamageIconColors(isDark: false)
+            
+        switch type.lowercased() {
+        case "acid":
+            return colors.acid
+        case "bludgeoning":
+            return colors.bludgeoning
+        case "cold":
+            return colors.cold
+        case "fire":
+            return colors.fire
+        case "force":
+            return .blue
+        case "lightning":
+            return colors.lightning
+        case "necrotic":
+            return colors.necrotic
+        case "piercing":
+            return colors.piercing
+        case "poison":
+            return colors.poison
+        case "psychic":
+            return colors.psychic
+        case "radiant":
+            return colors.radiant
+        case "slashing":
+            return colors.slashing
+        case "thunder":
+            return colors.thunder
+        default:
+            return .black
+        }
+    }
 }
 
 struct AbilityScore: View {
@@ -243,7 +347,7 @@ struct ProficiencyBlock: View {
     let proficiencies: [ProficiencyUiState]
     
     var body: some View {
-        OptionalBlock(value: proficiencies, title: title) { proficiencies in
+        OptionalBlock(title: title, value: proficiencies) { proficiencies in
             Grid(size: proficiencies.count) { index in
                 Bonus(
                     value: proficiencies[index].modifier,
@@ -267,11 +371,15 @@ struct Grid<Content: View>: View {
                         let index = rowIndex * 3 + columnIndex
                         if index < size {
                             content(index)
+                                .padding(.horizontal, 16)
+                                .padding(.top, rowIndex == 0 ? 0 : 8)
+                                .padding(.bottom, rowIndex == 2 ? 0 : 8)
                         }
                     }
                 }
             }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -349,7 +457,7 @@ struct Block<Content: View>: View {
                 BlockTitle(title: title)
             }
             content()
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxWidth: .infinity)
         .padding(16)
@@ -357,17 +465,17 @@ struct Block<Content: View>: View {
 }
 
 struct OptionalBlock<Content: View, T>: View {
-    let value: T
     let title: String?
+    let value: T
     let content: (T) -> Content
     
     init(
-        value: T,
         title: String? = nil,
+        value: T,
         @ViewBuilder content: @escaping (T) -> Content
     ) {
-        self.value = value
         self.title = title
+        self.value = value
         self.content = content
     }
     
@@ -424,13 +532,15 @@ struct MonsterDetailView_Previews: PreviewProvider {
                     ProficiencyUiState(index: "1", modifier: 4, name: "Acrobatics")
                 ],
                 damageVulnerabilities: [
-                    DamageUiState(index: "0", name: "Fire")
+                    DamageUiState(index: "0", type: "FIRE", name: "Fire"),
+                    DamageUiState(index: "1", type: "OTHER", name: "Something"),
+                    DamageUiState(index: "2", type: "OTHER", name: "Something more detailed")
                 ],
                 damageResistances: [
-                    DamageUiState(index: "1", name: "Cold")
+                    DamageUiState(index: "1", type: "COLD", name: "Cold")
                 ],
                 damageImmunities: [
-                    DamageUiState(index: "2", name: "Poison")
+                    DamageUiState(index: "2", type: "POISON", name: "Poison")
                 ],
                 conditionImmunities: [
                     ConditionUiState(index: "0", name: "Charmed")
@@ -446,7 +556,7 @@ struct MonsterDetailView_Previews: PreviewProvider {
                 actions: [
                     ActionUiState(
                         damageDices: [
-                            DamageDiceUiState(dice: "1d6", damage: DamageUiState(index: "0", name: "Bludgeoning"))
+                            DamageDiceUiState(dice: "1d6", damage: DamageUiState(index: "0", type: "FIRE", name: "Bludgeoning"))
                         ],
                         attackBonus: 5,
                         abilityDescription: AbilityDescriptionUiState(name: "Sample Attack", description: "Sample attack description.")

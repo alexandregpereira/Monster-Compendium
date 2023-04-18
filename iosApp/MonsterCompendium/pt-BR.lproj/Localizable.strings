@@ -6,7 +6,7 @@
   
 */
 
-"monster_detail_armor_class" = "Classe de Armadura";
+"monster_detail_armor_class" = "Armadura";
 "monster_detail_speed_title" = "Deslocamento";
 "monster_detail_speed_hover" = "Pairar";
 "monster_detail_vulnerabilities" = "Vulnerabilidades";

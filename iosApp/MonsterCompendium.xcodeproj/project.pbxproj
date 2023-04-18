@@ -19,6 +19,7 @@
 		C15BF15629B3945800F47375 /* ScreenHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15529B3945800F47375 /* ScreenHeaderView.swift */; };
 		C15BF15829B395CE00F47375 /* AppBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15729B395CE00F47375 /* AppBarIconView.swift */; };
 		C15BF15A29B3976B00F47375 /* MonsterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15929B3976B00F47375 /* MonsterTitleView.swift */; };
+		C1948B6729EF13E000384671 /* DamageIconColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1948B6629EF13E000384671 /* DamageIconColors.swift */; };
 		C19D519129B90B0E00712CD2 /* TableContentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19D519029B90B0E00712CD2 /* TableContentPopup.swift */; };
 		C19D519329B90C1200712CD2 /* TableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19D519229B90C1200712CD2 /* TableContentView.swift */; };
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
@@ -68,6 +69,7 @@
 		C15BF15529B3945800F47375 /* ScreenHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenHeaderView.swift; sourceTree = "<group>"; };
 		C15BF15729B395CE00F47375 /* AppBarIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBarIconView.swift; sourceTree = "<group>"; };
 		C15BF15929B3976B00F47375 /* MonsterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterTitleView.swift; sourceTree = "<group>"; };
+		C1948B6629EF13E000384671 /* DamageIconColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageIconColors.swift; sourceTree = "<group>"; };
 		C19D519029B90B0E00712CD2 /* TableContentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableContentPopup.swift; sourceTree = "<group>"; };
 		C19D519229B90C1200712CD2 /* TableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableContentView.swift; sourceTree = "<group>"; };
 		C1BC0E7F29847A84002F517C /* MonsterCompendium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonsterCompendium.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				C15BF15329B118D800F47375 /* MonsterDetailView.swift */,
 				C15BF15929B3976B00F47375 /* MonsterTitleView.swift */,
 				C107C2B829CFEEB500EBF42B /* MonsterDetailPagerView.swift */,
+				C1948B6629EF13E000384671 /* DamageIconColors.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				C15BF15429B118D800F47375 /* MonsterDetailView.swift in Sources */,
 				C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */,
 				C15BF14929B1018100F47375 /* MonsterDetailUiState.swift in Sources */,
+				C1948B6729EF13E000384671 /* DamageIconColors.swift in Sources */,
 				C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */,
 				C1FC49142986F15000C18252 /* MonsterUiState.swift in Sources */,
 				C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */,

@@ -20,6 +20,7 @@ struct IconInfo: View {
         VStack(alignment: .center) {
             ZStack {
                 image
+                    .renderingMode(.template)
                     .resizable()
                     .frame(width: iconSize, height: iconSize)
                     .foregroundColor(iconColor)
@@ -48,6 +49,6 @@ struct IconInfo: View {
 
 struct IconInfo_Previews: PreviewProvider {
     static var previews: some View {
-        IconInfo(image: Image(systemName: "star"), title: "Example", iconText: "1")
+        IconInfo(image: Image("fire"), iconColor: .red, title: "Example", iconText: "1")
     }
 }

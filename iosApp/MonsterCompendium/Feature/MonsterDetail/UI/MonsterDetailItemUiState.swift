@@ -68,6 +68,7 @@ struct SavingThrowUiState {
 
 struct DamageUiState {
     var index: String
+    var type: String
     var name: String
 }
 
