@@ -38,7 +38,7 @@ class HandleSyncUseCase internal constructor(
     private val deviceLanguageRepository: DeviceLanguageRepository
 ) {
 
-    private val contentVersion = 1
+    private val contentVersion = 2
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
