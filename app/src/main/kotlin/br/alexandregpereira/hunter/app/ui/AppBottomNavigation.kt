@@ -81,7 +81,7 @@ fun BoxScope.AppBottomNavigation(
         Surface(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface),
-            elevation = BottomNavigationDefaults.Elevation
+            elevation = 4.dp
         ) {
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,
