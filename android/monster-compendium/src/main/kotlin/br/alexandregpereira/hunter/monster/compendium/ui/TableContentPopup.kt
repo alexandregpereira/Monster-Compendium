@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateInt
@@ -34,11 +33,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -53,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +63,7 @@ import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.SizeMode
+import kotlin.math.ln
 
 @Composable
 fun TableContentPopup(
@@ -92,52 +94,25 @@ fun TableContentPopup(
         if (isOpen) 10 else 100
     }
 
-    val colorStiffnessIn = Spring.StiffnessMedium
-    val colorStiffnessOut = Spring.StiffnessVeryLow
-    val primaryColor by transition.animateColor(
-        label = "primaryColor",
-        transitionSpec = {
-            val isOpen = this.targetState
-            spring(stiffness = if (isOpen) colorStiffnessIn else colorStiffnessOut)
-        }
-    ) { isOpen ->
-        if (isOpen) MaterialTheme.colors.surface else MaterialTheme.colors.secondary
-    }
-    val secondaryColor by transition.animateColor(
-        label = "secondaryColor",
-        transitionSpec = {
-            val isOpen = this.targetState
-            spring(stiffness = if (isOpen) colorStiffnessIn else colorStiffnessOut)
-        }
-    ) { isOpen ->
-        if (isOpen) MaterialTheme.colors.background else MaterialTheme.colors.secondaryVariant
-    }
-
     BackHandler(enabled = tableContentOpened, onBack = onTableContentClosed)
 
-    Box(modifier) {
+    Box(modifier, contentAlignment = Alignment.BottomEnd) {
+        val backgroundColor = if (MaterialTheme.colors.isLight) MaterialTheme.colors.surface else  {
+            val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
+            MaterialTheme.colors.onSurface.copy(alpha = alpha)
+                .compositeOver(MaterialTheme.colors.surface)
+        }
         Box(
-            Modifier
-                .wrapContentSize()
+            modifier = Modifier
+                .padding(vertical = shadowingVerticalPadding, horizontal = shadowingHorizontalPadding)
+                .sizeIn(minWidth = 56.dp, minHeight = 56.dp)
                 .clip(shape = RoundedCornerShape(percent))
-                .background(color = primaryColor)
+                .background(color = backgroundColor)
                 .noIndicationClick()
                 .animateContentSize(
                     animationSpec = spring(Spring.DampingRatioLowBouncy)
                 )
         ) {
-
-            AnimatedVisibility(
-                visible = opened.not(),
-                enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessVeryLow)),
-                exit = fadeOut(),
-                modifier = Modifier.align(Alignment.BottomEnd)
-            ) {
-                CircleLetter(
-                    letter = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
-                    onClick = onOpenButtonClicked
-                )
-            }
 
             AnimatedVisibility(
                 visible = opened,
@@ -182,27 +157,49 @@ fun TableContentPopup(
             visible = opened,
             enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessVeryLow)),
             exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
-            modifier = Modifier.align(Alignment.BottomEnd)
         ) {
-            CloseButton(backgroundColor = secondaryColor, onClick = onCloseButtonClicked)
+            CloseButton(
+                backgroundColor = MaterialTheme.colors.background,
+                onClick = onCloseButtonClicked
+            )
+        }
+
+        AnimatedVisibility(
+            visible = opened.not(),
+            enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessVeryLow)),
+            exit = fadeOut(),
+        ) {
+            CircleLetter(
+                letter = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
+                onClick = onOpenButtonClicked
+            )
         }
     }
 }
+
+private val shadowingHorizontalPadding = 2.dp
+private val shadowingVerticalPadding = 8.dp
+private const val elevation = 4
 
 @Composable
 private fun CircleLetter(
     letter: String,
     onClick: () -> Unit
+) = Surface(
+    elevation = elevation.dp,
+    shape = CircleShape,
+    modifier = Modifier.padding(
+        vertical = shadowingVerticalPadding,
+        horizontal = shadowingHorizontalPadding
+    )
 ) {
     Box(
         Modifier
             .size(56.dp)
-            .clip(CircleShape)
             .clickableWithRippleEffect(onClick = onClick)
     ) {
         Text(
             text = letter,
-            color = MaterialTheme.colors.primaryVariant,
             style = TextStyle(fontSize = 24.sp),
             modifier = Modifier
                 .align(Alignment.Center)
@@ -256,6 +253,7 @@ private fun CloseButton(backgroundColor: Color, onClick: () -> Unit) {
                 end = 16.dp,
                 top = 8.dp
             )
+            .padding(vertical = shadowingVerticalPadding, horizontal = shadowingHorizontalPadding)
             .size(40.dp)
             .clip(CircleShape)
             .background(backgroundColor)
