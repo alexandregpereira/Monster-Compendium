@@ -24,7 +24,7 @@ lifecycle = "2.6.1"
 material = "1.8.0"
 mockk = "1.13.5"
 multiplatform-settings = "1.0.0"
-okhttp3_logging_interceptor = "4.10.0"
+okhttp3_logging_interceptor = "4.11.0"
 sqldelight = "1.5.5"
 
 [libraries]
