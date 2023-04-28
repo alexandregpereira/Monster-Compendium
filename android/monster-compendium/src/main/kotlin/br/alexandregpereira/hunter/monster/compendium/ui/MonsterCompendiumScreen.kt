@@ -134,7 +134,7 @@ private fun MonsterCompendiumScreen(
                     top = contentPadding.calculateTopPadding(),
                     bottom = contentPadding.calculateBottomPadding() + paddingBottom
                 )
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 14.dp)
         )
     }
 }

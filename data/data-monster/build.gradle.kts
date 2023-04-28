@@ -24,11 +24,6 @@ kotlin {
                 implementation(libs.ktor.okhttp)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(libs.bundles.unittest)
-            }
-        }
         if (isMac()) {
             val iosMain by getting {
                 dependencies {

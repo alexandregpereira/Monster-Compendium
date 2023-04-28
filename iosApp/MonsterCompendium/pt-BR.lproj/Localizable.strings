@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  MonsterCompendium
+
+  Created by Alexandre G Pereira on 17/04/23.
+  
+*/
+
+"monster_detail_armor_class" = "Armadura";
+"monster_detail_speed_title" = "Deslocamento";
+"monster_detail_speed_hover" = "Pairar";
+"monster_detail_vulnerabilities" = "Vulnerabilidades";
+"monster_detail_resistances" = "Resistências";
+"monster_detail_immunities" = "Imunidades";
+"monster_detail_condition_immunities" = "Imunidades à Condição";
+"monster_detail_saving_throws" = "Salvaguardas";
+"monster_detail_skills" = "Perícias";
+"monster_detail_senses" = "Sentidos";
+"monster_detail_languages" = "Idiomas";
+"monster_detail_special_abilities" = "Habilidades Especiais";
+"monster_detail_actions" = "Ações";
+"monster_detail_legendary_actions" = "Ações Lendárias";
+"monster_detail_attack" = "Ataque";
+"monster_detail_options" = "Opções";
+"monster_detail_go_to_top" = "Ir para o Topo";
+"monster_detail_reactions" = "Reações";
+"monster_detail_spells" = "Magias";
+"monster_detail_spellcasting" = "Conjuração";
+"monster_detail_innate_spellcasting" = "Conjuração Inata";
+"monster_detail_ability_scores" = "Atributos";
+"monster_detail_options_add_to_folder" = "Adicionar à Pasta";
+"monster_detail_options_change_to_feet" = "Mudar para Pés";
+"monster_detail_options_change_to_meters" = "Mudar para Metros";
+"monster_detail_saving_throw_strength" = "Força";
+"monster_detail_saving_throw_dexterity" = "Destreza";
+"monster_detail_saving_throw_constitution" = "Constituição";
+"monster_detail_saving_throw_intelligence" = "Inteligência";
+"monster_detail_saving_throw_wisdom" = "Sabedoria";
+"monster_detail_saving_throw_charisma" = "Carisma";

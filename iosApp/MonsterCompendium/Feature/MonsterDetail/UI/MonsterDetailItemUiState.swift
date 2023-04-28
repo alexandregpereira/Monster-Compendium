@@ -49,7 +49,7 @@ struct SpeedValueUiState {
 }
 
 struct AbilityScoreUiState {
-    var name: String
+    var type: String
     var value: Int
     var modifier: Int
 }
@@ -68,6 +68,7 @@ struct SavingThrowUiState {
 
 struct DamageUiState {
     var index: String
+    var type: String
     var name: String
 }
 

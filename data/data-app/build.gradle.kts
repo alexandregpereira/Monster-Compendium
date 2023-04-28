@@ -30,11 +30,6 @@ kotlin {
                 implementation(libs.sqldelight.android)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(libs.bundles.unittest)
-            }
-        }
         val jvmMain by getting {
             dependencies {
                 implementation(libs.ktor.okhttp)

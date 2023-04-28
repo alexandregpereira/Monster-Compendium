@@ -57,7 +57,10 @@ fun MonsterCard(
             text = name,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
-            modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)
+            modifier = Modifier.padding(
+                vertical = 4.dp,
+                horizontal = 4.dp
+            )
         )
     }
 }
