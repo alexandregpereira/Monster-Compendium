@@ -46,8 +46,14 @@ jobs:
           data/build/reports/tests
           domain/build/reports/tests
           
-    - name:  Upload an APK
+    - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-dev-release
+        name: app-dev-release.apk
         path: app/build/outputs/apk/release/app-dev-release.apk
+        
+    - name: Upload an APK metadata JSON
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: output-metadata.json
+        path: app/build/outputs/apk/release/output-metadata.json
