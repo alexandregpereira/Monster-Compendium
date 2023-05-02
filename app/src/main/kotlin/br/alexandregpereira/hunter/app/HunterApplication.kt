@@ -60,11 +60,13 @@ class HunterApplication : Application() {
             modules(domainModules)
             modules(dataModules)
             modules(
+                folderDetailModule +
+                        folderInsertModule +
+                        folderListModule +
+                        folderPreviewModule
+            )
+            modules(
                 appModule,
-                folderDetailModule,
-                folderInsertModule,
-                folderListModule,
-                folderPreviewModule,
                 monsterCompendiumModule,
                 monsterDetailModule,
                 monsterLoreDetailModule,
