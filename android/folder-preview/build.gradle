@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion project.findProperty('compileSdk')
+
+    defaultConfig {
+        minSdkVersion project.findProperty('minSdk')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+    namespace 'br.alexandregpereira.hunter.folder.preview'
+}
+
+dependencies {
+    implementation project(':feature:folder-preview')
+    implementation project(':ui:core')
+
+    implementation libs.bundles.viewmodel.bundle
+    implementation libs.bundles.compose
+
+    implementation libs.koin.compose
+
+    testImplementation libs.bundles.unittest
+}

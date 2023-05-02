@@ -6,6 +6,10 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'hunter'
+include ':android:folder-detail'
+include ':android:folder-insert'
+include ':android:folder-list'
+include ':android:folder-preview'
 include ':android:monster-compendium'
 include ':android:monster-detail'
 include ':app'
