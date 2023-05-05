@@ -16,53 +16,45 @@
 
 package br.alexandregpereira.hunter.monster.lore.detail
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
+import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-internal class MonsterLoreDetailViewModel(
-    private val savedStateHandle: SavedStateHandle,
+class MonsterLoreDetailStateHolder internal constructor(
+    stateRecovery: MonsterLoreDetailStateRecovery,
     private val getMonsterLoreUseCase: GetMonsterLoreDetailUseCase,
     private val monsterLoreDetailEventListener: MonsterLoreDetailEventListener,
+    private val monsterLoreIndexStateRecovery: MonsterLoreIndexStateRecovery,
     private val dispatcher: CoroutineDispatcher
-) : ViewModel() {
+) : ScopeManager(), StateHolder<MonsterLoreDetailState> {
 
-    private var monsterLoreIndex: String
-        get() = savedStateHandle["monsterLoreIndex"] ?: ""
-        set(value) {
-            savedStateHandle["monsterLoreIndex"] = value
-        }
-
-    private val _state = MutableStateFlow(savedStateHandle.getState())
-    val state: StateFlow<MonsterLoreDetailViewState> = _state
+    private val _state = MutableStateFlow(stateRecovery.getState())
+    override val state: StateFlow<MonsterLoreDetailState> = _state
 
     init {
         observeEvents()
         if (state.value.showDetail && state.value.monsterLore == null) {
-            loadMonsterLore(monsterLoreIndex)
+            loadMonsterLore(monsterLoreIndexStateRecovery.getState())
         }
     }
 
     private fun loadMonsterLore(monsterLoreIndex: String) {
         getMonsterLoreUseCase(monsterLoreIndex)
-            .map { monsterLore -> monsterLore.asState() }
             .flowOn(dispatcher)
             .onEach { monsterLore ->
                 setState { changeMonsterLore(monsterLore) }
             }
             .catch {}
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     private fun observeEvents() {
@@ -70,19 +62,19 @@ internal class MonsterLoreDetailViewModel(
             .onEach { event ->
                 when (event) {
                     is MonsterLoreDetailEvent.Show -> {
-                        monsterLoreIndex = event.index
+                        monsterLoreIndexStateRecovery.saveState(event.index)
                         loadMonsterLore(event.index)
                     }
                 }
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     fun onClose() {
         setState { hideDetail() }
     }
 
-    private fun setState(block: MonsterLoreDetailViewState.() -> MonsterLoreDetailViewState) {
-        _state.value = state.value.block().saveState(savedStateHandle)
+    private fun setState(block: MonsterLoreDetailState.() -> MonsterLoreDetailState) {
+        _state.value = state.value.block()
     }
 }

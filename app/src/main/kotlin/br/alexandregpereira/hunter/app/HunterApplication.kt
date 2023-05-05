@@ -63,13 +63,13 @@ class HunterApplication : Application() {
                 folderDetailModule +
                         folderInsertModule +
                         folderListModule +
-                        folderPreviewModule
+                        folderPreviewModule +
+                        monsterLoreDetailModule
             )
             modules(
                 appModule,
                 monsterCompendiumModule,
                 monsterDetailModule,
-                monsterLoreDetailModule,
                 searchModule,
                 settingsModule,
                 spellDetailModule,

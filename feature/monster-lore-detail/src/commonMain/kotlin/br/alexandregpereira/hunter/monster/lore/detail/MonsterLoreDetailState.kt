@@ -16,31 +16,17 @@
 
 package br.alexandregpereira.hunter.monster.lore.detail
 
-import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.lore.detail.ui.MonsterLoreState
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 
-internal data class MonsterLoreDetailViewState(
-    val monsterLore: MonsterLoreState? = null,
+data class MonsterLoreDetailState(
+    val monsterLore: MonsterLore? = null,
     val showDetail: Boolean = false,
 )
 
-internal fun SavedStateHandle.getState(): MonsterLoreDetailViewState {
-    return MonsterLoreDetailViewState(
-        showDetail = this["showDetail"] ?: false
-    )
-}
-
-internal fun MonsterLoreDetailViewState.saveState(
-    savedStateHandle: SavedStateHandle
-): MonsterLoreDetailViewState {
-    savedStateHandle["showDetail"] = showDetail
-    return this
-}
-
-internal fun MonsterLoreDetailViewState.changeMonsterLore(monsterLore: MonsterLoreState): MonsterLoreDetailViewState {
+internal fun MonsterLoreDetailState.changeMonsterLore(monsterLore: MonsterLore): MonsterLoreDetailState {
     return copy(monsterLore = monsterLore, showDetail = true)
 }
 
-internal fun MonsterLoreDetailViewState.hideDetail(): MonsterLoreDetailViewState {
+internal fun MonsterLoreDetailState.hideDetail(): MonsterLoreDetailState {
     return copy(showDetail = false)
 }
