@@ -110,7 +110,7 @@ dependencies {
     implementation(project(":android:folder-preview"))
     implementation(project(":android:monster-compendium"))
     implementation(project(":android:monster-detail"))
-    implementation(project(":feature:monster-lore-detail"))
+    implementation(project(":android:monster-lore-detail"))
     implementation(project(":feature:search"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:spell-detail"))

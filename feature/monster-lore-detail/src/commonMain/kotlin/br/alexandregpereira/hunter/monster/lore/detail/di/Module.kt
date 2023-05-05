@@ -18,19 +18,26 @@ package br.alexandregpereira.hunter.monster.lore.detail.di
 
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
+import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreIndexStateRecovery
+import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreDetailStateRecovery
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailEventManager
-import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailViewModel
+import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailStateHolder
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val monsterLoreDetailModule = module {
+val featureMonsterLoreDetailModule = module {
     single { MonsterLoreDetailEventManager() }
     single<MonsterLoreDetailEventDispatcher> { get<MonsterLoreDetailEventManager>() }
     single<MonsterLoreDetailEventListener> { get<MonsterLoreDetailEventManager>() }
     factory { GetMonsterLoreDetailUseCase(get(), get()) }
 
-    viewModel {
-        MonsterLoreDetailViewModel(get(), get(), get(), get())
+    factory {
+        MonsterLoreDetailStateHolder(
+            stateRecovery = getOrNull() ?: EmptyMonsterLoreDetailStateRecovery(),
+            getMonsterLoreUseCase = get(),
+            monsterLoreDetailEventListener = get(),
+            monsterLoreIndexStateRecovery = getOrNull() ?: EmptyMonsterLoreIndexStateRecovery(),
+            dispatcher = get()
+        )
     }
 }

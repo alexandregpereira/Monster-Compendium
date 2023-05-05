@@ -31,9 +31,7 @@ android {
 }
 
 dependencies {
-    implementation project(':domain:monster')
-    implementation project(':domain:monster-lore')
-    implementation project(':event:monster-lore-detail-event')
+    implementation project(':feature:monster-lore-detail')
     implementation project(':ui:core')
 
     implementation libs.bundles.viewmodel.bundle
