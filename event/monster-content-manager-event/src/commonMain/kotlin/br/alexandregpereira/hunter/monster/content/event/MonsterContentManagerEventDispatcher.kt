@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote.model
+package br.alexandregpereira.hunter.monster.content.event
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+interface MonsterContentManagerEventDispatcher {
 
-@Serializable
-data class AlternativeSourceDto(
-    @SerialName("source")
-    val source: SourceDto,
-    @SerialName("totalMonsters")
-    val totalMonsters: Int,
-    @SerialName("summary")
-    val summary: String = "",
-    @SerialName("coverImageUrl")
-    val coverImageUrl: String = "",
-    @SerialName("isEnabled")
-    val isEnabled: Boolean = true,
-)
+    fun dispatchEvent(event: MonsterContentManagerEvent)
+}
+
+fun emptyMonsterContentManagerEventDispatcher(): MonsterContentManagerEventDispatcher {
+    return object : MonsterContentManagerEventDispatcher {
+        override fun dispatchEvent(event: MonsterContentManagerEvent) {}
+    }
+}

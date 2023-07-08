@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
 import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
 import br.alexandregpereira.hunter.monster.compendium.di.monsterCompendiumModule
+import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModule
 import br.alexandregpereira.hunter.search.di.searchModule
 import br.alexandregpereira.hunter.settings.di.settingsModule
@@ -53,7 +54,7 @@ class HunterApplication : Application() {
     internal companion object {
         private val appModule = module {
             factory { Dispatchers.Default }
-            viewModel { MainViewModel(get(), get(), get(), get(), get()) }
+            viewModel { MainViewModel(get(), get(), get(), get(), get(), get()) }
         }
 
         fun KoinApplication.initKoinModules() {
@@ -64,7 +65,8 @@ class HunterApplication : Application() {
                         folderInsertModule +
                         folderListModule +
                         folderPreviewModule +
-                        monsterLoreDetailModule
+                        monsterLoreDetailModule +
+                        monsterContentManagerModule
             )
             modules(
                 appModule,

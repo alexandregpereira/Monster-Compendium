@@ -21,6 +21,9 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,6 +39,7 @@ internal class SettingsViewModel(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase,
     private val saveUrls: SaveUrlsUseCase,
+    private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -70,6 +74,10 @@ internal class SettingsViewModel(
                 _action.tryEmit(SettingsAction.CloseApp)
             }
             .launchIn(viewModelScope)
+    }
+
+    fun onManageMonsterContentClick() {
+        monsterContentManagerEventDispatcher.dispatchEvent(Show)
     }
 
     private fun load() {

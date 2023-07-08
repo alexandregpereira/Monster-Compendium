@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'br.alexandregpereira.hunter.monster.content'
     compileSdkVersion project.findProperty('compileSdk')
 
     defaultConfig {
@@ -27,15 +28,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
-    namespace 'br.alexandregpereira.hunter.settings'
 }
 
 dependencies {
-    implementation project(':domain:settings')
-    implementation project(':event:monster-content-manager-event')
+    implementation project(':feature:monster-content-manager')
     implementation project(':ui:core')
-
-    implementation libs.kotlin.coroutines
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.source
+package br.alexandregpereira.hunter.monster.content.event
 
-import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Hide
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
-class GetAlternativeSourcesUseCase(
-    private val repository: AlternativeSourceRepository
-) {
+interface MonsterContentManagerEventListener {
 
-    operator fun invoke(onlyContentEnabled: Boolean = true): Flow<List<AlternativeSource>> {
-        return repository.getAlternativeSources().map { alternativeSources ->
-            alternativeSources.filter { !onlyContentEnabled || it.isEnabled }
+    val events: Flow<MonsterContentManagerEvent>
+}
+
+fun MonsterContentManagerEventListener.collectOnVisibilityChanges(
+    action: suspend (Boolean) -> Unit
+): Flow<Boolean> {
+    return events.map { event ->
+        when (event) {
+            is Show -> true
+            is Hide -> false
         }
-    }
+    }.onEach(action)
 }

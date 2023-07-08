@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote.model
+plugins {
+    kotlin("multiplatform")
+}
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+configureJvmTargets()
 
-@Serializable
-data class AlternativeSourceDto(
-    @SerialName("source")
-    val source: SourceDto,
-    @SerialName("totalMonsters")
-    val totalMonsters: Int,
-    @SerialName("summary")
-    val summary: String = "",
-    @SerialName("coverImageUrl")
-    val coverImageUrl: String = "",
-    @SerialName("isEnabled")
-    val isEnabled: Boolean = true,
-)
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlin.coroutines.core)
+            }
+        }
+        if (isMac()) {
+            val iosMain by getting
+        }
+    }
+}

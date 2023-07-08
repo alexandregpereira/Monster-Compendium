@@ -19,4 +19,13 @@ package br.alexandregpereira.hunter.domain.source.model
 data class AlternativeSource(
     val source: Source,
     val totalMonsters: Int,
-)
+    val summary: String,
+    val coverImageUrl: String,
+    val isEnabled: Boolean,
+) {
+    val acronym: String
+        get() = source.acronym
+
+    val name: String
+        get() = source.name
+}

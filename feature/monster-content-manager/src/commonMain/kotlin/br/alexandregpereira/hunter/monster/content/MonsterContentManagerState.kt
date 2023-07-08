@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote.mapper
+package br.alexandregpereira.hunter.monster.content
 
-import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import br.alexandregpereira.hunter.domain.source.model.Source
 
-internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
-    return this.map {
-        AlternativeSource(
-            source = Source(name = it.source.name, acronym = it.source.acronym),
-            totalMonsters = it.totalMonsters,
-            summary = it.summary,
-            coverImageUrl = it.coverImageUrl,
-            isEnabled = it.isEnabled
-        )
-    }
+data class MonsterContentManagerState(
+    val monsterContents: List<AlternativeSource> = emptyList(),
+    val isOpen: Boolean = false,
+)
+
+internal fun MonsterContentManagerState.hide(): MonsterContentManagerState {
+    return copy(isOpen = false)
 }

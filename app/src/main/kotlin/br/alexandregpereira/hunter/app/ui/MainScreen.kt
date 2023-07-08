@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.detail.MonsterDetailFeature
 import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 
@@ -50,6 +51,10 @@ fun MainScreen(
         BottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
+        )
+
+        MonsterContentManagerFeature(
+            contentPadding = contentPadding,
         )
 
         FolderDetailFeature(

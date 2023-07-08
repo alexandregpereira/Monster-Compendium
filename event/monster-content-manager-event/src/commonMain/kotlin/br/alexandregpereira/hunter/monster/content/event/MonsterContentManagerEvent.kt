@@ -14,21 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote.model
+package br.alexandregpereira.hunter.monster.content.event
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class AlternativeSourceDto(
-    @SerialName("source")
-    val source: SourceDto,
-    @SerialName("totalMonsters")
-    val totalMonsters: Int,
-    @SerialName("summary")
-    val summary: String = "",
-    @SerialName("coverImageUrl")
-    val coverImageUrl: String = "",
-    @SerialName("isEnabled")
-    val isEnabled: Boolean = true,
-)
+sealed class MonsterContentManagerEvent {
+    object Show : MonsterContentManagerEvent()
+    object Hide : MonsterContentManagerEvent()
+}
