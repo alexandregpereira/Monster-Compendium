@@ -22,7 +22,6 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 internal class DefaultAlternativeSourceRemoteDataSource(
@@ -30,11 +29,7 @@ internal class DefaultAlternativeSourceRemoteDataSource(
     private val json: Json
 ) : AlternativeSourceRemoteDataSource {
 
-    override fun getAlternativeSources(): Flow<List<AlternativeSourceDto>> = flow {
-        emit(json.decodeFromString(client.get("alternative-sources.json").bodyAsText()))
-    }
-
-    override fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>> = flow {
-        emit(json.decodeFromString(client.get("monster-lore-sources.json").bodyAsText()))
+    override fun getAlternativeSources(lang: String): Flow<List<AlternativeSourceDto>> = flow {
+        emit(json.decodeFromString(client.get("$lang/alternative-sources.json").bodyAsText()))
     }
 }

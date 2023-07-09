@@ -23,8 +23,16 @@ import br.alexandregpereira.hunter.domain.source.model.Source
 internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
     return this.map {
         AlternativeSource(
-            source = Source(name = it.source.name, acronym = it.source.acronym),
-            totalMonsters = it.totalMonsters
+            source = Source(
+                name = it.source.name,
+                acronym = it.source.acronym,
+                originalName = it.source.originalName
+            ),
+            totalMonsters = it.totalMonsters,
+            summary = it.summary,
+            coverImageUrl = it.coverImageUrl,
+            isEnabled = it.isEnabled,
+            isLoreEnabled = it.isLoreEnabled
         )
     }
 }

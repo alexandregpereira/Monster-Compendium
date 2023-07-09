@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 fun AppButton(
     text: String,
     modifier: Modifier = Modifier,
+    size: AppButtonSize = AppButtonSize.MEDIUM,
     enabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
@@ -43,11 +44,16 @@ fun AppButton(
         enabled = enabled,
         shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colors.surface,
+            backgroundColor = MaterialTheme.colors.surface,
+        ),
+        elevation = ButtonDefaults.elevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 2.dp,
         ),
         modifier = modifier
-            .height(48.dp)
-            .fillMaxWidth(),
+            .height(size.height.dp)
+            .fillMaxWidth()
+            .animatePressed(),
         onClick = onClick
     ) {
         Text(
@@ -56,6 +62,11 @@ fun AppButton(
             fontSize = 16.sp,
         )
     }
+}
+
+enum class AppButtonSize(val height: Int) {
+    SMALL(40),
+    MEDIUM(48),
 }
 
 @Preview

@@ -22,10 +22,11 @@ data class MainViewState(
     val bottomBarItemSelected: BottomBarItem = BottomBarItem.COMPENDIUM,
     val isFolderDetailShowing: Boolean = false,
     val isMonsterDetailShowing: Boolean = false,
+    val isMonsterContentManagerShowing: Boolean = false,
     val isFolderListSelectionShowing: Boolean = false,
 ) {
     val showBottomBar: Boolean = isMonsterDetailShowing.not() && isFolderDetailShowing.not()
-            && isFolderListSelectionShowing.not()
+            && isFolderListSelectionShowing.not() && isMonsterContentManagerShowing.not()
 }
 
 enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
@@ -41,6 +42,7 @@ internal fun SavedStateHandle.getState(): MainViewState {
         isFolderDetailShowing = this["isFolderDetailShowing"] ?: false,
         isMonsterDetailShowing = this["isMonsterDetailShowing"] ?: false,
         isFolderListSelectionShowing = this["isFolderListSelectionShowing"] ?: false,
+        isMonsterContentManagerShowing = this["isMonsterContentManagerShowing"] ?: false,
     )
 }
 
@@ -51,5 +53,6 @@ internal fun MainViewState.saveState(
     savedStateHandle["isFolderDetailShowing"] = this.isFolderDetailShowing
     savedStateHandle["isMonsterDetailShowing"] = this.isMonsterDetailShowing
     savedStateHandle["isFolderListSelectionShowing"] = this.isFolderListSelectionShowing
+    savedStateHandle["isMonsterContentManagerShowing"] = this.isMonsterContentManagerShowing
     return this
 }

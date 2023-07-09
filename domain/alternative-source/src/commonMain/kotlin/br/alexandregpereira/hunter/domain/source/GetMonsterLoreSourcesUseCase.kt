@@ -18,12 +18,15 @@ package br.alexandregpereira.hunter.domain.source
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class GetMonsterLoreSourcesUseCase(
-    private val repository: AlternativeSourceRepository
+    private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase
 ) {
 
     operator fun invoke(): Flow<List<AlternativeSource>> {
-        return repository.getMonsterLoreSources()
+        return getAlternativeSourcesUseCase(onlyContentEnabled = false).map { alternativeSources ->
+            alternativeSources.filter { it.isEnabled || it.isLoreEnabled }
+        }
     }
 }

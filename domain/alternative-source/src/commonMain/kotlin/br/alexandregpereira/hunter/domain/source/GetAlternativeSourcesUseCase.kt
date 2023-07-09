@@ -17,13 +17,32 @@
 package br.alexandregpereira.hunter.domain.source
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetAlternativeSourcesUseCase(
-    private val repository: AlternativeSourceRepository
+    private val remoteRepository: AlternativeSourceRemoteRepository,
+    private val settingsRepository: AlternativeSourceSettingsRepository,
+    private val localRepository: AlternativeSourceLocalRepository
 ) {
 
-    operator fun invoke(): Flow<List<AlternativeSource>> {
-        return repository.getAlternativeSources()
+    operator fun invoke(onlyContentEnabled: Boolean = true): Flow<List<AlternativeSource>> {
+        return settingsRepository.getLanguage().map { lang ->
+            val (remoteSources, localSourcesMap) = coroutineScope {
+                val localDeferred = async {
+                    localRepository.getAlternativeSources().single().groupBy { it.acronym }
+                }
+                val remoteDeferred = async { remoteRepository.getAlternativeSources(lang).single() }
+                remoteDeferred.await() to localDeferred.await()
+            }
+            remoteSources.map {
+                it.copy(isEnabled = localSourcesMap[it.acronym] != null)
+            }
+        }.map { alternativeSources ->
+            alternativeSources.filter { !onlyContentEnabled || it.isEnabled }
+        }
     }
 }

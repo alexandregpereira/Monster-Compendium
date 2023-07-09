@@ -19,14 +19,24 @@
 package br.alexandregpereira.hunter.data.source.di
 
 import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
-import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRepositoryImpl
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteRepositoryImpl
+import br.alexandregpereira.hunter.data.source.AlternativeSourceSettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalDataSource
+import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalRepositoryImpl
 import br.alexandregpereira.hunter.data.source.remote.DefaultAlternativeSourceRemoteDataSource
-import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceSettingsRepository
 import org.koin.dsl.module
 
 val alternativeSourceDataModule = module {
+    factory {
+        AlternativeSourceLocalDataSource(get())
+    }
     factory<AlternativeSourceRemoteDataSource> {
         DefaultAlternativeSourceRemoteDataSource(get(), get())
     }
-    factory<AlternativeSourceRepository> { AlternativeSourceRepositoryImpl(get()) }
+    factory<AlternativeSourceLocalRepository> { AlternativeSourceLocalRepositoryImpl(get()) }
+    factory<AlternativeSourceRemoteRepository> { AlternativeSourceRemoteRepositoryImpl(get()) }
+    factory<AlternativeSourceSettingsRepository> { AlternativeSourceSettingsRepositoryImpl(get()) }
 }

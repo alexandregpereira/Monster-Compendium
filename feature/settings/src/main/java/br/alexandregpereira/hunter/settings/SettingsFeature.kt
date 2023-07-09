@@ -39,6 +39,7 @@ fun SettingsFeature(
         onImageBaseUrlChange = viewModel::onImageBaseUrlChange,
         onAlternativeSourceBaseUrlChange = viewModel::onAlternativeSourceBaseUrlChange,
         onSaveButtonClick = viewModel::onSaveButtonClick,
+        onManageMonsterContentClick = viewModel::onManageMonsterContentClick,
     )
 
     LaunchedEffect(Unit) {

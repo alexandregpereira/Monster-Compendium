@@ -33,7 +33,7 @@ class SyncMonstersLoreUseCase(
     private val settingsRepository: MonsterLoreSettingsRepository,
 ) {
 
-    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
         return alternativeSourceRepository.getMonsterLoreSources()
             .catch { emit(emptyList()) }

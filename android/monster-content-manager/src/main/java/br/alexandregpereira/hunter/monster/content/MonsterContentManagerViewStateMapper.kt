@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.source
+package br.alexandregpereira.hunter.monster.content
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.monster.content.ui.MonsterContentState
 
-interface AlternativeSourceRepository {
-
-    fun getAlternativeSources(): Flow<List<AlternativeSource>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSource>>
+internal fun AlternativeSource.asState(): MonsterContentState {
+    return MonsterContentState(
+        acronym = acronym,
+        name = name,
+        originalName = originalName,
+        totalMonsters = totalMonsters,
+        summary = summary,
+        coverImageUrl = coverImageUrl,
+        isEnabled = isEnabled
+    )
 }

@@ -30,6 +30,8 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
+import br.alexandregpereira.hunter.monster.content.event.collectOnVisibilityChanges
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -39,6 +41,7 @@ class MainViewModel(
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val folderDetailResultListener: FolderDetailResultListener,
     private val folderListResultListener: FolderListResultListener,
+    private val monsterContentManagerEventListener: MonsterContentManagerEventListener,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
 ) : ViewModel() {
 
@@ -49,6 +52,7 @@ class MainViewModel(
         observeMonsterDetailEvents()
         observeFolderDetailResults()
         observeFolderListResults()
+        observeMonsterContentManagerEvents()
     }
 
     private fun observeMonsterDetailEvents() {
@@ -58,6 +62,12 @@ class MainViewModel(
                 Hide -> setState { copy(isMonsterDetailShowing = false) }
             }
             dispatchFolderPreviewEvent(show = state.value.isMonsterDetailShowing.not())
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeMonsterContentManagerEvents() {
+        monsterContentManagerEventListener.collectOnVisibilityChanges { isShowing ->
+            setState { copy(isMonsterContentManagerShowing = isShowing) }
         }.launchIn(viewModelScope)
     }
 

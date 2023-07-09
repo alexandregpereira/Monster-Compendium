@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation project(':domain:settings')
+    implementation project(':event:monster-content-manager-event')
     implementation project(':ui:core')
 
     implementation libs.kotlin.coroutines

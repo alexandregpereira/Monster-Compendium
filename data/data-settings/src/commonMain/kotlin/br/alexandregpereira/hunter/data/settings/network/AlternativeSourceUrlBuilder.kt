@@ -32,11 +32,11 @@ class AlternativeSourceUrlBuilder(
     ): HttpRequestBuilder {
         val currentUrl = requestBuilder.url.buildString()
         val newRequestBuilder = if (isToInterceptUrl(currentUrl)) {
-            val newUrl = getNewUrl(currentUrl).orEmpty()
+            val newUrl = getNewUrl(currentUrl)
             requestBuilder.apply {
                 url {
-                    host = newUrl.split("/").dropLast(1).joinToString(separator = "/")
-                    path(newUrl.split("/").last())
+                    host = newUrl.split("/").firstOrNull().orEmpty()
+                    path(*newUrl.split("/").drop(1).toTypedArray())
                 }
             }
         } else requestBuilder
@@ -52,10 +52,12 @@ class AlternativeSourceUrlBuilder(
         }
     }
 
-    private suspend fun getNewUrl(currentUrl: String): String? {
+    private suspend fun getNewUrl(currentUrl: String): String {
         return when {
             currentUrl.contains("alternative-sources.json") -> getAlternativeSourceJsonUrl()
             currentUrl.contains("/sources/") -> getAlternativeSourceJsonUrl().map { url ->
+                if (url.isBlank()) return@map url
+
                 val path = currentUrl.split("/")
                     .run { subList(size - 4, size) }
                     .joinToString("/")
@@ -66,16 +68,14 @@ class AlternativeSourceUrlBuilder(
                 "$host/$path"
             }
             else -> null
-        }?.appendLocalHostIfEmpty()?.single()
+        }?.appendCurrentUrlIfEmpty(currentUrl)?.single()
             ?.replace("https://", "")
-            ?.replace("http://", "")
+            ?.replace("http://", "") ?: currentUrl
     }
 
-    private fun Flow<String>.appendLocalHostIfEmpty(): Flow<String> {
+    private fun Flow<String>.appendCurrentUrlIfEmpty(currentUrl: String): Flow<String> {
         return map { url ->
-            url.ifBlank {
-                "https://localhost/"
-            }
+            url.ifBlank { currentUrl }
         }
     }
 }

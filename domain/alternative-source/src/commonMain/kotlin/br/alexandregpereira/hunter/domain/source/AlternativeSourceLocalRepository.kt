@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.domain.source
 
-import br.alexandregpereira.hunter.data.source.remote.mapper.toDomain
-import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
-internal class AlternativeSourceRepositoryImpl(
-    private val remoteDataSource: AlternativeSourceRemoteDataSource
-) : AlternativeSourceRepository {
+interface AlternativeSourceLocalRepository {
 
-    override fun getAlternativeSources(): Flow<List<AlternativeSource>> {
-       return remoteDataSource.getAlternativeSources().map { it.toDomain() }
-    }
+    fun getAlternativeSources(): Flow<List<AlternativeSource>>
 
-    override fun getMonsterLoreSources(): Flow<List<AlternativeSource>> {
-        return remoteDataSource.getMonsterLoreSources().map { it.toDomain() }
-    }
+    fun addAlternativeSource(acronym: String): Flow<Unit>
+
+    fun removeAlternativeSource(acronym: String): Flow<Unit>
 }

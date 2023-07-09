@@ -287,12 +287,13 @@ private fun LazyListScope.monsterInfoPart5(
     }
 
     item(key = "actions") {
-        MonsterRequireSectionAlphaTransition(
+        MonsterOptionalSectionAlphaTransition(
+            valueToValidate = { it.actions },
             dataList = monsters,
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
-        ) { monster ->
-            ActionBlock(actions = monster.actions)
+        ) { actions ->
+            ActionBlock(actions = actions)
         }
     }
 

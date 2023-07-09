@@ -25,4 +25,12 @@ data class AlternativeSourceDto(
     val source: SourceDto,
     @SerialName("totalMonsters")
     val totalMonsters: Int,
+    @SerialName("summary")
+    val summary: String = "",
+    @SerialName("coverImageUrl")
+    val coverImageUrl: String = "",
+    @SerialName("isEnabled")
+    val isEnabled: Boolean = true,
+    @SerialName("isLoreEnabled")
+    val isLoreEnabled: Boolean = true,
 )

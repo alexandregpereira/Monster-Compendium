@@ -75,7 +75,8 @@ class SyncMonstersUseCase internal constructor(
                 repository.getRemoteMonsters(
                     sourceAcronym = this.acronym,
                     lang = it
-                ).catch {
+                ).catch { error ->
+                    error.printStackTrace()
                     emit(emptyList())
                 }
             }
