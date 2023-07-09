@@ -29,8 +29,4 @@ internal class AlternativeSourceRemoteRepositoryImpl(
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> {
        return remoteDataSource.getAlternativeSources(lang).map { it.toDomain() }
     }
-
-    override fun getMonsterLoreSources(): Flow<List<AlternativeSource>> {
-        return remoteDataSource.getMonsterLoreSources().map { it.toDomain() }
-    }
 }

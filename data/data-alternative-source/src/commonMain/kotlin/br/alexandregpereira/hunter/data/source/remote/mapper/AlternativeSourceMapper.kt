@@ -31,7 +31,8 @@ internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
             totalMonsters = it.totalMonsters,
             summary = it.summary,
             coverImageUrl = it.coverImageUrl,
-            isEnabled = it.isEnabled
+            isEnabled = it.isEnabled,
+            isLoreEnabled = it.isLoreEnabled
         )
     }
 }

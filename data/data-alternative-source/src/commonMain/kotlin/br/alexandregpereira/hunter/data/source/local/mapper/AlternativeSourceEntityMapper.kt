@@ -32,7 +32,8 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             totalMonsters = 0,
             summary = "",
             coverImageUrl = "",
-            isEnabled = true
+            isEnabled = true,
+            isLoreEnabled = true,
         )
     }
 }

@@ -32,8 +32,4 @@ internal class DefaultAlternativeSourceRemoteDataSource(
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSourceDto>> = flow {
         emit(json.decodeFromString(client.get("$lang/alternative-sources.json").bodyAsText()))
     }
-
-    override fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>> = flow {
-        emit(json.decodeFromString(client.get("monster-lore-sources.json").bodyAsText()))
-    }
 }

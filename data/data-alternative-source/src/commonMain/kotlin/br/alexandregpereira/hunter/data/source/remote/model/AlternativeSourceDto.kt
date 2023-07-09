@@ -31,4 +31,6 @@ data class AlternativeSourceDto(
     val coverImageUrl: String = "",
     @SerialName("isEnabled")
     val isEnabled: Boolean = true,
+    @SerialName("isLoreEnabled")
+    val isLoreEnabled: Boolean = true,
 )

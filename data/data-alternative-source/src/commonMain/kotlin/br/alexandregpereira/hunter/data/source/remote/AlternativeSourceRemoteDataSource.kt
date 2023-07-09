@@ -22,6 +22,4 @@ import kotlinx.coroutines.flow.Flow
 internal interface AlternativeSourceRemoteDataSource {
 
     fun getAlternativeSources(lang: String): Flow<List<AlternativeSourceDto>>
-
-    fun getMonsterLoreSources(): Flow<List<AlternativeSourceDto>>
 }
