@@ -21,6 +21,6 @@ import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
 import org.koin.dsl.module
 
 val alternativeSourceDomainModule = module {
-    factory { GetAlternativeSourcesUseCase(get()) }
+    factory { GetAlternativeSourcesUseCase(get(), get()) }
     factory { GetMonsterLoreSourcesUseCase(get()) }
 }

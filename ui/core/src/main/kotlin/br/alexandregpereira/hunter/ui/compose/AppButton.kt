@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 fun AppButton(
     text: String,
     modifier: Modifier = Modifier,
+    size: AppButtonSize = AppButtonSize.MEDIUM,
     enabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
@@ -46,7 +47,7 @@ fun AppButton(
             contentColor = MaterialTheme.colors.surface,
         ),
         modifier = modifier
-            .height(48.dp)
+            .height(size.height.dp)
             .fillMaxWidth(),
         onClick = onClick
     ) {
@@ -56,6 +57,11 @@ fun AppButton(
             fontSize = 16.sp,
         )
     }
+}
+
+enum class AppButtonSize(val height: Int) {
+    SMALL(40),
+    MEDIUM(48),
 }
 
 @Preview

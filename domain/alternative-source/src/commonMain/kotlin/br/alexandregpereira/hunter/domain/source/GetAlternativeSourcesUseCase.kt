@@ -19,13 +19,17 @@ package br.alexandregpereira.hunter.domain.source
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetAlternativeSourcesUseCase(
-    private val repository: AlternativeSourceRepository
+    private val repository: AlternativeSourceRepository,
+    private val settingsRepository: AlternativeSourceSettingsRepository
 ) {
 
     operator fun invoke(onlyContentEnabled: Boolean = true): Flow<List<AlternativeSource>> {
-        return repository.getAlternativeSources().map { alternativeSources ->
+        return settingsRepository.getLanguage().map { lang ->
+            repository.getAlternativeSources(lang).single()
+        }.map { alternativeSources ->
             alternativeSources.filter { !onlyContentEnabled || it.isEnabled }
         }
     }

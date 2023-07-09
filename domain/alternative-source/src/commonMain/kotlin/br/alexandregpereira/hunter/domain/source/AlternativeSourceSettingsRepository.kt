@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.content
+package br.alexandregpereira.hunter.domain.source
 
-import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import br.alexandregpereira.hunter.monster.content.ui.MonsterContentState
+import kotlinx.coroutines.flow.Flow
 
-internal fun AlternativeSource.asState(): MonsterContentState {
-    return MonsterContentState(
-        acronym = acronym,
-        name = name,
-        originalName = originalName,
-        totalMonsters = totalMonsters,
-        summary = summary,
-        coverImageUrl = coverImageUrl,
-        isEnabled = isEnabled
-    )
+interface AlternativeSourceSettingsRepository {
+
+    fun getLanguage(): Flow<String>
 }

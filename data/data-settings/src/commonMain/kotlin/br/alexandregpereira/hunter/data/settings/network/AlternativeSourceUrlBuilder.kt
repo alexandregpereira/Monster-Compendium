@@ -66,16 +66,14 @@ class AlternativeSourceUrlBuilder(
                 "$host/$path"
             }
             else -> null
-        }?.appendLocalHostIfEmpty()?.single()
+        }?.appendLocalHostIfEmpty(currentUrl)?.single()
             ?.replace("https://", "")
             ?.replace("http://", "")
     }
 
-    private fun Flow<String>.appendLocalHostIfEmpty(): Flow<String> {
+    private fun Flow<String>.appendLocalHostIfEmpty(currentUrl: String): Flow<String> {
         return map { url ->
-            url.ifBlank {
-                "https://localhost/"
-            }
+            url.ifBlank { currentUrl }
         }
     }
 }

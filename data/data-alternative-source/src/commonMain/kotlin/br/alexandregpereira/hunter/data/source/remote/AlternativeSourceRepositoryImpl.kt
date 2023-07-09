@@ -26,8 +26,8 @@ internal class AlternativeSourceRepositoryImpl(
     private val remoteDataSource: AlternativeSourceRemoteDataSource
 ) : AlternativeSourceRepository {
 
-    override fun getAlternativeSources(): Flow<List<AlternativeSource>> {
-       return remoteDataSource.getAlternativeSources().map { it.toDomain() }
+    override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> {
+       return remoteDataSource.getAlternativeSources(lang).map { it.toDomain() }
     }
 
     override fun getMonsterLoreSources(): Flow<List<AlternativeSource>> {

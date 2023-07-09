@@ -28,4 +28,7 @@ data class AlternativeSource(
 
     val name: String
         get() = source.name
+
+    val originalName: String?
+        get() = source.originalName
 }
