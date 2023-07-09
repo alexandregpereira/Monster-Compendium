@@ -35,8 +35,8 @@ class AlternativeSourceUrlBuilder(
             val newUrl = getNewUrl(currentUrl)
             requestBuilder.apply {
                 url {
-                    host = newUrl.split("/").dropLast(1).joinToString(separator = "/")
-                    path(newUrl.split("/").last())
+                    host = newUrl.split("/").firstOrNull().orEmpty()
+                    path(*newUrl.split("/").drop(1).toTypedArray())
                 }
             }
         } else requestBuilder
@@ -71,7 +71,6 @@ class AlternativeSourceUrlBuilder(
         }?.appendCurrentUrlIfEmpty(currentUrl)?.single()
             ?.replace("https://", "")
             ?.replace("http://", "") ?: currentUrl
-
     }
 
     private fun Flow<String>.appendCurrentUrlIfEmpty(currentUrl: String): Flow<String> {
