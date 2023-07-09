@@ -47,6 +47,14 @@ internal class MonsterContentManagerViewModel(
             .launchIn(viewModelScope)
     }
 
+    fun onAddContentClick(acronym: String) {
+        stateHolder.onAddContentClick(acronym)
+    }
+
+    fun onRemoveContentClick(acronym: String) {
+        stateHolder.onRemoveContentClick(acronym)
+    }
+
     fun onClose() {
         stateHolder.onClose()
     }

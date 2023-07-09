@@ -34,6 +34,8 @@ fun MonsterContentManagerFeature(
         onClose = {
             viewModel.onClose()
             onClose()
-        }
+        },
+        onAddClick = viewModel::onAddContentClick,
+        onRemoveClick = viewModel::onRemoveContentClick,
     )
 }

@@ -42,8 +42,8 @@ internal fun MonsterContentManagerScreen(
     state: MonsterContentManagerViewState,
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {},
-    onAddClick: () -> Unit = {},
-    onRemoveClick: () -> Unit = {},
+    onAddClick: (String) -> Unit = {},
+    onRemoveClick: (String) -> Unit = {},
 ) {
     BackHandler(enabled = state.isOpen, onBack = onClose)
 
@@ -73,8 +73,8 @@ internal fun MonsterContentManagerScreen(
                         summary = monsterContent.summary,
                         coverImageUrl = monsterContent.coverImageUrl,
                         isEnabled = monsterContent.isEnabled,
-                        onAddClick = onAddClick,
-                        onRemoveClick = onRemoveClick,
+                        onAddClick = { onAddClick(monsterContent.acronym) },
+                        onRemoveClick = { onRemoveClick(monsterContent.acronym) },
                     )
                     Spacer(modifier = Modifier.padding(bottom = 32.dp))
                 }

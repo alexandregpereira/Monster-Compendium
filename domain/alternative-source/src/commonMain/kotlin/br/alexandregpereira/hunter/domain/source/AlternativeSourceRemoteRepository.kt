@@ -19,11 +19,9 @@ package br.alexandregpereira.hunter.domain.source
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
 
-class GetMonsterLoreSourcesUseCase(
-    private val repository: AlternativeSourceRemoteRepository
-) {
+interface AlternativeSourceRemoteRepository {
 
-    operator fun invoke(): Flow<List<AlternativeSource>> {
-        return repository.getMonsterLoreSources()
-    }
+    fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>>
+
+    fun getMonsterLoreSources(): Flow<List<AlternativeSource>>
 }

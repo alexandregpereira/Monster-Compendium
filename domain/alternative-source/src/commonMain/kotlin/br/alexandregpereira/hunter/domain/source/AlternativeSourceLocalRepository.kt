@@ -19,9 +19,11 @@ package br.alexandregpereira.hunter.domain.source
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
 
-interface AlternativeSourceRepository {
+interface AlternativeSourceLocalRepository {
 
-    fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>>
+    fun getAlternativeSources(): Flow<List<AlternativeSource>>
 
-    fun getMonsterLoreSources(): Flow<List<AlternativeSource>>
+    fun addAlternativeSource(acronym: String): Flow<Unit>
+
+    fun removeAlternativeSource(acronym: String): Flow<Unit>
 }

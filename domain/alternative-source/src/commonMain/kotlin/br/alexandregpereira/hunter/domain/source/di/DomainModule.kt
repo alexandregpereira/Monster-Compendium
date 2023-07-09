@@ -16,11 +16,15 @@
 
 package br.alexandregpereira.hunter.domain.source.di
 
+import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
+import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
 import org.koin.dsl.module
 
 val alternativeSourceDomainModule = module {
-    factory { GetAlternativeSourcesUseCase(get(), get()) }
+    factory { GetAlternativeSourcesUseCase(get(), get(), get()) }
     factory { GetMonsterLoreSourcesUseCase(get()) }
+    factory { AddAlternativeSourceUseCase(get()) }
+    factory { RemoveAlternativeSourceUseCase(get()) }
 }

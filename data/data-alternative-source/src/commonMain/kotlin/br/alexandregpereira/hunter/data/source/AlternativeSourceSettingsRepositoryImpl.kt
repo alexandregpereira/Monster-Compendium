@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.data.source.remote
+package br.alexandregpereira.hunter.data.source
 
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceSettingsRepository

@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.data.di
 
 import br.alexandregpereira.hunter.data.Database
+import br.alexandregpereira.hunter.data.database.dao.AlternativeSourceDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterFolderDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterLoreDaoImpl
@@ -24,6 +25,7 @@ import br.alexandregpereira.hunter.data.database.dao.SpellDaoImpl
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
+import br.alexandregpereira.hunter.data.source.local.dao.AlternativeSourceDao
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.dsl.module
@@ -31,6 +33,12 @@ import org.koin.dsl.module
 val databaseModule = module {
     single {
         createDatabase(get())
+    }
+    factory<AlternativeSourceDao> {
+        AlternativeSourceDaoImpl(
+            dispatcher = getDispatcherIO(),
+            queries = get<Database>().alternativeSourceQueries
+        )
     }
     factory<MonsterDao> {
         val database = get<Database>()

@@ -17,14 +17,14 @@
 package br.alexandregpereira.hunter.data.source.remote
 
 import br.alexandregpereira.hunter.data.source.remote.mapper.toDomain
-import br.alexandregpereira.hunter.domain.source.AlternativeSourceRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class AlternativeSourceRepositoryImpl(
+internal class AlternativeSourceRemoteRepositoryImpl(
     private val remoteDataSource: AlternativeSourceRemoteDataSource
-) : AlternativeSourceRepository {
+) : AlternativeSourceRemoteRepository {
 
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> {
        return remoteDataSource.getAlternativeSources(lang).map { it.toDomain() }

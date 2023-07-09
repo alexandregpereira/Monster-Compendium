@@ -27,9 +27,9 @@ data class MonsterDto(
     @SerialName("type")
     val type: MonsterTypeDto,
     @SerialName("subtype")
-    val subtype: String?,
+    val subtype: String? = null,
     @SerialName("group")
-    val group: String?,
+    val group: String? = null,
     @SerialName("challenge_rating")
     val challengeRating: Float,
     @SerialName("name")
@@ -51,29 +51,29 @@ data class MonsterDto(
     @SerialName("ability_scores")
     val abilityScores: List<AbilityScoreDto>,
     @SerialName("saving_throws")
-    val savingThrows: List<SavingThrowDto>,
+    val savingThrows: List<SavingThrowDto> = emptyList(),
     @SerialName("skills")
-    val skills: List<SkillDto>,
+    val skills: List<SkillDto> = emptyList(),
     @SerialName("damage_vulnerabilities")
-    val damageVulnerabilities: List<DamageDto>,
+    val damageVulnerabilities: List<DamageDto> = emptyList(),
     @SerialName("damage_resistances")
-    val damageResistances: List<DamageDto>,
+    val damageResistances: List<DamageDto> = emptyList(),
     @SerialName("damage_immunities")
-    val damageImmunities: List<DamageDto>,
+    val damageImmunities: List<DamageDto> = emptyList(),
     @SerialName("condition_immunities")
-    val conditionImmunities: List<ConditionDto>,
+    val conditionImmunities: List<ConditionDto> = emptyList(),
     @SerialName("senses")
-    val senses: List<String>,
+    val senses: List<String> = emptyList(),
     @SerialName("languages")
     val languages: String,
     @SerialName("special_abilities")
-    val specialAbilities: List<SpecialAbilityDto>,
+    val specialAbilities: List<SpecialAbilityDto> = emptyList(),
     @SerialName("actions")
-    val actions: List<ActionDto>,
+    val actions: List<ActionDto> = emptyList(),
     @SerialName("legendary_actions")
     val legendaryActions: List<ActionDto> = emptyList(),
     @SerialName("reactions")
-    val reactions: List<SpecialAbilityDto>,
+    val reactions: List<SpecialAbilityDto> = emptyList(),
     @SerialName("spellcasting")
     val spellcastings: List<SpellcastingDto> = emptyList(),
     @SerialName("source")

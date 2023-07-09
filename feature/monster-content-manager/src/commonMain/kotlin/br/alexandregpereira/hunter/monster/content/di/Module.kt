@@ -32,6 +32,8 @@ val featureMonsterContentManagerModule = module {
         MonsterContentManagerStateHolder(
             stateRecovery = getOrNull() ?: EmptyMonsterContentManagerStateRecovery(),
             getAlternativeSourcesUseCase = get(),
+            addAlternativeSourceUseCase = get(),
+            removeAlternativeSourceUseCase = get(),
             eventDispatcher = get(),
             eventListener = get(),
             dispatcher = get()

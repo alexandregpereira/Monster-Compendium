@@ -16,7 +16,9 @@
 
 package br.alexandregpereira.hunter.monster.content
 
+import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
+import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
@@ -33,6 +35,8 @@ import kotlinx.coroutines.flow.onEach
 class MonsterContentManagerStateHolder internal constructor(
     stateRecovery: MonsterContentManagerStateRecovery,
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
+    private val addAlternativeSourceUseCase: AddAlternativeSourceUseCase,
+    private val removeAlternativeSourceUseCase: RemoveAlternativeSourceUseCase,
     private val eventDispatcher: MonsterContentManagerEventDispatcher,
     private val eventListener: MonsterContentManagerEventListener,
     private val dispatcher: CoroutineDispatcher
@@ -73,6 +77,26 @@ class MonsterContentManagerStateHolder internal constructor(
                     }
                 }
             }
+            .launchIn(scope)
+    }
+
+    fun onAddContentClick(acronym: String) {
+        addAlternativeSourceUseCase(acronym)
+            .flowOn(dispatcher)
+            .onEach {
+                load()
+            }
+            .catch {}
+            .launchIn(scope)
+    }
+
+    fun onRemoveContentClick(acronym: String) {
+        removeAlternativeSourceUseCase(acronym)
+            .flowOn(dispatcher)
+            .onEach {
+                load()
+            }
+            .catch {}
             .launchIn(scope)
     }
 

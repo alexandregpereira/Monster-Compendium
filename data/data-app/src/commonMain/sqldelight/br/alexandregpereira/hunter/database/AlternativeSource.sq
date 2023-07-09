@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS AlternativeSourceEntity (
+    `acronym` TEXT PRIMARY KEY NOT NULL,
+    `createdAt` INTEGER NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO AlternativeSourceEntity VALUES ?;
+
+deleteByAcronym:
+DELETE FROM AlternativeSourceEntity WHERE acronym = ?;
+
+getAll:
+SELECT * FROM AlternativeSourceEntity;
