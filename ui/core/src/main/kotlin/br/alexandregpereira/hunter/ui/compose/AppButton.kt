@@ -44,11 +44,16 @@ fun AppButton(
         enabled = enabled,
         shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.buttonColors(
-            contentColor = MaterialTheme.colors.surface,
+            backgroundColor = MaterialTheme.colors.surface,
+        ),
+        elevation = ButtonDefaults.elevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 2.dp,
         ),
         modifier = modifier
             .height(size.height.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .animatePressed(),
         onClick = onClick
     ) {
         Text(
