@@ -22,7 +22,10 @@ import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentI
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import br.alexandregpereira.hunter.sync.SyncStateHolder
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -30,8 +33,24 @@ class MonsterCompendiumFeature : KoinComponent {
 
     val stateHolder: MonsterCompendiumStateHolder by inject()
 
+    // TODO Remove after iOS sync feature implementation
+    val syncEventDispatcher: SyncEventDispatcher by inject()
+    val syncStateHolder: SyncStateHolder by inject()
+
+    init {
+        // TODO Remove after iOS sync feature implementation
+        syncStateHolder.state.wrap().collect {
+            println("Sync state $it")
+        }
+    }
+
     val state: CFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
         it.asMonsterCompendiumStateIos()
+    }.onEach { monsters ->
+        // TODO Remove after iOS sync feature implementation
+        if (monsters.isLoading.not() && monsters.items.isEmpty()) {
+            syncEventDispatcher.startSync()
+        }
     }.wrap()
 
     val action: CFlow<MonsterCompendiumActionIos> = stateHolder.action.map { action ->

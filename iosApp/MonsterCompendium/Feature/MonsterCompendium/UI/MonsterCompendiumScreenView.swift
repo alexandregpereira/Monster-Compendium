@@ -24,26 +24,30 @@ struct MonsterCompendiumScreenView: View {
                     .transition(.opacity)
             } else {
                 ZStack {
-                    MonsterCompendiumView(
-                        items: state.items,
-                        initialCompendiumIndex: viewModel.getInitialScrollItemPosition(),
-                        compendiumIndex: viewModel.compendiumIndex,
-                        onMonsterItemClick: { viewModel.onItemClick(index: $0) },
-                        onFirstVisibleIndexChange: { viewModel.onFirstVisibleItemChange(position: $0) }
-                    )
+                    if !state.items.isEmpty {
+                        MonsterCompendiumView(
+                            items: state.items,
+                            initialCompendiumIndex: viewModel.getInitialScrollItemPosition(),
+                            compendiumIndex: viewModel.compendiumIndex,
+                            onMonsterItemClick: { viewModel.onItemClick(index: $0) },
+                            onFirstVisibleIndexChange: { viewModel.onFirstVisibleItemChange(position: $0) }
+                        )
+                    }
                     
-                    TableContentPopup(
-                        tableContent: state.tableContent,
-                        alphabet: state.alphabet,
-                        alphabetSelectedIndex: state.alphabetSelectedIndex,
-                        tableContentSelectedIndex: state.tableContentSelectedIndex,
-                        tableContentInitialIndex: state.tableContentInitialIndex,
-                        screen: state.tableContentPopupScreenType,
-                        onOpenButtonClicked: { viewModel.onPopupOpened() },
-                        onCloseButtonClicked: { viewModel.onPopupClosed() },
-                        onTableContentClicked: { viewModel.onTableContentIndexClicked(position: $0) },
-                        onAlphabetIndexClicked: { viewModel.onAlphabetIndexClicked(position: $0) }
-                    )
+                    if !state.alphabet.isEmpty {
+                        TableContentPopup(
+                            tableContent: state.tableContent,
+                            alphabet: state.alphabet,
+                            alphabetSelectedIndex: state.alphabetSelectedIndex,
+                            tableContentSelectedIndex: state.tableContentSelectedIndex,
+                            tableContentInitialIndex: state.tableContentInitialIndex,
+                            screen: state.tableContentPopupScreenType,
+                            onOpenButtonClicked: { viewModel.onPopupOpened() },
+                            onCloseButtonClicked: { viewModel.onPopupClosed() },
+                            onTableContentClicked: { viewModel.onTableContentIndexClicked(position: $0) },
+                            onAlphabetIndexClicked: { viewModel.onAlphabetIndexClicked(position: $0) }
+                        )
+                    }
                 }
                 .transition(.opacity)
             }
