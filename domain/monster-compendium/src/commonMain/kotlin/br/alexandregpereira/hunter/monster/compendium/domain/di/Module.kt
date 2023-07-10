@@ -25,6 +25,6 @@ import org.koin.dsl.module
 val monsterCompendiumDomainModule = module {
     factory { GetAlphabetUseCase() }
     factory { GetMonsterCompendiumUseCase(get(), get(), get()) }
-    factory { GetMonsterPreviewsBySectionUseCase(get(), get(), get()) }
+    factory { GetMonsterPreviewsBySectionUseCase(get()) }
     factory { GetTableContentUseCase() }
 }

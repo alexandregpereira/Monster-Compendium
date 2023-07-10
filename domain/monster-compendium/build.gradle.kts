@@ -25,7 +25,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":domain:monster"))
-                implementation(project(":domain:sync"))
                 implementation(libs.koin.core)
                 implementation(libs.kotlin.coroutines.core)
             }

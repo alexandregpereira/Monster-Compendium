@@ -36,6 +36,9 @@ import br.alexandregpereira.hunter.state.DefaultActionDispatcher
 import br.alexandregpereira.hunter.state.DefaultStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
+import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,6 +60,8 @@ class MonsterCompendiumStateHolder(
     private val folderPreviewResultListener: FolderPreviewResultListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
+    private val syncEventListener: SyncEventListener,
+    private val syncEventDispatcher: SyncEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
     loadOnInit: Boolean = true,
@@ -106,7 +111,7 @@ class MonsterCompendiumStateHolder(
             .flowOn(dispatcher)
             .catch { error ->
                 error.printStackTrace()
-                emit(state.value.error() to initialScrollItemPosition)
+                emit(state.value.error(error) to initialScrollItemPosition)
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
@@ -153,7 +158,7 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onErrorButtonClick() {
-        loadMonsters()
+        syncEventDispatcher.startSync()
     }
 
     private fun saveCompendiumScrollItemPosition(position: Int) {
@@ -225,6 +230,10 @@ class MonsterCompendiumStateHolder(
 
         monsterDetailEventListener.collectOnMonsterPageChanges { event ->
             navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex)
+        }.launchIn(scope)
+
+        syncEventListener.collectSyncFinishedEvents {
+            loadMonsters()
         }.launchIn(scope)
     }
 

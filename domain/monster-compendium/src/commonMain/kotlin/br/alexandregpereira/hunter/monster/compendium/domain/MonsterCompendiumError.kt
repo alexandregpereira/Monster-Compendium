@@ -17,5 +17,6 @@
 package br.alexandregpereira.hunter.monster.compendium.domain
 
 sealed class MonsterCompendiumError(cause: Throwable? = null) : Throwable(cause) {
+    class NoMonsterError(cause: Throwable? = null) : MonsterCompendiumError(cause)
     class UnknownError(cause: Throwable? = null) : MonsterCompendiumError(cause)
 }

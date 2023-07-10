@@ -22,6 +22,6 @@ import org.koin.dsl.module
 
 val monsterCompendiumModule = module {
     viewModel {
-        MonsterCompendiumViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MonsterCompendiumViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 }

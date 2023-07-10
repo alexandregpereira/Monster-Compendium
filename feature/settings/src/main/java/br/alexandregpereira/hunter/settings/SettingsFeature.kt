@@ -16,10 +16,8 @@
 
 package br.alexandregpereira.hunter.settings
 
-import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import br.alexandregpereira.hunter.settings.ui.SettingsScreen
@@ -41,12 +39,4 @@ fun SettingsFeature(
         onSaveButtonClick = viewModel::onSaveButtonClick,
         onManageMonsterContentClick = viewModel::onManageMonsterContentClick,
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.action.collect { action ->
-            when (action) {
-                SettingsAction.CloseApp -> (context as Activity).finish()
-            }
-        }
-    }
 }

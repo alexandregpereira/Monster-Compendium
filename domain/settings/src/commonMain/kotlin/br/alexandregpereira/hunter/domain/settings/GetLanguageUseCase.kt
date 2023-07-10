@@ -30,6 +30,6 @@ class GetLanguageUseCase(
     }
 
     companion object {
-        const val SETTING_LANGUAGE_KEY = "SETTING_LANGUAGE_KEY"
+        internal const val SETTING_LANGUAGE_KEY = "SETTING_LANGUAGE_KEY"
     }
 }

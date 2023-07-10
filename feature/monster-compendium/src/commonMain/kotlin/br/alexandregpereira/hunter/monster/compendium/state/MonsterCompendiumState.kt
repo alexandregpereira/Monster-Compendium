@@ -35,7 +35,7 @@ data class MonsterCompendiumState(
 )
 
 fun MonsterCompendiumState.loading(isLoading: Boolean): MonsterCompendiumState {
-    return this.copy(isLoading = isLoading)
+    return this.copy(isLoading = isLoading, errorState = null)
 }
 
 fun MonsterCompendiumState.complete(
@@ -53,8 +53,14 @@ fun MonsterCompendiumState.complete(
     tableContentIndex = tableContentIndex,
 )
 
-fun MonsterCompendiumState.error(): MonsterCompendiumState {
-    return this.copy(errorState = MonsterCompendiumError.UnknownError())
+fun MonsterCompendiumState.error(error: Throwable): MonsterCompendiumState {
+    val compendiumError =  if (error is MonsterCompendiumError) {
+        error
+    } else {
+        MonsterCompendiumError.UnknownError(error)
+    }
+
+    return this.copy(errorState = compendiumError, isLoading = false)
 }
 
 fun MonsterCompendiumState.tableContentIndex(

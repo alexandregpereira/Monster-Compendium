@@ -18,39 +18,22 @@ package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.domain.collections.equalsWithNoSpecialChar
 import br.alexandregpereira.hunter.domain.collections.removeSpecialCharacters
-import br.alexandregpereira.hunter.domain.exception.NoMonstersException
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.sync.HandleSyncUseCase
-import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.retry
+import kotlinx.coroutines.flow.onEach
 
 class GetMonsterPreviewsBySectionUseCase internal constructor(
-    private val sync: SyncUseCase,
     private val getMonstersUseCase: GetMonsterPreviewsUseCase,
-    private val handleSyncUseCase: HandleSyncUseCase
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<List<MonsterCompendiumItem>> {
-        return handleSyncUseCase()
-            .flatMapLatest { getMonstersUseCase() }
-            .flatMapLatest { monsters ->
-                if (monsters.isEmpty()) {
-                    sync().map {
-                        throw NoMonstersException()
-                    }
-                } else flowOf(monsters)
-            }
-            .retry(retries = 1) { cause: Throwable ->
-                cause is NoMonstersException
+        return getMonstersUseCase()
+            .onEach {
+                if (it.isEmpty()) throw MonsterCompendiumError.NoMonsterError()
             }
             .toMonsterCompendiumItems()
     }

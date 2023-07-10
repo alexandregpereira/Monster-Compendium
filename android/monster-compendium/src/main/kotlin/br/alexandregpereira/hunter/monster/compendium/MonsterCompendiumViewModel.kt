@@ -30,7 +30,10 @@ import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiu
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -49,6 +52,8 @@ internal class MonsterCompendiumViewModel(
     folderPreviewResultListener: FolderPreviewResultListener,
     monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     monsterDetailEventListener: MonsterDetailEventListener,
+    syncEventListener: SyncEventListener,
+    syncEventDispatcher: SyncEventDispatcher,
     dispatcher: CoroutineDispatcher,
     loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
@@ -61,6 +66,8 @@ internal class MonsterCompendiumViewModel(
         folderPreviewResultListener,
         monsterDetailEventDispatcher,
         monsterDetailEventListener,
+        syncEventListener,
+        syncEventDispatcher,
         dispatcher,
         loadOnInit = loadOnInit,
         initialState = savedStateHandle.getState().asMonsterCompendiumState()
@@ -132,7 +139,7 @@ internal class MonsterCompendiumViewModel(
     private fun MonsterCompendiumState.asMonsterCompendiumViewState(): MonsterCompendiumViewState {
         return MonsterCompendiumViewState(
             loadingState = when {
-                this.errorState != null -> LoadingScreenState.Error(this.errorState)
+                this.errorState != null -> LoadingScreenState.Error(NO_INTERNET_CONNECTION)
                 this.isLoading -> LoadingScreenState.LoadingScreen
                 else -> LoadingScreenState.Success
             },

@@ -25,6 +25,8 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListene
 import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
+import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,6 +46,7 @@ class FolderListStateHolder internal constructor(
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val folderListEventManager: FolderListEventManager,
     private val dispatcher: CoroutineDispatcher,
+    private val syncEventListener: SyncEventListener
 ) : ScopeManager(), StateHolder<FolderListState> {
 
     private val _state: MutableStateFlow<FolderListState> = MutableStateFlow(
@@ -53,6 +56,7 @@ class FolderListStateHolder internal constructor(
 
     init {
         observeFolderInsertResults()
+        observeEvents()
         loadMonsterFolders()
     }
 
@@ -126,6 +130,12 @@ class FolderListStateHolder internal constructor(
                 loadMonsterFolders()
             }
             .launchIn(scope)
+    }
+
+    private fun observeEvents() {
+        syncEventListener.collectSyncFinishedEvents {
+            loadMonsterFolders()
+        }.launchIn(scope)
     }
 
     private fun setState(block: FolderListState.() -> FolderListState) {

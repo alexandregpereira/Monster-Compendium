@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.exception
+package br.alexandregpereira.hunter.sync.event
 
-class NoMonstersException : Throwable("Monster database is empty")
+interface SyncEventDispatcher {
+
+    fun startSync()
+}
