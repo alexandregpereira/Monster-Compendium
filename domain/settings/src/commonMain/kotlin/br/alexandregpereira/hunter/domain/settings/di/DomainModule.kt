@@ -32,5 +32,5 @@ val settingsDomainModule = module {
     factory { GetMonsterImageJsonUrlUseCase(get()) }
     factory { SaveContentVersionUseCase(get()) }
     factory { SaveLanguageUseCase(get()) }
-    factory { SaveUrlsUseCase(get(), get(), get()) }
+    factory { SaveUrlsUseCase(get()) }
 }

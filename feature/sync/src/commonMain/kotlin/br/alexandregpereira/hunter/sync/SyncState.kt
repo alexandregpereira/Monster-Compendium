@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.exception
+package br.alexandregpereira.hunter.sync
 
-class NoMonstersException : Throwable("Monster database is empty")
+data class SyncState(
+    val isOpen: Boolean = false,
+    val hasError: Boolean = false
+)

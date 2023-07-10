@@ -21,14 +21,12 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
-import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEvent
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -40,17 +38,12 @@ internal class SettingsViewModel(
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase,
     private val saveUrls: SaveUrlsUseCase,
     private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val syncEventDispatcher: SyncEventDispatcher
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsViewState())
     val state: StateFlow<SettingsViewState> = _state
-
-    private val _action: MutableSharedFlow<SettingsAction> = MutableSharedFlow(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val action: SharedFlow<SettingsAction> = _action
 
     init {
         load()
@@ -65,13 +58,12 @@ internal class SettingsViewModel(
     }
 
     fun onSaveButtonClick() {
-        _state.value = state.value.copy(saveButtonEnabled = false)
         saveUrls(
             imageBaseUrl = state.value.imageBaseUrl,
             alternativeSourceBaseUrl = state.value.alternativeSourceBaseUrl
         ).flowOn(dispatcher)
             .onEach {
-                _action.tryEmit(SettingsAction.CloseApp)
+                syncEventDispatcher.startSync()
             }
             .launchIn(viewModelScope)
     }

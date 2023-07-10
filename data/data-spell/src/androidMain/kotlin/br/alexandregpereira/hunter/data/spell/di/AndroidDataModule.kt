@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
-import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
@@ -27,9 +26,5 @@ internal actual fun getAdditionalModule(): Module {
 }
 
 internal actual fun Scope.createLocalRepository(): SpellLocalRepository? {
-    return null
-}
-
-internal actual fun Scope.createSettingsRepository(): SettingsSpellDataRepository? {
     return null
 }

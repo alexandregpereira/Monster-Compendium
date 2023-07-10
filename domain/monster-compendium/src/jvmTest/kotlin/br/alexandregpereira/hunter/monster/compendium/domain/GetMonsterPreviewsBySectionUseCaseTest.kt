@@ -18,30 +18,22 @@ package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
-import br.alexandregpereira.hunter.domain.sync.HandleSyncUseCase
-import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class GetMonsterPreviewsBySectionUseCaseTest {
 
-    private val sync: SyncUseCase = mockk()
     private val getMonstersUseCase: GetMonsterPreviewsUseCase = mockk()
-    private val handleSyncUseCase: HandleSyncUseCase = mockk()
     private val useCase = GetMonsterPreviewsBySectionUseCase(
-        sync,
         getMonstersUseCase,
-        handleSyncUseCase
     )
 
     @Test
@@ -68,8 +60,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
             ),
         )
 
-        every { sync() } returns flowOf(Unit)
-        every { handleSyncUseCase() } returns flowOf(Unit)
         every { getMonstersUseCase() } returns flowOf(monster)
 
         val result = useCase().single()
@@ -134,8 +124,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
             ),
         )
 
-        every { sync() } returns flowOf(Unit)
-        every { handleSyncUseCase() } returns flowOf(Unit)
         every { getMonstersUseCase() } returns flowOf(monster)
 
         val result = useCase().single()

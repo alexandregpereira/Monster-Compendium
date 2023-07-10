@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEv
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,16 +35,18 @@ import kotlinx.coroutines.flow.onEach
 
 class MonsterContentManagerStateHolder internal constructor(
     stateRecovery: MonsterContentManagerStateRecovery,
+    private val dispatcher: CoroutineDispatcher,
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
     private val addAlternativeSourceUseCase: AddAlternativeSourceUseCase,
     private val removeAlternativeSourceUseCase: RemoveAlternativeSourceUseCase,
     private val eventDispatcher: MonsterContentManagerEventDispatcher,
     private val eventListener: MonsterContentManagerEventListener,
-    private val dispatcher: CoroutineDispatcher
+    private val syncEventDispatcher: SyncEventDispatcher
 ) : ScopeManager(), StateHolder<MonsterContentManagerState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
     override val state: StateFlow<MonsterContentManagerState> = _state
+    private var hasChanges: Boolean = false
 
     init {
         observeEvents()
@@ -81,6 +84,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onAddContentClick(acronym: String) {
+        hasChanges = true
         addAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
             .onEach {
@@ -91,6 +95,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onRemoveContentClick(acronym: String) {
+        hasChanges = true
         removeAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
             .onEach {
@@ -101,6 +106,10 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onClose() {
+        if (hasChanges) {
+            hasChanges = false
+            syncEventDispatcher.startSync()
+        }
         eventDispatcher.dispatchEvent(MonsterContentManagerEvent.Hide)
     }
 

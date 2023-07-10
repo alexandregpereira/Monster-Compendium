@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.spell
+plugins {
+    kotlin("multiplatform")
+}
 
-import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
-import br.alexandregpereira.hunter.domain.settings.SettingsSpellDataRepository
-import kotlinx.coroutines.flow.Flow
+configureJvmTargets()
 
-internal class DefaultSettingsSpellDataRepository(
-    private val localDataSource: SpellLocalDataSource
-) : SettingsSpellDataRepository {
-
-    override fun deleteData(): Flow<Unit> {
-        return localDataSource.deleteSpells()
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlin.coroutines.core)
+            }
+        }
+        if (isMac()) {
+            val iosMain by getting
+        }
     }
 }

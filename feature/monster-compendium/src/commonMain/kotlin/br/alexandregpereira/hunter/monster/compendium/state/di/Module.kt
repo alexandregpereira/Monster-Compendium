@@ -21,6 +21,6 @@ import org.koin.dsl.module
 
 val monsterCompendiumStateModule = module {
     factory {
-        MonsterCompendiumStateHolder(get(), get(), get(), get(), get(), get(), get(), get())
+        MonsterCompendiumStateHolder(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 }

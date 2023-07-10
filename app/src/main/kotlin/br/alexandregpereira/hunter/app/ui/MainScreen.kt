@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
+import br.alexandregpereira.hunter.sync.SyncFeature
 
 @Composable
 fun MainScreen(
@@ -83,5 +84,7 @@ fun MainScreen(
         )
 
         FolderInsertFeature(contentPadding = contentPadding)
+
+        SyncFeature()
     }
 }

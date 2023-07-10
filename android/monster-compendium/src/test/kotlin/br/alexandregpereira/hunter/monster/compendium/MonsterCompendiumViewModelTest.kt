@@ -35,6 +35,8 @@ import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
 import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.BODY
 import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER1
 import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER2
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
@@ -49,6 +51,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -69,7 +72,14 @@ class MonsterCompendiumViewModelTest {
     private val folderPreviewResultListener: FolderPreviewResultListener = mockk()
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher = mockk()
     private val monsterDetailEventListener: MonsterDetailEventListener = mockk()
+    private val syncEventDispatcher: SyncEventDispatcher = mockk()
+    private val syncEventListener: SyncEventListener = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
+
+    @Before
+    fun setup() {
+        every { syncEventListener.events } returns flowOf()
+    }
 
     @Test
     fun loadMonsters() = runTest {
@@ -374,6 +384,8 @@ class MonsterCompendiumViewModelTest {
             folderPreviewResultListener = folderPreviewResultListener,
             monsterDetailEventDispatcher = monsterDetailEventDispatcher,
             monsterDetailEventListener = monsterDetailEventListener,
+            syncEventDispatcher = syncEventDispatcher,
+            syncEventListener = syncEventListener,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher
         )

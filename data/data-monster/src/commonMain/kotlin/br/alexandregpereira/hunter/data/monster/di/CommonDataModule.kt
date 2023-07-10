@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
-import br.alexandregpereira.hunter.data.monster.SettingsMonsterDataRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.data.monster.local.DefaultMonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
@@ -42,7 +41,6 @@ import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
-import br.alexandregpereira.hunter.domain.settings.SettingsMonsterDataRepository
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
@@ -66,7 +64,6 @@ val monsterDataModule = module {
     single { MonsterPreferencesRepository(get()) }
     single<CompendiumRepository> { get<MonsterPreferencesRepository>() }
     single<MeasurementUnitRepository> { get<MonsterPreferencesRepository>() }
-    factory<SettingsMonsterDataRepository> { SettingsMonsterDataRepositoryImpl(get(), get()) }
     factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
     single<MonsterLocalDataSource> {

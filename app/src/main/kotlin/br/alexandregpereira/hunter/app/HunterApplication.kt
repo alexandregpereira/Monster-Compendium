@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModul
 import br.alexandregpereira.hunter.search.di.searchModule
 import br.alexandregpereira.hunter.settings.di.settingsModule
 import br.alexandregpereira.hunter.spell.detail.di.spellDetailModule
+import br.alexandregpereira.hunter.sync.di.syncModule
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -66,7 +67,8 @@ class HunterApplication : Application() {
                         folderListModule +
                         folderPreviewModule +
                         monsterLoreDetailModule +
-                        monsterContentManagerModule
+                        monsterContentManagerModule +
+                        syncModule
             )
             modules(
                 appModule,

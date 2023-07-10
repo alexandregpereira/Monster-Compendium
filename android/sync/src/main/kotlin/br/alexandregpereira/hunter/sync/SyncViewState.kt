@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.settings
+package br.alexandregpereira.hunter.sync
 
-internal sealed class SettingsAction {
-    object CloseApp : SettingsAction()
+import androidx.lifecycle.SavedStateHandle
+
+internal fun SavedStateHandle.getState(): SyncState {
+    return SyncState(
+        isOpen = this["isOpen"] ?: false,
+    )
+}
+
+internal fun SyncState.saveState(
+    savedStateHandle: SavedStateHandle
+): SyncState {
+    savedStateHandle["isOpen"] = isOpen
+    return this
 }

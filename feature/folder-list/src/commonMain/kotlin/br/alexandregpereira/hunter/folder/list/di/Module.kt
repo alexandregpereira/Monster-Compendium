@@ -35,6 +35,7 @@ val featureFolderListModule = module {
             folderDetailEventDispatcher = get(),
             folderListEventManager = get(),
             dispatcher = get(),
+            syncEventListener = get(),
         )
     }
 }

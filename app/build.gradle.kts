@@ -113,6 +113,7 @@ dependencies {
     implementation(project(":android:monster-content-manager"))
     implementation(project(":android:monster-detail"))
     implementation(project(":android:monster-lore-detail"))
+    implementation(project(":android:sync"))
     implementation(project(":feature:search"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:spell-detail"))

@@ -12,6 +12,7 @@ kotlin {
                 api(project(":domain:monster-compendium"))
                 implementation(project(":event:folder-preview-event"))
                 implementation(project(":event:monster-detail-event"))
+                implementation(project(":event:sync-event"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
             }

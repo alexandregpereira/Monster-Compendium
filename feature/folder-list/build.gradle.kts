@@ -13,6 +13,7 @@ kotlin {
                 implementation(project(":event:folder-insert-event"))
                 implementation(project(":event:folder-detail-event"))
                 implementation(project(":event:folder-list-event"))
+                implementation(project(":event:sync-event"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
             }

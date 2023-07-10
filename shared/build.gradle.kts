@@ -33,6 +33,7 @@ kotlin {
                 implementation(project(":event:spell-detail-event")) // TODO Remove later
                 implementation(project(":feature:monster-compendium"))
                 implementation(project(":feature:monster-detail"))
+                implementation(project(":feature:sync"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
             }

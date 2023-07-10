@@ -46,5 +46,5 @@ val monsterDomainModule = module {
     factory { SaveCompendiumScrollItemPositionUseCase(get()) }
     factory { SaveMeasurementUnitUseCase(get(), get()) }
     factory { SaveMonstersUseCase(get(), get(), get()) }
-    factory { SyncMonstersUseCase(get(), get(), get(), get(), get()) }
+    factory { SyncMonstersUseCase(get(), get(), get(), get(), get(), get()) }
 }

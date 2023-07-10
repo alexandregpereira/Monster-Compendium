@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewResult
 import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
 import br.alexandregpereira.hunter.spell.detail.event.emptySpellDetailEventDispatcher
+import br.alexandregpereira.hunter.sync.di.syncStateModule
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -32,6 +33,7 @@ import org.koin.dsl.module
 fun appModules(): List<Module> = domainModules + dataModules +
         monsterCompendiumStateModule +
         monsterDetailStateModule +
+        syncStateModule +
         module {
             factory { Dispatchers.Default }
             factory {

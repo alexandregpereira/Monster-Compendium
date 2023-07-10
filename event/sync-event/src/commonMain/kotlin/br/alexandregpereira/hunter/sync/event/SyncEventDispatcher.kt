@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.settings
+package br.alexandregpereira.hunter.sync.event
 
-import kotlinx.coroutines.flow.Flow
+interface SyncEventDispatcher {
 
-interface SettingsSpellDataRepository {
-
-    fun deleteData(): Flow<Unit>
+    fun startSync()
 }
