@@ -36,7 +36,8 @@ val featureMonsterContentManagerModule = module {
             removeAlternativeSourceUseCase = get(),
             eventDispatcher = get(),
             eventListener = get(),
-            dispatcher = get()
+            dispatcher = get(),
+            syncEventDispatcher = get(),
         )
     }
 }

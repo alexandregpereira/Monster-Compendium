@@ -52,8 +52,4 @@ internal class DefaultMonsterLocalRepository(
     override fun getMonstersByQuery(query: String): Flow<List<Monster>> {
         return localDataSource.getMonstersByQuery(query).map { it.toDomainMonsterEntity() }
     }
-
-    override fun deleteAll(): Flow<Unit> {
-        return localDataSource.deleteAll()
-    }
 }

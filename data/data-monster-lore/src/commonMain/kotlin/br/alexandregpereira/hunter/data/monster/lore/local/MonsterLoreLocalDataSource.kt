@@ -50,10 +50,6 @@ internal class MonsterLoreLocalDataSource(
         emit(Unit)
     }
 
-    fun deleteAll(): Flow<Unit> = flow {
-        emit(deleteAllData())
-    }
-
     private suspend fun deleteAllData() {
         monsterLoreDao.deleteAllEntries()
         monsterLoreDao.deleteAll()

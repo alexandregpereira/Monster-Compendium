@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRep
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
@@ -35,13 +34,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.flow.zip
 
-@OptIn(FlowPreview::class)
 class SyncMonstersUseCase internal constructor(
     private val repository: MonsterRepository,
     private val alternativeSourceRepository: MonsterAlternativeSourceRepository,
     private val monsterSettingsRepository: MonsterSettingsRepository,
     private val getMonsterImages: GetMonsterImagesUseCase,
-    private val saveMonstersUseCase: SaveMonstersUseCase
+    private val saveMonstersUseCase: SaveMonstersUseCase,
+    private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase
 ) {
 
     private val srdSource = MonsterSource("SRD", "SRD")
@@ -61,6 +60,8 @@ class SyncMonstersUseCase internal constructor(
             }
             .flatMapLatest {
                 saveMonstersUseCase(monsters = it, isSync = true)
+            }.flatMapLatest {
+                saveCompendiumScrollItemPositionUseCase(position = 0)
             }
     }
 

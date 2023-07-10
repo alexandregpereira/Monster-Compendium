@@ -25,16 +25,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MonsterContentManagerFeature(
     contentPadding: PaddingValues = PaddingValues(),
-    onClose: () -> Unit = {}
 ) {
     val viewModel: MonsterContentManagerViewModel = koinViewModel()
     MonsterContentManagerScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,
-        onClose = {
-            viewModel.onClose()
-            onClose()
-        },
+        onClose = viewModel::onClose,
         onAddClick = viewModel::onAddContentClick,
         onRemoveClick = viewModel::onRemoveContentClick,
     )

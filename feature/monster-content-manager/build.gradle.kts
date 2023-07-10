@@ -11,6 +11,7 @@ kotlin {
                 api(project(":core:state-holder"))
                 api(project(":domain:alternative-source"))
                 implementation(project(":event:monster-content-manager-event"))
+                implementation(project(":event:sync-event"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
             }
