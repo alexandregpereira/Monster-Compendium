@@ -21,5 +21,4 @@
     <string name="settings_alternative_sources_json">Alternative Sources JSON URL</string>
     <string name="settings_manage_monster_content">Manage Monsters Content</string>
     <string name="settings_sync">Sync</string>
-    <string name="settings_sync_description">The app will be close to changes take effect</string>
 </resources>

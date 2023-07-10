@@ -82,14 +82,6 @@ fun Settings(
         onClick = onSaveButtonClick,
         modifier = Modifier.padding(top = 40.dp)
     )
-
-    Text(
-        text = stringResource(R.string.settings_sync_description),
-        fontWeight = FontWeight.Light,
-        fontStyle = FontStyle.Italic,
-        fontSize = 12.sp,
-        modifier = Modifier.padding(top = 8.dp).fillMaxWidth()
-    )
 }
 
 @Preview
