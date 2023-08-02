@@ -5,6 +5,8 @@ import java.time.Instant
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 @Suppress("UnstableApiUsage")
@@ -118,6 +120,10 @@ dependencies {
     implementation(project(":feature:settings"))
     implementation(project(":feature:spell-detail"))
     implementation(project(":ui:core"))
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     implementation(libs.bundles.viewmodel.bundle)
     implementation(libs.bundles.compose)

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "234098348706",
+    "project_id": "monster-compendium",
+    "storage_bucket": "monster-compendium.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234098348706:android:becd8ae73e9b45bb2ebdfb",
+        "android_client_info": {
+          "package_name": "br.alexandregpereira.hunter.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234098348706-91e6pmgeclng4fk6vq2g85p4lsb1e40b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxyjuvpRt9pjMOYYe1Yc0aMb0KsObpyh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234098348706-91e6pmgeclng4fk6vq2g85p4lsb1e40b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234098348706:android:0934c237089fb0962ebdfb",
+        "android_client_info": {
+          "package_name": "br.alexandregpereira.hunter.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234098348706-91e6pmgeclng4fk6vq2g85p4lsb1e40b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxyjuvpRt9pjMOYYe1Yc0aMb0KsObpyh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234098348706-91e6pmgeclng4fk6vq2g85p4lsb1e40b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
