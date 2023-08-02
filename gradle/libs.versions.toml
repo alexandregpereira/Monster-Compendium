@@ -10,6 +10,9 @@ compose_material = '1.5.0-alpha03'
 compose_compiler = '1.4.6'
 core_ktx = '1.9.0'
 espresso_core = "3.4.0"
+firebase_bom = "32.2.0"
+googleplay_services = "4.3.15"
+gradle_firebase_crashlytics = "2.9.7"
 junit_ext = "1.1.3"
 junit = "4.13.2"
 koin = '3.4.1'
@@ -43,7 +46,12 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing" }
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso_core" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android_gradle_plugin" }
+gradle-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "gradle_firebase_crashlytics" }
+gradle-googleplay-services = { module = "com.google.gms:google-services", version.ref = "googleplay_services" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-sqldelight = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit_ext" }

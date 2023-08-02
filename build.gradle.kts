@@ -11,6 +11,8 @@ buildscript {
     dependencies {
         classpath(libs.gradle.android)
         classpath(libs.gradle.kotlin)
+        classpath(libs.gradle.googleplay.services)
+        classpath(libs.gradle.firebase.crashlytics)
     }
 }
 
