@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.spell.detail.di
 
+import br.alexandregpereira.hunter.spell.detail.SpellDetailAnalytics
 import br.alexandregpereira.hunter.spell.detail.SpellDetailEventManager
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewModel
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
@@ -29,6 +30,6 @@ val spellDetailModule = module {
     single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
 
     viewModel {
-        SpellDetailViewModel(get(), get(), get(), get())
+        SpellDetailViewModel(get(), get(), get(), get(), analytics = SpellDetailAnalytics(get()))
     }
 }

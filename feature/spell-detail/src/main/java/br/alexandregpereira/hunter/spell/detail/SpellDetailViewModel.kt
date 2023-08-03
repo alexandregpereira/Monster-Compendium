@@ -35,7 +35,8 @@ internal class SpellDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getSpell: GetSpellUseCase,
     private val spellDetailEventListener: SpellDetailEventListener,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val analytics: SpellDetailAnalytics,
 ) : ViewModel() {
 
     private var spellIndex: String
@@ -59,9 +60,12 @@ internal class SpellDetailViewModel(
             .map { spell -> spell.asState() }
             .flowOn(dispatcher)
             .onEach { spell ->
+                analytics.trackSpellLoaded(spell)
                 setState { changeSpell(spell) }
             }
-            .catch {}
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(viewModelScope)
     }
 
@@ -70,6 +74,7 @@ internal class SpellDetailViewModel(
             .onEach { event ->
                 when (event) {
                     is SpellDetailEvent.ShowSpell -> {
+                        analytics.trackSpellShown(event.index)
                         spellIndex = event.index
                         loadSpell(event.index)
                     }
@@ -79,6 +84,7 @@ internal class SpellDetailViewModel(
     }
 
     fun onClose() {
+        analytics.trackSpellClosed()
         setState { hideDetail() }
     }
 

@@ -17,11 +17,23 @@
 package br.alexandregpereira.hunter.detail.di
 
 import br.alexandregpereira.hunter.detail.MonsterDetailViewModel
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 val monsterDetailModule = monsterDetailStateModule.apply {
     viewModel {
-        MonsterDetailViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MonsterDetailViewModel(
+            savedStateHandle = get(),
+            getMonsterDetailUseCase = get(),
+            changeMonstersMeasurementUnitUseCase = get(),
+            spellDetailEventDispatcher = get(),
+            monsterDetailEventListener = get(),
+            monsterDetailEventDispatcher = get(),
+            monsterLoreDetailEventDispatcher = get(),
+            folderInsertEventDispatcher = get(),
+            dispatcher = get(),
+            analytics = MonsterDetailAnalytics(get())
+        )
     }
 }

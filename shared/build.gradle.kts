@@ -24,6 +24,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":core:analytics"))
                 implementation(project(":data:data-app"))
                 implementation(project(":domain:app"))
                 implementation(project(":domain:sync"))

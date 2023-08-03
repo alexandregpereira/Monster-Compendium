@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import org.koin.dsl.module
 
@@ -28,5 +29,17 @@ val monsterDetailStateModule = module {
     single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
     single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
     factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
-    factory { MonsterDetailStateHolder(get(), get(), get(), get(), get(), get(), get(), get()) }
+    factory {
+        MonsterDetailStateHolder(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            analytics = MonsterDetailAnalytics(get()),
+        )
+    }
 }

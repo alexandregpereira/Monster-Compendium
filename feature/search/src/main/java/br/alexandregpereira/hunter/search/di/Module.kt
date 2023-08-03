@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.search.di
 
+import br.alexandregpereira.hunter.search.SearchAnalytics
 import br.alexandregpereira.hunter.search.SearchViewModel
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,6 +25,12 @@ import org.koin.dsl.module
 val searchModule = module {
     factory { SearchMonstersByUseCase(get(), get(), get()) }
     viewModel {
-        SearchViewModel(get(), get(), get(), get())
+        SearchViewModel(
+            searchMonstersByNameUseCase = get(),
+            folderPreviewEventDispatcher = get(),
+            monsterDetailEventDispatcher = get(),
+            analytics = SearchAnalytics(get()),
+            dispatcher = get()
+        )
     }
 }

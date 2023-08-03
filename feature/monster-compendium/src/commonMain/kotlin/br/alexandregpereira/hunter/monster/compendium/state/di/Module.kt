@@ -16,11 +16,24 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state.di
 
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import org.koin.dsl.module
 
 val monsterCompendiumStateModule = module {
     factory {
-        MonsterCompendiumStateHolder(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MonsterCompendiumStateHolder(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            analytics = MonsterCompendiumAnalytics(get()),
+        )
     }
 }

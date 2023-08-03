@@ -35,6 +35,7 @@ class SyncStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val syncEventManager: SyncEventManager,
     private val syncUseCase: SyncUseCase,
+    private val analytics: SyncAnalytics
 ) : ScopeManager(), StateHolder<SyncState> {
 
     private val _state: MutableStateFlow<SyncState> = MutableStateFlow(
@@ -52,9 +53,11 @@ class SyncStateHolder internal constructor(
             .onEach { event ->
                 when (event) {
                     is Start -> {
+                        analytics.trackStartSync()
                         sync()
                     }
                     is Finished -> {
+                        analytics.trackFinishSync()
                         hide()
                     }
                 }
@@ -67,9 +70,11 @@ class SyncStateHolder internal constructor(
             .flowOn(dispatcher)
             .catch { error ->
                 error.printStackTrace()
+                analytics.logException(error)
                 setState { copy(hasError = true) }
             }
             .onEach { status ->
+                analytics.trackSyncStatus(status, forceSync)
                 when (status) {
                     SyncStatus.SYNCED -> {
                         syncEventManager.dispatchEvent(Finished)
@@ -95,6 +100,7 @@ class SyncStateHolder internal constructor(
     }
 
     fun onTryAgain() {
+        analytics.trackTryAgain()
         syncEventManager.startSync()
     }
 

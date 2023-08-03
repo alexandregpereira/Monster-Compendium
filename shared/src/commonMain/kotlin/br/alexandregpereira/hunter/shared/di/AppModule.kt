@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.shared.di
 
+import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.domain.di.domainModules
 import br.alexandregpereira.hunter.event.folder.insert.emptyFolderInsertEventDispatcher
@@ -34,6 +35,7 @@ fun appModules(): List<Module> = domainModules + dataModules +
         monsterCompendiumStateModule +
         monsterDetailStateModule +
         syncStateModule +
+        analyticsModule +
         module {
             factory { Dispatchers.Default }
             factory {

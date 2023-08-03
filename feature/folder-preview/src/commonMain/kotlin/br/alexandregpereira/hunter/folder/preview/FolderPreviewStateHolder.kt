@@ -35,6 +35,7 @@ import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -50,6 +51,7 @@ class FolderPreviewStateHolder internal constructor(
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
+    private val analytics: FolderPreviewAnalytics,
 ) : ScopeManager(), StateHolder<FolderPreviewState> {
 
     private val _state: MutableStateFlow<FolderPreviewState> = MutableStateFlow(
@@ -64,17 +66,30 @@ class FolderPreviewStateHolder internal constructor(
         }
     }
 
-    fun onItemClick(monsterIndex: String) = navigateToMonsterDetail(monsterIndex)
+    fun onItemClick(monsterIndex: String) {
+        analytics.trackItemClick(monsterIndex)
+        navigateToMonsterDetail(monsterIndex)
+    }
 
-    fun onItemLongClick(monsterIndex: String) = removeMonster(monsterIndex)
+    fun onItemLongClick(monsterIndex: String) {
+        analytics.trackItemLongClick(monsterIndex)
+        removeMonster(monsterIndex)
+    }
 
     fun onSave() {
+        analytics.trackSave()
         folderInsertEventDispatcher.dispatchEvent(
             event = Show(monsterIndexes = state.value.monsters.map { it.index })
         ).onEach { result ->
             when (result) {
-                is FolderInsertResult.OnSaved -> clear()
-                is OnMonsterRemoved -> removeMonster(result.monsterIndex)
+                is FolderInsertResult.OnSaved -> {
+                    analytics.trackSaveSuccess()
+                    clear()
+                }
+                is OnMonsterRemoved -> {
+                    analytics.trackSaveMonsterRemoved()
+                    removeMonster(result.monsterIndex)
+                }
             }
         }.launchIn(scope)
     }
@@ -83,9 +98,18 @@ class FolderPreviewStateHolder internal constructor(
         scope.launch {
             folderPreviewEventManager.events.collect { event ->
                 when (event) {
-                    is AddMonster -> addMonster(event.index)
-                    is HideFolderPreview -> hideFolderPreview()
-                    is ShowFolderPreview -> loadMonsters()
+                    is AddMonster -> {
+                        analytics.trackAddMonster(event.index)
+                        addMonster(event.index)
+                    }
+                    is HideFolderPreview -> {
+                        analytics.trackHideFolderPreview()
+                        hideFolderPreview()
+                    }
+                    is ShowFolderPreview -> {
+                        analytics.trackShowFolderPreview()
+                        loadMonsters()
+                    }
                 }
             }
         }
@@ -110,10 +134,15 @@ class FolderPreviewStateHolder internal constructor(
     private fun loadMonsters() {
         getMonstersFromFolderPreview()
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { monsters ->
                 val showPreview = monsters.isNotEmpty()
                 _state.value = state.value.changeMonsters(monsters = monsters)
-                    .changeShowPreview(showPreview)
+                    .changeShowPreview(showPreview).also {
+                        analytics.trackLoadMonstersResult(it)
+                    }
                 dispatchFolderPreviewVisibilityChangesEvent()
             }
             .launchIn(scope)

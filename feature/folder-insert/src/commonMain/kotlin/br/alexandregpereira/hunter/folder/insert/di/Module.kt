@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.folder.insert.di
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.folder.insert.EmptyFolderInsertStateRecovery
+import br.alexandregpereira.hunter.folder.insert.FolderInsertAnalytics
 import br.alexandregpereira.hunter.folder.insert.FolderInsertEventManager
 import br.alexandregpereira.hunter.folder.insert.FolderInsertStateHolder
 import org.koin.dsl.module
@@ -36,6 +37,7 @@ val featureFolderInsertModule = module {
             addMonstersToFolder = get(),
             folderInsertEventManager = get(),
             dispatcher = get(),
+            analytics = FolderInsertAnalytics(get()),
         )
     }
 }

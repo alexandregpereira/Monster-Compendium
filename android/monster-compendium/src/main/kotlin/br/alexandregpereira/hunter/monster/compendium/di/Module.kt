@@ -17,11 +17,25 @@
 package br.alexandregpereira.hunter.monster.compendium.di
 
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val monsterCompendiumModule = module {
     viewModel {
-        MonsterCompendiumViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        MonsterCompendiumViewModel(
+            savedStateHandle = get(),
+            getMonsterCompendiumUseCase = get(),
+            getLastCompendiumScrollItemPositionUseCase = get(),
+            saveCompendiumScrollItemPositionUseCase = get(),
+            folderPreviewEventDispatcher = get(),
+            folderPreviewResultListener = get(),
+            monsterDetailEventDispatcher = get(),
+            monsterDetailEventListener = get(),
+            syncEventListener = get(),
+            syncEventDispatcher = get(),
+            analytics = MonsterCompendiumAnalytics(get()),
+            dispatcher = get()
+        )
     }
 }

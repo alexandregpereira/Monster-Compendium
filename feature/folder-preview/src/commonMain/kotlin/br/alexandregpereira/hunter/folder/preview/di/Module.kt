@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.folder.preview.di
 
 import br.alexandregpereira.hunter.folder.preview.EmptyFolderPreviewStateRecovery
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewAnalytics
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewEventManager
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewStateHolder
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
@@ -46,7 +47,8 @@ val featureFolderPreviewModule = module {
             clearFolderPreviewUseCase = get(),
             monsterDetailEventDispatcher = get(),
             folderInsertEventDispatcher = get(),
-            dispatcher = get()
+            dispatcher = get(),
+            analytics = FolderPreviewAnalytics(get()),
         )
     }
 }

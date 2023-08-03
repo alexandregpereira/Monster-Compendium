@@ -387,7 +387,8 @@ class MonsterCompendiumViewModelTest {
             syncEventDispatcher = syncEventDispatcher,
             syncEventListener = syncEventListener,
             loadOnInit = false,
-            dispatcher = testCoroutineRule.testCoroutineDispatcher
+            dispatcher = testCoroutineRule.testCoroutineDispatcher,
+            analytics = mockk(relaxed = true)
         )
     }
 

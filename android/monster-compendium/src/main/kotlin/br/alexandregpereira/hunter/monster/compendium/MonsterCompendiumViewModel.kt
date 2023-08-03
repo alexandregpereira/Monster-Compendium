@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListe
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
@@ -54,6 +55,7 @@ internal class MonsterCompendiumViewModel(
     monsterDetailEventListener: MonsterDetailEventListener,
     syncEventListener: SyncEventListener,
     syncEventDispatcher: SyncEventDispatcher,
+    analytics: MonsterCompendiumAnalytics,
     dispatcher: CoroutineDispatcher,
     loadOnInit: Boolean = true,
 ) : ViewModel(), MonsterCompendiumEvents {
@@ -70,7 +72,8 @@ internal class MonsterCompendiumViewModel(
         syncEventDispatcher,
         dispatcher,
         loadOnInit = loadOnInit,
-        initialState = savedStateHandle.getState().asMonsterCompendiumState()
+        initialState = savedStateHandle.getState().asMonsterCompendiumState(),
+        analytics = analytics,
     )
 
     val initialScrollItemPosition: Int

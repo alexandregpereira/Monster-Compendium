@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -43,6 +44,7 @@ class FolderDetailStateHolder internal constructor(
     private val folderInsertResultListener: FolderInsertResultListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
+    private val analytics: FolderDetailAnalytics,
 ) : ScopeManager(), StateHolder<FolderDetailState> {
 
     private val _state: MutableStateFlow<FolderDetailState> = MutableStateFlow(
@@ -59,6 +61,7 @@ class FolderDetailStateHolder internal constructor(
     }
 
     fun onItemClick(index: String) {
+        analytics.trackItemClicked(index)
         monsterDetailEventDispatcher.dispatchEvent(
             Show(
                 index = index,
@@ -68,11 +71,13 @@ class FolderDetailStateHolder internal constructor(
     }
 
     fun onItemLongClick(index: String) {
+        analytics.trackItemLongClicked(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.ShowFolderPreview)
     }
 
     fun onClose() {
+        analytics.trackClose()
         setState { copy(isOpen = false) }
         folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = false))
     }
@@ -80,7 +85,11 @@ class FolderDetailStateHolder internal constructor(
     private fun loadMonsters(folderName: String) {
         getMonstersByFolder(folderName)
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { monsters ->
+                analytics.trackMonstersLoaded(monsters)
                 setState {
                     copy(monsters = monsters, folderName = folderName, isOpen = true)
                 }
@@ -92,7 +101,10 @@ class FolderDetailStateHolder internal constructor(
     private fun observeEvents() {
         folderDetailEventManager.events.onEach { event ->
             when (event) {
-                is FolderDetailEvent.Show -> loadMonsters(event.folderName)
+                is FolderDetailEvent.Show -> {
+                    analytics.trackShow()
+                    loadMonsters(event.folderName)
+                }
             }
         }.launchIn(scope)
     }

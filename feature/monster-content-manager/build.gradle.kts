@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":core:analytics"))
                 api(project(":core:state-holder"))
                 api(project(":domain:alternative-source"))
                 implementation(project(":event:monster-content-manager-event"))

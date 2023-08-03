@@ -41,7 +41,8 @@ class MonsterContentManagerStateHolder internal constructor(
     private val removeAlternativeSourceUseCase: RemoveAlternativeSourceUseCase,
     private val eventDispatcher: MonsterContentManagerEventDispatcher,
     private val eventListener: MonsterContentManagerEventListener,
-    private val syncEventDispatcher: SyncEventDispatcher
+    private val syncEventDispatcher: SyncEventDispatcher,
+    private val analytics: MonsterContentManagerAnalytics,
 ) : ScopeManager(), StateHolder<MonsterContentManagerState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
@@ -59,11 +60,14 @@ class MonsterContentManagerStateHolder internal constructor(
         getAlternativeSourcesUseCase(onlyContentEnabled = false)
             .flowOn(dispatcher)
             .onEach { alternativeSources ->
+                analytics.trackMonsterContentLoaded(alternativeSources)
                 setState {
                     copy(monsterContents = alternativeSources)
                 }
             }
-            .catch {}
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(scope)
     }
 
@@ -84,6 +88,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onAddContentClick(acronym: String) {
+        analytics.trackAddContentClick(acronym)
         hasChanges = true
         addAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
@@ -95,6 +100,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onRemoveContentClick(acronym: String) {
+        analytics.trackRemoveContentClick(acronym)
         hasChanges = true
         removeAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
@@ -106,6 +112,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onClose() {
+        analytics.trackClose()
         if (hasChanges) {
             hasChanges = false
             syncEventDispatcher.startSync()

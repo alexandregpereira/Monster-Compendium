@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -40,6 +41,7 @@ class FolderInsertStateHolder internal constructor(
     private val addMonstersToFolder: AddMonstersToFolderUseCase,
     private val folderInsertEventManager: FolderInsertEventManager,
     private val dispatcher: CoroutineDispatcher,
+    private val analytics: FolderInsertAnalytics,
 ) : ScopeManager(), StateHolder<FolderInsertState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
@@ -63,6 +65,7 @@ class FolderInsertStateHolder internal constructor(
     }
 
     fun onRemoveMonster(monsterIndex: String) {
+        analytics.trackMonsterRemoved()
         loadMonsterPreviews(
             monsterIndexes = state.value.monsterIndexes.toMutableList().also {
                 it.remove(monsterIndex)
@@ -73,6 +76,7 @@ class FolderInsertStateHolder internal constructor(
 
     fun onSave() {
         if (state.value.folderName.isBlank()) return
+        analytics.trackFolderSaved()
 
         onClose()
         val indexes = state.value.monsterIndexes
@@ -87,6 +91,7 @@ class FolderInsertStateHolder internal constructor(
     }
 
     fun onClose() {
+        analytics.trackClosed()
         setState { copy(isOpen = false) }
     }
 
@@ -108,7 +113,11 @@ class FolderInsertStateHolder internal constructor(
                 folders.map { it.name to it.monsters.size }
             }
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { folders ->
+                analytics.trackFoldersLoaded(folders)
                 setState { copy(folders = folders) }
             }
             .launchIn(scope)
@@ -117,7 +126,11 @@ class FolderInsertStateHolder internal constructor(
     private fun loadMonsterPreviews(monsterIndexes: List<String>) {
         getFolderMonsterPreviewsByIds(monsterIndexes)
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { monsters ->
+                analytics.trackMonsterPreviewsLoaded(monsters)
                 setState {
                     copy(
                         monsterPreviews = monsters,
@@ -132,7 +145,10 @@ class FolderInsertStateHolder internal constructor(
     private fun observeEvents() {
         folderInsertEventManager.events.onEach { event ->
             when (event) {
-                is Show -> load(event.monsterIndexes)
+                is Show -> {
+                    analytics.trackOpened(event.monsterIndexes)
+                    load(event.monsterIndexes)
+                }
             }
         }.launchIn(scope)
     }
