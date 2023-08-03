@@ -34,7 +34,12 @@ jobs:
     - name: Build with Gradle
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew build -Pdev
+      run: ./gradlew assembleRelease testReleaseUnitTest jvmTest -Pdev
+
+    - name: Generate AAB
+      env:
+        MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+      run: ./gradlew bundleRelease
       
     - name: Upload the test report
       if: failure()
@@ -57,3 +62,9 @@ jobs:
       with:
         name: output-metadata.json
         path: app/build/outputs/apk/release/output-metadata.json
+
+    - name: Upload an AAB
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: app-release.aab
+        path: app/build/outputs/bundle/release/app-release.aab
