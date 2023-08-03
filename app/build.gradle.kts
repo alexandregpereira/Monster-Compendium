@@ -39,16 +39,18 @@ android {
         }
 
         val localDateTime = Instant.now().atOffset(ZoneOffset.UTC).toLocalDateTime()
-        val baseTimestampInSeconds = 1680040800L // Base value for the timestamp of 2023-03-28 22:00:00
+        val baseTimestampInSeconds = 1467504000L // Base value for the timestamp of 2013-07-03 00:00:00
         val currentTimestampInSeconds = localDateTime.toEpochSecond(ZoneOffset.UTC)
         val timestampDiff = currentTimestampInSeconds - baseTimestampInSeconds
         if (timestampDiff <= 0) {
             throw RuntimeException("Adjust your machine datetime! timestampDiff")
         }
-        val versionCodePerSeconds = 60 // Seconds to increment the version code
-        versionCode = (timestampDiff / versionCodePerSeconds).toInt()
+        val versionCodePerSeconds = 60 * 20 // Seconds to increment the version code
+        versionCode = (timestampDiff / versionCodePerSeconds).toInt().also { versionCode ->
+            val dateFormat = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd."))
+            versionName = dateFormat + (versionCode - 186000)
+        }
 
-        versionName = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd.HHmm"))
         versionNameSuffix = when {
             hasProperty("dev") -> {
                 "-dev"
