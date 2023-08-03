@@ -31,6 +31,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
@@ -43,6 +44,7 @@ internal class SearchViewModel(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val analytics: SearchAnalytics,
     dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -62,6 +64,12 @@ internal class SearchViewModel(
                 _state.value = state.value.changeMonsters(monsterRows, totalResults)
             }
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
+            .onEach { (totalResults, _) ->
+                analytics.trackSearch(totalResults, searchQuery.value)
+            }
             .launchIn(viewModelScope)
     }
 
@@ -71,12 +79,14 @@ internal class SearchViewModel(
     }
 
     fun onItemClick(index: String) {
+        analytics.trackItemClick(index, searchQuery.value)
         monsterDetailEventDispatcher.dispatchEvent(
             Show(index = index, indexes = listOf(index))
         )
     }
 
     fun onItemLongClick(index: String) {
+        analytics.trackItemLongClick(index, searchQuery.value)
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
         folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
     }

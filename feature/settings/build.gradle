@@ -31,6 +31,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core:analytics')
     implementation project(':domain:settings')
     implementation project(':event:monster-content-manager-event')
     implementation project(':event:sync-event')

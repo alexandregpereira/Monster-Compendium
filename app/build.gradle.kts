@@ -100,6 +100,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:analytics"))
     implementation(project(":data:data-app"))
     implementation(project(":domain:app"))
     implementation(project(":event:folder-detail-event"))

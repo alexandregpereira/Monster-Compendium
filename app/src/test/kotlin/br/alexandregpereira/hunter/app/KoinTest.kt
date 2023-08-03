@@ -19,7 +19,15 @@ package br.alexandregpereira.hunter.app
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.SavedStateHandle
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.app.HunterApplication.Companion.initKoinModules
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +42,8 @@ class KoinTest {
     private val context = mockk<Context>()
     private val sharedPreferences = mockk<SharedPreferences>()
     private val savedStateHandle = mockk<SavedStateHandle>()
+    private val analytics = mockk<FirebaseAnalytics>()
+    private val crashlytics = mockk<FirebaseCrashlytics>()
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -49,6 +59,8 @@ class KoinTest {
                 withInstance(context)
                 withInstance(sharedPreferences)
                 withInstance(savedStateHandle)
+                withInstance(analytics)
+                withInstance(crashlytics)
             }
         }
     }

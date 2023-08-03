@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
@@ -46,7 +47,8 @@ class FolderListStateHolder internal constructor(
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val folderListEventManager: FolderListEventManager,
     private val dispatcher: CoroutineDispatcher,
-    private val syncEventListener: SyncEventListener
+    private val syncEventListener: SyncEventListener,
+    private val analytics: FolderListAnalytics,
 ) : ScopeManager(), StateHolder<FolderListState> {
 
     private val _state: MutableStateFlow<FolderListState> = MutableStateFlow(
@@ -65,10 +67,12 @@ class FolderListStateHolder internal constructor(
             onItemSelect(folderName)
             return
         }
+        analytics.trackFolderClick(folderName)
         folderDetailEventDispatcher.dispatchEvent(Show(folderName = folderName))
     }
 
     fun onItemSelectionClose() {
+        analytics.trackItemSelectionClose()
         setState {
             copy(
                 isItemSelectionOpen = false
@@ -78,6 +82,7 @@ class FolderListStateHolder internal constructor(
     }
 
     fun onItemSelectionDeleteClick() {
+        analytics.trackItemSelectionDeleteClick()
         onItemSelectionClose()
         flowOf(state.value.itemSelection)
             .map { it.toList() }
@@ -90,6 +95,7 @@ class FolderListStateHolder internal constructor(
     }
 
     fun onItemSelect(folderName: String) {
+        analytics.trackItemSelect(folderName)
         setState {
             val (newItemSelection, added) = itemSelection.toMutableSet().let {
                 if (isItemSelectionOpen.not()) it.clear()
@@ -115,7 +121,11 @@ class FolderListStateHolder internal constructor(
         getMonsterFolders()
             .map { it.map { folder -> folder to false } }
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { folders ->
+                analytics.trackFoldersLoaded(folders)
                 setState { changeSelectedFolders(folders) }
             }
             .launchIn(scope)

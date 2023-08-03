@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatch
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
@@ -44,7 +45,8 @@ internal class MonsterDetailViewModel(
     monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     folderInsertEventDispatcher: FolderInsertEventDispatcher,
-    dispatcher: CoroutineDispatcher
+    dispatcher: CoroutineDispatcher,
+    analytics: MonsterDetailAnalytics,
 ) : ViewModel(), StateHolder<MonsterDetailViewState> {
 
     private val stateHolder = MonsterDetailStateHolder(
@@ -58,7 +60,8 @@ internal class MonsterDetailViewModel(
         dispatcher,
         initialState = savedStateHandle.getState().asMonsterDetailState(),
         monsterIndex = savedStateHandle["index"] ?: "",
-        monsterIndexes = savedStateHandle["indexes"] ?: emptyList()
+        monsterIndexes = savedStateHandle["indexes"] ?: emptyList(),
+        analytics = analytics,
     )
 
     private val _state = MutableStateFlow(savedStateHandle.getState())

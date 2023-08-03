@@ -34,7 +34,8 @@ class MonsterLoreDetailStateHolder internal constructor(
     private val getMonsterLoreUseCase: GetMonsterLoreDetailUseCase,
     private val monsterLoreDetailEventListener: MonsterLoreDetailEventListener,
     private val monsterLoreIndexStateRecovery: MonsterLoreIndexStateRecovery,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val analytics: MonsterLoreDetailAnalytics,
 ) : ScopeManager(), StateHolder<MonsterLoreDetailState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
@@ -51,9 +52,12 @@ class MonsterLoreDetailStateHolder internal constructor(
         getMonsterLoreUseCase(monsterLoreIndex)
             .flowOn(dispatcher)
             .onEach { monsterLore ->
+                analytics.trackMonsterLoreDetailLoaded(monsterLore)
                 setState { changeMonsterLore(monsterLore) }
             }
-            .catch {}
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(scope)
     }
 
@@ -62,6 +66,7 @@ class MonsterLoreDetailStateHolder internal constructor(
             .onEach { event ->
                 when (event) {
                     is MonsterLoreDetailEvent.Show -> {
+                        analytics.trackMonsterLoreDetailOpened(event.index)
                         monsterLoreIndexStateRecovery.saveState(event.index)
                         loadMonsterLore(event.index)
                     }
@@ -71,6 +76,7 @@ class MonsterLoreDetailStateHolder internal constructor(
     }
 
     fun onClose() {
+        analytics.trackMonsterLoreDetailClosed()
         setState { hideDetail() }
     }
 

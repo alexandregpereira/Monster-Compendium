@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.folder.detail.di
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
 import br.alexandregpereira.hunter.folder.detail.EmptyFolderDetailStateRecovery
+import br.alexandregpereira.hunter.folder.detail.FolderDetailAnalytics
 import br.alexandregpereira.hunter.folder.detail.FolderDetailEventManager
 import br.alexandregpereira.hunter.folder.detail.FolderDetailStateHolder
 import org.koin.dsl.module
@@ -36,7 +37,8 @@ val featureFolderDetailModule = module {
             folderPreviewEventDispatcher = get(),
             folderInsertResultListener = get(),
             monsterDetailEventDispatcher = get(),
-            dispatcher = get()
+            dispatcher = get(),
+            analytics = FolderDetailAnalytics(get()),
         )
     }
 }

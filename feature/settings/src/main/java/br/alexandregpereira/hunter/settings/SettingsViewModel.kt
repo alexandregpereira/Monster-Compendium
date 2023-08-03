@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -39,7 +40,8 @@ internal class SettingsViewModel(
     private val saveUrls: SaveUrlsUseCase,
     private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
-    private val syncEventDispatcher: SyncEventDispatcher
+    private val syncEventDispatcher: SyncEventDispatcher,
+    private val analytics: SettingsAnalytics,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsViewState())
@@ -58,6 +60,7 @@ internal class SettingsViewModel(
     }
 
     fun onSaveButtonClick() {
+        analytics.trackSaveButtonClick(state.value)
         saveUrls(
             imageBaseUrl = state.value.imageBaseUrl,
             alternativeSourceBaseUrl = state.value.alternativeSourceBaseUrl
@@ -69,6 +72,7 @@ internal class SettingsViewModel(
     }
 
     fun onManageMonsterContentClick() {
+        analytics.trackManageMonsterContentClick()
         monsterContentManagerEventDispatcher.dispatchEvent(Show)
     }
 
@@ -81,7 +85,11 @@ internal class SettingsViewModel(
                 )
             }
             .flowOn(dispatcher)
+            .catch {
+                analytics.logException(it)
+            }
             .onEach { state ->
+                analytics.trackLoadSettings(state)
                 _state.value = state
             }
             .launchIn(viewModelScope)

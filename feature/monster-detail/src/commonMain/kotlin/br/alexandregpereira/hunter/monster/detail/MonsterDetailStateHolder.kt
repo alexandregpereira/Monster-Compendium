@@ -61,6 +61,7 @@ class MonsterDetailStateHolder(
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
+    private val analytics: MonsterDetailAnalytics,
     initialState: MonsterDetailState = MonsterDetailState(),
     monsterIndex: String = "",
     monsterIndexes: List<String> = emptyList()
@@ -91,11 +92,15 @@ class MonsterDetailStateHolder(
         monsterDetailEventListener.collectOnVisibilityChanges { event ->
             when (event) {
                 is Show -> {
+                    analytics.trackMonsterDetailShown(event)
                     enableMonsterPageChangesEventDispatch = event.enableMonsterPageChangesEventDispatch
                     getMonstersByInitialIndex(event.index, event.indexes)
                     setState { copy(showDetail = true) }
                 }
-                Hide -> setState { copy(showDetail = false) }
+                Hide -> {
+                    analytics.trackMonsterDetailHidden()
+                    setState { copy(showDetail = false) }
+                }
             }
         }.launchIn(scope)
     }
@@ -108,20 +113,24 @@ class MonsterDetailStateHolder(
 
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
         if (enableMonsterPageChangesEventDispatch && scrolled && monsterIndex != this.monsterIndex) {
+            analytics.trackMonsterPageChanged(monsterIndex, scrolled)
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
         this.monsterIndex = monsterIndex
     }
 
     fun onShowOptionsClicked() {
+        analytics.trackMonsterDetailOptionsShown()
         setState { ShowOptions }
     }
 
     fun onShowOptionsClosed() {
+        analytics.trackMonsterDetailOptionsHidden()
         setState { HideOptions }
     }
 
     fun onOptionClicked(option: MonsterDetailOptionState) {
+        analytics.trackMonsterDetailOptionClicked(option)
         setState { HideOptions }
         when (option) {
             ADD_TO_FOLDER -> folderInsertEventDispatcher.dispatchEvent(
@@ -137,14 +146,17 @@ class MonsterDetailStateHolder(
     }
 
     fun onSpellClicked(spellIndex: String) {
+        analytics.trackMonsterDetailSpellClicked(spellIndex)
         spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
     fun onLoreClicked(monsterIndex: String) {
+        analytics.trackMonsterDetailLoreClicked(monsterIndex)
         monsterLoreDetailEventDispatcher.dispatchEvent(MonsterLoreDetailEvent.Show(monsterIndex))
     }
 
     fun onClose() {
+        analytics.trackMonsterDetailClosed()
         monsterDetailEventDispatcher.dispatchEvent(Hide)
     }
 
@@ -179,7 +191,9 @@ class MonsterDetailStateHolder(
             .catch {
                 setState { copy(isLoading = false) }
                 it.printStackTrace()
+                analytics.logException(it)
             }.onEach { state ->
+                analytics.trackMonsterDetailLoaded(monsterIndex, state.monsters)
                 setState {
                     complete(
                         initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,

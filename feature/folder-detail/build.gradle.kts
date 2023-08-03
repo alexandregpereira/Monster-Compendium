@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":core:analytics"))
                 api(project(":core:state-holder"))
                 api(project(":domain:monster-folder"))
                 implementation(project(":event:folder-preview-event"))

@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEv
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreIndexStateRecovery
 import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreDetailStateRecovery
+import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailAnalytics
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailEventManager
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailStateHolder
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
@@ -37,7 +38,8 @@ val featureMonsterLoreDetailModule = module {
             getMonsterLoreUseCase = get(),
             monsterLoreDetailEventListener = get(),
             monsterLoreIndexStateRecovery = getOrNull() ?: EmptyMonsterLoreIndexStateRecovery(),
-            dispatcher = get()
+            dispatcher = get(),
+            analytics = MonsterLoreDetailAnalytics(get()),
         )
     }
 }

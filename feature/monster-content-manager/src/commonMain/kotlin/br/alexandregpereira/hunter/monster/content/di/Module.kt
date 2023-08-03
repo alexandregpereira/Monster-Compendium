@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.monster.content.di
 
 import br.alexandregpereira.hunter.monster.content.EmptyMonsterContentManagerStateRecovery
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerAnalytics
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEventManager
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStateHolder
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
@@ -38,6 +39,7 @@ val featureMonsterContentManagerModule = module {
             eventListener = get(),
             dispatcher = get(),
             syncEventDispatcher = get(),
+            analytics = MonsterContentManagerAnalytics(get()),
         )
     }
 }

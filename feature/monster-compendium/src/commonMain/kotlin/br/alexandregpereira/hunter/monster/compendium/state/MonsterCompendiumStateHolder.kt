@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
@@ -63,6 +64,7 @@ class MonsterCompendiumStateHolder(
     private val syncEventListener: SyncEventListener,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
+    private val analytics: MonsterCompendiumAnalytics,
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
     loadOnInit: Boolean = true,
 ) : ScopeManager(), StateHolder<MonsterCompendiumState>, ActionListener<MonsterCompendiumAction> {
@@ -86,6 +88,7 @@ class MonsterCompendiumStateHolder(
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
             ) { compendium, scrollItemPosition ->
+                analytics.trackMonsterCompendium(compendium, scrollItemPosition)
                 val items = compendium.items
                 val alphabet = compendium.alphabet
                 val tableContent = compendium.tableContent
@@ -111,6 +114,7 @@ class MonsterCompendiumStateHolder(
             .flowOn(dispatcher)
             .catch { error ->
                 error.printStackTrace()
+                analytics.logException(error)
                 emit(state.value.error(error) to initialScrollItemPosition)
             }
             .collect { (state, scrollItemPosition) ->
@@ -120,12 +124,14 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onItemClick(index: String) {
+        analytics.trackItemClick(index)
         monsterDetailEventDispatcher.dispatchEvent(
             Show(index, enableMonsterPageChangesEventDispatch = true)
         )
     }
 
     fun onItemLongCLick(index: String) {
+        analytics.trackItemLongClick(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.ShowFolderPreview)
     }
@@ -135,6 +141,7 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onPopupOpened() {
+        analytics.trackPopupOpened()
         setState {
             popupOpened(popupOpened = true)
                 .tableContentOpened(false)
@@ -142,22 +149,27 @@ class MonsterCompendiumStateHolder(
     }
 
     fun onPopupClosed() {
+        analytics.trackPopupClosed()
         setState { popupOpened(popupOpened = false) }
     }
 
     fun onAlphabetIndexClicked(position: Int) {
+        analytics.trackAlphabetIndexClicked(position)
         navigateToTableContentFromAlphabetIndex(position)
     }
 
     fun onTableContentIndexClicked(position: Int) {
+        analytics.trackTableContentIndexClicked(position)
         navigateToCompendiumIndexFromTableContentIndex(position)
     }
 
     fun onTableContentClosed() {
+        analytics.trackTableContentClosed()
         setState { tableContentOpened(false) }
     }
 
     fun onErrorButtonClick() {
+        analytics.trackErrorButtonClick()
         syncEventDispatcher.startSync()
     }
 

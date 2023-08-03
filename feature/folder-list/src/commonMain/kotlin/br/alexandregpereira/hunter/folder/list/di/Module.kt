@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.folder.list.di
 
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
 import br.alexandregpereira.hunter.folder.list.EmptyFolderListStateRecovery
+import br.alexandregpereira.hunter.folder.list.FolderListAnalytics
 import br.alexandregpereira.hunter.folder.list.FolderListEventManager
 import br.alexandregpereira.hunter.folder.list.FolderListStateHolder
 import org.koin.dsl.module
@@ -36,6 +37,7 @@ val featureFolderListModule = module {
             folderListEventManager = get(),
             dispatcher = get(),
             syncEventListener = get(),
+            analytics = FolderListAnalytics(get()),
         )
     }
 }
