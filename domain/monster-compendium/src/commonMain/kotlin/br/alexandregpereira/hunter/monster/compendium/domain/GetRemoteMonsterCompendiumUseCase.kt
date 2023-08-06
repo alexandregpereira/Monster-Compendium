@@ -14,26 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.state
+package br.alexandregpereira.hunter.monster.compendium.domain
 
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
+import kotlinx.coroutines.flow.Flow
 
-interface ActionListener<Action> {
+class GetRemoteMonsterCompendiumUseCase internal constructor(
+    private val getRemoteMonstersBySectionUseCase: GetRemoteMonstersBySectionUseCase,
+    private val getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase
+) {
 
-    val action: SharedFlow<Action>
-}
-
-class DefaultActionDispatcher<Action> : ActionListener<Action> {
-
-    private val _action = MutableSharedFlow<Action>(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    override val action: SharedFlow<Action> = _action
-
-    fun sendAction(action: Action) {
-        _action.tryEmit(action)
+    operator fun invoke(sourceAcronym: String): Flow<MonsterCompendium> {
+        return getMonsterCompendiumBaseUseCase(getRemoteMonstersBySectionUseCase(sourceAcronym))
     }
 }

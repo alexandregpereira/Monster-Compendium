@@ -20,5 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
 
 fun String.toColor(): Color {
+    if (this.isEmpty()) return Color.Transparent
     return Color(this.toColorInt())
 }

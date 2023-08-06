@@ -17,14 +17,32 @@
 package br.alexandregpereira.hunter.monster.compendium.domain.di
 
 import br.alexandregpereira.hunter.monster.compendium.domain.GetAlphabetUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumBaseUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterPreviewsBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.GetMonstersBySectionUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.GetRemoteMonsterCompendiumUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.GetRemoteMonstersBySectionUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.GetTableContentUseCase
 import org.koin.dsl.module
 
 val monsterCompendiumDomainModule = module {
     factory { GetAlphabetUseCase() }
-    factory { GetMonsterCompendiumUseCase(get(), get(), get()) }
-    factory { GetMonsterPreviewsBySectionUseCase(get()) }
+    factory { GetMonsterCompendiumUseCase(get(), get()) }
+    factory {
+        GetMonsterPreviewsBySectionUseCase(
+            getMonsterPreviewsUseCase = get(),
+            getMonstersBySectionUseCase = GetMonstersBySectionUseCase()
+        )
+    }
+    factory {
+        GetRemoteMonstersBySectionUseCase(
+            getRemoteMonstersBySourceUseCase = get(),
+            getMonstersBySectionUseCase = GetMonstersBySectionUseCase(),
+            getMonsterImagesUseCase = get()
+        )
+    }
     factory { GetTableContentUseCase() }
+    factory { GetRemoteMonsterCompendiumUseCase(get(), get()) }
+    factory { GetMonsterCompendiumBaseUseCase(get(), get()) }
 }

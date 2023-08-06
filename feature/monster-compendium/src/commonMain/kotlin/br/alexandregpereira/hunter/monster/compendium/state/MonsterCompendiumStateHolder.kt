@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
-import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
@@ -28,21 +27,21 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispat
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
+import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
+import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexFromTableContentIndex
+import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromAlphabetIndex
+import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
-import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
-import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
-import br.alexandregpereira.hunter.state.ActionListener
-import br.alexandregpereira.hunter.state.DefaultActionDispatcher
-import br.alexandregpereira.hunter.state.DefaultStateHolder
+import br.alexandregpereira.hunter.state.DefaultActionHandler
+import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
+import br.alexandregpereira.hunter.state.MutableActionHandler
+import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -67,16 +66,12 @@ class MonsterCompendiumStateHolder(
     private val analytics: MonsterCompendiumAnalytics,
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
     loadOnInit: Boolean = true,
-) : ScopeManager(), StateHolder<MonsterCompendiumState>, ActionListener<MonsterCompendiumAction> {
+) : ScopeManager(),
+    MutableStateHolder<MonsterCompendiumState> by DefaultMutableStateHolder(initialState),
+    MutableActionHandler<MonsterCompendiumAction> by DefaultActionHandler() {
 
     var initialScrollItemPosition: Int = 0
         private set
-
-    private val stateHolder = DefaultStateHolder(initialState)
-    private val actionDispatcher = DefaultActionDispatcher<MonsterCompendiumAction>()
-
-    override val state: StateFlow<MonsterCompendiumState> = stateHolder.state
-    override val action: SharedFlow<MonsterCompendiumAction> = actionDispatcher.action
 
     init {
         observeEvents()
@@ -96,15 +91,13 @@ class MonsterCompendiumStateHolder(
                     items = items,
                     alphabet = alphabet,
                     tableContent = tableContent,
-                    tableContentIndex = getTableContentIndexFromCompendiumItemIndex(
+                    tableContentIndex = tableContent.getTableContentIndexFromCompendiumItemIndex(
                         scrollItemPosition,
                         items,
-                        tableContent
                     ),
-                    alphabetSelectedIndex = getAlphabetIndexFromCompendiumItemIndex(
+                    alphabetSelectedIndex = alphabet.getAlphabetIndexFromCompendiumItemIndex(
                         scrollItemPosition,
                         items,
-                        alphabet
                     )
                 ) to scrollItemPosition
             }
@@ -180,8 +173,8 @@ class MonsterCompendiumStateHolder(
         scope.launch {
             saveCompendiumScrollItemPositionUseCase(position)
                 .map {
-                    getTableContentIndexFromCompendiumItemIndex(position, items, tableContent) to
-                            getAlphabetIndexFromCompendiumItemIndex(position, items, alphabet)
+                    tableContent.getTableContentIndexFromCompendiumItemIndex(position, items) to
+                            alphabet.getAlphabetIndexFromCompendiumItemIndex(position, items)
                 }
                 .flowOn(dispatcher)
                 .collect { (tableContentIndex, alphabetLetter) ->
@@ -189,29 +182,6 @@ class MonsterCompendiumStateHolder(
                     setState { tableContentIndex(tableContentIndex, alphabetLetter) }
                 }
         }
-    }
-
-    private fun List<MonsterCompendiumItem>.mapToFirstLetters(): List<String> {
-        var lastLetter: Char? = null
-        return map { item ->
-            when (item) {
-                is Title -> {
-                    item.value.first().also { lastLetter = it }.toString()
-                }
-                is MonsterCompendiumItem.Item -> lastLetter?.toString()
-                    ?: throw IllegalArgumentException("Letter not initialized")
-            }
-        }
-    }
-
-    private fun getAlphabetIndexFromCompendiumItemIndex(
-        itemIndex: Int,
-        items: List<MonsterCompendiumItem>,
-        alphabet: List<String>
-    ): Int {
-        if (items.isEmpty()) return -1
-        val monsterFirstLetters = items.mapToFirstLetters()
-        return alphabet.indexOf(monsterFirstLetters[itemIndex])
     }
 
     private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
@@ -253,23 +223,17 @@ class MonsterCompendiumStateHolder(
         setState { showMonsterFolderPreview(isShowing) }
     }
 
-    private fun sendAction(action: MonsterCompendiumAction) {
-        actionDispatcher.sendAction(action)
-    }
-
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {
         val alphabet = state.value.alphabet
         val currentAlphabetIndex = state.value.alphabetSelectedIndex
         val currentTableContentIndex = state.value.tableContentIndex
         flowOf(state.value.tableContent)
-            .map { tableContent ->
-                val letter = alphabet[alphabetIndex]
-                if (currentAlphabetIndex == alphabetIndex) {
-                    currentTableContentIndex
-                } else {
-                    tableContent.indexOfFirst { it.text == letter }
-                }
-            }
+            .getTableContentIndexFromAlphabetIndex(
+                alphabet = alphabet,
+                alphabetIndex = alphabetIndex,
+                currentAlphabetIndex = currentAlphabetIndex,
+                currentTableContentIndex = currentTableContentIndex
+            )
             .flowOn(dispatcher)
             .onEach { tableContentIndex ->
                 setState {
@@ -285,39 +249,11 @@ class MonsterCompendiumStateHolder(
         val tableContent = state.value.tableContent
         scope.launch {
             flowOf(state.value.items)
-                .map { items ->
-                    val content = tableContent[tableContentIndex]
-                    items.indexOfFirst { item ->
-                        val value = when (item) {
-                            is Title -> item.id
-                            is MonsterCompendiumItem.Item -> item.monster.index
-                        }
-                        content.id == value
-                    }
-                }
+                .getCompendiumIndexFromTableContentIndex(tableContent, tableContentIndex)
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
                     sendAction(GoToCompendiumIndex(compendiumIndex))
                 }
         }
-    }
-
-    private fun getTableContentIndexFromCompendiumItemIndex(
-        itemIndex: Int,
-        items: List<MonsterCompendiumItem>,
-        tableContent: List<TableContentItem>
-    ): Int {
-        val compendiumItem = items.getOrNull(itemIndex) ?: return -1
-        return tableContent.indexOfFirst { content ->
-            val value = when (compendiumItem) {
-                is Title -> compendiumItem.id
-                is MonsterCompendiumItem.Item -> compendiumItem.monster.index
-            }
-            content.id == value
-        }
-    }
-
-    private fun setState(block: MonsterCompendiumState.() -> MonsterCompendiumState) {
-        stateHolder.setState(block)
     }
 }

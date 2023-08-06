@@ -55,7 +55,16 @@ internal class MonsterContentManagerViewModel(
         stateHolder.onRemoveContentClick(acronym)
     }
 
+    fun onPreviewClick(acronym: String, name: String) {
+        stateHolder.onPreviewClick(acronym, name)
+    }
+
     fun onClose() {
         stateHolder.onClose()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
     }
 }

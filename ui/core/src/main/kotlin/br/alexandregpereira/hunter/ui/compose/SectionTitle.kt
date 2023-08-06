@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.ui.compendium
+package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun SectionTitle(
+fun SectionTitle(
     title: String,
     isHeader: Boolean,
     modifier: Modifier = Modifier

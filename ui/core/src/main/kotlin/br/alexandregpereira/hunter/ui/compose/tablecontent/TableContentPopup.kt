@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.ui.compose.tablecontent
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -58,7 +58,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.BODY
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import com.google.accompanist.flowlayout.FlowRow

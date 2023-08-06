@@ -31,12 +31,12 @@ import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompen
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.BODY
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER1
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER2
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER1
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER2
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState

@@ -34,6 +34,7 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
     private val getMonstersUseCase: GetMonsterPreviewsUseCase = mockk()
     private val useCase = GetMonsterPreviewsBySectionUseCase(
         getMonstersUseCase,
+        GetMonstersBySectionUseCase(),
     )
 
     @Test

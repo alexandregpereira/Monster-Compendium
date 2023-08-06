@@ -38,6 +38,16 @@ internal class MonsterContentManagerAnalytics(
         )
     }
 
+    fun trackPreviewContentClick(acronym: String, name: String) {
+        analytics.track(
+            eventName = "MonsterContentManager - preview click",
+            params = mapOf(
+                "acronym" to acronym,
+                "contentName" to name,
+            )
+        )
+    }
+
     fun trackClose() {
         analytics.track(eventName = "MonsterContentManager - close")
     }

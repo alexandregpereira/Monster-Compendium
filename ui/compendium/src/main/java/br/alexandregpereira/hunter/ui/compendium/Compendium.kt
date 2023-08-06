@@ -31,17 +31,19 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.SectionTitle
 
 @Composable
 fun Compendium(
     items: List<CompendiumItemState>,
+    modifier: Modifier = Modifier,
     animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     key: (CompendiumItemState.Item) -> Any? = { null },
     isHorizontalCard: (CompendiumItemState.Item) -> Boolean = { false },
     cardContent: @Composable (CompendiumItemState.Item) -> Unit,
-) = Surface {
+) = Surface(modifier) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
         state = listState,

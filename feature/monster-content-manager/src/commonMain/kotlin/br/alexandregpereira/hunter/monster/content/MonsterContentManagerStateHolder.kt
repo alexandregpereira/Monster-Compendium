@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
+import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewEventManager
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -43,6 +44,7 @@ class MonsterContentManagerStateHolder internal constructor(
     private val eventListener: MonsterContentManagerEventListener,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val analytics: MonsterContentManagerAnalytics,
+    private val monsterContentPreviewEventManager: MonsterContentPreviewEventManager,
 ) : ScopeManager(), StateHolder<MonsterContentManagerState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
@@ -109,6 +111,11 @@ class MonsterContentManagerStateHolder internal constructor(
             }
             .catch {}
             .launchIn(scope)
+    }
+
+    fun onPreviewClick(acronym: String, name: String) {
+        analytics.trackPreviewContentClick(acronym, name)
+        monsterContentPreviewEventManager.show(acronym, title = name)
     }
 
     fun onClose() {
