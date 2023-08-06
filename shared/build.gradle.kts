@@ -25,9 +25,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":core:analytics"))
-                implementation(project(":data:data-app"))
-                implementation(project(":domain:app"))
-                implementation(project(":domain:sync"))
+                implementation(project(":domain:app:data"))
+                implementation(project(":domain:app:core"))
+                implementation(project(":domain:sync:core"))
                 implementation(project(":feature:folder-insert:event")) // TODO Remove later
                 implementation(project(":feature:folder-preview:event")) // TODO Remove later
                 implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later

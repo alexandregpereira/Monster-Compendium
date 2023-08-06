@@ -10,7 +10,7 @@ kotlin {
             dependencies {
                 implementation(project(":core:analytics"))
                 api(project(":core:state-holder"))
-                api(project(":domain:monster-folder"))
+                api(project(":domain:monster-folder:core"))
                 implementation(project(":feature:folder-insert:event"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)

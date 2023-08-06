@@ -54,7 +54,7 @@ internal extension Monster {
     }
 }
 
-private extension MonsterSpeedValue {
+private extension SpeedValue {
     func asUiState() -> SpeedValueUiState {
         return SpeedValueUiState(
             name: type.name,
@@ -63,7 +63,7 @@ private extension MonsterSpeedValue {
     }
 }
 
-private extension MonsterAbilityScore {
+private extension AbilityScore {
     func asUiState() -> AbilityScoreUiState {
         return AbilityScoreUiState(
             type: type.name,
@@ -73,7 +73,7 @@ private extension MonsterAbilityScore {
     }
 }
 
-private extension MonsterProficiency {
+private extension Proficiency {
     func asUiState() -> ProficiencyUiState {
         return ProficiencyUiState(
             index: index,
@@ -92,7 +92,7 @@ private extension MonsterProficiency {
     }
 }
 
-private extension MonsterDamage {
+private extension Damage {
     func asUiState() -> DamageUiState {
         return DamageUiState(
             index: index,
@@ -102,7 +102,7 @@ private extension MonsterDamage {
     }
 }
 
-private extension MonsterCondition {
+private extension Condition {
     func asUiState() -> ConditionUiState {
         return ConditionUiState(
             index: index,
@@ -111,7 +111,7 @@ private extension MonsterCondition {
     }
 }
 
-private extension MonsterAbilityDescription {
+private extension AbilityDescription {
     func asUiState() -> AbilityDescriptionUiState {
         return AbilityDescriptionUiState(
             name: name,
@@ -120,7 +120,7 @@ private extension MonsterAbilityDescription {
     }
 }
 
-private extension MonsterAction {
+private extension Action {
     func asUiState() -> ActionUiState {
         return ActionUiState(
             damageDices: damageDices.map { $0.asUiState() },
@@ -130,7 +130,7 @@ private extension MonsterAction {
     }
 }
 
-private extension MonsterDamageDice {
+private extension DamageDice {
     func asUiState() -> DamageDiceUiState {
         return DamageDiceUiState(
             dice: dice,
@@ -139,7 +139,7 @@ private extension MonsterDamageDice {
     }
 }
 
-private extension MonsterSpellcasting {
+private extension Spellcasting {
     func asUiState() -> SpellcastingUiState {
         return SpellcastingUiState(
             name: type.name,

@@ -16,9 +16,9 @@ kotlin {
             dependencies {
                 implementation(project(":core:analytics"))
                 api(project(":core:state-holder"))
-                api(project(":domain:alternative-source"))
-                api(project(":domain:monster"))
-                api(project(":domain:monster-compendium"))
+                api(project(":domain:alternative-source:core"))
+                api(project(":domain:monster:core"))
+                api(project(":domain:monster-compendium:core"))
                 implementation(project(":feature:monster-content-manager:event"))
                 implementation(project(":feature:sync:event"))
                 implementation(libs.kotlin.coroutines.core)

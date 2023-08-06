@@ -103,8 +103,8 @@ android {
 
 dependencies {
     implementation(project(":core:analytics"))
-    implementation(project(":data:data-app"))
-    implementation(project(":domain:app"))
+    implementation(project(":domain:app:data"))
+    implementation(project(":domain:app:core"))
     implementation(project(":feature:folder-detail:event"))
     implementation(project(":feature:folder-list:event"))
     implementation(project(":feature:folder-preview:event"))

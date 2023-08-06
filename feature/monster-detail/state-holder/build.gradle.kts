@@ -26,9 +26,9 @@ kotlin {
             dependencies {
                 api(project(":core:analytics"))
                 api(project(":core:state-holder"))
-                api(project(":domain:monster"))
-                implementation(project(":domain:monster-lore"))
-                implementation(project(":domain:spell"))
+                api(project(":domain:monster:core"))
+                implementation(project(":domain:monster-lore:core"))
+                implementation(project(":domain:spell:core"))
                 implementation(project(":feature:folder-insert:event"))
                 implementation(project(":feature:monster-detail:event"))
                 implementation(project(":feature:monster-lore-detail:event"))

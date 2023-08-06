@@ -10,7 +10,7 @@ kotlin {
             dependencies {
                 api(project(":core:analytics"))
                 api(project(":core:state-holder"))
-                api(project(":domain:monster-compendium"))
+                api(project(":domain:monster-compendium:core"))
                 implementation(project(":feature:folder-preview:event"))
                 implementation(project(":feature:monster-detail:event"))
                 implementation(project(":feature:sync:event"))

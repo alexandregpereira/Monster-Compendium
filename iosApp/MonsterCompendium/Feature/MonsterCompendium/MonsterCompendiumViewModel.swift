@@ -95,11 +95,11 @@ extension MonsterCompendiumStateIos {
                 text: itemIos.text,
                 type: {
                     switch itemIos.type {
-                    case Monster_compendiumTableContentItemType.header1:
+                    case TableContentItemType.header1:
                         return .HEADER1
-                    case Monster_compendiumTableContentItemType.header2:
+                    case TableContentItemType.header2:
                         return .HEADER2
-                    case Monster_compendiumTableContentItemType.body:
+                    case TableContentItemType.body:
                         return .BODY
                     default:
                         return .BODY

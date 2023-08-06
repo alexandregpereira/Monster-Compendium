@@ -32,8 +32,8 @@ android {
 
 dependencies {
     implementation project(':core:analytics')
-    implementation project(':domain:monster')
-    implementation project(':domain:spell')
+    implementation project(':domain:monster:core')
+    implementation project(':domain:spell:core')
     implementation project(':feature:folder-preview:event')
     implementation project(':feature:monster-detail:event')
     implementation project(':ui:core')

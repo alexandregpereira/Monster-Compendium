@@ -84,6 +84,7 @@ class MonsterCompendiumFeature : KoinComponent {
     }
 }
 
+@ObjCName(name = "MonsterCompendiumStateIos", exact = true)
 data class MonsterCompendiumStateIos(
     val isLoading: Boolean = false,
     val items: List<MonsterCompendiumItemIos> = emptyList(),
@@ -97,11 +98,13 @@ data class MonsterCompendiumStateIos(
     val isShowingMonsterFolderPreview: Boolean = false,
 )
 
+@ObjCName(name = "MonsterCompendiumItemIos", exact = true)
 data class MonsterCompendiumItemIos(
     val title: MonsterCompendiumItem.Title?,
     val monster: Monster?
 )
 
+@ObjCName(name = "MonsterCompendiumActionIos", exact = true)
 data class MonsterCompendiumActionIos(
     val compendiumIndex: Int?
 )
