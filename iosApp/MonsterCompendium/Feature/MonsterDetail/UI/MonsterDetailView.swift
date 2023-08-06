@@ -231,17 +231,17 @@ struct AbilityScoreBlock: View {
         
         Block(title: title) {
             HStack(spacing: 48) {
-                AbilityScore(abilityScore: abilityScores[0])
-                AbilityScore(abilityScore: abilityScores[1])
-                AbilityScore(abilityScore: abilityScores[2])
+                AbilityScoreView(abilityScore: abilityScores[0])
+                AbilityScoreView(abilityScore: abilityScores[1])
+                AbilityScoreView(abilityScore: abilityScores[2])
             }
             .padding(.bottom, 24)
             .frame(maxWidth: .infinity)
             
             HStack(spacing: 48) {
-                AbilityScore(abilityScore: abilityScores[3])
-                AbilityScore(abilityScore: abilityScores[4])
-                AbilityScore(abilityScore: abilityScores[5])
+                AbilityScoreView(abilityScore: abilityScores[3])
+                AbilityScoreView(abilityScore: abilityScores[4])
+                AbilityScoreView(abilityScore: abilityScores[5])
             }
             .frame(maxWidth: .infinity)
         }
@@ -314,7 +314,7 @@ struct DamageBlock: View {
     }
 }
 
-struct AbilityScore: View {
+struct AbilityScoreView: View {
     let abilityScore: AbilityScoreUiState
     
     var body: some View {

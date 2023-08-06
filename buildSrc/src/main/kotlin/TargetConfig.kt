@@ -53,7 +53,6 @@ fun Project.configureTargets(
                 )
             }.onEach {
                 it.binaries.framework {
-                    baseName = project.name
                     iosFramework()
                 }
             }
@@ -78,6 +77,12 @@ fun Project.configureTargets(
                         iosX64Main.dependsOn(this)
                     }
                 }
+            }
+
+
+            all {
+                it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+                it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
             }
         }
     }
