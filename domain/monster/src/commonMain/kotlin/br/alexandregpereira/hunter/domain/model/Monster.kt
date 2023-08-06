@@ -17,7 +17,9 @@
 package br.alexandregpereira.hunter.domain.model
 
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
+import kotlin.native.ObjCName
 
+@ObjCName(name = "Monster", exact = true)
 data class Monster(
     val index: String,
     val name: String = "",

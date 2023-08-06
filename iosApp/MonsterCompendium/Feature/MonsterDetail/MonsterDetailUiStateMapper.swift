@@ -8,13 +8,13 @@
 import Foundation
 import shared
 
-internal extension Array where Element == MonsterMonster {
+internal extension Array where Element == Monster {
     func asUiState() -> [MonsterDetailItemUiState] {
         return self.map { $0.asUiState() }
     }
 }
 
-internal extension MonsterMonster {
+internal extension Monster {
     func asUiState() -> MonsterDetailItemUiState {
         return MonsterDetailItemUiState(
             id: index,

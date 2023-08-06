@@ -18,7 +18,7 @@ import shared
     
     init() {
         feature = MonsterDetailFeature()
-        stateWatcher = feature.state.collect { (state: Monster_detailMonsterDetailState) -> Void in
+        stateWatcher = feature.state.collect { (state: MonsterDetailState) -> Void in
             self.state.isShowing = state.showDetail
             self.isLoading = state.isLoading
             self.state.monsters = state.monsters.asUiState()

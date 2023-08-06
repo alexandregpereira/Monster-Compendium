@@ -28,13 +28,13 @@ kotlin {
                 implementation(project(":data:data-app"))
                 implementation(project(":domain:app"))
                 implementation(project(":domain:sync"))
-                implementation(project(":event:folder-insert-event")) // TODO Remove later
-                implementation(project(":event:folder-preview-event")) // TODO Remove later
-                implementation(project(":event:monster-lore-detail-event")) // TODO Remove later
-                implementation(project(":event:spell-detail-event")) // TODO Remove later
-                implementation(project(":feature:monster-compendium"))
-                implementation(project(":feature:monster-detail"))
-                implementation(project(":feature:sync"))
+                implementation(project(":feature:folder-insert:event")) // TODO Remove later
+                implementation(project(":feature:folder-preview:event")) // TODO Remove later
+                implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
+                implementation(project(":feature:spell-detail:event")) // TODO Remove later
+                implementation(project(":feature:monster-compendium:state-holder"))
+                implementation(project(":feature:monster-detail:state-holder"))
+                implementation(project(":feature:sync:state-holder"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)
             }

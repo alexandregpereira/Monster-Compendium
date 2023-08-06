@@ -110,7 +110,7 @@ extension MonsterCompendiumStateIos {
     }
 }
 
-extension MonsterMonster {
+extension Monster {
 
     func asUiState() -> MonsterUiState {
         let monster = self
