@@ -79,6 +79,7 @@ sqldelight-android = { module = "com.squareup.sqldelight:android-driver", versio
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
 
 [bundles]
 compose = ["compose-ui", "compose-tooling", "compose-tooling-preview", "compose-material", "compose-activity", "compose-util"]

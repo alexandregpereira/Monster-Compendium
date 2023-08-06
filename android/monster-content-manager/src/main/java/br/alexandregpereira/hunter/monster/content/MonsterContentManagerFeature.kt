@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.content
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewFeature
 import br.alexandregpereira.hunter.monster.content.ui.MonsterContentManagerScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,5 +34,8 @@ fun MonsterContentManagerFeature(
         onClose = viewModel::onClose,
         onAddClick = viewModel::onAddContentClick,
         onRemoveClick = viewModel::onRemoveContentClick,
+        onPreviewClick = viewModel::onPreviewClick,
     )
+
+    MonsterContentPreviewFeature(contentPadding)
 }

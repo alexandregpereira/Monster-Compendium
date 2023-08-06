@@ -20,20 +20,17 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerViewState
 import br.alexandregpereira.hunter.monster.content.R
+import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.Window
 
@@ -44,24 +41,25 @@ internal fun MonsterContentManagerScreen(
     onClose: () -> Unit = {},
     onAddClick: (String) -> Unit = {},
     onRemoveClick: (String) -> Unit = {},
+    onPreviewClick: (String, String) -> Unit = { _, _ -> },
 ) {
     BackHandler(enabled = state.isOpen, onBack = onClose)
 
     SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
         Window(Modifier.fillMaxSize()) {
             LazyColumn(
-                modifier = Modifier
-                    .padding(contentPadding)
-                    .padding(16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
+                contentPadding = PaddingValues(
+                    top = 24.dp + contentPadding.calculateTopPadding(),
+                    bottom = contentPadding.calculateBottomPadding()
+                )
             ) {
                 item(key = "title") {
-                    Text(
-                        text = stringResource(R.string.monster_content_manager_manage_monster_content),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
+                    SectionTitle(
+                        title = stringResource(R.string.monster_content_manager_monster_content),
+                        isHeader = true,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 24.dp)
+                            .padding(bottom = 32.dp)
                     )
                 }
 
@@ -75,8 +73,14 @@ internal fun MonsterContentManagerScreen(
                         isEnabled = monsterContent.isEnabled,
                         onAddClick = { onAddClick(monsterContent.acronym) },
                         onRemoveClick = { onRemoveClick(monsterContent.acronym) },
+                        onPreviewClick = {
+                            onPreviewClick(
+                                monsterContent.acronym,
+                                monsterContent.name
+                            )
+                        },
                     )
-                    Spacer(modifier = Modifier.padding(bottom = 32.dp))
+                    Spacer(modifier = Modifier.padding(bottom = 48.dp))
                 }
             }
         }

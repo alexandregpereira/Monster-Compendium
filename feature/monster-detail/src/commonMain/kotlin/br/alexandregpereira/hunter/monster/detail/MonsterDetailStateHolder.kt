@@ -35,14 +35,13 @@ import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
-import br.alexandregpereira.hunter.state.DefaultStateHolder
+import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
+import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
@@ -65,10 +64,8 @@ class MonsterDetailStateHolder(
     initialState: MonsterDetailState = MonsterDetailState(),
     monsterIndex: String = "",
     monsterIndexes: List<String> = emptyList()
-) : ScopeManager(), StateHolder<MonsterDetailState> {
-
-    private val stateHolder = DefaultStateHolder(initialState)
-    override val state: StateFlow<MonsterDetailState> = stateHolder.state
+) : ScopeManager(),
+    MutableStateHolder<MonsterDetailState> by DefaultMutableStateHolder(initialState) {
 
     var monsterIndex: String = ""
         private set
@@ -203,9 +200,5 @@ class MonsterDetailStateHolder(
                 }
             }
             .launchIn(scope)
-    }
-
-    private fun setState(block: MonsterDetailState.() -> MonsterDetailState) {
-        stateHolder.setState(block)
     }
 }

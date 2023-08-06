@@ -17,8 +17,8 @@
 package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
 

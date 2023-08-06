@@ -24,14 +24,48 @@ interface StateHolder<State> {
     val state: StateFlow<State>
 }
 
-class DefaultStateHolder<State>(
+interface MutableStateHolder<State>: StateHolder<State> {
+
+    fun setState(block: State.() -> State)
+}
+
+@Suppress("FunctionName")
+fun <State> DefaultMutableStateHolder(initialState: State): MutableStateHolder<State> {
+    return DefaultStateHolderImpl(initialState)
+}
+
+@Suppress("FunctionName")
+fun <State> DefaultMutableStateHolder(
+    stateRecovery: StateRecovery<State>
+): MutableStateHolder<State> {
+    return DefaultStateHolderWithRecovery(stateRecovery)
+}
+
+private class DefaultStateHolderImpl<State>(
     initialState: State
-): StateHolder<State> {
+): MutableStateHolder<State> {
 
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlow<State> = _state
 
-    fun setState(block: State.() -> State) {
+    override fun setState(block: State.() -> State) {
         _state.value = state.value.block()
+    }
+}
+
+private class DefaultStateHolderWithRecovery<State>(
+    private val stateRecovery: StateRecovery<State>
+): MutableStateHolder<State> {
+
+    private val stateHolderDelegate = DefaultStateHolderImpl(stateRecovery.getState())
+
+    override val state: StateFlow<State> = stateHolderDelegate.state
+
+    override fun setState(block: State.() -> State) {
+        stateHolderDelegate.setState {
+            block().also {
+                stateRecovery.saveState(it)
+            }
+        }
     }
 }

@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.monster.compendium.ui
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,13 +27,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
-import br.alexandregpereira.hunter.ui.compose.Closeable
+import br.alexandregpereira.hunter.ui.compose.PopupContainer
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -102,41 +102,44 @@ private fun MonsterCompendiumScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumEvents,
 ) {
-    Box(Modifier.fillMaxSize()) {
-        MonsterCompendium(
-            items = items,
-            listState = listState,
-            contentPadding = contentPadding,
-            onItemCLick = events::onItemCLick,
-            onItemLongCLick = events::onItemLongCLick,
-        )
-        Closeable(opened = popupOpened, onClosed = events::onPopupClosed)
-        val paddingBottom by animateDpAsState(
-            if (isShowingMonsterFolderPreview) 72.dp else 8.dp
-        )
+    PopupContainer(
+        isOpened = popupOpened,
+        onPopupClosed = events::onPopupClosed,
+        content = {
+            MonsterCompendium(
+                items = items,
+                listState = listState,
+                contentPadding = contentPadding,
+                onItemCLick = events::onItemCLick,
+                onItemLongCLick = events::onItemLongCLick,
+            )
+        },
+        popupContent = {
+            val paddingBottom by animateDpAsState(
+                if (isShowingMonsterFolderPreview) 72.dp else 8.dp
+            )
 
-        TableContentPopup(
-            alphabet = alphabet,
-            tableContent = tableContent,
-            alphabetSelectedIndex = alphabetSelectedIndex,
-            tableContentSelectedIndex = tableContentIndex,
-            tableContentInitialIndex = tableContentInitialIndex,
-            opened = popupOpened,
-            tableContentOpened = tableContentOpened,
-            onOpenButtonClicked = events::onPopupOpened,
-            onCloseButtonClicked = events::onPopupClosed,
-            onTableContentClicked = events::onTableContentIndexClicked,
-            onAlphabetIndexClicked = events::onAlphabetIndexClicked,
-            onTableContentClosed = events::onTableContentClosed,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(
-                    top = contentPadding.calculateTopPadding(),
-                    bottom = contentPadding.calculateBottomPadding() + paddingBottom
-                )
-                .padding(horizontal = 14.dp)
-        )
-    }
+            TableContentPopup(
+                alphabet = alphabet,
+                tableContent = tableContent,
+                alphabetSelectedIndex = alphabetSelectedIndex,
+                tableContentSelectedIndex = tableContentIndex,
+                tableContentInitialIndex = tableContentInitialIndex,
+                opened = popupOpened,
+                tableContentOpened = tableContentOpened,
+                onOpenButtonClicked = events::onPopupOpened,
+                onCloseButtonClicked = events::onPopupClosed,
+                onTableContentClicked = events::onTableContentIndexClicked,
+                onAlphabetIndexClicked = events::onAlphabetIndexClicked,
+                onTableContentClosed = events::onTableContentClosed,
+                modifier = Modifier
+                    .padding(
+                        top = contentPadding.calculateTopPadding(),
+                        bottom = contentPadding.calculateBottomPadding() + paddingBottom
+                    )
+            )
+        }
+    )
 }
 
 @Composable

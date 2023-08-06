@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation project(':feature:monster-content-manager')
     implementation project(':ui:core')
+    implementation project(':ui:monster-compendium')
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

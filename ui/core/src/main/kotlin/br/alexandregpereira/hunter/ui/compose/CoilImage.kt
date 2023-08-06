@@ -20,6 +20,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
@@ -56,6 +57,7 @@ fun CoilImage(
                     )
                 } ?: this
             }
+            .clip(shape = shape)
             .graphicsLayer(graphicsLayerBlock)
     )
 }

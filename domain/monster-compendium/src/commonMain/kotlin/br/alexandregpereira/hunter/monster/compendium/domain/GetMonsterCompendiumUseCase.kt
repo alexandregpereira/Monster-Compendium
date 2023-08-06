@@ -17,32 +17,14 @@
 package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.single
 
 class GetMonsterCompendiumUseCase internal constructor(
     private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
-    private val getTableContentUseCase: GetTableContentUseCase,
-    private val getAlphabetUseCase: GetAlphabetUseCase
+    private val getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase
 ) {
 
     operator fun invoke(): Flow<MonsterCompendium> {
-        return getMonsterPreviewsBySectionUseCase().map { items ->
-            val (tableContent, alphabet) = coroutineScope {
-                val tableContentDeferred = async { getTableContentUseCase(items).single() }
-                val alphabetDeferred = async { getAlphabetUseCase(items).single() }
-
-                tableContentDeferred.await() to alphabetDeferred.await()
-            }
-
-            MonsterCompendium(
-                items = items,
-                tableContent = tableContent,
-                alphabet = alphabet
-            )
-        }
+        return getMonsterCompendiumBaseUseCase(getMonsterPreviewsBySectionUseCase())
     }
 }

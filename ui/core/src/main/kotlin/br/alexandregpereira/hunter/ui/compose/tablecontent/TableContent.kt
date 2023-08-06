@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.ui.compose.tablecontent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,12 +39,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.BODY
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER1
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState.HEADER2
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER1
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER2
 
 @Composable
-fun TableContent(
+internal fun TableContent(
     tableContent: List<TableContentItemState>,
     selectedIndex: Int,
     onTableContentClicked: (Int) -> Unit,

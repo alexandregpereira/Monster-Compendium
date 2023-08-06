@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.ui.compose.Window
 @Composable
 fun MonsterCompendium(
     items: List<CompendiumItemState>,
+    modifier: Modifier = Modifier,
     animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -39,6 +40,7 @@ fun MonsterCompendium(
     onItemLongCLick: (index: String) -> Unit = {},
 ) = Compendium(
     items = items,
+    modifier = modifier,
     animateItems = animateItems,
     listState = listState,
     contentPadding = contentPadding,

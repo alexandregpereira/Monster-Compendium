@@ -19,9 +19,9 @@ package br.alexandregpereira.hunter.monster.compendium
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemState
-import br.alexandregpereira.hunter.monster.compendium.ui.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState

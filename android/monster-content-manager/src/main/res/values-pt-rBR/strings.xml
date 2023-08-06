@@ -15,8 +15,9 @@
   -->
 
 <resources>
-    <string name="monster_content_manager_manage_monster_content">Gerenciar Conteúdo</string>
-    <string name="monster_content_manager_manage_add">Adicionar</string>
-    <string name="monster_content_manager_manage_remove">Remover</string>
-    <string name="monster_content_manager_manage_total_monsters">%s monstros</string>
+    <string name="monster_content_manager_monster_content">Gerenciar Conteúdo</string>
+    <string name="monster_content_manager_add">Adicionar</string>
+    <string name="monster_content_manager_remove">Remover</string>
+    <string name="monster_content_manager_total_monsters">%s monstros</string>
+    <string name="monster_content_manager_preview">Prévia</string>
 </resources>
