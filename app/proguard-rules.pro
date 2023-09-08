@@ -9,3 +9,5 @@
 -keep public class br.alexandregpereira.hunter.data.** {
     public protected *;
 }
+
+-dontwarn org.slf4j.impl.StaticLoggerBinder

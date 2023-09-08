@@ -1,8 +1,8 @@
 buildscript {
     extra.apply {
-        set("compileSdk", 33)
+        set("compileSdk", 34)
         set("minSdk", 24)
-        set("targetSdk", 33)
+        set("targetSdk", 34)
     }
     repositories {
         google()

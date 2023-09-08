@@ -16,11 +16,16 @@
 
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 
 private val Project.kotlin: KotlinMultiplatformExtension
     get() = extensions.getByType(KotlinMultiplatformExtension::class.java)
+
+private val Project.java: JavaPluginExtension
+    get() = extensions.getByType(JavaPluginExtension::class.java)
 
 fun Project.isMac(): Boolean = Os.isFamily(Os.FAMILY_MAC) && !hasProperty("disableIos")
 
@@ -84,6 +89,12 @@ fun Project.configureTargets(
                 it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
                 it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
             }
+        }
+    }
+
+    java.apply {
+        toolchain.apply {
+            languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
 }

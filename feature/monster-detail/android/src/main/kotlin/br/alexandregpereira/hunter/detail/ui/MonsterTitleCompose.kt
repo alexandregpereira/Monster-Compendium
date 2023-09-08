@@ -46,7 +46,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 fun MonsterTitleCompose(
     monsterTitleStates: List<MonsterTitleState>,
     modifier: Modifier = Modifier,
-    pagerState: PagerState = rememberPagerState(),
+    pagerState: PagerState = rememberPagerState(
+        pageCount = { monsterTitleStates.size }
+    ),
     contentPadding: PaddingValues = PaddingValues(16.dp),
     titleFontSize: MonsterTitleFontSize = MonsterTitleFontSize.LARGE,
     onOptionsClicked: () -> Unit = {}

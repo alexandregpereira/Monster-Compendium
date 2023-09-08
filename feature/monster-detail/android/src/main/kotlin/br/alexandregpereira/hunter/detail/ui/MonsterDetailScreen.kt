@@ -89,7 +89,8 @@ fun MonsterDetailScreen(
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     pagerState: PagerState = rememberPagerState(
-        initialPage = initialMonsterIndex
+        initialPage = initialMonsterIndex,
+        pageCount = { monsters.size }
     ),
     scrollState: LazyListState = rememberLazyListState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
@@ -489,7 +490,9 @@ private fun MonsterTopBarPreview() = Window {
                 reactions = listOf()
             )
         ),
-        pagerState = rememberPagerState(),
+        pagerState = rememberPagerState(
+            pageCount = { 1 }
+        ),
         firstVisibleItemIndex = { 0 },
         onOptionsClicked = {
 
