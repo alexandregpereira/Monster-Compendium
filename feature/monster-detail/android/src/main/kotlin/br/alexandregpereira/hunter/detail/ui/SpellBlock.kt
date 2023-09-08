@@ -156,7 +156,6 @@ internal const val SPELLCASTING_ITEM_KEY = "spellcasting"
 @Preview
 @Composable
 private fun SpellBlockPreview() = Window {
-    val pagerState = rememberPagerState()
     val spellcastings = listOf(
         SpellcastingState(
             type = SpellcastingTypeState.SPELLCASTER,
@@ -201,6 +200,10 @@ private fun SpellBlockPreview() = Window {
                 )
             )
         )
+    )
+
+    val pagerState = rememberPagerState(
+        pageCount = { spellcastings.size }
     )
 
     LazyColumn {
