@@ -29,14 +29,10 @@ fun SettingsFeature(
     contentPadding: PaddingValues,
 ) {
     val viewModel: SettingsViewModel = koinViewModel()
-    val context = LocalContext.current
     SettingsScreen(
         state = viewModel.state.collectAsState().value,
         versionName = versionName,
         contentPadding = contentPadding,
-        onImageBaseUrlChange = viewModel::onImageBaseUrlChange,
-        onAlternativeSourceBaseUrlChange = viewModel::onAlternativeSourceBaseUrlChange,
-        onSaveButtonClick = viewModel::onSaveButtonClick,
-        onManageMonsterContentClick = viewModel::onManageMonsterContentClick,
+        viewIntent = viewModel,
     )
 }
