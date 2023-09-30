@@ -33,8 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.settings.EmptySettingsViewIntent
 import br.alexandregpereira.hunter.settings.R
+import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
+import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
@@ -42,41 +45,24 @@ internal fun SettingsScreen(
     state: SettingsViewState,
     versionName: String,
     contentPadding: PaddingValues = PaddingValues(),
-    onImageBaseUrlChange: (String) -> Unit = {},
-    onAlternativeSourceBaseUrlChange: (String) -> Unit = {},
-    onSaveButtonClick: () -> Unit = {},
-    onManageMonsterContentClick: () -> Unit = {},
+    viewIntent: SettingsViewIntent = EmptySettingsViewIntent(),
 ) = Window {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            Settings(
-                imageBaseUrl = state.imageBaseUrl,
-                alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
-                saveButtonEnabled = state.saveButtonEnabled,
-                onImageBaseUrlChange = onImageBaseUrlChange,
-                onAlternativeSourceBaseUrlChange = onAlternativeSourceBaseUrlChange,
-                onSaveButtonClick = onSaveButtonClick,
-                modifier = Modifier.padding(
-                    top = contentPadding.calculateTopPadding(),
-                    bottom = 16.dp
-                )
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(Modifier.padding(contentPadding)) {
+
+            SettingsItem(
+                text = "Advanced Settings",
+                onClick = viewIntent::onAdvancedSettingsClick
             )
 
             Divider()
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onManageMonsterContentClick)
-            ) {
-                Text(
-                    text = stringResource(R.string.settings_manage_monster_content),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 22.sp,
-                    modifier = Modifier
-                        .padding(16.dp)
-                )
-            }
+            SettingsItem(
+                text = stringResource(R.string.settings_manage_monster_content),
+                onClick = viewIntent::onManageMonsterContentClick
+            )
         }
 
         Text(
@@ -87,6 +73,41 @@ internal fun SettingsScreen(
                 .align(Alignment.BottomEnd)
                 .padding(contentPadding)
                 .padding(8.dp)
+        )
+
+        BottomSheet(
+            opened = state.advancedSettingsOpened,
+            onClose = viewIntent::onAdvancedSettingsCloseClick,
+            contentPadding = contentPadding
+        ) {
+            AdvancedSettings(
+                imageBaseUrl = state.imageBaseUrl,
+                alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
+                saveButtonEnabled = state.saveButtonEnabled,
+                onImageBaseUrlChange = viewIntent::onImageBaseUrlChange,
+                onAlternativeSourceBaseUrlChange = viewIntent::onAlternativeSourceBaseUrlChange,
+                onSaveButtonClick = viewIntent::onSaveButtonClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingsItem(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Normal,
+            fontSize = 22.sp,
+            modifier = Modifier
+                .padding(16.dp)
         )
     }
 }

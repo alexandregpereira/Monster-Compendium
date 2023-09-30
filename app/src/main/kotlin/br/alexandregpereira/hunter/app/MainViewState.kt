@@ -20,29 +20,40 @@ import androidx.lifecycle.SavedStateHandle
 
 data class MainViewState(
     val bottomBarItemSelected: BottomBarItem = BottomBarItem.COMPENDIUM,
-    val isFolderDetailShowing: Boolean = false,
-    val isMonsterDetailShowing: Boolean = false,
-    val isMonsterContentManagerShowing: Boolean = false,
-    val isFolderListSelectionShowing: Boolean = false,
+    internal val topContentStack: List<String> = listOf(),
 ) {
-    val showBottomBar: Boolean = isMonsterDetailShowing.not() && isFolderDetailShowing.not()
-            && isFolderListSelectionShowing.not() && isMonsterContentManagerShowing.not()
+
+    val showBottomBar: Boolean = topContentStack.isEmpty()
+}
+
+internal fun MainViewState.addTopContentStack(
+    topContent: String,
+): MainViewState {
+    return copy(topContentStack = topContentStack + topContent)
+}
+
+internal fun MainViewState.removeTopContentStack(
+    topContent: String,
+): MainViewState {
+    return copy(
+        topContentStack = topContentStack.toMutableList().apply {
+            remove(topContent)
+        }.toList()
+    )
 }
 
 enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
     COMPENDIUM(iconRes = R.drawable.ic_book, stringRes = R.string.compendium),
     SEARCH(iconRes = R.drawable.ic_search, stringRes = R.string.search),
     FOLDERS(iconRes = R.drawable.ic_folder, stringRes = R.string.folders),
-    SETTINGS(iconRes = R.drawable.ic_settings, stringRes = R.string.settings)
+    SETTINGS(iconRes = R.drawable.ic_menu, stringRes = R.string.menu)
 }
 
 internal fun SavedStateHandle.getState(): MainViewState {
     return MainViewState(
-        bottomBarItemSelected = BottomBarItem.values()[this["bottomBarItemSelected"] ?: 0],
-        isFolderDetailShowing = this["isFolderDetailShowing"] ?: false,
-        isMonsterDetailShowing = this["isMonsterDetailShowing"] ?: false,
-        isFolderListSelectionShowing = this["isFolderListSelectionShowing"] ?: false,
-        isMonsterContentManagerShowing = this["isMonsterContentManagerShowing"] ?: false,
+        bottomBarItemSelected = BottomBarItem.entries[this["bottomBarItemSelected"] ?: 0],
+        topContentStack = this.get<Array<String>>("topContentStack")?.toMutableList()
+            ?: mutableListOf(),
     )
 }
 
@@ -50,9 +61,6 @@ internal fun MainViewState.saveState(
     savedStateHandle: SavedStateHandle
 ): MainViewState {
     savedStateHandle["bottomBarItemSelected"] = this.bottomBarItemSelected.ordinal
-    savedStateHandle["isFolderDetailShowing"] = this.isFolderDetailShowing
-    savedStateHandle["isMonsterDetailShowing"] = this.isMonsterDetailShowing
-    savedStateHandle["isFolderListSelectionShowing"] = this.isFolderListSelectionShowing
-    savedStateHandle["isMonsterContentManagerShowing"] = this.isMonsterContentManagerShowing
+    savedStateHandle["topContentStack"] = this.topContentStack.toTypedArray()
     return this
 }

@@ -21,9 +21,12 @@ import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
+import br.alexandregpereira.hunter.event.EventDispatcher
+import br.alexandregpereira.hunter.event.systembar.BottomBarEvent
+import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
+import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
-import br.alexandregpereira.hunter.sync.event.SyncEvent
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +45,8 @@ internal class SettingsViewModel(
     private val dispatcher: CoroutineDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val analytics: SettingsAnalytics,
-) : ViewModel() {
+    private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
+) : ViewModel(), SettingsViewIntent {
 
     private val _state = MutableStateFlow(SettingsViewState())
     val state: StateFlow<SettingsViewState> = _state
@@ -51,30 +55,38 @@ internal class SettingsViewModel(
         load()
     }
 
-    fun onImageBaseUrlChange(value: String) {
+    override fun onImageBaseUrlChange(value: String) {
         _state.value = state.value.copy(imageBaseUrl = value)
     }
 
-    fun onAlternativeSourceBaseUrlChange(value: String) {
+    override fun onAlternativeSourceBaseUrlChange(value: String) {
         _state.value = state.value.copy(alternativeSourceBaseUrl = value)
     }
 
-    fun onSaveButtonClick() {
+    override fun onSaveButtonClick() {
         analytics.trackSaveButtonClick(state.value)
         saveUrls(
             imageBaseUrl = state.value.imageBaseUrl,
             alternativeSourceBaseUrl = state.value.alternativeSourceBaseUrl
         ).flowOn(dispatcher)
             .onEach {
+                closeAdvancedSettings()
                 syncEventDispatcher.startSync()
             }
             .launchIn(viewModelScope)
     }
 
-    fun onManageMonsterContentClick() {
+    override fun onManageMonsterContentClick() {
         analytics.trackManageMonsterContentClick()
         monsterContentManagerEventDispatcher.dispatchEvent(Show)
     }
+
+    override fun onAdvancedSettingsClick() {
+        _state.value = state.value.copy(advancedSettingsOpened = true)
+        bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
+    }
+
+    override fun onAdvancedSettingsCloseClick() = closeAdvancedSettings()
 
     private fun load() {
         getMonsterImageJsonUrl()
@@ -93,5 +105,14 @@ internal class SettingsViewModel(
                 _state.value = state
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun closeAdvancedSettings() {
+        _state.value = state.value.copy(advancedSettingsOpened = false)
+        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
+    }
+
+    private companion object {
+        private const val ADVANCED_SETTINGS_CONTENT = "AdvancedSettings"
     }
 }

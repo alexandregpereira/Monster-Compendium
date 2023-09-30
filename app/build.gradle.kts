@@ -102,6 +102,7 @@ java {
 
 dependencies {
     implementation(project(":core:analytics"))
+    implementation(project(":core:event"))
     implementation(project(":domain:app:data"))
     implementation(project(":domain:app:core"))
     implementation(project(":feature:folder-detail:event"))
