@@ -20,4 +20,5 @@ internal data class SettingsViewState(
     val imageBaseUrl: String = "",
     val alternativeSourceBaseUrl: String = "",
     val saveButtonEnabled: Boolean = true,
+    val advancedSettingsOpened: Boolean = false,
 )
