@@ -31,7 +31,7 @@ fun BottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    Crossfade(targetState = bottomBarItemSelected) { index ->
+    Crossfade(targetState = bottomBarItemSelected, label = "BottomNavigationTransition") { index ->
         when (index) {
             BottomBarItem.COMPENDIUM -> MonsterCompendiumFeature(
                 contentPadding = contentPadding,

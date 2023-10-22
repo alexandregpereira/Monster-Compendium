@@ -28,6 +28,11 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVis
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
+import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.AddTopContent
+import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.RemoveTopContent
+import br.alexandregpereira.hunter.event.systembar.BottomBarEventManager
+import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
+import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
@@ -35,6 +40,7 @@ import br.alexandregpereira.hunter.monster.content.event.collectOnVisibilityChan
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -43,50 +49,69 @@ class MainViewModel(
     private val folderListResultListener: FolderListResultListener,
     private val monsterContentManagerEventListener: MonsterContentManagerEventListener,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    private val bottomBarEventManager: BottomBarEventManager,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
     val state: StateFlow<MainViewState> = _state
 
     init {
+        observeBottomBarEvents()
         observeMonsterDetailEvents()
         observeFolderDetailResults()
         observeFolderListResults()
         observeMonsterContentManagerEvents()
     }
 
+    private fun observeBottomBarEvents() {
+        bottomBarEventManager.events.onEach { event ->
+            when (event) {
+                is AddTopContent -> setState { addTopContentStack(event.topContentId) }
+                is RemoveTopContent -> setState { removeTopContentStack(event.topContentId) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     private fun observeMonsterDetailEvents() {
         monsterDetailEventListener.collectOnVisibilityChanges { event ->
             when (event) {
-                is Show -> setState { copy(isMonsterDetailShowing = true) }
-                Hide -> setState { copy(isMonsterDetailShowing = false) }
+                is Show -> {
+                    dispatchAddTopContentEvent(TopContent.MONSTER_DETAIL.name)
+                    dispatchFolderPreviewEvent(show = false)
+                }
+                Hide -> {
+                    dispatchRemoveTopContentEvent(TopContent.MONSTER_DETAIL.name)
+                    dispatchFolderPreviewEvent(show = true)
+                }
             }
-            dispatchFolderPreviewEvent(show = state.value.isMonsterDetailShowing.not())
         }.launchIn(viewModelScope)
     }
 
     private fun observeMonsterContentManagerEvents() {
         monsterContentManagerEventListener.collectOnVisibilityChanges { isShowing ->
-            setState { copy(isMonsterContentManagerShowing = isShowing) }
+            dispatchTopContentEvent(TopContent.MONSTER_CONTENT_MANAGER.name, isShowing)
         }.launchIn(viewModelScope)
     }
 
     private fun observeFolderDetailResults() {
         folderDetailResultListener.collectOnVisibilityChanges { result ->
-            setState { copy(isFolderDetailShowing = result.isShowing) }
+            dispatchTopContentEvent(TopContent.FOLDER_DETAIL.name, result.isShowing)
         }.launchIn(viewModelScope)
     }
 
     private fun observeFolderListResults() {
         folderListResultListener.collectOnItemSelectionVisibilityChanges { result ->
-            setState { copy(isFolderListSelectionShowing = result.isShowing) }
+            dispatchTopContentEvent(TopContent.FOLDER_LIST_SELECTION.name, result.isShowing)
             dispatchFolderPreviewEvent(result.isShowing.not())
         }.launchIn(viewModelScope)
     }
 
     fun onEvent(event: MainViewEvent) {
         when (event) {
-            is BottomNavigationItemClick -> setState { copy(bottomBarItemSelected = event.item) }
+            is BottomNavigationItemClick -> {
+                setState { copy(bottomBarItemSelected = event.item) }
+                dispatchFolderPreviewEvent(show = event.item != BottomBarItem.SETTINGS)
+            }
         }
     }
 
@@ -99,7 +124,30 @@ class MainViewModel(
         folderPreviewEventDispatcher.dispatchEvent(folderPreviewEvent)
     }
 
+    private fun dispatchAddTopContentEvent(topContentId: String) {
+        bottomBarEventManager.dispatchAddTopContentEvent(topContentId)
+    }
+
+    private fun dispatchRemoveTopContentEvent(topContentId: String) {
+        bottomBarEventManager.dispatchRemoveTopContentEvent(topContentId)
+    }
+
+    private fun dispatchTopContentEvent(topContentId: String, show: Boolean) {
+        if (show) {
+            dispatchAddTopContentEvent(topContentId)
+        } else {
+            dispatchRemoveTopContentEvent(topContentId)
+        }
+    }
+
     private fun setState(block: MainViewState.() -> MainViewState) {
         _state.value = state.value.block().saveState(savedStateHandle)
     }
+}
+
+private enum class TopContent {
+    MONSTER_DETAIL,
+    FOLDER_DETAIL,
+    MONSTER_CONTENT_MANAGER,
+    FOLDER_LIST_SELECTION,
 }

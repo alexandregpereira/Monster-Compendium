@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.detail.di.monsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModules
+import br.alexandregpereira.hunter.event.systembar.bottomBarEventModule
 import br.alexandregpereira.hunter.folder.detail.di.folderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
@@ -66,7 +67,7 @@ class HunterApplication : Application() {
     internal companion object {
         private val appModule = module {
             factory { Dispatchers.Default }
-            viewModel { MainViewModel(get(), get(), get(), get(), get(), get()) }
+            viewModel { MainViewModel(get(), get(), get(), get(), get(), get(), get()) }
         }
 
         fun KoinApplication.initKoinModules() {
@@ -90,6 +91,7 @@ class HunterApplication : Application() {
                 searchModule,
                 settingsModule,
                 spellDetailModule,
+                bottomBarEventModule
             )
         }
     }
