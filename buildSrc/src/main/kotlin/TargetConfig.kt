@@ -40,7 +40,7 @@ fun Project.configureTargets(
 ) {
     kotlin.apply {
         if (hasAndroid) {
-            android()
+            androidTarget()
         }
         if (hasJvm) {
             jvm()

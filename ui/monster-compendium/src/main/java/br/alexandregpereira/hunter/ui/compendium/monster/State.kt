@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.ui.compendium.monster
 
 import androidx.annotation.DrawableRes
+import br.alexandregpereira.hunter.ui.R as UiR
 
 data class MonsterCardState(
     val index: String,
@@ -42,18 +43,18 @@ data class ColorState(
 }
 
 enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
-    ABERRATION(R.drawable.ic_aberration),
-    BEAST(R.drawable.ic_beast),
-    CELESTIAL(R.drawable.ic_celestial),
-    CONSTRUCT(R.drawable.ic_construct),
-    DRAGON(R.drawable.ic_dragon),
-    ELEMENTAL(R.drawable.ic_elemental),
-    FEY(R.drawable.ic_fey),
-    FIEND(R.drawable.ic_fiend),
-    GIANT(R.drawable.ic_giant),
-    HUMANOID(R.drawable.ic_humanoid),
-    MONSTROSITY(R.drawable.ic_monstrosity),
-    OOZE(R.drawable.ic_ooze),
-    PLANT(R.drawable.ic_plant),
-    UNDEAD(R.drawable.ic_undead)
+    ABERRATION(UiR.drawable.ic_aberration),
+    BEAST(UiR.drawable.ic_beast),
+    CELESTIAL(UiR.drawable.ic_celestial),
+    CONSTRUCT(UiR.drawable.ic_construct),
+    DRAGON(UiR.drawable.ic_dragon),
+    ELEMENTAL(UiR.drawable.ic_elemental),
+    FEY(UiR.drawable.ic_fey),
+    FIEND(UiR.drawable.ic_fiend),
+    GIANT(UiR.drawable.ic_giant),
+    HUMANOID(UiR.drawable.ic_humanoid),
+    MONSTROSITY(UiR.drawable.ic_monstrosity),
+    OOZE(UiR.drawable.ic_ooze),
+    PLANT(UiR.drawable.ic_plant),
+    UNDEAD(UiR.drawable.ic_undead)
 }

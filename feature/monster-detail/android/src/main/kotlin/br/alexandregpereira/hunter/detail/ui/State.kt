@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.annotation.DrawableRes
 import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
+import br.alexandregpereira.hunter.ui.R as UiR
 
 data class MonsterState(
     val index: String = "",
@@ -119,9 +120,9 @@ enum class DamageTypeState(@DrawableRes val iconRes: Int? = null) {
     ACID(R.drawable.ic_acid),
     BLUDGEONING(R.drawable.ic_bludgeoning),
     COLD(R.drawable.ic_cold),
-    FIRE(R.drawable.ic_elemental),
+    FIRE(UiR.drawable.ic_elemental),
     LIGHTNING(R.drawable.ic_lightning),
-    NECROTIC(R.drawable.ic_undead),
+    NECROTIC(UiR.drawable.ic_undead),
     PIERCING(R.drawable.ic_piercing),
     POISON(R.drawable.ic_poison),
     PSYCHIC(R.drawable.ic_psychic),
@@ -187,20 +188,20 @@ data class ColorState(
 }
 
 enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
-    ABERRATION(R.drawable.ic_aberration),
-    BEAST(R.drawable.ic_beast),
-    CELESTIAL(R.drawable.ic_celestial),
-    CONSTRUCT(R.drawable.ic_construct),
-    DRAGON(R.drawable.ic_dragon),
-    ELEMENTAL(R.drawable.ic_elemental),
-    FEY(R.drawable.ic_fey),
-    FIEND(R.drawable.ic_fiend),
-    GIANT(R.drawable.ic_giant),
-    HUMANOID(R.drawable.ic_humanoid),
-    MONSTROSITY(R.drawable.ic_monstrosity),
-    OOZE(R.drawable.ic_ooze),
-    PLANT(R.drawable.ic_plant),
-    UNDEAD(R.drawable.ic_undead)
+    ABERRATION(UiR.drawable.ic_aberration),
+    BEAST(UiR.drawable.ic_beast),
+    CELESTIAL(UiR.drawable.ic_celestial),
+    CONSTRUCT(UiR.drawable.ic_construct),
+    DRAGON(UiR.drawable.ic_dragon),
+    ELEMENTAL(UiR.drawable.ic_elemental),
+    FEY(UiR.drawable.ic_fey),
+    FIEND(UiR.drawable.ic_fiend),
+    GIANT(UiR.drawable.ic_giant),
+    HUMANOID(UiR.drawable.ic_humanoid),
+    MONSTROSITY(UiR.drawable.ic_monstrosity),
+    OOZE(UiR.drawable.ic_ooze),
+    PLANT(UiR.drawable.ic_plant),
+    UNDEAD(UiR.drawable.ic_undead)
 }
 
 data class SpellcastingState(
