@@ -81,6 +81,7 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
                 senses = it.senses.joinToString(),
                 languages = it.languages,
                 sourceName = it.sourceName,
+                isClone = it.isClone,
             ),
             speed = it.speed.toEntity(it.index),
             abilityScores = it.toAbilityScoreEntity(),
@@ -127,5 +128,6 @@ private fun MonsterEntity.toDomain(): Monster {
         sourceName = monster.sourceName,
         senses = monster.senses.split(", "),
         languages = monster.languages,
+        isClone = monster.isClone
     )
 }

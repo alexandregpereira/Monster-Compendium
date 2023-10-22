@@ -36,6 +36,9 @@ jobs:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
       run: ./gradlew assembleRelease testReleaseUnitTest jvmTest -Pdev
 
+    - name: Verify database migration
+      run: ./scripts/sqldelight/verifyDatabaseMigration
+
     - name: Generate AAB
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
