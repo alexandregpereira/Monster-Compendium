@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO SpeedValueEntity VALUES ?;
 
 deleteAll:
-DELETE FROM SpeedValueEntity;
+DELETE FROM SpeedValueEntity WHERE speedId NOT LIKE '%-k4k4sh1';
 
 getBySpeedId:
 SELECT * FROM SpeedValueEntity WHERE speedId = ?;

@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO ReactionEntity VALUES ?;
 
 deleteAll:
-DELETE FROM ReactionEntity;
+DELETE FROM ReactionEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
 
 getByMonterIndex:
 SELECT * FROM ReactionEntity WHERE monsterIndex = ?;

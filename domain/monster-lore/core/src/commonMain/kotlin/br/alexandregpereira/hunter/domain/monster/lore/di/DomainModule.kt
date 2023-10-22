@@ -18,11 +18,13 @@ package br.alexandregpereira.hunter.domain.monster.lore.di
 
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import org.koin.dsl.module
 
 val monsterLoreDomainModule = module {
     factory { GetMonsterLoreUseCase(get()) }
     factory { GetMonstersLoreByIdsUseCase(get()) }
-    factory { SyncMonstersLoreUseCase(get(), get(), get()) }
+    factory { SyncMonstersLoreUseCase(get(), get(), get(), get()) }
+    factory { SaveMonstersLoreUseCase(get()) }
 }

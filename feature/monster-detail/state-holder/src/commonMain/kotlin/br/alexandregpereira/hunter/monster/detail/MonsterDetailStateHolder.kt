@@ -28,9 +28,12 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.monster.detail.FormFieldKeyState.CLONE_MONSTER_NAME
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CLONE
+import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
@@ -44,10 +47,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlin.native.ObjCName
@@ -55,6 +61,7 @@ import kotlin.native.ObjCName
 @ObjCName(name = "MonsterDetailStateHolder", exact = true)
 class MonsterDetailStateHolder(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
+    private val cloneMonster: CloneMonsterUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
@@ -135,6 +142,7 @@ class MonsterDetailStateHolder(
             ADD_TO_FOLDER -> folderInsertEventDispatcher.dispatchEvent(
                 FolderInsertEvent.Show(monsterIndexes = listOf(monsterIndex))
             )
+            CLONE -> showForm()
             CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }
@@ -159,8 +167,36 @@ class MonsterDetailStateHolder(
         monsterDetailEventDispatcher.dispatchEvent(Hide)
     }
 
-    private fun getMonsterDetail(): Flow<MonsterDetail> {
-        return getMonsterDetailUseCase(monsterIndex, indexes = monsterIndexes)
+    fun onFormClosed() {
+        setState { hideForm() }
+    }
+
+    fun onFormChanged(field: Pair<FormFieldKeyState, String>) {
+        setState {
+            val (fieldKey, formField) = field
+            val form = this.formFields.toMutableMap().apply {
+                this[fieldKey] = formField
+            }
+            copy(formFields = form, formButtonEnabled = formField.isNotBlank())
+        }
+    }
+
+    fun onFormSaved() {
+        setState { hideForm() }
+        when (state.value.formTitle) {
+            FormTitleState.CLONE -> cloneMonster()
+        }
+    }
+
+    private fun getMonsterDetail(
+        monsterIndex: String = this.monsterIndex,
+        invalidateCache: Boolean = false
+    ): Flow<MonsterDetail> {
+        return getMonsterDetailUseCase(
+            monsterIndex,
+            indexes = monsterIndexes,
+            invalidateCache = invalidateCache
+        )
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -173,17 +209,8 @@ class MonsterDetailStateHolder(
     private fun Flow<MonsterDetail>.collectDetail() {
         currentJob?.cancel()
         currentJob = this.cancellable()
-            .map {
-                val measurementUnit = it.measurementUnit
-                MonsterDetailState(
-                    initialMonsterListPositionIndex = it.monsterIndexSelected,
-                    monsters = it.monsters,
-                    options = when (measurementUnit) {
-                        MeasurementUnit.FEET -> listOf(ADD_TO_FOLDER, CHANGE_TO_METERS)
-                        MeasurementUnit.METER -> listOf(ADD_TO_FOLDER, CHANGE_TO_FEET)
-                    }
-                )
-            }.flowOn(dispatcher)
+            .toMonsterDetailState()
+            .flowOn(dispatcher)
             .onStart {
                 setState { copy(isLoading = true) }
             }
@@ -191,15 +218,70 @@ class MonsterDetailStateHolder(
                 setState { copy(isLoading = false) }
                 it.printStackTrace()
                 analytics.logException(it)
-            }.onEach { state ->
+            }
+            .emitState()
+            .onEach { state ->
                 analytics.trackMonsterDetailLoaded(monsterIndex, state.monsters)
-                setState {
-                    complete(
-                        initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,
-                        monsters = state.monsters,
-                        options = state.options
-                    )
+            }
+            .launchIn(scope)
+    }
+
+    private fun Flow<MonsterDetail>.toMonsterDetailState(): Flow<MonsterDetailState> {
+        return map {
+            val measurementUnit = it.measurementUnit
+            MonsterDetailState(
+                initialMonsterListPositionIndex = it.monsterIndexSelected,
+                monsters = it.monsters,
+                options = listOf(ADD_TO_FOLDER, CLONE) + when (measurementUnit) {
+                    MeasurementUnit.FEET -> CHANGE_TO_METERS
+                    MeasurementUnit.METER -> CHANGE_TO_FEET
                 }
+            )
+        }
+    }
+
+    private fun Flow<MonsterDetailState>.emitState(): Flow<MonsterDetailState> {
+        return onEach { state ->
+            setState {
+                complete(
+                    initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,
+                    monsters = state.monsters,
+                    options = state.options
+                )
+            }
+        }
+    }
+
+    private fun showForm() = setState {
+        showForm(
+            formTitle = FormTitleState.CLONE,
+            formFields = mapOf(CLONE_MONSTER_NAME to "")
+        )
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun cloneMonster() {
+        val form = state.value.formFields
+        setState { copy(isLoading = true) }
+        flow {
+            emit(
+                form[CLONE_MONSTER_NAME]
+                    ?: throw IllegalStateException("Monster name is empty")
+            )
+        }.flatMapConcat { monsterName ->
+            cloneMonster(monsterIndex, monsterName = monsterName)
+        }.flowOn(dispatcher)
+            .flatMapConcat { monsterIndex ->
+                getMonsterDetail(monsterIndex, invalidateCache = true)
+                    .toMonsterDetailState()
+                    .flowOn(dispatcher)
+                    .emitState()
+                    .onEach {
+                        onMonsterChanged(monsterIndex, scrolled = false)
+                    }
+            }
+            .onCompletion {
+                monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
             }
             .launchIn(scope)
     }

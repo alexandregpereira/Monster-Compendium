@@ -42,9 +42,10 @@ internal class MonsterLoreLocalDataSource(
 
     fun save(
         monsters: List<MonsterLoreCompleteEntity>,
+        isSync: Boolean = false
     ): Flow<Unit> = flow {
         mutex.withLock {
-            deleteAllData()
+            if (isSync) deleteAllData()
             insertAll(monsters)
         }
         emit(Unit)

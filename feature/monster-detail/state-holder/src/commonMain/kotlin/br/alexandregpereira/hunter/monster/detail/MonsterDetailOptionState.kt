@@ -21,6 +21,7 @@ import kotlin.native.ObjCName
 @ObjCName(name = "MonsterDetailOptionState", exact = true)
 enum class MonsterDetailOptionState {
     ADD_TO_FOLDER,
+    CLONE,
     CHANGE_TO_FEET,
     CHANGE_TO_METERS
 }

@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO SpellUsageEntity VALUES ?;
 
 deleteAll:
-DELETE FROM SpellUsageEntity;
+DELETE FROM SpellUsageEntity WHERE spellcastingId NOT LIKE '%-k4k4sh1';
 
 getBySpellcastingId:
 SELECT * FROM SpellUsageEntity WHERE spellcastingId = ?;

@@ -35,8 +35,8 @@ internal class DefaultMonsterLoreRepository(
         return localRepository.getLocalMonstersLore(indexes)
     }
 
-    override fun save(monstersLore: List<MonsterLore>): Flow<Unit> {
-        return localRepository.save(monstersLore)
+    override fun save(monstersLore: List<MonsterLore>, isSync: Boolean): Flow<Unit> {
+        return localRepository.save(monstersLore, isSync)
     }
 
     override fun getRemoteMonstersLore(

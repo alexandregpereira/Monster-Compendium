@@ -33,6 +33,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
 import br.alexandregpereira.hunter.state.DefaultActionHandler
 import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
 import br.alexandregpereira.hunter.state.MutableActionHandler
@@ -191,10 +192,19 @@ class MonsterCompendiumStateHolder(
                     it is MonsterCompendiumItem.Item
                             && it.monster.index == monsterIndex
                 }
+            }.onEach { compendiumIndex ->
+                if (compendiumIndex < 0) throw NavigateToCompendiumIndexError(monsterIndex)
             }
             .flowOn(dispatcher)
             .onEach { compendiumIndex ->
                 sendAction(GoToCompendiumIndex(compendiumIndex))
+            }
+            .catch {  error ->
+                if (error is NavigateToCompendiumIndexError) {
+                    loadMonsters()
+                } else {
+                    analytics.logException(error)
+                }
             }
             .launchIn(scope)
     }

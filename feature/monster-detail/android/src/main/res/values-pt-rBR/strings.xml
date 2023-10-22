@@ -46,4 +46,6 @@
     <string name="monster_detail_saving_throw_intelligence">Inteligência</string>
     <string name="monster_detail_saving_throw_wisdom">Sabedoria</string>
     <string name="monster_detail_saving_throw_charisma">Carisma</string>
+    <string name="monster_detail_clone">Clonar</string>
+    <string name="monster_detail_clone_monster_name">Nome</string>
 </resources>

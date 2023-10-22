@@ -4,7 +4,7 @@ insert:
 INSERT OR REPLACE INTO MonsterEntity VALUES ?;
 
 deleteAll:
-DELETE FROM MonsterEntity;
+DELETE FROM MonsterEntity WHERE isClone == 0;
 
 getMonsterPreviews:
 SELECT * FROM MonsterEntity;

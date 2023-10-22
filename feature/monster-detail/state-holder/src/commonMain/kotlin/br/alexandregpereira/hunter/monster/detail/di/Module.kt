@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispat
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
+import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
@@ -41,7 +42,9 @@ val monsterDetailStateModule = module {
             get(),
             get(),
             get(),
+            get(),
             analytics = MonsterDetailAnalytics(get()),
         )
     }
+    factory { CloneMonsterUseCase(get(), get(), get(), get()) }
 }

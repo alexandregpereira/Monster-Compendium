@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO DamageImmunityEntity VALUES ?;
 
 deleteAll:
-DELETE FROM DamageImmunityEntity;
+DELETE FROM DamageImmunityEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
 
 getByMonterIndex:
 SELECT * FROM DamageImmunityEntity WHERE monsterIndex = ?;

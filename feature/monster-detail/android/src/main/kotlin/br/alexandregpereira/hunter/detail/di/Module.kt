@@ -26,6 +26,7 @@ val monsterDetailModule = monsterDetailStateModule.apply {
         MonsterDetailViewModel(
             savedStateHandle = get(),
             getMonsterDetailUseCase = get(),
+            cloneMonster = get(),
             changeMonstersMeasurementUnitUseCase = get(),
             spellDetailEventDispatcher = get(),
             monsterDetailEventListener = get(),

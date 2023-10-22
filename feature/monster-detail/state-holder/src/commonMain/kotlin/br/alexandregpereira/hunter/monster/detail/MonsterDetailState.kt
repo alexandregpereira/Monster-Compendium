@@ -27,7 +27,19 @@ data class MonsterDetailState(
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
+    val showForm: Boolean = false,
+    val formTitle: FormTitleState = FormTitleState.CLONE,
+    val formFields: Map<FormFieldKeyState, String> = emptyMap(),
+    val formButtonEnabled: Boolean = false,
 )
+
+enum class FormTitleState {
+    CLONE,
+}
+
+enum class FormFieldKeyState {
+    CLONE_MONSTER_NAME,
+}
 
 val MonsterDetailState.ShowOptions: MonsterDetailState
     get() = this.copy(showOptions = true)
@@ -45,3 +57,15 @@ fun MonsterDetailState.complete(
     monsters = monsters,
     options = options
 )
+
+fun MonsterDetailState.showForm(
+    formTitle: FormTitleState,
+    formFields: Map<FormFieldKeyState, String>
+): MonsterDetailState = this.copy(
+    showForm = true,
+    formTitle = formTitle,
+    formFields = formFields,
+    formButtonEnabled = false
+)
+
+fun MonsterDetailState.hideForm(): MonsterDetailState = this.copy(showForm = false)

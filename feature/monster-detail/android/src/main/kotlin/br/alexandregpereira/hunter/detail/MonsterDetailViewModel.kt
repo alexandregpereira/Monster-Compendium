@@ -24,12 +24,15 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatch
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.monster.detail.FormFieldKeyState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
+import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.ui.compose.FormField
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +42,7 @@ import kotlinx.coroutines.flow.onEach
 internal class MonsterDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     getMonsterDetailUseCase: GetMonsterDetailUseCase,
+    cloneMonster: CloneMonsterUseCase,
     changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     spellDetailEventDispatcher: SpellDetailEventDispatcher,
     monsterDetailEventListener: MonsterDetailEventListener,
@@ -51,6 +55,7 @@ internal class MonsterDetailViewModel(
 
     private val stateHolder = MonsterDetailStateHolder(
         getMonsterDetailUseCase,
+        cloneMonster,
         changeMonstersMeasurementUnitUseCase,
         spellDetailEventDispatcher,
         monsterDetailEventListener,
@@ -104,6 +109,15 @@ internal class MonsterDetailViewModel(
         stateHolder.onClose()
     }
 
+    fun onFormClosed() = stateHolder.onFormClosed()
+
+    fun onFormChanged(field: FormField) {
+        val formFieldKey = FormFieldKeyState.valueOf(field.key)
+        stateHolder.onFormChanged(formFieldKey to field.value)
+    }
+
+    fun onFormSaved() = stateHolder.onFormSaved()
+
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
             showDetail = showDetail,
@@ -118,6 +132,10 @@ internal class MonsterDetailViewModel(
             options = options.map { MonsterDetailOptionState.valueOf(it.name) },
             showDetail = showDetail,
             isLoading = isLoading,
+            showForm = showForm,
+            formTitle = FormTitleViewState.valueOf(formTitle.name),
+            formFields = formFields.mapKeys { FormFieldKeyViewState.valueOf(it.key.name) },
+            formButtonEnabled = formButtonEnabled,
         )
     }
 }
