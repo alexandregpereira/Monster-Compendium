@@ -26,6 +26,6 @@ repositories {
 
 dependencies {
     implementation(kotlin("gradle-plugin"))
-    implementation("com.android.tools.build:gradle:8.1.1")
+    implementation("com.android.tools.build:gradle:8.1.2")
     implementation(kotlin("compiler-embeddable"))
 }
