@@ -37,7 +37,7 @@ jobs:
       run: ./gradlew assembleRelease testReleaseUnitTest jvmTest -Pdev
 
     - name: Verify database migration
-      run: ./scripts/sqldelight/verifyDatabaseMigration
+      run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
 
     - name: Generate AAB
       env:
