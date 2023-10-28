@@ -127,6 +127,7 @@ class MonsterDetailStateHolder(
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
         this.monsterIndex = monsterIndex
+        setState { changeOptions() }
     }
 
     fun onShowOptionsClicked() {
@@ -231,20 +232,11 @@ class MonsterDetailStateHolder(
 
     private fun Flow<MonsterDetail>.toMonsterDetailState(): Flow<MonsterDetailState> {
         return map {
-            val measurementUnit = it.measurementUnit
-
-            val editOption = if (it.monsters[it.monsterIndexSelected].isClone) {
-                listOf(EDIT)
-            } else emptyList()
-
             MonsterDetailState(
                 initialMonsterListPositionIndex = it.monsterIndexSelected,
                 monsters = it.monsters,
-                options = listOf(ADD_TO_FOLDER, CLONE) + editOption + when (measurementUnit) {
-                    MeasurementUnit.FEET -> CHANGE_TO_METERS
-                    MeasurementUnit.METER -> CHANGE_TO_FEET
-                }
-            )
+                measurementUnit = it.measurementUnit,
+            ).changeOptions()
         }
     }
 
@@ -258,6 +250,20 @@ class MonsterDetailStateHolder(
                 )
             }
         }
+    }
+
+    private fun MonsterDetailState.changeOptions(): MonsterDetailState {
+        val monster = monsters.find { monster -> monster.index == monsterIndex } ?: return this
+        val editOption = if (monster.isClone) {
+            listOf(EDIT)
+        } else emptyList()
+
+        return copy(
+            options = listOf(ADD_TO_FOLDER, CLONE) + editOption + when (measurementUnit) {
+                MeasurementUnit.FEET -> CHANGE_TO_METERS
+                MeasurementUnit.METER -> CHANGE_TO_FEET
+            }
+        )
     }
 
     private fun showCloneForm() = setState {
