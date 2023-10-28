@@ -1,10 +1,9 @@
 package br.alexandregpereira.hunter.event.systembar
 
-import br.alexandregpereira.hunter.event.DefaultEventManager
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventManager
 
-class BottomBarEventManager : EventManager<BottomBarEvent> by DefaultEventManager()
+class BottomBarEventManager : EventManager<BottomBarEvent> by EventManager()
 
 sealed class BottomBarEvent {
 

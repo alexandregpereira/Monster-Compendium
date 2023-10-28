@@ -42,11 +42,10 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAction
-import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewActionType
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewActionType.GO_TO_COMPENDIUM_INDEX
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewState
 import br.alexandregpereira.hunter.state.ActionHandler
-import br.alexandregpereira.hunter.state.DefaultActionHandler
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
@@ -65,7 +64,7 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 @Composable
 internal fun MonsterContentPreviewScreen(
     state: MonsterContentPreviewState,
-    actionHandler: ActionHandler<MonsterContentPreviewAction> = DefaultActionHandler(),
+    actionHandler: ActionHandler<MonsterContentPreviewAction> = MutableActionHandler(),
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {},
     onTableContentOpenButtonClick: () -> Unit = {},

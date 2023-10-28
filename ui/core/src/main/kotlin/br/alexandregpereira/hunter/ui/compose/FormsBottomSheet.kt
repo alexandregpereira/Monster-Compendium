@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -26,22 +27,12 @@ fun FormBottomSheet(
     onClose = onClosed,
     contentPadding = contentPadding,
 ) {
-    ScreenHeader(
+    Form(
         title = title,
-        modifier = Modifier.padding(top = 16.dp).padding(horizontal = 16.dp)
+        formFields = formFields,
+        modifier = Modifier.padding(top = 16.dp).padding(horizontal = 16.dp),
+        onFormChanged = onFormChanged,
     )
-
-    Spacer(modifier = Modifier.padding(top = 24.dp))
-
-    formFields.forEach { formField ->
-        AppTextField(
-            text = formField.value,
-            label = formField.label,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
-        )
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
-    }
 
     Spacer(modifier = Modifier.padding(top = 16.dp))
 
@@ -53,6 +44,29 @@ fun FormBottomSheet(
     )
 
     Spacer(modifier = Modifier.padding(top = 16.dp))
+}
+
+@Composable
+fun Form(
+    title: String,
+    formFields: List<FormField>,
+    modifier: Modifier = Modifier,
+    onFormChanged: (FormField) -> Unit = {},
+) = Column(modifier) {
+    ScreenHeader(
+        title = title,
+    )
+
+    Spacer(modifier = Modifier.padding(top = 24.dp))
+
+    formFields.forEach { formField ->
+        AppTextField(
+            text = formField.value,
+            label = formField.label,
+            onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
+        )
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+    }
 }
 
 data class FormField(

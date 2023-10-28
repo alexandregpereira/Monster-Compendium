@@ -35,8 +35,6 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
-import br.alexandregpereira.hunter.state.DefaultActionHandler
-import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
@@ -69,8 +67,8 @@ class MonsterCompendiumStateHolder(
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
     loadOnInit: Boolean = true,
 ) : ScopeManager(),
-    MutableStateHolder<MonsterCompendiumState> by DefaultMutableStateHolder(initialState),
-    MutableActionHandler<MonsterCompendiumAction> by DefaultActionHandler() {
+    MutableStateHolder<MonsterCompendiumState> by MutableStateHolder(initialState),
+    MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler() {
 
     var initialScrollItemPosition: Int = 0
         private set

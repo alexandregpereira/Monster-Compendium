@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnCompendiumChanges
@@ -33,12 +34,13 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_T
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CLONE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.EDIT
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
-import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
 import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
 import kotlinx.coroutines.CoroutineDispatcher
@@ -67,13 +69,14 @@ class MonsterDetailStateHolder(
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
+    private val monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
     initialState: MonsterDetailState = MonsterDetailState(),
     monsterIndex: String = "",
     monsterIndexes: List<String> = emptyList()
 ) : ScopeManager(),
-    MutableStateHolder<MonsterDetailState> by DefaultMutableStateHolder(initialState) {
+    MutableStateHolder<MonsterDetailState> by MutableStateHolder(initialState) {
 
     var monsterIndex: String = ""
         private set
@@ -145,6 +148,9 @@ class MonsterDetailStateHolder(
             )
 
             CLONE -> showCloneForm()
+            EDIT -> monsterRegistrationEventDispatcher.dispatchEvent(
+                MonsterRegistrationEvent.ShowEdit(monsterIndex)
+            )
             CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }
@@ -226,10 +232,15 @@ class MonsterDetailStateHolder(
     private fun Flow<MonsterDetail>.toMonsterDetailState(): Flow<MonsterDetailState> {
         return map {
             val measurementUnit = it.measurementUnit
+
+            val editOption = if (it.monsters[it.monsterIndexSelected].isClone) {
+                listOf(EDIT)
+            } else emptyList()
+
             MonsterDetailState(
                 initialMonsterListPositionIndex = it.monsterIndexSelected,
                 monsters = it.monsters,
-                options = listOf(ADD_TO_FOLDER, CLONE) + when (measurementUnit) {
+                options = listOf(ADD_TO_FOLDER, CLONE) + editOption + when (measurementUnit) {
                     MeasurementUnit.FEET -> CHANGE_TO_METERS
                     MeasurementUnit.METER -> CHANGE_TO_FEET
                 }
