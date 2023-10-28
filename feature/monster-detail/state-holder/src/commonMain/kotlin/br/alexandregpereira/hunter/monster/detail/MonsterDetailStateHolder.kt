@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnCompendiumChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Hide
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
@@ -28,7 +29,6 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
-import br.alexandregpereira.hunter.monster.detail.FormFieldKeyState.CLONE_MONSTER_NAME
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
@@ -49,11 +49,10 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlin.native.ObjCName
@@ -99,10 +98,12 @@ class MonsterDetailStateHolder(
             when (event) {
                 is Show -> {
                     analytics.trackMonsterDetailShown(event)
-                    enableMonsterPageChangesEventDispatch = event.enableMonsterPageChangesEventDispatch
+                    enableMonsterPageChangesEventDispatch =
+                        event.enableMonsterPageChangesEventDispatch
                     getMonstersByInitialIndex(event.index, event.indexes)
                     setState { copy(showDetail = true) }
                 }
+
                 Hide -> {
                     analytics.trackMonsterDetailHidden()
                     setState { copy(showDetail = false) }
@@ -142,10 +143,12 @@ class MonsterDetailStateHolder(
             ADD_TO_FOLDER -> folderInsertEventDispatcher.dispatchEvent(
                 FolderInsertEvent.Show(monsterIndexes = listOf(monsterIndex))
             )
-            CLONE -> showForm()
+
+            CLONE -> showCloneForm()
             CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }
+
             CHANGE_TO_METERS -> {
                 changeMeasurementUnit(MeasurementUnit.METER)
             }
@@ -167,25 +170,19 @@ class MonsterDetailStateHolder(
         monsterDetailEventDispatcher.dispatchEvent(Hide)
     }
 
-    fun onFormClosed() {
-        setState { hideForm() }
+    fun onCloneFormClosed() {
+        setState { hideCloneForm() }
     }
 
-    fun onFormChanged(field: Pair<FormFieldKeyState, String>) {
+    fun onCloneFormChanged(monsterName: String) {
         setState {
-            val (fieldKey, formField) = field
-            val form = this.formFields.toMutableMap().apply {
-                this[fieldKey] = formField
-            }
-            copy(formFields = form, formButtonEnabled = formField.isNotBlank())
+            copy(monsterCloneName = monsterName)
         }
     }
 
-    fun onFormSaved() {
-        setState { hideForm() }
-        when (state.value.formTitle) {
-            FormTitleState.CLONE -> cloneMonster()
-        }
+    fun onCloneFormSaved() {
+        setState { hideCloneForm() }
+        cloneMonster()
     }
 
     private fun getMonsterDetail(
@@ -252,37 +249,34 @@ class MonsterDetailStateHolder(
         }
     }
 
-    private fun showForm() = setState {
-        showForm(
-            formTitle = FormTitleState.CLONE,
-            formFields = mapOf(CLONE_MONSTER_NAME to "")
-        )
+    private fun showCloneForm() = setState {
+        this.showCloneForm()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun cloneMonster() {
-        val form = state.value.formFields
+        val monsterCloneName = state.value.monsterCloneName
+        val currentState = state.value
+        val monsterIndexes = monsterIndexes
+        val currentMonsterIndex = monsterIndex
         setState { copy(isLoading = true) }
-        flow {
-            emit(
-                form[CLONE_MONSTER_NAME]
-                    ?: throw IllegalStateException("Monster name is empty")
-            )
-        }.flatMapConcat { monsterName ->
-            cloneMonster(monsterIndex, monsterName = monsterName)
-        }.flowOn(dispatcher)
-            .flatMapConcat { monsterIndex ->
+        cloneMonster(monsterIndex, monsterName = monsterCloneName).flatMapConcat { monsterIndex ->
+            if (monsterIndexes.isEmpty()) {
                 getMonsterDetail(monsterIndex, invalidateCache = true)
                     .toMonsterDetailState()
-                    .flowOn(dispatcher)
-                    .emitState()
-                    .onEach {
-                        onMonsterChanged(monsterIndex, scrolled = false)
+                    .map {
+                        it to monsterIndex
                     }
+            } else flowOf(currentState to currentMonsterIndex)
+        }.flowOn(dispatcher)
+            .map { (state, monsterIndex) ->
+                onMonsterChanged(monsterIndex, scrolled = true)
+                if (monsterIndexes.isNotEmpty()) {
+                    monsterDetailEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                }
+                state
             }
-            .onCompletion {
-                monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
-            }
+            .emitState()
             .launchIn(scope)
     }
 }

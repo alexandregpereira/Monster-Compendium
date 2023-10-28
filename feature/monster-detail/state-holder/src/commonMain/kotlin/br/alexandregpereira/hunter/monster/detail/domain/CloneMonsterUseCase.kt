@@ -21,8 +21,9 @@ internal fun CloneMonsterUseCase(
 ) = CloneMonsterUseCase { monsterIndex, monsterName ->
     getMonster(monsterIndex)
         .map { monster ->
+            val monsterNameIndex = monsterName.lowercase().replace(" ", "-")
             monster.copy(
-                index = "$monsterIndex-k4k4sh1",
+                index = "$monsterNameIndex-$monsterIndex-k4k4sh1",
                 name = monsterName,
                 isClone = true,
             )

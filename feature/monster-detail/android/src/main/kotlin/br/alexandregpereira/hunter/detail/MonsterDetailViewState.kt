@@ -26,36 +26,21 @@ data class MonsterDetailViewState(
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
     val isLoading: Boolean = true,
-    val showForm: Boolean = false,
-    val formTitle: FormTitleViewState = FormTitleViewState.CLONE,
-    val formFields: Map<FormFieldKeyViewState, String> = emptyMap(),
-    val formButtonEnabled: Boolean = false,
+    val showCloneForm: Boolean = false,
+    val monsterCloneName: String = "",
 )
 
-enum class FormTitleViewState(val titleRes: Int) {
-    CLONE(R.string.monster_detail_clone),
-}
-
-enum class FormFieldKeyViewState(val labelRes: Int) {
-    CLONE_MONSTER_NAME(R.string.monster_detail_clone_monster_name),
-}
-
 fun SavedStateHandle.getState(): MonsterDetailViewState {
-    val formFieldKeys = (this["formFieldKeys"] ?: emptyArray<String>()).map { FormFieldKeyViewState.valueOf(it) }
-    val formFieldValues = this["formFieldValues"] ?: emptyArray<String>()
     return MonsterDetailViewState(
         showDetail = this["showDetail"] ?: false,
-        showForm = this["showForm"] ?: false,
-        formTitle = this.get<String>("formTitle")?.let { FormTitleViewState.valueOf(it) } ?: FormTitleViewState.CLONE,
-        formFields = formFieldKeys.zip(formFieldValues).toMap(),
+        showCloneForm = this["showCloneForm"] ?: false,
+        monsterCloneName = this["monsterCloneName"] ?: "",
     )
 }
 
 fun MonsterDetailViewState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailViewState {
     savedStateHandle["showDetail"] = showDetail
-    savedStateHandle["showForm"] = showForm
-    savedStateHandle["formTitle"] = formTitle.name
-    savedStateHandle["formFieldKeys"] = formFields.keys.map { it.name }.toTypedArray()
-    savedStateHandle["formFieldValues"] = formFields.values.toTypedArray()
+    savedStateHandle["showCloneForm"] = showCloneForm
+    savedStateHandle["monsterCloneName"] = monsterCloneName
     return this
 }

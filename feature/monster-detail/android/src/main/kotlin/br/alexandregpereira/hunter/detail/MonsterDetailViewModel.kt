@@ -24,7 +24,6 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatch
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
-import br.alexandregpereira.hunter.monster.detail.FormFieldKeyState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
@@ -32,7 +31,6 @@ import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.StateHolder
-import br.alexandregpereira.hunter.ui.compose.FormField
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -109,14 +107,13 @@ internal class MonsterDetailViewModel(
         stateHolder.onClose()
     }
 
-    fun onFormClosed() = stateHolder.onFormClosed()
+    fun onCloneFormClosed() = stateHolder.onCloneFormClosed()
 
-    fun onFormChanged(field: FormField) {
-        val formFieldKey = FormFieldKeyState.valueOf(field.key)
-        stateHolder.onFormChanged(formFieldKey to field.value)
+    fun onCloneFormChanged(monsterName: String) {
+        stateHolder.onCloneFormChanged(monsterName)
     }
 
-    fun onFormSaved() = stateHolder.onFormSaved()
+    fun onCloneFormSaved() = stateHolder.onCloneFormSaved()
 
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
@@ -132,10 +129,8 @@ internal class MonsterDetailViewModel(
             options = options.map { MonsterDetailOptionState.valueOf(it.name) },
             showDetail = showDetail,
             isLoading = isLoading,
-            showForm = showForm,
-            formTitle = FormTitleViewState.valueOf(formTitle.name),
-            formFields = formFields.mapKeys { FormFieldKeyViewState.valueOf(it.key.name) },
-            formButtonEnabled = formButtonEnabled,
+            showCloneForm = showCloneForm,
+            monsterCloneName = monsterCloneName,
         )
     }
 }

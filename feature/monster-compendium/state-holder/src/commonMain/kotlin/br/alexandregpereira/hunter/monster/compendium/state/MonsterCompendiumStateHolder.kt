@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositi
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
+import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterPageChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -222,6 +223,10 @@ class MonsterCompendiumStateHolder(
 
         monsterDetailEventListener.collectOnMonsterPageChanges { event ->
             navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex)
+        }.launchIn(scope)
+
+        monsterDetailEventListener.collectOnMonsterCompendiumChanges {
+            loadMonsters()
         }.launchIn(scope)
 
         syncEventListener.collectSyncFinishedEvents {
