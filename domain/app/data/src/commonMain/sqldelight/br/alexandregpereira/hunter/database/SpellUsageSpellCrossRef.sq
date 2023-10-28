@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO SpellUsageSpellCrossRefEntity VALUES ?;
 
 deleteAll:
-DELETE FROM SpellUsageSpellCrossRefEntity;
+DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId NOT LIKE '%-k4k4sh1';
 
 getBySpellusageIdAndSpellIndex:
 SELECT

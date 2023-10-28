@@ -94,7 +94,8 @@ internal class MonsterFolderDaoImpl(
                 hitDice = it.hitDice,
                 senses = it.senses,
                 languages = it.languages,
-                sourceName = it.sourceName
+                sourceName = it.sourceName,
+                isClone = it.isClone == 1L,
             )
         }.groupBy(keySelector = { it.first }, valueTransform = { it.second })
     }

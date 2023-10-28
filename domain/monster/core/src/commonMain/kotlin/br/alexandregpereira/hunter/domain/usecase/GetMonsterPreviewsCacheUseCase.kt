@@ -27,7 +27,10 @@ class GetMonsterPreviewsCacheUseCase internal constructor(
     private val cacheRepository: MonsterCacheRepository
 ) {
 
-    operator fun invoke(): Flow<List<Monster>> {
+    operator fun invoke(invalidateCache: Boolean = false): Flow<List<Monster>> {
+        if (invalidateCache) {
+            return getMonsterPreviewsUseCase()
+        }
         return cacheRepository.getMonsters().map { monsters ->
             monsters.ifEmpty { getMonsterPreviewsUseCase().single() }
         }

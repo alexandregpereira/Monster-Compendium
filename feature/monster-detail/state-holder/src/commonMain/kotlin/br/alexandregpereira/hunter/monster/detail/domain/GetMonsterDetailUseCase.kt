@@ -48,9 +48,10 @@ class GetMonsterDetailUseCase internal constructor(
     operator fun invoke(
         index: String,
         indexes: List<String>,
+        invalidateCache: Boolean = false
     ): Flow<MonsterDetail> {
         return getMeasurementUnitUseCase().flatMapLatest { measurementUnit ->
-            getMonsters(index, indexes).map { monsters ->
+            getMonsters(index, indexes, invalidateCache).map { monsters ->
                 val monster = monsters.find { monster -> monster.index == index }
                     ?: throw RuntimeException("Monster not found")
 
@@ -123,9 +124,10 @@ class GetMonsterDetailUseCase internal constructor(
     private fun getMonsters(
         index: String,
         indexes: List<String>,
+        invalidateCache: Boolean = false
     ): Flow<List<Monster>> {
         return if (indexes.isEmpty()) {
-            getMonstersUseCase(index)
+            getMonstersUseCase(index, invalidateCache)
         } else if (indexes.size == 1) {
             getMonsterUseCase(index).map { listOf(it) }
         } else {

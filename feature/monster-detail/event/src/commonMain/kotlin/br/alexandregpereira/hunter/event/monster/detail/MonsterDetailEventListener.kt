@@ -16,10 +16,12 @@
 
 package br.alexandregpereira.hunter.event.monster.detail
 
+import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnCompendiumChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -46,4 +48,10 @@ fun MonsterDetailEventListener.collectOnMonsterPageChanges(
     action: (OnMonsterPageChanges) -> Unit
 ): Flow<Unit> {
     return events.map { it as? OnMonsterPageChanges }.filterNotNull().map(action)
+}
+
+fun MonsterDetailEventListener.collectOnMonsterCompendiumChanges(
+    action: () -> Unit
+): Flow<Unit> {
+    return events.filter { it is OnCompendiumChanges }.map { action() }
 }

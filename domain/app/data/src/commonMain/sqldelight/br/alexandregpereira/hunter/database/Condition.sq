@@ -6,7 +6,7 @@ insert:
 INSERT OR REPLACE INTO ConditionEntity VALUES ?;
 
 deleteAll:
-DELETE FROM ConditionEntity;
+DELETE FROM ConditionEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
 
 getByMonterIndex:
 SELECT * FROM ConditionEntity WHERE monsterIndex = ?;

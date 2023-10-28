@@ -49,6 +49,7 @@ data class Monster(
     val reactions: List<AbilityDescription> = emptyList(),
     val spellcastings: List<Spellcasting> = emptyList(),
     val lore: String? = null,
+    val isClone: Boolean = false
 )
 
 data class MonsterImageData(

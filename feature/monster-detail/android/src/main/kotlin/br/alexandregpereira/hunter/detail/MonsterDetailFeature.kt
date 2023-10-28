@@ -29,9 +29,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
+import br.alexandregpereira.hunter.ui.compose.FormField
+import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -75,6 +78,23 @@ fun MonsterDetailFeature(
                 showOptions = viewState.showOptions,
                 onOptionSelected = viewModel::onOptionClicked,
                 onClosed = viewModel::onShowOptionsClosed
+            )
+
+            FormBottomSheet(
+                title = stringResource(R.string.monster_detail_clone),
+                formFields = listOf(
+                    FormField(
+                        key = "monsterName",
+                        label = stringResource(R.string.monster_detail_clone_monster_name),
+                        value = viewState.monsterCloneName,
+                    )
+                ),
+                opened = viewState.showCloneForm,
+                contentPadding = contentPadding,
+                buttonEnabled = viewState.monsterCloneName.isNotBlank(),
+                onFormChanged = { viewModel.onCloneFormChanged(it.value) },
+                onClosed = viewModel::onCloneFormClosed,
+                onSaved = viewModel::onCloneFormSaved,
             )
         }
     }

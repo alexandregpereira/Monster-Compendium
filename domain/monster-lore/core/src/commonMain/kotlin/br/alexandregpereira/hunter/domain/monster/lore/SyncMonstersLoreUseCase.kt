@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.domain.monster.lore
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
@@ -29,6 +28,7 @@ import kotlinx.coroutines.flow.single
 
 class SyncMonstersLoreUseCase(
     private val repository: MonsterLoreRepository,
+    private val saveMonstersLore: SaveMonstersLoreUseCase,
     private val alternativeSourceRepository: MonsterLoreSourceRepository,
     private val settingsRepository: MonsterLoreSettingsRepository,
 ) {
@@ -47,7 +47,7 @@ class SyncMonstersLoreUseCase(
                     }?.reduce { accumulator, value -> accumulator + value } ?: emptyList()
             }
             .flatMapLatest { monstersLore ->
-                repository.save(monstersLore)
+                saveMonstersLore(monstersLore, isSync = true)
             }
     }
 }

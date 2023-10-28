@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./gradlew :domain:app:data:generateCommonMainDatabaseSchema

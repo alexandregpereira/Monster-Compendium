@@ -114,7 +114,8 @@ internal fun MonsterEntity.toDatabaseEntity(): MonsterDatabaseEntity {
         hitDice = this.hitDice,
         senses = this.senses,
         languages = this.languages,
-        sourceName = this.sourceName
+        sourceName = this.sourceName,
+        isClone = if (this.isClone) 1L else 0L
     )
 }
 
@@ -316,7 +317,8 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         hitDice = this.hitDice,
         senses = this.senses,
         languages = this.languages,
-        sourceName = this.sourceName
+        sourceName = this.sourceName,
+        isClone = this.isClone == 1L,
     )
 }
 

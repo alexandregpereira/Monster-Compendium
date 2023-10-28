@@ -26,15 +26,21 @@ data class MonsterDetailViewState(
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
     val isLoading: Boolean = true,
+    val showCloneForm: Boolean = false,
+    val monsterCloneName: String = "",
 )
 
 fun SavedStateHandle.getState(): MonsterDetailViewState {
     return MonsterDetailViewState(
-        showDetail = this["showDetail"] ?: false
+        showDetail = this["showDetail"] ?: false,
+        showCloneForm = this["showCloneForm"] ?: false,
+        monsterCloneName = this["monsterCloneName"] ?: "",
     )
 }
 
 fun MonsterDetailViewState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailViewState {
     savedStateHandle["showDetail"] = showDetail
+    savedStateHandle["showCloneForm"] = showCloneForm
+    savedStateHandle["monsterCloneName"] = monsterCloneName
     return this
 }

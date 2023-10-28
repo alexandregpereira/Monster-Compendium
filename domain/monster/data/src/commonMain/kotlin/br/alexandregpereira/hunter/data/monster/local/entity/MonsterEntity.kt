@@ -36,4 +36,5 @@ data class MonsterEntity(
     val senses: String,
     val languages: String,
     val sourceName: String,
+    val isClone: Boolean
 )

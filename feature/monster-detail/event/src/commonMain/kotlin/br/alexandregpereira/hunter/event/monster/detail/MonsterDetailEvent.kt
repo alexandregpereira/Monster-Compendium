@@ -25,10 +25,12 @@ sealed class MonsterDetailEvent {
             val enableMonsterPageChangesEventDispatch: Boolean = false
         ) : OnVisibilityChanges()
 
-        object Hide : OnVisibilityChanges()
+        data object Hide : OnVisibilityChanges()
     }
 
     data class OnMonsterPageChanges(
         val monsterIndex: String
     ) : MonsterDetailEvent()
+
+    data object OnCompendiumChanges : MonsterDetailEvent()
 }

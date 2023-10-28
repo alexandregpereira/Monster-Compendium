@@ -27,6 +27,8 @@ data class MonsterDetailState(
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
     val showDetail: Boolean = false,
+    val showCloneForm: Boolean = false,
+    val monsterCloneName: String = "",
 )
 
 val MonsterDetailState.ShowOptions: MonsterDetailState
@@ -45,3 +47,10 @@ fun MonsterDetailState.complete(
     monsters = monsters,
     options = options
 )
+
+fun MonsterDetailState.showCloneForm(): MonsterDetailState = this.copy(
+    showCloneForm = true,
+    monsterCloneName = "",
+)
+
+fun MonsterDetailState.hideCloneForm(): MonsterDetailState = this.copy(showCloneForm = false)

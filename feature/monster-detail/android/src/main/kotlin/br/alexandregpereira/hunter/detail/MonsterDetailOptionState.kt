@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail
 
 enum class MonsterDetailOptionState(val stringRes: Int) {
     ADD_TO_FOLDER(R.string.monster_detail_options_add_to_folder),
+    CLONE(R.string.monster_detail_clone),
     CHANGE_TO_FEET(R.string.monster_detail_options_change_to_feet),
     CHANGE_TO_METERS(R.string.monster_detail_options_change_to_meters)
 }

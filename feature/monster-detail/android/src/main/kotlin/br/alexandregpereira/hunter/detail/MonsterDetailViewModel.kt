@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEv
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
+import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.StateHolder
@@ -39,6 +40,7 @@ import kotlinx.coroutines.flow.onEach
 internal class MonsterDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     getMonsterDetailUseCase: GetMonsterDetailUseCase,
+    cloneMonster: CloneMonsterUseCase,
     changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     spellDetailEventDispatcher: SpellDetailEventDispatcher,
     monsterDetailEventListener: MonsterDetailEventListener,
@@ -51,6 +53,7 @@ internal class MonsterDetailViewModel(
 
     private val stateHolder = MonsterDetailStateHolder(
         getMonsterDetailUseCase,
+        cloneMonster,
         changeMonstersMeasurementUnitUseCase,
         spellDetailEventDispatcher,
         monsterDetailEventListener,
@@ -104,6 +107,14 @@ internal class MonsterDetailViewModel(
         stateHolder.onClose()
     }
 
+    fun onCloneFormClosed() = stateHolder.onCloneFormClosed()
+
+    fun onCloneFormChanged(monsterName: String) {
+        stateHolder.onCloneFormChanged(monsterName)
+    }
+
+    fun onCloneFormSaved() = stateHolder.onCloneFormSaved()
+
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
             showDetail = showDetail,
@@ -118,6 +129,8 @@ internal class MonsterDetailViewModel(
             options = options.map { MonsterDetailOptionState.valueOf(it.name) },
             showDetail = showDetail,
             isLoading = isLoading,
+            showCloneForm = showCloneForm,
+            monsterCloneName = monsterCloneName,
         )
     }
 }

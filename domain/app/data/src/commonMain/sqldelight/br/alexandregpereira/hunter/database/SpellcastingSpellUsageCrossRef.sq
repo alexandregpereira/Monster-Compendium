@@ -7,4 +7,4 @@ insert:
 INSERT OR REPLACE INTO SpellcastingSpellUsageCrossRefEntity VALUES ?;
 
 deleteAll:
-DELETE FROM SpellcastingSpellUsageCrossRefEntity;
+DELETE FROM SpellcastingSpellUsageCrossRefEntity WHERE spellcastingId NOT LIKE '%-k4k4sh1';

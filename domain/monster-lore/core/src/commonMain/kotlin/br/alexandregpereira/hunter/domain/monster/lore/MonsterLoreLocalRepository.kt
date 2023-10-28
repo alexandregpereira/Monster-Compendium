@@ -25,5 +25,5 @@ interface MonsterLoreLocalRepository {
 
     fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>>
 
-    fun save(monstersLore: List<MonsterLore>): Flow<Unit>
+    fun save(monstersLore: List<MonsterLore>, isSync: Boolean): Flow<Unit>
 }

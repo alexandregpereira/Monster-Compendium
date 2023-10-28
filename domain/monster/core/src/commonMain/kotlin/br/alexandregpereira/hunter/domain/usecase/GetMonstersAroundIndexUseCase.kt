@@ -28,8 +28,11 @@ class GetMonstersAroundIndexUseCase internal constructor(
     private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
 ) {
 
-    operator fun invoke(monsterIndex: String): Flow<List<Monster>> = flow {
-        val monsterPreviews = getMonsterPreviewsCacheUseCase().sortMonstersByNameAndGroup().single()
+    operator fun invoke(
+        monsterIndex: String,
+        invalidateCache: Boolean = false
+    ): Flow<List<Monster>> = flow {
+        val monsterPreviews = getMonsterPreviewsCacheUseCase(invalidateCache).sortMonstersByNameAndGroup().single()
         val position = monsterPreviews.indexOfFirst { it.index == monsterIndex }
         val completeMonsters = getCompleteMonsters(
             monsterPreviews = monsterPreviews,
