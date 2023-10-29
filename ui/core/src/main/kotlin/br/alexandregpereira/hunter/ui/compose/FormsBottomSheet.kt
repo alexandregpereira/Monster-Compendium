@@ -69,6 +69,7 @@ fun Form(
             is FormField.Text -> AppTextField(
                 text = formField.value,
                 label = formField.label,
+                multiline = formField.multiline,
                 onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
             )
             is FormField.Number -> AppTextField(
@@ -116,6 +117,7 @@ sealed class FormField {
         override val key: String,
         override val label: String,
         val value: String,
+        val multiline: Boolean = false,
     ) : FormField()
 
     data class Number(
@@ -148,6 +150,12 @@ fun FormBottomSheetPreview() = Window {
                 key = "key1",
                 label = "Label 1",
                 value = "Value 1",
+            ),
+            FormField.Text(
+                key = "key4",
+                label = "Label 4",
+                value = "Value 4 asd asd asdasdasdasda asdasdasdas dasdasdasdasdasdasd asdasdasdas",
+                multiline = true,
             ),
             FormField.Number(
                 key = "key2",

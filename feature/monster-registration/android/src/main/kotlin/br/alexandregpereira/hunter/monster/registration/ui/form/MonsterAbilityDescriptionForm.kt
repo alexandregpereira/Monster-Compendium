@@ -16,15 +16,18 @@ internal fun MonsterAbilityDescriptionForm(
     title: String,
     abilityDescriptions: List<AbilityDescription>,
     modifier: Modifier = Modifier,
-    onChanged: (List<AbilityDescription>) -> Unit = {}
+    onChanged: (List<AbilityDescription>) -> Unit = {},
+    getAdditionalFields: @Composable (Int) -> List<FormField> = { emptyList() },
+    onAdditionalFieldChanged: (Int, FormField) -> Unit = { _, _ -> },
 ) {
     Column(modifier) {
         ScreenHeader(title = title)
 
-        abilityDescriptions.forEach { abilityDescription ->
+        abilityDescriptions.forEachIndexed { index, abilityDescription ->
             Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
             val id = abilityDescription.name + abilityDescription.description
+            val newFields = getAdditionalFields(index)
             Form(
                 formFields = listOf(
                     FormField.Text(
@@ -36,8 +39,9 @@ internal fun MonsterAbilityDescriptionForm(
                         key = "description",
                         label = "Description",
                         value = abilityDescription.description,
+                        multiline = true,
                     )
-                ),
+                ) + newFields,
                 onFormChanged = { field ->
                     when (field.key) {
                         "name" -> onChanged(
@@ -59,6 +63,8 @@ internal fun MonsterAbilityDescriptionForm(
                                 }
                             }
                         )
+
+                        else -> onAdditionalFieldChanged(index, field)
                     }
                 }
             )

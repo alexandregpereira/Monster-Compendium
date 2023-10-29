@@ -7,4 +7,19 @@
     <string name="monster_registration_intelligence">Intelligence</string>
     <string name="monster_registration_wisdom">Wisdom</string>
     <string name="monster_registration_charisma">Charisma</string>
+    <string name="monster_registration_actions">Actions</string>
+    <string name="monster_registration_aberration">Aberration</string>
+    <string name="monster_registration_beast">Beast</string>
+    <string name="monster_registration_celestial">Celestial</string>
+    <string name="monster_registration_construct">Construct</string>
+    <string name="monster_registration_dragon">Dragon</string>
+    <string name="monster_registration_elemental">Elemental</string>
+    <string name="monster_registration_fey">Fey</string>
+    <string name="monster_registration_fiend">Fiend</string>
+    <string name="monster_registration_giant">Giant</string>
+    <string name="monster_registration_humanoid">Humanoid</string>
+    <string name="monster_registration_monstrosity">Monstrosity</string>
+    <string name="monster_registration_ooze">Ooze</string>
+    <string name="monster_registration_plant">Plant</string>
+    <string name="monster_registration_undead">Undead</string>
 </resources>

@@ -21,13 +21,19 @@ import br.alexandregpereira.hunter.data.monster.remote.model.DamageDiceDto
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
+import kotlinx.datetime.Clock
 
 internal fun List<ActionDto>.toDomain(): List<Action> {
-    return this.map {
+    return this.mapIndexed { index, action ->
+        val timeInMillis = Clock.System.now().toEpochMilliseconds()
         Action(
-            damageDices = it.damageDices.toDamageDiceDomain(),
-            attackBonus = it.attackBonus,
-            abilityDescription = AbilityDescription(name = it.name, description = it.description)
+            id = "action-${timeInMillis + index}",
+            damageDices = action.damageDices.toDamageDiceDomain(),
+            attackBonus = action.attackBonus,
+            abilityDescription = AbilityDescription(
+                name = action.name,
+                description = action.description
+            )
         )
     }
 }

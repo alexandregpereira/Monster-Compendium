@@ -17,7 +17,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
@@ -35,6 +35,7 @@ fun AppTextField(
     modifier: Modifier = Modifier,
     label: String = "",
     keyboardType: AppKeyboardType = AppKeyboardType.TEXT,
+    multiline: Boolean = false,
     onValueChange: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
@@ -42,8 +43,9 @@ fun AppTextField(
         value = text,
         onValueChange = onValueChange,
         label = { Text(label) },
-        singleLine = true,
-        shape = CircleShape,
+        singleLine = !multiline,
+        shape = RoundedCornerShape(20),
+        maxLines = if (multiline) 6 else 1,
         modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = MaterialTheme.colors.onSurface,

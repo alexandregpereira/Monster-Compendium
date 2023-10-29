@@ -107,6 +107,7 @@ fun getFakeMonster(): Monster {
         ),
         actions = listOf(
             Action(
+                id = "id",
                 damageDices = listOf(
                     DamageDice(
                         dice = "1d6",
@@ -122,6 +123,7 @@ fun getFakeMonster(): Monster {
         ),
         legendaryActions = listOf(
             Action(
+                id = "id2",
                 damageDices = listOf(
                     DamageDice(
                         dice = "1d6",

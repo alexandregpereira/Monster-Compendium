@@ -7,4 +7,19 @@
     <string name="monster_registration_intelligence">Inteligência</string>
     <string name="monster_registration_wisdom">Sabedoria</string>
     <string name="monster_registration_charisma">Carisma</string>
+    <string name="monster_registration_actions">Ações</string>
+    <string name="monster_registration_aberration">Aberração</string>
+    <string name="monster_registration_beast">Fera</string>
+    <string name="monster_registration_celestial">Celestial</string>
+    <string name="monster_registration_construct">Construto</string>
+    <string name="monster_registration_dragon">Dragão</string>
+    <string name="monster_registration_elemental">Elemental</string>
+    <string name="monster_registration_fey">Fada</string>
+    <string name="monster_registration_fiend">Diabo/Demônio</string>
+    <string name="monster_registration_giant">Gigante</string>
+    <string name="monster_registration_humanoid">Humanoide</string>
+    <string name="monster_registration_monstrosity">Monstrosidade</string>
+    <string name="monster_registration_ooze">Gosma</string>
+    <string name="monster_registration_plant">Planta</string>
+    <string name="monster_registration_undead">Morto-vivo</string>
 </resources>
