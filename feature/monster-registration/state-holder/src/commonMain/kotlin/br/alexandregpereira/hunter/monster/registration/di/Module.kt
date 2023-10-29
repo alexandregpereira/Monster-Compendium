@@ -5,12 +5,13 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationParam
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStateHolder
 import br.alexandregpereira.hunter.monster.registration.di.MonsterRegistrationQualifiers.eventManagerQualifier
 import br.alexandregpereira.hunter.monster.registration.di.MonsterRegistrationQualifiers.paramsQualifier
+import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.state.StateHolderParams
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
@@ -29,20 +30,23 @@ val monsterRegistrationStateModule = module {
             )
         )
     }
-    single<MonsterRegistrationEventListener> {
-        MonsterRegistrationEventListenerImpl(
-            eventManager = get<EventManager<MonsterRegistrationEvent>>(
-                qualifier = eventManagerQualifier
-            )
-        )
+    single<MonsterRegistrationResultManager> {
+        MonsterRegistrationResultManager()
     }
+    single<MonsterRegistrationEventListener> {
+        get<MonsterRegistrationResultManager>()
+    }
+    factory { NormalizeMonsterUseCase() }
 
     factory {
         MonsterRegistrationStateHolder(
             params = get(qualifier = paramsQualifier),
             eventManager = get(qualifier = eventManagerQualifier),
+            eventResultManager = get<MonsterRegistrationResultManager>(),
             dispatcher = Dispatchers.Default,
             getMonster = get(),
+            saveMonsters = get(),
+            normalizeMonster = get(),
         )
     }
 }
@@ -61,8 +65,5 @@ private class MonsterRegistrationEventDispatcherImpl(
     }
 }
 
-private class MonsterRegistrationEventListenerImpl(
-    eventManager: EventManager<MonsterRegistrationEvent>
-): MonsterRegistrationEventListener {
-    override val events: Flow<MonsterRegistrationEvent> = eventManager.events
-}
+internal class MonsterRegistrationResultManager: MonsterRegistrationEventListener,
+    EventManager<MonsterRegistrationResult> by EventManager()

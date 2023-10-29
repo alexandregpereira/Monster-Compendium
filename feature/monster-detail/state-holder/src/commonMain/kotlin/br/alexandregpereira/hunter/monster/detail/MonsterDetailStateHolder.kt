@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.detail
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
+import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnCompendiumChanges
@@ -39,6 +40,8 @@ import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.MutableStateHolder
@@ -70,6 +73,7 @@ class MonsterDetailStateHolder(
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
+    private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
     initialState: MonsterDetailState = MonsterDetailState(),
@@ -113,12 +117,20 @@ class MonsterDetailStateHolder(
                 }
             }
         }.launchIn(scope)
+
+        monsterRegistrationEventListener.collectOnSaved {
+            getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
+        }.launchIn(scope)
     }
 
-    private fun getMonstersByInitialIndex(monsterIndex: String, monsterIndexes: List<String>) {
+    private fun getMonstersByInitialIndex(
+        monsterIndex: String,
+        monsterIndexes: List<String>,
+        invalidateCache: Boolean = false
+    ) {
         this.monsterIndexes = monsterIndexes
         onMonsterChanged(monsterIndex, scrolled = false)
-        getMonsterDetail().collectDetail()
+        getMonsterDetail(invalidateCache = invalidateCache).collectDetail()
     }
 
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
@@ -149,9 +161,14 @@ class MonsterDetailStateHolder(
             )
 
             CLONE -> showCloneForm()
-            EDIT -> monsterRegistrationEventDispatcher.dispatchEvent(
-                MonsterRegistrationEvent.ShowEdit(monsterIndex)
-            )
+
+            EDIT -> {
+                setState { HideOptions }
+                monsterRegistrationEventDispatcher.dispatchEvent(
+                    MonsterRegistrationEvent.ShowEdit(monsterIndex)
+                )
+            }
+
             CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }

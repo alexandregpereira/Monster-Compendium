@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium.state
 
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
@@ -35,6 +36,9 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
@@ -62,6 +66,7 @@ class MonsterCompendiumStateHolder(
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val syncEventListener: SyncEventListener,
     private val syncEventDispatcher: SyncEventDispatcher,
+    private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
     initialState: MonsterCompendiumState = MonsterCompendiumState(),
@@ -228,6 +233,10 @@ class MonsterCompendiumStateHolder(
         }.launchIn(scope)
 
         syncEventListener.collectSyncFinishedEvents {
+            loadMonsters()
+        }.launchIn(scope)
+
+        monsterRegistrationEventListener.collectOnSaved {
             loadMonsters()
         }.launchIn(scope)
     }

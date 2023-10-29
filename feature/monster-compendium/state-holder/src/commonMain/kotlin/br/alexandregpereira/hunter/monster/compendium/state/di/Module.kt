@@ -33,6 +33,7 @@ val monsterCompendiumStateModule = module {
             get(),
             get(),
             get(),
+            get(),
             analytics = MonsterCompendiumAnalytics(get()),
         )
     }

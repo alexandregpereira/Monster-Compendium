@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
+import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
@@ -31,6 +32,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
@@ -50,6 +52,7 @@ internal class MonsterDetailViewModel(
     monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     folderInsertEventDispatcher: FolderInsertEventDispatcher,
     monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
+    monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     dispatcher: CoroutineDispatcher,
     analytics: MonsterDetailAnalytics,
 ) : ViewModel(), StateHolder<MonsterDetailViewState> {
@@ -64,6 +67,7 @@ internal class MonsterDetailViewModel(
         monsterLoreDetailEventDispatcher,
         folderInsertEventDispatcher,
         monsterRegistrationEventDispatcher,
+        monsterRegistrationEventListener,
         dispatcher,
         initialState = savedStateHandle.getState().asMonsterDetailState(),
         monsterIndex = savedStateHandle["index"] ?: "",

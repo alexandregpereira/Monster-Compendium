@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -33,6 +34,7 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumSta
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
@@ -55,6 +57,7 @@ internal class MonsterCompendiumViewModel(
     monsterDetailEventListener: MonsterDetailEventListener,
     syncEventListener: SyncEventListener,
     syncEventDispatcher: SyncEventDispatcher,
+    monsterRegistrationEventListener: MonsterRegistrationEventListener,
     analytics: MonsterCompendiumAnalytics,
     dispatcher: CoroutineDispatcher,
     loadOnInit: Boolean = true,
@@ -70,6 +73,7 @@ internal class MonsterCompendiumViewModel(
         monsterDetailEventListener,
         syncEventListener,
         syncEventDispatcher,
+        monsterRegistrationEventListener,
         dispatcher,
         loadOnInit = loadOnInit,
         initialState = savedStateHandle.getState().asMonsterCompendiumState(),

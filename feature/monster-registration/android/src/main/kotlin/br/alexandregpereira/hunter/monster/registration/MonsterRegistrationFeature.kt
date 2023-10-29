@@ -14,7 +14,6 @@ fun MonsterRegistrationFeature(
     MonsterRegistrationScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,
-        onMonsterChanged = viewModel::onMonsterChanged,
-        onClose = viewModel::onClose,
+        intent = viewModel,
     )
 }

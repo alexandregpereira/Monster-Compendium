@@ -13,9 +13,9 @@ import br.alexandregpereira.hunter.ui.R
 
 @Composable
 fun FormBottomSheet(
-    title: String,
     formFields: List<FormField>,
     opened: Boolean,
+    title: String? = null,
     buttonText: String = stringResource(R.string.ui_core_save),
     buttonEnabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(),
@@ -48,16 +48,19 @@ fun FormBottomSheet(
 
 @Composable
 fun Form(
-    title: String,
     formFields: List<FormField>,
     modifier: Modifier = Modifier,
+    title: String? = null,
     onFormChanged: (FormField) -> Unit = {},
 ) = Column(modifier) {
-    ScreenHeader(
-        title = title,
-    )
 
-    Spacer(modifier = Modifier.padding(top = 24.dp))
+    if (!title.isNullOrBlank()) {
+        ScreenHeader(
+            title = title,
+        )
+
+        Spacer(modifier = Modifier.padding(top = 24.dp))
+    }
 
     formFields.forEach { formField ->
         AppTextField(
@@ -80,6 +83,31 @@ data class FormField(
 fun FormBottomSheetPreview() = Window {
     FormBottomSheet(
         title = "Form",
+        formFields = listOf(
+            FormField(
+                key = "key1",
+                label = "Label 1",
+                value = "Value 1",
+            ),
+            FormField(
+                key = "key2",
+                label = "Label 2",
+                value = "Value 2",
+            ),
+            FormField(
+                key = "key3",
+                label = "Label 3",
+                value = "Value 3",
+            ),
+        ),
+        opened = true,
+    )
+}
+
+@Preview
+@Composable
+fun FormBottomSheetNoTitlePreview() = Window {
+    FormBottomSheet(
         formFields = listOf(
             FormField(
                 key = "key1",
