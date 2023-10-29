@@ -72,6 +72,7 @@ val databaseModule = module {
     factory<MonsterLoreDao> {
         val database = get<Database>()
         MonsterLoreDaoImpl(
+            monsterQueries = database.monsterQueries,
             queries = database.monsterLoreQueries,
             monsterLoreEntryQueries = database.monsterLoreEntryQueries,
             dispatcher = getDispatcherIO()

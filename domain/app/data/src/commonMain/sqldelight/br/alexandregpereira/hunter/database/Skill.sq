@@ -5,8 +5,8 @@ CREATE INDEX index_SkillEntity_monsterIndex ON SkillEntity (monsterIndex);
 insert:
 INSERT OR REPLACE INTO SkillEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SkillEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM SkillEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM SkillEntity WHERE monsterIndex = ?;

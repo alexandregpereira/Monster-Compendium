@@ -13,8 +13,8 @@ CREATE INDEX index_DamageDiceEntity_actionId ON DamageDiceEntity (actionId);
 insert:
 INSERT OR REPLACE INTO DamageDiceEntity VALUES ?;
 
-deleteAll:
-DELETE FROM DamageDiceEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithActionId:
+DELETE FROM DamageDiceEntity WHERE actionId IN ?;
 
 getByActionId:
 SELECT * FROM DamageDiceEntity WHERE actionId = ?;

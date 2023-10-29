@@ -5,8 +5,8 @@ CREATE INDEX index_ActionEntity_monsterIndex ON ActionEntity (monsterIndex);
 insert:
 INSERT OR REPLACE INTO ActionEntity VALUES ?;
 
-deleteAll:
-DELETE FROM ActionEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM ActionEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM ActionEntity WHERE monsterIndex = ?;

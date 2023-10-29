@@ -5,8 +5,8 @@ CREATE INDEX index_SavingThrowEntity_monsterIndex ON SavingThrowEntity (monsterI
 insert:
 INSERT OR REPLACE INTO SavingThrowEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SavingThrowEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM SavingThrowEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM SavingThrowEntity WHERE monsterIndex = ?;

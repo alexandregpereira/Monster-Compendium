@@ -5,8 +5,8 @@ CREATE INDEX index_SpellcastingEntity_monsterIndex ON SpellcastingEntity (monste
 insert:
 INSERT OR REPLACE INTO SpellcastingEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SpellcastingEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM SpellcastingEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM SpellcastingEntity WHERE monsterIndex = ?;

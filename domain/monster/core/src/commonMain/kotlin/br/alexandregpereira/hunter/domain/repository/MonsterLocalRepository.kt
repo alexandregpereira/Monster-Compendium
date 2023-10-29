@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.domain.repository
 
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImage
 import kotlinx.coroutines.flow.Flow
 
 interface MonsterLocalRepository {

@@ -5,8 +5,8 @@ CREATE INDEX index_AbilityScoreEntity_monsterIndex ON AbilityScoreEntity (monste
 insert:
 INSERT OR REPLACE INTO AbilityScoreEntity VALUES ?;
 
-deleteAll:
-DELETE FROM AbilityScoreEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM AbilityScoreEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM AbilityScoreEntity WHERE monsterIndex = ?;

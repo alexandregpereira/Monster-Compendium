@@ -5,8 +5,8 @@ CREATE INDEX index_SpeedEntity_monsterIndex ON SpeedEntity (monsterIndex);
 insert:
 INSERT OR REPLACE INTO SpeedEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SpeedEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM SpeedEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM SpeedEntity WHERE monsterIndex = ?;
