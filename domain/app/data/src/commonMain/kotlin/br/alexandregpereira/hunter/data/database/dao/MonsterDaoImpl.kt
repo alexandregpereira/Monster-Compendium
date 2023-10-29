@@ -101,7 +101,6 @@ internal class MonsterDaoImpl(
 
     override suspend fun insert(monsters: List<MonsterCompleteEntity>) = withContext(dispatcher) {
         monsterQueries.transaction {
-            specialAbilityQueries.deleteAll()
             monsterQueries.insert(monsters.map { it.monster })
             abilityScoreQueries.insert(monsters.mapAndReduce { abilityScores })
             actionQueries.run {
@@ -161,6 +160,7 @@ internal class MonsterDaoImpl(
             damageDiceQueries.deleteAll()
             savingThrowQueries.deleteAll()
             skillQueries.deleteAll()
+            specialAbilityQueries.deleteAll()
             speedQueries.deleteAll()
             speedValueQueries.deleteAll()
             monsterQueries.deleteAll()
