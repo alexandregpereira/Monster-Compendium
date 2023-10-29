@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster.remote.mapper
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.data.monster.remote.model.SkillDto
-import br.alexandregpereira.hunter.domain.model.Skill
+import kotlin.native.ObjCName
 
-internal fun List<SkillDto>.toDomain(): List<Skill> {
-    return this.map {
-        Skill(index = it.index, modifier = it.modifier, name = it.name)
-    }
-}
+@ObjCName(name = "SavingThrow", exact = true)
+data class SavingThrow(
+    val index: String,
+    val modifier: Int,
+    val type: AbilityScoreType
+)

@@ -18,8 +18,8 @@ package br.alexandregpereira.hunter.domain.model
 
 import kotlin.native.ObjCName
 
-@ObjCName(name = "Proficiency", exact = true)
-data class Proficiency(
+@ObjCName(name = "Skill", exact = true)
+data class Skill(
     val index: String,
     val modifier: Int,
     val name: String

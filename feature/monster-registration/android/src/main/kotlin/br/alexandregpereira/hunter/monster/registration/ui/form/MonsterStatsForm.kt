@@ -16,17 +16,17 @@ internal fun MonsterStatsForm(
         modifier = modifier,
         title = "Stats",
         formFields = listOf(
-            FormField(
+            FormField.Number(
                 key = "armorClass",
                 label = "Armor Class",
-                value = monster.stats.armorClass.toString(),
+                value = monster.stats.armorClass,
             ),
-            FormField(
+            FormField.Number(
                 key = "hitPoints",
                 label = "Hit Points",
-                value = monster.stats.hitPoints.toString(),
+                value = monster.stats.hitPoints,
             ),
-            FormField(
+            FormField.Text(
                 key = "hitDice",
                 label = "Hit Dice",
                 value = monster.stats.hitDice,
@@ -37,7 +37,7 @@ internal fun MonsterStatsForm(
                 "armorClass" -> onMonsterChanged(
                     monster.copy(
                         stats = monster.stats.copy(
-                            armorClass = field.value.toIntOrNull() ?: 0
+                            armorClass = field.intValue
                         )
                     )
                 )
@@ -45,12 +45,14 @@ internal fun MonsterStatsForm(
                 "hitPoints" -> onMonsterChanged(
                     monster.copy(
                         stats = monster.stats.copy(
-                            hitPoints = field.value.toIntOrNull() ?: 0
+                            hitPoints = field.intValue
                         )
                     )
                 )
 
-                "hitDice" -> onMonsterChanged(monster.copy(stats = monster.stats.copy(hitDice = field.value)))
+                "hitDice" -> onMonsterChanged(
+                    monster.copy(stats = monster.stats.copy(hitDice = field.stringValue))
+                )
             }
         },
     )

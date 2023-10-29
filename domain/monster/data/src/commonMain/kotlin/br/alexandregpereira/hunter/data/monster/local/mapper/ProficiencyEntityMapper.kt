@@ -17,17 +17,31 @@
 package br.alexandregpereira.hunter.data.monster.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
-import br.alexandregpereira.hunter.domain.model.Proficiency
+import br.alexandregpereira.hunter.domain.model.SavingThrow
+import br.alexandregpereira.hunter.domain.model.Skill
 
-internal fun ProficiencyEntity.toDomain(): Proficiency {
-    return Proficiency(index = this.index, modifier = this.modifier, name = this.name)
+internal fun ProficiencyEntity.toDomain(): Skill {
+    return Skill(index = this.index, modifier = this.modifier, name = this.name)
 }
 
-internal fun Proficiency.toEntity(monsterIndex: String): ProficiencyEntity {
+internal fun ProficiencyEntity.toSavingThrowDomain(): SavingThrow {
+    return SavingThrow(index = this.index, modifier = this.modifier, type = this.name.toDomain())
+}
+
+internal fun Skill.toEntity(monsterIndex: String): ProficiencyEntity {
     return ProficiencyEntity(
         index = this.index,
         modifier = this.modifier,
         name = this.name,
+        monsterIndex = monsterIndex
+    )
+}
+
+internal fun SavingThrow.toEntity(monsterIndex: String): ProficiencyEntity {
+    return ProficiencyEntity(
+        index = this.index,
+        modifier = this.modifier,
+        name = this.type.name,
         monsterIndex = monsterIndex
     )
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="monster_registration_saving_throws">Saving Throws</string>
+    <string name="monster_registration_strength">Strength</string>
+    <string name="monster_registration_dexterity">Dexterity</string>
+    <string name="monster_registration_constitution">Constitution</string>
+    <string name="monster_registration_intelligence">Intelligence</string>
+    <string name="monster_registration_wisdom">Wisdom</string>
+    <string name="monster_registration_charisma">Charisma</string>
+</resources>

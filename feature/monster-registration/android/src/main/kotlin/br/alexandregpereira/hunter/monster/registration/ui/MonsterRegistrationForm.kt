@@ -2,9 +2,7 @@ package br.alexandregpereira.hunter.monster.registration.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,8 +15,9 @@ import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistration
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityDescriptionForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityScoresForm
-import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterForm1
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterHeaderForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterProficiencyForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSavingThrowsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSpeedValuesForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStatsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStringValueForm
@@ -41,7 +40,7 @@ internal fun MonsterRegistrationForm(
         contentPadding = contentPadding,
     ) {
         item(key = "monster") {
-            MonsterForm1(
+            MonsterHeaderForm(
                 monster = monster,
                 modifier = Modifier.padding(16.dp),
                 onMonsterChanged = intent::onMonsterChanged,
@@ -69,9 +68,8 @@ internal fun MonsterRegistrationForm(
             )
         }
         item(key = "savingThrows") {
-            MonsterProficiencyForm(
-                title = "Saving Throws",
-                proficiencies = monster.savingThrows,
+            MonsterSavingThrowsForm(
+                savingThrows = monster.savingThrows,
                 modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(savingThrows = it)) },
             )

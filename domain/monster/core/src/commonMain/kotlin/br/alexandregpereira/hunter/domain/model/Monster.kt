@@ -16,7 +16,11 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Monster", exact = true)
@@ -37,8 +41,8 @@ data class Monster(
     val sourceName: String = "",
     val speed: Speed = Speed(hover = false, values = emptyList()),
     val abilityScores: List<AbilityScore> = emptyList(),
-    val savingThrows: List<Proficiency> = emptyList(),
-    val skills: List<Proficiency> = emptyList(),
+    val savingThrows: List<SavingThrow> = emptyList(),
+    val skills: List<Skill> = emptyList(),
     val damageVulnerabilities: List<Damage> = emptyList(),
     val damageResistances: List<Damage> = emptyList(),
     val damageImmunities: List<Damage> = emptyList(),
@@ -64,3 +68,158 @@ data class Color(
 )
 
 fun Monster.isComplete() = abilityScores.isNotEmpty()
+
+fun getFakeMonster(): Monster {
+    return Monster(
+        index = "1",
+        name = "Monster Name",
+        group = "Group",
+        stats = Stats(
+            armorClass = 10,
+            hitPoints = 10,
+            hitDice = "1d10",
+        ),
+        speed = Speed(
+            hover = false,
+            values = listOf(
+                SpeedValue(
+                    type = SpeedType.WALK,
+                    valueFormatted = "10 ft.",
+                ),
+                SpeedValue(
+                    type = SpeedType.SWIM,
+                    valueFormatted = "10 ft.",
+                ),
+            ),
+        ),
+        abilityScores = AbilityScoreType.entries.map {
+            AbilityScore(
+                type = it,
+                value = 10,
+                modifier = 0,
+            )
+        },
+        specialAbilities = listOf(
+            AbilityDescription(
+                name = "Special Ability Name",
+                description = "Special Ability Description",
+            )
+        ),
+        actions = listOf(
+            Action(
+                damageDices = listOf(
+                    DamageDice(
+                        dice = "1d6",
+                        damage = Damage(index = "accumsan", type = DamageType.ACID, name = "Fran Case"),
+                    )
+                ),
+                attackBonus = 2,
+                abilityDescription = AbilityDescription(
+                    name = "Ignacio Allen",
+                    description = "percipit"
+                )
+            )
+        ),
+        legendaryActions = listOf(
+            Action(
+                damageDices = listOf(
+                    DamageDice(
+                        dice = "1d6",
+                        damage = Damage(index = "accumsan", type = DamageType.ACID, name = "Fran Case"),
+                    )
+                ),
+                attackBonus = 2,
+                abilityDescription = AbilityDescription(
+                    name = "Ignacio Allen",
+                    description = "percipit"
+                )
+            )
+        ),
+        reactions = listOf(
+            AbilityDescription(
+                name = "Reaction Name",
+                description = "Reaction Description",
+            )
+        ),
+        spellcastings = listOf(
+            Spellcasting(
+                description = "latine",
+                type = SpellcastingType.SPELLCASTER,
+                usages = listOf(
+                    SpellUsage(
+                        group = "group",
+                        spells = listOf(
+                            SpellPreview(
+                                index = "index",
+                                name = "name",
+                                level = 1,
+                                school = SchoolOfMagic.ABJURATION,
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        type = MonsterType.ABERRATION,
+        challengeRating = 10f,
+        imageData = MonsterImageData(
+            url = "http://www.bing.com/search?q=neglegentur",
+            backgroundColor = Color(
+                light = "adipisci",
+                dark = "libero"
+            ),
+            isHorizontal = false
+        ),
+        subtype = "subtype",
+        subtitle = "curae",
+        size = "mazim",
+        alignment = "conubia",
+        senses = listOf("senses"),
+        languages = "epicuri",
+        sourceName = "Domingo Woods",
+        savingThrows = listOf(
+            SavingThrow(
+                index = "index",
+                type = AbilityScoreType.CHARISMA,
+                modifier = 5
+            )
+        ),
+        skills = listOf(
+            Skill(
+                index = "index",
+                name = "name",
+                modifier = 5
+            )
+        ),
+        damageVulnerabilities = listOf(
+            Damage(
+                index = "index",
+                type = DamageType.ACID,
+                name = "name"
+            )
+        ),
+        damageResistances = listOf(
+            Damage(
+                index = "index",
+                type = DamageType.ACID,
+                name = "name"
+            )
+        ),
+        damageImmunities = listOf(
+            Damage(
+                index = "index",
+                type = DamageType.ACID,
+                name = "name"
+            )
+        ),
+        conditionImmunities = listOf(
+            Condition(
+                index = "index",
+                name = "name",
+                type = ConditionType.BLINDED
+            )
+        ),
+        lore = "lore",
+        isClone = true,
+    )
+}

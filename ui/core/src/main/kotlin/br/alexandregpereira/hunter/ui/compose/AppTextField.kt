@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.ui.compose
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -26,12 +27,14 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun AppTextField(
     text: String,
     modifier: Modifier = Modifier,
     label: String = "",
+    keyboardType: AppKeyboardType = AppKeyboardType.TEXT,
     onValueChange: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
@@ -46,6 +49,17 @@ fun AppTextField(
             textColor = MaterialTheme.colors.onSurface,
             backgroundColor = MaterialTheme.colors.surface
         ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = when (keyboardType) {
+                AppKeyboardType.TEXT -> KeyboardType.Text
+                AppKeyboardType.NUMBER -> KeyboardType.Number
+            }
+        ),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
     )
+}
+
+enum class AppKeyboardType {
+    TEXT,
+    NUMBER
 }

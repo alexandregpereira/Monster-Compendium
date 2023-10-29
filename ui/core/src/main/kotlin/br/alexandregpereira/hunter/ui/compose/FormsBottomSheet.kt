@@ -30,7 +30,9 @@ fun FormBottomSheet(
     Form(
         title = title,
         formFields = formFields,
-        modifier = Modifier.padding(top = 16.dp).padding(horizontal = 16.dp),
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp),
         onFormChanged = onFormChanged,
     )
 
@@ -63,20 +65,78 @@ fun Form(
     }
 
     formFields.forEach { formField ->
-        AppTextField(
-            text = formField.value,
-            label = formField.label,
-            onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
-        )
+        when (formField) {
+            is FormField.Text -> AppTextField(
+                text = formField.value,
+                label = formField.label,
+                onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
+            )
+            is FormField.Number -> AppTextField(
+                text = formField.value.takeUnless { it == 0 }?.toString().orEmpty(),
+                label = formField.label,
+                keyboardType = AppKeyboardType.NUMBER,
+                onValueChange = { newValue ->
+                    onFormChanged(formField.copy(value = newValue.toIntOrNull() ?: 0))
+                }
+            )
+            is FormField.Picker -> PickerField(
+                value = formField.value,
+                label = formField.label,
+                options = formField.options,
+                onValueChange = { newValue ->
+                    onFormChanged(formField.copy(value = newValue))
+                }
+            )
+        }
+
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
     }
 }
 
-data class FormField(
-    val key: String,
-    val label: String,
-    val value: String,
-)
+sealed class FormField {
+
+    abstract val key: String
+    abstract val label: String
+
+    val stringValue: String
+        get() = when (this) {
+            is Text -> value
+            is Number -> value.toString()
+            is Picker -> value
+        }
+
+    val intValue: Int
+        get() = when (this) {
+            is Text -> value.toIntOrNull() ?: 0
+            is Number -> value
+            is Picker -> value.toIntOrNull() ?: 0
+        }
+
+    data class Text(
+        override val key: String,
+        override val label: String,
+        val value: String,
+    ) : FormField()
+
+    data class Number(
+        override val key: String,
+        override val label: String,
+        val value: Int,
+    ) : FormField()
+
+    data class Picker(
+        override val key: String,
+        override val label: String,
+        val value: String,
+        val options: List<String>,
+    ) : FormField()
+}
+
+val FormField.selectedIndex: Int
+    get() = when (this) {
+        is FormField.Picker -> options.indexOf(value)
+        else -> -1
+    }
 
 @Preview
 @Composable
@@ -84,20 +144,21 @@ fun FormBottomSheetPreview() = Window {
     FormBottomSheet(
         title = "Form",
         formFields = listOf(
-            FormField(
+            FormField.Text(
                 key = "key1",
                 label = "Label 1",
                 value = "Value 1",
             ),
-            FormField(
+            FormField.Number(
                 key = "key2",
                 label = "Label 2",
-                value = "Value 2",
+                value = 2,
             ),
-            FormField(
+            FormField.Picker(
                 key = "key3",
                 label = "Label 3",
-                value = "Value 3",
+                value = "",
+                options = listOf("Option 1", "Option 2", "Option 3"),
             ),
         ),
         opened = true,
@@ -109,20 +170,21 @@ fun FormBottomSheetPreview() = Window {
 fun FormBottomSheetNoTitlePreview() = Window {
     FormBottomSheet(
         formFields = listOf(
-            FormField(
+            FormField.Text(
                 key = "key1",
                 label = "Label 1",
                 value = "Value 1",
             ),
-            FormField(
+            FormField.Number(
                 key = "key2",
                 label = "Label 2",
-                value = "Value 2",
+                value = 2,
             ),
-            FormField(
+            FormField.Picker(
                 key = "key3",
                 label = "Label 3",
-                value = "Value 3",
+                value = "",
+                options = listOf("Option 1", "Option 2", "Option 3"),
             ),
         ),
         opened = true,
