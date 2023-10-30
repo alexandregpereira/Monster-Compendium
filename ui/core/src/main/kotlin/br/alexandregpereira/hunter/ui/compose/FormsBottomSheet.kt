@@ -1,6 +1,5 @@
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -54,16 +53,7 @@ fun Form(
     modifier: Modifier = Modifier,
     title: String? = null,
     onFormChanged: (FormField) -> Unit = {},
-) = Column(modifier) {
-
-    if (!title.isNullOrBlank()) {
-        ScreenHeader(
-            title = title,
-        )
-
-        Spacer(modifier = Modifier.padding(top = 24.dp))
-    }
-
+) = Form(modifier, title) {
     formFields.forEach { formField ->
         when (formField) {
             is FormField.Text -> AppTextField(
@@ -85,12 +75,10 @@ fun Form(
                 label = formField.label,
                 options = formField.options,
                 onValueChange = { newValue ->
-                    onFormChanged(formField.copy(value = newValue))
+                    onFormChanged(formField.copy(value = formField.options[newValue]))
                 }
             )
         }
-
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
     }
 }
 

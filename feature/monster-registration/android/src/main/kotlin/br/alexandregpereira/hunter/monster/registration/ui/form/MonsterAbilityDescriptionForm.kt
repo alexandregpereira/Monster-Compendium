@@ -1,15 +1,14 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
+import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
-import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 
 @Composable
 internal fun MonsterAbilityDescriptionForm(
@@ -17,57 +16,29 @@ internal fun MonsterAbilityDescriptionForm(
     abilityDescriptions: List<AbilityDescription>,
     modifier: Modifier = Modifier,
     onChanged: (List<AbilityDescription>) -> Unit = {},
-    getAdditionalFields: @Composable (Int) -> List<FormField> = { emptyList() },
-    onAdditionalFieldChanged: (Int, FormField) -> Unit = { _, _ -> },
-) {
-    Column(modifier) {
-        ScreenHeader(title = title)
+    content: @Composable (Int) -> Unit = { },
+) = Form(modifier, title) {
+    val newAbilityDescriptions = abilityDescriptions.toMutableList()
+    abilityDescriptions.forEachIndexed { index, abilityDescription ->
+        if (index != 0) Spacer(modifier = Modifier.height(8.dp))
 
-        abilityDescriptions.forEachIndexed { index, abilityDescription ->
-            Spacer(modifier = Modifier.padding(vertical = 16.dp))
+        AppTextField(
+            text = abilityDescription.name,
+            label = "Name",
+            onValueChange = { newValue ->
+                onChanged(newAbilityDescriptions.changeAt(index) { copy(name = newValue) })
+            }
+        )
 
-            val id = abilityDescription.name + abilityDescription.description
-            val newFields = getAdditionalFields(index)
-            Form(
-                formFields = listOf(
-                    FormField.Text(
-                        key = "name",
-                        label = "Name",
-                        value = abilityDescription.name,
-                    ),
-                    FormField.Text(
-                        key = "description",
-                        label = "Description",
-                        value = abilityDescription.description,
-                        multiline = true,
-                    )
-                ) + newFields,
-                onFormChanged = { field ->
-                    when (field.key) {
-                        "name" -> onChanged(
-                            abilityDescriptions.map {
-                                if (it.name + it.description == id) {
-                                    it.copy(name = field.stringValue)
-                                } else {
-                                    it
-                                }
-                            }
-                        )
+        AppTextField(
+            text = abilityDescription.description,
+            label = "Description",
+            multiline = true,
+            onValueChange = { newValue ->
+                onChanged(newAbilityDescriptions.changeAt(index) { copy(name = newValue) })
+            }
+        )
 
-                        "description" -> onChanged(
-                            abilityDescriptions.map {
-                                if (it.name + it.description == id) {
-                                    it.copy(description = field.stringValue)
-                                } else {
-                                    it
-                                }
-                            }
-                        )
-
-                        else -> onAdditionalFieldChanged(index, field)
-                    }
-                }
-            )
-        }
+        content(index)
     }
 }

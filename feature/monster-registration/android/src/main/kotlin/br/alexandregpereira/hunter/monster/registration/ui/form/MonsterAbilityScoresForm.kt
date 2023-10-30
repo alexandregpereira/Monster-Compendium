@@ -2,34 +2,29 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.domain.model.Monster
+import androidx.compose.ui.util.fastForEachIndexed
+import br.alexandregpereira.hunter.domain.model.AbilityScore
+import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
 
 @Composable
 internal fun MonsterAbilityScoresForm(
-    monster: Monster,
+    abilityScores: List<AbilityScore>,
     modifier: Modifier = Modifier,
-    onMonsterChanged: (Monster) -> Unit = {}
+    onChanged: (List<AbilityScore>) -> Unit = {}
+) = Form(
+    modifier = modifier,
+    title = "Ability Scores",
 ) {
-    Form(
-        modifier = modifier,
-        title = "Ability Scores",
-        formFields = monster.abilityScores.map { abilityScore ->
-            FormField.Number(
-                key = abilityScore.type.name,
-                label = abilityScore.type.name,
-                value = abilityScore.value,
-            )
-        },
-        onFormChanged = { field ->
-            val abilityScores = monster.abilityScores.toMutableList()
-            val index = abilityScores.indexOfFirst { it.type.name == field.key }
-            if (index != -1) {
-                abilityScores[index] =
-                    abilityScores[index].copy(value = field.intValue)
-                onMonsterChanged(monster.copy(abilityScores = abilityScores))
+    val newAbilityScores = abilityScores.toMutableList()
+    abilityScores.fastForEachIndexed { i, abilityScore ->
+        AppTextField(
+            value = abilityScore.value,
+            label = abilityScore.type.name,
+            onValueChange = { newValue ->
+                onChanged(newAbilityScores.changeAt(i) { copy(value = newValue) })
             }
-        },
-    )
+        )
+    }
 }

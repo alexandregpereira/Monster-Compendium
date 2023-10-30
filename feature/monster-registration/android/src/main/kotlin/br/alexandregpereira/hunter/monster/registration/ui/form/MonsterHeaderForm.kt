@@ -7,63 +7,47 @@ import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
-import br.alexandregpereira.hunter.ui.compose.selectedIndex
+import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Composable
 internal fun MonsterHeaderForm(
     monster: Monster,
     modifier: Modifier = Modifier,
     onMonsterChanged: (Monster) -> Unit = {}
-) {
-    Form(
-        modifier = modifier,
-        title = "Test",
-        formFields = listOf(
-            FormField.Text(
-                key = "monsterName",
-                label = "Name",
-                value = monster.name,
-            ),
-            FormField.Text(
-                key = "group",
-                label = "Group",
-                value = monster.group.orEmpty(),
-            ),
-            FormField.Text(
-                key = "imageUrl",
-                label = "Image Url",
-                value = monster.imageData.url,
-            ),
-            FormField.Picker(
-                key = "type",
-                label = "Type",
-                value = stringResource(monster.type.toMonsterTypeState().stringRes),
-                options = MonsterType.entries.map {
-                    stringResource(it.toMonsterTypeState().stringRes)
-                },
-            ),
-        ),
-        onFormChanged = { field ->
-            when (field.key) {
-                "monsterName" -> onMonsterChanged(monster.copy(name = field.stringValue))
+) = Form(modifier = modifier, title = "Edit") {
+    AppTextField(
+        text = monster.name,
+        label = "Name",
+        onValueChange = { onMonsterChanged(monster.copy(name = it)) }
+    )
 
-                "group" -> onMonsterChanged(
-                    monster.copy(group = field.stringValue.takeUnless { it.isBlank() })
-                )
+    AppTextField(
+        text = monster.group.orEmpty(),
+        label = "Group",
+        onValueChange = {
+            onMonsterChanged(monster.copy(group = it.takeUnless { it.isBlank() }))
+        }
+    )
 
-                "imageUrl" -> onMonsterChanged(
-                    monster.copy(imageData = monster.imageData.copy(url = field.stringValue))
-                )
+    AppTextField(
+        text = monster.imageData.url,
+        label = "Image Url",
+        onValueChange = {
+            onMonsterChanged(monster.copy(imageData = monster.imageData.copy(url = it)))
+        }
+    )
 
-                "type" -> onMonsterChanged(
-                    monster.copy(
-                        type = MonsterType.entries[field.selectedIndex]
-                    )
-                )
-            }
+    PickerField(
+        value = stringResource(monster.type.toMonsterTypeState().stringRes),
+        label = "Type",
+        options = MonsterType.entries.map {
+            stringResource(it.toMonsterTypeState().stringRes)
         },
+        onValueChange = { i ->
+            onMonsterChanged(monster.copy(type = MonsterType.entries[i]))
+        }
     )
 }
 

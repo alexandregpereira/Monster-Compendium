@@ -61,6 +61,24 @@ fun AppTextField(
     )
 }
 
+@Composable
+fun AppTextField(
+    value: Int,
+    modifier: Modifier = Modifier,
+    label: String = "",
+    onValueChange: (Int) -> Unit = {}
+) {
+    AppTextField(
+        text = value.takeUnless { it == 0 }?.toString().orEmpty(),
+        label = label,
+        keyboardType = AppKeyboardType.NUMBER,
+        modifier = modifier,
+        onValueChange = { newValue ->
+            onValueChange(newValue.toIntOrNull() ?: 0)
+        }
+    )
+}
+
 enum class AppKeyboardType {
     TEXT,
     NUMBER

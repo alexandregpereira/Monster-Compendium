@@ -1,6 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +27,6 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStringVal
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun MonsterRegistrationForm(
     monster: Monster,
@@ -37,43 +36,43 @@ internal fun MonsterRegistrationForm(
 ) = Box(
     modifier = modifier.fillMaxSize()
 ) {
-
     LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(48.dp, Alignment.Top),
         modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding() + 32.dp + AppButtonSize.MEDIUM.height.dp),
-        contentPadding = contentPadding,
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            end = 16.dp,
+            top = contentPadding.calculateTopPadding() + 16.dp,
+            bottom = contentPadding.calculateBottomPadding() + 16.dp,
+        ),
     ) {
         item(key = "monster") {
             MonsterHeaderForm(
                 monster = monster,
-                modifier = Modifier.padding(16.dp),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "stats") {
             MonsterStatsForm(
                 monster = monster,
-                modifier = Modifier.padding(16.dp),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "speed") {
             MonsterSpeedValuesForm(
                 monster = monster,
-                modifier = Modifier.padding(16.dp),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "abilityScores") {
             MonsterAbilityScoresForm(
-                monster = monster,
-                modifier = Modifier.padding(16.dp),
-                onMonsterChanged = intent::onMonsterChanged,
+                abilityScores = monster.abilityScores,
+                onChanged = { intent.onMonsterChanged(monster.copy(abilityScores = it)) }
             )
         }
         item(key = "savingThrows") {
             MonsterSavingThrowsForm(
                 savingThrows = monster.savingThrows,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(savingThrows = it)) },
             )
         }
@@ -81,7 +80,6 @@ internal fun MonsterRegistrationForm(
             MonsterProficiencyForm(
                 title = "Skills",
                 proficiencies = monster.skills,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(skills = it)) },
             )
         }
@@ -89,7 +87,6 @@ internal fun MonsterRegistrationForm(
             MonsterStringValueForm(
                 title = "Senses",
                 value = monster.senses.joinToString(", "),
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(senses = it.split(", "))) },
             )
         }
@@ -97,7 +94,6 @@ internal fun MonsterRegistrationForm(
             MonsterStringValueForm(
                 title = "Languages",
                 value = monster.languages,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(languages = it)) },
             )
         }
@@ -105,7 +101,6 @@ internal fun MonsterRegistrationForm(
             MonsterAbilityDescriptionForm(
                 title = "Special Abilities",
                 abilityDescriptions = monster.specialAbilities,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(specialAbilities = it)) },
             )
         }
@@ -113,7 +108,6 @@ internal fun MonsterRegistrationForm(
             MonsterActionsForm(
                 title = stringResource(R.string.monster_registration_actions),
                 actions = monster.actions,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(actions = it)) },
             )
         }
@@ -121,7 +115,6 @@ internal fun MonsterRegistrationForm(
             MonsterAbilityDescriptionForm(
                 title = "Reactions",
                 abilityDescriptions = monster.reactions,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(reactions = it)) },
             )
         }
@@ -129,7 +122,6 @@ internal fun MonsterRegistrationForm(
             MonsterActionsForm(
                 title = "Legendary Actions",
                 actions = monster.legendaryActions,
-                modifier = Modifier.padding(16.dp),
                 onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
             )
         }
@@ -143,4 +135,13 @@ internal fun MonsterRegistrationForm(
             .align(Alignment.BottomCenter),
         onClick = intent::onSaved
     )
+}
+
+internal fun <T> MutableList<T>.changeAt(
+    index: Int,
+    copy: T.() -> T
+): List<T> {
+    return also {
+        it[index] = it[index].copy()
+    }
 }

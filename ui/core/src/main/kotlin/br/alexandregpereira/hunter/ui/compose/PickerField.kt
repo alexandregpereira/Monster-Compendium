@@ -26,7 +26,7 @@ fun PickerField(
     options: List<String>,
     modifier: Modifier = Modifier,
     value: String = "",
-    onValueChange: (String) -> Unit = {}
+    onValueChange: (Int) -> Unit = {}
 ) {
     val isOpen = remember { mutableStateOf(false) }
     Box(modifier) {
@@ -42,7 +42,7 @@ fun PickerField(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             isOpen.value = false
-                            onValueChange(options[index])
+                            onValueChange(index)
                         }
                     ) {
                         Text(option, modifier = Modifier
@@ -73,6 +73,6 @@ fun PickerFieldPreview() = Window {
         value = text.value,
         options = options,
         modifier = Modifier.padding(16.dp),
-        onValueChange = { text.value = it }
+        onValueChange = { text.value = options[it] }
     )
 }
