@@ -11,6 +11,7 @@ include ':app'
 include ':core:analytics'
 include ':core:event'
 include ':core:state-holder'
+include ':core:uuid'
 
 include ':domain:app:core'
 include ':domain:monster:core'
