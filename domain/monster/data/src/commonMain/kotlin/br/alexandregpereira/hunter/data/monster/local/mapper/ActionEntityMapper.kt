@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
+import br.alexandregpereira.hunter.uuid.generateUUID
 
 internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
     return this.map {
@@ -47,14 +48,15 @@ internal fun List<DamageDiceEntity>.toDamageDiceDomain(): List<DamageDice> {
 }
 
 internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageDicesEntity> {
-    return this.map {
+    return this.map { action ->
+        val actionId = action.id.takeUnless { it.isBlank() } ?: "action-${generateUUID()}"
         ActionWithDamageDicesEntity(
-            damageDices = it.damageDices.toDamageDiceEntity(it.id, monsterIndex),
+            damageDices = action.damageDices.toDamageDiceEntity(actionId, monsterIndex),
             action = ActionEntity(
-                id = it.id,
-                attackBonus = it.attackBonus,
-                description = it.abilityDescription.description,
-                name = it.abilityDescription.name,
+                id = actionId,
+                attackBonus = action.attackBonus,
+                description = action.abilityDescription.description,
+                name = action.abilityDescription.name,
                 monsterIndex = monsterIndex
             )
         )

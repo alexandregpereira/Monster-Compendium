@@ -57,7 +57,7 @@ fun PickerField(
                 .matchParentSize()
                 .background(Color.Transparent)
                 .clickable(
-                    onClick = { isOpen.value = true }
+                    onClick = { isOpen.value = options.isNotEmpty() }
                 )
         )
     }

@@ -70,7 +70,7 @@ private fun MonsterType.toMonsterTypeState(): MonsterTypeState {
     }
 }
 
-enum class MonsterTypeState(@StringRes val stringRes: Int) {
+internal enum class MonsterTypeState(@StringRes val stringRes: Int) {
     ABERRATION(R.string.monster_registration_aberration),
     BEAST(R.string.monster_registration_beast),
     CELESTIAL(R.string.monster_registration_celestial),

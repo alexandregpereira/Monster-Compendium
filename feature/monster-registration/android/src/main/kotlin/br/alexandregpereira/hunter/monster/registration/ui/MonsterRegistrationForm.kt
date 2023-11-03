@@ -18,6 +18,8 @@ import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityDescriptionForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityScoresForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterActionsForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterConditionsForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterDamagesForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterHeaderForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterProficiencyForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSavingThrowsForm
@@ -81,6 +83,34 @@ internal fun MonsterRegistrationForm(
                 title = "Skills",
                 proficiencies = monster.skills,
                 onChanged = { intent.onMonsterChanged(monster.copy(skills = it)) },
+            )
+        }
+        item(key = "damageVulnerabilities") {
+            MonsterDamagesForm(
+                title = "Damage Vulnerabilities",
+                damages = monster.damageVulnerabilities,
+                onChanged = { intent.onMonsterChanged(monster.copy(damageVulnerabilities = it)) },
+            )
+        }
+        item(key = "damageResistances") {
+            MonsterDamagesForm(
+                title = "Damage Resistances",
+                damages = monster.damageResistances,
+                onChanged = { intent.onMonsterChanged(monster.copy(damageResistances = it)) },
+            )
+        }
+        item(key = "damageImmunities") {
+            MonsterDamagesForm(
+                title = "Damage Immunities",
+                damages = monster.damageImmunities,
+                onChanged = { intent.onMonsterChanged(monster.copy(damageImmunities = it)) },
+            )
+        }
+        item(key = "conditionImmunities") {
+            MonsterConditionsForm(
+                title = "Condition Immunities",
+                conditions = monster.conditionImmunities,
+                onChanged = { intent.onMonsterChanged(monster.copy(conditionImmunities = it)) },
             )
         }
         item(key = "senses") {

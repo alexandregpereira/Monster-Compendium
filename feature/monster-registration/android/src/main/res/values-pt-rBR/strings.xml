@@ -22,4 +22,32 @@
     <string name="monster_registration_ooze">Gosma</string>
     <string name="monster_registration_plant">Planta</string>
     <string name="monster_registration_undead">Morto-vivo</string>
+
+    <string name="monster_registration_damage_type_acid">Ácido</string>
+    <string name="monster_registration_damage_type_bludgeoning">Contundente</string>
+    <string name="monster_registration_damage_type_cold">Frio</string>
+    <string name="monster_registration_damage_type_fire">Fogo</string>
+    <string name="monster_registration_damage_type_lightning">Elétrico</string>
+    <string name="monster_registration_damage_type_necrotic">Necrótico</string>
+    <string name="monster_registration_damage_type_piercing">Perfurante</string>
+    <string name="monster_registration_damage_type_poison">Veneno</string>
+    <string name="monster_registration_damage_type_psychic">Psíquico</string>
+    <string name="monster_registration_damage_type_radiant">Radiante</string>
+    <string name="monster_registration_damage_type_slashing">Cortante</string>
+    <string name="monster_registration_damage_type_thunder">Trovão</string>
+    <string name="monster_registration_damage_type_other">Outro</string>
+
+    <string name="monster_registration_condition_type_blinded">Cego</string>
+    <string name="monster_registration_condition_type_charmed">Encantado</string>
+    <string name="monster_registration_condition_type_deafened">Surdo</string>
+    <string name="monster_registration_condition_type_exhaustion">Exausto</string>
+    <string name="monster_registration_condition_type_frightened">Amendrotado</string>
+    <string name="monster_registration_condition_type_grappled">Agarrado</string>
+    <string name="monster_registration_condition_type_paralyzed">Paralisado</string>
+    <string name="monster_registration_condition_type_petrified">Petrificado</string>
+    <string name="monster_registration_condition_type_poisoned">Envenenado</string>
+    <string name="monster_registration_condition_type_prone">Caído</string>
+    <string name="monster_registration_condition_type_restrained">Contido</string>
+    <string name="monster_registration_condition_type_stunned">Atordoado</string>
+    <string name="monster_registration_condition_type_unconscious">Inconsciente</string>
 </resources>

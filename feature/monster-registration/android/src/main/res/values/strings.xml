@@ -22,4 +22,32 @@
     <string name="monster_registration_ooze">Ooze</string>
     <string name="monster_registration_plant">Plant</string>
     <string name="monster_registration_undead">Undead</string>
+
+    <string name="monster_registration_damage_type_acid">Acid</string>
+    <string name="monster_registration_damage_type_bludgeoning">Bludgeoning</string>
+    <string name="monster_registration_damage_type_cold">Cold</string>
+    <string name="monster_registration_damage_type_fire">Fire</string>
+    <string name="monster_registration_damage_type_lightning">Lightning</string>
+    <string name="monster_registration_damage_type_necrotic">Necrotic</string>
+    <string name="monster_registration_damage_type_piercing">Piercing</string>
+    <string name="monster_registration_damage_type_poison">Poison</string>
+    <string name="monster_registration_damage_type_psychic">Psychic</string>
+    <string name="monster_registration_damage_type_radiant">Radiant</string>
+    <string name="monster_registration_damage_type_slashing">Slashing</string>
+    <string name="monster_registration_damage_type_thunder">Thunder</string>
+    <string name="monster_registration_damage_type_other">Other</string>
+
+    <string name="monster_registration_condition_type_blinded">Blinded</string>
+    <string name="monster_registration_condition_type_charmed">Charmed</string>
+    <string name="monster_registration_condition_type_deafened">Deafened</string>
+    <string name="monster_registration_condition_type_exhaustion">Exhaustion</string>
+    <string name="monster_registration_condition_type_frightened">Frightened</string>
+    <string name="monster_registration_condition_type_grappled">Grappled</string>
+    <string name="monster_registration_condition_type_paralyzed">Paralyzed</string>
+    <string name="monster_registration_condition_type_petrified">Petrified</string>
+    <string name="monster_registration_condition_type_poisoned">Poisoned</string>
+    <string name="monster_registration_condition_type_prone">Prone</string>
+    <string name="monster_registration_condition_type_restrained">Restrained</string>
+    <string name="monster_registration_condition_type_stunned">Stunned</string>
+    <string name="monster_registration_condition_type_unconscious">Unconscious</string>
 </resources>
