@@ -26,7 +26,7 @@ ktor = "2.3.4"
 lifecycle = "2.6.2"
 material = "1.9.0"
 mockk = "1.13.8"
-multiplatform-settings = "1.0.0"
+multiplatform-settings = "1.1.1"
 okhttp3_logging_interceptor = "4.11.0"
 sqldelight = "1.5.5"
 
