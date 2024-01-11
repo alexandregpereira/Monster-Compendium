@@ -16,7 +16,7 @@ internal fun MonsterHeaderForm(
     monster: Monster,
     modifier: Modifier = Modifier,
     onMonsterChanged: (Monster) -> Unit = {}
-) = Form(modifier = modifier, title = "Edit") {
+) = Form(modifier = modifier, title = "Edit (Beta)") {
     AppTextField(
         text = monster.name,
         label = "Name",

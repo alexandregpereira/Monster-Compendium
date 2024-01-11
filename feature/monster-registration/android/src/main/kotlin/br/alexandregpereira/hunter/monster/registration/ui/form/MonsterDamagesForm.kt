@@ -63,6 +63,10 @@ internal fun MonsterDamagesForm(
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
+
+        if (damages.size < DamageType.entries.size) {
+            AddButton()
+        }
     }
 }
 

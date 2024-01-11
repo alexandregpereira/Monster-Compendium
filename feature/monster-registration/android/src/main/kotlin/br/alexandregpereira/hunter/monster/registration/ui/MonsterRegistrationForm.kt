@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterHeaderFor
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterProficiencyForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSavingThrowsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSpeedValuesForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSpellcastingsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStatsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStringValueForm
 import br.alexandregpereira.hunter.ui.compose.AppButton
@@ -153,6 +154,11 @@ internal fun MonsterRegistrationForm(
                 title = "Legendary Actions",
                 actions = monster.legendaryActions,
                 onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
+            )
+        }
+        item(key = "spells") {
+            MonsterSpellcastingsForm(
+                spellcastings = monster.spellcastings,
             )
         }
     }

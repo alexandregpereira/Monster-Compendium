@@ -6,8 +6,11 @@ import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.SavingThrow
 import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
+import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Composable
 internal fun MonsterSavingThrowsForm(
@@ -16,50 +19,49 @@ internal fun MonsterSavingThrowsForm(
     onChanged: (List<SavingThrow>) -> Unit = {}
 ) {
     val types = savingThrows.map { it.type.name }
-    val options = AbilityScoreTypeState.entries.filterNot { types.contains(it.name) }
+    val options = AbilityScoreType.entries.filterNot { types.contains(it.name) }
+    val optionsString = AbilityScoreTypeState.entries.filterNot { types.contains(it.name) }
         .map { it.getStringResource() }
-    val allOptions = AbilityScoreTypeState.entries.map { it.getStringResource() }
+    val mutableSavingThrows = savingThrows.toMutableList()
 
     Form(
         modifier = modifier,
         title = stringResource(R.string.monster_registration_saving_throws),
-        formFields = savingThrows.map { savingThrow ->
+    ) {
+        savingThrows.forEachIndexed { i, savingThrow ->
             val typeName = savingThrow.type.toState().getStringResource()
-            listOf(
-                FormField.Picker(
-                    key = savingThrow.index + "-type",
-                    label = "Name",
-                    value = typeName,
-                    options = options,
-                ),
-                FormField.Number(
-                    key = savingThrow.index + "-modifier",
-                    label = typeName,
-                    value = savingThrow.modifier,
-                )
-            )
-        }.reduceOrNull { acc, texts -> acc + texts } ?: emptyList(),
-        onFormChanged = { field ->
-            val newSavingThrows = savingThrows.toMutableList()
-            val index = newSavingThrows.indexOfFirst { field.key.startsWith(it.index) }
-            if (index != -1) {
-                when (field.key) {
-                    "${newSavingThrows[index].index}-type" -> {
-                        newSavingThrows[index] = newSavingThrows[index].copy(
-                            type = AbilityScoreType.entries[allOptions.indexOf(field.stringValue)]
-                        )
-                    }
 
-                    "${newSavingThrows[index].index}-modifier" -> {
-                        newSavingThrows[index] = newSavingThrows[index].copy(
-                            modifier = field.intValue
-                        )
-                    }
+            PickerField(
+                value = typeName,
+                label = "Name",
+                options = optionsString,
+                onValueChange = { optionIndex ->
+                    onChanged(
+                        mutableSavingThrows.changeAt(i) {
+                            copy(type = options[optionIndex])
+                        }
+                    )
                 }
-                onChanged(newSavingThrows)
-            }
-        },
-    )
+            )
+
+            AppTextField(
+                text = savingThrow.modifier.toString(),
+                label = typeName,
+                keyboardType = AppKeyboardType.NUMBER,
+                onValueChange = { newValue ->
+                    onChanged(
+                        mutableSavingThrows.changeAt(i) {
+                            copy(modifier = newValue.toIntOrNull() ?: 0)
+                        }
+                    )
+                }
+            )
+        }
+
+        if (savingThrows.size < AbilityScoreType.entries.size) {
+            AddButton()
+        }
+    }
 }
 
 private fun AbilityScoreType.toState(): AbilityScoreTypeState {

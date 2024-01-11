@@ -45,6 +45,10 @@ internal fun MonsterConditionsForm(
                 }
             )
         }
+
+        if (conditions.size < ConditionType.entries.size) {
+            AddButton()
+        }
     }
 }
 
