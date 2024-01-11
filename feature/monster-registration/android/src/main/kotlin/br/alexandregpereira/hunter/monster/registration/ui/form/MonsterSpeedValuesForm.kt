@@ -2,8 +2,10 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.SpeedType
+import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.FormField
 
@@ -19,12 +21,12 @@ internal fun MonsterSpeedValuesForm(
 
     Form(
         modifier = modifier,
-        title = "Speed",
+        title = stringResource(R.string.monster_registration_speed),
         formFields = monster.speed.values.map { speedValue ->
             listOf(
                 FormField.Picker(
                     key = "${speedValue.type.name}-type",
-                    label = "Speed type",
+                    label = stringResource(R.string.monster_registration_speed_type),
                     value = speedValue.type.name,
                     options = options,
                 ),

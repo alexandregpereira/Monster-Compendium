@@ -16,16 +16,16 @@ internal fun MonsterHeaderForm(
     monster: Monster,
     modifier: Modifier = Modifier,
     onMonsterChanged: (Monster) -> Unit = {}
-) = Form(modifier = modifier, title = "Edit (Beta)") {
+) = Form(modifier = modifier, title = stringResource(R.string.monster_registration_edit)) {
     AppTextField(
         text = monster.name,
-        label = "Name",
+        label = stringResource(R.string.monster_registration_name),
         onValueChange = { onMonsterChanged(monster.copy(name = it)) }
     )
 
     AppTextField(
         text = monster.group.orEmpty(),
-        label = "Group",
+        label = stringResource(R.string.monster_registration_group),
         onValueChange = {
             onMonsterChanged(monster.copy(group = it.takeUnless { it.isBlank() }))
         }
@@ -33,7 +33,7 @@ internal fun MonsterHeaderForm(
 
     AppTextField(
         text = monster.imageData.url,
-        label = "Image Url",
+        label = stringResource(R.string.monster_registration_image_url),
         onValueChange = {
             onMonsterChanged(monster.copy(imageData = monster.imageData.copy(url = it)))
         }
@@ -41,7 +41,7 @@ internal fun MonsterHeaderForm(
 
     PickerField(
         value = stringResource(monster.type.toMonsterTypeState().stringRes),
-        label = "Type",
+        label = stringResource(R.string.monster_registration_type),
         options = MonsterType.entries.map {
             stringResource(it.toMonsterTypeState().stringRes)
         },

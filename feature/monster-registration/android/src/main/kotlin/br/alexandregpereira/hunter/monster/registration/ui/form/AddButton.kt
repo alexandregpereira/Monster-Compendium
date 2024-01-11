@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,15 +23,18 @@ internal fun AddButton(
     onClick: () -> Unit = {},
 ) = Row(
     verticalAlignment = Alignment.CenterVertically,
-    modifier = modifier.height(40.dp).fillMaxWidth().clickable { onClick() },
+    modifier = modifier
+        .height(40.dp)
+        .fillMaxWidth()
+        .clickable { onClick() },
 ) {
     Icon(
         painter = painterResource(R.drawable.ic_add),
-        contentDescription = "Add",
+        contentDescription = stringResource(R.string.monster_registration_add_new),
         modifier = Modifier.padding(end = 8.dp),
     )
     Text(
-        text = "Add new (Work in progress)",
+        text = stringResource(R.string.monster_registration_add_new),
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
     )

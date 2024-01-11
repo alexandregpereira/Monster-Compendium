@@ -36,7 +36,7 @@ internal fun MonsterDamagesForm(
 
             PickerField(
                 value = stringResource(damage.type.toTypeState().stringRes),
-                label = "Damage Type",
+                label = stringResource(R.string.monster_registration_damage_type),
                 options = damageTypeOptions,
                 onValueChange = { optionIndex ->
                     onChanged(
@@ -55,7 +55,7 @@ internal fun MonsterDamagesForm(
             if (damage.type == DamageType.OTHER) {
                 AppTextField(
                     text = damage.name,
-                    label = "Other",
+                    label = stringResource(R.string.monster_registration_damage_type_other),
                     onValueChange = { newValue ->
                         onChanged(newDamages.changeAt(i) { copy(name = newValue) })
                     }
@@ -70,7 +70,7 @@ internal fun MonsterDamagesForm(
     }
 }
 
-private fun DamageType.toTypeState(): DamageTypeState {
+internal fun DamageType.toTypeState(): DamageTypeState {
     return when (this) {
         DamageType.ACID -> DamageTypeState.ACID
         DamageType.BLUDGEONING -> DamageTypeState.BLUDGEONING
@@ -88,7 +88,7 @@ private fun DamageType.toTypeState(): DamageTypeState {
     }
 }
 
-private enum class DamageTypeState(val stringRes: Int) {
+internal enum class DamageTypeState(val stringRes: Int) {
     ACID(R.string.monster_registration_damage_type_acid),
     BLUDGEONING(R.string.monster_registration_damage_type_bludgeoning),
     COLD(R.string.monster_registration_damage_type_cold),
@@ -102,4 +102,9 @@ private enum class DamageTypeState(val stringRes: Int) {
     SLASHING(R.string.monster_registration_damage_type_slashing),
     THUNDER(R.string.monster_registration_damage_type_thunder),
     OTHER(R.string.monster_registration_damage_type_other),
+}
+
+@Composable
+internal fun DamageTypeState.getStringName(): String {
+    return stringResource(stringRes)
 }

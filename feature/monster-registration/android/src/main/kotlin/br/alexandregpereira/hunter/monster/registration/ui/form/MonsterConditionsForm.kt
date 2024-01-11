@@ -31,7 +31,7 @@ internal fun MonsterConditionsForm(
         conditions.forEachIndexed { i, condition ->
             PickerField(
                 value = stringResource(condition.type.toTypeState().stringRes),
-                label = "Condition Type",
+                label = stringResource(R.string.monster_registration_condition_type),
                 options = conditionTypeOptions,
                 onValueChange = { optionIndex ->
                     onChanged(

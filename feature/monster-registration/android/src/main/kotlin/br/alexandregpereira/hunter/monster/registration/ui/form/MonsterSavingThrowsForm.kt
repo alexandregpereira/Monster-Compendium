@@ -33,7 +33,7 @@ internal fun MonsterSavingThrowsForm(
 
             PickerField(
                 value = typeName,
-                label = "Name",
+                label = stringResource(R.string.monster_registration_name),
                 options = optionsString,
                 onValueChange = { optionIndex ->
                     onChanged(
@@ -64,7 +64,7 @@ internal fun MonsterSavingThrowsForm(
     }
 }
 
-private fun AbilityScoreType.toState(): AbilityScoreTypeState {
+internal fun AbilityScoreType.toState(): AbilityScoreTypeState {
     return when (this) {
         AbilityScoreType.STRENGTH -> AbilityScoreTypeState.STRENGTH
         AbilityScoreType.DEXTERITY -> AbilityScoreTypeState.DEXTERITY
@@ -76,9 +76,9 @@ private fun AbilityScoreType.toState(): AbilityScoreTypeState {
 }
 
 @Composable
-private fun AbilityScoreTypeState.getStringResource(): String = stringResource(stringRes)
+internal fun AbilityScoreTypeState.getStringResource(): String = stringResource(stringRes)
 
-private enum class AbilityScoreTypeState(val stringRes: Int) {
+internal enum class AbilityScoreTypeState(val stringRes: Int) {
     STRENGTH(R.string.monster_registration_strength),
     DEXTERITY(R.string.monster_registration_dexterity),
     CONSTITUTION(R.string.monster_registration_constitution),

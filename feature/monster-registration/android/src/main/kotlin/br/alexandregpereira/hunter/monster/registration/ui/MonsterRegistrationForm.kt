@@ -81,56 +81,56 @@ internal fun MonsterRegistrationForm(
         }
         item(key = "skills") {
             MonsterProficiencyForm(
-                title = "Skills",
+                title = stringResource(R.string.monster_registration_skills),
                 proficiencies = monster.skills,
                 onChanged = { intent.onMonsterChanged(monster.copy(skills = it)) },
             )
         }
         item(key = "damageVulnerabilities") {
             MonsterDamagesForm(
-                title = "Damage Vulnerabilities",
+                title = stringResource(R.string.monster_registration_damage_vulnerabilities),
                 damages = monster.damageVulnerabilities,
                 onChanged = { intent.onMonsterChanged(monster.copy(damageVulnerabilities = it)) },
             )
         }
         item(key = "damageResistances") {
             MonsterDamagesForm(
-                title = "Damage Resistances",
+                title = stringResource(R.string.monster_registration_damage_resistances),
                 damages = monster.damageResistances,
                 onChanged = { intent.onMonsterChanged(monster.copy(damageResistances = it)) },
             )
         }
         item(key = "damageImmunities") {
             MonsterDamagesForm(
-                title = "Damage Immunities",
+                title = stringResource(R.string.monster_registration_damage_immunities),
                 damages = monster.damageImmunities,
                 onChanged = { intent.onMonsterChanged(monster.copy(damageImmunities = it)) },
             )
         }
         item(key = "conditionImmunities") {
             MonsterConditionsForm(
-                title = "Condition Immunities",
+                title = stringResource(R.string.monster_registration_condition_immunities),
                 conditions = monster.conditionImmunities,
                 onChanged = { intent.onMonsterChanged(monster.copy(conditionImmunities = it)) },
             )
         }
         item(key = "senses") {
             MonsterStringValueForm(
-                title = "Senses",
+                title = stringResource(R.string.monster_registration_senses),
                 value = monster.senses.joinToString(", "),
                 onChanged = { intent.onMonsterChanged(monster.copy(senses = it.split(", "))) },
             )
         }
         item(key = "languages") {
             MonsterStringValueForm(
-                title = "Languages",
+                title = stringResource(R.string.monster_registration_languages),
                 value = monster.languages,
                 onChanged = { intent.onMonsterChanged(monster.copy(languages = it)) },
             )
         }
         item(key = "specialAbilities") {
             MonsterAbilityDescriptionForm(
-                title = "Special Abilities",
+                title = stringResource(R.string.monster_registration_special_abilities),
                 abilityDescriptions = monster.specialAbilities,
                 onChanged = { intent.onMonsterChanged(monster.copy(specialAbilities = it)) },
             )
@@ -144,14 +144,14 @@ internal fun MonsterRegistrationForm(
         }
         item(key = "reactions") {
             MonsterAbilityDescriptionForm(
-                title = "Reactions",
+                title = stringResource(R.string.monster_registration_reactions),
                 abilityDescriptions = monster.reactions,
                 onChanged = { intent.onMonsterChanged(monster.copy(reactions = it)) },
             )
         }
         item(key = "legendaryActions") {
             MonsterActionsForm(
-                title = "Legendary Actions",
+                title = stringResource(R.string.monster_registration_legendary_actions),
                 actions = monster.legendaryActions,
                 onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
             )

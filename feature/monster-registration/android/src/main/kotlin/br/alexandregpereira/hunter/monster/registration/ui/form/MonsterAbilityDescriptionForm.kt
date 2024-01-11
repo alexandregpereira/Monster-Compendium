@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
+import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
@@ -26,7 +28,7 @@ internal fun MonsterAbilityDescriptionForm(
     abilityDescriptions.forEachIndexed { index, abilityDescription ->
         AppTextField(
             text = abilityDescription.name,
-            label = "Name",
+            label = stringResource(R.string.monster_registration_name),
             onValueChange = { newValue ->
                 onChanged(newAbilityDescriptions.changeAt(index) { copy(name = newValue) })
             }
@@ -34,7 +36,7 @@ internal fun MonsterAbilityDescriptionForm(
 
         AppTextField(
             text = abilityDescription.description,
-            label = "Description",
+            label = stringResource(R.string.monster_registration_description),
             multiline = true,
             onValueChange = { newValue ->
                 onChanged(newAbilityDescriptions.changeAt(index) { copy(name = newValue) })

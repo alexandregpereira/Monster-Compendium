@@ -2,7 +2,9 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Skill
+import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
 import br.alexandregpereira.hunter.ui.compose.AppTextField
@@ -23,7 +25,7 @@ internal fun MonsterProficiencyForm(
         proficiencies.forEachIndexed { i, proficiency ->
             AppTextField(
                 text = proficiency.name,
-                label = "Name",
+                label = stringResource(R.string.monster_registration_name),
                 onValueChange = { newValue ->
                     onChanged(mutableProficiencies.changeAt(i) { copy(name = newValue) })
                 }

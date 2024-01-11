@@ -50,4 +50,35 @@
     <string name="monster_registration_condition_type_restrained">Restrained</string>
     <string name="monster_registration_condition_type_stunned">Stunned</string>
     <string name="monster_registration_condition_type_unconscious">Unconscious</string>
+
+    <string name="monster_registration_add_new">Add new (Work in progress)</string>
+    <string name="monster_registration_name">Name</string>
+    <string name="monster_registration_description">Description</string>
+    <string name="monster_registration_ability_scores">Ability Scores</string>
+    <string name="monster_registration_attack_bonus">Attack Bonus</string>
+    <string name="monster_registration_damage_type">Damage Type</string>
+    <string name="monster_registration_damage_dice">Damage Dice</string>
+    <string name="monster_registration_condition_type">Condition Type</string>
+    <string name="monster_registration_edit">Edit (Beta)</string>
+    <string name="monster_registration_group">Group</string>
+    <string name="monster_registration_image_url">Image Url</string>
+    <string name="monster_registration_type">Type</string>
+    <string name="monster_registration_speed">Speed</string>
+    <string name="monster_registration_speed_type">Speed type</string>
+    <string name="monster_registration_spells">Spells</string>
+    <string name="monster_registration_work_in_progress">Work in Progress</string>
+    <string name="monster_registration_stats">Stats</string>
+    <string name="monster_registration_armor_class">Armor Class</string>
+    <string name="monster_registration_hit_points">Hit Points</string>
+    <string name="monster_registration_hit_dice">Hit Dice</string>
+    <string name="monster_registration_skills">Skills</string>
+    <string name="monster_registration_damage_vulnerabilities">Damage Vulnerabilities</string>
+    <string name="monster_registration_damage_resistances">Damage Resistances</string>
+    <string name="monster_registration_damage_immunities">Damage Immunities</string>
+    <string name="monster_registration_condition_immunities">Condition Immunities</string>
+    <string name="monster_registration_senses">Senses</string>
+    <string name="monster_registration_languages">Languages</string>
+    <string name="monster_registration_special_abilities">Special Abilities</string>
+    <string name="monster_registration_reactions">Reactions</string>
+    <string name="monster_registration_legendary_actions">Legendary Actions</string>
 </resources>
