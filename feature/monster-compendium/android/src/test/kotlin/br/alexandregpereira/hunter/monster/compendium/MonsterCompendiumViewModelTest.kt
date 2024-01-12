@@ -111,6 +111,7 @@ class MonsterCompendiumViewModelTest {
 
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(4)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -204,6 +205,7 @@ class MonsterCompendiumViewModelTest {
 
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -277,6 +279,7 @@ class MonsterCompendiumViewModelTest {
         every { saveScrollPositionUseCase(any()) } returns flowOf(Unit)
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -342,6 +345,7 @@ class MonsterCompendiumViewModelTest {
         every { saveScrollPositionUseCase(any()) } returns flowOf(Unit)
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
