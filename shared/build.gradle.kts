@@ -31,6 +31,7 @@ kotlin {
                 implementation(project(":feature:folder-insert:event")) // TODO Remove later
                 implementation(project(":feature:folder-preview:event")) // TODO Remove later
                 implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
+                implementation(project(":feature:monster-registration:event")) // TODO Remove later
                 implementation(project(":feature:spell-detail:event")) // TODO Remove later
                 implementation(project(":feature:monster-compendium:state-holder"))
                 implementation(project(":feature:monster-detail:state-holder"))

@@ -2,8 +2,8 @@ package br.alexandregpereira.hunter.monster.registration.event
 
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
-import br.alexandregpereira.hunter.event.EventManager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 
 sealed class MonsterRegistrationEvent {
@@ -24,3 +24,15 @@ interface MonsterRegistrationEventDispatcher : EventDispatcher<MonsterRegistrati
 fun EventListener<MonsterRegistrationResult>.collectOnSaved(
     onAction: () -> Unit
 ): Flow<Unit> = events.map { it is MonsterRegistrationResult.OnSaved }.map { onAction() }
+
+fun emptyMonsterRegistrationEventDispatcher(): MonsterRegistrationEventDispatcher {
+    return object : MonsterRegistrationEventDispatcher {
+        override fun dispatchEvent(event: MonsterRegistrationEvent) {}
+    }
+}
+
+fun emptyMonsterRegistrationEventListener(): MonsterRegistrationEventListener {
+    return object : MonsterRegistrationEventListener {
+        override val events: Flow<MonsterRegistrationResult> = emptyFlow()
+    }
+}
