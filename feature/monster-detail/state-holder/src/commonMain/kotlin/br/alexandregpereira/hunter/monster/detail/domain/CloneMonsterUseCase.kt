@@ -29,6 +29,9 @@ internal fun CloneMonsterUseCase(
             )
         }
         .map { monster ->
+            monster.copy(actions = monster.actions.map { it.copy(id = "") })
+        }
+        .map { monster ->
             val newMonsterLore = runCatching {
                 getMonsterLore(monsterIndex).single()
             }.getOrNull()?.copy(index = monster.index)

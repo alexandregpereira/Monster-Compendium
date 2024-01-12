@@ -17,13 +17,13 @@
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.SavingThrowDto
-import br.alexandregpereira.hunter.domain.model.Proficiency
+import br.alexandregpereira.hunter.domain.model.SavingThrow
 
-internal fun List<SavingThrowDto>.toDomain(): List<Proficiency> {
+internal fun List<SavingThrowDto>.toDomain(): List<SavingThrow> {
     return this.map {
-        Proficiency(
+        SavingThrow(
             index = it.index,
-            name = it.type.name,
+            type = it.type.toDomain(),
             modifier = it.modifier
         )
     }

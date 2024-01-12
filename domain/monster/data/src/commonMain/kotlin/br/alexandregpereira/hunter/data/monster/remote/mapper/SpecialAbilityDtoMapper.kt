@@ -20,7 +20,10 @@ import br.alexandregpereira.hunter.data.monster.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
 internal fun List<SpecialAbilityDto>.toDomain(): List<AbilityDescription> {
-    return this.map {
-        AbilityDescription(name = it.name, description = it.desc)
+    return this.mapIndexed { index, abilityDescription ->
+        AbilityDescription(
+            name = abilityDescription.name,
+            description = abilityDescription.desc
+        )
     }
 }

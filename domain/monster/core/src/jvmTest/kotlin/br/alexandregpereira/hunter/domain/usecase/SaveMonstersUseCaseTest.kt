@@ -76,9 +76,10 @@ class SaveMonstersUseCaseTest {
             description = "ASDAS sada 1m//asdqweqweqw 9m-asd-6m 3m"
         )
         val actionExpected = Action(
+            id = "actionId",
             damageDices = listOf(),
             attackBonus = null,
-            abilityDescriptionExpected
+            abilityDescription = abilityDescriptionExpected
         )
 
         verify {
@@ -127,6 +128,7 @@ class SaveMonstersUseCaseTest {
             description = "ASDAS sada 5 ft.//asdqweqweqw 30 ft.-asd-20 ft. 10 ft."
         )
         val actionExpected = Action(
+            id = "actionId",
             damageDices = listOf(),
             attackBonus = null,
             abilityDescriptionExpected
@@ -191,6 +193,7 @@ class SaveMonstersUseCaseTest {
                 ),
                 actions = listOf(
                     Action(
+                        id = "actionId",
                         damageDices = listOf(),
                         attackBonus = null,
                         AbilityDescription(
@@ -244,6 +247,7 @@ class SaveMonstersUseCaseTest {
                 ),
                 actions = listOf(
                     Action(
+                        id = "actionId",
                         damageDices = listOf(),
                         attackBonus = null,
                         AbilityDescription(

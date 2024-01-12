@@ -67,7 +67,7 @@ class GetMonstersBySectionUseCase internal constructor() {
         return map { monsters ->
             val items = mutableListOf<MonsterCompendiumItem>()
             monsters.forEach { monster ->
-                val title = monster.group ?: monster.name.getFirstLetter()
+                val title = monster.group?.takeUnless { it.isBlank() } ?: monster.name.getFirstLetter()
                 val lastTitle = items.lastOrNull { it is MonsterCompendiumItem.Title }?.let { it as MonsterCompendiumItem.Title }?.value
                 if (title.equalsWithNoSpecialChar(lastTitle).not()) {
                     val titleFirstLetter = title.getFirstLetter()

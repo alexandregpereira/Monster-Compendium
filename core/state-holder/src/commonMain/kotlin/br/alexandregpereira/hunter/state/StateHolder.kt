@@ -16,8 +16,32 @@
 
 package br.alexandregpereira.hunter.state
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+
+abstract class UiModel<State>(
+    initialState: State
+) : StateHolder<State> {
+
+    protected val scope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main.immediate
+    )
+
+    private val _state = MutableStateFlow(initialState)
+    override val state: StateFlow<State> = _state
+
+    protected fun setState(block: State.() -> State) {
+        _state.value = state.value.block()
+    }
+
+    fun onCleared() {
+        scope.cancel()
+    }
+}
 
 interface StateHolder<State> {
 
@@ -29,13 +53,11 @@ interface MutableStateHolder<State>: StateHolder<State> {
     fun setState(block: State.() -> State)
 }
 
-@Suppress("FunctionName")
-fun <State> DefaultMutableStateHolder(initialState: State): MutableStateHolder<State> {
+fun <State> MutableStateHolder(initialState: State): MutableStateHolder<State> {
     return DefaultStateHolderImpl(initialState)
 }
 
-@Suppress("FunctionName")
-fun <State> DefaultMutableStateHolder(
+fun <State> MutableStateHolder(
     stateRecovery: StateRecovery<State>
 ): MutableStateHolder<State> {
     return DefaultStateHolderWithRecovery(stateRecovery)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.monster.registration.di
 
-import kotlin.native.ObjCName
+import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@ObjCName(name = "Proficiency", exact = true)
-data class Proficiency(
-    val index: String,
-    val modifier: Int,
-    val name: String
-)
+val monsterRegistrationModule = listOf(monsterRegistrationStateModule) + module {
+
+    viewModel {
+        MonsterRegistrationViewModel(get(), get())
+    }
+}

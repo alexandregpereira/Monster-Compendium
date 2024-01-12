@@ -5,8 +5,8 @@ CREATE INDEX IF NOT EXISTS `index_SpellUsageSpellCrossRefEntity_spellIndex` ON S
 insert:
 INSERT OR REPLACE INTO SpellUsageSpellCrossRefEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId NOT LIKE '%-k4k4sh1';
+deleteWithSpellUsageId:
+DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId IN ?;
 
 getBySpellusageIdAndSpellIndex:
 SELECT

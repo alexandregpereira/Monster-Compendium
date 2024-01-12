@@ -25,6 +25,8 @@ import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventD
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewResultListener
 import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
+import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventDispatcher
+import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventListener
 import br.alexandregpereira.hunter.spell.detail.event.emptySpellDetailEventDispatcher
 import br.alexandregpereira.hunter.sync.di.syncStateModule
 import kotlinx.coroutines.Dispatchers
@@ -52,5 +54,11 @@ fun appModules(): List<Module> = domainModules + dataModules +
             }
             factory {
                 emptyFolderPreviewEventDispatcher()
+            }
+            factory {
+                emptyMonsterRegistrationEventListener()
+            }
+            factory {
+                emptyMonsterRegistrationEventDispatcher()
             }
         }

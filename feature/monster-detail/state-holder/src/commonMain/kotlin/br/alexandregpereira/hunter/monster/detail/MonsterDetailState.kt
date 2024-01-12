@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.detail
 
+import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlin.native.ObjCName
 
@@ -26,6 +27,7 @@ data class MonsterDetailState(
     val monsters: List<Monster> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
+    val measurementUnit: MeasurementUnit = MeasurementUnit.FEET,
     val showDetail: Boolean = false,
     val showCloneForm: Boolean = false,
     val monsterCloneName: String = "",

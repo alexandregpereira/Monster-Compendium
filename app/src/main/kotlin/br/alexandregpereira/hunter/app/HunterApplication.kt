@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.monster.compendium.di.monsterCompendiumModule
 import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModule
 import br.alexandregpereira.hunter.monster.content.preview.di.monsterContentPreviewModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModule
+import br.alexandregpereira.hunter.monster.registration.di.monsterRegistrationModule
 import br.alexandregpereira.hunter.search.di.searchModule
 import br.alexandregpereira.hunter.settings.di.settingsModule
 import br.alexandregpereira.hunter.spell.detail.di.spellDetailModule
@@ -81,7 +82,8 @@ class HunterApplication : Application() {
                         monsterLoreDetailModule +
                         monsterContentManagerModule +
                         monsterContentPreviewModule +
-                        syncModule
+                        syncModule +
+                        monsterRegistrationModule
             )
             modules(
                 analyticsModule,

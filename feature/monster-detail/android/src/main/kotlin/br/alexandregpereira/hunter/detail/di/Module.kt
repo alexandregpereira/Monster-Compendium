@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.detail.di
 import br.alexandregpereira.hunter.detail.MonsterDetailViewModel
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 val monsterDetailModule = monsterDetailStateModule.apply {
@@ -33,6 +35,8 @@ val monsterDetailModule = monsterDetailStateModule.apply {
             monsterDetailEventDispatcher = get(),
             monsterLoreDetailEventDispatcher = get(),
             folderInsertEventDispatcher = get(),
+            monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
+            monsterRegistrationEventListener = get<MonsterRegistrationEventListener>(),
             dispatcher = get(),
             analytics = MonsterDetailAnalytics(get())
         )

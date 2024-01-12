@@ -10,6 +10,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":core:uuid"))
                 implementation(project(":domain:alternative-source:core"))
                 implementation(project(":domain:monster:core"))
                 implementation(project(":domain:settings:core"))

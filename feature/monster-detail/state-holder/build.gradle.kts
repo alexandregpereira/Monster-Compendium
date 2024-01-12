@@ -32,6 +32,7 @@ kotlin {
                 implementation(project(":feature:folder-insert:event"))
                 implementation(project(":feature:monster-detail:event"))
                 implementation(project(":feature:monster-lore-detail:event"))
+                implementation(project(":feature:monster-registration:event"))
                 implementation(project(":feature:spell-detail:event"))
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.koin.core)

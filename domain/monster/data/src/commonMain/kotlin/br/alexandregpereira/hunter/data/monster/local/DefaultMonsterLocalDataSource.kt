@@ -67,16 +67,8 @@ internal class DefaultMonsterLocalDataSource(
         isSync: Boolean
     ): Flow<Unit> = flow {
         mutex.withLock {
-            if (isSync) {
-                monsterDao.deleteAll()
-            }
-
-            insertAll(monsters)
+            monsterDao.insert(monsters, deleteAll = isSync)
         }
         emit(Unit)
-    }
-
-    private suspend fun insertAll(monsters: List<MonsterCompleteEntity>) {
-        monsterDao.insert(monsters)
     }
 }

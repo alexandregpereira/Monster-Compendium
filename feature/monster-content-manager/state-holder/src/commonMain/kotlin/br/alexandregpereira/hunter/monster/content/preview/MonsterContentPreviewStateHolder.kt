@@ -20,10 +20,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.GetRemoteMonsterCom
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexFromTableContentIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromCompendiumItemIndex
-import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAction.Companion.goToCompendiumIndex
-import br.alexandregpereira.hunter.state.DefaultActionHandler
-import br.alexandregpereira.hunter.state.DefaultMutableStateHolder
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.MutableStateHolder
 import br.alexandregpereira.hunter.state.ScopeManager
@@ -43,8 +40,8 @@ class MonsterContentPreviewStateHolder internal constructor(
     private val getRemoteMonsterCompendiumUseCase: GetRemoteMonsterCompendiumUseCase,
     private val monsterContentPreviewEventManager: MonsterContentPreviewEventManager,
 ) : ScopeManager(),
-    MutableStateHolder<MonsterContentPreviewState> by DefaultMutableStateHolder(stateRecovery),
-    MutableActionHandler<MonsterContentPreviewAction> by DefaultActionHandler() {
+    MutableStateHolder<MonsterContentPreviewState> by MutableStateHolder(stateRecovery),
+    MutableActionHandler<MonsterContentPreviewAction> by MutableActionHandler() {
 
     init {
         observeEvents()

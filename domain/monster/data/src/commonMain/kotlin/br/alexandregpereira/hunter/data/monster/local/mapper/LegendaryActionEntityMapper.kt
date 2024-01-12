@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.domain.model.Action
 internal fun List<LegendaryActionWithDamageDicesEntity>.toDomain(): List<Action> {
     return this.map {
         Action(
+            id = it.action.id,
             damageDices = it.damageDices.toDamageDiceDomain(),
             attackBonus = it.action.attackBonus,
             abilityDescription = AbilityDescription(
@@ -38,11 +39,10 @@ internal fun List<Action>.toLegendaryActionEntity(
     monsterIndex: String
 ): List<LegendaryActionWithDamageDicesEntity> {
     return this.map {
-        val actionId = it.abilityDescription.name + monsterIndex
         LegendaryActionWithDamageDicesEntity(
-            damageDices = it.damageDices.toDamageDiceEntity(actionId, monsterIndex),
+            damageDices = it.damageDices.toDamageDiceEntity(it.id, monsterIndex),
             action = LegendaryActionEntity(
-                id = actionId,
+                id = it.id,
                 attackBonus = it.attackBonus,
                 description = it.abilityDescription.description,
                 name = it.abilityDescription.name,

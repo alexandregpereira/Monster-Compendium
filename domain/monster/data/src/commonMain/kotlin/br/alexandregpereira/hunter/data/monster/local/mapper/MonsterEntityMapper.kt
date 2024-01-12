@@ -58,46 +58,48 @@ internal fun MonsterCompleteEntity.toDomain(): Monster {
     )
 }
 
+internal fun Monster.toEntity(): MonsterCompleteEntity {
+    return MonsterCompleteEntity(
+        monster = MonsterEntity(
+            index = index,
+            type = type.name,
+            subtype = subtype,
+            group = group,
+            challengeRating = challengeRating,
+            name = name,
+            subtitle = subtitle,
+            imageUrl = imageData.url,
+            backgroundColorLight = imageData.backgroundColor.light,
+            backgroundColorDark = imageData.backgroundColor.dark,
+            isHorizontalImage = imageData.isHorizontal,
+            size = size,
+            alignment = alignment,
+            armorClass = stats.armorClass,
+            hitPoints = stats.hitPoints,
+            hitDice = stats.hitDice,
+            senses = senses.joinToString(),
+            languages = languages,
+            sourceName = sourceName,
+            isClone = isClone,
+        ),
+        speed = speed.toEntity(index),
+        abilityScores = toAbilityScoreEntity(),
+        savingThrows = savingThrows.toSavingThrowEntity(index),
+        skills = skills.toSkillEntity(index),
+        damageVulnerabilities = damageVulnerabilities.toDamageVulnerabilityEntity(index),
+        damageResistances = damageResistances.toDamageResistanceEntity(index),
+        damageImmunities = damageImmunities.toDamageImmunityEntity(index),
+        conditionImmunities = conditionImmunities.toEntity(index),
+        specialAbilities = specialAbilities.toEntity(index),
+        actions = actions.toEntity(index),
+        reactions = reactions.toReactionEntity(index),
+        spellcastings = spellcastings.toEntity(index),
+        legendaryActions = legendaryActions.toLegendaryActionEntity(index)
+    )
+}
+
 internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
-    return this.map {
-        MonsterCompleteEntity(
-            monster = MonsterEntity(
-                index = it.index,
-                type = it.type.name,
-                subtype = it.subtype,
-                group = it.group,
-                challengeRating = it.challengeRating,
-                name = it.name,
-                subtitle = it.subtitle,
-                imageUrl = it.imageData.url,
-                backgroundColorLight = it.imageData.backgroundColor.light,
-                backgroundColorDark = it.imageData.backgroundColor.dark,
-                isHorizontalImage = it.imageData.isHorizontal,
-                size = it.size,
-                alignment = it.alignment,
-                armorClass = it.stats.armorClass,
-                hitPoints = it.stats.hitPoints,
-                hitDice = it.stats.hitDice,
-                senses = it.senses.joinToString(),
-                languages = it.languages,
-                sourceName = it.sourceName,
-                isClone = it.isClone,
-            ),
-            speed = it.speed.toEntity(it.index),
-            abilityScores = it.toAbilityScoreEntity(),
-            savingThrows = it.savingThrows.toSavingThrowEntity(it.index),
-            skills = it.skills.toSkillEntity(it.index),
-            damageVulnerabilities = it.damageVulnerabilities.toDamageVulnerabilityEntity(it.index),
-            damageResistances = it.damageResistances.toDamageResistanceEntity(it.index),
-            damageImmunities = it.damageImmunities.toDamageImmunityEntity(it.index),
-            conditionImmunities = it.conditionImmunities.toEntity(it.index),
-            specialAbilities = it.specialAbilities.toEntity(it.index),
-            actions = it.actions.toEntity(it.index),
-            reactions = it.reactions.toReactionEntity(it.index),
-            spellcastings = it.spellcastings.toEntity(it.index),
-            legendaryActions = it.legendaryActions.toLegendaryActionEntity(it.index)
-        )
-    }
+    return this.map { it.toEntity() }
 }
 
 private fun MonsterEntity.toDomain(): Monster {

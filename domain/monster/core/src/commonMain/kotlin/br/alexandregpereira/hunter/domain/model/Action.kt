@@ -20,6 +20,7 @@ import kotlin.native.ObjCName
 
 @ObjCName(name = "Action", exact = true)
 data class Action(
+    val id: String,
     val damageDices: List<DamageDice>,
     val attackBonus: Int?,
     val abilityDescription: AbilityDescription

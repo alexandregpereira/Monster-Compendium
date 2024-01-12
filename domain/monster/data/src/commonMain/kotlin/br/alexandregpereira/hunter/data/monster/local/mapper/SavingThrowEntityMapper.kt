@@ -18,25 +18,14 @@ package br.alexandregpereira.hunter.data.monster.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
-import br.alexandregpereira.hunter.domain.model.Proficiency
+import br.alexandregpereira.hunter.domain.model.SavingThrow
+import br.alexandregpereira.hunter.domain.model.Skill
 
-internal fun List<SavingThrowEntity>.toDomain(): List<Proficiency> {
-    return this.map {
-        it.value.copy(
-            name = when (it.value.name) {
-                "Str" -> AbilityScoreType.STRENGTH.name
-                "Dex" -> AbilityScoreType.DEXTERITY.name
-                "Con" -> AbilityScoreType.CONSTITUTION.name
-                "Int" -> AbilityScoreType.INTELLIGENCE.name
-                "Wis" -> AbilityScoreType.WISDOM.name
-                "Cha" -> AbilityScoreType.CHARISMA.name
-                else -> it.value.name
-            }
-        ).toDomain()
-    }
+internal fun List<SavingThrowEntity>.toDomain(): List<SavingThrow> {
+    return this.map { it.value.toSavingThrowDomain() }
 }
 
-internal fun List<Proficiency>.toSavingThrowEntity(monsterIndex: String): List<SavingThrowEntity> {
+internal fun List<SavingThrow>.toSavingThrowEntity(monsterIndex: String): List<SavingThrowEntity> {
     return this.map {
         SavingThrowEntity(
             value = it.toEntity(monsterIndex)
