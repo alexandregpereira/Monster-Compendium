@@ -52,6 +52,7 @@ import br.alexandregpereira.hunter.domain.model.Skill
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
+import java.text.NumberFormat
 
 internal fun List<Monster>.asState(): List<MonsterState> {
     return this.map { it.asState() }
@@ -61,7 +62,12 @@ private fun Monster.asState(): MonsterState {
     return MonsterState(
         index = index,
         name = name,
-        imageState = imageData.asState(type, challengeRating, contentDescription = name),
+        imageState = imageData.asState(
+            type = type,
+            challengeRating = challengeRating,
+            xp = xpFormatted(),
+            contentDescription = name
+        ),
         subtype = subtype,
         group = group,
         subtitle = subtitle,
@@ -98,9 +104,24 @@ private fun Monster.asState(): MonsterState {
     )
 }
 
+private fun Monster.xpFormatted(): String {
+    val xpString = when {
+        xp < 1000 -> xp.toString()
+        else -> {
+            val xpFormatted = NumberFormat.getIntegerInstance().format(xp)
+                .replace("0", "")
+                .let { if (it.last().isDigit().not()) it.dropLast(1) else it }
+            "${xpFormatted}k"
+        }
+    }
+
+    return "$xpString XP"
+}
+
 private fun MonsterImageData.asState(
     type: MonsterType,
     challengeRating: Float,
+    xp: String,
     contentDescription: String,
 ): MonsterImageState {
     return MonsterImageState(
@@ -111,6 +132,7 @@ private fun MonsterImageData.asState(
             dark = backgroundColor.dark,
         ),
         challengeRating = challengeRating,
+        xp = xp,
         isHorizontal = isHorizontal,
         contentDescription = contentDescription,
     )

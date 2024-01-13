@@ -17,10 +17,16 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,12 +48,13 @@ fun ChallengeRatingCircle(
     challengeRating: Float,
     size: Dp,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 14.sp,
-    contentTopPadding: Dp = 0.dp
+    xp: String = "",
+    fontSize: TextUnit = 16.sp,
+    contentTopPadding: Dp = 0.dp,
+    xpFontSize: TextUnit = 10.sp,
 ) = Box(
-    contentAlignment = Alignment.CenterStart,
     modifier = modifier
-        .width(size)
+        .widthIn(min = size)
         .height(size + contentTopPadding)
 ) {
     DrawChallengeRatingCircle(
@@ -55,20 +62,45 @@ fun ChallengeRatingCircle(
         canvasSize = size,
         contentTopPadding = contentTopPadding
     )
-    Text(
-        challengeRating.getChallengeRatingFormatted(),
-        fontWeight = FontWeight.SemiBold,
-        fontSize = fontSize,
-        color = MaterialTheme.colors.onSurface,
-        textAlign = TextAlign.Center,
-        maxLines = 1,
-        modifier = Modifier
-            .width(size - 16.dp)
-            .padding(
-                bottom = 16.dp,
-                top = contentTopPadding + 4.dp
+    Column(
+        modifier = Modifier.background(
+            color = MaterialTheme.colors.surface,
+            shape = RoundedCornerShape(bottomEndPercent = 25)
+        )
+    ) {
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(vertical = 4.dp)
+                .padding(top = contentTopPadding)
+        ) {
+            Text(
+                challengeRating.getChallengeRatingFormatted(),
+                fontWeight = FontWeight.SemiBold,
+                fontSize = fontSize,
+                color = MaterialTheme.colors.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                modifier = Modifier
+                    .width(size - 16.dp)
             )
-    )
+
+            if (xp.isNotBlank()) {
+                Text(
+                    xp,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = xpFontSize,
+                    color = MaterialTheme.colors.onSurface,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    modifier = Modifier
+                        .padding(start = 4.dp, end = 8.dp)
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -110,13 +142,39 @@ private fun Float.getChallengeRatingFormatted(): String {
     }
 }
 
+@Preview
+@Composable
+private fun ChallengeRatingWithXpPreview() {
+    HunterTheme {
+        ChallengeRatingCircle(
+            challengeRating = 10f,
+            xp = "111k XP",
+            size = 62.dp,
+            fontSize = 18.sp,
+            xpFontSize = 14.sp,
+        )
+    }
+}
 
+@Preview
+@Composable
+private fun ChallengeRatingWithXpPreviewWithDifferentSize() {
+    HunterTheme {
+        ChallengeRatingCircle(
+            challengeRating = 10f,
+            xp = "155k XP",
+            size = 56.dp,
+            fontSize = 16.sp,
+            contentTopPadding = 24.dp
+        )
+    }
+}
 
 @Preview
 @Composable
 private fun ChallengeRatingPreview() {
     HunterTheme {
-        ChallengeRatingCircle(10f, 48.dp)
+        ChallengeRatingCircle(challengeRating = 10f, size = 48.dp)
     }
 }
 
@@ -125,7 +183,7 @@ private fun ChallengeRatingPreview() {
 private fun ChallengeRatingPreviewWithDifferentSize() {
     HunterTheme {
         ChallengeRatingCircle(
-            10f,
+            challengeRating = 10f,
             size = 56.dp,
             fontSize = 16.sp,
             contentTopPadding = 24.dp
