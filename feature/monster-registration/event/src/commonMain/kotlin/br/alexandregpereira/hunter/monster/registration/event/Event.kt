@@ -14,7 +14,7 @@ sealed class MonsterRegistrationEvent {
 }
 
 sealed class MonsterRegistrationResult {
-    data object OnSaved : MonsterRegistrationResult()
+    data class OnSaved(val monsterIndex: String) : MonsterRegistrationResult()
 }
 
 interface MonsterRegistrationEventListener : EventListener<MonsterRegistrationResult>
@@ -22,8 +22,9 @@ interface MonsterRegistrationEventListener : EventListener<MonsterRegistrationRe
 interface MonsterRegistrationEventDispatcher : EventDispatcher<MonsterRegistrationEvent>
 
 fun EventListener<MonsterRegistrationResult>.collectOnSaved(
-    onAction: () -> Unit
-): Flow<Unit> = events.map { it is MonsterRegistrationResult.OnSaved }.map { onAction() }
+    onAction: (String) -> Unit
+): Flow<Unit> = events.map { it as? MonsterRegistrationResult.OnSaved }
+    .map { event -> event?.let { onAction(it.monsterIndex) } }
 
 fun emptyMonsterRegistrationEventDispatcher(): MonsterRegistrationEventDispatcher {
     return object : MonsterRegistrationEventDispatcher {

@@ -84,6 +84,10 @@ class MonsterCompendiumStateHolder(
     }
 
     fun loadMonsters() = scope.launch {
+        fetchMonsterCompendium()
+    }
+
+    private suspend fun fetchMonsterCompendium() {
         getMonsterCompendiumUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
@@ -192,10 +196,7 @@ class MonsterCompendiumStateHolder(
     private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
         flowOf(state.value.items)
             .map { items ->
-                items.indexOfFirst {
-                    it is MonsterCompendiumItem.Item
-                            && it.monster.index == monsterIndex
-                }
+                items.compendiumIndexOf(monsterIndex)
             }.onEach { compendiumIndex ->
                 if (compendiumIndex < 0) throw NavigateToCompendiumIndexError(monsterIndex)
             }
@@ -205,12 +206,21 @@ class MonsterCompendiumStateHolder(
             }
             .catch {  error ->
                 if (error is NavigateToCompendiumIndexError) {
-                    loadMonsters()
+                    fetchMonsterCompendium()
+                    state.value.items.compendiumIndexOf(monsterIndex).takeIf { it >= 0 }?.let {
+                        sendAction(GoToCompendiumIndex(it))
+                    }
                 } else {
                     analytics.logException(error)
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun List<MonsterCompendiumItem>.compendiumIndexOf(monsterIndex: String): Int {
+        return indexOfFirst {
+            it is MonsterCompendiumItem.Item && it.monster.index == monsterIndex
+        }
     }
 
     private fun observeEvents() {
@@ -236,8 +246,11 @@ class MonsterCompendiumStateHolder(
             loadMonsters()
         }.launchIn(scope)
 
-        monsterRegistrationEventListener.collectOnSaved {
-            loadMonsters()
+        monsterRegistrationEventListener.collectOnSaved { monsterIndex ->
+            scope.launch {
+                fetchMonsterCompendium()
+                navigateToCompendiumIndexFromMonsterIndex(monsterIndex)
+            }
         }.launchIn(scope)
     }
 
