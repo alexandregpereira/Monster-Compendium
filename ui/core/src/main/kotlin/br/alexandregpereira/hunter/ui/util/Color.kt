@@ -21,5 +21,5 @@ import androidx.core.graphics.toColorInt
 
 fun String.toColor(): Color {
     if (this.isEmpty()) return Color.Transparent
-    return Color(this.toColorInt())
+    return runCatching { this.toColorInt() }.getOrNull()?.let(::Color) ?: Color.Transparent
 }
