@@ -21,8 +21,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
@@ -46,13 +48,13 @@ fun MonsterDeleteConfirmation(
     Spacer(modifier = Modifier.height(16.dp))
 
     ScreenHeader(
-        title = "Are you sure you want to delete this monster?",
+        title = stringResource(R.string.monster_detail_delete_question),
     )
 
     Spacer(modifier = Modifier.height(32.dp))
 
     AppButton(
-        text = "I'm sure",
+        text = stringResource(R.string.monster_detail_delete_confirmation),
         onClick = onConfirmed
     )
 }

@@ -20,4 +20,5 @@
     <string name="settings_alternative_sources_json">URL do JSON de Fontes Alternativas</string>
     <string name="settings_manage_monster_content">Gerenciar Conteúdos de Monstros</string>
     <string name="settings_sync">Sincronizar</string>
+    <string name="settings_manage_advanced_settings">Configurações Avançadas</string>
 </resources>

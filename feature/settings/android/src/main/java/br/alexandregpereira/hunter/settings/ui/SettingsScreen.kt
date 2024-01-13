@@ -53,7 +53,7 @@ internal fun SettingsScreen(
         Column(Modifier.padding(contentPadding)) {
 
             SettingsItem(
-                text = "Advanced Settings",
+                text = stringResource(R.string.settings_manage_advanced_settings),
                 onClick = viewIntent::onAdvancedSettingsClick
             )
 
