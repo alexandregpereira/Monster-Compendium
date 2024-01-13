@@ -81,4 +81,5 @@
     <string name="monster_registration_special_abilities">Special Abilities</string>
     <string name="monster_registration_reactions">Reactions</string>
     <string name="monster_registration_legendary_actions">Legendary Actions</string>
+    <string name="monster_registration_image_background_color">Image Background Color</string>
 </resources>

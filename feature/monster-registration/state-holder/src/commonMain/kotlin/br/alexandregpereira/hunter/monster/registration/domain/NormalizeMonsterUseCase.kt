@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -56,6 +57,18 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
                     else -> 10
                 }
             )
-        }
+        },
+        imageData = monster.imageData.copy(
+            backgroundColor = monster.imageData.backgroundColor.normalizeColor(),
+        ),
+    )
+}
+
+private fun Color.normalizeColor(): Color {
+    val newColor = this.light.takeIf { it.isNotBlank() }
+        ?.replace("#", "")?.let { "#$it" }?.uppercase().orEmpty()
+    return this.copy(
+        light = newColor,
+        dark = newColor,
     )
 }

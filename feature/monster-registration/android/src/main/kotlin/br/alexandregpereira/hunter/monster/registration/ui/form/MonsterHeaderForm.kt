@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.registration.R
@@ -36,6 +37,18 @@ internal fun MonsterHeaderForm(
         label = stringResource(R.string.monster_registration_image_url),
         onValueChange = {
             onMonsterChanged(monster.copy(imageData = monster.imageData.copy(url = it)))
+        }
+    )
+
+    AppTextField(
+        text = monster.imageData.backgroundColor.light,
+        label = stringResource(R.string.monster_registration_image_background_color),
+        onValueChange = {
+            onMonsterChanged(
+                monster.copy(imageData = monster.imageData.copy(
+                    backgroundColor = Color(light = it, dark = it)
+                ))
+            )
         }
     )
 
