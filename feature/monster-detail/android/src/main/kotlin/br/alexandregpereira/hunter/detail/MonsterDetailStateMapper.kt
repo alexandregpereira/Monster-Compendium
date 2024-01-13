@@ -50,6 +50,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.SavingThrow
 import br.alexandregpereira.hunter.domain.model.Skill
 import br.alexandregpereira.hunter.domain.model.SpeedValue
+import br.alexandregpereira.hunter.domain.model.xpFormatted
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import java.text.NumberFormat
@@ -102,20 +103,6 @@ private fun Monster.asState(): MonsterState {
             substring(0, loreSize.coerceAtMost(length)) + ellipse
         }.orEmpty()
     )
-}
-
-private fun Monster.xpFormatted(): String {
-    val xpString = when {
-        xp < 1000 -> xp.toString()
-        else -> {
-            val xpFormatted = NumberFormat.getIntegerInstance().format(xp)
-                .replace("0", "")
-                .let { if (it.last().isDigit().not()) it.dropLast(1) else it }
-            "${xpFormatted}k"
-        }
-    }
-
-    return "$xpString XP"
 }
 
 private fun MonsterImageData.asState(

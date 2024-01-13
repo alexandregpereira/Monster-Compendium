@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
+import java.text.NumberFormat
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Monster", exact = true)
@@ -109,6 +110,20 @@ private fun Monster.challengeRatingToXp(): Int {
         30f -> 155000
         else -> 10
     }
+}
+
+fun Monster.xpFormatted(): String {
+    val xpString = when {
+        xp < 1000 -> xp.toString()
+        else -> {
+            val xpFormatted = NumberFormat.getIntegerInstance().format(xp)
+                .dropLastWhile { it == '0' }
+                .let { if (it.last().isDigit().not()) it.dropLast(1) else it }
+            "${xpFormatted}k"
+        }
+    }
+
+    return "$xpString XP"
 }
 
 fun getFakeMonster(): Monster {
