@@ -31,6 +31,7 @@ data class MonsterDetailState(
     val showDetail: Boolean = false,
     val showCloneForm: Boolean = false,
     val monsterCloneName: String = "",
+    val showDeleteConfirmation: Boolean = false,
 )
 
 val MonsterDetailState.ShowOptions: MonsterDetailState

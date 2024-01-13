@@ -174,7 +174,8 @@ class MonsterDetailStateHolder(
             }
 
             DELETE -> {
-                deleteMonster()
+                analytics.trackMonsterDetailDeleteClicked(monsterIndex)
+                setState { copy(showDeleteConfirmation = true) }
             }
 
             CHANGE_TO_FEET -> {
@@ -215,6 +216,17 @@ class MonsterDetailStateHolder(
     fun onCloneFormSaved() {
         setState { hideCloneForm() }
         cloneMonster()
+    }
+
+    fun onDeleteConfirmed() {
+        analytics.trackMonsterDetailDeleteConfirmed(monsterIndex)
+        setState { copy(showDeleteConfirmation = false) }
+        deleteMonster()
+    }
+
+    fun onDeleteClosed() {
+        analytics.trackMonsterDetailDeleteCanceled(monsterIndex)
+        setState { copy(showDeleteConfirmation = false) }
     }
 
     private fun getMonsterDetail(
@@ -306,8 +318,8 @@ class MonsterDetailStateHolder(
             if (monsterIndexes.isEmpty()) {
                 getMonsterDetail(monsterIndex, invalidateCache = true)
                     .toMonsterDetailState()
-                    .map {
-                        it to monsterIndex
+                    .map { state ->
+                        state to monsterIndex
                     }
             } else flowOf(currentState to currentMonsterIndex)
         }.flowOn(dispatcher)
@@ -323,7 +335,6 @@ class MonsterDetailStateHolder(
     }
 
     private fun deleteMonster() {
-        analytics.trackMonsterDetailDeleteClicked(monsterIndex)
         deleteMonster(monsterIndex)
             .flowOn(dispatcher)
             .onEach {

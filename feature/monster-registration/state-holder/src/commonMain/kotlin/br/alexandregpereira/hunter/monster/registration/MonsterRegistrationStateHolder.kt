@@ -56,7 +56,9 @@ class MonsterRegistrationStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach {
                 onClose()
-                eventResultManager.dispatchEvent(MonsterRegistrationResult.OnSaved)
+                eventResultManager.dispatchEvent(MonsterRegistrationResult.OnSaved(
+                    monsterIndex = state.value.monster.index
+                ))
             }
             .launchIn(scope)
     }

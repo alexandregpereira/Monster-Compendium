@@ -115,4 +115,22 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackMonsterDetailDeleteConfirmed(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - delete confirmed",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackMonsterDetailDeleteCanceled(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - delete canceled",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
 }

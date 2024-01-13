@@ -50,4 +50,6 @@
     <string name="monster_detail_clone_monster_name">Nome</string>
     <string name="monster_detail_edit">Editar</string>
     <string name="monster_detail_delete">Remover</string>
+    <string name="monster_detail_delete_question">Tem certeza que deseja excluir esse monstro?</string>
+    <string name="monster_detail_delete_confirmation">Tenho certeza</string>
 </resources>
