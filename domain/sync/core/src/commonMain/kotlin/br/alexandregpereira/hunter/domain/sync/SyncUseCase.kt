@@ -49,7 +49,7 @@ class SyncUseCase internal constructor(
     private val deviceLanguageRepository: DeviceLanguageRepository
 ) {
 
-    private val contentVersion = 2
+    private val contentVersion = 3
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {
