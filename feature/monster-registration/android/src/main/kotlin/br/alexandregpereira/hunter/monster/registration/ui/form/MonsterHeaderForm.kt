@@ -25,6 +25,12 @@ internal fun MonsterHeaderForm(
     )
 
     AppTextField(
+        text = monster.subtitle,
+        label = stringResource(R.string.monster_registration_name),
+        onValueChange = { onMonsterChanged(monster.copy(subtitle = it)) }
+    )
+
+    AppTextField(
         text = monster.group.orEmpty(),
         label = stringResource(R.string.monster_registration_group),
         onValueChange = {
