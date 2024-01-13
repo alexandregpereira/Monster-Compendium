@@ -49,6 +49,7 @@ val monsterRegistrationStateModule = module {
             getMonster = get(),
             saveMonsters = get(),
             normalizeMonster = get(),
+            analytics = get(),
         )
     }
 }
