@@ -53,6 +53,7 @@
 
     <string name="monster_registration_add_new">Add new (Work in progress)</string>
     <string name="monster_registration_name">Name</string>
+    <string name="monster_registration_subtitle">Subtitle</string>
     <string name="monster_registration_description">Description</string>
     <string name="monster_registration_ability_scores">Ability Scores</string>
     <string name="monster_registration_attack_bonus">Attack Bonus</string>
