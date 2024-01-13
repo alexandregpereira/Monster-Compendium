@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
@@ -46,6 +47,7 @@ internal class MonsterDetailViewModel(
     getMonsterDetailUseCase: GetMonsterDetailUseCase,
     cloneMonster: CloneMonsterUseCase,
     changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
+    deleteMonsterUseCase: DeleteMonsterUseCase,
     spellDetailEventDispatcher: SpellDetailEventDispatcher,
     monsterDetailEventListener: MonsterDetailEventListener,
     monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
@@ -61,6 +63,7 @@ internal class MonsterDetailViewModel(
         getMonsterDetailUseCase,
         cloneMonster,
         changeMonstersMeasurementUnitUseCase,
+        deleteMonsterUseCase,
         spellDetailEventDispatcher,
         monsterDetailEventListener,
         monsterDetailEventDispatcher,

@@ -97,4 +97,22 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackMonsterDetailDeleteClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - delete clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackMonsterDetailEditClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - edit clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
 }

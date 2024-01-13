@@ -50,4 +50,5 @@
     <string name="monster_detail_clone">Clone</string>
     <string name="monster_detail_clone_monster_name">Name</string>
     <string name="monster_detail_edit">Edit</string>
+    <string name="monster_detail_delete">Delete</string>
 </resources>

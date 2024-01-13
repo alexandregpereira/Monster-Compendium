@@ -35,8 +35,10 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_T
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CLONE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.EDIT
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
@@ -67,6 +69,7 @@ class MonsterDetailStateHolder(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val cloneMonster: CloneMonsterUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
+    private val deleteMonster: DeleteMonsterUseCase,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
@@ -163,10 +166,15 @@ class MonsterDetailStateHolder(
             CLONE -> showCloneForm()
 
             EDIT -> {
+                analytics.trackMonsterDetailEditClicked(monsterIndex)
                 setState { HideOptions }
                 monsterRegistrationEventDispatcher.dispatchEvent(
                     MonsterRegistrationEvent.ShowEdit(monsterIndex)
                 )
+            }
+
+            DELETE -> {
+                deleteMonster()
             }
 
             CHANGE_TO_FEET -> {
@@ -272,7 +280,7 @@ class MonsterDetailStateHolder(
     private fun MonsterDetailState.changeOptions(): MonsterDetailState {
         val monster = monsters.find { monster -> monster.index == monsterIndex } ?: return this
         val editOption = if (monster.isClone) {
-            listOf(EDIT)
+            listOf(EDIT, DELETE)
         } else emptyList()
 
         return copy(
@@ -311,6 +319,17 @@ class MonsterDetailStateHolder(
                 state
             }
             .emitState()
+            .launchIn(scope)
+    }
+
+    private fun deleteMonster() {
+        analytics.trackMonsterDetailDeleteClicked(monsterIndex)
+        deleteMonster(monsterIndex)
+            .flowOn(dispatcher)
+            .onEach {
+                monsterDetailEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                monsterDetailEventDispatcher.dispatchEvent(Hide)
+            }
             .launchIn(scope)
     }
 }

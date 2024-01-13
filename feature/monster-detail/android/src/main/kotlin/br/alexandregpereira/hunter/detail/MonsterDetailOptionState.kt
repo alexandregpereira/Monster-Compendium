@@ -20,6 +20,7 @@ enum class MonsterDetailOptionState(val stringRes: Int) {
     ADD_TO_FOLDER(R.string.monster_detail_options_add_to_folder),
     CLONE(R.string.monster_detail_clone),
     EDIT(R.string.monster_detail_edit),
+    DELETE(R.string.monster_detail_delete),
     CHANGE_TO_FEET(R.string.monster_detail_options_change_to_feet),
     CHANGE_TO_METERS(R.string.monster_detail_options_change_to_meters)
 }
