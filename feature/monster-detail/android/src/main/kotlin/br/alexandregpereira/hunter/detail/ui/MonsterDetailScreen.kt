@@ -49,7 +49,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -214,13 +214,13 @@ private fun OnMonsterChanged(
     pagerState: PagerState,
     onMonsterChanged: (monster: MonsterState) -> Unit
 ) {
-    var initialMonsterIndexState by remember { mutableStateOf(initialMonsterIndex) }
+    var initialMonsterIndexState by remember { mutableIntStateOf(initialMonsterIndex) }
 
     LaunchedEffect(key1 = initialMonsterIndex) {
         pagerState.scrollToPage(initialMonsterIndex)
     }
 
-    LaunchedEffect(pagerState) {
+    LaunchedEffect(pagerState, monsters) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             if (initialMonsterIndexState == initialMonsterIndex) {
                 onMonsterChanged(monsters[page])

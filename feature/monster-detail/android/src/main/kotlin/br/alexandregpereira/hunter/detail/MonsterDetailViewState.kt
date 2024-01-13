@@ -28,6 +28,7 @@ data class MonsterDetailViewState(
     val isLoading: Boolean = true,
     val showCloneForm: Boolean = false,
     val monsterCloneName: String = "",
+    val showDeleteConfirmation: Boolean = false,
 )
 
 fun SavedStateHandle.getState(): MonsterDetailViewState {

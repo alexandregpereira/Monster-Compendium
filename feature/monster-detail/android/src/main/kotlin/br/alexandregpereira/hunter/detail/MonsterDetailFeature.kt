@@ -31,10 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.detail.ui.MonsterDeleteConfirmation
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
-import br.alexandregpereira.hunter.ui.compose.FormField
 import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
+import br.alexandregpereira.hunter.ui.compose.FormField
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -95,6 +96,13 @@ fun MonsterDetailFeature(
                 onFormChanged = { viewModel.onCloneFormChanged(it.stringValue) },
                 onClosed = viewModel::onCloneFormClosed,
                 onSaved = viewModel::onCloneFormSaved,
+            )
+
+            MonsterDeleteConfirmation(
+                show = viewState.showDeleteConfirmation,
+                contentPadding = contentPadding,
+                onConfirmed = viewModel::onDeleteConfirmed,
+                onClosed = viewModel::onDeleteClosed
             )
         }
     }

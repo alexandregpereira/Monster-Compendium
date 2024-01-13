@@ -126,6 +126,10 @@ internal class MonsterDetailViewModel(
 
     fun onCloneFormSaved() = stateHolder.onCloneFormSaved()
 
+    fun onDeleteConfirmed() = stateHolder.onDeleteConfirmed()
+
+    fun onDeleteClosed() = stateHolder.onDeleteClosed()
+
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
             showDetail = showDetail,
@@ -142,6 +146,7 @@ internal class MonsterDetailViewModel(
             isLoading = isLoading,
             showCloneForm = showCloneForm,
             monsterCloneName = monsterCloneName,
+            showDeleteConfirmation = showDeleteConfirmation,
         )
     }
 }
