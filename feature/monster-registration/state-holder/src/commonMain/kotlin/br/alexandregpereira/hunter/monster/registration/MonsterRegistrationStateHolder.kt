@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
@@ -26,6 +27,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getMonster: GetMonsterUseCase,
     private val saveMonsters: SaveMonstersUseCase,
     private val normalizeMonster: NormalizeMonsterUseCase,
+    private val analytics: Analytics,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -46,6 +48,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onSaved() {
+        analytics.trackMonsterRegistrationSaved(state.value.monster.index)
         normalizeMonster(state.value.monster)
             .flatMapConcat { monster ->
                 saveMonsters(monsters = listOf(monster))
@@ -77,8 +80,12 @@ class MonsterRegistrationStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach { event ->
                 when (event) {
-                    MonsterRegistrationEvent.Hide -> setState { copy(isOpen = false) }
+                    MonsterRegistrationEvent.Hide -> {
+                        analytics.trackMonsterRegistrationClosed(state.value.monster.index)
+                        setState { copy(isOpen = false) }
+                    }
                     is MonsterRegistrationEvent.ShowEdit -> {
+                        analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
                         setState { copy(isOpen = true) }
                         loadMonster()
