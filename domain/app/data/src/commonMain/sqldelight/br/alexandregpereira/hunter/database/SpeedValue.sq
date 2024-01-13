@@ -5,8 +5,8 @@ CREATE INDEX index_SpeedValueEntity_speedId ON SpeedValueEntity (speedId);
 insert:
 INSERT OR REPLACE INTO SpeedValueEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SpeedValueEntity WHERE speedId NOT LIKE '%-k4k4sh1';
+deleteWithSpeedId:
+DELETE FROM SpeedValueEntity WHERE speedId IN ?;
 
 getBySpeedId:
 SELECT * FROM SpeedValueEntity WHERE speedId = ?;

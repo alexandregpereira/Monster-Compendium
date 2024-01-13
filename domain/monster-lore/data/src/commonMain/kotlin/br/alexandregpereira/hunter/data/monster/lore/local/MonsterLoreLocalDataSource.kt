@@ -45,23 +45,8 @@ internal class MonsterLoreLocalDataSource(
         isSync: Boolean = false
     ): Flow<Unit> = flow {
         mutex.withLock {
-            if (isSync) deleteAllData()
-            insertAll(monsters)
+            monsterLoreDao.insert(monsters, deleteAll = isSync)
         }
         emit(Unit)
-    }
-
-    private suspend fun deleteAllData() {
-        monsterLoreDao.deleteAllEntries()
-        monsterLoreDao.deleteAll()
-    }
-
-    private suspend fun insertAll(monsters: List<MonsterLoreCompleteEntity>) {
-        monsterLoreDao.insert(monsters.map { it.monsterLore })
-        monsterLoreDao.insertEntries(monsters.map { it.entries }.reduceList())
-    }
-
-    private fun <T> List<List<T>>.reduceList(): List<T> {
-        return this.reduceOrNull { acc, list -> acc + list } ?: emptyList()
     }
 }

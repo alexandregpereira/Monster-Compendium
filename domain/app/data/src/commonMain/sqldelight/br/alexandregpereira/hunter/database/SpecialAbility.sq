@@ -5,8 +5,8 @@ CREATE INDEX index_SpecialAbilityEntity_monsterIndex ON SpecialAbilityEntity (mo
 insert:
 INSERT OR REPLACE INTO SpecialAbilityEntity VALUES ?;
 
-deleteAll:
-DELETE FROM SpecialAbilityEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM SpecialAbilityEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM SpecialAbilityEntity WHERE monsterIndex = ?;

@@ -83,7 +83,7 @@ fun MonsterDetailFeature(
             FormBottomSheet(
                 title = stringResource(R.string.monster_detail_clone),
                 formFields = listOf(
-                    FormField(
+                    FormField.Text(
                         key = "monsterName",
                         label = stringResource(R.string.monster_detail_clone_monster_name),
                         value = viewState.monsterCloneName,
@@ -92,7 +92,7 @@ fun MonsterDetailFeature(
                 opened = viewState.showCloneForm,
                 contentPadding = contentPadding,
                 buttonEnabled = viewState.monsterCloneName.isNotBlank(),
-                onFormChanged = { viewModel.onCloneFormChanged(it.value) },
+                onFormChanged = { viewModel.onCloneFormChanged(it.stringValue) },
                 onClosed = viewModel::onCloneFormClosed,
                 onSaved = viewModel::onCloneFormSaved,
             )

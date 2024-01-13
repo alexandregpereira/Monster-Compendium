@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion project.findProperty('compileSdk')
+
+    defaultConfig {
+        minSdkVersion project.findProperty('minSdk')
+    }
+
+    kotlinOptions {
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+    namespace 'br.alexandregpereira.hunter.monster.registration'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+dependencies {
+    implementation project(':domain:monster:core')
+    implementation project(':domain:monster-lore:core')
+    implementation project(':domain:spell:core')
+    implementation project(':feature:monster-registration:state-holder')
+    implementation project(':ui:core')
+
+    implementation libs.core.ktx
+    implementation libs.kotlin.coroutines
+    implementation libs.bundles.viewmodel.bundle
+
+    implementation libs.bundles.compose
+    implementation libs.compose.util
+    implementation libs.coil.compose
+
+    implementation libs.koin.compose
+    implementation libs.kotlin.reflect
+
+    testImplementation libs.bundles.unittest
+    androidTestImplementation libs.bundles.instrumentedtest
+}

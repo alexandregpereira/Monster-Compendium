@@ -1,7 +1,9 @@
 CREATE TABLE IF NOT EXISTS MonsterLoreEntryEntity (`id` TEXT NOT NULL, `title` TEXT, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
 
+CREATE INDEX index_MonsterLoreEntryEntity_monsterIndex ON MonsterLoreEntryEntity (monsterIndex);
+
 insert:
 INSERT OR REPLACE INTO MonsterLoreEntryEntity VALUES ?;
 
-deleteAll:
-DELETE FROM MonsterLoreEntryEntity;
+deleteWithMonsterIndexes:
+DELETE FROM MonsterLoreEntryEntity WHERE monsterIndex IN ?;

@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompen
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
@@ -74,6 +75,7 @@ class MonsterCompendiumViewModelTest {
     private val monsterDetailEventListener: MonsterDetailEventListener = mockk()
     private val syncEventDispatcher: SyncEventDispatcher = mockk()
     private val syncEventListener: SyncEventListener = mockk()
+    private val monsterRegistrationEventListener: MonsterRegistrationEventListener = mockk()
     private lateinit var viewModel: MonsterCompendiumViewModel
 
     @Before
@@ -109,6 +111,7 @@ class MonsterCompendiumViewModelTest {
 
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(4)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -202,6 +205,7 @@ class MonsterCompendiumViewModelTest {
 
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -275,6 +279,7 @@ class MonsterCompendiumViewModelTest {
         every { saveScrollPositionUseCase(any()) } returns flowOf(Unit)
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -340,6 +345,7 @@ class MonsterCompendiumViewModelTest {
         every { saveScrollPositionUseCase(any()) } returns flowOf(Unit)
         every { folderPreviewResultListener.result } returns flowOf()
         every { monsterDetailEventListener.events } returns flowOf()
+        every { monsterRegistrationEventListener.events } returns flowOf()
         every { getMonsterCompendiumUseCase() } returns flowOf(monsterCompendium)
         every { getLastScrollPositionUseCase() } returns flowOf(0)
         every { savedStateHandle.get<Boolean>(any()) } returns null
@@ -386,6 +392,7 @@ class MonsterCompendiumViewModelTest {
             monsterDetailEventListener = monsterDetailEventListener,
             syncEventDispatcher = syncEventDispatcher,
             syncEventListener = syncEventListener,
+            monsterRegistrationEventListener = monsterRegistrationEventListener,
             loadOnInit = false,
             dispatcher = testCoroutineRule.testCoroutineDispatcher,
             analytics = mockk(relaxed = true)

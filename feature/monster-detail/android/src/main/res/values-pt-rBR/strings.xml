@@ -48,4 +48,5 @@
     <string name="monster_detail_saving_throw_charisma">Carisma</string>
     <string name="monster_detail_clone">Clonar</string>
     <string name="monster_detail_clone_monster_name">Nome</string>
+    <string name="monster_detail_edit">Editar</string>
 </resources>

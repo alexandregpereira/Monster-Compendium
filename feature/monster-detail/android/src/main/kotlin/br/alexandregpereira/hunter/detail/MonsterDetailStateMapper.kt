@@ -47,7 +47,8 @@ import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterType
-import br.alexandregpereira.hunter.domain.model.Proficiency
+import br.alexandregpereira.hunter.domain.model.SavingThrow
+import br.alexandregpereira.hunter.domain.model.Skill
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
@@ -130,7 +131,7 @@ private fun AbilityScore.asState(): AbilityScoreState {
     )
 }
 
-private fun Proficiency.asState(): ProficiencyState {
+private fun Skill.asState(): ProficiencyState {
     return ProficiencyState(
         index = index,
         modifier = modifier,
@@ -138,11 +139,11 @@ private fun Proficiency.asState(): ProficiencyState {
     )
 }
 
-private fun Proficiency.asSavingThrowState(): SavingThrowState {
+private fun SavingThrow.asSavingThrowState(): SavingThrowState {
     return SavingThrowState(
         index = index,
         modifier = modifier,
-        type = AbilityScoreTypeState.valueOf(name)
+        type = AbilityScoreTypeState.valueOf(type.name)
     )
 }
 

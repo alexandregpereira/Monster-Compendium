@@ -5,8 +5,8 @@ CREATE INDEX index_LegendaryActionEntity_monsterIndex ON LegendaryActionEntity (
 insert:
 INSERT OR REPLACE INTO LegendaryActionEntity VALUES ?;
 
-deleteAll:
-DELETE FROM LegendaryActionEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM LegendaryActionEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM LegendaryActionEntity WHERE monsterIndex = ?;

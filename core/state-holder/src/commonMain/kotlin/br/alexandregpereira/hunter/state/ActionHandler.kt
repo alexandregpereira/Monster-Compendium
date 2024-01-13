@@ -30,7 +30,11 @@ interface MutableActionHandler<Action> : ActionHandler<Action> {
     fun sendAction(action: Action)
 }
 
-class DefaultActionHandler<Action> : MutableActionHandler<Action> {
+fun <Action> MutableActionHandler(): MutableActionHandler<Action> {
+    return MutableActionHandlerImpl()
+}
+
+private class MutableActionHandlerImpl<Action> : MutableActionHandler<Action> {
 
     private val _action = MutableSharedFlow<Action>(
         extraBufferCapacity = 1,

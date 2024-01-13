@@ -5,8 +5,8 @@ CREATE INDEX index_ConditionEntity_monsterIndex ON ConditionEntity (monsterIndex
 insert:
 INSERT OR REPLACE INTO ConditionEntity VALUES ?;
 
-deleteAll:
-DELETE FROM ConditionEntity WHERE monsterIndex NOT LIKE '%-k4k4sh1';
+deleteWithMonsterIndex:
+DELETE FROM ConditionEntity WHERE monsterIndex IN ?;
 
 getByMonterIndex:
 SELECT * FROM ConditionEntity WHERE monsterIndex = ?;

@@ -33,7 +33,5 @@ interface MonsterDao {
 
     suspend fun getMonstersByQuery(query: String): List<MonsterEntity>
 
-    suspend fun insert(monsters: List<MonsterCompleteEntity>)
-
-    suspend fun deleteAll()
+    suspend fun insert(monsters: List<MonsterCompleteEntity>, deleteAll: Boolean)
 }

@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS MonsterLoreEntity (`monsterLoreIndex` TEXT NOT NULL, 
 insert:
 INSERT OR REPLACE INTO MonsterLoreEntity VALUES ?;
 
-deleteAll:
-DELETE FROM MonsterLoreEntity;
+deleteWithIndexes:
+DELETE FROM MonsterLoreEntity WHERE monsterLoreIndex IN ?;
 
 getMonstersLore:
 SELECT * FROM MonsterLoreCompleteEntityView

@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.monster.compendium.state.di
 
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import org.koin.dsl.module
 
 val monsterCompendiumStateModule = module {
@@ -32,6 +33,7 @@ val monsterCompendiumStateModule = module {
             get(),
             get(),
             get(),
+            monsterRegistrationEventListener = get<MonsterRegistrationEventListener>(),
             get(),
             analytics = MonsterCompendiumAnalytics(get()),
         )

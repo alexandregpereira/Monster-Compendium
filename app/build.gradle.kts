@@ -14,7 +14,7 @@ android {
     namespace = "br.alexandregpereira.hunter.app"
     compileSdk = findProperty("compileSdk")?.toString()?.toInt()
 
-    packagingOptions {
+    packaging {
         jniLibs {
             excludes += "META-INF/licenses/**"
         }
@@ -118,6 +118,7 @@ dependencies {
     implementation(project(":feature:monster-content-manager:android"))
     implementation(project(":feature:monster-detail:android"))
     implementation(project(":feature:monster-lore-detail:android"))
+    implementation(project(":feature:monster-registration:android"))
     implementation(project(":feature:sync:android"))
     implementation(project(":feature:search:android"))
     implementation(project(":feature:settings:android"))

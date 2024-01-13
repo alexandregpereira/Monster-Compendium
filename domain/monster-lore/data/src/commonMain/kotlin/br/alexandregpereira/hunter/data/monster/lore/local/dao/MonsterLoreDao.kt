@@ -26,11 +26,8 @@ interface MonsterLoreDao {
 
     suspend fun getMonsterLore(monsterIndex: String): MonsterLoreCompleteEntity
 
-    suspend fun insert(monsters: List<MonsterLoreEntity>)
-
-    suspend fun insertEntries(monsters: List<MonsterLoreEntryEntity>)
-
-    suspend fun deleteAll()
-
-    suspend fun deleteAllEntries()
+    suspend fun insert(
+        monstersLore: List<MonsterLoreCompleteEntity>,
+        deleteAll: Boolean
+    )
 }

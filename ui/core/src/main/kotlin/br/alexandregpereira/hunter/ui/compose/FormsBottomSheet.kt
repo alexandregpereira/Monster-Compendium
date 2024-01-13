@@ -12,9 +12,9 @@ import br.alexandregpereira.hunter.ui.R
 
 @Composable
 fun FormBottomSheet(
-    title: String,
     formFields: List<FormField>,
     opened: Boolean,
+    title: String? = null,
     buttonText: String = stringResource(R.string.ui_core_save),
     buttonEnabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(),
@@ -26,22 +26,14 @@ fun FormBottomSheet(
     onClose = onClosed,
     contentPadding = contentPadding,
 ) {
-    ScreenHeader(
+    Form(
         title = title,
-        modifier = Modifier.padding(top = 16.dp).padding(horizontal = 16.dp)
+        formFields = formFields,
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp),
+        onFormChanged = onFormChanged,
     )
-
-    Spacer(modifier = Modifier.padding(top = 24.dp))
-
-    formFields.forEach { formField ->
-        AppTextField(
-            text = formField.value,
-            label = formField.label,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
-        )
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
-    }
 
     Spacer(modifier = Modifier.padding(top = 16.dp))
 
@@ -55,11 +47,86 @@ fun FormBottomSheet(
     Spacer(modifier = Modifier.padding(top = 16.dp))
 }
 
-data class FormField(
-    val key: String,
-    val label: String,
-    val value: String,
-)
+@Composable
+fun Form(
+    formFields: List<FormField>,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    onFormChanged: (FormField) -> Unit = {},
+) = Form(modifier, title) {
+    formFields.forEach { formField ->
+        when (formField) {
+            is FormField.Text -> AppTextField(
+                text = formField.value,
+                label = formField.label,
+                multiline = formField.multiline,
+                onValueChange = { newValue -> onFormChanged(formField.copy(value = newValue)) }
+            )
+            is FormField.Number -> AppTextField(
+                text = formField.value.takeUnless { it == 0 }?.toString().orEmpty(),
+                label = formField.label,
+                keyboardType = AppKeyboardType.NUMBER,
+                onValueChange = { newValue ->
+                    onFormChanged(formField.copy(value = newValue.toIntOrNull() ?: 0))
+                }
+            )
+            is FormField.Picker -> PickerField(
+                value = formField.value,
+                label = formField.label,
+                options = formField.options,
+                onValueChange = { newValue ->
+                    onFormChanged(formField.copy(value = formField.options[newValue]))
+                }
+            )
+        }
+    }
+}
+
+sealed class FormField {
+
+    abstract val key: String
+    abstract val label: String
+
+    val stringValue: String
+        get() = when (this) {
+            is Text -> value
+            is Number -> value.toString()
+            is Picker -> value
+        }
+
+    val intValue: Int
+        get() = when (this) {
+            is Text -> value.toIntOrNull() ?: 0
+            is Number -> value
+            is Picker -> value.toIntOrNull() ?: 0
+        }
+
+    data class Text(
+        override val key: String,
+        override val label: String,
+        val value: String,
+        val multiline: Boolean = false,
+    ) : FormField()
+
+    data class Number(
+        override val key: String,
+        override val label: String,
+        val value: Int,
+    ) : FormField()
+
+    data class Picker(
+        override val key: String,
+        override val label: String,
+        val value: String,
+        val options: List<String>,
+    ) : FormField()
+}
+
+val FormField.selectedIndex: Int
+    get() = when (this) {
+        is FormField.Picker -> options.indexOf(value)
+        else -> -1
+    }
 
 @Preview
 @Composable
@@ -67,20 +134,53 @@ fun FormBottomSheetPreview() = Window {
     FormBottomSheet(
         title = "Form",
         formFields = listOf(
-            FormField(
+            FormField.Text(
                 key = "key1",
                 label = "Label 1",
                 value = "Value 1",
             ),
-            FormField(
+            FormField.Text(
+                key = "key4",
+                label = "Label 4",
+                value = "Value 4 asd asd asdasdasdasda asdasdasdas dasdasdasdasdasdasd asdasdasdas",
+                multiline = true,
+            ),
+            FormField.Number(
                 key = "key2",
                 label = "Label 2",
-                value = "Value 2",
+                value = 2,
             ),
-            FormField(
+            FormField.Picker(
                 key = "key3",
                 label = "Label 3",
-                value = "Value 3",
+                value = "",
+                options = listOf("Option 1", "Option 2", "Option 3"),
+            ),
+        ),
+        opened = true,
+    )
+}
+
+@Preview
+@Composable
+fun FormBottomSheetNoTitlePreview() = Window {
+    FormBottomSheet(
+        formFields = listOf(
+            FormField.Text(
+                key = "key1",
+                label = "Label 1",
+                value = "Value 1",
+            ),
+            FormField.Number(
+                key = "key2",
+                label = "Label 2",
+                value = 2,
+            ),
+            FormField.Picker(
+                key = "key3",
+                label = "Label 3",
+                value = "",
+                options = listOf("Option 1", "Option 2", "Option 3"),
             ),
         ),
         opened = true,

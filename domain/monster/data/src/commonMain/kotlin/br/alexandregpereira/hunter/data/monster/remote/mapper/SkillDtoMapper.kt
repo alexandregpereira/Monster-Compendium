@@ -17,10 +17,10 @@
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.SkillDto
-import br.alexandregpereira.hunter.domain.model.Proficiency
+import br.alexandregpereira.hunter.domain.model.Skill
 
-internal fun List<SkillDto>.toDomain(): List<Proficiency> {
+internal fun List<SkillDto>.toDomain(): List<Skill> {
     return this.map {
-        Proficiency(index = it.index, modifier = it.modifier, name = it.name)
+        Skill(index = it.index, modifier = it.modifier, name = it.name)
     }
 }

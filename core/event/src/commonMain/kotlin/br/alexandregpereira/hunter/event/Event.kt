@@ -16,7 +16,9 @@ interface EventListener<Event> {
 
 interface EventManager<Event> : EventDispatcher<Event>, EventListener<Event>
 
-internal class DefaultEventManager<Event> : EventManager<Event> {
+fun <Event> EventManager(): EventManager<Event> = DefaultEventManager()
+
+private class DefaultEventManager<Event> : EventManager<Event> {
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow(
         extraBufferCapacity = 1,

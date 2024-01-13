@@ -23,12 +23,14 @@ import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEnt
 import br.alexandregpereira.hunter.database.MonsterLoreCompleteEntityView
 import br.alexandregpereira.hunter.database.MonsterLoreEntryQueries
 import br.alexandregpereira.hunter.database.MonsterLoreQueries
+import br.alexandregpereira.hunter.database.MonsterQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import br.alexandregpereira.hunter.database.MonsterLoreEntity as MonsterLoreDatabaseEntity
 import br.alexandregpereira.hunter.database.MonsterLoreEntryEntity as MonsterLoreEntryDatabaseEntity
 
 internal class MonsterLoreDaoImpl(
+    private val monsterQueries: MonsterQueries,
     private val queries: MonsterLoreQueries,
     private val monsterLoreEntryQueries: MonsterLoreEntryQueries,
     private val dispatcher: CoroutineDispatcher
@@ -47,24 +49,30 @@ internal class MonsterLoreDaoImpl(
     }
 
     override suspend fun insert(
-        monsters: List<MonsterLoreEntity>
+        monstersLore: List<MonsterLoreCompleteEntity>,
+        deleteAll: Boolean
     ) = withContext(dispatcher) {
         queries.transaction {
-            monsters.forEach {
+            val monsterIndexes = if (deleteAll) {
+                monsterQueries.getMonstersThatIsNotCloned().executeAsList()
+                    .map { it.index }.also { monsterIndexes ->
+                        queries.deleteWithIndexes(monsterIndexes)
+                    }
+            } else {
+                monstersLore.map { it.monsterLore.monsterLoreIndex }
+            }
+
+            monsterLoreEntryQueries.deleteWithMonsterIndexes(monsterIndexes)
+
+            monstersLore.map { it.monsterLore }.forEach {
                 queries.insert(
                     MonsterLoreDatabaseEntity(
                         monsterLoreIndex = it.monsterLoreIndex
                     )
                 )
             }
-        }
-    }
 
-    override suspend fun insertEntries(
-        monsters: List<MonsterLoreEntryEntity>
-    ) = withContext(dispatcher) {
-        monsterLoreEntryQueries.transaction {
-            monsters.forEach {
+            monstersLore.mapAndReduce { entries }.forEach {
                 monsterLoreEntryQueries.insert(
                     MonsterLoreEntryDatabaseEntity(
                         id = it.id,
@@ -75,14 +83,6 @@ internal class MonsterLoreDaoImpl(
                 )
             }
         }
-    }
-
-    override suspend fun deleteAll() = withContext(dispatcher) {
-        queries.deleteAll()
-    }
-
-    override suspend fun deleteAllEntries() = withContext(dispatcher) {
-        monsterLoreEntryQueries.deleteAll()
     }
 
     private fun List<MonsterLoreCompleteEntityView>.asEntities(): List<MonsterLoreCompleteEntity> {

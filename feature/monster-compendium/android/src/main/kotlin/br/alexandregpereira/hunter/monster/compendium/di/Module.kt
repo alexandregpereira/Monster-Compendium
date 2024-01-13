@@ -34,6 +34,7 @@ val monsterCompendiumModule = module {
             monsterDetailEventListener = get(),
             syncEventListener = get(),
             syncEventDispatcher = get(),
+            monsterRegistrationEventListener = get(),
             analytics = MonsterCompendiumAnalytics(get()),
             dispatcher = get()
         )

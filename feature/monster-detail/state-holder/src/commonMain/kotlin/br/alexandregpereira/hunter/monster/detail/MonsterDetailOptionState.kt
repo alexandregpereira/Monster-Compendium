@@ -22,6 +22,7 @@ import kotlin.native.ObjCName
 enum class MonsterDetailOptionState {
     ADD_TO_FOLDER,
     CLONE,
+    EDIT,
     CHANGE_TO_FEET,
     CHANGE_TO_METERS
 }
