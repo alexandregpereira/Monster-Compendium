@@ -14,7 +14,7 @@ android {
     namespace = "br.alexandregpereira.hunter.app"
     compileSdk = findProperty("compileSdk")?.toString()?.toInt()
 
-    packagingOptions {
+    packaging {
         jniLibs {
             excludes += "META-INF/licenses/**"
         }
