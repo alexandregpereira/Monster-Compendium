@@ -6,6 +6,9 @@ INSERT OR REPLACE INTO MonsterEntity VALUES ?;
 deleteAll:
 DELETE FROM MonsterEntity WHERE isClone == 0;
 
+deleteByIndex:
+DELETE FROM MonsterEntity WHERE `index` == ?;
+
 getMonstersThatIsNotCloned:
 SELECT * FROM MonsterEntity WHERE isClone == 0;
 

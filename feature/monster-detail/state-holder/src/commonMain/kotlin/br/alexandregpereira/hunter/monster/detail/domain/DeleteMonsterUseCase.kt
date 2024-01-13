@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.monster.detail.domain
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import kotlinx.coroutines.flow.Flow
 
-interface MonsterLocalRepository {
+fun interface DeleteMonsterUseCase {
+    operator fun invoke(id: String): Flow<Unit>
+}
 
-    fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
-    fun getMonsterPreviews(): Flow<List<Monster>>
-    fun getMonsters(): Flow<List<Monster>>
-    fun getMonsters(indexes: List<String>): Flow<List<Monster>>
-    fun getMonster(index: String): Flow<Monster>
-    fun getMonstersByQuery(query: String): Flow<List<Monster>>
-    fun deleteMonster(index: String): Flow<Unit>
+internal fun DeleteMonsterUseCase(
+    repository: MonsterLocalRepository,
+): DeleteMonsterUseCase = DeleteMonsterUseCase { id ->
+    repository.deleteMonster(id)
 }

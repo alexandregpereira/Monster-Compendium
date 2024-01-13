@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
-fun interface NormalizeMonsterUseCase {
+internal fun interface NormalizeMonsterUseCase {
     operator fun invoke(monster: Monster): Flow<Monster>
 }
 
-fun NormalizeMonsterUseCase(): NormalizeMonsterUseCase = NormalizeMonsterUseCase { monster ->
+internal fun NormalizeMonsterUseCase(): NormalizeMonsterUseCase = NormalizeMonsterUseCase { monster ->
     flowOf(monster)
         .map { it.changeAbilityScoresModifier() }
 }

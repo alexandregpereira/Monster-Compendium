@@ -23,6 +23,7 @@ enum class MonsterDetailOptionState {
     ADD_TO_FOLDER,
     CLONE,
     EDIT,
+    DELETE,
     CHANGE_TO_FEET,
     CHANGE_TO_METERS
 }

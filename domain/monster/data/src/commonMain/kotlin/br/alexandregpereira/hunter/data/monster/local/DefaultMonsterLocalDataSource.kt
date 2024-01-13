@@ -71,4 +71,8 @@ internal class DefaultMonsterLocalDataSource(
         }
         emit(Unit)
     }
+
+    override fun deleteMonster(index: String): Flow<Unit> = flow {
+        emit(monsterDao.deleteMonster(index))
+    }
 }
