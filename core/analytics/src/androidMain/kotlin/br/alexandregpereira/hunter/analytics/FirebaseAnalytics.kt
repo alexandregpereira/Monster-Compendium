@@ -25,9 +25,11 @@ internal class FirebaseAnalytics(
                 is Double -> bundle.putDouble(key, value)
             }
         }
-        analytics.logEvent(eventNameNormalized, bundle)
+
         if (BuildConfig.DEBUG) {
             Log.d("FirebaseAnalytics", "event name: $eventNameNormalized. params: $params")
+        } else {
+            analytics.logEvent(eventNameNormalized, bundle)
         }
     }
 
