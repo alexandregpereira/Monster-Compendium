@@ -103,11 +103,9 @@ class FolderPreviewStateHolder internal constructor(
                         addMonster(event.index)
                     }
                     is HideFolderPreview -> {
-                        analytics.trackHideFolderPreview()
                         hideFolderPreview()
                     }
                     is ShowFolderPreview -> {
-                        analytics.trackShowFolderPreview()
                         loadMonsters()
                     }
                 }
@@ -141,7 +139,9 @@ class FolderPreviewStateHolder internal constructor(
                 val showPreview = monsters.isNotEmpty()
                 _state.value = state.value.changeMonsters(monsters = monsters)
                     .changeShowPreview(showPreview).also {
-                        analytics.trackLoadMonstersResult(it)
+                        if (it.monsters.isNotEmpty() || it.showPreview) {
+                            analytics.trackLoadMonstersResult(it)
+                        }
                     }
                 dispatchFolderPreviewVisibilityChangesEvent()
             }
@@ -160,6 +160,16 @@ class FolderPreviewStateHolder internal constructor(
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun FolderPreviewState.changeShowPreview(
+        show: Boolean,
+    ): FolderPreviewState {
+        if (show != showPreview) {
+            if (show) analytics.trackShowFolderPreview()
+            else analytics.trackHideFolderPreview()
+        }
+        return this.copy(showPreview = show)
     }
 
     private fun hideFolderPreview() {

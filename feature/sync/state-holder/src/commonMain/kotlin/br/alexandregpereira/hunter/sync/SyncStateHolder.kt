@@ -74,9 +74,9 @@ class SyncStateHolder internal constructor(
                 setState { copy(hasError = true) }
             }
             .onEach { status ->
-                analytics.trackSyncStatus(status, forceSync)
                 when (status) {
                     SyncStatus.SYNCED -> {
+                        analytics.trackSyncStatus(status, forceSync)
                         syncEventManager.dispatchEvent(Finished)
                         hide()
                     }
@@ -84,6 +84,7 @@ class SyncStateHolder internal constructor(
                         hide()
                     }
                     SyncStatus.BUSY -> {
+                        analytics.trackSyncStatus(status, forceSync)
                         show()
                     }
                 }
