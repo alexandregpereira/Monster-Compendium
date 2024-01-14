@@ -365,8 +365,10 @@ private fun ChallengeRatingCompose(
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         ChallengeRatingCircle(
             challengeRating = data.imageState.challengeRating,
-            size = 56.dp,
-            fontSize = 16.sp,
+            xp = data.imageState.xp,
+            size = 62.dp,
+            fontSize = 18.sp,
+            xpFontSize = 12.sp,
             contentTopPadding = contentTopPadding
         )
     }
@@ -410,6 +412,7 @@ private fun MonsterDetailPreview() = Window {
                     url = "",
                     type = MonsterTypeState.CELESTIAL,
                     challengeRating = 0.0f,
+                    xp = "100 XP",
                     backgroundColor = ColorState(
                         light = "#ffe2e2",
                         dark = "#ffe2e2"
@@ -459,6 +462,7 @@ private fun MonsterTopBarPreview() = Window {
                     url = "",
                     type = MonsterTypeState.CELESTIAL,
                     challengeRating = 0.0f,
+                    xp = "100 XP",
                     backgroundColor = ColorState(
                         light = "#ffe2e2",
                         dark = "#ffe2e2"

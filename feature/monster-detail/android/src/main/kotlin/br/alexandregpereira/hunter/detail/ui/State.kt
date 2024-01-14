@@ -32,6 +32,7 @@ data class MonsterState(
             dark = ""
         ),
         challengeRating = 0.0f,
+        xp = "",
         isHorizontal = false,
         contentDescription = ""
     ),
@@ -175,6 +176,7 @@ data class MonsterImageState(
     val type: MonsterTypeState,
     val backgroundColor: ColorState,
     val challengeRating: Float,
+    val xp: String,
     val isHorizontal: Boolean = false,
     val contentDescription: String = ""
 )

@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
+import java.text.NumberFormat
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Monster", exact = true)
@@ -53,8 +54,11 @@ data class Monster(
     val reactions: List<AbilityDescription> = emptyList(),
     val spellcastings: List<Spellcasting> = emptyList(),
     val lore: String? = null,
-    val isClone: Boolean = false
-)
+    val isClone: Boolean = false,
+) {
+
+    val xp: Int = challengeRatingToXp()
+}
 
 data class MonsterImageData(
     val url: String = "",
@@ -68,6 +72,59 @@ data class Color(
 )
 
 fun Monster.isComplete() = abilityScores.isNotEmpty()
+
+private fun Monster.challengeRatingToXp(): Int {
+    return when (challengeRating) {
+        0.125f -> 25
+        0.25f -> 50
+        0.5f -> 100
+        1f -> 200
+        2f -> 450
+        3f -> 700
+        4f -> 1100
+        5f -> 1800
+        6f -> 2300
+        7f -> 2900
+        8f -> 3900
+        9f -> 5000
+        10f -> 5900
+        11f -> 7200
+        12f -> 8400
+        13f -> 10000
+        14f -> 11500
+        15f -> 13000
+        16f -> 15000
+        17f -> 18000
+        18f -> 20000
+        19f -> 22000
+        20f -> 25000
+        21f -> 33000
+        22f -> 41000
+        23f -> 50000
+        24f -> 62000
+        25f -> 75000
+        26f -> 90000
+        27f -> 105000
+        28f -> 120000
+        29f -> 135000
+        30f -> 155000
+        else -> 10
+    }
+}
+
+fun Monster.xpFormatted(): String {
+    val xpString = when {
+        xp < 1000 -> xp.toString()
+        else -> {
+            val xpFormatted = NumberFormat.getIntegerInstance().format(xp)
+                .dropLastWhile { it == '0' }
+                .let { if (it.last().isDigit().not()) it.dropLast(1) else it }
+            "${xpFormatted}k"
+        }
+    }
+
+    return "$xpString XP"
+}
 
 fun getFakeMonster(): Monster {
     return Monster(
