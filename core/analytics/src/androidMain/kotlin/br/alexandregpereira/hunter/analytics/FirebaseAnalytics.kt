@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.analytics
 
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
@@ -24,7 +25,12 @@ internal class FirebaseAnalytics(
                 is Double -> bundle.putDouble(key, value)
             }
         }
-        analytics.logEvent(eventNameNormalized, bundle)
+
+        if (BuildConfig.DEBUG) {
+            Log.d("FirebaseAnalytics", "event name: $eventNameNormalized. params: $params")
+        } else {
+            analytics.logEvent(eventNameNormalized, bundle)
+        }
     }
 
     override fun logException(throwable: Throwable) {

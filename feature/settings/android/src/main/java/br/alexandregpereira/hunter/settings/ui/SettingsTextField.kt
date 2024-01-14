@@ -37,6 +37,7 @@ fun SettingsTextField(
 ) = Column(modifier) {
     AppTextField(
         text = text,
+        capitalize = false,
         onValueChange = onValueChange
     )
 

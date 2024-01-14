@@ -28,9 +28,3 @@ internal fun FolderPreviewState.changeMonsters(
 ): FolderPreviewState {
     return this.copy(monsters = monsters)
 }
-
-internal fun FolderPreviewState.changeShowPreview(
-    show: Boolean,
-): FolderPreviewState {
-    return this.copy(showPreview = show)
-}

@@ -27,6 +27,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
@@ -36,9 +37,14 @@ fun AppTextField(
     label: String = "",
     keyboardType: AppKeyboardType = AppKeyboardType.TEXT,
     multiline: Boolean = false,
+    capitalize: Boolean = true,
     onValueChange: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
+    val capitalization = if (capitalize) {
+        KeyboardCapitalization.Sentences
+    } else KeyboardCapitalization.None
+
     OutlinedTextField(
         value = text,
         onValueChange = onValueChange,
@@ -55,7 +61,8 @@ fun AppTextField(
             keyboardType = when (keyboardType) {
                 AppKeyboardType.TEXT -> KeyboardType.Text
                 AppKeyboardType.NUMBER -> KeyboardType.Number
-            }
+            },
+            capitalization = capitalization,
         ),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
     )
