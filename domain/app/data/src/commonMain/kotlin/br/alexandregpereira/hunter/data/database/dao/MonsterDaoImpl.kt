@@ -102,8 +102,8 @@ internal class MonsterDaoImpl(
     override suspend fun insert(monsters: List<MonsterCompleteEntity>, deleteAll: Boolean) = withContext(dispatcher) {
         monsterQueries.transaction {
             if (deleteAll) {
-                monsterQueries.deleteAll()
                 deleteAllEntries(getMonstersByIsNotClone())
+                monsterQueries.deleteAll()
             } else {
                 deleteAllEntries(monsters)
             }
