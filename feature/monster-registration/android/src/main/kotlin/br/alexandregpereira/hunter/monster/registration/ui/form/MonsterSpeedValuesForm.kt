@@ -6,8 +6,10 @@ import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
+import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Composable
 internal fun MonsterSpeedValuesForm(
@@ -17,42 +19,63 @@ internal fun MonsterSpeedValuesForm(
 ) {
     val speedValues = monster.speed.values
     val types = speedValues.map { it.type }
-    val options = SpeedType.entries.filterNot { types.contains(it) }.map { it.name }
+    val options = SpeedType.entries.filterNot { types.contains(it) }
+    val optionsStrings = options.map { it.toTypeState().getString() }
+    val newSpeedValues = speedValues.toMutableList()
 
     Form(
         modifier = modifier,
         title = stringResource(R.string.monster_registration_speed),
-        formFields = monster.speed.values.map { speedValue ->
-            listOf(
-                FormField.Picker(
-                    key = "${speedValue.type.name}-type",
-                    label = stringResource(R.string.monster_registration_speed_type),
-                    value = speedValue.type.name,
-                    options = options,
-                ),
-                FormField.Text(
-                    key = "${speedValue.type.name}-name",
-                    label = speedValue.type.name,
-                    value = speedValue.valueFormatted,
-                )
-            )
-        }.reduceOrNull { acc, texts -> acc + texts } ?: emptyList(),
-        onFormChanged = { field ->
-            val newSpeedValues = speedValues.toMutableList()
-            val index = newSpeedValues.indexOfFirst { field.key.startsWith(it.type.name) }
-            if (index != -1) {
-                when (field.key) {
-                    "${newSpeedValues[index].type.name}-type" -> {
-                        newSpeedValues[index] = newSpeedValues[index].copy(
-                            type = SpeedType.valueOf(field.stringValue),
+    ) {
+        monster.speed.values.mapIndexed { index, speedValue ->
+            val name = speedValue.type.toTypeState().getString()
+            PickerField(
+                value = name,
+                label = stringResource(R.string.monster_registration_speed_type),
+                options = optionsStrings,
+                onValueChange = { optionIndex ->
+                    onMonsterChanged(
+                        monster.copy(
+                            speed = monster.speed.copy(
+                                values = newSpeedValues.changeAt(index) {
+                                    copy(
+                                        type = options[optionIndex],
+                                    )
+                                }
+                            )
                         )
-                    }
-                    "${newSpeedValues[index].type.name}-name" -> {
-                        newSpeedValues[index] = newSpeedValues[index].copy(valueFormatted = field.stringValue)
-                    }
+                    )
                 }
-                onMonsterChanged(monster.copy(speed = monster.speed.copy(values = newSpeedValues)))
-            }
-        },
-    )
+            )
+
+            AppTextField(
+                text = speedValue.valueFormatted,
+                label = name,
+                onValueChange = { newValue ->
+                    onMonsterChanged(
+                        monster.copy(
+                            speed = monster.speed.copy(
+                                values = newSpeedValues.changeAt(index) {
+                                    copy(valueFormatted = newValue)
+                                }
+                            )
+                        )
+                    )
+                }
+            )
+        }
+    }
 }
+
+private enum class SpeedTypeState(val stringRes: Int) {
+    BURROW(R.string.monster_registration_speed_type_burrow),
+    CLIMB(R.string.monster_registration_speed_type_climb),
+    FLY(R.string.monster_registration_speed_type_fly),
+    WALK(R.string.monster_registration_speed_type_walk),
+    SWIM(R.string.monster_registration_speed_type_swim),
+}
+
+private fun SpeedType.toTypeState() = SpeedTypeState.valueOf(name)
+
+@Composable
+private fun SpeedTypeState.getString() = stringResource(stringRes)
