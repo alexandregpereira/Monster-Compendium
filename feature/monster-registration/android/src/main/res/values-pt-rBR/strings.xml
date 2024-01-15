@@ -83,4 +83,10 @@
     <string name="monster_registration_reactions">Reações</string>
     <string name="monster_registration_legendary_actions">Ações Lendárias</string>
     <string name="monster_registration_image_background_color">Cor de Fundo da Imagem</string>
+
+    <string name="monster_registration_speed_type_walk">Deslocamento</string>
+    <string name="monster_registration_speed_type_fly">Voo</string>
+    <string name="monster_registration_speed_type_swim">Natação</string>
+    <string name="monster_registration_speed_type_climb">Escalagem</string>
+    <string name="monster_registration_speed_type_burrow">Escavação</string>
 </resources>

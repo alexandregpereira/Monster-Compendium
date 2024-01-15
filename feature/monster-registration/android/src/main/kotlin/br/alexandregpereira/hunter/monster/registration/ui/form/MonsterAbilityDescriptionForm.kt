@@ -39,7 +39,7 @@ internal fun MonsterAbilityDescriptionForm(
             label = stringResource(R.string.monster_registration_description),
             multiline = true,
             onValueChange = { newValue ->
-                onChanged(newAbilityDescriptions.changeAt(index) { copy(name = newValue) })
+                onChanged(newAbilityDescriptions.changeAt(index) { copy(description = newValue) })
             }
         )
 

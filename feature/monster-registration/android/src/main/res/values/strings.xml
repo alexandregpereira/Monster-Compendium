@@ -83,4 +83,10 @@
     <string name="monster_registration_reactions">Reactions</string>
     <string name="monster_registration_legendary_actions">Legendary Actions</string>
     <string name="monster_registration_image_background_color">Image Background Color</string>
+
+    <string name="monster_registration_speed_type_walk">Speed</string>
+    <string name="monster_registration_speed_type_fly">Fly</string>
+    <string name="monster_registration_speed_type_swim">Swim</string>
+    <string name="monster_registration_speed_type_climb">Climb</string>
+    <string name="monster_registration_speed_type_burrow">Burrow</string>
 </resources>
