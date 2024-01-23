@@ -16,19 +16,32 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AppTextField(
@@ -38,7 +51,24 @@ fun AppTextField(
     keyboardType: AppKeyboardType = AppKeyboardType.TEXT,
     multiline: Boolean = false,
     capitalize: Boolean = true,
-    onValueChange: (String) -> Unit = {}
+    onValueChange: (String) -> Unit = {},
+    trailingIcon: @Composable (() -> Unit)? = {
+        AnimatedVisibility(
+            visible = text.isNotEmpty(),
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            IconButton(
+                onClick = { onValueChange("") },
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Clear,
+                    contentDescription = "Clear",
+                    tint = MaterialTheme.colors.onSurface
+                )
+            }
+        }
+    },
 ) {
     val focusManager = LocalFocusManager.current
     val capitalization = if (capitalize) {
@@ -64,7 +94,8 @@ fun AppTextField(
             },
             capitalization = capitalization,
         ),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+        trailingIcon = trailingIcon
     )
 }
 
@@ -89,4 +120,18 @@ fun AppTextField(
 enum class AppKeyboardType {
     TEXT,
     NUMBER
+}
+
+@Preview
+@Composable
+private fun AppTextFieldPreview() = Window {
+    var value by remember { mutableStateOf("Text") }
+    AppTextField(text = "Text", label = "Label", onValueChange = { value = it })
+}
+
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun AppTextFieldDarkPreview() = Window {
+    var value by remember { mutableStateOf("Text") }
+    AppTextField(text = "Text", label = "Label", onValueChange = { value = it })
 }

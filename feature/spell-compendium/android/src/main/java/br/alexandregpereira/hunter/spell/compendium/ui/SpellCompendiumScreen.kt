@@ -3,9 +3,7 @@ package br.alexandregpereira.hunter.spell.compendium.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,8 +44,6 @@ internal fun SpellCompendiumScreen(
                     capitalize = false,
                     onValueChange = intent::onSearchTextChange
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
 
                 SpellList(
                     spellsGroupByLevel = state.spellsGroupByLevel,

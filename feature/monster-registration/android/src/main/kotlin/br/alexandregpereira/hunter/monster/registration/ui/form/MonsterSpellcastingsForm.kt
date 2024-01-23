@@ -22,6 +22,10 @@ internal fun MonsterSpellcastingsForm(
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<Spellcasting>) -> Unit = {}
 ) = Form(modifier, stringResource(R.string.monster_registration_spells)) {
+    if (spellcastings.isEmpty()) {
+        AddButton(text = stringResource(R.string.monster_registration_add_spellcasting_type))
+        return@Form
+    }
     val newSpellcastings = spellcastings.toMutableList()
     val options = SpellcastingType.entries
     val optionStrings = SpellcastingType.entries.map { it.toState().getStringName() }

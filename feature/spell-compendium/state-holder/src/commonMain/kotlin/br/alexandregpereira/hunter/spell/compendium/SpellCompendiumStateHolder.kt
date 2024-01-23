@@ -29,6 +29,7 @@ class SpellCompendiumStateHolder internal constructor(
     StateHolder<SpellCompendiumState> by stateHandler {
 
     private val searchQuery = MutableStateFlow(state.value.searchText)
+    private val originalSpellsGroupByLevel = mutableMapOf<String, List<SpellCompendiumItemState>>()
 
     init {
         debounceSearch()
@@ -50,6 +51,8 @@ class SpellCompendiumStateHolder internal constructor(
                 }?.level?.let { level ->
                     spellsGroupByLevel.compendiumIndexOf(level)
                 }
+                originalSpellsGroupByLevel.clear()
+                originalSpellsGroupByLevel.putAll(spellsGroupByLevel)
                 stateHandler.setState {
                     copy(
                         spellsGroupByLevel = spellsGroupByLevel,
@@ -63,6 +66,18 @@ class SpellCompendiumStateHolder internal constructor(
 
     private fun debounceSearch() {
         searchQuery.debounce(500L)
+            .onEach { text ->
+                stateHandler.setState {
+                    val spellsGroupByLevel = if (text.isNotBlank()){
+                        val spellsFiltered = spellsGroupByLevel.values.flatten()
+                            .filter { it.name.contains(text, ignoreCase = true) }
+                        mapOf("${spellsFiltered.size} results" to spellsFiltered)
+                    } else originalSpellsGroupByLevel
+
+                    copy(spellsGroupByLevel = spellsGroupByLevel)
+                }
+            }
+            .flowOn(dispatcher)
             .launchIn(scope)
     }
 
