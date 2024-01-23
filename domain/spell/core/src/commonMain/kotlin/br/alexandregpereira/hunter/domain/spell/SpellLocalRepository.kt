@@ -24,5 +24,6 @@ interface SpellLocalRepository {
     fun saveSpells(spells: List<Spell>): Flow<Unit>
     fun getLocalSpell(index: String): Flow<Spell>
     fun getLocalSpells(indexes: List<String>): Flow<List<Spell>>
+    fun getLocalSpells(): Flow<List<Spell>>
     fun deleteLocalSpells(): Flow<Unit>
 }

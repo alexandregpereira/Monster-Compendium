@@ -38,6 +38,7 @@ fun Compendium(
     items: List<CompendiumItemState>,
     modifier: Modifier = Modifier,
     animateItems: Boolean = false,
+    columns: CompendiumColumns = CompendiumColumns.Fixed(count = 2),
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     key: (CompendiumItemState.Item) -> Any? = { null },
@@ -45,7 +46,7 @@ fun Compendium(
     cardContent: @Composable (CompendiumItemState.Item) -> Unit,
 ) = Surface(modifier) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2),
+        columns = columns.toGridCells(),
         state = listState,
         contentPadding = PaddingValues(
             start = 16.dp,
@@ -103,6 +104,19 @@ fun Compendium(
             }
         }
     }
+}
+
+sealed class CompendiumColumns {
+    data class Fixed(val count: Int) : CompendiumColumns()
+
+    data class Adaptive(
+        val minSize: Int,
+    ) : CompendiumColumns()
+}
+
+private fun CompendiumColumns.toGridCells(): GridCells = when (this) {
+    is CompendiumColumns.Fixed -> GridCells.Fixed(count)
+    is CompendiumColumns.Adaptive -> GridCells.Adaptive(minSize.dp)
 }
 
 @OptIn(ExperimentalFoundationApi::class)

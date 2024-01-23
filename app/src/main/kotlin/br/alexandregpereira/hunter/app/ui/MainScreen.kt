@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
+import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
 
@@ -70,6 +71,10 @@ fun MainScreen(
         MonsterLoreDetailFeature(contentPadding = contentPadding)
 
         MonsterRegistrationFeature(contentPadding = contentPadding)
+
+        SpellCompendiumFeature(
+            contentPadding = contentPadding,
+        )
 
         SpellDetailFeature(
             contentPadding = contentPadding,

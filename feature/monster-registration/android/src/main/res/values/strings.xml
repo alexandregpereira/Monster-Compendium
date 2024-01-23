@@ -89,4 +89,13 @@
     <string name="monster_registration_speed_type_swim">Swim</string>
     <string name="monster_registration_speed_type_climb">Climb</string>
     <string name="monster_registration_speed_type_burrow">Burrow</string>
+
+    <string name="monster_registration_spellcasting_caster_type">Spellcaster</string>
+    <string name="monster_registration_spellcasting_innate_type">Innate Spellcaster</string>
+    <string name="monster_registration_spellcasting_type_label">Spellcasting Type</string>
+    <string name="monster_registration_spell_group">Spell Group</string>
+    <string name="monster_registration_spell_label">Spell</string>
+    <string name="monster_registration_add_spell_group">Add spell group</string>
+    <string name="monster_registration_add_spell">Add spell</string>
+    <string name="monster_registration_add_spellcasting_type">Add spellcasting type</string>
 </resources>

@@ -20,7 +20,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.R
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -31,7 +30,8 @@ fun SpellIconInfo(
     modifier: Modifier = Modifier,
     name: String? = null,
     size: SpellIconSize = SpellIconSize.SMALL,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    onLongClick: () -> Unit = {},
 ) {
     val iconColor = if (isSystemInDarkTheme()) school.iconColorDark else school.iconColorLight
     IconInfo(
@@ -39,16 +39,17 @@ fun SpellIconInfo(
         painter = painterResource(school.iconRes),
         iconColor = iconColor.toColor(),
         iconAlpha = 1f,
-        iconSize = size.value,
+        iconSize = size.value.dp,
         modifier = modifier.animatePressed(
             pressedScale = 0.85f,
-            onClick = onClick
+            onClick = onClick,
+            onLongClick = onLongClick,
         )
     )
 }
 
-enum class SpellIconSize(val value: Dp) {
-    LARGE(72.dp), SMALL(56.dp)
+enum class SpellIconSize(val value: Int) {
+    LARGE(72), SMALL(56)
 }
 
 enum class SchoolOfMagicState(val iconRes: Int, val iconColorLight: String, val iconColorDark: String) {

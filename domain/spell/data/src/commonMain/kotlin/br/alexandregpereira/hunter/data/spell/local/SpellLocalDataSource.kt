@@ -25,4 +25,5 @@ internal interface SpellLocalDataSource {
     fun getSpell(index: String): Flow<SpellEntity>
     fun deleteSpells(): Flow<Unit>
     fun getSpells(indexes: List<String>):  Flow<List<SpellEntity>>
+    fun getSpells():  Flow<List<SpellEntity>>
 }

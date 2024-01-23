@@ -64,7 +64,11 @@ internal class SpellDaoImpl(
     override suspend fun getSpells(
         indexes: List<String>
     ): List<SpellEntity> = withContext(dispatcher) {
-        spellQueries.getSpells(indexes).executeAsList().map { it.asSpellEntity() }
+        spellQueries.getSpellsByIds(indexes).executeAsList().map { it.asSpellEntity() }
+    }
+
+    override suspend fun getSpells(): List<SpellEntity> = withContext(dispatcher) {
+        spellQueries.getSpells().executeAsList().map { it.asSpellEntity() }
     }
 
     private fun SpellDatabaseEntity.asSpellEntity(): SpellEntity {

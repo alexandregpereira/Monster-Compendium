@@ -57,6 +57,8 @@ private fun MonsterRegistrationScreenPreview() {
         }
 
         override fun onSaved() {}
+
+        override fun onSpellClick(spellIndex: String) {}
     }
     MonsterRegistrationScreen(
         state = state.value,

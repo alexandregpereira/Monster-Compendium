@@ -37,6 +37,7 @@ internal fun SearchBar(
 ) {
     AppTextField(
         text = text,
+        capitalize = false,
         onValueChange = onValueChange,
         label = stringResource(R.string.search_search_label),
         modifier = modifier

@@ -159,6 +159,8 @@ internal fun MonsterRegistrationForm(
         item(key = "spells") {
             MonsterSpellcastingsForm(
                 spellcastings = monster.spellcastings,
+                onChanged = { intent.onMonsterChanged(monster.copy(spellcastings = it)) },
+                onSpellClick = intent::onSpellClick,
             )
         }
     }

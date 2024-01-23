@@ -43,6 +43,10 @@ internal class DefaultSpellRepository(
         return localRepository.getLocalSpells(indexes)
     }
 
+    override fun getLocalSpells(): Flow<List<Spell>> {
+        return localRepository.getLocalSpells()
+    }
+
     override fun deleteLocalSpells(): Flow<Unit> {
         return localRepository.deleteLocalSpells()
     }

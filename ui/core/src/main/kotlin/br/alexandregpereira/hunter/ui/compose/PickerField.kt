@@ -10,7 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +35,17 @@ fun PickerField(
     val isOpen = remember { mutableStateOf(false) }
     Box(modifier) {
         Column {
-            AppTextField(text = value, label = label)
+            AppTextField(
+                text = value,
+                label = label,
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                }
+            )
             DropdownMenu(
                 modifier = Modifier.fillMaxWidth(),
                 expanded = isOpen.value,

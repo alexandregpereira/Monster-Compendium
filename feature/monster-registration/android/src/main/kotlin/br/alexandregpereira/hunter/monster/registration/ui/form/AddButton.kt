@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.monster.registration.R
 @Composable
 internal fun AddButton(
     modifier: Modifier = Modifier,
+    text: String = "",
     onClick: () -> Unit = {},
 ) = Row(
     verticalAlignment = Alignment.CenterVertically,
@@ -28,13 +29,16 @@ internal fun AddButton(
         .fillMaxWidth()
         .clickable { onClick() },
 ) {
+    val string = text.ifEmpty {
+        stringResource(R.string.monster_registration_add_new)
+    }
     Icon(
         painter = painterResource(R.drawable.ic_add),
-        contentDescription = stringResource(R.string.monster_registration_add_new),
+        contentDescription = string,
         modifier = Modifier.padding(end = 8.dp),
     )
     Text(
-        text = stringResource(R.string.monster_registration_add_new),
+        text = string,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
     )

@@ -50,6 +50,9 @@ val monsterRegistrationStateModule = module {
             saveMonsters = get(),
             normalizeMonster = get(),
             analytics = get(),
+            spellCompendiumEventDispatcher = get(),
+            spellDetailEventDispatcher = get(),
+            getSpell = get()
         )
     }
 }
