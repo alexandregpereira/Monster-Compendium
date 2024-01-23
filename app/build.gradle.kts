@@ -122,6 +122,7 @@ dependencies {
     implementation(project(":feature:sync:android"))
     implementation(project(":feature:search:android"))
     implementation(project(":feature:settings:android"))
+    implementation(project(":feature:spell-compendium:android"))
     implementation(project(":feature:spell-detail:android"))
     implementation(project(":ui:core"))
 

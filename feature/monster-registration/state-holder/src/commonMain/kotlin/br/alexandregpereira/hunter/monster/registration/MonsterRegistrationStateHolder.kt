@@ -2,12 +2,20 @@ package br.alexandregpereira.hunter.monster.registration
 
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent.Show
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
@@ -28,6 +36,9 @@ class MonsterRegistrationStateHolder internal constructor(
     private val saveMonsters: SaveMonstersUseCase,
     private val normalizeMonster: NormalizeMonsterUseCase,
     private val analytics: Analytics,
+    private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
+    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
+    private val getSpell: GetSpellUseCase,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -61,6 +72,64 @@ class MonsterRegistrationStateHolder internal constructor(
                 ))
             }
             .launchIn(scope)
+    }
+
+    override fun onSpellClick(spellIndex: String) {
+        val showEvent = Show(
+            spellIndex = spellIndex,
+            selectedSpellIndexes = state.value.monster.spellcastings
+                .flatMap { it.usages }
+                .flatMap { it.spells }
+                .map { it.index }
+        )
+        spellCompendiumEventDispatcher.dispatchEventResult(showEvent).onEach { result ->
+            when (result) {
+                is SpellCompendiumResult.OnSpellClick -> updateSpells(
+                    currentSpellIndex = spellIndex,
+                    newSpellIndex= result.spellIndex
+                )
+                is SpellCompendiumResult.OnSpellLongClick -> openSpellDetail(result.spellIndex)
+            }
+        }.launchIn(scope)
+    }
+
+    private fun updateSpells(currentSpellIndex: String, newSpellIndex: String) {
+        spellCompendiumEventDispatcher.dispatchEventResult(SpellCompendiumEvent.Hide)
+        getSpell(newSpellIndex)
+            .flowOn(dispatcher)
+            .onEach { newSpell ->
+                setState {
+                    copy(
+                        monster = monster.copy(
+                            spellcastings = monster.spellcastings.map { spellcasting ->
+                                spellcasting.copy(
+                                    usages = spellcasting.usages.map { usage ->
+                                        usage.copy(
+                                            spells = usage.spells.map { spell ->
+                                                if (spell.index == currentSpellIndex) {
+                                                    spell.copy(
+                                                        index = newSpellIndex,
+                                                        name = newSpell.name,
+                                                        level = newSpell.level,
+                                                        school = SchoolOfMagic.valueOf(newSpell.school.name),
+                                                    )
+                                                } else {
+                                                    spell
+                                                }
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        )
+                    )
+                }
+            }
+            .launchIn(scope)
+    }
+
+    private fun openSpellDetail(spellIndex: String) {
+        spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
     private fun loadMonster() {

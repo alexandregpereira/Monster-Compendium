@@ -89,4 +89,13 @@
     <string name="monster_registration_speed_type_swim">Natação</string>
     <string name="monster_registration_speed_type_climb">Escalagem</string>
     <string name="monster_registration_speed_type_burrow">Escavação</string>
+
+    <string name="monster_registration_spellcasting_caster_type">Conjuração</string>
+    <string name="monster_registration_spellcasting_innate_type">Conjuração Inata</string>
+    <string name="monster_registration_spellcasting_type_label">Tipo de Conjuração</string>
+    <string name="monster_registration_spell_group">Grupo de Magia</string>
+    <string name="monster_registration_spell_label">Magia</string>
+    <string name="monster_registration_add_spell_group">Adicionar grupo de magia</string>
+    <string name="monster_registration_add_spell">Adicionar magia</string>
+    <string name="monster_registration_add_spellcasting_type">Adicionar tipo de conjuração</string>
 </resources>

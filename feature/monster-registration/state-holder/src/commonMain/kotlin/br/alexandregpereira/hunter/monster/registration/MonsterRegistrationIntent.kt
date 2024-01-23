@@ -9,6 +9,8 @@ interface MonsterRegistrationIntent {
     fun onMonsterChanged(monster: Monster)
 
     fun onSaved()
+
+    fun onSpellClick(spellIndex: String)
 }
 
 class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
@@ -18,4 +20,6 @@ class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
     override fun onMonsterChanged(monster: Monster) {}
 
     override fun onSaved() {}
+
+    override fun onSpellClick(spellIndex: String) {}
 }

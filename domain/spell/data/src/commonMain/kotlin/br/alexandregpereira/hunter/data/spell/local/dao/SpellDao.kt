@@ -27,4 +27,6 @@ interface SpellDao {
     suspend fun deleteAll()
 
     suspend fun getSpells(indexes: List<String>): List<SpellEntity>
+
+    suspend fun getSpells(): List<SpellEntity>
 }

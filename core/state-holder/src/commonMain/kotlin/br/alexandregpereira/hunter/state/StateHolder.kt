@@ -91,3 +91,7 @@ private class DefaultStateHolderWithRecovery<State>(
         }
     }
 }
+
+internal fun <State> StateHolder<State>.setState(block: State.() -> State) {
+    (this as MutableStateHolder).setState(block)
+}

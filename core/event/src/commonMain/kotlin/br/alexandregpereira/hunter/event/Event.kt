@@ -9,6 +9,11 @@ interface EventDispatcher<Event> {
     fun dispatchEvent(event: Event)
 }
 
+interface EventResultDispatcher<Event, Result> {
+
+    fun dispatchEventResult(event: Event): Flow<Result>
+}
+
 interface EventListener<Event> {
 
     val events: Flow<Event>
