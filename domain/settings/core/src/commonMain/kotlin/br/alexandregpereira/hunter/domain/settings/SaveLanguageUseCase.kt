@@ -17,15 +17,24 @@
 package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase.Companion.SETTING_LANGUAGE_KEY
+import br.alexandregpereira.hunter.localization.MutableAppLocalization
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 
 class SaveLanguageUseCase(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val mutableAppLanguage: MutableAppLocalization,
 ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(lang: String): Flow<Unit> {
         if (IsLanguageSupported(lang).not()) return flowOf(Unit)
-        return settingsRepository.saveSettings(mapOf(SETTING_LANGUAGE_KEY to lang))
+        return flowOf {
+            mutableAppLanguage.setLanguage(lang)
+        }.flatMapLatest {
+            settingsRepository.saveSettings(mapOf(SETTING_LANGUAGE_KEY to lang))
+        }
     }
 }

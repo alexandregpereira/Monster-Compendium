@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.event.folder.insert.emptyFolderInsertEventDis
 import br.alexandregpereira.hunter.event.monster.lore.detail.emptyMonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewResultListener
+import br.alexandregpereira.hunter.localization.di.localizationModule
 import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
 import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventDispatcher
@@ -38,6 +39,7 @@ fun appModules(): List<Module> = domainModules + dataModules +
         monsterDetailStateModule +
         syncStateModule +
         analyticsModule +
+        localizationModule +
         module {
             factory { Dispatchers.Default }
             factory {

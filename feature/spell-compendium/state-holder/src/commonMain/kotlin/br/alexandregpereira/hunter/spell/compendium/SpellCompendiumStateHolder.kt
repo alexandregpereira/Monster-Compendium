@@ -3,6 +3,7 @@ package br.alexandregpereira.hunter.spell.compendium
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
@@ -24,12 +25,14 @@ class SpellCompendiumStateHolder internal constructor(
     private val stateHandler: MutableStateHolder<SpellCompendiumState>,
     private val eventListener: EventListener<SpellCompendiumEvent>,
     private val resultDispatcher: EventDispatcher<SpellCompendiumResult>,
+    private val appLocalization: AppLocalization,
 ) : ScopeManager(),
     SpellCompendiumIntent,
     StateHolder<SpellCompendiumState> by stateHandler {
 
     private val searchQuery = MutableStateFlow(state.value.searchText)
     private val originalSpellsGroupByLevel = mutableMapOf<String, List<SpellCompendiumItemState>>()
+    private var strings: SpellCompendiumStrings = getSpellCompendiumStrings(appLocalization.getLanguage())
 
     init {
         debounceSearch()
@@ -43,6 +46,8 @@ class SpellCompendiumStateHolder internal constructor(
         spellIndex: String? = null,
         selectedSpellIndexes: List<String> = emptyList(),
     ) {
+        strings = getSpellCompendiumStrings(appLocalization.getLanguage())
+        stateHandler.setState { copy(searchText = "", searchTextLabel = strings.searchLabel) }
         getSpellsUseCase()
             .onEach { spells ->
                 val spellsGroupByLevel = spells.groupByLevel(selectedSpellIndexes)
@@ -56,7 +61,7 @@ class SpellCompendiumStateHolder internal constructor(
                 stateHandler.setState {
                     copy(
                         spellsGroupByLevel = spellsGroupByLevel,
-                        initialItemIndex = compendiumIndex?.takeIf { it >= 0 } ?: 0
+                        initialItemIndex = compendiumIndex?.takeIf { it >= 0 } ?: 0,
                     )
                 }
             }
@@ -69,9 +74,9 @@ class SpellCompendiumStateHolder internal constructor(
             .onEach { text ->
                 stateHandler.setState {
                     val spellsGroupByLevel = if (text.isNotBlank()){
-                        val spellsFiltered = spellsGroupByLevel.values.flatten()
+                        val spellsFiltered = originalSpellsGroupByLevel.values.flatten()
                             .filter { it.name.contains(text, ignoreCase = true) }
-                        mapOf("${spellsFiltered.size} results" to spellsFiltered)
+                        mapOf(strings.searchResults(spellsFiltered.size) to spellsFiltered)
                     } else originalSpellsGroupByLevel
 
                     copy(spellsGroupByLevel = spellsGroupByLevel)
@@ -123,8 +128,8 @@ class SpellCompendiumStateHolder internal constructor(
 
     private fun Int.getSpellLevelText(): String {
         return when (this) {
-            0 -> "Cantrip"
-            else -> "Level $this"
+            0 -> strings.cantrips
+            else -> strings.level(this)
         }
     }
 

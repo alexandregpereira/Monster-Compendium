@@ -10,6 +10,7 @@ include ':app'
 
 include ':core:analytics'
 include ':core:event'
+include ':core:localization'
 include ':core:state-holder'
 include ':core:uuid'
 

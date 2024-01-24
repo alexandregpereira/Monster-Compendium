@@ -25,6 +25,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":core:analytics"))
+                implementation(project(":core:localization"))
                 implementation(project(":domain:app:data"))
                 implementation(project(":domain:app:core"))
                 implementation(project(":domain:sync:core"))
