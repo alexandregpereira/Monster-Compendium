@@ -4,6 +4,7 @@ data class SpellCompendiumState(
     val isShowing: Boolean = false,
     val spellsGroupByLevel: Map<String, List<SpellCompendiumItemState>> = emptyMap(),
     val searchText: String = "",
+    val searchTextLabel: String = "",
     val initialItemIndex: Int = 0,
 )
 

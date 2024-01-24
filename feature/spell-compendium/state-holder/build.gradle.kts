@@ -26,6 +26,7 @@ kotlin {
             dependencies {
                 implementation(project(":core:state-holder"))
                 implementation(project(":core:event"))
+                implementation(project(":core:localization"))
                 implementation(project(":domain:spell:core"))
                 implementation(project(":feature:spell-compendium:event"))
                 implementation(libs.kotlin.coroutines.core)

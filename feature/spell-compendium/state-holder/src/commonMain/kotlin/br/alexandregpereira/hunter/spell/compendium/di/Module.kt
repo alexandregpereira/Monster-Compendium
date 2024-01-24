@@ -29,7 +29,8 @@ val spellCompendiumStateModule = module {
             getSpellsUseCase = get(),
             stateHandler = MutableStateHolder(SpellCompendiumState()),
             eventListener = get<SpellCompendiumEventManager>(),
-            resultDispatcher = get<SpellCompendiumEventManager>()
+            resultDispatcher = get<SpellCompendiumEventManager>(),
+            appLocalization = get(),
         )
     }
 }

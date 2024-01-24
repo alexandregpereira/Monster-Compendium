@@ -28,9 +28,9 @@ import org.koin.dsl.module
 val settingsDomainModule = module {
     factory { GetAlternativeSourceJsonUrlUseCase(get()) }
     factory { GetContentVersionUseCase(get()) }
-    factory { GetLanguageUseCase(get()) }
+    factory { GetLanguageUseCase(get(), get()) }
     factory { GetMonsterImageJsonUrlUseCase(get()) }
     factory { SaveContentVersionUseCase(get()) }
-    factory { SaveLanguageUseCase(get()) }
+    factory { SaveLanguageUseCase(get(), get()) }
     factory { SaveUrlsUseCase(get()) }
 }

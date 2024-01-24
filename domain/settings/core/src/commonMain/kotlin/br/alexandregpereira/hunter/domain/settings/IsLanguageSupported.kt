@@ -16,9 +16,11 @@
 
 package br.alexandregpereira.hunter.domain.settings
 
+import br.alexandregpereira.hunter.localization.Language
+
 object IsLanguageSupported {
 
-    private val supportedLanguage = listOf("en-us", "pt-br")
+    private val supportedLanguage = Language.entries.map { it.code }
 
     operator fun invoke(lang: String): Boolean {
         return supportedLanguage.contains(lang)

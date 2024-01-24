@@ -40,7 +40,7 @@ internal fun SpellCompendiumScreen(
             ) {
                 AppTextField(
                     text = state.searchText,
-                    label = "Search",
+                    label = state.searchTextLabel,
                     capitalize = false,
                     onValueChange = intent::onSearchTextChange
                 )
