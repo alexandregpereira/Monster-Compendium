@@ -24,7 +24,22 @@ data class SpellPreview(
     val name: String,
     val level: Int,
     val school: SchoolOfMagic,
-)
+) {
+
+        companion object {
+
+            fun create(
+                name: String = "",
+                level: Int = 0,
+                school: SchoolOfMagic = SchoolOfMagic.ABJURATION
+            ) = SpellPreview(
+                index = "",
+                name = name,
+                level = level,
+                school = school,
+            )
+        }
+}
 
 @ObjCName(name = "SchoolOfMagic", exact = true)
 enum class SchoolOfMagic {

@@ -22,4 +22,16 @@ import kotlin.native.ObjCName
 data class AbilityDescription(
     val name: String,
     val description: String
-)
+) {
+
+    companion object {
+
+        fun create(
+            name: String = "",
+            description: String = ""
+        ) = AbilityDescription(
+            name = name,
+            description = description
+        )
+    }
+}

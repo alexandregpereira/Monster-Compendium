@@ -16,8 +16,13 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
+import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.Color
+import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
+import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -26,10 +31,11 @@ internal fun interface NormalizeMonsterUseCase {
     operator fun invoke(monster: Monster): Flow<Monster>
 }
 
-internal fun NormalizeMonsterUseCase(): NormalizeMonsterUseCase = NormalizeMonsterUseCase { monster ->
-    flowOf(monster)
-        .map { it.changeAbilityScoresModifier() }
-}
+internal fun NormalizeMonsterUseCase(): NormalizeMonsterUseCase =
+    NormalizeMonsterUseCase { monster ->
+        flowOf(monster)
+            .map { it.changeAbilityScoresModifier() }
+    }
 
 private fun Monster.changeAbilityScoresModifier(): Monster {
     val monster = this
@@ -61,7 +67,7 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
         imageData = monster.imageData.copy(
             backgroundColor = monster.imageData.backgroundColor.normalizeColor(),
         ),
-    )
+    ).filterEmpties().createIndexes()
 }
 
 private fun Color.normalizeColor(): Color {
@@ -71,4 +77,77 @@ private fun Color.normalizeColor(): Color {
         light = newColor,
         dark = newColor,
     )
+}
+
+internal fun Monster.filterEmpties(): Monster {
+    val emptyAbilityDescription = AbilityDescription.create()
+    val emptyAction = Action.create()
+
+    return copy(
+        speed = speed.copy(
+            values = speed.values.filter { it.valueFormatted.isNotBlank() }
+        ),
+        conditionImmunities = conditionImmunities.filter { it.name.isNotBlank() },
+        savingThrows = savingThrows.filter { it.modifier != 0 },
+        skills = skills.filter { it.name.isNotBlank() },
+        specialAbilities = specialAbilities.filter { it != emptyAbilityDescription },
+        actions = actions.filterDamageDices().filter { it != emptyAction },
+        reactions = reactions.filter { it != emptyAbilityDescription },
+        legendaryActions = legendaryActions.filterDamageDices().filter { it != emptyAction },
+        spellcastings = spellcastings.filterSpellUsages().filter { spellcasting ->
+            spellcasting.usages.isNotEmpty()
+        }
+    )
+}
+
+private fun List<Action>.filterDamageDices(): List<Action> {
+    val emptyDamageDice = DamageDice.create()
+    return map { action ->
+        action.copy(
+            damageDices = action.damageDices.filter { it != emptyDamageDice }
+        )
+    }
+}
+
+private fun List<Spellcasting>.filterSpellUsages(): List<Spellcasting> {
+    return map { spellcasting ->
+        spellcasting.copy(
+            usages = spellcasting.usages.filterSpells().filter { it.spells.isNotEmpty() }
+        )
+    }
+}
+
+private fun List<SpellUsage>.filterSpells(): List<SpellUsage> {
+    return map { spellUsage ->
+        spellUsage.copy(
+            spells = spellUsage.spells.filter { it.name.isNotBlank() }
+        )
+    }
+}
+
+private fun Monster.createIndexes(): Monster {
+    return copy(
+        savingThrows = savingThrows.map { savingThrow ->
+            savingThrow.copy(index = "saving-throw-${savingThrow.type.name}".normalizeIndex())
+        },
+        skills = skills.map { skill ->
+            skill.copy(index = "skill-${skill.name}".normalizeIndex())
+        },
+        conditionImmunities = conditionImmunities.map { conditionImmunity ->
+            conditionImmunity.copy(index = conditionImmunity.type.name.normalizeIndex())
+        },
+        damageVulnerabilities = damageVulnerabilities.map { damageVulnerability ->
+            damageVulnerability.copy(index = damageVulnerability.type.name.normalizeIndex())
+        },
+        damageResistances = damageResistances.map { damageResistance ->
+            damageResistance.copy(index = damageResistance.type.name.normalizeIndex())
+        },
+        damageImmunities = damageImmunities.map { damageImmunity ->
+            damageImmunity.copy(index = damageImmunity.type.name.normalizeIndex())
+        },
+    )
+}
+
+private fun String.normalizeIndex(): String {
+    return lowercase().replace(" ", "-")
 }

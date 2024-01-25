@@ -54,7 +54,7 @@ private fun ActionDamageGrid(
 ) = Grid(modifier = modifier) {
 
     val iconSize = 48.dp
-    attackBonus?.let {
+    attackBonus.takeUnless { it == 0 }?.let {
         Bonus(value = it, name = stringResource(R.string.monster_detail_attack), iconSize = iconSize)
     }
 

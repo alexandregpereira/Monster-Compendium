@@ -23,7 +23,20 @@ data class Condition(
     val index: String,
     val type: ConditionType,
     val name: String
-)
+) {
+
+    companion object {
+
+        fun create(
+            type: ConditionType = ConditionType.BLINDED,
+            name: String = ""
+        ) = Condition(
+            index = "",
+            type = type,
+            name = name
+        )
+    }
+}
 
 @ObjCName(name = "ConditionType", exact = true)
 enum class ConditionType {

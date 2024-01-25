@@ -8,6 +8,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
+import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
@@ -43,10 +44,12 @@ class MonsterRegistrationStateHolder internal constructor(
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
 
+    private var originalMonster: Monster? = null
+
     init {
         observeEvents()
         if (state.value.isOpen) {
-            loadMonster()
+            fetchMonster()
         }
     }
 
@@ -55,7 +58,12 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onMonsterChanged(monster: Monster) {
-        setState { copy(monster = monster) }
+        setState {
+            copy(
+                monster = monster,
+                isSaveButtonEnabled = monster.filterEmpties() != originalMonster
+            )
+        }
     }
 
     override fun onSaved() {
@@ -67,9 +75,11 @@ class MonsterRegistrationStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach {
                 onClose()
-                eventResultManager.dispatchEvent(MonsterRegistrationResult.OnSaved(
-                    monsterIndex = state.value.monster.index
-                ))
+                eventResultManager.dispatchEvent(
+                    MonsterRegistrationResult.OnSaved(
+                        monsterIndex = state.value.monster.index
+                    )
+                )
             }
             .launchIn(scope)
     }
@@ -86,7 +96,7 @@ class MonsterRegistrationStateHolder internal constructor(
             when (result) {
                 is SpellCompendiumResult.OnSpellClick -> updateSpells(
                     currentSpellIndex = spellIndex,
-                    newSpellIndex= result.spellIndex
+                    newSpellIndex = result.spellIndex
                 )
                 is SpellCompendiumResult.OnSpellLongClick -> openSpellDetail(result.spellIndex)
             }
@@ -132,13 +142,14 @@ class MonsterRegistrationStateHolder internal constructor(
         spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
     }
 
-    private fun loadMonster() {
+    private fun fetchMonster() {
         val monsterIndex = params.value.monsterIndex?.takeUnless { it.isBlank() } ?: return
 
         setState { copy(isLoading = true) }
         getMonster(monsterIndex)
             .flowOn(dispatcher)
             .onEach { monster ->
+                originalMonster = monster
                 setState { copy(monster = monster, isLoading = false) }
             }
             .launchIn(scope)
@@ -151,13 +162,14 @@ class MonsterRegistrationStateHolder internal constructor(
                 when (event) {
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
-                        setState { copy(isOpen = false) }
+                        setState { copy(isOpen = false, isSaveButtonEnabled = false) }
                     }
+
                     is MonsterRegistrationEvent.ShowEdit -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
                         setState { copy(isOpen = true) }
-                        loadMonster()
+                        fetchMonster()
                     }
                 }
             }

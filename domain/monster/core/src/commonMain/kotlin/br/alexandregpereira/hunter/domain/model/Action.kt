@@ -24,10 +24,37 @@ data class Action(
     val damageDices: List<DamageDice>,
     val attackBonus: Int?,
     val abilityDescription: AbilityDescription
-)
+) {
+
+    companion object {
+
+        fun create(
+            damageDices: List<DamageDice> = emptyList(),
+            attackBonus: Int? = null,
+            abilityDescription: AbilityDescription = AbilityDescription.create()
+        ) = Action(
+            id = "",
+            damageDices = damageDices,
+            attackBonus = attackBonus,
+            abilityDescription = abilityDescription
+        )
+    }
+}
 
 @ObjCName(name = "DamageDice", exact = true)
 data class DamageDice(
     val dice: String,
     val damage: Damage
-)
+) {
+
+    companion object {
+
+        fun create(
+            dice: String = "",
+            damage: Damage = Damage.create()
+        ) = DamageDice(
+            dice = dice,
+            damage = damage
+        )
+    }
+}

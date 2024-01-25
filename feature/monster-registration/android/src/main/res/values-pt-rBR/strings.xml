@@ -95,7 +95,20 @@
     <string name="monster_registration_spellcasting_type_label">Tipo de Conjuração</string>
     <string name="monster_registration_spell_group">Grupo de Magia</string>
     <string name="monster_registration_spell_label">Magia</string>
-    <string name="monster_registration_add_spell_group">Adicionar grupo de magia</string>
+    <string name="monster_registration_add_spell_group">Adicionar grupo</string>
+    <string name="monster_registration_remove_spell_group">Remover grupo</string>
     <string name="monster_registration_add_spell">Adicionar magia</string>
-    <string name="monster_registration_add_spellcasting_type">Adicionar tipo de conjuração</string>
+    <string name="monster_registration_remove_spell">Remover magia</string>
+    <string name="monster_registration_add_spellcasting_type">Adicionar conjuração</string>
+    <string name="monster_registration_remove_spellcasting_type">Remover conjuração</string>
+    <string name="monster_registration_add_damage_dice">Adicionar dano</string>
+    <string name="monster_registration_remove_damage_dice">Remover dano</string>
+    <string name="monster_registration_add_action">Adicionar ação</string>
+    <string name="monster_registration_remove_action">Remover ação</string>
+    <string name="monster_registration_add_special_ability">Adicionar habilidade</string>
+    <string name="monster_registration_remove_special_ability">Remover habilidade</string>
+    <string name="monster_registration_add_reaction">Adicionar reação</string>
+    <string name="monster_registration_remove_reaction">Remover reação</string>
+    <string name="monster_registration_add">Adicionar</string>
+    <string name="monster_registration_remove">Remover</string>
 </resources>

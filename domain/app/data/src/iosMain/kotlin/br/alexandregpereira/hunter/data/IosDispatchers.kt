@@ -16,6 +16,8 @@
 
 package br.alexandregpereira.hunter.data
 
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.autoreleasepool
 import kotlinx.cinterop.cstr
@@ -34,8 +36,9 @@ object IosDispatchers {
     val IO: CoroutineDispatcher = NSQueueDispatcher(QOS_CLASS_UTILITY)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 class NSQueueDispatcher(private val qosClass: qos_class_t) : CoroutineDispatcher() {
-    private val queue = dispatch_get_global_queue(qosClass.toLong(), 0)
+    private val queue = dispatch_get_global_queue(qosClass.toLong(), 0.toULong())
 
     init {
         val key = "NSQueueDispatcher:$qosClass"
@@ -45,6 +48,7 @@ class NSQueueDispatcher(private val qosClass: qos_class_t) : CoroutineDispatcher
         }
     }
 
+    @OptIn(BetaInteropApi::class)
     override fun dispatch(context: CoroutineContext, block: Runnable) {
         dispatch_async(queue) {
             autoreleasepool {

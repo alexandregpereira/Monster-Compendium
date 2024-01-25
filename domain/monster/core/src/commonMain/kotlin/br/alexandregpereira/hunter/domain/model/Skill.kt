@@ -23,4 +23,17 @@ data class Skill(
     val index: String,
     val modifier: Int,
     val name: String
-)
+) {
+
+    companion object {
+
+        fun create(
+            modifier: Int = 0,
+            name: String = "",
+        ) = Skill(
+            index = "",
+            modifier = modifier,
+            name = name
+        )
+    }
+}

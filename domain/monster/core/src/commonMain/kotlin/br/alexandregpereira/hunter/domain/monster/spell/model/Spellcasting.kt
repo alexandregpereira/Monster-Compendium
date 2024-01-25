@@ -23,4 +23,18 @@ data class Spellcasting(
     val description: String,
     val type: SpellcastingType,
     val usages: List<SpellUsage>
-)
+) {
+
+    companion object {
+
+        fun create(
+            description: String = "",
+            type: SpellcastingType = SpellcastingType.SPELLCASTER,
+            usages: List<SpellUsage> = emptyList()
+        ) = Spellcasting(
+            description = description,
+            type = type,
+            usages = usages
+        )
+    }
+}

@@ -1,21 +1,19 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
-import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterConditionsForm(
-    title: String,
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterConditionsForm(
+    title: @Composable () -> String,
     conditions: List<Condition>,
-    modifier: Modifier = Modifier,
     onChanged: (List<Condition>) -> Unit = {}
 ) {
     val newConditions = conditions.toMutableList()
@@ -23,31 +21,35 @@ internal fun MonsterConditionsForm(
     val conditionTypes = ConditionType.entries.map { it.toTypeState() }.filterNot {
         currentConditionTypes.contains(it)
     }
-    val conditionTypeOptions = conditionTypes.map { stringResource(it.stringRes) }
-    Form(
-        modifier = modifier,
+    val key = "conditionImmunities"
+    FormLazy(
+        key = key,
         title = title,
     ) {
-        conditions.forEachIndexed { i, condition ->
-            PickerField(
-                value = stringResource(condition.type.toTypeState().stringRes),
-                label = stringResource(R.string.monster_registration_condition_type),
-                options = conditionTypeOptions,
-                onValueChange = { optionIndex ->
-                    onChanged(
-                        newConditions.changeAt(i) {
-                            copy(
-                                type = ConditionType.valueOf(conditionTypes[optionIndex].name),
-                                name = conditionTypeOptions[optionIndex]
-                            )
-                        }
-                    )
-                }
-            )
-        }
-
-        if (conditions.size < ConditionType.entries.size) {
-            AddButton()
+        FormItems(
+            key = key,
+            items = newConditions,
+            createNew = { Condition.create() },
+            onChanged = onChanged
+        ) { i, condition ->
+            formItem(key = "$key-name-$i") {
+                val conditionTypeOptions = conditionTypes.map { stringResource(it.stringRes) }
+                PickerField(
+                    value = stringResource(condition.type.toTypeState().stringRes),
+                    label = stringResource(R.string.monster_registration_condition_type),
+                    options = conditionTypeOptions,
+                    onValueChange = { optionIndex ->
+                        onChanged(
+                            newConditions.changeAt(i) {
+                                copy(
+                                    type = ConditionType.valueOf(conditionTypes[optionIndex].name),
+                                    name = conditionTypeOptions[optionIndex]
+                                )
+                            }
+                        )
+                    }
+                )
+            }
         }
     }
 }

@@ -22,4 +22,16 @@ import kotlin.native.ObjCName
 data class SpellUsage(
     val group: String,
     val spells: List<SpellPreview>
-)
+) {
+
+    companion object {
+
+        fun create(
+            group: String = "",
+            spells: List<SpellPreview> = emptyList()
+        ) = SpellUsage(
+            group = group,
+            spells = spells
+        )
+    }
+}

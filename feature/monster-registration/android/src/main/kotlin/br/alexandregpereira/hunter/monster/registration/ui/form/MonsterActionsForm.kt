@@ -1,7 +1,7 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
@@ -11,34 +11,65 @@ import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterActionsForm(
-    title: String,
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterActionsForm(
+    key: String,
+    title: @Composable () -> String,
     actions: List<Action>,
-    modifier: Modifier = Modifier,
     onChanged: (List<Action>) -> Unit = {}
-) {
+) = FormLazy(key, title) {
     val newActions = actions.toMutableList()
     val damageTypes = DamageType.entries.filter { it != DamageType.OTHER }
-    val damageTypeOptions = damageTypes.map { it.toTypeState().getStringName() }
-    MonsterAbilityDescriptionForm(
-        title = title,
-        abilityDescriptions = actions.map { it.abilityDescription },
-        modifier = modifier,
-        onChanged = {
-            onChanged(
-                actions.mapIndexed { index, action ->
-                    action.copy(
-                        abilityDescription = it[index],
+
+    FormItems(
+        items = newActions,
+        addText = { stringResource(R.string.monster_registration_add_action) },
+        removeText = { stringResource(R.string.monster_registration_remove_action) },
+        key = key,
+        createNew = { Action.create() },
+        onChanged = onChanged
+    ) { actionIndex, action ->
+        val abilityDescription = action.abilityDescription
+        formItem(key = "$key-action-name-$actionIndex") {
+            AppTextField(
+                text = abilityDescription.name,
+                label = stringResource(R.string.monster_registration_name),
+                onValueChange = { newValue ->
+                    onChanged(
+                        newActions.changeAt(actionIndex) {
+                            copy(
+                                abilityDescription = actions[actionIndex].abilityDescription.copy(
+                                    name = newValue
+                                )
+                            )
+                        }
                     )
                 }
             )
         }
-    ) { actionIndex ->
-        val action = actions[actionIndex]
-        action.attackBonus?.let {
+
+        formItem(key = "$key-action-description-$actionIndex") {
             AppTextField(
-                value = it,
+                text = abilityDescription.description,
+                label = stringResource(R.string.monster_registration_description),
+                multiline = true,
+                onValueChange = { newValue ->
+                    onChanged(
+                        newActions.changeAt(actionIndex) {
+                            copy(
+                                abilityDescription = actions[actionIndex].abilityDescription.copy(
+                                    description = newValue
+                                )
+                            )
+                        }
+                    )
+                }
+            )
+        }
+
+        formItem(key = "$key-action-attackBonus-$actionIndex") {
+            AppTextField(
+                value = action.attackBonus ?: 0,
                 label = stringResource(R.string.monster_registration_attack_bonus),
                 onValueChange = { newValue ->
                     onChanged(newActions.changeAt(actionIndex) { copy(attackBonus = newValue) })
@@ -46,31 +77,47 @@ internal fun MonsterActionsForm(
             )
         }
 
-        action.damageDices.takeIf { it.isNotEmpty() }?.forEachIndexed { index, damageDice ->
-            PickerField(
-                value = damageDice.damage.type.toTypeState().getStringName(),
-                label = stringResource(R.string.monster_registration_damage_type),
-                options = damageTypeOptions,
-                onValueChange = { optionIndex ->
-                    onChanged(
-                        newActions.changeDamageDiceAt(actionIndex, index) {
-                            copy(damage = damage.copy(type = damageTypes[optionIndex]))
-                        }
-                    )
-                }
-            )
+        val damageDiceKey = "$key-actions-damageDices-$actionIndex"
+        FormItems(
+            items = action.damageDices.toMutableList(),
+            addText = { stringResource(R.string.monster_registration_add_damage_dice) },
+            removeText = { stringResource(R.string.monster_registration_remove_damage_dice) },
+            key = damageDiceKey,
+            createNew = { DamageDice.create() },
+            onChanged = {
+                onChanged(
+                    newActions.changeAt(actionIndex) { copy(damageDices = it) }
+                )
+            }
+        ) { index, damageDice ->
+            formItem(key = "$damageDiceKey-damageDice-type-$index") {
+                PickerField(
+                    value = damageDice.damage.type.toTypeState().getStringName(),
+                    label = stringResource(R.string.monster_registration_damage_type),
+                    options = damageTypes.map { it.toTypeState().getStringName() },
+                    onValueChange = { optionIndex ->
+                        onChanged(
+                            newActions.changeDamageDiceAt(actionIndex, index) {
+                                copy(damage = damage.copy(type = damageTypes[optionIndex]))
+                            }
+                        )
+                    }
+                )
+            }
 
-            AppTextField(
-                text = damageDice.dice,
-                label = stringResource(R.string.monster_registration_damage_dice),
-                onValueChange = { newValue ->
-                    onChanged(
-                        newActions.changeDamageDiceAt(actionIndex, index) {
-                            copy(dice = newValue)
-                        }
-                    )
-                }
-            )
+            formItem(key = "$damageDiceKey-damageDice-dice-$index") {
+                AppTextField(
+                    text = damageDice.dice,
+                    label = stringResource(R.string.monster_registration_damage_dice),
+                    onValueChange = { newValue ->
+                        onChanged(
+                            newActions.changeDamageDiceAt(actionIndex, index) {
+                                copy(dice = newValue)
+                            }
+                        )
+                    }
+                )
+            }
         }
     }
 }

@@ -1,65 +1,68 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.SavingThrow
 import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
-import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
 import br.alexandregpereira.hunter.ui.compose.AppTextField
-import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterSavingThrowsForm(
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterSavingThrowsForm(
     savingThrows: List<SavingThrow>,
-    modifier: Modifier = Modifier,
     onChanged: (List<SavingThrow>) -> Unit = {}
 ) {
     val types = savingThrows.map { it.type.name }
     val options = AbilityScoreType.entries.filterNot { types.contains(it.name) }
-    val optionsString = AbilityScoreTypeState.entries.filterNot { types.contains(it.name) }
-        .map { it.getStringResource() }
     val mutableSavingThrows = savingThrows.toMutableList()
+    val key = "saving-throws"
 
-    Form(
-        modifier = modifier,
-        title = stringResource(R.string.monster_registration_saving_throws),
+    FormLazy(
+        key = key,
+        title = { stringResource(R.string.monster_registration_saving_throws) },
     ) {
-        savingThrows.forEachIndexed { i, savingThrow ->
-            val typeName = savingThrow.type.toState().getStringResource()
 
-            PickerField(
-                value = typeName,
-                label = stringResource(R.string.monster_registration_name),
-                options = optionsString,
-                onValueChange = { optionIndex ->
-                    onChanged(
-                        mutableSavingThrows.changeAt(i) {
-                            copy(type = options[optionIndex])
-                        }
-                    )
-                }
-            )
+        FormItems(
+            key = key,
+            items = mutableSavingThrows,
+            createNew = { SavingThrow.create() },
+            onChanged = onChanged
+        ) { i, savingThrow ->
+            formItem(key = "$key-name-$i") {
+                val typeName = savingThrow.type.toState().getStringResource()
+                val optionsString = AbilityScoreTypeState.entries.filterNot { types.contains(it.name) }
+                    .map { it.getStringResource() }
+                PickerField(
+                    value = typeName,
+                    label = stringResource(R.string.monster_registration_name),
+                    options = optionsString,
+                    onValueChange = { optionIndex ->
+                        onChanged(
+                            mutableSavingThrows.changeAt(i) {
+                                copy(type = options[optionIndex])
+                            }
+                        )
+                    }
+                )
+            }
 
-            AppTextField(
-                text = savingThrow.modifier.toString(),
-                label = typeName,
-                keyboardType = AppKeyboardType.NUMBER,
-                onValueChange = { newValue ->
-                    onChanged(
-                        mutableSavingThrows.changeAt(i) {
-                            copy(modifier = newValue.toIntOrNull() ?: 0)
-                        }
-                    )
-                }
-            )
-        }
-
-        if (savingThrows.size < AbilityScoreType.entries.size) {
-            AddButton()
+            formItem(key = "$key-modifier-$i") {
+                val typeName = savingThrow.type.toState().getStringResource()
+                AppTextField(
+                    value = savingThrow.modifier,
+                    label = typeName,
+                    onValueChange = { newValue ->
+                        onChanged(
+                            mutableSavingThrows.changeAt(i) {
+                                copy(modifier = newValue)
+                            }
+                        )
+                    }
+                )
+            }
         }
     }
 }

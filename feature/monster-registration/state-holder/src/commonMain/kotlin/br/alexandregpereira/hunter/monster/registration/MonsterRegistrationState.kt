@@ -7,4 +7,5 @@ data class MonsterRegistrationState(
     val isOpen: Boolean = false,
     val monster: Monster = Monster(index = ""),
     val initialSelectedStepIndex: Int = 0,
+    val isSaveButtonEnabled: Boolean = false,
 )

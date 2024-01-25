@@ -30,6 +30,7 @@ internal fun MonsterRegistrationScreen(
         ) {
             MonsterRegistrationForm(
                 monster = state.monster,
+                isSaveButtonEnabled = state.isSaveButtonEnabled,
                 modifier = Modifier,
                 contentPadding = contentPadding,
                 intent = intent,
