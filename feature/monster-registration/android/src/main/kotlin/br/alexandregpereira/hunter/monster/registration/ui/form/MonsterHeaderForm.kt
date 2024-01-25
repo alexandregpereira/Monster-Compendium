@@ -1,73 +1,83 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.annotation.StringRes
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.ui.compose.AppTextField
-import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterHeaderForm(
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterHeaderForm(
     monster: Monster,
-    modifier: Modifier = Modifier,
     onMonsterChanged: (Monster) -> Unit = {}
-) = Form(modifier = modifier, title = stringResource(R.string.monster_registration_edit)) {
-    AppTextField(
-        text = monster.name,
-        label = stringResource(R.string.monster_registration_name),
-        onValueChange = { onMonsterChanged(monster.copy(name = it)) }
-    )
-
-    AppTextField(
-        text = monster.subtitle,
-        label = stringResource(R.string.monster_registration_name),
-        onValueChange = { onMonsterChanged(monster.copy(subtitle = it)) }
-    )
-
-    AppTextField(
-        text = monster.group.orEmpty(),
-        label = stringResource(R.string.monster_registration_group),
-        onValueChange = {
-            onMonsterChanged(monster.copy(group = it.takeUnless { it.isBlank() }))
-        }
-    )
-
-    AppTextField(
-        text = monster.imageData.url,
-        label = stringResource(R.string.monster_registration_image_url),
-        onValueChange = {
-            onMonsterChanged(monster.copy(imageData = monster.imageData.copy(url = it)))
-        }
-    )
-
-    AppTextField(
-        text = monster.imageData.backgroundColor.light,
-        label = stringResource(R.string.monster_registration_image_background_color),
-        onValueChange = {
-            onMonsterChanged(
-                monster.copy(imageData = monster.imageData.copy(
-                    backgroundColor = Color(light = it, dark = it)
-                ))
+) {
+    val key = "monsterHeader"
+    FormLazy(
+        key = key,
+        title = { stringResource(R.string.monster_registration_edit) }
+    ) {
+        formItem(key = "$key-name") {
+            AppTextField(
+                text = monster.name,
+                label = stringResource(R.string.monster_registration_name),
+                onValueChange = { onMonsterChanged(monster.copy(name = it)) }
             )
         }
-    )
-
-    PickerField(
-        value = stringResource(monster.type.toMonsterTypeState().stringRes),
-        label = stringResource(R.string.monster_registration_type),
-        options = MonsterType.entries.map {
-            stringResource(it.toMonsterTypeState().stringRes)
-        },
-        onValueChange = { i ->
-            onMonsterChanged(monster.copy(type = MonsterType.entries[i]))
+        formItem(key = "$key-subtitle") {
+            AppTextField(
+                text = monster.subtitle,
+                label = stringResource(R.string.monster_registration_subtitle),
+                onValueChange = { onMonsterChanged(monster.copy(subtitle = it)) }
+            )
         }
-    )
+        formItem(key = "$key-group") {
+            AppTextField(
+                text = monster.group.orEmpty(),
+                label = stringResource(R.string.monster_registration_group),
+                onValueChange = {
+                    onMonsterChanged(monster.copy(group = it.takeUnless { it.isBlank() }))
+                }
+            )
+        }
+        formItem(key = "$key-imageUrl") {
+            AppTextField(
+                text = monster.imageData.url,
+                label = stringResource(R.string.monster_registration_image_url),
+                onValueChange = {
+                    onMonsterChanged(monster.copy(imageData = monster.imageData.copy(url = it)))
+                }
+            )
+        }
+        formItem(key = "$key-imageBackgroundColor") {
+            AppTextField(
+                text = monster.imageData.backgroundColor.light,
+                label = stringResource(R.string.monster_registration_image_background_color),
+                onValueChange = {
+                    onMonsterChanged(
+                        monster.copy(imageData = monster.imageData.copy(
+                            backgroundColor = Color(light = it, dark = it)
+                        ))
+                    )
+                }
+            )
+        }
+        formItem(key = "$key-type") {
+            PickerField(
+                value = stringResource(monster.type.toMonsterTypeState().stringRes),
+                label = stringResource(R.string.monster_registration_type),
+                options = MonsterType.entries.map {
+                    stringResource(it.toMonsterTypeState().stringRes)
+                },
+                onValueChange = { i ->
+                    onMonsterChanged(monster.copy(type = MonsterType.entries[i]))
+                }
+            )
+        }
+    }
 }
 
 private fun MonsterType.toMonsterTypeState(): MonsterTypeState {

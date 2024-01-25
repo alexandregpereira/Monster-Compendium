@@ -1,29 +1,24 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.ui.compose.Form
-import br.alexandregpereira.hunter.ui.compose.FormField
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 
-@Composable
-internal fun MonsterStringValueForm(
-    title: String,
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterStringValueForm(
+    key: String,
+    title: @Composable () -> String,
     value: String,
-    modifier: Modifier = Modifier,
     onChanged: (String) -> Unit = {}
+) = FormLazy(
+    key = key,
+    title = title,
 ) {
-    Form(
-        modifier = modifier,
-        title = title,
-        formFields = listOf(
-            FormField.Text(
-                key = title,
-                label = title,
-                value = value,
-            )
-        ),
-        onFormChanged = { field ->
-            onChanged(field.stringValue)
-        },
-    )
+    formItem(key = "$key-string-value") {
+        AppTextField(
+            text = value,
+            label = title(),
+            onValueChange = onChanged
+        )
+    }
 }

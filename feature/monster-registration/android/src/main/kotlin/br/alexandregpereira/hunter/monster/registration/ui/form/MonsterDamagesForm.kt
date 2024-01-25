@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -11,14 +12,13 @@ import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.ui.compose.AppTextField
-import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterDamagesForm(
-    title: String,
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterDamagesForm(
+    key: String,
+    title: @Composable () -> String,
     damages: List<Damage>,
-    modifier: Modifier = Modifier,
     onChanged: (List<Damage>) -> Unit = {}
 ) {
     val newDamages = damages.toMutableList()
@@ -26,46 +26,51 @@ internal fun MonsterDamagesForm(
     val damageTypes = DamageType.entries.map { it.toTypeState() }.filterNot {
         currentDamageTypes.contains(it)
     }
-    val damageTypeOptions = damageTypes.map { stringResource(it.stringRes) }
-    Form(
-        modifier = modifier,
+    FormLazy(
+        key = key,
         title = title,
     ) {
-        damages.forEachIndexed { i, damage ->
-            if (i != 0 && damage.type == DamageType.OTHER) Spacer(modifier = Modifier.height(8.dp))
+        FormItems(
+            key = key,
+            items = newDamages,
+            createNew = { Damage.create() },
+            onChanged = onChanged
+        ) { i, damage ->
+            formItem(key = "$key-name-$i") {
+                val damageTypeOptions = damageTypes.map { stringResource(it.stringRes) }
+                if (i != 0 && damage.type == DamageType.OTHER) Spacer(modifier = Modifier.height(8.dp))
 
-            PickerField(
-                value = stringResource(damage.type.toTypeState().stringRes),
-                label = stringResource(R.string.monster_registration_damage_type),
-                options = damageTypeOptions,
-                onValueChange = { optionIndex ->
-                    onChanged(
-                        newDamages.changeAt(i) {
-                            copy(
-                                type = DamageType.valueOf(damageTypes[optionIndex].name),
-                                name = damageTypeOptions[optionIndex].takeIf {
-                                    damageTypes[optionIndex] != DamageTypeState.OTHER
-                                }.orEmpty()
-                            )
-                        }
-                    )
-                }
-            )
-
-            if (damage.type == DamageType.OTHER) {
-                AppTextField(
-                    text = damage.name,
-                    label = stringResource(R.string.monster_registration_damage_type_other),
-                    onValueChange = { newValue ->
-                        onChanged(newDamages.changeAt(i) { copy(name = newValue) })
+                PickerField(
+                    value = stringResource(damage.type.toTypeState().stringRes),
+                    label = stringResource(R.string.monster_registration_damage_type),
+                    options = damageTypeOptions,
+                    onValueChange = { optionIndex ->
+                        onChanged(
+                            newDamages.changeAt(i) {
+                                copy(
+                                    type = DamageType.valueOf(damageTypes[optionIndex].name),
+                                    name = damageTypeOptions[optionIndex].takeIf {
+                                        damageTypes[optionIndex] != DamageTypeState.OTHER
+                                    }.orEmpty()
+                                )
+                            }
+                        )
                     }
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
-        }
 
-        if (damages.size < DamageType.entries.size) {
-            AddButton()
+            formItem(key = "$key-name-other-$i") {
+                if (damage.type == DamageType.OTHER) {
+                    AppTextField(
+                        text = damage.name,
+                        label = stringResource(R.string.monster_registration_damage_type_other),
+                        onValueChange = { newValue ->
+                            onChanged(newDamages.changeAt(i) { copy(name = newValue) })
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
         }
     }
 }

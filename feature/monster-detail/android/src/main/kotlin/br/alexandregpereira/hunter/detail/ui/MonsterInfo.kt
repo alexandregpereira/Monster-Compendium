@@ -86,17 +86,6 @@ fun LazyListScope.monsterInfo(
         onSpellClicked = onSpellClicked
     )
 
-    item(key = "reactions") {
-        MonsterOptionalSectionAlphaTransition(
-            valueToValidate = { it.reactions },
-            dataList = monsters,
-            pagerState = pagerState,
-            getItemsKeys = getItemsKeys,
-        ) {
-            ReactionBlock(reactions = it)
-        }
-    }
-
     item(key = "space") {
         Spacer(
             modifier = Modifier
@@ -294,6 +283,17 @@ private fun LazyListScope.monsterInfoPart5(
             getItemsKeys = getItemsKeys,
         ) { actions ->
             ActionBlock(actions = actions)
+        }
+    }
+
+    item(key = "reactions") {
+        MonsterOptionalSectionAlphaTransition(
+            valueToValidate = { it.reactions },
+            dataList = monsters,
+            pagerState = pagerState,
+            getItemsKeys = getItemsKeys,
+        ) {
+            ReactionBlock(reactions = it)
         }
     }
 

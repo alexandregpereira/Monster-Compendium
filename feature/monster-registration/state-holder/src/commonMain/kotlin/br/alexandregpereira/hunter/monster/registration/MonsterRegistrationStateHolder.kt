@@ -162,7 +162,7 @@ class MonsterRegistrationStateHolder internal constructor(
                 when (event) {
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
-                        setState { copy(isOpen = false) }
+                        setState { copy(isOpen = false, isSaveButtonEnabled = false) }
                     }
 
                     is MonsterRegistrationEvent.ShowEdit -> {

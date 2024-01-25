@@ -1,8 +1,7 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
@@ -12,93 +11,117 @@ import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.ClickableField
-import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
-@Composable
-internal fun MonsterSpellcastingsForm(
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterSpellcastingsForm(
     spellcastings: List<Spellcasting>,
-    modifier: Modifier = Modifier,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<Spellcasting>) -> Unit = {}
-) = Form(modifier, stringResource(R.string.monster_registration_spells)) {
-    if (spellcastings.isEmpty()) {
-        AddButton(text = stringResource(R.string.monster_registration_add_spellcasting_type))
-        return@Form
-    }
-    val newSpellcastings = spellcastings.toMutableList()
-    val options = SpellcastingType.entries
-    val optionStrings = SpellcastingType.entries.map { it.toState().getStringName() }
+) {
+    val key = "spellcastings"
+    FormLazy(key, { stringResource(R.string.monster_registration_spells) }) {
+        val newSpellcastings = spellcastings.toMutableList()
+        val options = SpellcastingType.entries
 
-    spellcastings.forEachIndexed { index, spellcasting ->
-        PickerField(
-            value = spellcasting.type.toState().getStringName(),
-            label = stringResource(R.string.monster_registration_spellcasting_type_label),
-            options = optionStrings,
-            onValueChange = { optionIndex ->
-                onChanged(newSpellcastings.changeAt(index) { copy(type = options[optionIndex]) })
+        FormItems(
+            key = key,
+            items = newSpellcastings,
+            addText = { stringResource(R.string.monster_registration_add_spellcasting_type) },
+            removeText = { stringResource(R.string.monster_registration_remove_spellcasting_type) },
+            createNew = { Spellcasting.create() },
+            onChanged = onChanged
+        ) { index, spellcasting ->
+            formItem(key = "$key-type-$index") {
+                val optionStrings = SpellcastingType.entries.map { it.toState().getStringName() }
+                PickerField(
+                    value = spellcasting.type.toState().getStringName(),
+                    label = stringResource(R.string.monster_registration_spellcasting_type_label),
+                    options = optionStrings,
+                    onValueChange = { optionIndex ->
+                        onChanged(newSpellcastings.changeAt(index) { copy(type = options[optionIndex]) })
+                    }
+                )
             }
-        )
-        AppTextField(
-            text = spellcasting.description,
-            label = stringResource(R.string.monster_registration_description),
-            multiline = true,
-            onValueChange = { newValue ->
-                onChanged(newSpellcastings.changeAt(index) { copy(description = newValue) })
+            formItem(key = "$key-description-$index") {
+                AppTextField(
+                    text = spellcasting.description,
+                    label = stringResource(R.string.monster_registration_description),
+                    multiline = true,
+                    onValueChange = { newValue ->
+                        onChanged(newSpellcastings.changeAt(index) { copy(description = newValue) })
+                    }
+                )
             }
-        )
-
-        MonsterSpellsUsageForm(
-            spellsUsage = spellcasting.usages,
-            onSpellClick = onSpellClick,
-            onChanged = { newSpellsUsage ->
-                onChanged(newSpellcastings.changeAt(index) { copy(usages = newSpellsUsage) })
-            }
-        )
-
-        AddButton(text = stringResource(R.string.monster_registration_add_spellcasting_type))
+            MonsterSpellsUsageForm(
+                key = "$key-spellsUsage-$index",
+                spellsUsage = spellcasting.usages,
+                onSpellClick = onSpellClick,
+                onChanged = { newSpellsUsage ->
+                    onChanged(newSpellcastings.changeAt(index) { copy(usages = newSpellsUsage) })
+                }
+            )
+        }
     }
 }
 
-@Composable
-internal fun MonsterSpellsUsageForm(
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterSpellsUsageForm(
+    key: String,
     spellsUsage: List<SpellUsage>,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<SpellUsage>) -> Unit = {}
 ) {
     val newSpellsUsage = spellsUsage.toMutableList()
-
-    AddButton(text = stringResource(R.string.monster_registration_add_spell_group))
-
-    spellsUsage.forEachIndexed { index, spellUsage ->
-        AppTextField(
-            text = spellUsage.group,
-            label = stringResource(R.string.monster_registration_spell_group),
-            onValueChange = { newValue ->
-                onChanged(newSpellsUsage.changeAt(index) { copy(group = newValue) })
+    FormItems(
+        key = key,
+        items = newSpellsUsage,
+        addText = { stringResource(R.string.monster_registration_add_spell_group) },
+        removeText = { stringResource(R.string.monster_registration_remove_spell_group) },
+        createNew = { SpellUsage.create() },
+        onChanged = onChanged
+    ) { index, spellUsage ->
+        formItem(key = "$key-group-$index") {
+            AppTextField(
+                text = spellUsage.group,
+                label = stringResource(R.string.monster_registration_spell_group),
+                onValueChange = { newValue ->
+                    onChanged(newSpellsUsage.changeAt(index) { copy(group = newValue) })
+                }
+            )
+        }
+        MonsterSpellsForm(
+            key = "$key-spells-$index",
+            spells = spellUsage.spells,
+            onSpellClick = onSpellClick,
+            onChanged = { newSpells ->
+                onChanged(newSpellsUsage.changeAt(index) { copy(spells = newSpells) })
             }
         )
-
-        MonsterSpellsForm(spells = spellUsage.spells, onSpellClick = onSpellClick)
-
-        AddButton(text = stringResource(R.string.monster_registration_add_spell_group))
     }
 }
 
-@Composable
-internal fun MonsterSpellsForm(
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterSpellsForm(
+    key: String,
     spells: List<SpellPreview>,
-    onSpellClick: (String) -> Unit = {}
-) {
-    spells.forEach { spell ->
+    onSpellClick: (String) -> Unit = {},
+    onChanged: (List<SpellPreview>) -> Unit = {}
+) = FormItems(
+    key = key,
+    items = spells.toMutableList(),
+    addText = { stringResource(R.string.monster_registration_add_spell) },
+    removeText = { stringResource(R.string.monster_registration_remove_spell) },
+    createNew = { SpellPreview.create() },
+    onChanged = onChanged
+) { index, spell ->
+    formItem(key = "$key-spell-name-$index") {
         ClickableField(
             text = spell.name,
             label = stringResource(R.string.monster_registration_spell_label),
             onClick = { onSpellClick(spell.index) },
         )
     }
-
-    AddButton(text = stringResource(R.string.monster_registration_add_spell))
 }
 
 private fun SpellcastingType.toState() = when (this) {
@@ -113,4 +136,3 @@ private enum class SpellcastingTypeState(val stringRes: Int) {
 
 @Composable
 private fun SpellcastingTypeState.getStringName() = stringResource(stringRes)
-

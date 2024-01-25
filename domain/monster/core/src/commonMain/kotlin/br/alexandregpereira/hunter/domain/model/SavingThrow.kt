@@ -23,4 +23,18 @@ data class SavingThrow(
     val index: String,
     val modifier: Int,
     val type: AbilityScoreType
-)
+) {
+    companion object {
+
+        fun create(
+            modifier: Int = 0,
+            type: AbilityScoreType = AbilityScoreType.STRENGTH,
+        ): SavingThrow {
+            return SavingThrow(
+                index = "",
+                modifier = modifier,
+                type = type
+            )
+        }
+    }
+}

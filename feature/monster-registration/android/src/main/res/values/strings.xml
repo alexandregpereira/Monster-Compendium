@@ -95,9 +95,12 @@
     <string name="monster_registration_spellcasting_type_label">Spellcasting Type</string>
     <string name="monster_registration_spell_group">Spell Group</string>
     <string name="monster_registration_spell_label">Spell</string>
-    <string name="monster_registration_add_spell_group">Add spell group</string>
+    <string name="monster_registration_add_spell_group">Add group</string>
+    <string name="monster_registration_remove_spell_group">Remove group</string>
     <string name="monster_registration_add_spell">Add spell</string>
-    <string name="monster_registration_add_spellcasting_type">Add spellcasting type</string>
+    <string name="monster_registration_remove_spell">Remove spell</string>
+    <string name="monster_registration_add_spellcasting_type">Add spellcasting</string>
+    <string name="monster_registration_remove_spellcasting_type">Remove spellcasting</string>
     <string name="monster_registration_add_damage_dice">Add damage</string>
     <string name="monster_registration_remove_damage_dice">Remove damage</string>
     <string name="monster_registration_add_action">Add action</string>
@@ -106,4 +109,6 @@
     <string name="monster_registration_remove_special_ability">Remove ability</string>
     <string name="monster_registration_add_reaction">Add reaction</string>
     <string name="monster_registration_remove_reaction">Remove reaction</string>
+    <string name="monster_registration_add">Add</string>
+    <string name="monster_registration_remove">Remove</string>
 </resources>
