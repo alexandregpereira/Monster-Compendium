@@ -16,7 +16,10 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.hunter.domain.model.AbilityDescription
+import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.Color
+import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.Monster
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -61,7 +64,7 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
         imageData = monster.imageData.copy(
             backgroundColor = monster.imageData.backgroundColor.normalizeColor(),
         ),
-    )
+    ).filterEmpties()
 }
 
 private fun Color.normalizeColor(): Color {
@@ -71,4 +74,25 @@ private fun Color.normalizeColor(): Color {
         light = newColor,
         dark = newColor,
     )
+}
+
+internal fun Monster.filterEmpties(): Monster {
+    val emptyAbilityDescription = AbilityDescription.create()
+    val emptyAction = Action.create()
+
+    return copy(
+        specialAbilities = specialAbilities.filter { it != emptyAbilityDescription },
+        actions = actions.filterDamageDices().filter { it != emptyAction },
+        reactions = reactions.filter { it != emptyAbilityDescription },
+        legendaryActions = legendaryActions.filterDamageDices().filter { it != emptyAction },
+    )
+}
+
+private fun List<Action>.filterDamageDices(): List<Action> {
+    val emptyDamageDice = DamageDice.create()
+    return map { action ->
+        action.copy(
+            damageDices = action.damageDices.filter { it != emptyDamageDice }
+        )
+    }
 }

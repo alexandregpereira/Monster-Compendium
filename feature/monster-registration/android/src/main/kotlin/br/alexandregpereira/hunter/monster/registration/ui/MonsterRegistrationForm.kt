@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,9 +31,11 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStringVal
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun MonsterRegistrationForm(
     monster: Monster,
+    isSaveButtonEnabled: Boolean,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     intent: MonsterRegistrationIntent = EmptyMonsterRegistrationIntent(),
@@ -52,30 +55,35 @@ internal fun MonsterRegistrationForm(
         item(key = "monster") {
             MonsterHeaderForm(
                 monster = monster,
+                modifier = Modifier.animateItemPlacement(),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "stats") {
             MonsterStatsForm(
                 monster = monster,
+                modifier = Modifier.animateItemPlacement(),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "speed") {
             MonsterSpeedValuesForm(
                 monster = monster,
+                modifier = Modifier.animateItemPlacement(),
                 onMonsterChanged = intent::onMonsterChanged,
             )
         }
         item(key = "abilityScores") {
             MonsterAbilityScoresForm(
                 abilityScores = monster.abilityScores,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(abilityScores = it)) }
             )
         }
         item(key = "savingThrows") {
             MonsterSavingThrowsForm(
                 savingThrows = monster.savingThrows,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(savingThrows = it)) },
             )
         }
@@ -83,6 +91,7 @@ internal fun MonsterRegistrationForm(
             MonsterProficiencyForm(
                 title = stringResource(R.string.monster_registration_skills),
                 proficiencies = monster.skills,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(skills = it)) },
             )
         }
@@ -90,6 +99,7 @@ internal fun MonsterRegistrationForm(
             MonsterDamagesForm(
                 title = stringResource(R.string.monster_registration_damage_vulnerabilities),
                 damages = monster.damageVulnerabilities,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(damageVulnerabilities = it)) },
             )
         }
@@ -97,6 +107,7 @@ internal fun MonsterRegistrationForm(
             MonsterDamagesForm(
                 title = stringResource(R.string.monster_registration_damage_resistances),
                 damages = monster.damageResistances,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(damageResistances = it)) },
             )
         }
@@ -104,6 +115,7 @@ internal fun MonsterRegistrationForm(
             MonsterDamagesForm(
                 title = stringResource(R.string.monster_registration_damage_immunities),
                 damages = monster.damageImmunities,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(damageImmunities = it)) },
             )
         }
@@ -111,6 +123,7 @@ internal fun MonsterRegistrationForm(
             MonsterConditionsForm(
                 title = stringResource(R.string.monster_registration_condition_immunities),
                 conditions = monster.conditionImmunities,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(conditionImmunities = it)) },
             )
         }
@@ -118,6 +131,7 @@ internal fun MonsterRegistrationForm(
             MonsterStringValueForm(
                 title = stringResource(R.string.monster_registration_senses),
                 value = monster.senses.joinToString(", "),
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(senses = it.split(", "))) },
             )
         }
@@ -125,6 +139,7 @@ internal fun MonsterRegistrationForm(
             MonsterStringValueForm(
                 title = stringResource(R.string.monster_registration_languages),
                 value = monster.languages,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(languages = it)) },
             )
         }
@@ -132,6 +147,9 @@ internal fun MonsterRegistrationForm(
             MonsterAbilityDescriptionForm(
                 title = stringResource(R.string.monster_registration_special_abilities),
                 abilityDescriptions = monster.specialAbilities,
+                addText = stringResource(R.string.monster_registration_add_special_ability),
+                removeText = stringResource(R.string.monster_registration_remove_special_ability),
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(specialAbilities = it)) },
             )
         }
@@ -139,6 +157,7 @@ internal fun MonsterRegistrationForm(
             MonsterActionsForm(
                 title = stringResource(R.string.monster_registration_actions),
                 actions = monster.actions,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(actions = it)) },
             )
         }
@@ -146,6 +165,9 @@ internal fun MonsterRegistrationForm(
             MonsterAbilityDescriptionForm(
                 title = stringResource(R.string.monster_registration_reactions),
                 abilityDescriptions = monster.reactions,
+                addText = stringResource(R.string.monster_registration_add_reaction),
+                removeText = stringResource(R.string.monster_registration_remove_reaction),
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(reactions = it)) },
             )
         }
@@ -153,12 +175,14 @@ internal fun MonsterRegistrationForm(
             MonsterActionsForm(
                 title = stringResource(R.string.monster_registration_legendary_actions),
                 actions = monster.legendaryActions,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
             )
         }
         item(key = "spells") {
             MonsterSpellcastingsForm(
                 spellcastings = monster.spellcastings,
+                modifier = Modifier.animateItemPlacement(),
                 onChanged = { intent.onMonsterChanged(monster.copy(spellcastings = it)) },
                 onSpellClick = intent::onSpellClick,
             )
@@ -167,6 +191,7 @@ internal fun MonsterRegistrationForm(
 
     AppButton(
         text = "Save",
+        enabled = isSaveButtonEnabled,
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .padding(bottom = contentPadding.calculateBottomPadding() + 16.dp)
@@ -182,4 +207,12 @@ internal fun <T> MutableList<T>.changeAt(
     return also {
         it[index] = it[index].copy()
     }
+}
+
+internal fun <T> MutableList<T>.alsoAdd(index: Int, value: T): List<T> {
+    return also { it.add(index, value) }
+}
+
+internal fun <T> MutableList<T>.alsoRemoveAt(index: Int): List<T> {
+    return also { it.removeAt(index) }
 }

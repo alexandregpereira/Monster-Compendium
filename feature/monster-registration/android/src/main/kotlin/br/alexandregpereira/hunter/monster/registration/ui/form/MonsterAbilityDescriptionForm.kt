@@ -1,15 +1,8 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
@@ -20,12 +13,19 @@ import br.alexandregpereira.hunter.ui.compose.Form
 internal fun MonsterAbilityDescriptionForm(
     title: String,
     abilityDescriptions: List<AbilityDescription>,
+    addText: String,
+    removeText: String,
     modifier: Modifier = Modifier,
     onChanged: (List<AbilityDescription>) -> Unit = {},
-    content: @Composable (Int) -> Unit = { },
 ) = Form(modifier, title) {
     val newAbilityDescriptions = abilityDescriptions.toMutableList()
-    abilityDescriptions.forEachIndexed { index, abilityDescription ->
+    FormItems(
+        items = newAbilityDescriptions,
+        addText = addText,
+        removeText = removeText,
+        createNew = { AbilityDescription.create() },
+        onChanged = onChanged
+    ) { index, abilityDescription ->
         AppTextField(
             text = abilityDescription.name,
             label = stringResource(R.string.monster_registration_name),
@@ -42,13 +42,5 @@ internal fun MonsterAbilityDescriptionForm(
                 onChanged(newAbilityDescriptions.changeAt(index) { copy(description = newValue) })
             }
         )
-
-        content(index)
-
-        AddButton()
-    }
-
-    if (abilityDescriptions.isEmpty()) {
-        AddButton()
     }
 }
