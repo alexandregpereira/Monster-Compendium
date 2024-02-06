@@ -23,7 +23,7 @@ import kotlin.native.ObjCName
 data class AbilityDescription(
     val name: String,
     val description: String,
-    val index: String = generateUUID(),
+    val index: String = "",
 ) {
 
     companion object {

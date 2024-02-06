@@ -29,7 +29,7 @@ data class Speed(
 data class SpeedValue(
     val type: SpeedType,
     val valueFormatted: String,
-    val index: String = generateUUID(),
+    val index: String = "",
 ) {
 
     companion object {
@@ -40,7 +40,8 @@ data class SpeedValue(
         ): SpeedValue {
             return SpeedValue(
                 type = type,
-                valueFormatted = valueFormatted
+                valueFormatted = valueFormatted,
+                index = generateUUID()
             )
         }
     }
