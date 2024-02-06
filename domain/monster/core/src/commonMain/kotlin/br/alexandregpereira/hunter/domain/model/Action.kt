@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Action", exact = true)
@@ -33,7 +34,7 @@ data class Action(
             attackBonus: Int? = null,
             abilityDescription: AbilityDescription = AbilityDescription.create()
         ) = Action(
-            id = "",
+            id = generateUUID(),
             damageDices = damageDices,
             attackBonus = attackBonus,
             abilityDescription = abilityDescription
@@ -44,7 +45,8 @@ data class Action(
 @ObjCName(name = "DamageDice", exact = true)
 data class DamageDice(
     val dice: String,
-    val damage: Damage
+    val damage: Damage,
+    val index: String = generateUUID(),
 ) {
 
     companion object {

@@ -36,7 +36,7 @@ internal fun LazyListScope.MonsterDamagesForm(
             createNew = { Damage.create() },
             onChanged = onChanged
         ) { i, damage ->
-            formItem(key = "$key-name-$i") {
+            formItem(key = "$key-name-${damage.index}") {
                 val damageTypeOptions = damageTypes.map { stringResource(it.stringRes) }
                 if (i != 0 && damage.type == DamageType.OTHER) Spacer(modifier = Modifier.height(8.dp))
 
@@ -59,7 +59,7 @@ internal fun LazyListScope.MonsterDamagesForm(
                 )
             }
 
-            formItem(key = "$key-name-other-$i") {
+            formItem(key = "$key-name-other-${damage.index}") {
                 if (damage.type == DamageType.OTHER) {
                     AppTextField(
                         text = damage.name,

@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Damage", exact = true)
@@ -31,7 +32,7 @@ data class Damage(
             type: DamageType = DamageType.ACID,
             name: String = ""
         ) = Damage(
-            index = "",
+            index = generateUUID(),
             type = type,
             name = name
         )

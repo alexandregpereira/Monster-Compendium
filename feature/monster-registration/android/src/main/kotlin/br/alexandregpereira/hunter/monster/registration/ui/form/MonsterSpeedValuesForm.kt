@@ -40,7 +40,7 @@ internal fun LazyListScope.MonsterSpeedValuesForm(
                 )
             }
         ) { index, speedValue ->
-            formItem(key = "$key-name-$index") {
+            formItem(key = "$key-name-${speedValue.index}") {
                 val optionsStrings = options.map { it.toTypeState().getString() }
                 val name = speedValue.type.toTypeState().getString()
                 PickerField(
@@ -63,7 +63,7 @@ internal fun LazyListScope.MonsterSpeedValuesForm(
                 )
             }
 
-            formItem(key = "$key-value-$index") {
+            formItem(key = "$key-value-${speedValue.index}") {
                 val name = speedValue.type.toTypeState().getString()
                 AppTextField(
                     text = speedValue.valueFormatted,

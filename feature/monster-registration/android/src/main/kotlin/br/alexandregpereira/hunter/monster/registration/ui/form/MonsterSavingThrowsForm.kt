@@ -31,7 +31,7 @@ internal fun LazyListScope.MonsterSavingThrowsForm(
             createNew = { SavingThrow.create() },
             onChanged = onChanged
         ) { i, savingThrow ->
-            formItem(key = "$key-name-$i") {
+            formItem(key = "$key-name-${savingThrow.index}") {
                 val typeName = savingThrow.type.toState().getStringResource()
                 val optionsString = AbilityScoreTypeState.entries.filterNot { types.contains(it.name) }
                     .map { it.getStringResource() }
@@ -49,7 +49,7 @@ internal fun LazyListScope.MonsterSavingThrowsForm(
                 )
             }
 
-            formItem(key = "$key-modifier-$i") {
+            formItem(key = "$key-modifier-${savingThrow.index}") {
                 val typeName = savingThrow.type.toState().getStringResource()
                 AppTextField(
                     value = savingThrow.modifier,

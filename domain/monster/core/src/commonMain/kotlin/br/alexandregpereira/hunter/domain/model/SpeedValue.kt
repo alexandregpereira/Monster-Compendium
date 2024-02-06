@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Speed", exact = true)
@@ -27,7 +28,8 @@ data class Speed(
 @ObjCName(name = "SpeedValue", exact = true)
 data class SpeedValue(
     val type: SpeedType,
-    val valueFormatted: String
+    val valueFormatted: String,
+    val index: String = generateUUID(),
 ) {
 
     companion object {

@@ -28,6 +28,7 @@ internal fun List<LegendaryActionWithDamageDicesEntity>.toDomain(): List<Action>
             damageDices = it.damageDices.toDamageDiceDomain(),
             attackBonus = it.action.attackBonus,
             abilityDescription = AbilityDescription(
+                index = it.action.id,
                 name = it.action.name,
                 description = it.action.description
             )

@@ -16,12 +16,14 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "AbilityDescription", exact = true)
 data class AbilityDescription(
     val name: String,
-    val description: String
+    val description: String,
+    val index: String = generateUUID(),
 ) {
 
     companion object {
@@ -30,6 +32,7 @@ data class AbilityDescription(
             name: String = "",
             description: String = ""
         ) = AbilityDescription(
+            index = generateUUID(),
             name = name,
             description = description
         )

@@ -23,7 +23,7 @@ internal fun List<SpecialAbilityDto>.toDomain(): List<AbilityDescription> {
     return this.mapIndexed { index, abilityDescription ->
         AbilityDescription(
             name = abilityDescription.name,
-            description = abilityDescription.desc
+            description = abilityDescription.desc,
         )
     }
 }

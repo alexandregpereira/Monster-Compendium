@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":core:uuid"))
                 implementation(libs.koin.core)
                 implementation(libs.kotlin.coroutines.core)
             }

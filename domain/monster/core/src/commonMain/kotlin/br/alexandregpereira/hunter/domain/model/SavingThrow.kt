@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "SavingThrow", exact = true)
@@ -31,7 +32,7 @@ data class SavingThrow(
             type: AbilityScoreType = AbilityScoreType.STRENGTH,
         ): SavingThrow {
             return SavingThrow(
-                index = "",
+                index = generateUUID(),
                 modifier = modifier,
                 type = type
             )

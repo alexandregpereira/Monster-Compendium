@@ -32,7 +32,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
             createNew = { Spellcasting.create() },
             onChanged = onChanged
         ) { index, spellcasting ->
-            formItem(key = "$key-type-$index") {
+            formItem(key = "$key-type-${spellcasting.index}") {
                 val optionStrings = SpellcastingType.entries.map { it.toState().getStringName() }
                 PickerField(
                     value = spellcasting.type.toState().getStringName(),
@@ -43,7 +43,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
                     }
                 )
             }
-            formItem(key = "$key-description-$index") {
+            formItem(key = "$key-description-${spellcasting.index}") {
                 AppTextField(
                     text = spellcasting.description,
                     label = stringResource(R.string.monster_registration_description),
@@ -54,7 +54,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
                 )
             }
             MonsterSpellsUsageForm(
-                key = "$key-spellsUsage-$index",
+                key = "$key-spellsUsage-${spellcasting.index}",
                 spellsUsage = spellcasting.usages,
                 onSpellClick = onSpellClick,
                 onChanged = { newSpellsUsage ->
@@ -81,7 +81,7 @@ internal fun LazyListScope.MonsterSpellsUsageForm(
         createNew = { SpellUsage.create() },
         onChanged = onChanged
     ) { index, spellUsage ->
-        formItem(key = "$key-group-$index") {
+        formItem(key = "$key-group-${spellUsage.index}") {
             AppTextField(
                 text = spellUsage.group,
                 label = stringResource(R.string.monster_registration_spell_group),
@@ -91,7 +91,7 @@ internal fun LazyListScope.MonsterSpellsUsageForm(
             )
         }
         MonsterSpellsForm(
-            key = "$key-spells-$index",
+            key = "$key-spells-${spellUsage.index}",
             spells = spellUsage.spells,
             onSpellClick = onSpellClick,
             onChanged = { newSpells ->
@@ -115,7 +115,7 @@ internal fun LazyListScope.MonsterSpellsForm(
     createNew = { SpellPreview.create() },
     onChanged = onChanged
 ) { index, spell ->
-    formItem(key = "$key-spell-name-$index") {
+    formItem(key = "$key-spell-name-${spell.index}") {
         ClickableField(
             text = spell.name,
             label = stringResource(R.string.monster_registration_spell_label),

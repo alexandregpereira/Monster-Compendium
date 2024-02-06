@@ -30,7 +30,7 @@ internal fun LazyListScope.MonsterActionsForm(
         onChanged = onChanged
     ) { actionIndex, action ->
         val abilityDescription = action.abilityDescription
-        formItem(key = "$key-action-name-$actionIndex") {
+        formItem(key = "$key-action-name-${action.id}") {
             AppTextField(
                 text = abilityDescription.name,
                 label = stringResource(R.string.monster_registration_name),
@@ -48,7 +48,7 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        formItem(key = "$key-action-description-$actionIndex") {
+        formItem(key = "$key-action-description-${action.id}") {
             AppTextField(
                 text = abilityDescription.description,
                 label = stringResource(R.string.monster_registration_description),
@@ -67,7 +67,7 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        formItem(key = "$key-action-attackBonus-$actionIndex") {
+        formItem(key = "$key-action-attackBonus-${action.id}") {
             AppTextField(
                 value = action.attackBonus ?: 0,
                 label = stringResource(R.string.monster_registration_attack_bonus),
@@ -77,7 +77,7 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        val damageDiceKey = "$key-actions-damageDices-$actionIndex"
+        val damageDiceKey = "$key-actions-damageDices-${action.id}"
         FormItems(
             items = action.damageDices.toMutableList(),
             addText = { stringResource(R.string.monster_registration_add_damage_dice) },
@@ -90,7 +90,7 @@ internal fun LazyListScope.MonsterActionsForm(
                 )
             }
         ) { index, damageDice ->
-            formItem(key = "$damageDiceKey-damageDice-type-$index") {
+            formItem(key = "$damageDiceKey-damageDice-type-${damageDice.index}") {
                 PickerField(
                     value = damageDice.damage.type.toTypeState().getStringName(),
                     label = stringResource(R.string.monster_registration_damage_type),
@@ -105,7 +105,7 @@ internal fun LazyListScope.MonsterActionsForm(
                 )
             }
 
-            formItem(key = "$damageDiceKey-damageDice-dice-$index") {
+            formItem(key = "$damageDiceKey-damageDice-dice-${damageDice.index}") {
                 AppTextField(
                     text = damageDice.dice,
                     label = stringResource(R.string.monster_registration_damage_dice),

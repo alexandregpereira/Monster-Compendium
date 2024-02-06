@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Condition", exact = true)
@@ -31,7 +32,7 @@ data class Condition(
             type: ConditionType = ConditionType.BLINDED,
             name: String = ""
         ) = Condition(
-            index = "",
+            index = generateUUID(),
             type = type,
             name = name
         )

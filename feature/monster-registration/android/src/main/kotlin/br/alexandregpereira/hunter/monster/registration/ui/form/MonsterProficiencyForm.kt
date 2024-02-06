@@ -26,7 +26,7 @@ internal fun LazyListScope.MonsterProficiencyForm(
             createNew = { Skill.create() },
             onChanged = onChanged
         ) { i, proficiency ->
-            formItem(key = "$key-name-$i") {
+            formItem(key = "$key-name-${proficiency.index}") {
                 AppTextField(
                     text = proficiency.name,
                     label = stringResource(R.string.monster_registration_name),
@@ -36,7 +36,7 @@ internal fun LazyListScope.MonsterProficiencyForm(
                 )
             }
 
-            formItem(key = "$key-modifier-$i") {
+            formItem(key = "$key-modifier-${proficiency.index}") {
                 AppTextField(
                     value = proficiency.modifier,
                     label = proficiency.name,

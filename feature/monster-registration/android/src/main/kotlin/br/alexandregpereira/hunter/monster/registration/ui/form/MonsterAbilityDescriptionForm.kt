@@ -26,7 +26,7 @@ internal fun LazyListScope.MonsterAbilityDescriptionForm(
         createNew = { AbilityDescription.create() },
         onChanged = onChanged
     ) { index, abilityDescription ->
-        formItem(key = "$key-ability-description-name-$index") {
+        formItem(key = "$key-ability-description-name-${abilityDescription.index}") {
             AppTextField(
                 text = abilityDescription.name,
                 label = stringResource(R.string.monster_registration_name),
@@ -36,7 +36,7 @@ internal fun LazyListScope.MonsterAbilityDescriptionForm(
             )
         }
 
-        formItem(key = "$key-ability-description-description-$index") {
+        formItem(key = "$key-ability-description-description-${abilityDescription.index}") {
             AppTextField(
                 text = abilityDescription.description,
                 label = stringResource(R.string.monster_registration_description),
