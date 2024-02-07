@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.monster.spell.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "SpellPreview", exact = true)
@@ -33,7 +34,7 @@ data class SpellPreview(
                 level: Int = 0,
                 school: SchoolOfMagic = SchoolOfMagic.ABJURATION
             ) = SpellPreview(
-                index = "",
+                index = generateUUID(),
                 name = name,
                 level = level,
                 school = school,

@@ -32,7 +32,7 @@ internal fun LazyListScope.MonsterConditionsForm(
             createNew = { Condition.create() },
             onChanged = onChanged
         ) { i, condition ->
-            formItem(key = "$key-name-$i") {
+            formItem(key = "$key-name-${condition.index}") {
                 val conditionTypeOptions = conditionTypes.map { stringResource(it.stringRes) }
                 PickerField(
                     value = stringResource(condition.type.toTypeState().stringRes),

@@ -16,12 +16,14 @@
 
 package br.alexandregpereira.hunter.domain.monster.spell.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "SpellUsage", exact = true)
 data class SpellUsage(
     val group: String,
-    val spells: List<SpellPreview>
+    val spells: List<SpellPreview>,
+    val index: String = generateUUID(),
 ) {
 
     companion object {

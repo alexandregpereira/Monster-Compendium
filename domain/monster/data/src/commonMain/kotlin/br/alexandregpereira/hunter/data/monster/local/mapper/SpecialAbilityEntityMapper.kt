@@ -22,13 +22,21 @@ import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
 internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
     return this.map {
-        AbilityDescription(name = it.name, description = it.description)
+        AbilityDescription(
+            name = it.name,
+            description = it.description,
+            index = "${it.monsterIndex}-${it.name}",
+        )
     }
 }
 
 internal fun List<ReactionEntity>.toDomainReactionEntity(): List<AbilityDescription> {
     return this.map {
-        AbilityDescription(name = it.name, description = it.description)
+        AbilityDescription(
+            name = it.name,
+            description = it.description,
+            index = "${it.monsterIndex}-${it.name}",
+        )
     }
 }
 
@@ -37,7 +45,7 @@ internal fun List<AbilityDescription>.toEntity(monsterIndex: String): List<Speci
         SpecialAbilityEntity(
             name = it.name,
             description = it.description,
-            monsterIndex = monsterIndex
+            monsterIndex = monsterIndex,
         )
     }
 }

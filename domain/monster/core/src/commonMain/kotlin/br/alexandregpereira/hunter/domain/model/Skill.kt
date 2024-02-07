@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Skill", exact = true)
@@ -31,7 +32,7 @@ data class Skill(
             modifier: Int = 0,
             name: String = "",
         ) = Skill(
-            index = "",
+            index = generateUUID(),
             modifier = modifier,
             name = name
         )

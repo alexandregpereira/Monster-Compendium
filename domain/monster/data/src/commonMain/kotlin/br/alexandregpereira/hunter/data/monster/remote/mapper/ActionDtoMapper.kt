@@ -32,7 +32,8 @@ internal fun List<ActionDto>.toDomain(): List<Action> {
             attackBonus = action.attackBonus,
             abilityDescription = AbilityDescription(
                 name = action.name,
-                description = action.description
+                description = action.description,
+                index = "action-$uuid"
             )
         )
     }
