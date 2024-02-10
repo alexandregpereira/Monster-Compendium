@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.monster.registration
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.domain.model.Monster
 
 internal fun Analytics.trackMonsterRegistrationOpened(monsterIndex: String) {
     track(
@@ -20,11 +21,12 @@ internal fun Analytics.trackMonsterRegistrationClosed(monsterIndex: String) {
     )
 }
 
-internal fun Analytics.trackMonsterRegistrationSaved(monsterIndex: String) {
+internal fun Analytics.trackMonsterRegistrationSaved(monster: Monster) {
     track(
         eventName = "MonsterRegistration - saved",
         params = mapOf(
-            "monsterIndex" to monsterIndex,
+            "monsterIndex" to monster.index,
+            "monster" to monster.toString(),
         ),
     )
 }
