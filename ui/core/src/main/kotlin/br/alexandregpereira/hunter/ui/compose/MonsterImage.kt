@@ -60,7 +60,11 @@ fun MonsterImage(
             fontSize = challengeRatingFontSize
         )
 
-        MonsterTypeIcon(iconRes = iconRes, iconSize = iconSize)
+        MonsterTypeIcon(
+            iconRes = iconRes,
+            iconSize = iconSize,
+            tint = backgroundColor.getTintColor()
+        )
     }
 }
 
@@ -70,6 +74,18 @@ fun MonsterImagePreview() = HunterTheme {
     MonsterImage(
         url = "asdasdas",
         backgroundColor = "#ffe3ee",
+        contentDescription = "Anything",
+        challengeRating = 18f,
+        iconRes = R.drawable.ic_aberration
+    )
+}
+
+@Preview
+@Composable
+fun MonsterImageBlackBackgroundPreview() = HunterTheme {
+    MonsterImage(
+        url = "asdasdas",
+        backgroundColor = "#000000",
         contentDescription = "Anything",
         challengeRating = 18f,
         iconRes = R.drawable.ic_aberration
