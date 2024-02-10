@@ -73,6 +73,7 @@ import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.getTintColor
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -385,6 +386,7 @@ private fun MonsterTypeIcon(
         MonsterTypeIcon(
             iconRes = data.imageState.type.iconRes,
             iconSize = 32.dp,
+            tint = data.imageState.backgroundColor.getColor(isSystemInDarkTheme()).getTintColor()
         )
     }
 }

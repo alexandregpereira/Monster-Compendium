@@ -31,13 +31,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.util.toColor
+import kotlin.math.pow
 
 @Composable
 fun MonsterTypeIcon(
     @DrawableRes iconRes: Int,
     iconSize: Dp,
     modifier: Modifier = Modifier,
-    contentDescription: String = ""
+    contentDescription: String = "",
+    tint: Color = Color.Black,
 ) = Box(
     contentAlignment = Alignment.TopEnd,
     modifier = modifier
@@ -47,9 +50,25 @@ fun MonsterTypeIcon(
     Icon(
         painter = painterResource(iconRes),
         contentDescription = contentDescription,
-        tint = Color.Black.copy(alpha = LocalContentAlpha.current),
+        tint = tint,
         modifier = Modifier
             .size(iconSize)
             .alpha(0.7f)
     )
+}
+
+fun String.getTintColor(): Color {
+    val color = this.toColor()
+    val luminance = colorToLuminance(color.red, color.green, color.blue)
+    return if (luminance > 0.5) Color.Black else Color.White
+}
+
+private fun colorToLuminance(red: Float, green: Float, blue: Float): Double {
+    // Adjust colors based on luminance
+    val rLum = if (red <= 0.03928f) red / 12.92f else ((red + 0.055f) / 1.055f).pow(2.4f)
+    val gLum = if (green <= 0.03928f) green / 12.92f else ((green + 0.055f) / 1.055f).pow(2.4f)
+    val bLum = if (blue <= 0.03928f) blue / 12.92f else ((blue + 0.055f) / 1.055f).pow(2.4f)
+
+    // Apply the luminance formula
+    return (0.2126 * rLum + 0.7152 * gLum + 0.0722 * bLum).toDouble()
 }
