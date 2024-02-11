@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.BottomNavigation
@@ -83,14 +84,15 @@ fun BoxScope.AppBottomNavigation(
                 .background(MaterialTheme.colors.surface),
             elevation = 4.dp
         ) {
+            val paddingBottom = contentPadding.calculateBottomPadding()
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,
                 elevation = 0.dp,
-                modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding())
+                modifier = Modifier.height(56.dp + paddingBottom).padding(bottom = paddingBottom)
             ) {
-                BottomBarItem.values().forEach { bottomBarItem ->
+                BottomBarItem.entries.forEach { bottomBarItem ->
                     AppBottomNavigationItem(
-                        totalItems = BottomBarItem.values().size,
+                        totalItems = BottomBarItem.entries.size,
                         indexSelected = bottomBarItemSelected.ordinal,
                         currentIndex = bottomBarItem.ordinal,
                         iconRes = bottomBarItem.iconRes,
@@ -192,7 +194,7 @@ private fun BottomNavigationTransition(
     content: @Composable (animationProgress: Float) -> Unit
 ) {
     val animationProgress by animateFloatAsState(
-        targetValue = if (selected) 1f else 0f,
+        targetValue = if (selected) 1f else 0f, label = "BottomNavigationTransition",
     )
 
     val color = lerp(inactiveColor, activeColor, animationProgress)
