@@ -28,20 +28,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.EmptySettingsViewIntent
-import br.alexandregpereira.hunter.settings.R
 import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-internal fun SettingsScreen(
+internal fun MenuScreen(
     state: SettingsViewState,
     versionName: String,
     contentPadding: PaddingValues = PaddingValues(),
@@ -52,15 +50,22 @@ internal fun SettingsScreen(
     ) {
         Column(Modifier.padding(contentPadding)) {
 
-            SettingsItem(
-                text = stringResource(R.string.settings_manage_advanced_settings),
+            MenuItem(
+                text = state.strings.settingsTitle,
+                onClick = viewIntent::onSettingsClick
+            )
+
+            Divider()
+
+            MenuItem(
+                text = state.strings.manageAdvancedSettings,
                 onClick = viewIntent::onAdvancedSettingsClick
             )
 
             Divider()
 
-            SettingsItem(
-                text = stringResource(R.string.settings_manage_monster_content),
+            MenuItem(
+                text = state.strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
             )
         }
@@ -84,16 +89,27 @@ internal fun SettingsScreen(
                 imageBaseUrl = state.imageBaseUrl,
                 alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
                 saveButtonEnabled = state.saveButtonEnabled,
+                strings = state.strings,
                 onImageBaseUrlChange = viewIntent::onImageBaseUrlChange,
                 onAlternativeSourceBaseUrlChange = viewIntent::onAlternativeSourceBaseUrlChange,
                 onSaveButtonClick = viewIntent::onSaveButtonClick,
             )
         }
+
+        SettingsBottomSheet(
+            settingsOpened = state.settingsOpened,
+            state = state.settingsState,
+            strings = state.strings,
+            contentPadding = contentPadding,
+            onLanguageChange = viewIntent::onLanguageChange,
+            onSaveButtonClick = viewIntent::onSettingsSaveClick,
+            onClose = viewIntent::onSettingsCloseClick
+        )
     }
 }
 
 @Composable
-private fun SettingsItem(
+private fun MenuItem(
     text: String,
     onClick: () -> Unit,
 ) {
@@ -115,7 +131,7 @@ private fun SettingsItem(
 @Preview
 @Composable
 private fun SettingsScreenPreview() {
-    SettingsScreen(
+    MenuScreen(
         state = SettingsViewState(),
         versionName = "1.20.1"
     )

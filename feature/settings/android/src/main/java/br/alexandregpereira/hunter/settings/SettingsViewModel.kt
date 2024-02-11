@@ -20,11 +20,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
+import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent
 import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -46,10 +49,15 @@ internal class SettingsViewModel(
     private val syncEventDispatcher: SyncEventDispatcher,
     private val analytics: SettingsAnalytics,
     private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
+    private val appLocalization: AppLocalization,
+    private val saveLanguage: SaveLanguageUseCase,
 ) : ViewModel(), SettingsViewIntent {
 
     private val _state = MutableStateFlow(SettingsViewState())
     val state: StateFlow<SettingsViewState> = _state
+    private val strings: SettingsStrings
+        get() = getSettingsStrings(appLocalization.getLanguage())
+    private var originalSettingsState: SettingsState = SettingsState()
 
     init {
         load()
@@ -82,18 +90,60 @@ internal class SettingsViewModel(
     }
 
     override fun onAdvancedSettingsClick() {
+        analytics.trackAdvancedSettingsClick()
         _state.value = state.value.copy(advancedSettingsOpened = true)
         bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
     override fun onAdvancedSettingsCloseClick() = closeAdvancedSettings()
 
+    override fun onSettingsClick() {
+        analytics.trackSettingsClick()
+        _state.value = state.value.copy(settingsOpened = true)
+        bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = SETTINGS_CONTENT)
+    }
+
+    override fun onSettingsCloseClick() {
+        _state.value = state.value.copy(settingsOpened = false)
+        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
+    }
+
+    override fun onSettingsSaveClick() {
+        analytics.trackCommonSettingSaveButtonClick(state.value.settingsState)
+        _state.value = state.value.copy(settingsOpened = false)
+        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
+        saveLanguage(state.value.settingsState.language.code)
+            .flowOn(dispatcher)
+            .onEach {
+                if (originalSettingsState.language != state.value.settingsState.language) {
+                    syncEventDispatcher.startSync()
+                    originalSettingsState = state.value.settingsState
+                }
+                _state.value = state.value.copy(
+                    strings = this.strings
+                )
+            }
+            .launchIn(viewModelScope)
+    }
+
+    override fun onLanguageChange(language: SettingsLanguageState) {
+        analytics.trackLanguageChange(language)
+        _state.value = state.value.copy(
+            settingsState = state.value.settingsState.copy(language = language)
+        )
+    }
+
     private fun load() {
         getMonsterImageJsonUrl()
             .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->
                 state.value.copy(
                     imageBaseUrl = imageBaseUrl,
-                    alternativeSourceBaseUrl = alternativeSourceBaseUrl
+                    alternativeSourceBaseUrl = alternativeSourceBaseUrl,
+                    strings = this@SettingsViewModel.strings,
+                    settingsState = SettingsState(
+                        languages = Language.entries.map { it.asState() },
+                        language = appLocalization.getLanguage().asState()
+                    )
                 )
             }
             .flowOn(dispatcher)
@@ -102,6 +152,7 @@ internal class SettingsViewModel(
             }
             .onEach { state ->
                 analytics.trackLoadSettings(state)
+                originalSettingsState = state.settingsState
                 _state.value = state
             }
             .launchIn(viewModelScope)
@@ -112,7 +163,20 @@ internal class SettingsViewModel(
         bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
+    private fun Language.asState(): SettingsLanguageState {
+        val string =  when (this) {
+            Language.ENGLISH -> "English (United States)"
+            Language.PORTUGUESE -> "Português (Brasil)"
+        }
+
+        return SettingsLanguageState(
+            code = this.code,
+            value = string
+        )
+    }
+
     private companion object {
+        private const val SETTINGS_CONTENT = "Settings"
         private const val ADVANCED_SETTINGS_CONTENT = "AdvancedSettings"
     }
 }

@@ -17,26 +17,26 @@
 package br.alexandregpereira.hunter.settings.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.settings.R
+import br.alexandregpereira.hunter.settings.SettingsEnStrings
+import br.alexandregpereira.hunter.settings.SettingsStrings
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-fun AdvancedSettings(
+internal fun AdvancedSettings(
     imageBaseUrl: String,
     alternativeSourceBaseUrl: String,
     modifier: Modifier = Modifier,
     saveButtonEnabled: Boolean = false,
+    strings: SettingsStrings,
     onImageBaseUrlChange: (String) -> Unit = {},
     onAlternativeSourceBaseUrlChange: (String) -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
@@ -46,14 +46,14 @@ fun AdvancedSettings(
 ) {
 
     Text(
-        text = stringResource(R.string.settings_additional_content),
+        text = strings.additionalContent,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         modifier = Modifier.padding(bottom = 16.dp)
     )
 
     Text(
-        text = stringResource(R.string.settings_monster_images_json),
+        text = strings.alternativeSourcesJson,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         modifier = Modifier
@@ -66,7 +66,7 @@ fun AdvancedSettings(
     )
 
     Text(
-        text = stringResource(R.string.settings_alternative_sources_json),
+        text = strings.alternativeSourcesJson,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         modifier = Modifier.padding(top = 16.dp)
@@ -79,7 +79,7 @@ fun AdvancedSettings(
     )
 
     AppButton(
-        text = stringResource(R.string.settings_sync),
+        text = strings.sync,
         enabled = saveButtonEnabled,
         onClick = onSaveButtonClick,
         modifier = Modifier.padding(top = 40.dp)
@@ -91,6 +91,7 @@ fun AdvancedSettings(
 private fun AdvancedSettingsPreview() = Window {
     AdvancedSettings(
         imageBaseUrl = "",
-        alternativeSourceBaseUrl = ""
+        alternativeSourceBaseUrl = "",
+        strings = SettingsEnStrings(),
     )
 }

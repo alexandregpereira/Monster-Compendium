@@ -12,6 +12,14 @@ internal interface SettingsViewIntent {
 
     fun onAdvancedSettingsClick()
     fun onAdvancedSettingsCloseClick()
+
+    fun onSettingsClick()
+
+    fun onSettingsCloseClick()
+
+    fun onSettingsSaveClick()
+
+    fun onLanguageChange(language: SettingsLanguageState)
 }
 
 internal class EmptySettingsViewIntent : SettingsViewIntent {
@@ -27,4 +35,12 @@ internal class EmptySettingsViewIntent : SettingsViewIntent {
     override fun onAdvancedSettingsClick() {}
 
     override fun onAdvancedSettingsCloseClick() {}
+
+    override fun onSettingsClick() {}
+
+    override fun onSettingsCloseClick() {}
+
+    override fun onSettingsSaveClick() {}
+
+    override fun onLanguageChange(language: SettingsLanguageState) {}
 }

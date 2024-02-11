@@ -18,19 +18,26 @@ package br.alexandregpereira.hunter.domain.settings
 
 import br.alexandregpereira.hunter.localization.MutableAppLocalization
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetLanguageUseCase(
     private val settingsRepository: SettingsRepository,
     private val mutableAppLanguage: MutableAppLocalization,
+    private val saveLanguage: SaveLanguageUseCase
 ) {
 
     operator fun invoke(): Flow<String> {
         return settingsRepository.getValue(
             key = SETTING_LANGUAGE_KEY,
-            defaultValue = "en-us"
-        ).onEach {
-            mutableAppLanguage.setLanguage(it)
+            defaultValue = ""
+        ).map { lang ->
+            if (lang.isBlank()) {
+                saveLanguage(mutableAppLanguage.getLanguage().code).single()
+            } else {
+                mutableAppLanguage.setLanguage(lang)
+            }
+            mutableAppLanguage.getLanguage().code
         }
     }
 

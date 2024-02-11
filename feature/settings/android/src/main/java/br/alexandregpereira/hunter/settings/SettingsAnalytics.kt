@@ -35,4 +35,34 @@ internal class SettingsAnalytics(
             )
         )
     }
+
+    fun trackAdvancedSettingsClick() {
+        analytics.track(
+            eventName = "Settings - advanced settings click",
+        )
+    }
+
+    fun trackSettingsClick() {
+        analytics.track(
+            eventName = "Settings - settings click",
+        )
+    }
+
+    fun trackCommonSettingSaveButtonClick(settingsState: SettingsState) {
+        analytics.track(
+            eventName = "Settings - common setting save click",
+            params = mapOf(
+                "language" to settingsState.language.code,
+            )
+        )
+    }
+
+    fun trackLanguageChange(language: SettingsLanguageState) {
+        analytics.track(
+            eventName = "Settings - language change",
+            params = mapOf(
+                "language" to language.code,
+            )
+        )
+    }
 }

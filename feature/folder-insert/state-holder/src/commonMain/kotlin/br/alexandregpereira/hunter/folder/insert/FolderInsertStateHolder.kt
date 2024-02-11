@@ -48,9 +48,8 @@ class FolderInsertStateHolder internal constructor(
 
     private val _state = MutableStateFlow(stateRecovery.getState())
     override val state: StateFlow<FolderInsertState> = _state
-    private val strings: FolderInsertStrings by lazy {
-        getFolderInsertStrings(appLocalization.getLanguage())
-    }
+    private val strings: FolderInsertStrings
+        get() = getFolderInsertStrings(appLocalization.getLanguage())
 
     init {
         observeEvents()

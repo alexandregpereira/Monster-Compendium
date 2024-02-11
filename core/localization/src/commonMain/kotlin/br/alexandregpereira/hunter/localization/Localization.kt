@@ -12,16 +12,24 @@ interface MutableAppLocalization : AppLocalization {
 
 internal class AppLocalizationImpl : MutableAppLocalization {
 
-    private var language: Language = Language.ENGLISH
+    private var language: Language = getDefaultLanguage()
 
     override fun getLanguage(): Language {
         return language
     }
 
     override fun setLanguage(language: String) {
-        this.language = Language.entries.firstOrNull { it.code == language } ?: Language.ENGLISH
+        this.language = Language.entries.firstOrNull { it.code == language } ?: getDefaultLanguage()
+    }
+
+    private fun getDefaultLanguage(): Language {
+        return Language.entries.firstOrNull {
+            it.code == getDeviceLangCode()
+        } ?: Language.ENGLISH
     }
 }
+
+internal expect fun getDeviceLangCode(): String
 
 enum class Language(val code: String) {
     ENGLISH("en-us"),

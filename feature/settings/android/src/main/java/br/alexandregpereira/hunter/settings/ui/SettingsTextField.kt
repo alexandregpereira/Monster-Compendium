@@ -29,7 +29,7 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-fun SettingsTextField(
+internal fun SettingsTextField(
     text: String,
     modifier: Modifier = Modifier,
     description: String = "",

@@ -16,13 +16,9 @@
 
 package br.alexandregpereira.hunter.domain.sync.di
 
-import br.alexandregpereira.hunter.domain.sync.DeviceLanguageRepository
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import org.koin.dsl.module
 
 val syncDomainModule = module {
-    factory { SyncUseCase(get(), get(), get(), get(), get(), get(), get(), get()) }
-    factory { createDeviceLanguageRepository() }
+    factory { SyncUseCase(get(), get(), get(), get(), get(), get(), get()) }
 }
-
-expect fun createDeviceLanguageRepository(): DeviceLanguageRepository
