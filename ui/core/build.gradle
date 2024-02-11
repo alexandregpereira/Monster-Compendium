@@ -12,6 +12,7 @@ android {
 
     kotlinOptions {
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
     }
 
     buildFeatures {
@@ -37,9 +38,6 @@ dependencies {
     implementation libs.compose.util
     implementation libs.kotlin.reflect
     implementation libs.coil.compose
-    implementation libs.accompanist.pager
-    implementation libs.accompanist.insets
-    implementation libs.accompanist.flowlayout
 
     androidTestImplementation libs.bundles.instrumentedtest
 }

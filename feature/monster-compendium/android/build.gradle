@@ -45,7 +45,6 @@ dependencies {
     implementation libs.bundles.viewmodel.bundle
 
     implementation libs.bundles.compose
-    implementation libs.accompanist.flowlayout
 
     implementation libs.koin.compose
 

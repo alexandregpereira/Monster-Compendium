@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -34,6 +35,10 @@ private fun ProficiencyGrid(
 ) = Grid {
 
     proficiencies.forEach { proficiency ->
-        Bonus(value = proficiency.modifier, name = proficiency.name)
+        Bonus(
+            value = proficiency.modifier,
+            name = proficiency.name,
+            modifier = Modifier.width(GridItemWidth),
+        )
     }
 }

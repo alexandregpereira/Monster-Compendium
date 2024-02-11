@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 import kotlin.math.roundToInt
 
 @Composable
@@ -88,7 +89,8 @@ fun BoxScope.AppBottomNavigation(
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,
                 elevation = 0.dp,
-                modifier = Modifier.height(56.dp + paddingBottom).padding(bottom = paddingBottom)
+                modifier = Modifier.height(BottomNavigationHeight + paddingBottom)
+                    .padding(bottom = paddingBottom)
             ) {
                 BottomBarItem.entries.forEach { bottomBarItem ->
                     AppBottomNavigationItem(
