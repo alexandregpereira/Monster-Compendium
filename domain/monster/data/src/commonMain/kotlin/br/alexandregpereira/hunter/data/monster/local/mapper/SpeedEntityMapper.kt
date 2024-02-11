@@ -31,10 +31,11 @@ internal fun SpeedWithValuesEntity.toDomain(): Speed {
 }
 
 internal fun List<SpeedValueEntity>.toDomain(): List<SpeedValue> {
-    return this.map {
+    return this.mapIndexed { index, speedValueEntity ->
         SpeedValue(
-            type = SpeedType.valueOf(it.type),
-            valueFormatted = it.valueFormatted
+            type = SpeedType.valueOf(speedValueEntity.type),
+            valueFormatted = speedValueEntity.valueFormatted,
+            index = "${speedValueEntity.speedId}-${speedValueEntity.type}-$index"
         )
     }
 }

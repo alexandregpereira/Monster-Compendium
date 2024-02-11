@@ -67,7 +67,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onSaved() {
-        analytics.trackMonsterRegistrationSaved(state.value.monster.index)
+        analytics.trackMonsterRegistrationSaved(state.value.monster)
         normalizeMonster(state.value.monster)
             .flatMapConcat { monster ->
                 saveMonsters(monsters = listOf(monster))
