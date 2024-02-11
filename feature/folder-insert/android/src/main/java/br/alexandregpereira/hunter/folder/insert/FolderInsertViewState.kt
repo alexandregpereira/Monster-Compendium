@@ -17,19 +17,9 @@
 package br.alexandregpereira.hunter.folder.insert
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.folder.insert.ui.MonsterPreviewState
 
-internal data class FolderInsertViewState(
-    val isOpen: Boolean = false,
-    val folderName: String = "",
-    val folderIndexSelected: Int = -1,
-    val monsterIndexes: List<String> = emptyList(),
-    val folders: List<Pair<String, Int>> = emptyList(),
-    val monsterPreviews: List<MonsterPreviewState> = emptyList()
-)
-
-internal fun SavedStateHandle.getState(): FolderInsertViewState {
-    return FolderInsertViewState(
+internal fun SavedStateHandle.getState(): FolderInsertState {
+    return FolderInsertState(
         isOpen = this["isOpen"] ?: false,
         folderName = this["folderName"] ?: "",
         folderIndexSelected = this["folderIndexPositionSelected"] ?: -1,
@@ -37,9 +27,9 @@ internal fun SavedStateHandle.getState(): FolderInsertViewState {
     )
 }
 
-internal fun FolderInsertViewState.saveState(
+internal fun FolderInsertState.saveState(
     savedStateHandle: SavedStateHandle
-): FolderInsertViewState {
+): FolderInsertState {
     savedStateHandle["isOpen"] = isOpen
     savedStateHandle["folderName"] = folderName
     savedStateHandle["folderIndexSelected"] = folderIndexSelected

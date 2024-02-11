@@ -20,11 +20,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.folder.insert.FolderInsertViewState
-import br.alexandregpereira.hunter.folder.insert.R
+import br.alexandregpereira.hunter.folder.insert.FolderInsertState
+import br.alexandregpereira.hunter.folder.insert.MonsterPreviewState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
@@ -33,7 +32,7 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun FolderInsertScreen(
-    state: FolderInsertViewState,
+    state: FolderInsertState,
     contentPadding: PaddingValues = PaddingValues(),
     onFolderNameFieldChange: (String) -> Unit = {},
     onFolderSelected: (String) -> Unit = {},
@@ -43,7 +42,7 @@ internal fun FolderInsertScreen(
 ) = HunterTheme {
     BottomSheet(opened = state.isOpen, contentPadding = contentPadding, onClose = onClose) {
         ScreenHeader(
-            title = stringResource(R.string.folder_insert_add_to_folder),
+            title = state.strings.addToFolder,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -55,7 +54,7 @@ internal fun FolderInsertScreen(
 
         AppTextField(
             text = state.folderName,
-            label = stringResource(R.string.folder_insert_folder_name_label),
+            label = state.strings.folderNameLabel,
             modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
             onValueChange = onFolderNameFieldChange
         )
@@ -67,7 +66,7 @@ internal fun FolderInsertScreen(
         )
 
         AppButton(
-            text = stringResource(R.string.folder_insert_save),
+            text = state.strings.save,
             modifier = Modifier.padding(16.dp),
             onClick = onSave
         )
@@ -78,7 +77,7 @@ internal fun FolderInsertScreen(
 @Composable
 private fun FolderInsertScreenPreview() {
     FolderInsertScreen(
-        state = FolderInsertViewState(
+        state = FolderInsertState(
             isOpen = true,
             monsterPreviews = (1..10).map { i ->
                 MonsterPreviewState(

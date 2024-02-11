@@ -38,6 +38,7 @@ val featureFolderInsertModule = module {
             folderInsertEventManager = get(),
             dispatcher = get(),
             analytics = FolderInsertAnalytics(get()),
+            appLocalization = get(),
         )
     }
 }

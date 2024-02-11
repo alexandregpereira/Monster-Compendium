@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.insert.ui
+package br.alexandregpereira.hunter.folder.insert
 
-internal data class MonsterPreviewState(
-    val index: String,
-    val name: String = "",
-    val imageUrl: String = "",
-    val backgroundColorLight: String,
-    val backgroundColorDark: String
-)
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+
+internal fun List<MonsterPreviewFolder>.asState(): List<MonsterPreviewState> {
+    return map {
+        MonsterPreviewState(
+            index = it.index,
+            name = it.name,
+            imageUrl = it.imageUrl,
+            backgroundColorLight = it.backgroundColorLight,
+            backgroundColorDark = it.backgroundColorDark
+        )
+    }
+}

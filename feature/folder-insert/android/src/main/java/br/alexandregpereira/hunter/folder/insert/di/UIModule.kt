@@ -35,15 +35,7 @@ val folderInsertModule = listOf(featureFolderInsertModule) + module {
                 folderIndexSelected = state.folderIndexSelected,
                 monsterIndexes = state.monsterIndexes,
                 folders = state.folders,
-                monsterPreviews = state.monsterPreviews.map {
-                    MonsterPreviewFolder(
-                        index = it.index,
-                        name = it.name,
-                        imageUrl = it.imageUrl,
-                        backgroundColorLight = it.backgroundColorLight,
-                        backgroundColorDark = it.backgroundColorDark,
-                    )
-                }
+                monsterPreviews = state.monsterPreviews,
             )
         }
     }
