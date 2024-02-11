@@ -66,7 +66,7 @@ private fun ActionDamageGrid(
                 painter = painterResource(iconRes),
                 iconColor = damageDice.damage.type.getIconColor(),
                 iconAlpha = 1f,
-                iconSize = iconSize
+                iconSize = iconSize,
             )
         }
     }

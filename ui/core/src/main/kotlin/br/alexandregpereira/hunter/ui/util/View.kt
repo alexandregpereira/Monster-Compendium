@@ -18,12 +18,12 @@ package br.alexandregpereira.hunter.ui.util
 
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.ProvideWindowInsets
 
 fun Context.createComposeView(
     withBottomBar: Boolean = false,
@@ -39,17 +39,18 @@ fun ComposeView.setContentWithPadding(
     content: @Composable (PaddingValues) -> Unit
 ) {
     setContent {
-        val bottomBarNavigationSize = if (withBottomBar) 58.dp else 0.dp
-        ProvideWindowInsets {
-            val insets = LocalWindowInsets.current
-            val top = with(LocalDensity.current) { insets.systemBars.top.toDp() }
-            val bottom = with(LocalDensity.current) { insets.systemBars.bottom.toDp() }
-            content(
-                PaddingValues(
-                    top = top,
-                    bottom = bottom + bottomBarNavigationSize
-                )
+        val bottomBarNavigationSize = if (withBottomBar) BottomNavigationHeight else 0.dp
+        val insets = WindowInsets.systemBars
+        val density = LocalDensity.current
+        val top = with(density) { insets.getTop(this).toDp() }
+        val bottom = with(density) { insets.getBottom(this).toDp() }
+        content(
+            PaddingValues(
+                top = top,
+                bottom = bottom + bottomBarNavigationSize
             )
-        }
+        )
     }
 }
+
+val BottomNavigationHeight = 56.dp

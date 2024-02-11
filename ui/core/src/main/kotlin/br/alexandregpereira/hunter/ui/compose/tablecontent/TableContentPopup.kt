@@ -29,7 +29,9 @@ import androidx.compose.foundation.Indication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,11 +60,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.flowlayout.SizeMode
 import kotlin.math.ln
 
 @Composable
@@ -214,9 +214,8 @@ private fun AlphabetGrid(
     onAlphabetIndexClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) = FlowRow(
-    mainAxisSize = SizeMode.Wrap,
-    mainAxisSpacing = 16.dp,
-    crossAxisSpacing = 16.dp,
+    horizontalArrangement  =  Arrangement.spacedBy(16.dp, Alignment.Start),
+    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
     modifier = modifier
 ) {
     alphabet.forEachIndexed { index, letter ->

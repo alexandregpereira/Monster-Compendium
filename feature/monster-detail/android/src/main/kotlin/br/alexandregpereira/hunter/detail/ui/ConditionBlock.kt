@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -43,7 +44,8 @@ private fun ConditionGrid(
         val iconRes = condition.type.iconRes
         IconInfo(
             title = condition.name,
-            painter = painterResource(iconRes)
+            painter = painterResource(iconRes),
+            modifier = Modifier.width(GridItemWidth)
         )
     }
 }

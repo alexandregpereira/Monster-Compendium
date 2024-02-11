@@ -1,37 +1,16 @@
-<!--
-  ~ Copyright 2022 Alexandre Gomes Pereira
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="69dp"
-    android:height="89dp"
+    android:height="88dp"
     android:viewportWidth="69"
-    android:viewportHeight="89">
+    android:viewportHeight="88">
   <path
-      android:pathData="M56,1H12.5C11.185,7.542 8.518,9.724 1,11.5V67c1.235,4.972 3.385,6.505 7.5,9h9c5.293,7.476 8.944,9.774 16.5,11 8.622,-1.027 12.615,-2.867 16.5,-11h10c4.518,-2.738 6.025,-4.725 7,-9V11.5C60.302,9.86 57.698,7.639 56,1z"
+      android:pathData="M56,1H12.5C11.185,7.542 8.518,9.724 1,11.5V67c1.235,4.972 3.385,6.505 7.5,9h9c5.293,7.476 8.944,9.774 16.5,11 8.622,-1.027 12.615,-2.867 16.5,-11h10c4.518,-2.738 6.025,-4.725 7,-9V11.5C60.302,9.86 57.698,7.639 56,1Z"
       android:strokeWidth="2"
       android:fillColor="#00000000"
       android:strokeColor="#000000"/>
   <path
       android:strokeWidth="1"
-      android:pathData="M53.143,5H15.857C14.73,10.933 12.444,12.913 6,14.523v50.338c1.059,4.509 2.902,5.9 6.429,8.162h7.714c4.536,6.78 7.666,8.865 14.143,9.977 7.39,-0.932 10.813,-2.6 14.143,-9.977H57c3.872,-2.483 5.165,-4.286 6,-8.162V14.523c-6.17,-1.486 -8.401,-3.502 -9.857,-9.523z"
-      android:fillColor="#00000000"
-      android:strokeColor="#000000"/>
-  <path
-      android:strokeWidth="1"
-      android:pathData="M34,61.5c-7.624,1.102 -11.129,3.432 -13.5,10.5 3.644,7.546 6.706,10.134 13.5,11 7.95,-1.395 11.405,-3.363 14,-11 -1.453,-6.58 -4.274,-9.023 -14,-10.5z"
+      android:pathData="M53.143,5H15.857C14.73,10.933 12.444,12.913 6,14.523v50.338c1.059,4.509 2.902,5.9 6.429,8.162h7.714c4.536,6.78 7.666,8.865 14.143,9.977 7.39,-0.932 10.813,-2.6 14.143,-9.977H57c3.872,-2.483 5.165,-4.286 6,-8.162V14.523c-6.17,-1.486 -8.401,-3.502 -9.857,-9.523Z"
       android:fillColor="#00000000"
       android:strokeColor="#000000"/>
 </vector>

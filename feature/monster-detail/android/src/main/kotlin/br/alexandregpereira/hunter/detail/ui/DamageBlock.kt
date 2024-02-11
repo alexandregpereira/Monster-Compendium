@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
@@ -80,7 +81,8 @@ fun DamageGrid(
                 title = damage.name,
                 painter = painterResource(iconRes),
                 iconColor = damage.type.getIconColor(),
-                iconAlpha = 1f
+                iconAlpha = 1f,
+                modifier = Modifier.width(GridItemWidth)
             )
         }
     }

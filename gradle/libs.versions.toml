@@ -1,5 +1,4 @@
 [versions]
-accompanist = "0.30.1"
 android_gradle_plugin = "8.2.2"
 appcompat = "1.6.1"
 arch_core_testing = "2.2.0"
@@ -31,9 +30,6 @@ okhttp3_logging_interceptor = "4.12.0"
 sqldelight = "1.5.5"
 
 [libraries]
-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }

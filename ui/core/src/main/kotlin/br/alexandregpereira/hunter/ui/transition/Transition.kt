@@ -30,7 +30,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
-import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -90,7 +89,7 @@ fun <Data> HorizontalSlideTransition(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalSnapperApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> Transition(
     dataList: List<Data>,
@@ -108,13 +107,13 @@ fun <Data> Transition(
         content(
             transitionData.data,
             { transitionData.fraction },
-            isTarget = false
+            false
         )
         if (transitionData.data != transitionData.nextData) {
             content(
                 transitionData.nextData,
                 { transitionData.fraction },
-                isTarget = true
+                true
             )
         }
     }

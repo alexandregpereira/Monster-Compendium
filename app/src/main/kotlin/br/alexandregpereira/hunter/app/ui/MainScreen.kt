@@ -35,6 +35,7 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeatu
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
+import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 
 @Composable
 fun MainScreen(
@@ -44,7 +45,8 @@ fun MainScreen(
 ) {
     Box {
         val bottomBarNavigationSize by animateDpAsState(
-            targetValue = if (state.showBottomBar) 56.dp else 0.dp, label = "bottomBarNavigationSize"
+            targetValue = if (state.showBottomBar) BottomNavigationHeight else 0.dp,
+            label = "bottomBarNavigationSize",
         )
         val contentPaddingWithBottomBar = PaddingValues(
             top = contentPadding.calculateTopPadding(),

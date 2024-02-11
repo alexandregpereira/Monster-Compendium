@@ -50,7 +50,7 @@ fun AbilityScore(
         contentDescription = stringResource(id = abilityScore.type.stringRes),
         modifier = Modifier
             .width(69.dp)
-            .height(89.dp)
+            .height(88.dp)
     )
 
     Column(
@@ -76,8 +76,7 @@ fun AbilityScore(
         Text(
             text = abilityScoreModifier,
             fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
-            modifier = Modifier.padding(top = 1.dp)
+            fontSize = 16.sp,
         )
     }
 }
