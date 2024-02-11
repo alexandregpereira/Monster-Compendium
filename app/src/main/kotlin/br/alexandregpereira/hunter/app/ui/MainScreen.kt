@@ -44,7 +44,7 @@ fun MainScreen(
 ) {
     Box {
         val bottomBarNavigationSize by animateDpAsState(
-            targetValue = if (state.showBottomBar) 56.dp else 0.dp
+            targetValue = if (state.showBottomBar) 56.dp else 0.dp, label = "bottomBarNavigationSize"
         )
         val contentPaddingWithBottomBar = PaddingValues(
             top = contentPadding.calculateTopPadding(),
