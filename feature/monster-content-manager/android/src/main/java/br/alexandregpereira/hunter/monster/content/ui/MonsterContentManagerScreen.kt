@@ -25,18 +25,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.monster.content.MonsterContentManagerViewState
-import br.alexandregpereira.hunter.monster.content.R
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerState
+import br.alexandregpereira.hunter.monster.content.MonsterContentState
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun MonsterContentManagerScreen(
-    state: MonsterContentManagerViewState,
+    state: MonsterContentManagerState,
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {},
     onAddClick: (String) -> Unit = {},
@@ -56,7 +55,7 @@ internal fun MonsterContentManagerScreen(
             ) {
                 item(key = "title") {
                     SectionTitle(
-                        title = stringResource(R.string.monster_content_manager_monster_content),
+                        title = state.strings.title,
                         isHeader = true,
                         modifier = Modifier
                             .padding(bottom = 32.dp)
@@ -71,6 +70,7 @@ internal fun MonsterContentManagerScreen(
                         summary = monsterContent.summary,
                         coverImageUrl = monsterContent.coverImageUrl,
                         isEnabled = monsterContent.isEnabled,
+                        strings =  state.strings,
                         onAddClick = { onAddClick(monsterContent.acronym) },
                         onRemoveClick = { onRemoveClick(monsterContent.acronym) },
                         onPreviewClick = {
@@ -91,7 +91,7 @@ internal fun MonsterContentManagerScreen(
 @Composable
 private fun MonsterContentManagerScreenPreview() {
     MonsterContentManagerScreen(
-        state = MonsterContentManagerViewState(
+        state = MonsterContentManagerState(
             monsterContents = (0..10).map {
                 MonsterContentState(
                     acronym = "ACR",

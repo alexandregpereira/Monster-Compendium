@@ -11,14 +11,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.content.R
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEmptyStrings
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.CoilImage
@@ -34,6 +34,7 @@ internal fun MonsterContentCard(
     summary: String,
     coverImageUrl: String,
     isEnabled: Boolean,
+    strings: MonsterContentManagerStrings,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
@@ -47,7 +48,7 @@ internal fun MonsterContentCard(
         Cover(
             coverImageUrl = coverImageUrl,
             name = name,
-            totalMonsters = totalMonsters,
+            totalMonsters = strings.totalMonsters(totalMonsters),
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 8.dp)
@@ -62,10 +63,13 @@ internal fun MonsterContentCard(
 
     Buttons(
         isEnabled = isEnabled,
+        removeText = strings.remove,
+        addText = strings.add,
+        previewLabel = strings.preview,
         onAddClick = onAddClick,
         onRemoveClick = onRemoveClick,
         onPreviewClick = onPreviewClick,
-        modifier = Modifier.padding(top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp),
     )
 }
 
@@ -73,7 +77,7 @@ internal fun MonsterContentCard(
 private fun Cover(
     coverImageUrl: String,
     name: String,
-    totalMonsters: Int,
+    totalMonsters: String,
     modifier: Modifier
 ) {
     Column(
@@ -90,10 +94,7 @@ private fun Cover(
         )
 
         Text(
-            text = stringResource(
-                id = R.string.monster_content_manager_total_monsters,
-                formatArgs = arrayOf(totalMonsters)
-            ),
+            text = totalMonsters,
             fontWeight = FontWeight.Light,
             fontSize = 14.sp,
             modifier = Modifier
@@ -143,20 +144,23 @@ private fun Summary(
 @Composable
 private fun Buttons(
     isEnabled: Boolean,
+    removeText: String,
+    addText: String,
+    previewLabel: String,
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
 ) {
-    val textId = if (isEnabled) {
-        R.string.monster_content_manager_remove
-    } else R.string.monster_content_manager_add
+    val text = if (isEnabled) {
+        removeText
+    } else addText
 
     val click = if (isEnabled) onRemoveClick else onAddClick
 
     Row(modifier) {
         AppButton(
-            text = stringResource(textId),
+            text = text,
             onClick = click,
             size = AppButtonSize.SMALL,
             modifier = Modifier
@@ -165,7 +169,7 @@ private fun Buttons(
         )
 
         AppButton(
-            text = stringResource(R.string.monster_content_manager_preview),
+            text = previewLabel,
             onClick = onPreviewClick,
             size = AppButtonSize.SMALL,
             modifier = Modifier
@@ -186,6 +190,7 @@ private fun MonsterContentCardPreview() = HunterTheme {
             summary = "A menagerie of deadly monsters for the world's greatest roleplaying game. The Monster Manual presents a horde of classic Dungeons & Dragons creatures, including dragons, giants, mind flayers, and beholders—a monstrous feast for Dungeon Masters ready to challenge their players and populate their adventures.",
             coverImageUrl = "",
             isEnabled = true,
+            strings = MonsterContentManagerEmptyStrings(),
         )
     }
 }

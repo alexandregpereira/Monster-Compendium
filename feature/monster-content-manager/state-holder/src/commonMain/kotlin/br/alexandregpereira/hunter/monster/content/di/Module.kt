@@ -41,6 +41,7 @@ val featureMonsterContentManagerModule = module {
             syncEventDispatcher = get(),
             analytics = MonsterContentManagerAnalytics(get()),
             monsterContentPreviewEventManager = get(),
+            appLocalization = get(),
         )
     }
 }

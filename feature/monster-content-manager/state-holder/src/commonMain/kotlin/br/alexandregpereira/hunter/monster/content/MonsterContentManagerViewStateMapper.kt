@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.monster.content
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import br.alexandregpereira.hunter.monster.content.ui.MonsterContentState
 
 internal fun AlternativeSource.asState(): MonsterContentState {
     return MonsterContentState(

@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":core:analytics"))
+                implementation(project(":core:localization"))
                 api(project(":core:state-holder"))
                 api(project(":domain:alternative-source:core"))
                 api(project(":domain:monster:core"))
