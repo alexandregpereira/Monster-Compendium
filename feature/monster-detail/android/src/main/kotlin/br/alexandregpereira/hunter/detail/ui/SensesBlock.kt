@@ -18,15 +18,13 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.detail.R
 
 @Composable
 fun SensesBlock(
     senses: List<String>,
     modifier: Modifier = Modifier
 ) = TextBlock(
-    title = stringResource(R.string.monster_detail_senses),
+    title = strings.senses,
     text = senses.joinToString(", "),
     modifier = modifier
 )

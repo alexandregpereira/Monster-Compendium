@@ -19,11 +19,12 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.SpeedType
+import br.alexandregpereira.hunter.monster.detail.SpeedState
+import br.alexandregpereira.hunter.monster.detail.SpeedValueState
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
@@ -33,9 +34,9 @@ fun SpeedBlock(
     modifier: Modifier = Modifier,
     contentPaddingBottom: Dp = 0.dp,
 ) {
-    val prefixTitle = stringResource(R.string.monster_detail_speed_title)
+    val prefixTitle = strings.speedTitle
     val title = if (speed.hover) {
-        "$prefixTitle (${stringResource(R.string.monster_detail_speed_hover)})"
+        "$prefixTitle (${strings.speedHover})"
     } else prefixTitle
     Block(title = title, modifier = modifier, contentPaddingBottom = contentPaddingBottom) {
 
@@ -49,7 +50,7 @@ private fun SpeedGrid(
 ) = Grid {
 
     speed.values.forEach { speedValue ->
-        val iconRes = speedValue.type.iconRes
+        val iconRes = speedValue.type.toIconRes()
         IconInfo(title = speedValue.valueFormatted, painter = painterResource(iconRes))
     }
 }
@@ -61,7 +62,7 @@ private fun SpeedGridPreview() = Window {
         speed = SpeedState(
             hover = false, values = (0..6).map {
                 SpeedValueState(
-                    type = SpeedTypeState.WALK,
+                    type = SpeedType.WALK,
                     valueFormatted = "10m"
                 )
             }
@@ -76,7 +77,7 @@ private fun SpeedBlockPreview() = HunterTheme {
         speed = SpeedState(
             hover = true, values = listOf(
                 SpeedValueState(
-                    type = SpeedTypeState.WALK,
+                    type = SpeedType.WALK,
                     valueFormatted = "10m"
                 )
             )

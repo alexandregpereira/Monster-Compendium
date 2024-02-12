@@ -13,6 +13,8 @@ android {
     kotlinOptions {
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         freeCompilerArgs += "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
     }
 
     buildFeatures {
@@ -32,6 +34,7 @@ java {
 }
 
 dependencies {
+    implementation project(':core:state-holder')
     implementation project(':domain:monster:core')
     implementation project(':domain:monster-lore:core')
     implementation project(':domain:spell:core')

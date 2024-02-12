@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import br.alexandregpereira.hunter.monster.detail.ProficiencyState
 
 @Composable
 internal fun ProficiencyBlock(

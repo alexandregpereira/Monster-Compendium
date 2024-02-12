@@ -20,15 +20,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.ActionState
+import br.alexandregpereira.hunter.monster.detail.DamageDiceState
 
 @Composable
 fun ActionBlock(
     actions: List<ActionState>,
     modifier: Modifier = Modifier,
-    title: String = stringResource(R.string.monster_detail_actions),
+    title: String = strings.actions,
 ) = AbilityDescriptionBlock(
     title = title,
     abilityDescriptions = actions.map { it.abilityDescription },
@@ -55,11 +55,11 @@ private fun ActionDamageGrid(
 
     val iconSize = 48.dp
     attackBonus.takeUnless { it == 0 }?.let {
-        Bonus(value = it, name = stringResource(R.string.monster_detail_attack), iconSize = iconSize)
+        Bonus(value = it, name = strings.attack, iconSize = iconSize)
     }
 
     damageDices.forEach { damageDice ->
-        val iconRes = damageDice.damage.type.iconRes
+        val iconRes = damageDice.damage.type.toIconRes()
         if (iconRes != null) {
             IconInfo(
                 title = damageDice.dice,

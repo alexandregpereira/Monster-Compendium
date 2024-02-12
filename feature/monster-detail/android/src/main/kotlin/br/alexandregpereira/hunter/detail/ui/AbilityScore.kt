@@ -28,12 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.AbilityScoreState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
@@ -47,7 +47,7 @@ fun AbilityScore(
 ) {
     Icon(
         painter = painterResource(id = R.drawable.ic_ability_score),
-        contentDescription = stringResource(id = abilityScore.type.stringRes),
+        contentDescription = abilityScore.name,
         modifier = Modifier
             .width(69.dp)
             .height(88.dp)
@@ -58,8 +58,7 @@ fun AbilityScore(
         modifier = Modifier.height(89.dp)
     ) {
         Text(
-            text = stringResource(id = abilityScore.type.stringRes).uppercase()
-                .substring(0..2),
+            text = abilityScore.shortName,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             modifier = Modifier.padding(top = 8.dp)
@@ -86,9 +85,9 @@ fun AbilityScore(
 private fun AbilityScorePreview() = Window {
     AbilityScore(
         abilityScore = AbilityScoreState(
-            type = AbilityScoreTypeState.CHARISMA,
             value = 20,
-            modifier = 5
+            modifier = 5,
+            name = "Charisma",
         ),
     )
 }

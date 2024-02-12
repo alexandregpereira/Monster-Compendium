@@ -27,19 +27,19 @@ data class SpellPreview(
     val school: SchoolOfMagic,
 ) {
 
-        companion object {
+    companion object {
 
-            fun create(
-                name: String = "",
-                level: Int = 0,
-                school: SchoolOfMagic = SchoolOfMagic.ABJURATION
-            ) = SpellPreview(
-                index = generateUUID(),
-                name = name,
-                level = level,
-                school = school,
-            )
-        }
+        fun create(
+            name: String = "",
+            level: Int = 0,
+            school: SchoolOfMagic = SchoolOfMagic.ABJURATION
+        ) = SpellPreview(
+            index = generateUUID(),
+            name = name,
+            level = level,
+            school = school,
+        )
+    }
 }
 
 @ObjCName(name = "SchoolOfMagic", exact = true)

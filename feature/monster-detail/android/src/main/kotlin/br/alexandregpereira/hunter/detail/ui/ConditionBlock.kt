@@ -20,15 +20,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.ConditionState
 
 @Composable
 fun ConditionBlock(
     conditions: List<ConditionState>,
     modifier: Modifier = Modifier
 ) = Block(
-    title = stringResource(R.string.monster_detail_condition_immunities),
+    title = strings.conditionImmunities,
     modifier = modifier
 ) {
 
@@ -41,7 +40,7 @@ private fun ConditionGrid(
 ) = Grid {
 
     conditions.forEach { condition ->
-        val iconRes = condition.type.iconRes
+        val iconRes = condition.type.toIconRes()
         IconInfo(
             title = condition.name,
             painter = painterResource(iconRes),

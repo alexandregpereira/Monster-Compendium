@@ -14,32 +14,11 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.detail
+package br.alexandregpereira.hunter.monster.detail
 
-import br.alexandregpereira.hunter.detail.ui.AbilityDescriptionState
-import br.alexandregpereira.hunter.detail.ui.AbilityScoreState
-import br.alexandregpereira.hunter.detail.ui.AbilityScoreTypeState
-import br.alexandregpereira.hunter.detail.ui.ActionState
-import br.alexandregpereira.hunter.detail.ui.ColorState
-import br.alexandregpereira.hunter.detail.ui.ConditionState
-import br.alexandregpereira.hunter.detail.ui.ConditionTypeState
-import br.alexandregpereira.hunter.detail.ui.DamageDiceState
-import br.alexandregpereira.hunter.detail.ui.DamageState
-import br.alexandregpereira.hunter.detail.ui.DamageTypeState
-import br.alexandregpereira.hunter.detail.ui.MonsterImageState
-import br.alexandregpereira.hunter.detail.ui.MonsterState
-import br.alexandregpereira.hunter.detail.ui.MonsterTypeState
-import br.alexandregpereira.hunter.detail.ui.ProficiencyState
-import br.alexandregpereira.hunter.detail.ui.SavingThrowState
-import br.alexandregpereira.hunter.detail.ui.SpeedState
-import br.alexandregpereira.hunter.detail.ui.SpeedTypeState
-import br.alexandregpereira.hunter.detail.ui.SpeedValueState
-import br.alexandregpereira.hunter.detail.ui.SpellPreviewState
-import br.alexandregpereira.hunter.detail.ui.SpellcastingState
-import br.alexandregpereira.hunter.detail.ui.SpellcastingTypeState
-import br.alexandregpereira.hunter.detail.ui.StatsState
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.AbilityScore
+import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.Damage
@@ -52,14 +31,13 @@ import br.alexandregpereira.hunter.domain.model.Skill
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.xpFormatted
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
-import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
-import java.text.NumberFormat
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
 
-internal fun List<Monster>.asState(): List<MonsterState> {
-    return this.map { it.asState() }
+internal fun List<Monster>.asState(strings: MonsterDetailStrings): List<MonsterState> {
+    return this.map { it.asState(strings) }
 }
 
-private fun Monster.asState(): MonsterState {
+private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
     return MonsterState(
         index = index,
         name = name,
@@ -83,8 +61,8 @@ private fun Monster.asState(): MonsterState {
             hover = speed.hover,
             values = speed.values.map { it.asState() }
         ),
-        abilityScores = abilityScores.map { it.asState() },
-        savingThrows = savingThrows.map { it.asSavingThrowState() },
+        abilityScores = abilityScores.map { it.asState(strings) },
+        savingThrows = savingThrows.map { it.asSavingThrowState(strings) },
         skills = skills.map { it.asState() },
         damageVulnerabilities = damageVulnerabilities.map { it.asState() },
         damageResistances = damageResistances.map { it.asState() },
@@ -96,7 +74,7 @@ private fun Monster.asState(): MonsterState {
         actions = actions.map { it.asState() },
         legendaryActions = legendaryActions.map { it.asState() },
         reactions = reactions.map { it.asState() },
-        spellcastings = spellcastings.map { it.asState() },
+        spellcastings = spellcastings.map { it.asState(strings) },
         lore = lore?.run {
             val loreSize = 180
             val ellipse = if (length > loreSize) "..." else ""
@@ -113,7 +91,7 @@ private fun MonsterImageData.asState(
 ): MonsterImageState {
     return MonsterImageState(
         url = url,
-        type = MonsterTypeState.valueOf(type.name),
+        type = MonsterType.valueOf(type.name),
         backgroundColor = ColorState(
             light = backgroundColor.light,
             dark = backgroundColor.dark,
@@ -127,16 +105,23 @@ private fun MonsterImageData.asState(
 
 private fun SpeedValue.asState(): SpeedValueState {
     return SpeedValueState(
-        type = SpeedTypeState.valueOf(type.name),
+        type = type,
         valueFormatted = valueFormatted
     )
 }
 
-private fun AbilityScore.asState(): AbilityScoreState {
+private fun AbilityScore.asState(strings: MonsterDetailStrings): AbilityScoreState {
     return AbilityScoreState(
-        type = AbilityScoreTypeState.valueOf(type.name),
         value = value,
-        modifier = modifier
+        modifier = modifier,
+        name = when(type) {
+            AbilityScoreType.STRENGTH -> strings.savingThrowStrength
+            AbilityScoreType.DEXTERITY -> strings.savingThrowDexterity
+            AbilityScoreType.CONSTITUTION -> strings.savingThrowConstitution
+            AbilityScoreType.INTELLIGENCE -> strings.savingThrowIntelligence
+            AbilityScoreType.WISDOM -> strings.savingThrowWisdom
+            AbilityScoreType.CHARISMA -> strings.savingThrowCharisma
+        }
     )
 }
 
@@ -148,18 +133,25 @@ private fun Skill.asState(): ProficiencyState {
     )
 }
 
-private fun SavingThrow.asSavingThrowState(): SavingThrowState {
-    return SavingThrowState(
+private fun SavingThrow.asSavingThrowState(strings: MonsterDetailStrings): ProficiencyState {
+    return ProficiencyState(
         index = index,
         modifier = modifier,
-        type = AbilityScoreTypeState.valueOf(type.name)
+        name = when (type) {
+            AbilityScoreType.STRENGTH -> strings.savingThrowStrength
+            AbilityScoreType.DEXTERITY -> strings.savingThrowDexterity
+            AbilityScoreType.CONSTITUTION -> strings.savingThrowConstitution
+            AbilityScoreType.INTELLIGENCE -> strings.savingThrowIntelligence
+            AbilityScoreType.WISDOM -> strings.savingThrowWisdom
+            AbilityScoreType.CHARISMA -> strings.savingThrowCharisma
+        },
     )
 }
 
 private fun Damage.asState(): DamageState {
     return DamageState(
         index = index,
-        type = DamageTypeState.valueOf(type.name),
+        type = type,
         name = name
     )
 }
@@ -167,7 +159,7 @@ private fun Damage.asState(): DamageState {
 private fun Condition.asState(): ConditionState {
     return ConditionState(
         index = index,
-        type = ConditionTypeState.valueOf(type.name),
+        type = type,
         name = name
     )
 }
@@ -194,16 +186,19 @@ private fun DamageDice.asState(): DamageDiceState {
     )
 }
 
-private fun Spellcasting.asState(): SpellcastingState {
+private fun Spellcasting.asState(strings: MonsterDetailStrings): SpellcastingState {
     return SpellcastingState(
-        type = SpellcastingTypeState.valueOf(type.name),
+        name = when (type) {
+            SpellcastingType.INNATE -> strings.innateSpellcasting
+            SpellcastingType.SPELLCASTER -> strings.spellcasting
+        },
         description = description,
         spellsByGroup = usages.associate { spellUsage ->
             spellUsage.group to spellUsage.spells.map { spell ->
                 SpellPreviewState(
                     index = spell.index,
                     name = spell.name,
-                    school = SchoolOfMagicState.valueOf(spell.school.name)
+                    school = spell.school
                 )
             }
         }

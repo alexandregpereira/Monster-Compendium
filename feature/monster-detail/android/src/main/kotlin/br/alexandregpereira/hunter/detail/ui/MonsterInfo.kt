@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)
-
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -35,9 +32,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.MonsterState
+import br.alexandregpereira.hunter.monster.detail.ProficiencyState
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 
 fun LazyListScope.monsterInfo(
@@ -160,10 +157,10 @@ private fun LazyListScope.monsterInfoPart2(
                     ProficiencyState(
                         index = saving.index,
                         modifier = saving.modifier,
-                        name = stringResource(saving.type.stringRes)
+                        name = saving.name,
                     )
                 },
-                title = stringResource(R.string.monster_detail_saving_throws)
+                title = strings.savingThrows
             )
         }
     }
@@ -176,7 +173,7 @@ private fun LazyListScope.monsterInfoPart2(
         ) {
             ProficiencyBlock(
                 proficiencies = it,
-                title = stringResource(R.string.monster_detail_skills)
+                title = strings.skills
             )
         }
     }
@@ -252,7 +249,7 @@ private fun LazyListScope.monsterInfoPart4(
             getItemsKeys = getItemsKeys,
         ) {
             TextBlock(
-                title = stringResource(R.string.monster_detail_languages),
+                title = strings.languages,
                 text = it
             )
         }
@@ -305,7 +302,7 @@ private fun LazyListScope.monsterInfoPart5(
             getItemsKeys = getItemsKeys,
         ) { legendaryActions ->
             ActionBlock(
-                title = stringResource(R.string.monster_detail_legendary_actions),
+                title = strings.legendaryActions,
                 actions = legendaryActions
             )
         }

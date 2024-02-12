@@ -16,32 +16,28 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.detail.R
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.HeaderFontSize
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.HorizontalSlideTransition
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MonsterTitleCompose(
     monsterTitleStates: List<MonsterTitleState>,
@@ -93,7 +89,7 @@ private fun OptionIcon(
 ) {
     AppBarIcon(
         Icons.Filled.MoreVert,
-        contentDescription = stringResource(R.string.monster_detail_options),
+        contentDescription = strings.options,
         modifier = modifier,
         onClicked = onOptionsClicked
     )
@@ -110,7 +106,6 @@ data class MonsterTitleState(
 
 @Preview
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 private fun MonsterTitleWithSubtitlePreview() = Window {
     MonsterTitleCompose(
         listOf(
@@ -124,7 +119,6 @@ private fun MonsterTitleWithSubtitlePreview() = Window {
 
 @Preview
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 private fun MonsterTitleComposePreview() = Window {
     MonsterTitleCompose(
         monsterTitleStates = listOf(
