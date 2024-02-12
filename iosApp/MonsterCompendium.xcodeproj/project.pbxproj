@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C107C2B529CFCB1C00EBF42B /* IconInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C107C2B429CFCB1C00EBF42B /* IconInfo.swift */; };
 		C107C2B929CFEEB500EBF42B /* MonsterDetailPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C107C2B829CFEEB500EBF42B /* MonsterDetailPagerView.swift */; };
-		C125D7E229ED8BC800A8DA7C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C125D7E429ED8BC800A8DA7C /* Localizable.strings */; };
 		C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */; };
 		C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */; };
 		C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */; };
@@ -57,8 +56,6 @@
 /* Begin PBXFileReference section */
 		C107C2B429CFCB1C00EBF42B /* IconInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInfo.swift; sourceTree = "<group>"; };
 		C107C2B829CFEEB500EBF42B /* MonsterDetailPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailPagerView.swift; sourceTree = "<group>"; };
-		C125D7E329ED8BC800A8DA7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C125D7E529ED8BCD00A8DA7C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailViewModel.swift; sourceTree = "<group>"; };
 		C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailScreenView.swift; sourceTree = "<group>"; };
 		C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailItemUiState.swift; sourceTree = "<group>"; };
@@ -165,7 +162,6 @@
 				C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */,
 				C1BC0E8629847A85002F517C /* Assets.xcassets */,
 				C1BC0E8829847A85002F517C /* Preview Content */,
-				C125D7E429ED8BC800A8DA7C /* Localizable.strings */,
 			);
 			path = MonsterCompendium;
 			sourceTree = "<group>";
@@ -351,7 +347,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */,
-				C125D7E229ED8BC800A8DA7C /* Localizable.strings in Resources */,
 				C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,18 +449,6 @@
 			targetProxy = C1BC0E9A29847A85002F517C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C125D7E429ED8BC800A8DA7C /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C125D7E329ED8BC800A8DA7C /* en */,
-				C125D7E529ED8BCD00A8DA7C /* pt-BR */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C1BC0EA129847A85002F517C /* Debug */ = {
