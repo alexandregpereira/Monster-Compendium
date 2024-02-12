@@ -22,16 +22,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.search.R
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun SearchBar(
     text: String,
+    searchLabel: String,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {}
 ) {
@@ -39,7 +38,7 @@ internal fun SearchBar(
         text = text,
         capitalize = false,
         onValueChange = onValueChange,
-        label = stringResource(R.string.search_search_label),
+        label = searchLabel,
         modifier = modifier
     )
 }
@@ -48,10 +47,11 @@ internal fun SearchBar(
 @Composable
 private fun SearchBarPreview() = HunterTheme {
     Column(Modifier.padding(16.dp)) {
-        SearchBar("")
+        SearchBar(text = "", searchLabel = "Search")
         Spacer(modifier = Modifier.height(16.dp))
         SearchBar(
-            text = "Test"
+            text = "Test",
+            searchLabel = "Search"
         )
     }
 }

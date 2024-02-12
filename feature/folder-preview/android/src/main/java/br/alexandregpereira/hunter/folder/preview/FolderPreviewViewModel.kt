@@ -51,4 +51,9 @@ internal class FolderPreviewViewModel(
     fun onSave() {
         stateHolder.onSave()
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
 }

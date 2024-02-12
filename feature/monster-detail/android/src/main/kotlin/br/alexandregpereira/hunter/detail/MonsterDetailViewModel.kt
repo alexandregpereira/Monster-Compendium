@@ -130,6 +130,11 @@ internal class MonsterDetailViewModel(
 
     fun onDeleteClosed() = stateHolder.onDeleteClosed()
 
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
+
     private fun MonsterDetailViewState.asMonsterDetailState(): MonsterDetailState {
         return MonsterDetailState(
             showDetail = showDetail,

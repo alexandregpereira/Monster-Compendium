@@ -57,4 +57,9 @@ internal class FolderInsertViewModel(
     fun onClose() {
         stateHolder.onClose()
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
 }

@@ -10,7 +10,7 @@ interface AppLocalization {
     fun getLanguage(): Language
 }
 
-interface AppReactiveLocalization {
+interface AppReactiveLocalization : AppLocalization {
 
     val languageFlow: Flow<Language>
 }

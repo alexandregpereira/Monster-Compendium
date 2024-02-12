@@ -23,9 +23,9 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispat
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
-import br.alexandregpereira.hunter.search.ui.changeMonsters
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
@@ -45,10 +45,13 @@ internal class SearchViewModel(
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val analytics: SearchAnalytics,
-    dispatcher: CoroutineDispatcher
+    dispatcher: CoroutineDispatcher,
+    private val appLocalization: AppReactiveLocalization,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SearchViewState.Initial)
+    private val _state = MutableStateFlow(
+        SearchViewState(searchLabel = appLocalization.getStrings().search)
+    )
     val state: StateFlow<SearchViewState> = _state
     private val searchQuery = MutableStateFlow(_state.value.searchValue)
 
@@ -61,7 +64,11 @@ internal class SearchViewModel(
                 result.size to result.asState()
             }
             .onEach { (totalResults, monsterRows) ->
-                _state.value = state.value.changeMonsters(monsterRows, totalResults)
+                _state.value = state.value.copy(
+                    monsterRows = monsterRows,
+                    totalResults = totalResults,
+                    searchResults = appLocalization.getStrings().searchResults(totalResults)
+                )
             }
             .flowOn(dispatcher)
             .catch {
@@ -71,6 +78,18 @@ internal class SearchViewModel(
                 analytics.trackSearch(totalResults, searchQuery.value)
             }
             .launchIn(viewModelScope)
+
+        observeLanguageChanges()
+    }
+
+    private fun observeLanguageChanges() {
+        appLocalization.languageFlow.onEach { language ->
+            val strings = language.getStrings()
+            _state.value = state.value.copy(
+                searchLabel = strings.search,
+                searchResults = strings.searchResults(state.value.totalResults)
+            )
+        }.launchIn(viewModelScope)
     }
 
     fun onSearchValueChange(value: String) {

@@ -38,4 +38,9 @@ internal class FolderListViewModel(
     fun onItemSelect(folderName: String) {
         stateHolder.onItemSelect(folderName)
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
 }

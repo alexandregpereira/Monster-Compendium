@@ -7,4 +7,10 @@ internal class SpellCompendiumViewModel(
     private val stateHolder: SpellCompendiumStateHolder,
 ) : ViewModel(),
     SpellCompendiumIntent by stateHolder,
-    StateHolder<SpellCompendiumState> by stateHolder
+    StateHolder<SpellCompendiumState> by stateHolder {
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
+}

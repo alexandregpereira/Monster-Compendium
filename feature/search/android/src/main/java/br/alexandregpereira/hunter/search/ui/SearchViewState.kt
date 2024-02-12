@@ -21,21 +21,11 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 internal data class SearchViewState(
     val searchValue: String = "",
     val totalResults: Int = 0,
-    val monsterRows: List<MonsterCardState> = emptyList()
-) {
-
-    companion object {
-        val Initial = SearchViewState()
-    }
-}
+    val monsterRows: List<MonsterCardState> = emptyList(),
+    val searchLabel: String = "",
+    val searchResults: String = "",
+)
 
 internal fun SearchViewState.changeSearchValue(value: String): SearchViewState {
     return this.copy(searchValue = value)
-}
-
-internal fun SearchViewState.changeMonsters(
-    monsterRows: List<MonsterCardState>,
-    totalResults: Int
-): SearchViewState {
-    return this.copy(monsterRows = monsterRows, totalResults = totalResults)
 }
