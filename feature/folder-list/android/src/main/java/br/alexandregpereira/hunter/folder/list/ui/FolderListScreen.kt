@@ -21,12 +21,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.folder.list.FolderListViewState
+import br.alexandregpereira.hunter.folder.list.FolderListState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun FolderListScreen(
-    state: FolderListViewState,
+    state: FolderListState,
     contentPadding: PaddingValues = PaddingValues(),
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
@@ -42,7 +42,8 @@ internal fun FolderListScreen(
         )
 
         ItemSelection(
-            itemSelectionCount = state.itemSelectionCount,
+            itemSelectionText = state.strings.itemSelected(state.itemSelectionCount),
+            deleteText = state.strings.delete,
             contentBottomPadding = contentPadding.calculateBottomPadding(),
             onClose = onItemSelectionClose,
             onDeleteClick = onItemSelectionDeleteClick,

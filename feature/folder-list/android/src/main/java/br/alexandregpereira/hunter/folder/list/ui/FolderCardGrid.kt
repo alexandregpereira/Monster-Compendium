@@ -29,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.folder.list.FolderCardImageState
+import br.alexandregpereira.hunter.folder.list.FolderCardState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -55,6 +57,7 @@ internal fun FolderCardGrid(
         items(folders, key = { it.folderName.lowercase() }) { folder ->
             val scale by animateFloatAsState(
                 targetValue = if (folder.selected) 0.8f else 1f,
+                label = "animateSelected",
             )
 
             FolderCard(
@@ -74,14 +77,6 @@ internal fun FolderCardGrid(
         }
     }
 }
-
-internal data class FolderCardState(
-    val folderName: String = "",
-    val image1: FolderCardImageState = FolderCardImageState(),
-    val image2: FolderCardImageState? = null,
-    val image3: FolderCardImageState? = null,
-    val selected: Boolean = false,
-)
 
 @Preview
 @Composable

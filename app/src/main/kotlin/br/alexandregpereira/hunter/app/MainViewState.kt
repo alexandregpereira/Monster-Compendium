@@ -20,7 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 
 data class MainViewState(
     val bottomBarItemSelected: BottomBarItem = BottomBarItem.COMPENDIUM,
-    internal val topContentStack: List<String> = listOf(),
+    internal val topContentStack: Set<String> = setOf(),
 ) {
 
     val showBottomBar: Boolean = topContentStack.isEmpty()
@@ -36,9 +36,9 @@ internal fun MainViewState.removeTopContentStack(
     topContent: String,
 ): MainViewState {
     return copy(
-        topContentStack = topContentStack.toMutableList().apply {
+        topContentStack = topContentStack.toMutableSet().apply {
             remove(topContent)
-        }.toList()
+        }.toSet()
     )
 }
 
@@ -52,8 +52,8 @@ enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
 internal fun SavedStateHandle.getState(): MainViewState {
     return MainViewState(
         bottomBarItemSelected = BottomBarItem.entries[this["bottomBarItemSelected"] ?: 0],
-        topContentStack = this.get<Array<String>>("topContentStack")?.toMutableList()
-            ?: mutableListOf(),
+        topContentStack = this.get<Array<String>>("topContentStack")?.toSet()
+            ?: setOf(),
     )
 }
 

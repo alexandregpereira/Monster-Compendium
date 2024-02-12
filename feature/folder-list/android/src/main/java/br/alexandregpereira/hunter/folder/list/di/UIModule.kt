@@ -16,25 +16,12 @@
 
 package br.alexandregpereira.hunter.folder.list.di
 
-import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.folder.list.FolderListState
-import br.alexandregpereira.hunter.folder.list.FolderListStateRecovery
 import br.alexandregpereira.hunter.folder.list.FolderListViewModel
-import br.alexandregpereira.hunter.folder.list.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val folderListModule = listOf(featureFolderListModule) + module {
-    factory {
-        val state = get<SavedStateHandle>().getState()
-        FolderListStateRecovery {
-            FolderListState(
-                itemSelection = state.itemSelection,
-                isItemSelectionOpen = state.isItemSelectionOpen,
-            )
-        }
-    }
     viewModel {
-        FolderListViewModel(get(), get())
+        FolderListViewModel(get())
     }
 }

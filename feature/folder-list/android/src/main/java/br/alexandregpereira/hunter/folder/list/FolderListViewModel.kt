@@ -16,39 +16,12 @@
 
 package br.alexandregpereira.hunter.folder.list
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import br.alexandregpereira.hunter.state.StateHolder
 
 internal class FolderListViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val stateHolder: FolderListStateHolder
-) : ViewModel() {
-
-    private val _state: MutableStateFlow<FolderListViewState> = MutableStateFlow(
-        savedStateHandle.getState()
-    )
-    val state: StateFlow<FolderListViewState> = _state
-
-    init {
-        stateHolder.state
-            .map {
-                FolderListViewState(
-                    folders = it.folders.map { folder ->
-                        folder.first.asState().copy(selected = folder.second)
-                    },
-                    isItemSelectionOpen = it.isItemSelectionOpen,
-                    itemSelection = it.itemSelection,
-                ).saveState(savedStateHandle)
-            }
-            .onEach { _state.value = it }
-            .launchIn(viewModelScope)
-    }
+) : ViewModel(), StateHolder<FolderListState> by stateHolder {
 
     fun onItemClick(folderName: String) {
         stateHolder.onItemClick(folderName)

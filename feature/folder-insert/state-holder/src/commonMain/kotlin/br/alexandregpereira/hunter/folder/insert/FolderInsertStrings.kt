@@ -8,23 +8,23 @@ interface FolderInsertStrings {
     val save: String
 }
 
-internal class FolderInsertEnStrings : FolderInsertStrings {
-    override val addToFolder: String = "Add to folder"
-    override val folderNameLabel: String = "Folder name"
-    override val save: String = "Save"
-}
+internal data class FolderInsertEnStrings(
+    override val addToFolder: String = "Add to folder",
+    override val folderNameLabel: String = "Folder name",
+    override val save: String = "Save",
+) : FolderInsertStrings
 
-internal class FolderInsertPtStrings : FolderInsertStrings {
-    override val addToFolder: String = "Adicionar à pasta"
-    override val folderNameLabel: String = "Nome da pasta"
-    override val save: String = "Salvar"
-}
+internal data class FolderInsertPtStrings(
+    override val addToFolder: String = "Adicionar à pasta",
+    override val folderNameLabel: String = "Nome da pasta",
+    override val save: String = "Salvar",
+) : FolderInsertStrings
 
-internal class FolderInsertEmptyStrings : FolderInsertStrings {
-    override val addToFolder: String = ""
-    override val folderNameLabel: String = ""
-    override val save: String = ""
-}
+internal data class FolderInsertEmptyStrings(
+    override val addToFolder: String = "",
+    override val folderNameLabel: String = "",
+    override val save: String = "",
+) : FolderInsertStrings
 
 internal fun getFolderInsertStrings(lang: Language): FolderInsertStrings {
     return when (lang) {

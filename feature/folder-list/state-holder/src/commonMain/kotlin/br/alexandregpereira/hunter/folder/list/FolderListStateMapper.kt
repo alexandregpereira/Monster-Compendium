@@ -18,11 +18,14 @@ package br.alexandregpereira.hunter.folder.list
 
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-import br.alexandregpereira.hunter.folder.list.ui.FolderCardImageState
-import br.alexandregpereira.hunter.folder.list.ui.FolderCardState
 
-internal fun List<MonsterFolder>.asState(): List<FolderCardState> {
-    return map { it.asState() }
+internal typealias MonsterFolderWithSelection = Pair<MonsterFolder, Boolean>
+
+internal fun List<MonsterFolderWithSelection>.asState(): List<FolderCardState> {
+    return map {
+        val folder = it.first.asState()
+        folder.copy(selected = it.second)
+    }
 }
 
 internal fun MonsterFolder.asState(): FolderCardState {
@@ -30,7 +33,7 @@ internal fun MonsterFolder.asState(): FolderCardState {
         folderName = this.name,
         image1 = this.monsters.first().asState(),
         image2 = this.monsters.getOrNull(1)?.asState(),
-        image3 = this.monsters.getOrNull(2)?.asState()
+        image3 = this.monsters.getOrNull(2)?.asState(),
     )
 }
 
