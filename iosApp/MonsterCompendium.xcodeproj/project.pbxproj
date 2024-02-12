@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C107C2B329CFBCBA00EBF42B /* MonsterDetailUiStateMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C107C2B229CFBCBA00EBF42B /* MonsterDetailUiStateMapper.swift */; };
 		C107C2B529CFCB1C00EBF42B /* IconInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C107C2B429CFCB1C00EBF42B /* IconInfo.swift */; };
 		C107C2B929CFEEB500EBF42B /* MonsterDetailPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C107C2B829CFEEB500EBF42B /* MonsterDetailPagerView.swift */; };
 		C125D7E229ED8BC800A8DA7C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C125D7E429ED8BC800A8DA7C /* Localizable.strings */; };
 		C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */; };
-		C15BF14929B1018100F47375 /* MonsterDetailUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */; };
 		C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */; };
 		C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */; };
 		C15BF15429B118D800F47375 /* MonsterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BF15329B118D800F47375 /* MonsterDetailView.swift */; };
@@ -36,6 +34,7 @@
 		C1FC49122986F13600C18252 /* MonsterCompendiumItemUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC49112986F13600C18252 /* MonsterCompendiumItemUiState.swift */; };
 		C1FC49142986F15000C18252 /* MonsterUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC49132986F15000C18252 /* MonsterUiState.swift */; };
 		C1FC491629870A2600C18252 /* MonsterCompendiumUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC491529870A2600C18252 /* MonsterCompendiumUiState.swift */; };
+		E27E58612B7AC87900ED83F4 /* MonsterDetailStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E58602B7AC87900ED83F4 /* MonsterDetailStrings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,13 +55,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C107C2B229CFBCBA00EBF42B /* MonsterDetailUiStateMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailUiStateMapper.swift; sourceTree = "<group>"; };
 		C107C2B429CFCB1C00EBF42B /* IconInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInfo.swift; sourceTree = "<group>"; };
 		C107C2B829CFEEB500EBF42B /* MonsterDetailPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailPagerView.swift; sourceTree = "<group>"; };
 		C125D7E329ED8BC800A8DA7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C125D7E529ED8BCD00A8DA7C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailViewModel.swift; sourceTree = "<group>"; };
-		C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailUiState.swift; sourceTree = "<group>"; };
 		C15BF14B29B1019C00F47375 /* MonsterDetailScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailScreenView.swift; sourceTree = "<group>"; };
 		C15BF15129B1140500F47375 /* MonsterDetailItemUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailItemUiState.swift; sourceTree = "<group>"; };
 		C15BF15329B118D800F47375 /* MonsterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailView.swift; sourceTree = "<group>"; };
@@ -88,6 +85,7 @@
 		C1FC49112986F13600C18252 /* MonsterCompendiumItemUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumItemUiState.swift; sourceTree = "<group>"; };
 		C1FC49132986F15000C18252 /* MonsterUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterUiState.swift; sourceTree = "<group>"; };
 		C1FC491529870A2600C18252 /* MonsterCompendiumUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumUiState.swift; sourceTree = "<group>"; };
+		E27E58602B7AC87900ED83F4 /* MonsterDetailStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailStrings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,8 +119,7 @@
 			children = (
 				C15BF14A29B1018C00F47375 /* UI */,
 				C15BF14629B1017300F47375 /* MonsterDetailViewModel.swift */,
-				C15BF14829B1018100F47375 /* MonsterDetailUiState.swift */,
-				C107C2B229CFBCBA00EBF42B /* MonsterDetailUiStateMapper.swift */,
+				E27E58602B7AC87900ED83F4 /* MonsterDetailStrings.swift */,
 			);
 			path = MonsterDetail;
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 			files = (
 				C1D25EB829862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift in Sources */,
 				C1FC491629870A2600C18252 /* MonsterCompendiumUiState.swift in Sources */,
-				C107C2B329CFBCBA00EBF42B /* MonsterDetailUiStateMapper.swift in Sources */,
 				C1D25EB429862B4E00F0EBF9 /* MonsterCardView.swift in Sources */,
 				C1FC49122986F13600C18252 /* MonsterCompendiumItemUiState.swift in Sources */,
 				C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */,
@@ -413,12 +409,12 @@
 				C107C2B929CFEEB500EBF42B /* MonsterDetailPagerView.swift in Sources */,
 				C15BF15829B395CE00F47375 /* AppBarIconView.swift in Sources */,
 				C15BF15A29B3976B00F47375 /* MonsterTitleView.swift in Sources */,
+				E27E58612B7AC87900ED83F4 /* MonsterDetailStrings.swift in Sources */,
 				C1D25EBF29862ED300F0EBF9 /* MonsterCompendiumView.swift in Sources */,
 				C1D25EBD29862EB200F0EBF9 /* MonsterCompendiumScreenView.swift in Sources */,
 				C19D519129B90B0E00712CD2 /* TableContentPopup.swift in Sources */,
 				C15BF15429B118D800F47375 /* MonsterDetailView.swift in Sources */,
 				C15BF14729B1017300F47375 /* MonsterDetailViewModel.swift in Sources */,
-				C15BF14929B1018100F47375 /* MonsterDetailUiState.swift in Sources */,
 				C1948B6729EF13E000384671 /* DamageIconColors.swift in Sources */,
 				C15BF14C29B1019C00F47375 /* MonsterDetailScreenView.swift in Sources */,
 				C1FC49142986F15000C18252 /* MonsterUiState.swift in Sources */,

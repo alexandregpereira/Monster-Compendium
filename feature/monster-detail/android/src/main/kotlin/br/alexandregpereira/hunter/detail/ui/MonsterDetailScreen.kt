@@ -245,7 +245,7 @@ private fun MonsterImageCompose(
             .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
     ) {
         MonsterImages(
-            images = monsters.map { ImageState(it.imageState.url, it.name) },
+            images = monsters.map { ImageState(it.imageUrl, it.name) },
             pagerState = pagerState,
             height = getImageHeightInDp(),
             shape = RectangleShape,
@@ -276,8 +276,8 @@ private fun Modifier.monsterImageBackground(
     val transitionData = getTransitionData(monsters, getPageOffset)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    val startColor = transitionData.data.imageState.backgroundColor.getColor(isSystemInDarkTheme)
-    val endColor = transitionData.nextData.imageState.backgroundColor.getColor(isSystemInDarkTheme)
+    val startColor = transitionData.data.getBackgroundColor(isSystemInDarkTheme)
+    val endColor = transitionData.nextData.getBackgroundColor(isSystemInDarkTheme)
 
     val backgroundColor = lerp(
         start = startColor.toColor(),
@@ -363,8 +363,8 @@ private fun ChallengeRatingCompose(
 ) {
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         ChallengeRatingCircle(
-            challengeRating = data.imageState.challengeRating,
-            xp = data.imageState.xp,
+            challengeRating = data.challengeRating,
+            xp = data.xp,
             size = 62.dp,
             fontSize = 18.sp,
             xpFontSize = 12.sp,
@@ -381,9 +381,9 @@ private fun MonsterTypeIcon(
 ) {
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
-            iconRes = data.imageState.type.toIconRes(),
+            iconRes = data.type.toIconRes(),
             iconSize = 32.dp,
-            tint = data.imageState.backgroundColor.getColor(isSystemInDarkTheme()).getTintColor()
+            tint = data.getBackgroundColor(isSystemInDarkTheme()).getTintColor()
         )
     }
 }
@@ -416,13 +416,8 @@ private fun MonsterDetailPreview() = Window {
                         light = "#ffe2e2",
                         dark = "#ffe2e2"
                     ),
-                    isHorizontal = false
                 ),
-                subtype = null,
-                group = null,
                 subtitle = "This is the subtitle",
-                size = "Large",
-                alignment = "Good",
                 stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,
@@ -465,13 +460,8 @@ private fun MonsterTopBarPreview() = Window {
                         light = "#ffe2e2",
                         dark = "#ffe2e2"
                     ),
-                    isHorizontal = false
                 ),
-                subtype = null,
-                group = null,
                 subtitle = "This is the subtitle",
-                size = "Large",
-                alignment = "Good",
                 stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,

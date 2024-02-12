@@ -2,7 +2,9 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
+import kotlin.native.ObjCName
 
+@ObjCName(name = "MonsterDetailStrings", exact = true)
 interface MonsterDetailStrings {
     val armorClass: String
     val speedTitle: String
@@ -44,7 +46,7 @@ interface MonsterDetailStrings {
     val save: String
 }
 
-data class MonsterDetailEnStrings(
+internal data class MonsterDetailEnStrings(
     override val armorClass: String = "Armor Class",
     override val speedTitle: String = "Speed",
     override val speedHover: String = "Hover",
@@ -125,6 +127,8 @@ internal data class MonsterDetailPtStrings(
     override val deleteConfirmation: String = "Tenho certeza",
     override val save: String = "Salvar",
 ) : MonsterDetailStrings
+
+fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
 
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {
     return when (getLanguage()) {

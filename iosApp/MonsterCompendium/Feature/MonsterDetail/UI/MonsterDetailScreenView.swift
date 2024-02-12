@@ -19,19 +19,19 @@ struct MonsterDetailScreenView : View {
         let state = viewModel.state
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
-                if state.isShowing {
+                if state.showDetail {
                     ZStack(alignment: .topLeading) {
                         if !state.monsters.isEmpty {
-                            MonsterDetailView(monster: state.monsters[viewModel.initialMonsterListPositionIndex])
+                            MonsterDetailView(monster: state.monsters[Int(state.initialMonsterListPositionIndex)])
                         }
                         
                         ZStack {
-                            if viewModel.isLoading {
+                            if state.isLoading {
                                 Color.white.ignoresSafeArea()
                                 .transition(.loadingTransition)
                             }
                         }
-                        .animation(.spring(), value: viewModel.isLoading)
+                        .animation(.spring(), value: state.isLoading)
                         
                         AppBarIconView(image: Image(systemName: "x.circle.fill"), onClicked: { viewModel.onClose() })
                             .padding(4)
@@ -39,6 +39,7 @@ struct MonsterDetailScreenView : View {
                     }
                     .clipped()
                     .transition(.offset(y: geometry.size.height + geometry.safeAreaInsets.bottom + geometry.safeAreaInsets.top))
+                    .environmentObject(MonsterDetailStringsWrapper(state.strings))
                 }
             }.frame(
                 minWidth: 0,
@@ -48,7 +49,7 @@ struct MonsterDetailScreenView : View {
                 alignment: .topLeading
             )
             .ignoresSafeArea()
-            .animation(.spring(response: 0.3, dampingFraction: 0.98), value: state.isShowing)
+            .animation(.spring(response: 0.3, dampingFraction: 0.98), value: state.showDetail)
         }
     }
 }

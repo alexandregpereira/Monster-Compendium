@@ -36,32 +36,22 @@ data class MonsterDetailState(
     val showCloneForm: Boolean = false,
     val monsterCloneName: String = "",
     val showDeleteConfirmation: Boolean = false,
-    val strings: MonsterDetailStrings = MonsterDetailEnStrings(),
-)
+    val strings: MonsterDetailStrings = MonsterDetailStrings(),
+) {
+
+    companion object {
+        val Empty: MonsterDetailState = MonsterDetailState()
+    }
+}
 
 @ObjCName(name = "MonsterState", exact = true)
 data class MonsterState(
     val index: String = "",
     val name: String = "",
-    val imageState: MonsterImageState = MonsterImageState(
-        url = "",
-        type = MonsterType.ABERRATION,
-        backgroundColor = ColorState(
-            light = "",
-            dark = ""
-        ),
-        challengeRating = 0.0f,
-        xp = "",
-        isHorizontal = false,
-        contentDescription = ""
-    ),
-    val subtype: String? = null,
-    val group: String? = null,
+    val imageState: MonsterImageState = MonsterImageState(),
     val subtitle: String = "",
-    val size: String = "",
-    val alignment: String = "",
-    val stats: StatsState = StatsState(armorClass = 0, hitPoints = 0, hitDice = ""),
-    val speed: SpeedState = SpeedState(hover = false, values = emptyList()),
+    val stats: StatsState = StatsState(),
+    val speed: SpeedState = SpeedState(),
     val abilityScores: List<AbilityScoreState> = emptyList(),
     val savingThrows: List<ProficiencyState> = emptyList(),
     val skills: List<ProficiencyState> = emptyList(),
@@ -77,19 +67,36 @@ data class MonsterState(
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
     val lore: String = "",
-)
+) {
+
+    val type: MonsterType
+        get() = imageState.type
+
+    val challengeRating: Float
+        get() = imageState.challengeRating
+
+    val xp: String
+        get() = imageState.xp
+
+    val imageUrl: String
+        get() = imageState.url
+
+    fun getBackgroundColor(isDarkTheme: Boolean): String {
+        return imageState.backgroundColor.getColor(isDarkTheme)
+    }
+}
 
 @ObjCName(name = "StatsState", exact = true)
 data class StatsState(
-    val armorClass: Int,
-    val hitPoints: Int,
-    val hitDice: String,
+    val armorClass: Int = 0,
+    val hitPoints: Int = 0,
+    val hitDice: String = "",
 )
 
 @ObjCName(name = "SpeedState", exact = true)
 data class SpeedState(
-    val hover: Boolean,
-    val values: List<SpeedValueState>,
+    val hover: Boolean = false,
+    val values: List<SpeedValueState> = emptyList(),
 )
 
 @ObjCName(name = "SpeedValueState", exact = true)
@@ -149,22 +156,21 @@ data class DamageDiceState(
 
 @ObjCName(name = "MonsterImageState", exact = true)
 data class MonsterImageState(
-    val url: String,
-    val type: MonsterType,
-    val backgroundColor: ColorState,
-    val challengeRating: Float,
-    val xp: String,
-    val isHorizontal: Boolean = false,
+    val url: String= "",
+    val type: MonsterType = MonsterType.ABERRATION,
+    val backgroundColor: ColorState = ColorState(),
+    val challengeRating: Float = 0f,
+    val xp: String = "",
     val contentDescription: String = ""
 )
 
 @ObjCName(name = "ColorState", exact = true)
 data class ColorState(
-    val light: String,
-    val dark: String
+    val light: String = "",
+    val dark: String = "",
 ) {
 
-    fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
+    internal fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
 }
 
 @ObjCName(name = "SpellcastingState", exact = true)

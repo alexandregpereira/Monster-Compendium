@@ -18,10 +18,10 @@ package br.alexandregpereira.hunter.monster.detail.di
 
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.monster.detail.EmptyMonsterDetailStateRecovery
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateRecovery
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
@@ -52,7 +52,7 @@ val monsterDetailStateModule = module {
             dispatcher = get(),
             analytics = MonsterDetailAnalytics(get()),
             appLocalization = get(),
-            stateRecovery = getOrNull() ?: EmptyMonsterDetailStateRecovery(),
+            stateRecovery = getOrNull() ?: MonsterDetailStateRecovery(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

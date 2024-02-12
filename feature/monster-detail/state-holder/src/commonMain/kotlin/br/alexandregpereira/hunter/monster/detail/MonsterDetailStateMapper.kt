@@ -47,11 +47,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
             xp = xpFormatted(),
             contentDescription = name
         ),
-        subtype = subtype,
-        group = group,
         subtitle = subtitle,
-        size = size,
-        alignment = alignment,
         stats = StatsState(
             armorClass = stats.armorClass,
             hitPoints = stats.hitPoints,
@@ -98,7 +94,6 @@ private fun MonsterImageData.asState(
         ),
         challengeRating = challengeRating,
         xp = xp,
-        isHorizontal = isHorizontal,
         contentDescription = contentDescription,
     )
 }

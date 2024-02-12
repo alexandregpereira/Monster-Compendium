@@ -28,6 +28,8 @@ interface MonsterDetailStateRecovery {
     fun saveMonsterIndexes(indexes: List<String>)
 }
 
+fun MonsterDetailStateRecovery(): MonsterDetailStateRecovery = DefaultMonsterDetailStateRecovery()
+
 internal fun MonsterDetailState.saveState(
     recovery: MonsterDetailStateRecovery
 ): MonsterDetailState {
@@ -35,14 +37,25 @@ internal fun MonsterDetailState.saveState(
     return this
 }
 
-internal class EmptyMonsterDetailStateRecovery : MonsterDetailStateRecovery {
-    override val state: MonsterDetailState = MonsterDetailState()
-    override val monsterIndex: String = ""
-    override val monsterIndexes: List<String> = emptyList()
+private class DefaultMonsterDetailStateRecovery : MonsterDetailStateRecovery {
+
+    override val state: MonsterDetailState = MonsterDetailState.Empty
+
+    private var _monsterIndex: String = ""
+    override val monsterIndex: String
+        get() = _monsterIndex
+
+    private var _monsterIndexes: List<String> = emptyList()
+    override val monsterIndexes: List<String>
+        get() = _monsterIndexes
 
     override fun saveState(state: MonsterDetailState) {}
 
-    override fun saveMonsterIndex(index: String) {}
+    override fun saveMonsterIndex(index: String) {
+        _monsterIndex = index
+    }
 
-    override fun saveMonsterIndexes(indexes: List<String>) {}
+    override fun saveMonsterIndexes(indexes: List<String>) {
+        _monsterIndexes = indexes
+    }
 }
