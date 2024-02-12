@@ -20,6 +20,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.app.BottomBarItem
+import br.alexandregpereira.hunter.app.BottomBarItemIcon
 import br.alexandregpereira.hunter.app.BuildConfig
 import br.alexandregpereira.hunter.folder.list.FolderListFeature
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
@@ -28,21 +29,22 @@ import br.alexandregpereira.hunter.settings.SettingsFeature
 
 @Composable
 fun BottomNavigationTransition(
-    bottomBarItemSelected: BottomBarItem,
+    bottomBarItemSelected: BottomBarItem?,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    Crossfade(targetState = bottomBarItemSelected, label = "BottomNavigationTransition") { index ->
-        when (index) {
-            BottomBarItem.COMPENDIUM -> MonsterCompendiumFeature(
+    if (bottomBarItemSelected == null) return
+    Crossfade(targetState = bottomBarItemSelected, label = "BottomNavigationTransition") { item ->
+        when (item.icon) {
+            BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature(
                 contentPadding = contentPadding,
             )
-            BottomBarItem.FOLDERS -> FolderListFeature(
+            BottomBarItemIcon.FOLDERS -> FolderListFeature(
                 contentPadding = contentPadding,
             )
-            BottomBarItem.SEARCH -> SearchScreenFeature(
+            BottomBarItemIcon.SEARCH -> SearchScreenFeature(
                 contentPadding = contentPadding,
             )
-            BottomBarItem.SETTINGS -> SettingsFeature(
+            BottomBarItemIcon.SETTINGS -> SettingsFeature(
                 versionName = BuildConfig.VERSION_NAME,
                 contentPadding = contentPadding,
             )

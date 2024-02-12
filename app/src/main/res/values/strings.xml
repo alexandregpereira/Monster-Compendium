@@ -16,8 +16,4 @@
 
 <resources>
     <string name="app_name">Compendium</string>
-    <string name="compendium">Compendium</string>
-    <string name="search">Search</string>
-    <string name="folders">Folders</string>
-    <string name="menu">Menu</string>
 </resources>

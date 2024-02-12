@@ -19,39 +19,49 @@ package br.alexandregpereira.hunter.app
 import androidx.lifecycle.SavedStateHandle
 
 data class MainViewState(
-    val bottomBarItemSelected: BottomBarItem = BottomBarItem.COMPENDIUM,
+    val bottomBarItemSelectedIndex: Int = 0,
+    val bottomBarItems: List<BottomBarItem> = emptyList(),
     internal val topContentStack: Set<String> = setOf(),
+    val showBottomBar: Boolean = false,
 ) {
 
-    val showBottomBar: Boolean = topContentStack.isEmpty()
+    val bottomBarItemSelected: BottomBarItem? = bottomBarItems.getOrNull(bottomBarItemSelectedIndex)
 }
 
 internal fun MainViewState.addTopContentStack(
     topContent: String,
 ): MainViewState {
-    return copy(topContentStack = topContentStack + topContent)
+    val topContentStack = topContentStack + topContent
+    return copy(topContentStack = topContentStack, showBottomBar = topContentStack.isEmpty())
 }
 
 internal fun MainViewState.removeTopContentStack(
     topContent: String,
 ): MainViewState {
+    val topContentStack = topContentStack.toMutableSet().apply {
+        remove(topContent)
+    }.toSet()
     return copy(
-        topContentStack = topContentStack.toMutableSet().apply {
-            remove(topContent)
-        }.toSet()
+        topContentStack = topContentStack,
+        showBottomBar = topContentStack.isEmpty(),
     )
 }
 
-enum class BottomBarItem(val iconRes: Int, val stringRes: Int) {
-    COMPENDIUM(iconRes = R.drawable.ic_book, stringRes = R.string.compendium),
-    SEARCH(iconRes = R.drawable.ic_search, stringRes = R.string.search),
-    FOLDERS(iconRes = R.drawable.ic_folder, stringRes = R.string.folders),
-    SETTINGS(iconRes = R.drawable.ic_menu, stringRes = R.string.menu)
+enum class BottomBarItemIcon(val iconRes: Int) {
+    COMPENDIUM(iconRes = R.drawable.ic_book),
+    SEARCH(iconRes = R.drawable.ic_search),
+    FOLDERS(iconRes = R.drawable.ic_folder),
+    SETTINGS(iconRes = R.drawable.ic_menu)
 }
+
+data class BottomBarItem(
+    val icon: BottomBarItemIcon = BottomBarItemIcon.COMPENDIUM,
+    val text: String = "",
+)
 
 internal fun SavedStateHandle.getState(): MainViewState {
     return MainViewState(
-        bottomBarItemSelected = BottomBarItem.entries[this["bottomBarItemSelected"] ?: 0],
+        bottomBarItemSelectedIndex = this["bottomBarItemSelectedIndex"] ?: 0,
         topContentStack = this.get<Array<String>>("topContentStack")?.toSet()
             ?: setOf(),
     )
@@ -60,7 +70,7 @@ internal fun SavedStateHandle.getState(): MainViewState {
 internal fun MainViewState.saveState(
     savedStateHandle: SavedStateHandle
 ): MainViewState {
-    savedStateHandle["bottomBarItemSelected"] = this.bottomBarItemSelected.ordinal
+    savedStateHandle["bottomBarItemSelectedIndex"] = this.bottomBarItemSelectedIndex
     savedStateHandle["topContentStack"] = this.topContentStack.toTypedArray()
     return this
 }
