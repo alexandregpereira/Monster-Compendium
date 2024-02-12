@@ -30,11 +30,9 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMo
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -52,12 +50,8 @@ class FolderPreviewStateHolder internal constructor(
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
-) : ScopeManager(), StateHolder<FolderPreviewState> {
-
-    private val _state: MutableStateFlow<FolderPreviewState> = MutableStateFlow(
-        stateRecovery.getState()
-    )
-    override val state: StateFlow<FolderPreviewState> = _state
+    private val appLocalization: AppLocalization,
+) : UiModel<FolderPreviewState>(stateRecovery.getState()) {
 
     init {
         observeEvents()
@@ -124,7 +118,7 @@ class FolderPreviewStateHolder internal constructor(
         addMonsterToFolderPreview(index)
             .flowOn(dispatcher)
             .onEach { monsters ->
-                _state.value = state.value.changeMonsters(monsters)
+                setState { changeMonsters(monsters) }
             }
             .launchIn(scope)
     }
@@ -137,12 +131,14 @@ class FolderPreviewStateHolder internal constructor(
             }
             .onEach { monsters ->
                 val showPreview = monsters.isNotEmpty()
-                _state.value = state.value.changeMonsters(monsters = monsters)
-                    .changeShowPreview(showPreview).also {
-                        if (it.monsters.isNotEmpty() || it.showPreview) {
-                            analytics.trackLoadMonstersResult(it)
-                        }
-                    }
+                setState {
+                    changeMonsters(monsters = monsters)
+                        .changeShowPreview(showPreview).also {
+                            if (it.monsters.isNotEmpty() || it.showPreview) {
+                                analytics.trackLoadMonstersResult(it)
+                            }
+                        }.copy(strings = appLocalization.getStrings())
+                }
                 dispatchFolderPreviewVisibilityChangesEvent()
             }
             .launchIn(scope)
@@ -153,8 +149,9 @@ class FolderPreviewStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach { monsters ->
                 val showPreview = monsters.isNotEmpty()
-                _state.value = state.value.changeMonsters(monsters = monsters)
-                    .changeShowPreview(showPreview)
+                setState {
+                    changeMonsters(monsters = monsters).changeShowPreview(showPreview)
+                }
                 if (showPreview.not()) {
                     dispatchFolderPreviewVisibilityChangesEvent()
                 }
@@ -173,13 +170,13 @@ class FolderPreviewStateHolder internal constructor(
     }
 
     private fun hideFolderPreview() {
-        _state.value = _state.value.changeShowPreview(show = false)
+        setState { changeShowPreview(show = false) }
         dispatchFolderPreviewVisibilityChangesEvent()
     }
 
     private fun dispatchFolderPreviewVisibilityChangesEvent() {
         folderPreviewEventManager.dispatchResult(
-            OnFolderPreviewPreviewVisibilityChanges(isShowing = _state.value.showPreview)
+            OnFolderPreviewPreviewVisibilityChanges(isShowing = state.value.showPreview)
         )
     }
 

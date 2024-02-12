@@ -49,6 +49,7 @@ val featureFolderPreviewModule = module {
             folderInsertEventDispatcher = get(),
             dispatcher = get(),
             analytics = FolderPreviewAnalytics(get()),
+            appLocalization = get(),
         )
     }
 }
