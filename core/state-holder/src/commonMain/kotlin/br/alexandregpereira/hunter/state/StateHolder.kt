@@ -27,7 +27,7 @@ abstract class UiModel<State>(
     initialState: State
 ) : StateHolder<State> {
 
-    protected val scope = CoroutineScope(
+    val scope = CoroutineScope(
         SupervisorJob() + Dispatchers.Main.immediate
     )
 

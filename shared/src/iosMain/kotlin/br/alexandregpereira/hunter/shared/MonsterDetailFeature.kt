@@ -25,5 +25,5 @@ class MonsterDetailFeature : KoinComponent {
 
     val stateHolder: MonsterDetailStateHolder by inject()
 
-    val state: CFlow<MonsterDetailState> = stateHolder.state.wrap()
+    val state: IosFlow<MonsterDetailState> = stateHolder.state.iosFlow(stateHolder.scope)
 }

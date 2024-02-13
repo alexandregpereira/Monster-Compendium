@@ -11,12 +11,10 @@ import shared
 @MainActor class MonsterDetailViewModel : ObservableObject {
     
     @Published var state: MonsterDetailState = MonsterDetailState.Companion.shared.Empty
-    private let feature: MonsterDetailFeature
-    private var stateWatcher : Closeable? = nil
+    private let feature: MonsterDetailFeature = MonsterDetailFeature()
     
     init() {
-        feature = MonsterDetailFeature()
-        stateWatcher = feature.state.collect { (state: MonsterDetailState) -> Void in
+        feature.state.collect { (state: MonsterDetailState) -> Void in
             self.state = state
         }
     }
@@ -30,6 +28,6 @@ import shared
     }
     
     deinit {
-        stateWatcher?.close()
+        feature.stateHolder.onCleared()
     }
 }

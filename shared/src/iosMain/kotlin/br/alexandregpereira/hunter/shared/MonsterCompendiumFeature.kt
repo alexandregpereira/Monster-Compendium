@@ -39,27 +39,27 @@ class MonsterCompendiumFeature : KoinComponent {
 
     init {
         // TODO Remove after iOS sync feature implementation
-        syncStateHolder.state.wrap().collect {
+        syncStateHolder.state.iosFlow(stateHolder.scope).collect {
             println("Sync state $it")
         }
     }
 
-    val state: CFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
+    val state: IosFlow<MonsterCompendiumStateIos> = stateHolder.state.map {
         it.asMonsterCompendiumStateIos()
     }.onEach { monsters ->
         // TODO Remove after iOS sync feature implementation
         if (monsters.isLoading.not() && monsters.items.isEmpty()) {
             syncEventDispatcher.startSync()
         }
-    }.wrap()
+    }.iosFlow(stateHolder.scope)
 
-    val action: CFlow<MonsterCompendiumActionIos> = stateHolder.action.map { action ->
+    val action: IosFlow<MonsterCompendiumActionIos> = stateHolder.action.map { action ->
         when (action) {
             is MonsterCompendiumAction.GoToCompendiumIndex -> MonsterCompendiumActionIos(
                 compendiumIndex = action.index
             )
         }
-    }.wrap()
+    }.iosFlow(stateHolder.scope)
 
     private fun MonsterCompendiumState.asMonsterCompendiumStateIos(): MonsterCompendiumStateIos {
         return MonsterCompendiumStateIos(
