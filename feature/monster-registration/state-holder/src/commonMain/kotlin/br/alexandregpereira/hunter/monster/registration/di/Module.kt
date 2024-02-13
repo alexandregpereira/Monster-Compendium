@@ -52,7 +52,8 @@ val monsterRegistrationStateModule = module {
             analytics = get(),
             spellCompendiumEventDispatcher = get(),
             spellDetailEventDispatcher = get(),
-            getSpell = get()
+            getSpell = get(),
+            appLocalization = get(),
         )
     }
 }

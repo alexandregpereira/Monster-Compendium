@@ -30,22 +30,7 @@ data class SpeedValue(
     val type: SpeedType,
     val valueFormatted: String,
     val index: String = "",
-) {
-
-    companion object {
-
-        fun create(
-            type: SpeedType = SpeedType.WALK,
-            valueFormatted: String = "",
-        ): SpeedValue {
-            return SpeedValue(
-                type = type,
-                valueFormatted = valueFormatted,
-                index = generateUUID()
-            )
-        }
-    }
-}
+)
 
 @ObjCName(name = "SpeedType", exact = true)
 enum class SpeedType {

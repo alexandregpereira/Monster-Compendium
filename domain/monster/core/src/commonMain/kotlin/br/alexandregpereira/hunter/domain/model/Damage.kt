@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlin.native.ObjCName
 
 @ObjCName(name = "Damage", exact = true)
@@ -24,20 +23,7 @@ data class Damage(
     val index: String,
     val type: DamageType,
     val name: String
-) {
-
-    companion object {
-
-        fun create(
-            type: DamageType = DamageType.ACID,
-            name: String = ""
-        ) = Damage(
-            index = generateUUID(),
-            type = type,
-            name = name
-        )
-    }
-}
+)
 
 @ObjCName(name = "DamageType", exact = true)
 enum class DamageType {

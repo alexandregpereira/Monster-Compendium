@@ -2,17 +2,16 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.domain.model.Skill
-import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.monster.registration.SkillState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterProficiencyForm(
     title: @Composable () -> String,
-    proficiencies: List<Skill>,
-    onChanged: (List<Skill>) -> Unit = {}
+    proficiencies: List<SkillState>,
+    onChanged: (List<SkillState>) -> Unit = {}
 ) {
     val mutableProficiencies = proficiencies.toMutableList()
     val key = "skills"
@@ -23,20 +22,20 @@ internal fun LazyListScope.MonsterProficiencyForm(
         FormItems(
             key = key,
             items = mutableProficiencies,
-            createNew = { Skill.create() },
+            createNew = { SkillState() },
             onChanged = onChanged
         ) { i, proficiency ->
-            formItem(key = "$key-name-${proficiency.index}") {
+            formItem(key = "$key-name-${proficiency.key}") {
                 AppTextField(
                     text = proficiency.name,
-                    label = stringResource(R.string.monster_registration_name),
+                    label = strings.name,
                     onValueChange = { newValue ->
                         onChanged(mutableProficiencies.changeAt(i) { copy(name = newValue) })
                     }
                 )
             }
 
-            formItem(key = "$key-modifier-${proficiency.index}") {
+            formItem(key = "$key-modifier-${proficiency.key}") {
                 AppTextField(
                     value = proficiency.modifier,
                     label = proficiency.name,

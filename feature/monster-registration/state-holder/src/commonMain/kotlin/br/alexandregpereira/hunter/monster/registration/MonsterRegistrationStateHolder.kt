@@ -1,23 +1,28 @@
 package br.alexandregpereira.hunter.monster.registration
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.domain.model.AbilityScoreType
+import br.alexandregpereira.hunter.domain.model.ConditionType
+import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.event.EventManager
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.monster.registration.mapper.asState
+import br.alexandregpereira.hunter.monster.registration.mapper.editBy
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent.Show
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
-import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,11 +45,12 @@ class MonsterRegistrationStateHolder internal constructor(
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val getSpell: GetSpellUseCase,
+    private val appLocalization: AppLocalization,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
-    MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
 
     private var originalMonster: Monster? = null
+    private var metadata: Metadata = Metadata()
 
     init {
         observeEvents()
@@ -57,18 +63,15 @@ class MonsterRegistrationStateHolder internal constructor(
         eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
     }
 
-    override fun onMonsterChanged(monster: Monster) {
-        setState {
-            copy(
-                monster = monster,
-                isSaveButtonEnabled = monster.filterEmpties() != originalMonster
-            )
-        }
+    override fun onMonsterChanged(monster: MonsterState) {
+        val newMonster = metadata.monster.editBy(monster)
+        setMetadata(newMonster)
+        updateMonster()
     }
 
     override fun onSaved() {
-        analytics.trackMonsterRegistrationSaved(state.value.monster)
-        normalizeMonster(state.value.monster)
+        analytics.trackMonsterRegistrationSaved(metadata.monster)
+        normalizeMonster(metadata.monster)
             .flatMapConcat { monster ->
                 saveMonsters(monsters = listOf(monster))
             }
@@ -88,7 +91,7 @@ class MonsterRegistrationStateHolder internal constructor(
         val showEvent = Show(
             spellIndex = spellIndex,
             selectedSpellIndexes = state.value.monster.spellcastings
-                .flatMap { it.usages }
+                .flatMap { it.spellsByGroup }
                 .flatMap { it.spells }
                 .map { it.index }
         )
@@ -108,34 +111,41 @@ class MonsterRegistrationStateHolder internal constructor(
         getSpell(newSpellIndex)
             .flowOn(dispatcher)
             .onEach { newSpell ->
-                setState {
-                    copy(
-                        monster = monster.copy(
-                            spellcastings = monster.spellcastings.map { spellcasting ->
-                                spellcasting.copy(
-                                    usages = spellcasting.usages.map { usage ->
-                                        usage.copy(
-                                            spells = usage.spells.map { spell ->
-                                                if (spell.index == currentSpellIndex) {
-                                                    spell.copy(
-                                                        index = newSpellIndex,
-                                                        name = newSpell.name,
-                                                        level = newSpell.level,
-                                                        school = SchoolOfMagic.valueOf(newSpell.school.name),
-                                                    )
-                                                } else {
-                                                    spell
-                                                }
-                                            }
-                                        )
+                val newMonster = metadata.monster.copy(
+                    spellcastings = metadata.monster.spellcastings.map { spellcasting ->
+                        spellcasting.copy(
+                            usages = spellcasting.usages.map { usage ->
+                                usage.copy(
+                                    spells = usage.spells.map { spell ->
+                                        if (spell.index == currentSpellIndex) {
+                                            spell.copy(
+                                                index = newSpellIndex,
+                                                name = newSpell.name,
+                                                level = newSpell.level,
+                                                school = SchoolOfMagic.valueOf(newSpell.school.name),
+                                            )
+                                        } else {
+                                            spell
+                                        }
                                     }
                                 )
                             }
                         )
-                    )
-                }
+                    }
+                )
+                metadata = metadata.copy(monster = newMonster)
+                updateMonster()
             }
             .launchIn(scope)
+    }
+
+    private fun updateMonster() {
+        setState {
+            copy(
+                monster = metadata.asState(appLocalization.getStrings()),
+                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster
+            )
+        }
     }
 
     private fun openSpellDetail(spellIndex: String) {
@@ -150,7 +160,13 @@ class MonsterRegistrationStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach { monster ->
                 originalMonster = monster
-                setState { copy(monster = monster, isLoading = false) }
+                setMetadata(monster)
+                setState {
+                    copy(
+                        monster = metadata.asState(appLocalization.getStrings()),
+                        isLoading = false
+                    )
+                }
             }
             .launchIn(scope)
     }
@@ -168,11 +184,47 @@ class MonsterRegistrationStateHolder internal constructor(
                     is MonsterRegistrationEvent.ShowEdit -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
-                        setState { copy(isOpen = true) }
+                        setState { copy(isOpen = true, strings = appLocalization.getStrings()) }
                         fetchMonster()
                     }
                 }
             }
             .launchIn(scope)
     }
+
+    private fun setMetadata(monster: Monster) {
+        val filteredSavingThrowTypes = AbilityScoreType.entries.filterNot { type ->
+            monster.savingThrows.any { it.type == type }
+        }
+        val filteredDamageVulnerabilityTypes = DamageType.entries.filterNot { type ->
+            monster.damageVulnerabilities.any { it.type == type }
+        }
+        val filteredDamageResistanceTypes = DamageType.entries.filterNot { type ->
+            monster.damageResistances.any { it.type == type }
+        }
+        val filteredDamageImmunityTypes = DamageType.entries.filterNot { type ->
+            monster.damageImmunities.any { it.type == type }
+        }
+        val filteredConditionTypes = ConditionType.entries.filterNot { type ->
+            monster.conditionImmunities.any { it.type == type }
+        }
+
+        metadata = metadata.copy(
+            monster = monster,
+            filteredSavingThrowTypes = filteredSavingThrowTypes,
+            filteredDamageVulnerabilityTypes = filteredDamageVulnerabilityTypes,
+            filteredDamageResistanceTypes = filteredDamageResistanceTypes,
+            filteredDamageImmunityTypes = filteredDamageImmunityTypes,
+            filteredConditionTypes = filteredConditionTypes,
+        )
+    }
 }
+
+internal data class Metadata(
+    val monster: Monster = Monster(index = ""),
+    val filteredSavingThrowTypes: List<AbilityScoreType> = emptyList(),
+    val filteredDamageVulnerabilityTypes: List<DamageType> = emptyList(),
+    val filteredDamageResistanceTypes: List<DamageType> = emptyList(),
+    val filteredDamageImmunityTypes: List<DamageType> = emptyList(),
+    val filteredConditionTypes: List<ConditionType> = emptyList(),
+)

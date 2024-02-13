@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.monster.registration.domain
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
@@ -101,10 +100,9 @@ internal fun Monster.filterEmpties(): Monster {
 }
 
 private fun List<Action>.filterDamageDices(): List<Action> {
-    val emptyDamageDice = DamageDice.create()
     return map { action ->
         action.copy(
-            damageDices = action.damageDices.filter { it != emptyDamageDice }
+            damageDices = action.damageDices.filter { it.dice.isBlank() }
         )
     }
 }
