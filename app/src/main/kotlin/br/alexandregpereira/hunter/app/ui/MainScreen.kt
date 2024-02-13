@@ -88,7 +88,8 @@ fun MainScreen(
 
         AppBottomNavigation(
             showBottomBar = state.showBottomBar,
-            bottomBarItemSelected = state.bottomBarItemSelected,
+            bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
+            bottomBarItems = state.bottomBarItems,
             contentPadding = contentPadding,
             onClick = { onEvent(BottomNavigationItemClick(item = it)) }
         )

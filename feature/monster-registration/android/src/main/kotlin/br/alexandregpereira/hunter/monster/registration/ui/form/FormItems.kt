@@ -4,17 +4,16 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.monster.registration.ui.alsoAdd
 import br.alexandregpereira.hunter.monster.registration.ui.alsoRemoveAt
+import br.alexandregpereira.hunter.monster.registration.ui.strings
 
 @Suppress("FunctionName")
 @OptIn(ExperimentalFoundationApi::class)
 internal fun <T> LazyListScope.FormItems(
     items: MutableList<T>,
-    addText: @Composable () -> String = { stringResource(R.string.monster_registration_add) },
-    removeText: @Composable () -> String = { stringResource(R.string.monster_registration_remove) },
+    addText: @Composable () -> String = { strings.add },
+    removeText: @Composable () -> String = { strings.remove },
     key: String,
     createNew: () -> T,
     onChanged: (List<T>) -> Unit = {},

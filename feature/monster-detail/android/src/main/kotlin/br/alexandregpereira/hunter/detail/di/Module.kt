@@ -16,30 +16,54 @@
 
 package br.alexandregpereira.hunter.detail.di
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.detail.MonsterDetailViewModel
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
+import br.alexandregpereira.hunter.detail.getMonsterIndex
+import br.alexandregpereira.hunter.detail.getMonsterIndexes
+import br.alexandregpereira.hunter.detail.getState
+import br.alexandregpereira.hunter.detail.saveMonsterIndex
+import br.alexandregpereira.hunter.detail.saveMonsterIndexes
+import br.alexandregpereira.hunter.detail.saveState
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateRecovery
 import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 val monsterDetailModule = monsterDetailStateModule.apply {
+    factory<MonsterDetailStateRecovery> {
+        AndroidMonsterDetailStateRecovery(
+            savedStateHandle = get(),
+        )
+    }
     viewModel {
         MonsterDetailViewModel(
-            savedStateHandle = get(),
-            getMonsterDetailUseCase = get(),
-            cloneMonster = get(),
-            changeMonstersMeasurementUnitUseCase = get(),
-            deleteMonsterUseCase = get(),
-            spellDetailEventDispatcher = get(),
-            monsterDetailEventListener = get(),
-            monsterDetailEventDispatcher = get(),
-            monsterLoreDetailEventDispatcher = get(),
-            folderInsertEventDispatcher = get(),
-            monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
-            monsterRegistrationEventListener = get<MonsterRegistrationEventListener>(),
-            dispatcher = get(),
-            analytics = MonsterDetailAnalytics(get())
+            stateHolder = get(),
         )
+    }
+}
+
+private class AndroidMonsterDetailStateRecovery(
+    private val savedStateHandle: SavedStateHandle,
+) : MonsterDetailStateRecovery {
+
+    override val state: MonsterDetailState
+        get() = savedStateHandle.getState()
+
+    override val monsterIndex: String
+        get() = savedStateHandle.getMonsterIndex()
+
+    override val monsterIndexes: List<String>
+        get() = savedStateHandle.getMonsterIndexes()
+
+    override fun saveState(state: MonsterDetailState) {
+        state.saveState(savedStateHandle)
+    }
+
+    override fun saveMonsterIndex(index: String) {
+        savedStateHandle.saveMonsterIndex(index)
+    }
+
+    override fun saveMonsterIndexes(indexes: List<String>) {
+        savedStateHandle.saveMonsterIndexes(indexes)
     }
 }

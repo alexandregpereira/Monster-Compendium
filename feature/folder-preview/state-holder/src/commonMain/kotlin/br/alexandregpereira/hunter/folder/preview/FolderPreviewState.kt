@@ -20,7 +20,8 @@ import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPrev
 
 data class FolderPreviewState(
     val showPreview: Boolean = false,
-    val monsters: List<MonsterFolderPreview> = emptyList()
+    val monsters: List<MonsterFolderPreview> = emptyList(),
+    val strings: FolderPreviewStrings = FolderPreviewEmptyStrings(),
 )
 
 internal fun FolderPreviewState.changeMonsters(

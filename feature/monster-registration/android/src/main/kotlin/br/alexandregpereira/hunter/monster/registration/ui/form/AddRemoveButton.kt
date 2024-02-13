@@ -19,18 +19,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.registration.R
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun AddRemoveButtons(
     modifier: Modifier = Modifier,
-    addText: String = stringResource(R.string.monster_registration_add_new),
+    addText: String,
     removeText: String = "",
     onAdd: () -> Unit = {},
     onRemove: () -> Unit = {},
@@ -72,7 +70,7 @@ private fun AnimatedRemoveButton(
 @Composable
 internal fun AddButton(
     modifier: Modifier = Modifier,
-    text: String = stringResource(R.string.monster_registration_add_new),
+    text: String,
     onClick: () -> Unit = {},
 ) = ItemButton(
     icon = Icons.Default.Add,

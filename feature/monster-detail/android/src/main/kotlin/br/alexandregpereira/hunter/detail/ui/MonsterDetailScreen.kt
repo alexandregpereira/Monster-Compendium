@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -62,13 +59,18 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.MonsterType.CELESTIAL
+import br.alexandregpereira.hunter.monster.detail.ColorState
+import br.alexandregpereira.hunter.monster.detail.MonsterImageState
+import br.alexandregpereira.hunter.monster.detail.MonsterState
+import br.alexandregpereira.hunter.monster.detail.SpeedState
+import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
@@ -83,7 +85,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MonsterDetailScreen(
     monsters: List<MonsterState>,
@@ -232,7 +233,6 @@ private fun OnMonsterChanged(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterImageCompose(
     monsters: List<MonsterState>,
@@ -245,7 +245,7 @@ private fun MonsterImageCompose(
             .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
     ) {
         MonsterImages(
-            images = monsters.map { ImageState(it.imageState.url, it.name) },
+            images = monsters.map { ImageState(it.imageUrl, it.name) },
             pagerState = pagerState,
             height = getImageHeightInDp(),
             shape = RectangleShape,
@@ -276,8 +276,8 @@ private fun Modifier.monsterImageBackground(
     val transitionData = getTransitionData(monsters, getPageOffset)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    val startColor = transitionData.data.imageState.backgroundColor.getColor(isSystemInDarkTheme)
-    val endColor = transitionData.nextData.imageState.backgroundColor.getColor(isSystemInDarkTheme)
+    val startColor = transitionData.data.getBackgroundColor(isSystemInDarkTheme)
+    val endColor = transitionData.nextData.getBackgroundColor(isSystemInDarkTheme)
 
     val backgroundColor = lerp(
         start = startColor.toColor(),
@@ -289,7 +289,6 @@ private fun Modifier.monsterImageBackground(
 }
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterTopBar(
     monsters: List<MonsterState>,
@@ -319,7 +318,7 @@ private fun MonsterTopBar(
                 val composableScope = rememberCoroutineScope()
                 AppBarIcon(
                     Icons.Filled.KeyboardArrowUp,
-                    contentDescription = stringResource(R.string.monster_detail_go_to_top),
+                    contentDescription = strings.goToTop,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
@@ -355,7 +354,6 @@ private fun MonsterTopBar(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChallengeRatingCompose(
     monsters: List<MonsterState>,
@@ -365,8 +363,8 @@ private fun ChallengeRatingCompose(
 ) {
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         ChallengeRatingCircle(
-            challengeRating = data.imageState.challengeRating,
-            xp = data.imageState.xp,
+            challengeRating = data.challengeRating,
+            xp = data.xp,
             size = 62.dp,
             fontSize = 18.sp,
             xpFontSize = 12.sp,
@@ -375,7 +373,6 @@ private fun ChallengeRatingCompose(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MonsterTypeIcon(
     monsters: List<MonsterState>,
@@ -384,9 +381,9 @@ private fun MonsterTypeIcon(
 ) {
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
-            iconRes = data.imageState.type.iconRes,
+            iconRes = data.type.toIconRes(),
             iconSize = 32.dp,
-            tint = data.imageState.backgroundColor.getColor(isSystemInDarkTheme()).getTintColor()
+            tint = data.getBackgroundColor(isSystemInDarkTheme()).getTintColor()
         )
     }
 }
@@ -401,7 +398,7 @@ private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
 private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
 private fun MonsterDetailPreview() = Window {
@@ -412,20 +409,15 @@ private fun MonsterDetailPreview() = Window {
                 name = "Monster of the monsters",
                 imageState = MonsterImageState(
                     url = "",
-                    type = MonsterTypeState.CELESTIAL,
+                    type = CELESTIAL,
                     challengeRating = 0.0f,
                     xp = "100 XP",
                     backgroundColor = ColorState(
                         light = "#ffe2e2",
                         dark = "#ffe2e2"
                     ),
-                    isHorizontal = false
                 ),
-                subtype = null,
-                group = null,
                 subtitle = "This is the subtitle",
-                size = "Large",
-                alignment = "Good",
                 stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,
@@ -451,7 +443,6 @@ private fun MonsterDetailPreview() = Window {
 }
 
 @ExperimentalAnimationApi
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun MonsterTopBarPreview() = Window {
@@ -462,20 +453,15 @@ private fun MonsterTopBarPreview() = Window {
                 name = "Monster of the monsters",
                 imageState = MonsterImageState(
                     url = "",
-                    type = MonsterTypeState.CELESTIAL,
+                    type = CELESTIAL,
                     challengeRating = 0.0f,
                     xp = "100 XP",
                     backgroundColor = ColorState(
                         light = "#ffe2e2",
                         dark = "#ffe2e2"
                     ),
-                    isHorizontal = false
                 ),
-                subtype = null,
-                group = null,
                 subtitle = "This is the subtitle",
-                size = "Large",
-                alignment = "Good",
                 stats = StatsState(
                     armorClass = 0,
                     hitPoints = 0,

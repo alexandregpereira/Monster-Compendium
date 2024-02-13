@@ -19,30 +19,19 @@ package br.alexandregpereira.hunter.monster.content
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 
 internal class MonsterContentManagerViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val stateHolder: MonsterContentManagerStateHolder,
-) : ViewModel() {
-
-    private val _state = MutableStateFlow(savedStateHandle.getState())
-    val state: StateFlow<MonsterContentManagerViewState> = _state
+) : ViewModel(), StateHolder<MonsterContentManagerState> by stateHolder{
 
     init {
         stateHolder.state
-            .map { stateHolderState ->
-                MonsterContentManagerViewState(
-                    monsterContents = stateHolderState.monsterContents.map { it.asState() },
-                    isOpen = stateHolderState.isOpen
-                )
-            }
-            .onEach {
-                _state.value = it.saveState(savedStateHandle)
+            .map {
+                it.saveState(savedStateHandle)
             }
             .launchIn(viewModelScope)
     }

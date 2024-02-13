@@ -24,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
@@ -44,7 +44,7 @@ private fun StatsGrid(
     stats: StatsState,
 ) = Grid {
     IconInfo(
-        title = stringResource(R.string.monster_detail_armor_class),
+        title = strings.armorClass,
         painter = painterResource(id = R.drawable.ic_shield),
         iconColor = Color.Blue,
         iconText = stats.armorClass.toString(),

@@ -19,8 +19,7 @@ package br.alexandregpereira.hunter.settings
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.LocalContext
-import br.alexandregpereira.hunter.settings.ui.SettingsScreen
+import br.alexandregpereira.hunter.settings.ui.MenuScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -29,7 +28,7 @@ fun SettingsFeature(
     contentPadding: PaddingValues,
 ) {
     val viewModel: SettingsViewModel = koinViewModel()
-    SettingsScreen(
+    MenuScreen(
         state = viewModel.state.collectAsState().value,
         versionName = versionName,
         contentPadding = contentPadding,

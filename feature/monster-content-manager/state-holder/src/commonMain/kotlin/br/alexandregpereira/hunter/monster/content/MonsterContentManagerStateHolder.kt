@@ -19,16 +19,14 @@ package br.alexandregpereira.hunter.monster.content
 import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewEventManager
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -45,10 +43,9 @@ class MonsterContentManagerStateHolder internal constructor(
     private val syncEventDispatcher: SyncEventDispatcher,
     private val analytics: MonsterContentManagerAnalytics,
     private val monsterContentPreviewEventManager: MonsterContentPreviewEventManager,
-) : ScopeManager(), StateHolder<MonsterContentManagerState> {
+    private val appLocalization: AppLocalization,
+) : UiModel<MonsterContentManagerState>(stateRecovery.getState()) {
 
-    private val _state = MutableStateFlow(stateRecovery.getState())
-    override val state: StateFlow<MonsterContentManagerState> = _state
     private var hasChanges: Boolean = false
 
     init {
@@ -64,7 +61,10 @@ class MonsterContentManagerStateHolder internal constructor(
             .onEach { alternativeSources ->
                 analytics.trackMonsterContentLoaded(alternativeSources)
                 setState {
-                    copy(monsterContents = alternativeSources)
+                    copy(
+                        monsterContents = alternativeSources.map { it.asState() },
+                        strings = appLocalization.getStrings(),
+                    )
                 }
             }
             .catch {
@@ -125,9 +125,5 @@ class MonsterContentManagerStateHolder internal constructor(
             syncEventDispatcher.startSync()
         }
         eventDispatcher.dispatchEvent(MonsterContentManagerEvent.Hide)
-    }
-
-    private fun setState(block: MonsterContentManagerState.() -> MonsterContentManagerState) {
-        _state.value = state.value.block()
     }
 }

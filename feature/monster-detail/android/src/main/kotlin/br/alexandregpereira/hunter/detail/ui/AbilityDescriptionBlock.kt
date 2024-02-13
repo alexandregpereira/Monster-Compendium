@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
+import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable

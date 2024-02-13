@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.folder.insert.MonsterPreviewState
 import br.alexandregpereira.hunter.ui.compose.CircleImage
 
 @OptIn(ExperimentalFoundationApi::class)

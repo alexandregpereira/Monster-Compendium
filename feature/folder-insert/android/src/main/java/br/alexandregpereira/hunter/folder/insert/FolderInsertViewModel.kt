@@ -31,19 +31,12 @@ internal class FolderInsertViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
-    val state: StateFlow<FolderInsertViewState> = _state
+    val state: StateFlow<FolderInsertState> = _state
 
     init {
         stateHolder.state
             .map {
-                FolderInsertViewState(
-                    isOpen = it.isOpen,
-                    folderName = it.folderName,
-                    folderIndexSelected = it.folderIndexSelected,
-                    monsterIndexes =it.monsterIndexes,
-                    folders = it.folders,
-                    monsterPreviews = it.monsterPreviews.asState()
-                ).saveState(savedStateHandle)
+                it.saveState(savedStateHandle)
             }
             .onEach { _state.value = it }
             .launchIn(viewModelScope)
@@ -63,5 +56,10 @@ internal class FolderInsertViewModel(
 
     fun onClose() {
         stateHolder.onClose()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
     }
 }

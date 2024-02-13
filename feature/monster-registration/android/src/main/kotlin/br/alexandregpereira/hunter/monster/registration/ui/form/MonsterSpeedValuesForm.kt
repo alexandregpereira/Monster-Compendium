@@ -1,82 +1,56 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.SpeedType
-import br.alexandregpereira.hunter.domain.model.SpeedValue
-import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.monster.registration.SpeedValueState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
+import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSpeedValuesForm(
-    monster: Monster,
-    onMonsterChanged: (Monster) -> Unit = {}
+    speedValueStates: List<SpeedValueState>,
+    onMonsterChanged: (List<SpeedValueState>) -> Unit = {}
 ) {
-    val speedValues = monster.speed.values
-    val types = speedValues.map { it.type }
-    val options = SpeedType.entries.filterNot { types.contains(it) }
-    val newSpeedValues = speedValues.toMutableList()
+    val newSpeedValues = speedValueStates.toMutableList()
     val key = "speed"
 
     FormLazy(
         key = key,
-        title = { stringResource(R.string.monster_registration_speed) },
+        title = { strings.speed },
     ) {
         FormItems(
             key = key,
             items = newSpeedValues,
-            createNew = { SpeedValue.create() },
+            createNew = { SpeedValueState() },
             onChanged = {
-                onMonsterChanged(
-                    monster.copy(
-                        speed = monster.speed.copy(
-                            values = it
-                        )
-                    )
-                )
+                onMonsterChanged(it)
             }
         ) { index, speedValue ->
-            formItem(key = "$key-name-${speedValue.index}") {
-                val optionsStrings = options.map { it.toTypeState().getString() }
-                val name = speedValue.type.toTypeState().getString()
+            formItem(key = "$key-name-${speedValue.key}") {
                 PickerField(
-                    value = name,
-                    label = stringResource(R.string.monster_registration_speed_type),
-                    options = optionsStrings,
+                    value = speedValue.type,
+                    label = strings.speedType,
+                    options = speedValue.options,
                     onValueChange = { optionIndex ->
                         onMonsterChanged(
-                            monster.copy(
-                                speed = monster.speed.copy(
-                                    values = newSpeedValues.changeAt(index) {
-                                        copy(
-                                            type = options[optionIndex],
-                                        )
-                                    }
-                                )
-                            )
+                            newSpeedValues.changeAt(index) {
+                                copy(typeIndex = optionIndex)
+                            }
                         )
                     }
                 )
             }
 
-            formItem(key = "$key-value-${speedValue.index}") {
-                val name = speedValue.type.toTypeState().getString()
+            formItem(key = "$key-value-${speedValue.key}") {
                 AppTextField(
-                    text = speedValue.valueFormatted,
-                    label = name,
+                    text = speedValue.value,
+                    label = speedValue.type,
                     onValueChange = { newValue ->
                         onMonsterChanged(
-                            monster.copy(
-                                speed = monster.speed.copy(
-                                    values = newSpeedValues.changeAt(index) {
-                                        copy(valueFormatted = newValue)
-                                    }
-                                )
-                            )
+                            newSpeedValues.changeAt(index) {
+                                copy(value = newValue)
+                            }
                         )
                     }
                 )
@@ -84,16 +58,3 @@ internal fun LazyListScope.MonsterSpeedValuesForm(
         }
     }
 }
-
-private enum class SpeedTypeState(val stringRes: Int) {
-    BURROW(R.string.monster_registration_speed_type_burrow),
-    CLIMB(R.string.monster_registration_speed_type_climb),
-    FLY(R.string.monster_registration_speed_type_fly),
-    WALK(R.string.monster_registration_speed_type_walk),
-    SWIM(R.string.monster_registration_speed_type_swim),
-}
-
-private fun SpeedType.toTypeState() = SpeedTypeState.valueOf(name)
-
-@Composable
-private fun SpeedTypeState.getString() = stringResource(stringRes)

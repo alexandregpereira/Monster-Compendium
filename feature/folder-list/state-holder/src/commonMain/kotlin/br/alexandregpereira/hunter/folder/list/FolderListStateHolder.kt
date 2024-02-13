@@ -23,13 +23,11 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatch
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
@@ -40,7 +38,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class FolderListStateHolder internal constructor(
-    stateRecovery: FolderListStateRecovery,
     private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val removeMonsterFolders: RemoveMonsterFoldersUseCase,
     private val folderInsertResultListener: FolderInsertResultListener,
@@ -49,12 +46,11 @@ class FolderListStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val syncEventListener: SyncEventListener,
     private val analytics: FolderListAnalytics,
-) : ScopeManager(), StateHolder<FolderListState> {
+    private val appLocalization: AppLocalization,
+) : UiModel<FolderListState>(FolderListState()) {
 
-    private val _state: MutableStateFlow<FolderListState> = MutableStateFlow(
-        stateRecovery.getState()
-    )
-    override val state: StateFlow<FolderListState> = _state
+    private val strings: FolderListStrings
+        get() = getFolderListStrings(appLocalization.getLanguage())
 
     init {
         observeFolderInsertResults()
@@ -75,8 +71,11 @@ class FolderListStateHolder internal constructor(
         analytics.trackItemSelectionClose()
         setState {
             copy(
-                isItemSelectionOpen = false
-            ).changeSelectedFolders(folders)
+                folders = folders.map {
+                    it.copy(selected = false)
+                },
+                isItemSelectionOpen = false,
+            )
         }
         folderListEventManager.dispatchResult(OnItemSelectionVisibilityChanges(isShowing = false))
     }
@@ -97,20 +96,21 @@ class FolderListStateHolder internal constructor(
     fun onItemSelect(folderName: String) {
         analytics.trackItemSelect(folderName)
         setState {
-            val (newItemSelection, added) = itemSelection.toMutableSet().let {
-                if (isItemSelectionOpen.not()) it.clear()
-
+            val newItemSelection = itemSelection.toMutableSet().also {
                 val added = it.add(folderName)
-                if (added.not() && it.size > 1) {
+                if (added.not()) {
                     it.remove(folderName)
                 }
-                it to added
             }
-            val isItemSelectionOpen = added || newItemSelection != setOf(folderName)
+            val isItemSelectionOpen = newItemSelection.isNotEmpty()
+            val itemSelectionCount = if (isItemSelectionOpen) newItemSelection.size else itemSelectionCount
             copy(
-                itemSelection = newItemSelection,
+                folders = folders.map {
+                    it.copy(selected = newItemSelection.contains(it.folderName))
+                },
                 isItemSelectionOpen = isItemSelectionOpen,
-            ).changeSelectedFolders(folders)
+                itemSelectionCount = itemSelectionCount,
+            )
         }
         folderListEventManager.dispatchResult(
             OnItemSelectionVisibilityChanges(isShowing = state.value.isItemSelectionOpen)
@@ -126,7 +126,12 @@ class FolderListStateHolder internal constructor(
             }
             .onEach { folders ->
                 analytics.trackFoldersLoaded(folders)
-                setState { changeSelectedFolders(folders) }
+                setState {
+                    copy(
+                        folders = folders.asState(),
+                        strings = this@FolderListStateHolder.strings
+                    )
+                }
             }
             .launchIn(scope)
     }
@@ -146,9 +151,5 @@ class FolderListStateHolder internal constructor(
         syncEventListener.collectSyncFinishedEvents {
             loadMonsterFolders()
         }.launchIn(scope)
-    }
-
-    private fun setState(block: FolderListState.() -> FolderListState) {
-        _state.value = state.value.block()
     }
 }

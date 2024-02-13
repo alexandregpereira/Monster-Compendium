@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,11 +32,9 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.folder.list.R
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
@@ -45,7 +42,8 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun BoxScope.ItemSelection(
-    itemSelectionCount: Int,
+    itemSelectionText: String,
+    deleteText: String,
     modifier: Modifier = Modifier,
     isOpen: Boolean = true,
     contentBottomPadding: Dp = 0.dp,
@@ -66,15 +64,12 @@ internal fun BoxScope.ItemSelection(
                 .verticalScroll(state = rememberScrollState())
         ) {
             Column(Modifier.padding(16.dp)) {
-                val titleRes = if (itemSelectionCount == 1) {
-                    R.string.folder_list_item_selected
-                } else R.string.folder_list_items_selected
                 ScreenHeader(
-                    title = stringResource(titleRes, itemSelectionCount),
+                    title = itemSelectionText,
                 )
 
                 AppButton(
-                    text = stringResource(R.string.folder_list_delete),
+                    text = deleteText,
                     modifier = Modifier.padding(top = 24.dp),
                     onClick = onDeleteClick
                 )
@@ -90,7 +85,8 @@ internal fun BoxScope.ItemSelection(
 private fun ItemSelectionPreview() = HunterTheme {
     Box(Modifier.fillMaxSize()) {
         ItemSelection(
-            itemSelectionCount = 2,
+            itemSelectionText = "Item Selection",
+            deleteText = "Delete",
         )
     }
 }

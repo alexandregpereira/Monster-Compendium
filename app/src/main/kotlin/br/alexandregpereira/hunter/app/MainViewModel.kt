@@ -19,6 +19,10 @@ package br.alexandregpereira.hunter.app
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.alexandregpereira.hunter.app.BottomBarItemIcon.COMPENDIUM
+import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
+import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
+import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
 import br.alexandregpereira.hunter.event.folder.detail.collectOnVisibilityChanges
@@ -31,10 +35,11 @@ import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChang
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.AddTopContent
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.RemoveTopContent
 import br.alexandregpereira.hunter.event.systembar.BottomBarEventManager
-import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
+import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
 import br.alexandregpereira.hunter.monster.content.event.collectOnVisibilityChanges
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +55,7 @@ class MainViewModel(
     private val monsterContentManagerEventListener: MonsterContentManagerEventListener,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val bottomBarEventManager: BottomBarEventManager,
+    private val appLocalization: AppReactiveLocalization,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(savedStateHandle.getState())
@@ -61,6 +67,26 @@ class MainViewModel(
         observeFolderDetailResults()
         observeFolderListResults()
         observeMonsterContentManagerEvents()
+        observeLanguageChanges()
+    }
+
+    private fun observeLanguageChanges() {
+        appLocalization.languageFlow.onEach { language ->
+            setState {
+                val strings = language.getStrings()
+                copy(
+                    bottomBarItems = BottomBarItemIcon.entries.map {
+                        when (it) {
+                            COMPENDIUM -> BottomBarItem(icon = it, text = strings.compendium)
+                            SEARCH -> BottomBarItem(icon = it, text = strings.search)
+                            FOLDERS -> BottomBarItem(icon = it, text = strings.folders)
+                            SETTINGS -> BottomBarItem(icon = it, text = strings.menu)
+                        }
+                    },
+                    showBottomBar = topContentStack.isEmpty()
+                )
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun observeBottomBarEvents() {
@@ -109,8 +135,8 @@ class MainViewModel(
     fun onEvent(event: MainViewEvent) {
         when (event) {
             is BottomNavigationItemClick -> {
-                setState { copy(bottomBarItemSelected = event.item) }
-                dispatchFolderPreviewEvent(show = event.item != BottomBarItem.SETTINGS)
+                setState { copy(bottomBarItemSelectedIndex = bottomBarItems.indexOf(event.item)) }
+                dispatchFolderPreviewEvent(show = event.item.icon != SETTINGS)
             }
         }
     }

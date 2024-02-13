@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationDefaults
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
@@ -56,7 +55,6 @@ import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
@@ -70,7 +68,8 @@ import kotlin.math.roundToInt
 @Composable
 fun BoxScope.AppBottomNavigation(
     showBottomBar: Boolean,
-    bottomBarItemSelected: BottomBarItem,
+    bottomBarItemSelectedIndex: Int,
+    bottomBarItems: List<BottomBarItem>,
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (BottomBarItem) -> Unit = {}
 ) = HunterTheme {
@@ -92,13 +91,13 @@ fun BoxScope.AppBottomNavigation(
                 modifier = Modifier.height(BottomNavigationHeight + paddingBottom)
                     .padding(bottom = paddingBottom)
             ) {
-                BottomBarItem.entries.forEach { bottomBarItem ->
+                bottomBarItems.forEachIndexed { i, bottomBarItem ->
                     AppBottomNavigationItem(
-                        totalItems = BottomBarItem.entries.size,
-                        indexSelected = bottomBarItemSelected.ordinal,
-                        currentIndex = bottomBarItem.ordinal,
-                        iconRes = bottomBarItem.iconRes,
-                        nameRes = bottomBarItem.stringRes,
+                        totalItems = bottomBarItems.size,
+                        indexSelected = bottomBarItemSelectedIndex,
+                        currentIndex = i,
+                        iconRes = bottomBarItem.icon.iconRes,
+                        name = bottomBarItem.text,
                         onClick = { onClick(bottomBarItem) }
                     )
                 }
@@ -113,7 +112,7 @@ private fun RowScope.AppBottomNavigationItem(
     indexSelected: Int,
     currentIndex: Int,
     iconRes: Int,
-    nameRes: Int,
+    name: String,
     onClick: () -> Unit
 ) {
     AppBottomNavigationItem(
@@ -123,11 +122,11 @@ private fun RowScope.AppBottomNavigationItem(
         icon = {
             Icon(
                 painter = painterResource(iconRes),
-                contentDescription = stringResource(nameRes)
+                contentDescription = name
             )
         },
         label = {
-            Text(text = stringResource(nameRes), maxLines = 1)
+            Text(text = name, maxLines = 1)
         },
     )
 }

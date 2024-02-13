@@ -18,15 +18,14 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 
 @Composable
 fun ReactionBlock(
     reactions: List<AbilityDescriptionState>,
     modifier: Modifier = Modifier
 ) = AbilityDescriptionBlock(
-    title = stringResource(R.string.monster_detail_reactions),
+    title = strings.reactions,
     abilityDescriptions = reactions,
     modifier = modifier
 )

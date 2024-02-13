@@ -47,16 +47,4 @@ data class DamageDice(
     val dice: String,
     val damage: Damage,
     val index: String = generateUUID(),
-) {
-
-    companion object {
-
-        fun create(
-            dice: String = "",
-            damage: Damage = Damage.create()
-        ) = DamageDice(
-            dice = dice,
-            damage = damage
-        )
-    }
-}
+)

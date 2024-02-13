@@ -16,13 +16,20 @@
 
 package br.alexandregpereira.hunter.folder.insert
 
-import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-
 data class FolderInsertState(
     val isOpen: Boolean = false,
     val folderName: String = "",
     val folderIndexSelected: Int = -1,
     val monsterIndexes: List<String> = emptyList(),
     val folders: List<Pair<String, Int>> = emptyList(),
-    val monsterPreviews: List<MonsterPreviewFolder> = emptyList()
+    val monsterPreviews: List<MonsterPreviewState> = emptyList(),
+    val strings: FolderInsertStrings = FolderInsertEmptyStrings(),
+)
+
+data class MonsterPreviewState(
+    val index: String,
+    val name: String = "",
+    val imageUrl: String = "",
+    val backgroundColorLight: String,
+    val backgroundColorDark: String
 )

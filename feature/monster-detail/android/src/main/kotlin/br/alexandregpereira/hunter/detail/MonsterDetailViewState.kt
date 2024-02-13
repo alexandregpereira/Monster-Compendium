@@ -17,29 +17,34 @@
 package br.alexandregpereira.hunter.detail
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.detail.ui.MonsterState
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 
-data class MonsterDetailViewState(
-    val initialMonsterListPositionIndex: Int = 0,
-    val monsters: List<MonsterState> = emptyList(),
-    val showOptions: Boolean = false,
-    val options: List<MonsterDetailOptionState> = emptyList(),
-    val showDetail: Boolean = false,
-    val isLoading: Boolean = true,
-    val showCloneForm: Boolean = false,
-    val monsterCloneName: String = "",
-    val showDeleteConfirmation: Boolean = false,
-)
-
-fun SavedStateHandle.getState(): MonsterDetailViewState {
-    return MonsterDetailViewState(
+fun SavedStateHandle.getState(): MonsterDetailState {
+    return MonsterDetailState(
         showDetail = this["showDetail"] ?: false,
         showCloneForm = this["showCloneForm"] ?: false,
         monsterCloneName = this["monsterCloneName"] ?: "",
     )
 }
 
-fun MonsterDetailViewState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailViewState {
+internal fun SavedStateHandle.getMonsterIndex(): String {
+    return this["index"] ?: ""
+}
+
+internal fun SavedStateHandle.saveMonsterIndex(index: String) {
+    this["index"] = index
+}
+
+internal fun SavedStateHandle.getMonsterIndexes(): List<String> {
+    return this["indexes"] ?: emptyList()
+}
+
+
+internal fun SavedStateHandle.saveMonsterIndexes(indexes: List<String>) {
+    this["indexes"] = indexes
+}
+
+fun MonsterDetailState.saveState(savedStateHandle: SavedStateHandle): MonsterDetailState {
     savedStateHandle["showDetail"] = showDetail
     savedStateHandle["showCloneForm"] = showCloneForm
     savedStateHandle["monsterCloneName"] = monsterCloneName

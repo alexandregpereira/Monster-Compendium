@@ -23,6 +23,6 @@ import org.koin.dsl.module
 val monsterRegistrationModule = listOf(monsterRegistrationStateModule) + module {
 
     viewModel {
-        MonsterRegistrationViewModel(get(), get())
+        MonsterRegistrationViewModel(get())
     }
 }

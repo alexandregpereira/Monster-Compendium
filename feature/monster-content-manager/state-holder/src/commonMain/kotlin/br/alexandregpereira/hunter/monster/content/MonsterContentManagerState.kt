@@ -16,11 +16,20 @@
 
 package br.alexandregpereira.hunter.monster.content
 
-import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-
 data class MonsterContentManagerState(
-    val monsterContents: List<AlternativeSource> = emptyList(),
+    val monsterContents: List<MonsterContentState> = emptyList(),
     val isOpen: Boolean = false,
+    val strings: MonsterContentManagerStrings = MonsterContentManagerEmptyStrings(),
+)
+
+data class MonsterContentState(
+    val acronym: String,
+    val name: String,
+    val originalName: String?,
+    val totalMonsters: Int,
+    val summary: String,
+    val coverImageUrl: String,
+    val isEnabled: Boolean,
 )
 
 internal fun MonsterContentManagerState.hide(): MonsterContentManagerState {

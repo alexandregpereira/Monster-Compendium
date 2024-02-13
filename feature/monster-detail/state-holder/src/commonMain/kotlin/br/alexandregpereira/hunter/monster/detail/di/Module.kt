@@ -16,14 +16,15 @@
 
 package br.alexandregpereira.hunter.monster.detail.di
 
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
-import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateRecovery
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import org.koin.dsl.module
@@ -37,19 +38,21 @@ val monsterDetailStateModule = module {
     factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
     factory {
         MonsterDetailStateHolder(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
+            getMonsterDetailUseCase = get(),
+            cloneMonster = get(),
+            changeMonstersMeasurementUnitUseCase = get(),
+            deleteMonster = get(),
+            spellDetailEventDispatcher = get(),
+            monsterDetailEventListener = get(),
+            monsterDetailEventDispatcher = get(),
+            monsterLoreDetailEventDispatcher = get(),
+            folderInsertEventDispatcher = get(),
             monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
             monsterRegistrationEventListener = get<MonsterRegistrationEventListener>(),
-            get(),
+            dispatcher = get(),
             analytics = MonsterDetailAnalytics(get()),
+            appLocalization = get(),
+            stateRecovery = getOrNull() ?: MonsterDetailStateRecovery(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

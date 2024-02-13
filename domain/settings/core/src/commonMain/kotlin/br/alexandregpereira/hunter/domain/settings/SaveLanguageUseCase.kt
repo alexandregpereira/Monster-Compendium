@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.localization.MutableAppLocalization
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class SaveLanguageUseCase(
@@ -31,8 +32,8 @@ class SaveLanguageUseCase(
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(lang: String): Flow<Unit> {
         if (IsLanguageSupported(lang).not()) return flowOf(Unit)
-        return flowOf {
-            mutableAppLanguage.setLanguage(lang)
+        return flow {
+            emit(mutableAppLanguage.setLanguage(lang))
         }.flatMapLatest {
             settingsRepository.saveSettings(mapOf(SETTING_LANGUAGE_KEY to lang))
         }

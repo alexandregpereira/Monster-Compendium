@@ -20,8 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import br.alexandregpereira.hunter.search.R
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
@@ -30,7 +28,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 @Composable
 fun SearchGrid(
     monsterRows: List<MonsterCardState>,
-    totalResults: Int,
+    totalResults: String,
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
@@ -40,9 +38,7 @@ fun SearchGrid(
 ) {
     val monstersBySection = listOf(
         Title(
-            value = if (totalResults == 1) {
-                stringResource(R.string.search_search_result, totalResults)
-            } else stringResource(R.string.search_search_results, totalResults),
+            value = totalResults,
             id = "results",
         )
     ) + monsterRows.map {

@@ -21,4 +21,17 @@ internal data class SettingsViewState(
     val alternativeSourceBaseUrl: String = "",
     val saveButtonEnabled: Boolean = true,
     val advancedSettingsOpened: Boolean = false,
+    val settingsOpened: Boolean = false,
+    val settingsState: SettingsState = SettingsState(),
+    val strings: SettingsStrings = SettingsEmptyStrings(),
+)
+
+internal data class SettingsState(
+    val language: SettingsLanguageState = SettingsLanguageState(),
+    val languages: List<SettingsLanguageState> = emptyList(),
+)
+
+internal data class SettingsLanguageState(
+    val code: String = "",
+    val value: String = "",
 )

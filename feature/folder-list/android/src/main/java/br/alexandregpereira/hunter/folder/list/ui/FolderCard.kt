@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.folder.list.FolderCardImageState
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.animatePressed
@@ -221,14 +222,6 @@ private fun MeasureScope.placeImages(
 
     firstPlaceable.placeRelative(x = firstImagePadding, y = firstImagePadding)
 }
-
-data class FolderCardImageState(
-    val url: String = "",
-    val contentDescription: String = "",
-    val isHorizontalImage: Boolean = false,
-    val backgroundColorLight: String = "",
-    val backgroundColorDark: String = backgroundColorLight,
-)
 
 @Preview
 @Composable

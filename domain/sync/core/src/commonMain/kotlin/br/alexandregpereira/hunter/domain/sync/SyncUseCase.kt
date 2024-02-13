@@ -46,7 +46,6 @@ class SyncUseCase internal constructor(
     private val saveLanguageUseCase: SaveLanguageUseCase,
     private val getContentVersionUseCase: GetContentVersionUseCase,
     private val saveContentVersionUseCase: SaveContentVersionUseCase,
-    private val deviceLanguageRepository: DeviceLanguageRepository
 ) {
 
     private val contentVersion = 3
@@ -83,13 +82,8 @@ class SyncUseCase internal constructor(
     }
 
     private fun isLangSyncScenario(): Flow<Pair<Boolean, String>> {
-        return getLanguageUseCase().flatMapLatest { lang ->
-            val deviceLang = deviceLanguageRepository.getLanguage().lowercase()
-            if (deviceLang != lang && IsLanguageSupported(deviceLang)) {
-                saveLanguageUseCase(deviceLang).map {
-                    true to lang
-                }
-            } else flowOf(false to lang)
+        return getLanguageUseCase().map { lang ->
+            false to lang
         }
     }
 

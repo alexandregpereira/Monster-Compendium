@@ -25,12 +25,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.folder.preview.FolderPreviewViewState
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun FolderPreviewScreen(
-    state: FolderPreviewViewState,
+    state: FolderPreviewState,
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
@@ -44,6 +44,7 @@ internal fun FolderPreviewScreen(
         Box(Modifier.fillMaxSize()) {
             FolderPreview(
                 monsters = state.monsters,
+                saveButtonText = state.strings.save,
                 contentPadding = contentPadding,
                 onClick = onClick,
                 onLongClick = onLongClick,

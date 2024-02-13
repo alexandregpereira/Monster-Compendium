@@ -43,4 +43,9 @@ internal class SyncViewModel(
     fun onTryAgain() {
         stateHolder.onTryAgain()
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
+    }
 }

@@ -26,11 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.monster.detail.DamageState
 import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
@@ -41,7 +41,7 @@ private fun DamageBlock(
 ) = Block(title = title, modifier = modifier) {
 
     DamageGrid(damages)
-    damages.filter { it.type == DamageTypeState.OTHER }.forEach { damage ->
+    damages.filter { it.type == DamageType.OTHER }.forEach { damage ->
         Text(
             text = damage.name,
             fontWeight = FontWeight.Light,
@@ -55,19 +55,19 @@ private fun DamageBlock(
 fun DamageVulnerabilitiesBlock(
     damages: List<DamageState>,
     modifier: Modifier = Modifier
-) = DamageBlock(damages, title = stringResource(R.string.monster_detail_vulnerabilities), modifier)
+) = DamageBlock(damages, title = strings.vulnerabilities, modifier)
 
 @Composable
 fun DamageResistancesBlock(
     damages: List<DamageState>,
     modifier: Modifier = Modifier
-) = DamageBlock(damages, title = stringResource(R.string.monster_detail_resistances), modifier)
+) = DamageBlock(damages, title = strings.resistances, modifier)
 
 @Composable
 fun DamageImmunitiesBlock(
     damages: List<DamageState>,
     modifier: Modifier = Modifier
-) = DamageBlock(damages, title = stringResource(R.string.monster_detail_immunities), modifier)
+) = DamageBlock(damages, title = strings.immunities, modifier)
 
 @Composable
 fun DamageGrid(
@@ -75,7 +75,7 @@ fun DamageGrid(
 ) = Grid {
 
     damages.forEach { damage ->
-        val iconRes = damage.type.iconRes
+        val iconRes = damage.type.toIconRes()
         if (iconRes != null) {
             IconInfo(
                 title = damage.name,
@@ -89,22 +89,22 @@ fun DamageGrid(
 }
 
 @Composable
-internal fun DamageTypeState.getIconColor(): Color {
+internal fun DamageType.getIconColor(): Color {
     val colors = DamageIconColors(isSystemInDarkTheme())
     return when (this) {
-        DamageTypeState.OTHER -> LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-        DamageTypeState.SLASHING -> colors.bludgeoning
-        DamageTypeState.PIERCING -> colors.piercing
-        DamageTypeState.BLUDGEONING -> colors.slashing
-        DamageTypeState.ACID -> colors.acid
-        DamageTypeState.COLD -> colors.cold
-        DamageTypeState.FIRE -> colors.fire
-        DamageTypeState.LIGHTNING -> colors.lightning
-        DamageTypeState.NECROTIC -> colors.necrotic
-        DamageTypeState.POISON -> colors.poison
-        DamageTypeState.PSYCHIC -> colors.psychic
-        DamageTypeState.RADIANT -> colors.radiant
-        DamageTypeState.THUNDER -> colors.thunder
+        DamageType.OTHER -> LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+        DamageType.SLASHING -> colors.bludgeoning
+        DamageType.PIERCING -> colors.piercing
+        DamageType.BLUDGEONING -> colors.slashing
+        DamageType.ACID -> colors.acid
+        DamageType.COLD -> colors.cold
+        DamageType.FIRE -> colors.fire
+        DamageType.LIGHTNING -> colors.lightning
+        DamageType.NECROTIC -> colors.necrotic
+        DamageType.POISON -> colors.poison
+        DamageType.PSYCHIC -> colors.psychic
+        DamageType.RADIANT -> colors.radiant
+        DamageType.THUNDER -> colors.thunder
     }
 }
 

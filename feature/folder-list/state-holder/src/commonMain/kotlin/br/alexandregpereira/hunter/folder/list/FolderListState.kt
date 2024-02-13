@@ -16,27 +16,33 @@
 
 package br.alexandregpereira.hunter.folder.list
 
-import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
-
-typealias MonsterFolderWithSelection = Pair<MonsterFolder, Boolean>
-
 data class FolderListState(
-    val folders: List<MonsterFolderWithSelection> = emptyList(),
-    val itemSelection: Set<String> = emptySet(),
-    val isItemSelectionOpen: Boolean = false
+    val folders: List<FolderCardState> = emptyList(),
+    val strings: FolderListStrings = FolderListEmptyStrings(),
+    val isItemSelectionOpen: Boolean = false,
+    val itemSelectionCount: Int = 0,
 ) {
-    val itemSelectionCount = itemSelection.size
-    val itemSelectionEnabled = isItemSelectionOpen
+
+    internal val itemSelection: Set<String> = folders
+        .filter { it.selected }
+        .map { it.folderName }
+        .toSet()
+
+    internal val itemSelectionEnabled = isItemSelectionOpen
 }
 
-internal fun FolderListState.changeSelectedFolders(
-    folders: List<MonsterFolderWithSelection>
-): FolderListState {
-    return copy(
-        folders = folders.map {
-            val folder = it.first
-            val selected = isItemSelectionOpen && itemSelection.contains(folder.name)
-            folder to selected
-        }
-    )
-}
+data class FolderCardState(
+    val folderName: String = "",
+    val image1: FolderCardImageState = FolderCardImageState(),
+    val image2: FolderCardImageState? = null,
+    val image3: FolderCardImageState? = null,
+    val selected: Boolean = false,
+)
+
+data class FolderCardImageState(
+    val url: String = "",
+    val contentDescription: String = "",
+    val isHorizontalImage: Boolean = false,
+    val backgroundColorLight: String = "",
+    val backgroundColorDark: String = backgroundColorLight,
+)

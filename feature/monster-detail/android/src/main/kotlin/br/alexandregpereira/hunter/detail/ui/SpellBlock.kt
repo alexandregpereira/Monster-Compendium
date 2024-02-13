@@ -36,26 +36,28 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.monster.detail.MonsterState
+import br.alexandregpereira.hunter.monster.detail.SpellPreviewState
+import br.alexandregpereira.hunter.monster.detail.SpellcastingState
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 
 fun LazyListScope.spellBlock(
     monsters: List<MonsterState>,
@@ -108,14 +110,14 @@ private fun SpellBlock(
 
     if (index == 0 ) {
         BlockTitle(
-            title = stringResource(R.string.monster_detail_spells),
+            title = strings.spells,
             modifier = Modifier.padding(top = 16.dp)
         )
     }
 
     val paddingTop = if (index == 0 ) 16.dp else 0.dp
     AbilityDescription(
-        name = stringResource(spellcasting.type.nameRes),
+        name = spellcasting.name,
         description = spellcasting.description,
         modifier = Modifier.padding(top = paddingTop, bottom = 16.dp)
     )
@@ -144,10 +146,23 @@ private fun Spells(
         items(spells) { spell ->
             SpellIconInfo(
                 name = spell.name,
-                school = spell.school,
+                school = spell.school.asState(),
                 onClick = { onSpellClicked(spell.index) }
             )
         }
+    }
+}
+
+private fun SchoolOfMagic.asState(): SchoolOfMagicState {
+    return when (this) {
+        SchoolOfMagic.ABJURATION -> SchoolOfMagicState.ABJURATION
+        SchoolOfMagic.CONJURATION -> SchoolOfMagicState.CONJURATION
+        SchoolOfMagic.DIVINATION -> SchoolOfMagicState.DIVINATION
+        SchoolOfMagic.ENCHANTMENT -> SchoolOfMagicState.ENCHANTMENT
+        SchoolOfMagic.EVOCATION -> SchoolOfMagicState.EVOCATION
+        SchoolOfMagic.ILLUSION -> SchoolOfMagicState.ILLUSION
+        SchoolOfMagic.NECROMANCY -> SchoolOfMagicState.NECROMANCY
+        SchoolOfMagic.TRANSMUTATION -> SchoolOfMagicState.TRANSMUTATION
     }
 }
 
@@ -158,44 +173,44 @@ internal const val SPELLCASTING_ITEM_KEY = "spellcasting"
 private fun SpellBlockPreview() = Window {
     val spellcastings = listOf(
         SpellcastingState(
-            type = SpellcastingTypeState.SPELLCASTER,
+            name = "Spellcaster",
             description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
             spellsByGroup = mapOf(
                 "At Will" to listOf(
                     SpellPreviewState(
                         index = "index",
                         name = "Detect Evil and Good",
-                        school = SchoolOfMagicState.DIVINATION
+                        school = SchoolOfMagic.DIVINATION,
                     ),
                     SpellPreviewState(
                         index = "index",
                         name = "Some Magic",
-                        school = SchoolOfMagicState.CONJURATION
+                        school = SchoolOfMagic.CONJURATION
                     ),
                 ),
                 "3/day each" to (0..10).map {
                     SpellPreviewState(
                         index = "index",
                         name = "Some Magic $it",
-                        school = SchoolOfMagicState.ILLUSION
+                        school = SchoolOfMagic.ILLUSION
                     )
                 }
             )
         ),
         SpellcastingState(
-            type = SpellcastingTypeState.INNATE,
+            name = "Innate Spellcaster",
             description = "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
             spellsByGroup = mapOf(
                 "At Will" to listOf(
                     SpellPreviewState(
                         index = "index",
                         name = "Detect Evil and Good",
-                        school = SchoolOfMagicState.ABJURATION
+                        school = SchoolOfMagic.ABJURATION
                     ),
                     SpellPreviewState(
                         index = "index",
                         name = "Some Magic",
-                        school = SchoolOfMagicState.NECROMANCY
+                        school = SchoolOfMagic.NECROMANCY
                     ),
                 )
             )
@@ -225,12 +240,14 @@ private fun SchoolsOfMagicPreview() = Window {
         columns = GridCells.Fixed(count = 4),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(SchoolOfMagicState.values()) { school ->
+        items(SchoolOfMagic.entries.toTypedArray()) { school ->
             val iconColor =
-                if (isSystemInDarkTheme()) school.iconColorDark else school.iconColorLight
+                if (isSystemInDarkTheme()) {
+                    school.asState().iconColorDark
+                } else school.asState().iconColorLight
             IconInfo(
                 title = school.name,
-                painter = painterResource(school.iconRes),
+                painter = painterResource(school.asState().iconRes),
                 iconColor = iconColor.toColor()
             )
         }
@@ -244,12 +261,14 @@ private fun SchoolsOfMagicDarkThemePreview() = Window {
         columns = GridCells.Fixed(count = 4),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(SchoolOfMagicState.values()) { school ->
+        items(SchoolOfMagic.entries.toTypedArray()) { school ->
             val iconColor =
-                if (isSystemInDarkTheme()) school.iconColorDark else school.iconColorLight
+                if (isSystemInDarkTheme()) {
+                    school.asState().iconColorDark
+                } else school.asState().iconColorLight
             IconInfo(
                 title = school.name,
-                painter = painterResource(school.iconRes),
+                painter = painterResource(school.asState().iconRes),
                 iconColor = iconColor.toColor()
             )
         }

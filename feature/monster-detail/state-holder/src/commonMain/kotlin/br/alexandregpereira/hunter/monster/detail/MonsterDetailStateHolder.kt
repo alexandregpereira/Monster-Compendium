@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
+import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
@@ -31,12 +32,19 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.ADD_TO_FOLDER
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_FEET
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CHANGE_TO_METERS
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.CLONE
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.DELETE
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.EDIT
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ADD_TO_FOLDER
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddToFolder
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CHANGE_TO_FEET
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CHANGE_TO_METERS
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CLONE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ChangeToFeet
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ChangeToMeters
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.DELETE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.EDIT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Edit
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
@@ -46,8 +54,7 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
-import br.alexandregpereira.hunter.state.MutableStateHolder
-import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -79,20 +86,19 @@ class MonsterDetailStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
-    initialState: MonsterDetailState = MonsterDetailState(),
-    monsterIndex: String = "",
-    monsterIndexes: List<String> = emptyList()
-) : ScopeManager(),
-    MutableStateHolder<MonsterDetailState> by MutableStateHolder(initialState) {
+    private val appLocalization: AppLocalization,
+    private val stateRecovery: MonsterDetailStateRecovery,
+) : UiModel<MonsterDetailState>(stateRecovery.state.copy(strings = appLocalization.getStrings())) {
 
-    var monsterIndex: String = ""
-        private set
+    private val monsterIndex: String
+        get() = stateRecovery.monsterIndex
 
-    var monsterIndexes: List<String> = emptyList()
-        private set
+    private val monsterIndexes: List<String>
+        get() = stateRecovery.monsterIndexes
 
     private var currentJob: Job? = null
     private var enableMonsterPageChangesEventDispatch = false
+    private var metadata: List<Monster> = emptyList()
 
     init {
         observeEvents()
@@ -111,12 +117,17 @@ class MonsterDetailStateHolder(
                     enableMonsterPageChangesEventDispatch =
                         event.enableMonsterPageChangesEventDispatch
                     getMonstersByInitialIndex(event.index, event.indexes)
-                    setState { copy(showDetail = true) }
+                    setState {
+                        copy(
+                            showDetail = true,
+                            strings = appLocalization.getStrings()
+                        ).saveState(stateRecovery)
+                    }
                 }
 
                 Hide -> {
                     analytics.trackMonsterDetailHidden()
-                    setState { copy(showDetail = false) }
+                    setState { copy(showDetail = false).saveState(stateRecovery) }
                 }
             }
         }.launchIn(scope)
@@ -131,7 +142,7 @@ class MonsterDetailStateHolder(
         monsterIndexes: List<String>,
         invalidateCache: Boolean = false
     ) {
-        this.monsterIndexes = monsterIndexes
+        stateRecovery.saveMonsterIndexes(monsterIndexes)
         onMonsterChanged(monsterIndex, scrolled = false)
         getMonsterDetail(invalidateCache = invalidateCache).collectDetail()
     }
@@ -141,7 +152,7 @@ class MonsterDetailStateHolder(
             analytics.trackMonsterPageChanged(monsterIndex, scrolled)
             monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
-        this.monsterIndex = monsterIndex
+        stateRecovery.saveMonsterIndex(monsterIndex)
         setState { changeOptions() }
     }
 
@@ -158,7 +169,7 @@ class MonsterDetailStateHolder(
     fun onOptionClicked(option: MonsterDetailOptionState) {
         analytics.trackMonsterDetailOptionClicked(option)
         setState { HideOptions }
-        when (option) {
+        when (option.id) {
             ADD_TO_FOLDER -> folderInsertEventDispatcher.dispatchEvent(
                 FolderInsertEvent.Show(monsterIndexes = listOf(monsterIndex))
             )
@@ -269,11 +280,13 @@ class MonsterDetailStateHolder(
 
     private fun Flow<MonsterDetail>.toMonsterDetailState(): Flow<MonsterDetailState> {
         return map {
+            metadata = it.monsters
+            val strings = appLocalization.getStrings()
             MonsterDetailState(
                 initialMonsterListPositionIndex = it.monsterIndexSelected,
-                monsters = it.monsters,
+                monsters = it.monsters.asState(strings),
                 measurementUnit = it.measurementUnit,
-            ).changeOptions()
+            ).changeOptions().saveState(stateRecovery)
         }
     }
 
@@ -290,21 +303,21 @@ class MonsterDetailStateHolder(
     }
 
     private fun MonsterDetailState.changeOptions(): MonsterDetailState {
-        val monster = monsters.find { monster -> monster.index == monsterIndex } ?: return this
+        val monster = metadata.find { monster -> monster.index == monsterIndex } ?: return this
         val editOption = if (monster.isClone) {
-            listOf(EDIT, DELETE)
+            listOf(Edit(strings), Delete(strings))
         } else emptyList()
 
         return copy(
-            options = listOf(ADD_TO_FOLDER, CLONE) + editOption + when (measurementUnit) {
-                MeasurementUnit.FEET -> CHANGE_TO_METERS
-                MeasurementUnit.METER -> CHANGE_TO_FEET
+            options = listOf(AddToFolder(strings), Clone(strings)) + editOption + when (measurementUnit) {
+                MeasurementUnit.FEET -> ChangeToFeet(strings)
+                MeasurementUnit.METER -> ChangeToMeters(strings)
             }
         )
     }
 
     private fun showCloneForm() = setState {
-        this.showCloneForm()
+        this.showCloneForm().saveState(stateRecovery)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

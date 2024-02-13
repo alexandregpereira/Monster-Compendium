@@ -23,7 +23,7 @@ import kotlinx.coroutines.cancel
 
 abstract class ScopeManager {
 
-    protected val scope = CoroutineScope(
+    val scope = CoroutineScope(
         SupervisorJob() + Dispatchers.Main.immediate
     )
 

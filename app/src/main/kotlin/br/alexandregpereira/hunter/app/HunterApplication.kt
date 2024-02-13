@@ -70,7 +70,7 @@ class HunterApplication : Application() {
     internal companion object {
         private val appModule = module {
             factory { Dispatchers.Default }
-            viewModel { MainViewModel(get(), get(), get(), get(), get(), get(), get()) }
+            viewModel { MainViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
         }
 
         fun KoinApplication.initKoinModules() {

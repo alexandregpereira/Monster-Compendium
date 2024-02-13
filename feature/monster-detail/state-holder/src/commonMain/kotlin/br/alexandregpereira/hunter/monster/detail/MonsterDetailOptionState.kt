@@ -19,11 +19,65 @@ package br.alexandregpereira.hunter.monster.detail
 import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterDetailOptionState", exact = true)
-enum class MonsterDetailOptionState {
-    ADD_TO_FOLDER,
-    CLONE,
-    EDIT,
-    DELETE,
-    CHANGE_TO_FEET,
-    CHANGE_TO_METERS
+data class MonsterDetailOptionState(
+    val id: String = "",
+    val name: String = "",
+) {
+
+    companion object {
+        internal const val ADD_TO_FOLDER = "add_to_folder"
+        internal const val CLONE = "clone"
+        internal const val EDIT = "edit"
+        internal const val DELETE = "delete"
+        internal const val CHANGE_TO_FEET = "change_to_feet"
+        internal const val CHANGE_TO_METERS = "change_to_meters"
+
+        @Suppress("FunctionName")
+        internal fun AddToFolder(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = ADD_TO_FOLDER,
+                name = strings.optionsAddToFolder
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun Clone(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = CLONE,
+                name = strings.clone
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun Edit(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = EDIT,
+                name = strings.edit
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun Delete(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = DELETE,
+                name = strings.delete
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun ChangeToFeet(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = CHANGE_TO_FEET,
+                name = strings.optionsChangeToFeet
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun ChangeToMeters(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = CHANGE_TO_METERS,
+                name = strings.optionsChangeToMeters
+            )
+        }
+    }
 }

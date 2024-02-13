@@ -24,10 +24,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":core:analytics"))
-                api(project(":core:event"))
-                api(project(":core:state-holder"))
-                api(project(":domain:monster:core"))
+                implementation(project(":core:analytics"))
+                implementation(project(":core:event"))
+                implementation(project(":core:state-holder"))
+                implementation(project(":core:localization"))
+                implementation(project(":core:uuid"))
+                implementation(project(":domain:monster:core"))
                 implementation(project(":domain:monster-lore:core"))
                 implementation(project(":domain:spell:core"))
                 implementation(project(":feature:monster-registration:event"))

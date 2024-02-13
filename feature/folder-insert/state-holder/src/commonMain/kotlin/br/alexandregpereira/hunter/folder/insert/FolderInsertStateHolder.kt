@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.Show
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.state.ScopeManager
 import br.alexandregpereira.hunter.state.StateHolder
 import kotlinx.coroutines.CoroutineDispatcher
@@ -42,10 +43,13 @@ class FolderInsertStateHolder internal constructor(
     private val folderInsertEventManager: FolderInsertEventManager,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderInsertAnalytics,
+    private val appLocalization: AppLocalization,
 ) : ScopeManager(), StateHolder<FolderInsertState> {
 
     private val _state = MutableStateFlow(stateRecovery.getState())
     override val state: StateFlow<FolderInsertState> = _state
+    private val strings: FolderInsertStrings
+        get() = getFolderInsertStrings(appLocalization.getLanguage())
 
     init {
         observeEvents()
@@ -99,7 +103,8 @@ class FolderInsertStateHolder internal constructor(
         setState {
             copy(
                 monsterIndexes = monsterIndexes,
-                folderName = folderName
+                folderName = folderName,
+                strings = this@FolderInsertStateHolder.strings,
             )
         }
 
@@ -133,7 +138,7 @@ class FolderInsertStateHolder internal constructor(
                 analytics.trackMonsterPreviewsLoaded(monsters)
                 setState {
                     copy(
-                        monsterPreviews = monsters,
+                        monsterPreviews = monsters.asState(),
                         monsterIndexes = monsterIndexes,
                         isOpen = monsters.isNotEmpty()
                     )

@@ -8,12 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
-import br.alexandregpereira.hunter.monster.registration.R
+import br.alexandregpereira.hunter.monster.registration.MonsterState
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityDescriptionForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityScoresForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterActionsForm
@@ -31,7 +29,7 @@ import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 
 @Composable
 internal fun MonsterRegistrationForm(
-    monster: Monster,
+    monster: MonsterState,
     isSaveButtonEnabled: Boolean,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
@@ -49,16 +47,16 @@ internal fun MonsterRegistrationForm(
         ),
     ) {
         MonsterHeaderForm(
-            monster = monster,
-            onMonsterChanged = intent::onMonsterChanged,
+            infoState = monster.info,
+            onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },
         )
         MonsterStatsForm(
             stats = monster.stats,
             onChanged = { intent.onMonsterChanged(monster.copy(stats = it)) }
         )
         MonsterSpeedValuesForm(
-            monster = monster,
-            onMonsterChanged = intent::onMonsterChanged,
+            speedValueStates = monster.speedValues,
+            onMonsterChanged = { intent.onMonsterChanged(monster.copy(speedValues = it)) },
         )
         MonsterAbilityScoresForm(
             abilityScores = monster.abilityScores,
@@ -69,70 +67,70 @@ internal fun MonsterRegistrationForm(
             onChanged = { intent.onMonsterChanged(monster.copy(savingThrows = it)) },
         )
         MonsterProficiencyForm(
-            title = { stringResource(R.string.monster_registration_skills) },
+            title = { strings.skills },
             proficiencies = monster.skills,
             onChanged = { intent.onMonsterChanged(monster.copy(skills = it)) },
         )
         MonsterDamagesForm(
             key = "damageVulnerabilities",
-            title = { stringResource(R.string.monster_registration_damage_vulnerabilities) },
+            title = { strings.damageVulnerabilities },
             damages = monster.damageVulnerabilities,
             onChanged = { intent.onMonsterChanged(monster.copy(damageVulnerabilities = it)) },
         )
         MonsterDamagesForm(
             key = "damageResistances",
-            title = { stringResource(R.string.monster_registration_damage_resistances) },
+            title = { strings.damageResistances },
             damages = monster.damageResistances,
             onChanged = { intent.onMonsterChanged(monster.copy(damageResistances = it)) },
         )
         MonsterDamagesForm(
             key = "damageImmunities",
-            title = { stringResource(R.string.monster_registration_damage_immunities) },
+            title = { strings.damageImmunities },
             damages = monster.damageImmunities,
             onChanged = { intent.onMonsterChanged(monster.copy(damageImmunities = it)) },
         )
         MonsterConditionsForm(
-            title = { stringResource(R.string.monster_registration_condition_immunities) },
+            title = { strings.conditionImmunities },
             conditions = monster.conditionImmunities,
             onChanged = { intent.onMonsterChanged(monster.copy(conditionImmunities = it)) },
         )
         MonsterStringValueForm(
             key = "senses",
-            title = { stringResource(R.string.monster_registration_senses) },
+            title = { strings.senses },
             value = monster.senses.joinToString(", "),
             onChanged = { intent.onMonsterChanged(monster.copy(senses = it.split(", "))) },
         )
         MonsterStringValueForm(
             key = "languages",
-            title = { stringResource(R.string.monster_registration_languages) },
+            title = { strings.languages },
             value = monster.languages,
             onChanged = { intent.onMonsterChanged(monster.copy(languages = it)) },
         )
         MonsterAbilityDescriptionForm(
             key = "specialAbilities",
-            title = { stringResource(R.string.monster_registration_special_abilities) },
+            title = { strings.specialAbilities },
             abilityDescriptions = monster.specialAbilities,
-            addText = { stringResource(R.string.monster_registration_add_special_ability) },
-            removeText = { stringResource(R.string.monster_registration_remove_special_ability) },
+            addText = { strings.addSpecialAbility },
+            removeText = { strings.removeSpecialAbility },
             onChanged = { intent.onMonsterChanged(monster.copy(specialAbilities = it)) },
         )
         MonsterActionsForm(
             key = "actions",
-            title = { stringResource(R.string.monster_registration_actions) },
+            title = { strings.actions },
             actions = monster.actions,
             onChanged = { intent.onMonsterChanged(monster.copy(actions = it)) },
         )
         MonsterAbilityDescriptionForm(
             key = "reactions",
-            title = { stringResource(R.string.monster_registration_reactions) },
+            title = { strings.reactions },
             abilityDescriptions = monster.reactions,
-            addText = { stringResource(R.string.monster_registration_add_reaction) },
-            removeText = { stringResource(R.string.monster_registration_remove_reaction) },
+            addText = { strings.addReaction },
+            removeText = { strings.removeReaction },
             onChanged = { intent.onMonsterChanged(monster.copy(reactions = it)) },
         )
         MonsterActionsForm(
             key = "legendaryActions",
-            title = { stringResource(R.string.monster_registration_legendary_actions) },
+            title = { strings.legendaryActions },
             actions = monster.legendaryActions,
             onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
         )

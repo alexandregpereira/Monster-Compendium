@@ -30,18 +30,15 @@ internal class FolderPreviewViewModel(
     private val stateHolder: FolderPreviewStateHolder,
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<FolderPreviewViewState> = MutableStateFlow(
+    private val _state: MutableStateFlow<FolderPreviewState> = MutableStateFlow(
         savedStateHandle.getState()
     )
-    val state: StateFlow<FolderPreviewViewState> = _state
+    val state: StateFlow<FolderPreviewState> = _state
 
     init {
         stateHolder.state
             .map {
-                FolderPreviewViewState(
-                    monsters = it.monsters,
-                    showPreview = it.showPreview
-                ).saveState(savedStateHandle)
+                it.saveState(savedStateHandle)
             }
             .onEach { _state.value = it }
             .launchIn(viewModelScope)
@@ -53,5 +50,10 @@ internal class FolderPreviewViewModel(
 
     fun onSave() {
         stateHolder.onSave()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateHolder.onCleared()
     }
 }

@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.folder.list.di
 
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
-import br.alexandregpereira.hunter.folder.list.EmptyFolderListStateRecovery
 import br.alexandregpereira.hunter.folder.list.FolderListAnalytics
 import br.alexandregpereira.hunter.folder.list.FolderListEventManager
 import br.alexandregpereira.hunter.folder.list.FolderListStateHolder
@@ -29,7 +28,6 @@ val featureFolderListModule = module {
 
     factory {
         FolderListStateHolder(
-            stateRecovery = getOrNull() ?: EmptyFolderListStateRecovery(),
             getMonsterFolders = get(),
             removeMonsterFolders = get(),
             folderInsertResultListener = get(),
@@ -38,6 +36,7 @@ val featureFolderListModule = module {
             dispatcher = get(),
             syncEventListener = get(),
             analytics = FolderListAnalytics(get()),
+            appLocalization = get(),
         )
     }
 }

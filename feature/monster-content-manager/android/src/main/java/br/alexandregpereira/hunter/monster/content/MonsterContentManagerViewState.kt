@@ -17,22 +17,16 @@
 package br.alexandregpereira.hunter.monster.content
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.content.ui.MonsterContentState
 
-internal data class MonsterContentManagerViewState(
-    val monsterContents: List<MonsterContentState> = emptyList(),
-    val isOpen: Boolean = false,
-)
-
-internal fun SavedStateHandle.getState(): MonsterContentManagerViewState {
-    return MonsterContentManagerViewState(
+internal fun SavedStateHandle.getState(): MonsterContentManagerState {
+    return MonsterContentManagerState(
         isOpen = this["isOpen"] ?: false
     )
 }
 
-internal fun MonsterContentManagerViewState.saveState(
+internal fun MonsterContentManagerState.saveState(
     savedStateHandle: SavedStateHandle
-): MonsterContentManagerViewState {
+): MonsterContentManagerState {
     savedStateHandle["isOpen"] = isOpen
     return this
 }

@@ -14,7 +14,7 @@ class MonsterDetailAnalytics(
         analytics.logException(throwable)
     }
 
-    fun trackMonsterDetailLoaded(monsterIndex: String, monsters: List<Monster>) {
+    fun trackMonsterDetailLoaded(monsterIndex: String, monsters: List<MonsterState>) {
         if (loadTracked) return
         analytics.track(
             eventName = "MonsterDetail - loaded",

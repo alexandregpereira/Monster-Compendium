@@ -32,6 +32,8 @@ val settingsModule = module {
             get(),
             analytics = SettingsAnalytics(get()),
             bottomBarEventDispatcher = get(),
+            appLocalization = get(),
+            saveLanguage = get(),
         )
     }
 }

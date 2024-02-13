@@ -44,7 +44,7 @@ internal fun SearchScreen(
                 val focusManager = LocalFocusManager.current
                 SearchGrid(
                     monsterRows = state.monsterRows,
-                    totalResults = state.totalResults,
+                    totalResults = state.searchResults,
                     contentPadding = PaddingValues(
                         top = contentPaddingValues.calculateTopPadding() + 56.dp + 8.dp,
                         bottom = contentPaddingValues.calculateBottomPadding()
@@ -61,6 +61,7 @@ internal fun SearchScreen(
 
                 SearchBar(
                     text = state.searchValue,
+                    searchLabel = state.searchLabel,
                     onValueChange = onSearchValueChange,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)

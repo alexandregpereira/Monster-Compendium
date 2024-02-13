@@ -30,7 +30,8 @@ val searchModule = module {
             folderPreviewEventDispatcher = get(),
             monsterDetailEventDispatcher = get(),
             analytics = SearchAnalytics(get()),
-            dispatcher = get()
+            dispatcher = get(),
+            appLocalization = get(),
         )
     }
 }

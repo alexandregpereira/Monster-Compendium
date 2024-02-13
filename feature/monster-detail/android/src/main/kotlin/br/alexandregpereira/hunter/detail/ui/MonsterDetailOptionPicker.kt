@@ -26,13 +26,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.detail.MonsterDetailOptionState
-import br.alexandregpereira.hunter.detail.R
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 
@@ -56,7 +54,7 @@ private fun MonsterDetailOptions(
 ) {
     Column {
         Text(
-            text = stringResource(R.string.monster_detail_options),
+            text = strings.options,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(all = 16.dp)
@@ -72,7 +70,7 @@ private fun MonsterDetailOptions(
                     )
             ) {
                 Text(
-                    text = stringResource(it.stringRes),
+                    text = it.name,
                     fontSize = 16.sp,
                 )
             }
@@ -91,8 +89,8 @@ private fun MonsterDetailOptions(
 fun MonsterDetailOptionPickerPreview() {
     MonsterDetailOptionPicker(
         listOf(
-            MonsterDetailOptionState.CHANGE_TO_FEET,
-            MonsterDetailOptionState.CHANGE_TO_METERS
+            MonsterDetailOptionState(name = "Change to feet"),
+            MonsterDetailOptionState(name = "Change to meters"),
         ),
         showOptions = true
     )
