@@ -15,7 +15,7 @@ class IosFlow<T: Any> internal constructor(
     }
 }
 
-fun <T: Any> Flow<T>.iosFlow(coroutineScope: CoroutineScope): IosFlow<T> = IosFlow(
+internal fun <T: Any> Flow<T>.iosFlow(coroutineScope: CoroutineScope): IosFlow<T> = IosFlow(
     origin = this,
     coroutineScope = coroutineScope
 )
