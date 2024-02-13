@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -30,14 +29,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.spell.detail.R
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-fun SpellDescription(
+internal fun SpellDescription(
     description: String,
-    higherLevel: String? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    higherLevel: String? = null
 ) = Column(modifier) {
     Text(
         text = description,
@@ -54,7 +52,7 @@ fun SpellDescription(
                         fontStyle = FontStyle.Italic,
                     )
                 ) {
-                    append("${stringResource(R.string.spell_detail_higher_level)} ")
+                    append("${strings.atHigherLevels} ")
                 }
 
                 withStyle(

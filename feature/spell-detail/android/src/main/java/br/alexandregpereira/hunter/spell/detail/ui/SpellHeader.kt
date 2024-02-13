@@ -27,45 +27,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.spell.detail.R
-import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.toColor
+import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState as UiSchoolOfMagicState
 
 @Composable
-fun SpellHeader(
-    spell: SpellState,
+internal fun SpellHeader(
+    title: String,
+    subtitle: String,
+    schoolIcon: UiSchoolOfMagicState,
     modifier: Modifier = Modifier
 ) = Layout(
     modifier = modifier,
     content = {
         val iconColor = if (isSystemInDarkTheme()) {
-            spell.school.iconColorDark
-        } else spell.school.iconColorLight
+            schoolIcon.iconColorDark
+        } else schoolIcon.iconColorLight
         val iconAlpha = 0.2f
 
         Icon(
-            painter = painterResource(spell.school.iconRes),
-            contentDescription = spell.school.name,
+            painter = painterResource(schoolIcon.iconRes),
+            contentDescription = subtitle,
             tint = iconColor.toColor(),
-            modifier = Modifier
-                .alpha(iconAlpha)
+            modifier = Modifier.alpha(iconAlpha)
         )
 
-        val ritualLabel = if (spell.ritual) {
-            "(${stringResource(R.string.spell_detail_ritual)})"
-        } else ""
-        val subtitle = "Level ${spell.level} ${spell.school.name.lowercase()} $ritualLabel"
         ScreenHeader(
-            title = spell.name,
+            title = title,
             subTitle = subtitle,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(vertical = 16.dp)
         )
 
         Box(
@@ -112,21 +107,8 @@ fun SpellHeader(
 @Composable
 private fun SpellHeaderPreview() = Window {
     SpellHeader(
-        spell = SpellState(
-            index = "",
-            name = "Detect Good and Evil asda",
-            level = 0,
-            castingTime = "",
-            components = "",
-            duration = "",
-            range = "",
-            ritual = true,
-            concentration = false,
-            savingThrowType = null,
-            damageType = null,
-            school = SchoolOfMagicState.CONJURATION,
-            description = "",
-            higherLevel = null
-        )
+        title = "Detect Good and Evil asda",
+        subtitle = "Level 1",
+        schoolIcon = UiSchoolOfMagicState.ABJURATION
     )
 }

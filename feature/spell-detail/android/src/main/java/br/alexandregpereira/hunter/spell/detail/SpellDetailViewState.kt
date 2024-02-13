@@ -17,11 +17,27 @@
 package br.alexandregpereira.hunter.spell.detail
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.spell.detail.ui.SpellState
+import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 
 internal data class SpellDetailViewState(
-    val spell: SpellState? = null,
+    val spell: SpellState = SpellState(),
     val showDetail: Boolean = false,
+    val strings: SpellDetailStrings = SpellDetailStrings()
+)
+
+data class SpellState(
+    val index: String = "",
+    val name: String = "",
+    val subtitle: String = "",
+    val castingTime: String = "",
+    val components: String = "",
+    val duration: String = "",
+    val range: String = "",
+    val concentration: Boolean = false,
+    val savingThrowType: String? = null,
+    val school: SchoolOfMagic = SchoolOfMagic.ABJURATION,
+    val description: String = "",
+    val higherLevel: String? = null,
 )
 
 internal fun SavedStateHandle.getState(): SpellDetailViewState {
@@ -37,8 +53,11 @@ internal fun SpellDetailViewState.saveState(
     return this
 }
 
-internal fun SpellDetailViewState.changeSpell(spellState: SpellState): SpellDetailViewState {
-    return copy(spell = spellState, showDetail = true)
+internal fun SpellDetailViewState.changeSpell(
+    spellState: SpellState,
+    strings: SpellDetailStrings,
+): SpellDetailViewState {
+    return copy(spell = spellState, showDetail = true, strings = strings)
 }
 
 internal fun SpellDetailViewState.hideDetail(): SpellDetailViewState {

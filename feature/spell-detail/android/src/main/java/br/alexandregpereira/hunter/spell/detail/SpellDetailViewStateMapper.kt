@@ -16,26 +16,52 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
+import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
+import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.model.Spell
-import br.alexandregpereira.hunter.spell.detail.ui.SavingThrowTypeState
-import br.alexandregpereira.hunter.spell.detail.ui.SpellState
-import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 
-internal fun Spell.asState(): SpellState {
+internal fun Spell.asState(strings: SpellDetailStrings): SpellState {
+    val durationText = if (concentration) {
+        "${strings.concentration}, ${duration.lowercase()}"
+    } else {
+        duration
+    }
     return SpellState(
         index = index,
         name = name,
-        level = level,
+        subtitle = strings.subtitle(level, school.name(strings)),
         castingTime = castingTime,
         components = components,
-        duration = duration,
+        duration = durationText,
         range = range,
-        ritual = ritual,
         concentration = concentration,
-        savingThrowType = savingThrowType?.let { SavingThrowTypeState.valueOf(it.name) },
-        damageType = damageType,
-        school = SchoolOfMagicState.valueOf(school.name),
+        savingThrowType = savingThrowType?.name(strings),
+        school = school,
         description = description,
         higherLevel = higherLevel
     )
+}
+
+private fun SchoolOfMagic.name(strings: SpellDetailStrings): String {
+    return when (this) {
+        SchoolOfMagic.ABJURATION -> strings.schoolAbjuration
+        SchoolOfMagic.CONJURATION -> strings.schoolConjuration
+        SchoolOfMagic.DIVINATION -> strings.schoolDivination
+        SchoolOfMagic.ENCHANTMENT -> strings.schoolEnchantment
+        SchoolOfMagic.EVOCATION -> strings.schoolEvocation
+        SchoolOfMagic.ILLUSION -> strings.schoolIllusion
+        SchoolOfMagic.NECROMANCY -> strings.schoolNecromancy
+        SchoolOfMagic.TRANSMUTATION -> strings.schoolTransmutation
+    }
+}
+
+private fun SavingThrowType.name(strings: SpellDetailStrings): String {
+    return when (this) {
+        SavingThrowType.STRENGTH -> strings.savingThrowStrength
+        SavingThrowType.DEXTERITY -> strings.savingThrowDexterity
+        SavingThrowType.CONSTITUTION -> strings.savingThrowConstitution
+        SavingThrowType.INTELLIGENCE -> strings.savingThrowIntelligence
+        SavingThrowType.WISDOM -> strings.savingThrowWisdom
+        SavingThrowType.CHARISMA -> strings.savingThrowCharisma
+    }
 }
