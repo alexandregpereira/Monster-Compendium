@@ -30,6 +30,13 @@ val spellDetailModule = module {
     single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
 
     viewModel {
-        SpellDetailViewModel(get(), get(), get(), get(), analytics = SpellDetailAnalytics(get()))
+        SpellDetailViewModel(
+            savedStateHandle = get(),
+            getSpell = get(),
+            spellDetailEventListener = get(),
+            dispatcher = get(),
+            analytics = SpellDetailAnalytics(get()),
+            appLocalization = get(),
+        )
     }
 }

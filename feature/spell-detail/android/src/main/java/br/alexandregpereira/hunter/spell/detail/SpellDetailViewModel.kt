@@ -20,6 +20,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,6 +38,7 @@ internal class SpellDetailViewModel(
     private val spellDetailEventListener: SpellDetailEventListener,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: SpellDetailAnalytics,
+    private val appLocalization: AppLocalization,
 ) : ViewModel() {
 
     private var spellIndex: String
@@ -50,18 +52,19 @@ internal class SpellDetailViewModel(
 
     init {
         observeEvents()
-        if (state.value.showDetail && state.value.spell == null) {
+        if (state.value.showDetail && state.value.spell.index.isEmpty()) {
             loadSpell(spellIndex)
         }
     }
 
     private fun loadSpell(spellIndex: String) {
+        val strings = appLocalization.getStrings()
         getSpell(spellIndex)
-            .map { spell -> spell.asState() }
+            .map { spell -> spell.asState(strings) }
             .flowOn(dispatcher)
             .onEach { spell ->
                 analytics.trackSpellLoaded(spell)
-                setState { changeSpell(spell) }
+                setState { changeSpell(spell, strings) }
             }
             .catch {
                 analytics.logException(it)

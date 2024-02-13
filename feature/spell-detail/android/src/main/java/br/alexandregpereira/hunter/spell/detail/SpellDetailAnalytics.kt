@@ -1,7 +1,6 @@
 package br.alexandregpereira.hunter.spell.detail
 
 import br.alexandregpereira.hunter.analytics.Analytics
-import br.alexandregpereira.hunter.spell.detail.ui.SpellState
 
 internal class SpellDetailAnalytics(
     private val analytics: Analytics
