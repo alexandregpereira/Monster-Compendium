@@ -2,24 +2,16 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":core:uuid"))
-                implementation(libs.koin.core)
-                implementation(libs.kotlin.coroutines.core)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.bundles.unittest)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
+multiplatform {
+    commonMain {
+        implementation(project(":core:uuid"))
+        implementation(libs.koin.core)
+        implementation(libs.kotlin.coroutines.core)
     }
+
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
+    jvmMain()
+    iosMain()
 }

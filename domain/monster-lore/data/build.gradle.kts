@@ -4,38 +4,27 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-configureTargets()
+multiplatform {
+    commonMain {
+        implementation(project(":domain:alternative-source:core"))
+        implementation(project(":domain:monster-lore:core"))
+        implementation(project(":domain:settings:core"))
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.serialization)
+        implementation(libs.koin.core)
+        implementation(libs.ktor.core)
+    }
 
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":domain:alternative-source:core"))
-                implementation(project(":domain:monster-lore:core"))
-                implementation(project(":domain:settings:core"))
-                implementation(libs.kotlin.coroutines.core)
-                implementation(libs.kotlin.serialization)
-                implementation(libs.koin.core)
-                implementation(libs.ktor.core)
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.ktor.okhttp)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.ktor.okhttp)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting {
-                dependencies {
-                    implementation(libs.ktor.darwin)
-                }
-            }
-        }
+    androidMain {
+        implementation(libs.ktor.okhttp)
+    }
+
+    jvmMain {
+        implementation(libs.ktor.okhttp)
+    }
+
+    iosMain {
+        implementation(libs.ktor.darwin)
     }
 }
 

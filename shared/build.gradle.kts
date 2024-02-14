@@ -18,30 +18,30 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets(iosFramework = { linkerOpts("-l", "sqlite3") })
+multiplatform {
+    commonMain {
+        implementation(project(":core:analytics"))
+        implementation(project(":core:localization"))
+        implementation(project(":domain:app:data"))
+        implementation(project(":domain:app:core"))
+        implementation(project(":domain:sync:core"))
+        implementation(project(":feature:folder-insert:event")) // TODO Remove later
+        implementation(project(":feature:folder-preview:event")) // TODO Remove later
+        implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
+        implementation(project(":feature:monster-registration:event")) // TODO Remove later
+        implementation(project(":feature:spell-detail:event")) // TODO Remove later
+        implementation(project(":feature:monster-compendium:state-holder"))
+        implementation(project(":feature:monster-detail:state-holder"))
+        implementation(project(":feature:sync:state-holder"))
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.koin.core)
+    }
 
-kotlin {
-    sourceSets {
-        commonMain.dependencies {
-            implementation(project(":core:analytics"))
-            implementation(project(":core:localization"))
-            implementation(project(":domain:app:data"))
-            implementation(project(":domain:app:core"))
-            implementation(project(":domain:sync:core"))
-            implementation(project(":feature:folder-insert:event")) // TODO Remove later
-            implementation(project(":feature:folder-preview:event")) // TODO Remove later
-            implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
-            implementation(project(":feature:monster-registration:event")) // TODO Remove later
-            implementation(project(":feature:spell-detail:event")) // TODO Remove later
-            implementation(project(":feature:monster-compendium:state-holder"))
-            implementation(project(":feature:monster-detail:state-holder"))
-            implementation(project(":feature:sync:state-holder"))
-            implementation(libs.kotlin.coroutines.core)
-            implementation(libs.koin.core)
-        }
-        jvmTest.dependencies {
-            implementation(libs.bundles.unittest)
-            implementation(libs.koin.test)
-        }
+    jvmMain()
+    iosMain(iosFramework = { linkerOpts("-l", "sqlite3") })
+
+    jvmTest {
+        implementation(libs.bundles.unittest)
+        implementation(libs.koin.test)
     }
 }

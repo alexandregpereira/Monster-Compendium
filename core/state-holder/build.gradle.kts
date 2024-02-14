@@ -2,12 +2,10 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
-
-kotlin {
-    sourceSets {
-        commonMain.dependencies {
-            api(project(":core:flow"))
-        }
+multiplatform {
+    commonMain {
+        api(project(":core:flow"))
     }
+    jvmMain()
+    iosMain()
 }

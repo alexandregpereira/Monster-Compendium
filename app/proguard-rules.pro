@@ -11,3 +11,5 @@
 }
 
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+-dontwarn org.apiguardian.api.API$Status
+-dontwarn org.apiguardian.api.API

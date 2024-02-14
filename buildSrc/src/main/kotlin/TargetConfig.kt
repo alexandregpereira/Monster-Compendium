@@ -19,6 +19,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 
 private val Project.kotlin: KotlinMultiplatformExtension
@@ -27,64 +28,11 @@ private val Project.kotlin: KotlinMultiplatformExtension
 private val Project.java: JavaPluginExtension
     get() = extensions.getByType(JavaPluginExtension::class.java)
 
-fun Project.isMac(): Boolean = Os.isFamily(Os.FAMILY_MAC) && !hasProperty("disableIos")
-
-fun Project.configureJvmTargets(
-    iosFramework: Framework.() -> Unit = {}
-) = configureTargets(hasAndroid = false, iosFramework = iosFramework)
-
-fun Project.configureTargets(
-    hasAndroid: Boolean = true,
-    hasJvm: Boolean = true,
-    iosFramework: Framework.() -> Unit = {}
-) {
+fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
     kotlin.apply {
-        if (hasAndroid) {
-            androidTarget()
-        }
-        if (hasJvm) {
-            jvm()
-        }
-
-        if (isMac()) {
-            if (Os.isArch("aarch64")) {
-                listOf(
-                    iosArm64(),
-                    iosSimulatorArm64()
-                )
-            } else {
-                listOf(
-                    iosX64()
-                )
-            }.onEach {
-                it.binaries.framework {
-                    iosFramework()
-                }
-            }
-        }
+        block()
 
         sourceSets.apply {
-            val commonMain = getByName("commonMain")
-
-            if (isMac()) {
-                if (Os.isArch("aarch64")) {
-                    val iosArm64Main = getByName("iosArm64Main")
-                    val iosSimulatorArm64Main = getByName("iosSimulatorArm64Main")
-                    create("iosMain").apply {
-                        dependsOn(commonMain)
-                        iosArm64Main.dependsOn(this)
-                        iosSimulatorArm64Main.dependsOn(this)
-                    }
-                } else {
-                    val iosX64Main = getByName("iosX64Main")
-                    create("iosMain").apply {
-                        dependsOn(commonMain)
-                        iosX64Main.dependsOn(this)
-                    }
-                }
-            }
-
-
             all {
                 it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
                 it.languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
@@ -96,5 +44,57 @@ fun Project.configureTargets(
         toolchain.apply {
             languageVersion.set(JavaLanguageVersion.of(17))
         }
+    }
+}
+
+fun KotlinMultiplatformExtension.commonMain(block: KotlinDependencyHandler.() -> Unit = {}) {
+    sourceSets.apply {
+        commonMain.dependencies(block)
+    }
+}
+
+fun KotlinMultiplatformExtension.androidMain(block: KotlinDependencyHandler.() -> Unit = {}) {
+    androidTarget()
+
+    sourceSets.apply {
+        androidMain.dependencies(block)
+    }
+}
+
+fun KotlinMultiplatformExtension.jvmMain(block: KotlinDependencyHandler.() -> Unit = {}) {
+    jvm()
+
+    sourceSets.apply {
+        jvmMain.dependencies(block)
+    }
+}
+
+fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Unit = {}) {
+    sourceSets.apply {
+        jvmMain.dependencies(block)
+    }
+}
+
+fun KotlinMultiplatformExtension.iosMain(
+    iosFramework: Framework.() -> Unit = {},
+    block: KotlinDependencyHandler.() -> Unit = {}
+) {
+    if (Os.isArch("aarch64")) {
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64()
+        )
+    } else {
+        listOf(
+            iosX64()
+        )
+    }.onEach {
+        it.binaries.framework {
+            iosFramework()
+        }
+    }
+
+    sourceSets.apply {
+        iosMain.dependencies(block)
     }
 }

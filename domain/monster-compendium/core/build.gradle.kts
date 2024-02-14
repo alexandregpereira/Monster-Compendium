@@ -18,24 +18,17 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
+multiplatform {
+    commonMain {
+        api(project(":domain:monster:core"))
+        implementation(libs.koin.core)
+        implementation(libs.kotlin.coroutines.core)
+    }
 
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":domain:monster:core"))
-                implementation(libs.koin.core)
-                implementation(libs.kotlin.coroutines.core)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.bundles.unittest)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
+    jvmMain()
+    iosMain()
+
+    jvmTest {
+        implementation(libs.bundles.unittest)
     }
 }

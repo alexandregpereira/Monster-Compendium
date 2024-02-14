@@ -18,18 +18,11 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.kotlin.coroutines.core)
-                api(project(":core:event"))
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
+multiplatform {
+    commonMain {
+        implementation(libs.kotlin.coroutines.core)
+        api(project(":core:event"))
     }
+    jvmMain()
+    iosMain()
 }
