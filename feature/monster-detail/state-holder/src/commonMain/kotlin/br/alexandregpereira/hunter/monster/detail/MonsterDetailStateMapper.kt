@@ -43,7 +43,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         name = name,
         imageState = imageData.asState(
             type = type,
-            challengeRating = challengeRating,
+            challengeRating = challengeRatingFormatted,
             xp = xpFormatted(),
             contentDescription = name
         ),
@@ -81,7 +81,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
 
 private fun MonsterImageData.asState(
     type: MonsterType,
-    challengeRating: Float,
+    challengeRating: String,
     xp: String,
     contentDescription: String,
 ): MonsterImageState {

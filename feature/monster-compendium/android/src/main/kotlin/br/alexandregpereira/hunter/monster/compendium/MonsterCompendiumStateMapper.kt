@@ -16,51 +16,51 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 
-fun List<MonsterCompendiumItem>.asState(): List<CompendiumItemState> {
+internal fun List<MonsterCompendiumItemState>.asState(): List<CompendiumItemState> {
     return this.map { item ->
         when (item) {
-            is MonsterCompendiumItem.Title -> CompendiumItemState.Title(
+            is MonsterCompendiumItemState.Title -> CompendiumItemState.Title(
                 value = item.value,
                 id = item.id,
                 isHeader = item.isHeader
             )
-            is MonsterCompendiumItem.Item -> CompendiumItemState.Item(
+            is MonsterCompendiumItemState.Item -> CompendiumItemState.Item(
                 value = item.monster.asState()
             )
         }
     }
 }
 
-private fun Monster.asState(): MonsterCardState {
+private fun MonsterPreviewState.asState(): MonsterCardState {
     return MonsterCardState(
         index = index,
         name = name,
         imageState = MonsterImageState(
-            url = imageData.url,
+            url = imageUrl,
             type = MonsterTypeState.valueOf(type.name),
             challengeRating = challengeRating,
             backgroundColor = ColorState(
-                light = imageData.backgroundColor.light,
-                dark = imageData.backgroundColor.dark
+                light = backgroundColorLight,
+                dark = backgroundColorDark
             ),
-            isHorizontal = imageData.isHorizontal
+            isHorizontal = isImageHorizontal
         )
     )
 }
 
 @JvmName("asStateTableContentItem")
-fun List<TableContentItem>.asState(): List<TableContentItemState> {
+internal fun List<TableContentItem>.asState(): List<TableContentItemState> {
     return this.map {
         TableContentItemState(
             id = it.id,

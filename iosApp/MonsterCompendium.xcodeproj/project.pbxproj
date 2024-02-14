@@ -32,7 +32,6 @@
 		C1D25EBF29862ED300F0EBF9 /* MonsterCompendiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D25EBE29862ED300F0EBF9 /* MonsterCompendiumView.swift */; };
 		C1FC49122986F13600C18252 /* MonsterCompendiumItemUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC49112986F13600C18252 /* MonsterCompendiumItemUiState.swift */; };
 		C1FC49142986F15000C18252 /* MonsterUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC49132986F15000C18252 /* MonsterUiState.swift */; };
-		C1FC491629870A2600C18252 /* MonsterCompendiumUiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC491529870A2600C18252 /* MonsterCompendiumUiState.swift */; };
 		E27E58612B7AC87900ED83F4 /* MonsterDetailStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E58602B7AC87900ED83F4 /* MonsterDetailStrings.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +80,6 @@
 		C1D25EBE29862ED300F0EBF9 /* MonsterCompendiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumView.swift; sourceTree = "<group>"; };
 		C1FC49112986F13600C18252 /* MonsterCompendiumItemUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumItemUiState.swift; sourceTree = "<group>"; };
 		C1FC49132986F15000C18252 /* MonsterUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterUiState.swift; sourceTree = "<group>"; };
-		C1FC491529870A2600C18252 /* MonsterCompendiumUiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumUiState.swift; sourceTree = "<group>"; };
 		E27E58602B7AC87900ED83F4 /* MonsterDetailStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailStrings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,7 +215,6 @@
 			children = (
 				C1D25EB929862DEC00F0EBF9 /* UI */,
 				C1D25EB729862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift */,
-				C1FC491529870A2600C18252 /* MonsterCompendiumUiState.swift */,
 			);
 			path = MonsterCompendium;
 			sourceTree = "<group>";
@@ -395,7 +392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1D25EB829862DCC00F0EBF9 /* MonsterCompendiumViewModel.swift in Sources */,
-				C1FC491629870A2600C18252 /* MonsterCompendiumUiState.swift in Sources */,
 				C1D25EB429862B4E00F0EBF9 /* MonsterCardView.swift in Sources */,
 				C1FC49122986F13600C18252 /* MonsterCompendiumItemUiState.swift in Sources */,
 				C15BF15229B1140500F47375 /* MonsterDetailItemUiState.swift in Sources */,

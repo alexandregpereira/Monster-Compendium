@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexFromTableContentIndex
@@ -36,12 +37,10 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.MutableActionHandler
-import br.alexandregpereira.hunter.state.MutableStateHolder
-import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
@@ -55,7 +54,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import kotlin.native.ObjCName
 
+@ObjCName(name = "MonsterCompendiumStateHolder", exact = true)
 class MonsterCompendiumStateHolder(
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
@@ -69,14 +70,16 @@ class MonsterCompendiumStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    initialState: MonsterCompendiumState = MonsterCompendiumState(),
+    private val stateRecovery: MonsterCompendiumStateRecovery,
+    appLocalization: AppLocalization,
     loadOnInit: Boolean = true,
-) : ScopeManager(),
-    MutableStateHolder<MonsterCompendiumState> by MutableStateHolder(initialState),
-    MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler() {
+) : UiModel<MonsterCompendiumState>(stateRecovery.state.copy(strings = appLocalization.getStrings())),
+    MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
+    MonsterCompendiumIntent {
 
     var initialScrollItemPosition: Int = 0
         private set
+    private var metadata: List<MonsterCompendiumItem> = emptyList()
 
     init {
         observeEvents()
@@ -94,10 +97,11 @@ class MonsterCompendiumStateHolder(
             ) { compendium, scrollItemPosition ->
                 analytics.trackMonsterCompendium(compendium, scrollItemPosition)
                 val items = compendium.items
+                metadata = items
                 val alphabet = compendium.alphabet
                 val tableContent = compendium.tableContent
                 state.value.complete(
-                    items = items,
+                    items = items.asState(),
                     alphabet = alphabet,
                     tableContent = tableContent,
                     tableContentIndex = tableContent.getTableContentIndexFromCompendiumItemIndex(
@@ -121,28 +125,28 @@ class MonsterCompendiumStateHolder(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                setState { state }
+                setState { state.saveState(stateRecovery) }
             }
     }
 
-    fun onItemClick(index: String) {
+    override fun onItemClick(index: String) {
         analytics.trackItemClick(index)
         monsterDetailEventDispatcher.dispatchEvent(
             Show(index, enableMonsterPageChangesEventDispatch = true)
         )
     }
 
-    fun onItemLongCLick(index: String) {
+    override fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.ShowFolderPreview)
     }
 
-    fun onFirstVisibleItemChange(position: Int) {
+    override fun onFirstVisibleItemChange(position: Int) {
         saveCompendiumScrollItemPosition(position)
     }
 
-    fun onPopupOpened() {
+    override fun onPopupOpened() {
         analytics.trackPopupOpened()
         setState {
             popupOpened(popupOpened = true)
@@ -150,40 +154,39 @@ class MonsterCompendiumStateHolder(
         }
     }
 
-    fun onPopupClosed() {
+    override fun onPopupClosed() {
         analytics.trackPopupClosed()
         setState { popupOpened(popupOpened = false) }
     }
 
-    fun onAlphabetIndexClicked(position: Int) {
+    override fun onAlphabetIndexClicked(position: Int) {
         analytics.trackAlphabetIndexClicked(position)
         navigateToTableContentFromAlphabetIndex(position)
     }
 
-    fun onTableContentIndexClicked(position: Int) {
+    override fun onTableContentIndexClicked(position: Int) {
         analytics.trackTableContentIndexClicked(position)
         navigateToCompendiumIndexFromTableContentIndex(position)
     }
 
-    fun onTableContentClosed() {
+    override fun onTableContentClosed() {
         analytics.trackTableContentClosed()
         setState { tableContentOpened(false) }
     }
 
-    fun onErrorButtonClick() {
+    override fun onErrorButtonClick() {
         analytics.trackErrorButtonClick()
         syncEventDispatcher.startSync()
     }
 
     private fun saveCompendiumScrollItemPosition(position: Int) {
-        val items = state.value.items
         val alphabet = state.value.alphabet
         val tableContent = state.value.tableContent
         scope.launch {
             saveCompendiumScrollItemPositionUseCase(position)
                 .map {
-                    tableContent.getTableContentIndexFromCompendiumItemIndex(position, items) to
-                            alphabet.getAlphabetIndexFromCompendiumItemIndex(position, items)
+                    tableContent.getTableContentIndexFromCompendiumItemIndex(position, metadata) to
+                            alphabet.getAlphabetIndexFromCompendiumItemIndex(position, metadata)
                 }
                 .flowOn(dispatcher)
                 .collect { (tableContentIndex, alphabetLetter) ->
@@ -194,7 +197,7 @@ class MonsterCompendiumStateHolder(
     }
 
     private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
-        flowOf(state.value.items)
+        flowOf(metadata)
             .map { items ->
                 items.compendiumIndexOf(monsterIndex)
             }.onEach { compendiumIndex ->
@@ -207,7 +210,7 @@ class MonsterCompendiumStateHolder(
             .catch {  error ->
                 if (error is NavigateToCompendiumIndexError) {
                     fetchMonsterCompendium()
-                    state.value.items.compendiumIndexOf(monsterIndex).takeIf { it >= 0 }?.let {
+                    metadata.compendiumIndexOf(monsterIndex).takeIf { it >= 0 }?.let {
                         sendAction(GoToCompendiumIndex(it))
                     }
                 } else {
@@ -255,7 +258,7 @@ class MonsterCompendiumStateHolder(
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
-        setState { showMonsterFolderPreview(isShowing) }
+        setState { showMonsterFolderPreview(isShowing).saveState(stateRecovery) }
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {
@@ -283,12 +286,17 @@ class MonsterCompendiumStateHolder(
         setState { popupOpened(popupOpened = false) }
         val tableContent = state.value.tableContent
         scope.launch {
-            flowOf(state.value.items)
+            flowOf(metadata)
                 .getCompendiumIndexFromTableContentIndex(tableContent, tableContentIndex)
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
                     sendAction(GoToCompendiumIndex(compendiumIndex))
                 }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        onActionHandlerClose()
     }
 }

@@ -22,7 +22,7 @@ internal data class SearchMonsterResult(
     val index: String,
     val name: String,
     val type: MonsterType,
-    val challengeRating: Float,
+    val challengeRating: String,
     val imageUrl: String,
     val backgroundColorLight: String,
     val backgroundColorDark: String,

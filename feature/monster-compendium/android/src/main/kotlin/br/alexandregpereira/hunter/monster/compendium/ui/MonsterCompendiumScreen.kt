@@ -28,33 +28,38 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewState
-import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
-import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
+import br.alexandregpereira.hunter.monster.compendium.asState
+import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
+import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIntent
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
+import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 
 @Composable
 internal fun MonsterCompendiumScreen(
-    state: MonsterCompendiumViewState,
+    state: MonsterCompendiumState,
     initialScrollItemPosition: Int,
     compendiumIndex: Int = -1,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    events: MonsterCompendiumEvents,
+    events: MonsterCompendiumIntent,
 ) = Window(Modifier.fillMaxSize()) {
-    LoadingScreen<MonsterCompendiumErrorState>(
-        state = state.loadingState,
-        errorContent = { errorState ->
+    LoadingScreen<MonsterCompendiumError>(
+        state = when {
+            state.errorState != null -> LoadingScreenState.Error(state.errorState)
+            state.isLoading -> LoadingScreenState.LoadingScreen
+            else -> LoadingScreenState.Success
+        },
+        errorContent = {
             EmptyScreenMessage(
-                title = stringResource(errorState.titleRes),
-                buttonText = stringResource(
-                    errorState.buttonTextRes
-                ),
+                title = state.strings.noInternetConnection,
+                buttonText = state.strings.tryAgain,
                 onButtonClick = events::onErrorButtonClick
             )
         }
@@ -89,29 +94,29 @@ internal fun MonsterCompendiumScreen(
 
 @Composable
 private fun MonsterCompendiumScreen(
-    items: List<CompendiumItemState>,
+    items: List<MonsterCompendiumItemState>,
     isShowingMonsterFolderPreview: Boolean,
     popupOpened: Boolean,
     alphabet: List<String>,
     alphabetSelectedIndex: Int,
-    tableContent: List<TableContentItemState>,
+    tableContent: List<TableContentItem>,
     tableContentIndex: Int,
     tableContentInitialIndex: Int,
     tableContentOpened: Boolean,
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    events: MonsterCompendiumEvents,
+    events: MonsterCompendiumIntent,
 ) {
     PopupContainer(
         isOpened = popupOpened,
         onPopupClosed = events::onPopupClosed,
         content = {
             MonsterCompendium(
-                items = items,
+                items = remember(items) { items.asState() },
                 listState = listState,
                 contentPadding = contentPadding,
-                onItemCLick = events::onItemCLick,
-                onItemLongCLick = events::onItemLongCLick,
+                onItemCLick = events::onItemClick,
+                onItemLongCLick = events::onItemLongClick,
             )
         },
         popupContent = {
@@ -121,7 +126,7 @@ private fun MonsterCompendiumScreen(
 
             TableContentPopup(
                 alphabet = alphabet,
-                tableContent = tableContent,
+                tableContent = remember(tableContent) { tableContent.asState() },
                 alphabetSelectedIndex = alphabetSelectedIndex,
                 tableContentSelectedIndex = tableContentIndex,
                 tableContentInitialIndex = tableContentInitialIndex,

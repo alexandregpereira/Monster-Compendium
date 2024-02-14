@@ -29,7 +29,7 @@ data class MonsterImageState(
     val url: String,
     val type: MonsterTypeState,
     val backgroundColor: ColorState,
-    val challengeRating: Float,
+    val challengeRating: String,
     val isHorizontal: Boolean = false,
     val contentDescription: String = ""
 )

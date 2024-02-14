@@ -5,18 +5,19 @@
 //  Created by Alexandre G Pereira on 29/01/23.
 //
 
+import shared
 import SwiftUI
 
 struct MonsterCompendiumView: View {
     
-    let items: [MonsterCompendiumItemUiState]
+    let items: [MonsterCompendiumItemState]
     let initialCompendiumIndex: Int
     let compendiumIndex: Int
     let onMonsterItemClick: (String) -> Void
     let onFirstVisibleIndexChange: ((Int) -> Void)?
     
     init(
-        items: [MonsterCompendiumItemUiState],
+        items: [MonsterCompendiumItemState],
         initialCompendiumIndex: Int = 0,
         compendiumIndex: Int = -1,
         onMonsterItemClick: @escaping (String) -> Void,
@@ -39,9 +40,9 @@ struct MonsterCompendiumView: View {
                     ]
                     
                     LazyVGrid(columns: gridItems, spacing: 0) {
-                        ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
+                        ForEach(Array(items.enumerated()), id: \.element.key) { index, item in
                             MonsterCompendiumItemView(item: item, onMonsterItemClick: onMonsterItemClick)
-                                .id(item.id)
+                                .id(item.key)
                                 .background(GeometryReader { itemProxy in
                                     let gridTop = gridProxy.frame(in: .global).minY
                                     let itemTop = itemProxy.frame(in: .global).minY
@@ -64,11 +65,11 @@ struct MonsterCompendiumView: View {
                 .onChange(of: compendiumIndex) { newIndex in
                     guard newIndex >= 0 else { return }
                     withAnimation {
-                        scrollProxy.scrollTo(items[newIndex].id, anchor: .top)
+                        scrollProxy.scrollTo(items[newIndex].key, anchor: .top)
                     }
                 }
                 .onAppear {
-                    scrollProxy.scrollTo(items[initialCompendiumIndex].id, anchor: .top)
+                    scrollProxy.scrollTo(items[initialCompendiumIndex].key, anchor: .top)
                 }
             }
         }
@@ -77,26 +78,28 @@ struct MonsterCompendiumView: View {
 
 struct MonsterCompendiumItemView: View {
     
-    let item: MonsterCompendiumItemUiState
+    let item: MonsterCompendiumItemState
     let onMonsterItemClick: (String) -> Void
     
     var body: some View {
         ZStack(alignment: .leading) {
             switch item {
-            case .title (let title):
+            case let title as MonsterCompendiumItemState.Title:
                 let font = title.isHeader ? Font.system(size: 48) : Font.title
                 let bottomPadding = title.isHeader ? 32.0 : 16
                 Text(title.value)
                     .font(font)
                     .padding(EdgeInsets(top: 40, leading: 16, bottom: bottomPadding, trailing: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
-            case .item (let item):
-                let monster = item.value
+            case let item as MonsterCompendiumItemState.Item:
+                let monster = item.monster
                 MonsterCardView(monster: monster)
                     .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
                     .onTapGesture {
                         onMonsterItemClick(monster.index)
                     }
+            default:
+                EmptyView()
             }
         }
         .frame(
@@ -117,6 +120,6 @@ struct FirstVisibleItemIndexKey: PreferenceKey {
 
 struct MonsterCompendiumView_Previews: PreviewProvider {
     static var previews: some View {
-        MonsterCompendiumView(items: MonsterCompendiumItemUiState.sampleData, onMonsterItemClick: { print($0) })
+        MonsterCompendiumView(items: MonsterCompendiumItemState.sampleData, onMonsterItemClick: { print($0) })
     }
 }

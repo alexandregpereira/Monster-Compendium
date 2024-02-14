@@ -16,78 +16,35 @@
 
 package br.alexandregpereira.hunter.state
 
+import br.alexandregpereira.flow.StateFlowWrapper
+import br.alexandregpereira.flow.wrap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
-abstract class UiModel<State>(
+abstract class UiModel<State : Any>(
     initialState: State
 ) : StateHolder<State> {
 
-    val scope = CoroutineScope(
+    protected val scope = CoroutineScope(
         SupervisorJob() + Dispatchers.Main.immediate
     )
 
     private val _state = MutableStateFlow(initialState)
-    override val state: StateFlow<State> = _state
+    override val state: StateFlowWrapper<State> = _state.wrap(scope)
 
     protected fun setState(block: State.() -> State) {
-        _state.value = state.value.block()
+        _state.value = _state.value.block()
     }
 
-    fun onCleared() {
+    open fun onCleared() {
         scope.cancel()
     }
 }
 
-interface StateHolder<State> {
+interface StateHolder<State : Any> {
 
-    val state: StateFlow<State>
-}
-
-interface MutableStateHolder<State>: StateHolder<State> {
-
-    fun setState(block: State.() -> State)
-}
-
-fun <State> MutableStateHolder(initialState: State): MutableStateHolder<State> {
-    return DefaultStateHolderImpl(initialState)
-}
-
-fun <State> MutableStateHolder(
-    stateRecovery: StateRecovery<State>
-): MutableStateHolder<State> {
-    return DefaultStateHolderWithRecovery(stateRecovery)
-}
-
-private class DefaultStateHolderImpl<State>(
-    initialState: State
-): MutableStateHolder<State> {
-
-    private val _state = MutableStateFlow(initialState)
-    override val state: StateFlow<State> = _state
-
-    override fun setState(block: State.() -> State) {
-        _state.value = state.value.block()
-    }
-}
-
-private class DefaultStateHolderWithRecovery<State>(
-    private val stateRecovery: StateRecovery<State>
-): MutableStateHolder<State> {
-
-    private val stateHolderDelegate = DefaultStateHolderImpl(stateRecovery.getState())
-
-    override val state: StateFlow<State> = stateHolderDelegate.state
-
-    override fun setState(block: State.() -> State) {
-        stateHolderDelegate.setState {
-            block().also {
-                stateRecovery.saveState(it)
-            }
-        }
-    }
+    val state: StateFlowWrapper<State>
 }

@@ -16,6 +16,9 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import kotlin.native.ObjCName
+
+@ObjCName(name = "MonsterCompendiumAction", exact = true)
 sealed class MonsterCompendiumAction {
     data class GoToCompendiumIndex(val index: Int) : MonsterCompendiumAction()
 }

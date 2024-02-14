@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.shared
 
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -24,6 +23,4 @@ import org.koin.core.component.inject
 class MonsterDetailFeature : KoinComponent {
 
     val stateHolder: MonsterDetailStateHolder by inject()
-
-    val state: IosFlow<MonsterDetailState> = stateHolder.state.iosFlow(stateHolder.scope)
 }

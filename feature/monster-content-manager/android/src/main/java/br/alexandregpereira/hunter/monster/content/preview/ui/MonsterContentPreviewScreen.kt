@@ -226,7 +226,7 @@ private fun Monster.asState(): MonsterCardState {
         imageState = MonsterImageState(
             url = imageData.url,
             type = MonsterTypeState.valueOf(type.name),
-            challengeRating = challengeRating,
+            challengeRating = challengeRatingFormatted,
             backgroundColor = ColorState(
                 light = imageData.backgroundColor.light,
                 dark = imageData.backgroundColor.dark

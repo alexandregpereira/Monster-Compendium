@@ -23,11 +23,8 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.Show
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.localization.AppLocalization
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -44,10 +41,8 @@ class FolderInsertStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderInsertAnalytics,
     private val appLocalization: AppLocalization,
-) : ScopeManager(), StateHolder<FolderInsertState> {
+) : UiModel<FolderInsertState>(stateRecovery.getState()) {
 
-    private val _state = MutableStateFlow(stateRecovery.getState())
-    override val state: StateFlow<FolderInsertState> = _state
     private val strings: FolderInsertStrings
         get() = getFolderInsertStrings(appLocalization.getLanguage())
 
@@ -156,9 +151,5 @@ class FolderInsertStateHolder internal constructor(
                 }
             }
         }.launchIn(scope)
-    }
-
-    private fun setState(block: FolderInsertState.() -> FolderInsertState) {
-        _state.value = state.value.block()
     }
 }

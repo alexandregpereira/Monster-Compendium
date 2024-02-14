@@ -18,31 +18,31 @@ package br.alexandregpereira.hunter.monster.compendium
 
 import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
-import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateRecovery
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER1
-import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.HEADER2
-import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Success
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -56,8 +56,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
-import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item as ItemState
-import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title as TitleState
 
 @ExperimentalCoroutinesApi
 class MonsterCompendiumViewModelTest {
@@ -94,10 +92,12 @@ class MonsterCompendiumViewModelTest {
                 Monster(
                     index = "zariel1",
                     name = "Zariel",
+                    challengeRating = 0.5f,
                 ).asItem(),
                 Monster(
                     index = "zariel2",
                     name = "Zariel",
+                    challengeRating = 1f,
                 ).asItem()
             ),
             tableContent = listOf(
@@ -117,7 +117,7 @@ class MonsterCompendiumViewModelTest {
         every { savedStateHandle.get<Boolean>(any()) } returns null
         createViewModel()
 
-        val results = mutableListOf<MonsterCompendiumViewState>()
+        val results = mutableListOf<MonsterCompendiumState>()
         val job = launch {
             viewModel.state.toList(results)
         }
@@ -132,43 +132,47 @@ class MonsterCompendiumViewModelTest {
 
         assertEquals(expected = 2, actual = results.size)
         assertEquals(expected = 4, actual = viewModel.initialScrollItemPosition)
-        assertEquals(expected = MonsterCompendiumViewState(), actual = results[0])
+        assertEquals(expected = MonsterCompendiumState(), actual = results[0])
         assertEquals(
             actual = results[1],
-            expected = MonsterCompendiumViewState().copy(
-                loadingState = Success,
+            expected = MonsterCompendiumState().copy(
+                isLoading = false,
                 items = listOf(
-                    TitleState(value = "Any", id = "da", isHeader = true),
-                    TitleState(value = "Any", id = "da2", isHeader = false),
-                    TitleState(value = "Any3", id = "da3", isHeader = false),
-                    MonsterCardState(
-                        index = "zariel1",
-                        name = "Zariel",
-                        imageState = MonsterImageState(
-                            url = "",
-                            type = MonsterTypeState.ABERRATION,
-                            challengeRating = 0.0f,
-                            backgroundColor = ColorState(light = "", dark = ""),
-                        ),
-                    ).asItemState(),
-                    MonsterCardState(
-                        index = "zariel2",
-                        name = "Zariel",
-                        imageState = MonsterImageState(
-                            url = "",
-                            type = MonsterTypeState.ABERRATION,
-                            challengeRating = 0.0f,
-                            backgroundColor = ColorState(light = "", dark = ""),
-                        ),
-                    ).asItemState(),
+                    MonsterCompendiumItemState.Title(value = "Any", id = "da", isHeader = true),
+                    MonsterCompendiumItemState.Title(value = "Any", id = "da2", isHeader = false),
+                    MonsterCompendiumItemState.Title(value = "Any3", id = "da3", isHeader = false),
+                    MonsterCompendiumItemState.Item(
+                        monster = MonsterPreviewState(
+                            index = "zariel1",
+                            name = "Zariel",
+                            imageUrl = "",
+                            type = MonsterType.ABERRATION,
+                            challengeRating = "1/2",
+                            backgroundColorLight = "",
+                            backgroundColorDark = "",
+                            isImageHorizontal = false,
+                        )
+                    ),
+                    MonsterCompendiumItemState.Item(
+                        monster = MonsterPreviewState(
+                            index = "zariel2",
+                            name = "Zariel",
+                            imageUrl = "",
+                            type = MonsterType.ABERRATION,
+                            challengeRating = "1",
+                            backgroundColorLight = "",
+                            backgroundColorDark = "",
+                            isImageHorizontal = false,
+                        )
+                    ),
                 ),
                 alphabet = listOf("A", "Z"),
                 alphabetSelectedIndex = 0,
                 tableContent = listOf(
-                    TableContentItemState(text = "Any", type = HEADER1),
-                    TableContentItemState(text = "Any", type = HEADER2),
-                    TableContentItemState(text = "Zariel", type = BODY, id = "zariel1"),
-                    TableContentItemState(text = "Zariel", type = BODY, id = "zariel2"),
+                    TableContentItem(text = "Any", type = TableContentItemType.HEADER1),
+                    TableContentItem(text = "Any", type = TableContentItemType.HEADER2),
+                    TableContentItem(text = "Zariel", type = TableContentItemType.BODY, id = "zariel1"),
+                    TableContentItem(text = "Zariel", type = TableContentItemType.BODY, id = "zariel2"),
                 ),
                 tableContentIndex = 3
             )
@@ -212,12 +216,12 @@ class MonsterCompendiumViewModelTest {
         createViewModel()
 
 
-        val results = mutableListOf<MonsterCompendiumViewState>()
+        val results = mutableListOf<MonsterCompendiumState>()
         val job = launch {
             viewModel.state.toList(results)
         }
 
-        val actions = mutableListOf<MonsterCompendiumViewAction>()
+        val actions = mutableListOf<MonsterCompendiumAction>()
         val actionJob = launch {
             viewModel.action.toList(actions)
         }
@@ -286,7 +290,7 @@ class MonsterCompendiumViewModelTest {
         createViewModel()
 
 
-        val results = mutableListOf<MonsterCompendiumViewState>()
+        val results = mutableListOf<MonsterCompendiumState>()
         val job = launch {
             viewModel.state.toList(results)
         }
@@ -352,7 +356,7 @@ class MonsterCompendiumViewModelTest {
         createViewModel()
 
 
-        val results = mutableListOf<MonsterCompendiumViewState>()
+        val results = mutableListOf<MonsterCompendiumState>()
         val job = launch {
             viewModel.state.toList(results)
         }
@@ -382,23 +386,27 @@ class MonsterCompendiumViewModelTest {
 
     private fun createViewModel() {
         viewModel = MonsterCompendiumViewModel(
-            savedStateHandle = savedStateHandle,
-            getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
-            getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
-            saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
-            folderPreviewEventDispatcher = folderPreviewEventDispatcher,
-            folderPreviewResultListener = folderPreviewResultListener,
-            monsterDetailEventDispatcher = monsterDetailEventDispatcher,
-            monsterDetailEventListener = monsterDetailEventListener,
-            syncEventDispatcher = syncEventDispatcher,
-            syncEventListener = syncEventListener,
-            monsterRegistrationEventListener = monsterRegistrationEventListener,
-            loadOnInit = false,
-            dispatcher = testCoroutineRule.testCoroutineDispatcher,
-            analytics = mockk(relaxed = true)
+            stateHolder = MonsterCompendiumStateHolder(
+                getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
+                getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
+                saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
+                folderPreviewEventDispatcher = folderPreviewEventDispatcher,
+                folderPreviewResultListener = folderPreviewResultListener,
+                monsterDetailEventDispatcher = monsterDetailEventDispatcher,
+                monsterDetailEventListener = monsterDetailEventListener,
+                syncEventDispatcher = syncEventDispatcher,
+                syncEventListener = syncEventListener,
+                monsterRegistrationEventListener = monsterRegistrationEventListener,
+                loadOnInit = false,
+                dispatcher = testCoroutineRule.testCoroutineDispatcher,
+                analytics = mockk(relaxed = true),
+                appLocalization = object : AppLocalization {
+                    override fun getLanguage(): Language = Language.ENGLISH
+                },
+                stateRecovery = MonsterCompendiumStateRecovery()
+            )
         )
     }
 
     private fun Monster.asItem(): Item = Item(this)
-    private fun MonsterCardState.asItemState(): ItemState = ItemState(this)
 }

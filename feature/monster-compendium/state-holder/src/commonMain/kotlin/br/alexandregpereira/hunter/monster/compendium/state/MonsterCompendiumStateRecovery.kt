@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Alexandre Gomes Pereira
+ * Copyright 2023 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium
+package br.alexandregpereira.hunter.monster.compendium.state
 
-import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+interface MonsterCompendiumStateRecovery {
+    val state: MonsterCompendiumState
 
-internal fun SavedStateHandle.getState(): MonsterCompendiumState {
-    return MonsterCompendiumState(
-        isShowingMonsterFolderPreview = this["isShowingMonsterFolderPreview"] ?: false
-    )
+    fun saveState(state: MonsterCompendiumState)
 }
 
+fun MonsterCompendiumStateRecovery(): MonsterCompendiumStateRecovery = DefaultMonsterCompendiumStateRecovery()
+
 internal fun MonsterCompendiumState.saveState(
-    savedStateHandle: SavedStateHandle
+    recovery: MonsterCompendiumStateRecovery
 ): MonsterCompendiumState {
-    savedStateHandle["isShowingMonsterFolderPreview"] = this.isShowingMonsterFolderPreview
+    recovery.saveState(this)
     return this
+}
+
+private class DefaultMonsterCompendiumStateRecovery : MonsterCompendiumStateRecovery {
+
+    override val state: MonsterCompendiumState = MonsterCompendiumState.Empty
+
+    override fun saveState(state: MonsterCompendiumState) {}
 }

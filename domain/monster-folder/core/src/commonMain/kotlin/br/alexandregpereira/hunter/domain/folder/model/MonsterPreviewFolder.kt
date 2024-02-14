@@ -20,7 +20,7 @@ data class MonsterPreviewFolder(
     val index: String,
     val name: String = "",
     val type: MonsterPreviewFolderType = MonsterPreviewFolderType.ABERRATION,
-    val challengeRating: Float = 0f,
+    val challengeRating: String = "",
     val imageUrl: String = "",
     val backgroundColorLight: String,
     val backgroundColorDark: String,

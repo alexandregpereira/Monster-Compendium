@@ -5,13 +5,14 @@
 //  Created by Alexandre G Pereira on 29/01/23.
 //
 
-import SwiftUI
 import SDWebImageSwiftUI
+import shared
+import SwiftUI
 
 struct MonsterCardView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var monster: MonsterUiState
+    var monster: MonsterPreviewState
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -42,7 +43,7 @@ struct MonsterCardView: View {
                     )
                     .padding(EdgeInsets(top: -50, leading: -50, bottom: 0, trailing: 0))
                 
-                Text(monster.challengeRatingFormatted)
+                Text(monster.challengeRating)
                     .frame(
                       minWidth: 0,
                       maxWidth: .infinity,
@@ -63,22 +64,11 @@ struct MonsterCardView: View {
 }
 
 struct MonsterCardView_Previews: PreviewProvider {
-    static var monsters = MonsterUiState.sampleData
+    static var monsters = MonsterPreviewState.sampleData
     static var previews: some View {
         MonsterCardView(monster: monsters[0])
             .padding()
             .previewLayout(.sizeThatFits)
-    }
-}
-
-extension MonsterUiState {
-    var challengeRatingFormatted: String {
-        if self.challengeRating >= 1 {
-            return Int(self.challengeRating).description
-        } else {
-            let safeNumber = self.challengeRating > 0 ? self.challengeRating : 0.12
-            return "1/" + Int(1 / safeNumber).description
-        }
     }
 }
 

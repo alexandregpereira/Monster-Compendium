@@ -18,7 +18,7 @@ struct MonsterCompendiumScreenView: View {
     var body: some View {
         let state = viewModel.state
         ZStack {
-            if viewModel.isLoading {
+            if viewModel.state.isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .transition(.opacity)
@@ -38,10 +38,10 @@ struct MonsterCompendiumScreenView: View {
                         TableContentPopup(
                             tableContent: state.tableContent,
                             alphabet: state.alphabet,
-                            alphabetSelectedIndex: state.alphabetSelectedIndex,
-                            tableContentSelectedIndex: state.tableContentSelectedIndex,
-                            tableContentInitialIndex: state.tableContentInitialIndex,
-                            screen: state.tableContentPopupScreenType,
+                            alphabetSelectedIndex: Int(state.alphabetSelectedIndex),
+                            tableContentSelectedIndex: Int(state.tableContentIndex),
+                            tableContentInitialIndex: Int(state.tableContentInitialIndex),
+                            screen: state.popupOpened && state.tableContentOpened ? .tableContent : (state.popupOpened ? .alphabetGrid : .circleLetter),
                             onOpenButtonClicked: { viewModel.onPopupOpened() },
                             onCloseButtonClicked: { viewModel.onPopupClosed() },
                             onTableContentClicked: { viewModel.onTableContentIndexClicked(position: $0) },
@@ -52,6 +52,6 @@ struct MonsterCompendiumScreenView: View {
                 .transition(.opacity)
             }
         }
-        .animation(.spring(), value: viewModel.isLoading)
+        .animation(.spring(), value: viewModel.state.isLoading)
     }
 }

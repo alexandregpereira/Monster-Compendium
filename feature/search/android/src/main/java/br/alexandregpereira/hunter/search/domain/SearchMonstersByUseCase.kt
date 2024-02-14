@@ -66,7 +66,7 @@ internal class SearchMonstersByUseCase internal constructor(
                         index = monster.index,
                         name = monster.name,
                         type = monster.type,
-                        challengeRating = monster.challengeRating,
+                        challengeRating = monster.challengeRatingFormatted,
                         imageUrl = monster.imageData.url,
                         backgroundColorLight = monster.imageData.backgroundColor.light,
                         backgroundColorDark = monster.imageData.backgroundColor.dark,
