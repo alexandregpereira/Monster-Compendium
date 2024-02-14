@@ -14,7 +14,7 @@ import shared
     private let feature: MonsterDetailFeature = MonsterDetailFeature()
     
     init() {
-        feature.state.collect { (state: MonsterDetailState) -> Void in
+        feature.stateHolder.state.subscribe { (state: MonsterDetailState) -> Void in
             self.state = state
         }
     }

@@ -524,7 +524,8 @@ struct MonsterDetailView_Previews: PreviewProvider {
                     url: "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/aboleth.png",
                     type: MonsterType.aberration,
                     backgroundColor: ColorState(light: "#ABCDEF", dark: "#ABCDEF"),
-                    challengeRating: 1.0, xp: "250 xp",
+                    challengeRating: "1",
+                    xp: "250 xp",
                     contentDescription: ""
                 ),
                 subtitle: "Sample Subtitle",

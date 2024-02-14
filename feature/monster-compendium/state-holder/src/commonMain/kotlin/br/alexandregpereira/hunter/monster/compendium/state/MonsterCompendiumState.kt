@@ -16,13 +16,15 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
-import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import kotlin.native.ObjCName
 
+@ObjCName(name = "MonsterCompendiumState", exact = true)
 data class MonsterCompendiumState(
     val isLoading: Boolean = true,
-    val items: List<MonsterCompendiumItem> = emptyList(),
+    val items: List<MonsterCompendiumItemState> = emptyList(),
     val alphabet: List<String> = emptyList(),
     val alphabetSelectedIndex: Int = -1,
     val popupOpened: Boolean = false,
@@ -31,7 +33,52 @@ data class MonsterCompendiumState(
     val tableContentInitialIndex: Int = 0,
     val tableContentOpened: Boolean = false,
     val isShowingMonsterFolderPreview: Boolean = false,
-    val errorState: MonsterCompendiumError? = null
+    val errorState: MonsterCompendiumError? = null,
+    val strings: MonsterCompendiumStrings = MonsterCompendiumStrings(),
+) {
+
+    companion object {
+        val Empty = MonsterCompendiumState()
+    }
+}
+
+@ObjCName(name = "MonsterCompendiumItemState", exact = true)
+sealed class MonsterCompendiumItemState {
+
+    val key: String
+        get() = when (this) {
+            is Title -> id
+            is Item -> monster.index
+        }
+
+    data class Title(
+        val id: String,
+        val value: String,
+        val isHeader: Boolean
+    ) : MonsterCompendiumItemState()
+
+    data class Item(
+        val monster: MonsterPreviewState
+    ) : MonsterCompendiumItemState()
+
+    fun isHorizontal(): Boolean {
+        return when (this) {
+            is Title -> true
+            is Item -> monster.isImageHorizontal
+        }
+    }
+}
+
+@ObjCName(name = "MonsterPreviewState", exact = true)
+data class MonsterPreviewState(
+    val index: String = "",
+    val name: String = "",
+    val type: MonsterType = MonsterType.ABERRATION,
+    val challengeRating: String = "",
+    val imageUrl: String = "",
+    val backgroundColorLight: String = "",
+    val backgroundColorDark: String = "",
+    val isImageHorizontal: Boolean = false,
 )
 
 fun MonsterCompendiumState.loading(isLoading: Boolean): MonsterCompendiumState {
@@ -39,7 +86,7 @@ fun MonsterCompendiumState.loading(isLoading: Boolean): MonsterCompendiumState {
 }
 
 fun MonsterCompendiumState.complete(
-    items: List<MonsterCompendiumItem>,
+    items: List<MonsterCompendiumItemState>,
     alphabet: List<String>,
     tableContent: List<TableContentItem>,
     alphabetSelectedIndex: Int,

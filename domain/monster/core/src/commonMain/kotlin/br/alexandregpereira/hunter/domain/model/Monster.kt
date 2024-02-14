@@ -58,6 +58,17 @@ data class Monster(
 ) {
 
     val xp: Int = challengeRatingToXp()
+
+    val challengeRatingFormatted: String = challengeRating.getChallengeRatingFormatted()
+}
+
+private fun Float.getChallengeRatingFormatted(): String {
+    return if (this < 1) {
+        val value = 1 / this
+        "1/${value.toInt()}"
+    } else {
+        this.toInt().toString()
+    }
 }
 
 data class MonsterImageData(

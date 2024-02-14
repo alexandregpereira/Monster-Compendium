@@ -16,155 +16,28 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.event.EventListener
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
-import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewAction.GoToCompendiumIndex
-import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIntent
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumErrorState.NO_INTERNET_CONNECTION
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumEvents
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
-import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
-import br.alexandregpereira.hunter.sync.event.SyncEventListener
-import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import br.alexandregpereira.hunter.state.ActionHandler
+import br.alexandregpereira.hunter.state.StateHolder
 
 internal class MonsterCompendiumViewModel(
-    private val savedStateHandle: SavedStateHandle,
-    getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
-    getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
-    saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
-    folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
-    folderPreviewResultListener: FolderPreviewResultListener,
-    monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
-    monsterDetailEventListener: MonsterDetailEventListener,
-    syncEventListener: SyncEventListener,
-    syncEventDispatcher: SyncEventDispatcher,
-    monsterRegistrationEventListener: MonsterRegistrationEventListener,
-    analytics: MonsterCompendiumAnalytics,
-    dispatcher: CoroutineDispatcher,
-    loadOnInit: Boolean = true,
-) : ViewModel(), MonsterCompendiumEvents {
-
-    private val stateHolder: MonsterCompendiumStateHolder = MonsterCompendiumStateHolder(
-        getMonsterCompendiumUseCase,
-        getLastCompendiumScrollItemPositionUseCase,
-        saveCompendiumScrollItemPositionUseCase,
-        folderPreviewEventDispatcher,
-        folderPreviewResultListener,
-        monsterDetailEventDispatcher,
-        monsterDetailEventListener,
-        syncEventListener,
-        syncEventDispatcher,
-        monsterRegistrationEventListener,
-        dispatcher,
-        loadOnInit = loadOnInit,
-        initialState = savedStateHandle.getState().asMonsterCompendiumState(),
-        analytics = analytics,
-    )
+    private val stateHolder: MonsterCompendiumStateHolder,
+) : ViewModel(),
+    StateHolder<MonsterCompendiumState> by stateHolder,
+    ActionHandler<MonsterCompendiumAction> by stateHolder,
+    MonsterCompendiumIntent by stateHolder {
 
     val initialScrollItemPosition: Int
         get() = stateHolder.initialScrollItemPosition
 
-    private val _state = MutableStateFlow(stateHolder.state.value.asMonsterCompendiumViewState())
-    val state: StateFlow<MonsterCompendiumViewState> = _state
-
-    val action: Flow<MonsterCompendiumViewAction> = stateHolder.action.map {
-        when (it) {
-            is MonsterCompendiumAction.GoToCompendiumIndex -> GoToCompendiumIndex(it.index)
-        }
-    }
-
-    init {
-        stateHolder.state
-            .onEach {
-                _state.value = it.asMonsterCompendiumViewState().saveState(savedStateHandle)
-            }
-            .launchIn(viewModelScope)
-    }
-
     fun loadMonsters() = stateHolder.loadMonsters()
-
-    override fun onItemCLick(index: String) {
-        stateHolder.onItemClick(index)
-    }
-
-    override fun onItemLongCLick(index: String) {
-        stateHolder.onItemLongCLick(index)
-    }
-
-    override fun onFirstVisibleItemChange(position: Int) {
-        stateHolder.onFirstVisibleItemChange(position)
-    }
-
-    override fun onPopupOpened() {
-        stateHolder.onPopupOpened()
-    }
-
-    override fun onPopupClosed() {
-        stateHolder.onPopupClosed()
-    }
-
-    override fun onAlphabetIndexClicked(position: Int) {
-        stateHolder.onAlphabetIndexClicked(position)
-    }
-
-    override fun onTableContentIndexClicked(position: Int) {
-        stateHolder.onTableContentIndexClicked(position)
-    }
-
-    override fun onTableContentClosed() {
-        stateHolder.onTableContentClosed()
-    }
-
-    override fun onErrorButtonClick() {
-        stateHolder.onErrorButtonClick()
-    }
 
     override fun onCleared() {
         super.onCleared()
         stateHolder.onCleared()
-    }
-
-    private fun MonsterCompendiumState.asMonsterCompendiumViewState(): MonsterCompendiumViewState {
-        return MonsterCompendiumViewState(
-            loadingState = when {
-                this.errorState != null -> LoadingScreenState.Error(NO_INTERNET_CONNECTION)
-                this.isLoading -> LoadingScreenState.LoadingScreen
-                else -> LoadingScreenState.Success
-            },
-            items = this.items.asState(),
-            alphabet = this.alphabet,
-            alphabetSelectedIndex = this.alphabetSelectedIndex,
-            popupOpened = this.popupOpened,
-            tableContent = this.tableContent.asState(),
-            tableContentIndex = this.tableContentIndex,
-            tableContentInitialIndex = this.tableContentInitialIndex,
-            tableContentOpened = this.tableContentOpened,
-            isShowingMonsterFolderPreview = this.isShowingMonsterFolderPreview,
-        )
-    }
-
-    private fun MonsterCompendiumViewState.asMonsterCompendiumState(): MonsterCompendiumState {
-        return MonsterCompendiumState(
-            isShowingMonsterFolderPreview = this.isShowingMonsterFolderPreview,
-        )
     }
 }

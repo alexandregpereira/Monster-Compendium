@@ -16,27 +16,36 @@
 
 package br.alexandregpereira.hunter.monster.compendium.di
 
+import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumViewModel
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
+import br.alexandregpereira.hunter.monster.compendium.getState
+import br.alexandregpereira.hunter.monster.compendium.saveState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateRecovery
+import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
 
-val monsterCompendiumModule = module {
+val monsterCompendiumModule = monsterCompendiumStateModule.apply {
+    factory<MonsterCompendiumStateRecovery> {
+        AndroidMonsterCompendiumStateRecovery(
+            savedStateHandle = get(),
+        )
+    }
     viewModel {
         MonsterCompendiumViewModel(
-            savedStateHandle = get(),
-            getMonsterCompendiumUseCase = get(),
-            getLastCompendiumScrollItemPositionUseCase = get(),
-            saveCompendiumScrollItemPositionUseCase = get(),
-            folderPreviewEventDispatcher = get(),
-            folderPreviewResultListener = get(),
-            monsterDetailEventDispatcher = get(),
-            monsterDetailEventListener = get(),
-            syncEventListener = get(),
-            syncEventDispatcher = get(),
-            monsterRegistrationEventListener = get(),
-            analytics = MonsterCompendiumAnalytics(get()),
-            dispatcher = get()
+            stateHolder = get(),
         )
+    }
+}
+
+private class AndroidMonsterCompendiumStateRecovery(
+    private val savedStateHandle: SavedStateHandle,
+) : MonsterCompendiumStateRecovery {
+
+    override val state: MonsterCompendiumState
+        get() = savedStateHandle.getState()
+
+    override fun saveState(state: MonsterCompendiumState) {
+        state.saveState(savedStateHandle)
     }
 }

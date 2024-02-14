@@ -72,7 +72,7 @@ data class MonsterState(
     val type: MonsterType
         get() = imageState.type
 
-    val challengeRating: Float
+    val challengeRating: String
         get() = imageState.challengeRating
 
     val xp: String
@@ -159,7 +159,7 @@ data class MonsterImageState(
     val url: String= "",
     val type: MonsterType = MonsterType.ABERRATION,
     val backgroundColor: ColorState = ColorState(),
-    val challengeRating: Float = 0f,
+    val challengeRating: String = "",
     val xp: String = "",
     val contentDescription: String = ""
 )

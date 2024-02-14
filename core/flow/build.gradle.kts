@@ -7,7 +7,7 @@ configureJvmTargets()
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":core:flow"))
+            api(libs.kotlin.coroutines.core)
         }
     }
 }

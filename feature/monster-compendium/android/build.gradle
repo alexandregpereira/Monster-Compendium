@@ -31,6 +31,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core:localization')
     implementation project(':feature:folder-preview:event')
     implementation project(':feature:monster-detail:event')
     implementation project(':feature:monster-registration:event')

@@ -16,33 +16,44 @@
 
 package br.alexandregpereira.hunter.state
 
+import br.alexandregpereira.flow.SharedFlowWrapper
+import br.alexandregpereira.flow.wrap
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 
-interface ActionHandler<Action> {
+interface ActionHandler<Action : Any> {
 
-    val action: SharedFlow<Action>
+    val action: SharedFlowWrapper<Action>
 }
 
-interface MutableActionHandler<Action> : ActionHandler<Action> {
+interface MutableActionHandler<Action : Any> : ActionHandler<Action> {
 
     fun sendAction(action: Action)
+
+    fun onActionHandlerClose()
 }
 
-fun <Action> MutableActionHandler(): MutableActionHandler<Action> {
+fun <Action : Any> MutableActionHandler(): MutableActionHandler<Action> {
     return MutableActionHandlerImpl()
 }
 
-private class MutableActionHandlerImpl<Action> : MutableActionHandler<Action> {
+private class MutableActionHandlerImpl<Action : Any> : MutableActionHandler<Action> {
+
+    private val coroutineScope = MainScope()
 
     private val _action = MutableSharedFlow<Action>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    override val action: SharedFlow<Action> = _action
+    override val action: SharedFlowWrapper<Action> = _action.wrap(coroutineScope)
 
     override fun sendAction(action: Action) {
         _action.tryEmit(action)
+    }
+
+    override fun onActionHandlerClose() {
+        coroutineScope.cancel()
     }
 }

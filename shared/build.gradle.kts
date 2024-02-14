@@ -22,33 +22,26 @@ configureJvmTargets(iosFramework = { linkerOpts("-l", "sqlite3") })
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":core:analytics"))
-                implementation(project(":core:localization"))
-                implementation(project(":domain:app:data"))
-                implementation(project(":domain:app:core"))
-                implementation(project(":domain:sync:core"))
-                implementation(project(":feature:folder-insert:event")) // TODO Remove later
-                implementation(project(":feature:folder-preview:event")) // TODO Remove later
-                implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
-                implementation(project(":feature:monster-registration:event")) // TODO Remove later
-                implementation(project(":feature:spell-detail:event")) // TODO Remove later
-                implementation(project(":feature:monster-compendium:state-holder"))
-                implementation(project(":feature:monster-detail:state-holder"))
-                implementation(project(":feature:sync:state-holder"))
-                implementation(libs.kotlin.coroutines.core)
-                implementation(libs.koin.core)
-            }
+        commonMain.dependencies {
+            implementation(project(":core:analytics"))
+            implementation(project(":core:localization"))
+            implementation(project(":domain:app:data"))
+            implementation(project(":domain:app:core"))
+            implementation(project(":domain:sync:core"))
+            implementation(project(":feature:folder-insert:event")) // TODO Remove later
+            implementation(project(":feature:folder-preview:event")) // TODO Remove later
+            implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
+            implementation(project(":feature:monster-registration:event")) // TODO Remove later
+            implementation(project(":feature:spell-detail:event")) // TODO Remove later
+            implementation(project(":feature:monster-compendium:state-holder"))
+            implementation(project(":feature:monster-detail:state-holder"))
+            implementation(project(":feature:sync:state-holder"))
+            implementation(libs.kotlin.coroutines.core)
+            implementation(libs.koin.core)
         }
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.bundles.unittest)
-                implementation(libs.koin.test)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
+        jvmTest.dependencies {
+            implementation(libs.bundles.unittest)
+            implementation(libs.koin.test)
         }
     }
 }

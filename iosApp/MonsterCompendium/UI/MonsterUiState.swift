@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import shared
 
 struct MonsterUiState {
     let index: String
@@ -17,12 +18,13 @@ struct MonsterUiState {
     var isImageHorizontal: Bool
 }
 
-extension MonsterUiState {
-    static let sampleData: [MonsterUiState] = (1...100).map {
-        MonsterUiState(
+extension MonsterPreviewState {
+    static let sampleData: [MonsterPreviewState] = (1...100).map {
+        MonsterPreviewState(
             index: "\($0)",
             name: "Aboleth\($0)",
-            challengeRating: 20.0,
+            type: MonsterType.aberration,
+            challengeRating: "20",
             imageUrl: "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/aboleth.png",
             backgroundColorLight: "#d3dedc",
             backgroundColorDark: "#d3dedc",

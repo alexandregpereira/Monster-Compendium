@@ -3,13 +3,11 @@ package br.alexandregpereira.hunter.spell.compendium.di
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.EventManager
-import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumState
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumStateHolder
 import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
-import br.alexandregpereira.hunter.state.MutableStateHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.koin.dsl.module
@@ -27,7 +25,6 @@ val spellCompendiumStateModule = module {
         SpellCompendiumStateHolder(
             dispatcher = Dispatchers.Default,
             getSpellsUseCase = get(),
-            stateHandler = MutableStateHolder(SpellCompendiumState()),
             eventListener = get<SpellCompendiumEventManager>(),
             resultDispatcher = get<SpellCompendiumEventManager>(),
             appLocalization = get(),

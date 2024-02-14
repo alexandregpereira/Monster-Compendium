@@ -286,7 +286,7 @@ class MonsterDetailStateHolder(
                 initialMonsterListPositionIndex = it.monsterIndexSelected,
                 monsters = it.monsters.asState(strings),
                 measurementUnit = it.measurementUnit,
-            ).changeOptions().saveState(stateRecovery)
+            ).changeOptions()
         }
     }
 
@@ -297,7 +297,7 @@ class MonsterDetailStateHolder(
                     initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,
                     monsters = state.monsters,
                     options = state.options
-                )
+                ).saveState(stateRecovery)
             }
         }
     }

@@ -19,11 +19,8 @@ package br.alexandregpereira.hunter.monster.lore.detail
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -36,10 +33,7 @@ class MonsterLoreDetailStateHolder internal constructor(
     private val monsterLoreIndexStateRecovery: MonsterLoreIndexStateRecovery,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterLoreDetailAnalytics,
-) : ScopeManager(), StateHolder<MonsterLoreDetailState> {
-
-    private val _state = MutableStateFlow(stateRecovery.getState())
-    override val state: StateFlow<MonsterLoreDetailState> = _state
+) : UiModel<MonsterLoreDetailState>(stateRecovery.getState()) {
 
     init {
         observeEvents()
@@ -78,9 +72,5 @@ class MonsterLoreDetailStateHolder internal constructor(
     fun onClose() {
         analytics.trackMonsterLoreDetailClosed()
         setState { hideDetail() }
-    }
-
-    private fun setState(block: MonsterLoreDetailState.() -> MonsterLoreDetailState) {
-        _state.value = state.value.block()
     }
 }

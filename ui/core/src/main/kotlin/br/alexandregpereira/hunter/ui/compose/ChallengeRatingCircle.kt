@@ -45,7 +45,7 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun ChallengeRatingCircle(
-    challengeRating: Float,
+    challengeRating: String,
     size: Dp,
     modifier: Modifier = Modifier,
     xp: String = "",
@@ -77,7 +77,7 @@ fun ChallengeRatingCircle(
                 .padding(top = contentTopPadding)
         ) {
             Text(
-                challengeRating.getChallengeRatingFormatted(),
+                challengeRating,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = fontSize,
                 color = MaterialTheme.colors.onSurface,
@@ -133,21 +133,12 @@ private fun DrawChallengeRatingCircle(
     )
 }
 
-private fun Float.getChallengeRatingFormatted(): String {
-    return if (this < 1) {
-        val value = 1 / this
-        "1/${value.toInt()}"
-    } else {
-        this.toInt().toString()
-    }
-}
-
 @Preview
 @Composable
 private fun ChallengeRatingWithXpPreview() {
     HunterTheme {
         ChallengeRatingCircle(
-            challengeRating = 10f,
+            challengeRating = "10",
             xp = "111k XP",
             size = 62.dp,
             fontSize = 18.sp,
@@ -161,7 +152,7 @@ private fun ChallengeRatingWithXpPreview() {
 private fun ChallengeRatingWithXpPreviewWithDifferentSize() {
     HunterTheme {
         ChallengeRatingCircle(
-            challengeRating = 10f,
+            challengeRating = "10",
             xp = "155k XP",
             size = 56.dp,
             fontSize = 16.sp,
@@ -174,7 +165,7 @@ private fun ChallengeRatingWithXpPreviewWithDifferentSize() {
 @Composable
 private fun ChallengeRatingPreview() {
     HunterTheme {
-        ChallengeRatingCircle(challengeRating = 10f, size = 48.dp)
+        ChallengeRatingCircle(challengeRating = "10", size = 48.dp)
     }
 }
 
@@ -183,7 +174,7 @@ private fun ChallengeRatingPreview() {
 private fun ChallengeRatingPreviewWithDifferentSize() {
     HunterTheme {
         ChallengeRatingCircle(
-            challengeRating = 10f,
+            challengeRating = "10",
             size = 56.dp,
             fontSize = 16.sp,
             contentTopPadding = 24.dp

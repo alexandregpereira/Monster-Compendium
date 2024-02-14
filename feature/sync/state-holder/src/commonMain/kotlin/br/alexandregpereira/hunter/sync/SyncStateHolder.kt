@@ -18,13 +18,10 @@ package br.alexandregpereira.hunter.sync
 
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEvent.Finished
 import br.alexandregpereira.hunter.sync.event.SyncEvent.Start
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -36,12 +33,7 @@ class SyncStateHolder internal constructor(
     private val syncEventManager: SyncEventManager,
     private val syncUseCase: SyncUseCase,
     private val analytics: SyncAnalytics
-) : ScopeManager(), StateHolder<SyncState> {
-
-    private val _state: MutableStateFlow<SyncState> = MutableStateFlow(
-        stateRecovery.getState()
-    )
-    override val state: StateFlow<SyncState> = _state
+) : UiModel<SyncState>(stateRecovery.getState()) {
 
     init {
         observeEvents()
@@ -103,9 +95,5 @@ class SyncStateHolder internal constructor(
     fun onTryAgain() {
         analytics.trackTryAgain()
         syncEventManager.startSync()
-    }
-
-    private fun setState(block: SyncState.() -> SyncState) {
-        _state.value = state.value.block()
     }
 }

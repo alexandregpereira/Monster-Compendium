@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.ui
+package br.alexandregpereira.hunter.monster.compendium.state
 
-import br.alexandregpereira.hunter.monster.compendium.R
-
-enum class MonsterCompendiumErrorState(
-    val titleRes: Int,
-    val buttonTextRes: Int
-) {
-    NO_INTERNET_CONNECTION(
-        titleRes = R.string.monster_compendium_error_no_internet_connection,
-        buttonTextRes = R.string.monster_compendium_error_try_again
-    )
+interface MonsterCompendiumIntent {
+    fun onFirstVisibleItemChange(position: Int)
+    fun onItemClick(index: String)
+    fun onItemLongClick(index: String)
+    fun onAlphabetIndexClicked(position: Int)
+    fun onPopupClosed()
+    fun onPopupOpened()
+    fun onTableContentIndexClicked(position: Int)
+    fun onTableContentClosed()
+    fun onErrorButtonClick()
 }

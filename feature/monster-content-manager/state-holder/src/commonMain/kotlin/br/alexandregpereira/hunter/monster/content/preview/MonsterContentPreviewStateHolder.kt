@@ -22,8 +22,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexF
 import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAction.Companion.goToCompendiumIndex
 import br.alexandregpereira.hunter.state.MutableActionHandler
-import br.alexandregpereira.hunter.state.MutableStateHolder
-import br.alexandregpereira.hunter.state.ScopeManager
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -39,8 +38,7 @@ class MonsterContentPreviewStateHolder internal constructor(
     private val analytics: MonsterContentPreviewAnalytics,
     private val getRemoteMonsterCompendiumUseCase: GetRemoteMonsterCompendiumUseCase,
     private val monsterContentPreviewEventManager: MonsterContentPreviewEventManager,
-) : ScopeManager(),
-    MutableStateHolder<MonsterContentPreviewState> by MutableStateHolder(stateRecovery),
+) : UiModel<MonsterContentPreviewState>(stateRecovery.getState()),
     MutableActionHandler<MonsterContentPreviewAction> by MutableActionHandler() {
 
     init {
@@ -152,5 +150,10 @@ class MonsterContentPreviewStateHolder internal constructor(
                 }
             }
             .launchIn(scope)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        onActionHandlerClose()
     }
 }

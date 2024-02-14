@@ -40,12 +40,21 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(): List<Mons
                 index = index,
                 name = name,
                 type = MonsterPreviewFolderType.valueOf(type),
-                challengeRating = challengeRating,
+                challengeRating = challengeRating.getChallengeRatingFormatted(),
                 imageUrl = imageUrl,
                 backgroundColorLight = backgroundColorLight,
                 backgroundColorDark = backgroundColorDark,
                 isHorizontalImage = isHorizontalImage,
             )
         }
+    }
+}
+
+private fun Float.getChallengeRatingFormatted(): String {
+    return if (this < 1) {
+        val value = 1 / this
+        "1/${value.toInt()}"
+    } else {
+        this.toInt().toString()
     }
 }

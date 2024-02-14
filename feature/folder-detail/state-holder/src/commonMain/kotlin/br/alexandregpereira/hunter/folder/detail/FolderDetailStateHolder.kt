@@ -25,11 +25,8 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVis
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.state.ScopeManager
-import br.alexandregpereira.hunter.state.StateHolder
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
@@ -45,12 +42,7 @@ class FolderDetailStateHolder internal constructor(
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderDetailAnalytics,
-) : ScopeManager(), StateHolder<FolderDetailState> {
-
-    private val _state: MutableStateFlow<FolderDetailState> = MutableStateFlow(
-        stateRecovery.getState()
-    )
-    override val state: StateFlow<FolderDetailState> = _state
+) : UiModel<FolderDetailState>(stateRecovery.getState()) {
 
     init {
         observeEvents()
@@ -118,9 +110,5 @@ class FolderDetailStateHolder internal constructor(
                 loadMonsters(state.value.folderName)
             }
             .launchIn(scope)
-    }
-
-    private fun setState(block: FolderDetailState.() -> FolderDetailState) {
-        _state.value = state.value.block()
     }
 }

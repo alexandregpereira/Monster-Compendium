@@ -5,10 +5,11 @@
 //  Created by Alexandre G Pereira on 08/03/23.
 //
 
+import shared
 import SwiftUI
 
 struct TableContentPopup: View {
-    let tableContent: [TableContentItemState]
+    let tableContent: [TableContentItem]
     let alphabet: [String]
     let alphabetSelectedIndex: Int
     let tableContentSelectedIndex: Int
@@ -274,12 +275,12 @@ struct CloseButton_Previews: PreviewProvider {
 struct TableContentPopup_Previews: PreviewProvider {
     static let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-    static var items: [TableContentItemState] = {
-        var items = [TableContentItemState]()
+    static var items: [TableContentItem] = {
+        var items = [TableContentItem]()
         for i in 0..<50 {
-            let type = i % 3 == 0 ? TableContentItemTypeState.HEADER1 : (i % 3 == 1 ? TableContentItemTypeState.HEADER2 : TableContentItemTypeState.BODY)
+            let type = i % 3 == 0 ? TableContentItemType.header1 : (i % 3 == 1 ? TableContentItemType.header2 : TableContentItemType.body)
             let text = "Item \(i)"
-            let item = TableContentItemState(id: text, text: text, type: type)
+            let item = TableContentItem(text: text, type: type, id: text)
             items.append(item)
         }
         return items

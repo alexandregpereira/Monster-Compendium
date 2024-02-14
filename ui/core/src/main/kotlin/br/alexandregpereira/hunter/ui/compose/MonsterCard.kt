@@ -35,7 +35,7 @@ fun MonsterCard(
     url: String,
     @DrawableRes iconRes: Int,
     backgroundColor: String,
-    challengeRating: Float,
+    challengeRating: String,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
     onLongCLick: () -> Unit = {},
@@ -73,7 +73,7 @@ private fun MonsterCardPreview() {
             name = "Monster of the Monsters",
             url = "asdasdas",
             backgroundColor = "#ffe3ee",
-            challengeRating = 18f,
+            challengeRating = "18",
             iconRes = R.drawable.ic_aberration
         )
     }

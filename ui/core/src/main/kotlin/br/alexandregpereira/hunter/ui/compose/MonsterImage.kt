@@ -33,7 +33,7 @@ fun MonsterImage(
     url: String,
     @DrawableRes iconRes: Int,
     backgroundColor: String,
-    challengeRating: Float,
+    challengeRating: String,
     modifier: Modifier = Modifier,
     contentDescription: String = "",
 ) {
@@ -75,7 +75,7 @@ fun MonsterImagePreview() = HunterTheme {
         url = "asdasdas",
         backgroundColor = "#ffe3ee",
         contentDescription = "Anything",
-        challengeRating = 18f,
+        challengeRating = "18",
         iconRes = R.drawable.ic_aberration
     )
 }
@@ -87,7 +87,7 @@ fun MonsterImageBlackBackgroundPreview() = HunterTheme {
         url = "asdasdas",
         backgroundColor = "#000000",
         contentDescription = "Anything",
-        challengeRating = 18f,
+        challengeRating = "18",
         iconRes = R.drawable.ic_aberration
     )
 }
