@@ -3,20 +3,17 @@ plugins {
     id("com.android.library")
 }
 
-configureTargets()
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":domain:settings:core"))
-                implementation(libs.multiplatform.settings)
-                implementation(libs.kotlin.coroutines.core)
-                implementation(libs.koin.core)
-                implementation(libs.ktor.core)
-            }
-        }
+multiplatform {
+    commonMain {
+        implementation(project(":domain:settings:core"))
+        implementation(libs.multiplatform.settings)
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.koin.core)
+        implementation(libs.ktor.core)
     }
+    androidMain()
+    jvmMain()
+    iosMain()
 }
 
 android {

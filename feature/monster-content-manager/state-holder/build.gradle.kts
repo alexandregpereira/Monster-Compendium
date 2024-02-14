@@ -3,33 +3,25 @@ plugins {
     id("com.android.library")
 }
 
-configureTargets()
-
-kotlin {
-    sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.viewmodel.savedstate)
-            }
-        }
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":core:analytics"))
-                implementation(project(":core:localization"))
-                api(project(":core:state-holder"))
-                api(project(":domain:alternative-source:core"))
-                api(project(":domain:monster:core"))
-                api(project(":domain:monster-compendium:core"))
-                implementation(project(":feature:monster-content-manager:event"))
-                implementation(project(":feature:sync:event"))
-                implementation(libs.kotlin.coroutines.core)
-                implementation(libs.koin.core)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
+multiplatform {
+    androidMain {
+        implementation(libs.viewmodel.savedstate)
     }
+
+    commonMain {
+        implementation(project(":core:analytics"))
+        implementation(project(":core:localization"))
+        api(project(":core:state-holder"))
+        api(project(":domain:alternative-source:core"))
+        api(project(":domain:monster:core"))
+        api(project(":domain:monster-compendium:core"))
+        implementation(project(":feature:monster-content-manager:event"))
+        implementation(project(":feature:sync:event"))
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.koin.core)
+    }
+    jvmMain()
+    iosMain()
 }
 
 android {

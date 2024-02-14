@@ -2,4 +2,8 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
+multiplatform {
+    commonMain()
+    jvmMain()
+    iosMain()
+}

@@ -18,23 +18,16 @@ plugins {
     kotlin("multiplatform")
 }
 
-configureJvmTargets()
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":core:state-holder"))
-                implementation(project(":core:event"))
-                implementation(project(":core:localization"))
-                implementation(project(":domain:spell:core"))
-                implementation(project(":feature:spell-compendium:event"))
-                implementation(libs.kotlin.coroutines.core)
-                implementation(libs.koin.core)
-            }
-        }
-        if (isMac()) {
-            val iosMain by getting
-        }
+multiplatform {
+    commonMain {
+        implementation(project(":core:state-holder"))
+        implementation(project(":core:event"))
+        implementation(project(":core:localization"))
+        implementation(project(":domain:spell:core"))
+        implementation(project(":feature:spell-compendium:event"))
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.koin.core)
     }
+    jvmMain()
+    iosMain()
 }
