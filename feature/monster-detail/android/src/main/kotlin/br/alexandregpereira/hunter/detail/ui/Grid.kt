@@ -23,11 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import kotlin.math.roundToInt
 
 @Composable
 fun Grid(
@@ -35,29 +31,9 @@ fun Grid(
     content: @Composable FlowRowScope.() -> Unit
 ) = FlowRow(
     modifier.fillMaxWidth(),
-    horizontalArrangement = GridArrangementHorizontal(),
+    horizontalArrangement = Arrangement.SpaceEvenly,
     verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.Top),
     content = content
 )
 
 internal val GridItemWidth = 120.dp
-
-private class GridArrangementHorizontal : Arrangement.Horizontal {
-
-    override val spacing: Dp = 8.dp
-
-    override fun Density.arrange(
-        totalSize: Int,
-        sizes: IntArray,
-        layoutDirection: LayoutDirection,
-        outPositions: IntArray
-    ) {
-        val consumedSize = sizes.fold(0) { a, b -> a + b }
-        val gapSize = ((totalSize - consumedSize).toFloat() / (sizes.size + 1))
-        var current = gapSize
-        sizes.forEachIndexed { index, it ->
-            outPositions[index] = current.roundToInt()
-            current += it.toFloat() + gapSize
-        }
-    }
-}
