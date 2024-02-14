@@ -28,8 +28,6 @@ private val Project.kotlin: KotlinMultiplatformExtension
 private val Project.java: JavaPluginExtension
     get() = extensions.getByType(JavaPluginExtension::class.java)
 
-fun Project.isMac(): Boolean = Os.isFamily(Os.FAMILY_MAC) && !hasProperty("disableIos")
-
 fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
     kotlin.apply {
         block()
