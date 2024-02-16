@@ -29,7 +29,10 @@ internal fun CloneMonsterUseCase(
             )
         }
         .map { monster ->
-            monster.copy(actions = monster.actions.map { it.copy(id = "") })
+            monster.copy(
+                actions = monster.actions.map { it.copy(id = "") },
+                legendaryActions = monster.legendaryActions.map { it.copy(id = "") },
+            )
         }
         .map { monster ->
             val newMonsterLore = runCatching {

@@ -25,22 +25,7 @@ data class Action(
     val damageDices: List<DamageDice>,
     val attackBonus: Int?,
     val abilityDescription: AbilityDescription
-) {
-
-    companion object {
-
-        fun create(
-            damageDices: List<DamageDice> = emptyList(),
-            attackBonus: Int? = null,
-            abilityDescription: AbilityDescription = AbilityDescription.create()
-        ) = Action(
-            id = generateUUID(),
-            damageDices = damageDices,
-            attackBonus = attackBonus,
-            abilityDescription = abilityDescription
-        )
-    }
-}
+)
 
 @ObjCName(name = "DamageDice", exact = true)
 data class DamageDice(

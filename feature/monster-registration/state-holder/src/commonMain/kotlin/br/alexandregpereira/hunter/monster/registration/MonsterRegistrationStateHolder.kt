@@ -93,6 +93,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onSpellClick(spellIndex: String) {
+        analytics.trackMonsterRegistrationSpellClicked(spellIndex)
         val showEvent = Show(
             spellIndex = spellIndex,
             selectedSpellIndexes = state.value.monster.spellcastings
@@ -112,6 +113,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onTableContentClick(key: String) {
+        analytics.trackMonsterRegistrationTableContentClicked(key)
         onTableContentClose()
         scope.launch {
             delay(300)
@@ -122,10 +124,12 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onTableContentClose() {
+        analytics.onTableContentClosed()
         setState { copy(isTableContentOpen = false)}
     }
 
     override fun onTableContentOpen() {
+        analytics.onTableContentOpened()
         setState { copy(isTableContentOpen = true)}
     }
 
