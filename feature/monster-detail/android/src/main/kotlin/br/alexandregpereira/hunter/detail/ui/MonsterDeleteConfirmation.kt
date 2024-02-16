@@ -46,7 +46,7 @@ fun MonsterDeleteConfirmation(
     Spacer(modifier = Modifier.height(16.dp))
 
     ScreenHeader(
-        title = strings.deleteConfirmation,
+        title = strings.deleteQuestion,
     )
 
     Spacer(modifier = Modifier.height(32.dp))
