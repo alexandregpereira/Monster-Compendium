@@ -94,7 +94,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
         actions = actions.toEntity(index),
         reactions = reactions.toReactionEntity(index),
         spellcastings = spellcastings.toEntity(index),
-        legendaryActions = legendaryActions.toLegendaryActionEntity(index)
+        legendaryActions = legendaryActions.toEntity(index)
     )
 }
 

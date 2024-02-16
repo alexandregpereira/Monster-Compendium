@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionWithDamageDicesEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
@@ -149,12 +148,12 @@ internal fun getLegendaryActions(
     monster: MonsterEntity,
     legendaryActionQueries: LegendaryActionQueries,
     damageDiceQueries: DamageDiceQueries
-): List<LegendaryActionWithDamageDicesEntity> {
+): List<ActionWithDamageDicesEntity> {
     return legendaryActionQueries.getByMonterIndex(monster.index).executeAsList()
         .map { legendaryAction ->
             val damageDices = damageDiceQueries.getByActionId(legendaryAction.id).executeAsList()
                 .map { it.toLocalEntity() }
-            LegendaryActionWithDamageDicesEntity(
+            ActionWithDamageDicesEntity(
                 action = legendaryAction.toLocalEntity(),
                 damageDices = damageDices
             )

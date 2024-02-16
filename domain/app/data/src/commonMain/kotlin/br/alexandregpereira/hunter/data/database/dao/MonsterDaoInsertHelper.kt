@@ -23,7 +23,6 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.LegendaryActionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
@@ -106,9 +105,9 @@ internal fun DamageDiceQueries.insert(entities: List<DamageDiceEntity>) {
     }
 }
 
-internal fun LegendaryActionQueries.insert(entities: List<LegendaryActionEntity>) {
+internal fun LegendaryActionQueries.insert(entities: List<ActionEntity>) {
     entities.forEach {
-        insert(it.toDatabaseEntity())
+        insert(it.toLegendaryActionDatabaseEntity())
     }
 }
 

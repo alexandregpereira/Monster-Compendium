@@ -84,7 +84,7 @@ internal fun DamageDiceEntity.toDatabaseEntity(): DamageDiceDatabaseEntity {
     )
 }
 
-internal fun LegendaryActionEntity.toDatabaseEntity(): LegendaryActionDatabaseEntity {
+internal fun ActionEntity.toLegendaryActionDatabaseEntity(): LegendaryActionDatabaseEntity {
     return LegendaryActionDatabaseEntity(
         id = this.id,
         attackBonus = this.attackBonus?.toLong(),
@@ -287,8 +287,8 @@ internal fun DamageImmunityEntity.toDatabaseEntity(): DamageImmunityDatabaseEnti
     )
 }
 
-internal fun LegendaryActionDatabaseEntity.toLocalEntity(): LegendaryActionEntity {
-    return LegendaryActionEntity(
+internal fun LegendaryActionDatabaseEntity.toLocalEntity(): ActionEntity {
+    return ActionEntity(
         id = this.id,
         attackBonus = this.attackBonus?.toInt(),
         description = this.description,

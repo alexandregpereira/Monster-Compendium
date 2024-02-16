@@ -84,9 +84,6 @@ private fun String.normalizeColorString(): String {
 }
 
 internal fun Monster.filterEmpties(): Monster {
-    val emptyAbilityDescription = AbilityDescription.create()
-    val emptyAction = Action.create()
-
     return copy(
         speed = speed.copy(
             values = speed.values.filter { it.valueFormatted.isNotBlank() }
@@ -94,20 +91,28 @@ internal fun Monster.filterEmpties(): Monster {
         conditionImmunities = conditionImmunities.filter { it.name.isNotBlank() },
         savingThrows = savingThrows.filter { it.modifier != 0 },
         skills = skills.filter { it.name.isNotBlank() },
-        specialAbilities = specialAbilities.filter { it != emptyAbilityDescription },
-        actions = actions.filterDamageDices().filter { it != emptyAction },
-        reactions = reactions.filter { it != emptyAbilityDescription },
-        legendaryActions = legendaryActions.filterDamageDices().filter { it != emptyAction },
+        specialAbilities = specialAbilities.filter { it.isEmpty().not() },
+        actions = actions.filterDamageDices().filter {
+            it.abilityDescription.isEmpty().not()
+        },
+        reactions = reactions.filter { it.isEmpty().not() },
+        legendaryActions = legendaryActions.filterDamageDices().filter {
+            it.abilityDescription.isEmpty().not()
+        },
         spellcastings = spellcastings.filterSpellUsages().filter { spellcasting ->
             spellcasting.usages.isNotEmpty()
         }
     )
 }
 
+private fun AbilityDescription.isEmpty(): Boolean {
+    return name.isBlank() && description.isBlank()
+}
+
 private fun List<Action>.filterDamageDices(): List<Action> {
     return map { action ->
         action.copy(
-            damageDices = action.damageDices.filter { it.dice.isBlank() }
+            damageDices = action.damageDices.filter { it.dice.isNotBlank() }
         )
     }
 }

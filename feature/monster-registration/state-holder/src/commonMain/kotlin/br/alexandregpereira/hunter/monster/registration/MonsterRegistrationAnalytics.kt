@@ -30,3 +30,33 @@ internal fun Analytics.trackMonsterRegistrationSaved(monster: Monster) {
         ),
     )
 }
+
+internal fun Analytics.trackMonsterRegistrationTableContentClicked(key: String) {
+    track(
+        eventName = "MonsterRegistration - table content clicked",
+        params = mapOf(
+            "key" to key,
+        ),
+    )
+}
+
+internal fun Analytics.onTableContentClosed() {
+    track(
+        eventName = "MonsterRegistration - table content closed",
+    )
+}
+
+internal fun Analytics.onTableContentOpened() {
+    track(
+        eventName = "MonsterRegistration - table content opened",
+    )
+}
+
+internal fun Analytics.trackMonsterRegistrationSpellClicked(spellIndex: String) {
+    track(
+        eventName = "MonsterRegistration - spell clicked",
+        params = mapOf(
+            "spellIndex" to spellIndex,
+        ),
+    )
+}

@@ -167,6 +167,7 @@ internal class MonsterDaoImpl(
     private fun deleteAllEntries(monsters: List<MonsterCompleteEntity>) {
         val monsterIndexes = monsters.map { it.monster.index }
         val actionsIds = monsters.mapAndReduce { actions.map { it.action.id } }
+        val legendaryActionsIds = monsters.mapAndReduce { legendaryActions.map { it.action.id } }
         val speedIds = monsters.mapNotNull { it.speed?.speed?.id }
         val spellcastings = monsters.mapAndReduce { spellcastings }
         val spellcastingIds = spellcastings.map { it.spellcasting.spellcastingId }
@@ -179,6 +180,7 @@ internal class MonsterDaoImpl(
         damageImmunityQueries.deleteWithMonsterIndex(monsterIndexes)
         damageVulnerabilityQueries.deleteWithMonsterIndex(monsterIndexes)
         damageDiceQueries.deleteWithActionId(actionsIds)
+        damageDiceQueries.deleteWithActionId(legendaryActionsIds)
         savingThrowQueries.deleteWithMonsterIndex(monsterIndexes)
         skillQueries.deleteWithMonsterIndex(monsterIndexes)
         specialAbilityQueries.deleteWithMonsterIndex(monsterIndexes)

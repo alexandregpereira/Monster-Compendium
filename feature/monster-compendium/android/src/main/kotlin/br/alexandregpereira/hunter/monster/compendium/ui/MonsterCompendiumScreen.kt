@@ -32,21 +32,24 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.asState
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
+import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIntent
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+import br.alexandregpereira.hunter.state.ActionHandler
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun MonsterCompendiumScreen(
     state: MonsterCompendiumState,
+    actionHandler: ActionHandler<MonsterCompendiumAction>,
     initialScrollItemPosition: Int,
-    compendiumIndex: Int = -1,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumIntent,
 ) = Window(Modifier.fillMaxSize()) {
@@ -84,9 +87,13 @@ internal fun MonsterCompendiumScreen(
 
         OnFirstVisibleItemChange(listState, events::onFirstVisibleItemChange)
 
-        if (compendiumIndex >= 0) {
-            LaunchedEffect(compendiumIndex) {
-                listState.scrollToItem(compendiumIndex)
+        LaunchedEffect(actionHandler.action) {
+            actionHandler.action.collectLatest { action ->
+                when (action) {
+                    is MonsterCompendiumAction.GoToCompendiumIndex -> {
+                        listState.scrollToItem(action.index)
+                    }
+                }
             }
         }
     }
