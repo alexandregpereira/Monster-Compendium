@@ -9,25 +9,25 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSpeedValuesForm(
+    keys: Iterator<String>,
     speedValueStates: List<SpeedValueState>,
     onMonsterChanged: (List<SpeedValueState>) -> Unit = {}
 ) {
     val newSpeedValues = speedValueStates.toMutableList()
-    val key = "speed"
 
     FormLazy(
-        key = key,
+        titleKey = keys.next(),
         title = { strings.speed },
     ) {
         FormItems(
-            key = key,
+            keys = keys,
             items = newSpeedValues,
             createNew = { SpeedValueState() },
             onChanged = {
                 onMonsterChanged(it)
             }
         ) { index, speedValue ->
-            formItem(key = "$key-name-${speedValue.key}") {
+            formItem(key = keys.next()) {
                 PickerField(
                     value = speedValue.type,
                     label = strings.speedType,
@@ -42,7 +42,7 @@ internal fun LazyListScope.MonsterSpeedValuesForm(
                 )
             }
 
-            formItem(key = "$key-value-${speedValue.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     text = speedValue.value,
                     label = speedValue.type,

@@ -9,6 +9,8 @@ data class MonsterRegistrationState(
     val initialSelectedStepIndex: Int = 0,
     val isSaveButtonEnabled: Boolean = false,
     val strings: MonsterRegistrationStrings = MonsterRegistrationStrings(),
+    val tableContent: Map<String, String> = emptyMap(),
+    val isTableContentOpen: Boolean = false,
 )
 
 data class MonsterState(
@@ -30,7 +32,26 @@ data class MonsterState(
     val legendaryActions: List<ActionState> = emptyList(),
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
-)
+    internal val keysList: List<String> = emptyList(),
+) {
+    val keys: Iterator<String> = KeyIterator(keysList)
+}
+
+private class KeyIterator(
+    private val keysList: List<String> = emptyList(),
+) : Iterator<String> {
+    private var keys: Iterator<String> = keysList.iterator()
+
+    override fun hasNext(): Boolean = keys.hasNext()
+
+    override fun next(): String {
+        if (!hasNext()) {
+            keys = keysList.iterator()
+        }
+
+        return keys.next()
+    }
+}
 
 data class MonsterInfoState(
     val name: String = "",
@@ -167,3 +188,23 @@ data class SpellPreviewState(
     val index: String = "",
     val name: String = "",
 )
+
+internal enum class SectionTitle {
+    Header,
+    Stats,
+    Speed,
+    AbilityScores,
+    SavingThrows,
+    Skills,
+    DamageVulnerabilities,
+    DamageResistances,
+    DamageImmunities,
+    ConditionImmunities,
+    Senses,
+    Languages,
+    SpecialAbilities,
+    Actions,
+    Reactions,
+    LegendaryActions,
+    Spellcastings,
+}

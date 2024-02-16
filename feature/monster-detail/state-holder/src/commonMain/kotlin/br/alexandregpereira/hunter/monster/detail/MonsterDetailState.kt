@@ -204,9 +204,9 @@ fun MonsterDetailState.complete(
     options = options
 )
 
-fun MonsterDetailState.showCloneForm(): MonsterDetailState = this.copy(
+fun MonsterDetailState.showCloneForm(monsterIndex: String): MonsterDetailState = this.copy(
     showCloneForm = true,
-    monsterCloneName = "",
+    monsterCloneName = monsters.firstOrNull { it.index == monsterIndex }?.name.orEmpty(),
 )
 
 fun MonsterDetailState.hideCloneForm(): MonsterDetailState = this.copy(showCloneForm = false)

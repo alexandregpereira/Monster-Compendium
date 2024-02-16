@@ -9,23 +9,23 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterAbilityDescriptionForm(
-    key: String,
+    keys: Iterator<String>,
     title: @Composable () -> String,
     abilityDescriptions: List<AbilityDescriptionState>,
     addText: @Composable () -> String,
     removeText: @Composable () -> String,
     onChanged: (List<AbilityDescriptionState>) -> Unit = {},
-) = FormLazy(key, title) {
+) = FormLazy(keys.next(), title) {
     val newAbilityDescriptions = abilityDescriptions.toMutableList()
     FormItems(
-        key = key,
+        keys = keys,
         items = newAbilityDescriptions,
         addText = addText,
         removeText = removeText,
         createNew = { AbilityDescriptionState() },
         onChanged = onChanged
     ) { index, abilityDescription ->
-        formItem(key = "$key-ability-description-name-${abilityDescription.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 text = abilityDescription.name,
                 label = strings.name,
@@ -35,7 +35,7 @@ internal fun LazyListScope.MonsterAbilityDescriptionForm(
             )
         }
 
-        formItem(key = "$key-ability-description-description-${abilityDescription.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 text = abilityDescription.description,
                 label = strings.description,

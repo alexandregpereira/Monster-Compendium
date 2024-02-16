@@ -9,6 +9,12 @@ interface MonsterRegistrationIntent {
     fun onSaved()
 
     fun onSpellClick(spellIndex: String)
+
+    fun onTableContentClick(key: String)
+
+    fun onTableContentClose()
+
+    fun onTableContentOpen()
 }
 
 class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
@@ -20,4 +26,10 @@ class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
     override fun onSaved() {}
 
     override fun onSpellClick(spellIndex: String) {}
+
+    override fun onTableContentClick(key: String) {}
+
+    override fun onTableContentClose() {}
+
+    override fun onTableContentOpen() {}
 }

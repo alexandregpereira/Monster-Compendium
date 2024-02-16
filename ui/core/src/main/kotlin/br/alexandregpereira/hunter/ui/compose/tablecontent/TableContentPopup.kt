@@ -31,6 +31,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -56,6 +57,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,8 +69,6 @@ import kotlin.math.ln
 
 @Composable
 fun TableContentPopup(
-    alphabet: List<String>,
-    alphabetSelectedIndex: Int,
     tableContent: List<TableContentItemState>,
     tableContentSelectedIndex: Int,
     opened: Boolean,
@@ -76,8 +76,12 @@ fun TableContentPopup(
     onCloseButtonClicked: () -> Unit,
     onTableContentClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    alphabet: List<String> = emptyList(),
+    alphabetSelectedIndex: Int = 0,
     tableContentOpened: Boolean = false,
     tableContentInitialIndex: Int = 0,
+    icon: ImageVector? = null,
+    backHandlerEnabled: Boolean = tableContentOpened,
     onAlphabetIndexClicked: (Int) -> Unit = {},
     onTableContentClosed: () -> Unit = {},
 ) {
@@ -94,17 +98,20 @@ fun TableContentPopup(
         if (isOpen) 10 else 100
     }
 
-    BackHandler(enabled = tableContentOpened, onBack = onTableContentClosed)
+    BackHandler(enabled = backHandlerEnabled, onBack = onTableContentClosed)
 
     Box(modifier, contentAlignment = Alignment.BottomEnd) {
-        val backgroundColor = if (MaterialTheme.colors.isLight) MaterialTheme.colors.surface else  {
+        val backgroundColor = if (MaterialTheme.colors.isLight) MaterialTheme.colors.surface else {
             val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
             MaterialTheme.colors.onSurface.copy(alpha = alpha)
                 .compositeOver(MaterialTheme.colors.surface)
         }
         Box(
             modifier = Modifier
-                .padding(vertical = shadowingVerticalPadding, horizontal = shadowingHorizontalPadding)
+                .padding(
+                    vertical = shadowingVerticalPadding,
+                    horizontal = shadowingHorizontalPadding
+                )
                 .sizeIn(minWidth = 56.dp, minHeight = 56.dp)
                 .clip(shape = RoundedCornerShape(percent))
                 .background(color = backgroundColor)
@@ -169,10 +176,17 @@ fun TableContentPopup(
             enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessVeryLow)),
             exit = fadeOut(),
         ) {
-            CircleLetter(
-                letter = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
-                onClick = onOpenButtonClicked
-            )
+            if (icon != null) {
+                CircleIcon(
+                    icon = icon,
+                    onClick = onOpenButtonClicked
+                )
+            } else {
+                CircleLetter(
+                    letter = alphabet.getOrNull(alphabetSelectedIndex) ?: "",
+                    onClick = onOpenButtonClicked
+                )
+            }
         }
     }
 }
@@ -185,6 +199,21 @@ private const val elevation = 4
 private fun CircleLetter(
     letter: String,
     onClick: () -> Unit
+) = Circle(
+    onClick = onClick,
+) {
+    Text(
+        text = letter,
+        style = TextStyle(fontSize = 24.sp),
+        modifier = Modifier
+            .align(Alignment.Center)
+    )
+}
+
+@Composable
+private fun Circle(
+    onClick: () -> Unit,
+    content: @Composable BoxScope.() -> Unit
 ) = Surface(
     elevation = elevation.dp,
     shape = CircleShape,
@@ -198,13 +227,23 @@ private fun CircleLetter(
             .size(56.dp)
             .clickableWithRippleEffect(onClick = onClick)
     ) {
-        Text(
-            text = letter,
-            style = TextStyle(fontSize = 24.sp),
-            modifier = Modifier
-                .align(Alignment.Center)
-        )
+        content()
     }
+}
+
+@Composable
+private fun CircleIcon(
+    icon: ImageVector,
+    onClick: () -> Unit
+) = Circle(
+    onClick = onClick,
+) {
+    Icon(
+        imageVector = icon,
+        contentDescription = "Open",
+        modifier = Modifier
+            .align(Alignment.Center),
+    )
 }
 
 @Composable
@@ -214,7 +253,7 @@ private fun AlphabetGrid(
     onAlphabetIndexClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) = FlowRow(
-    horizontalArrangement  =  Arrangement.spacedBy(16.dp, Alignment.Start),
+    horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
     verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
     modifier = modifier
 ) {

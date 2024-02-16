@@ -17,20 +17,24 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.monster.registration.mapper.asState
 import br.alexandregpereira.hunter.monster.registration.mapper.editBy
+import br.alexandregpereira.hunter.monster.registration.mapper.name
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent.Show
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MonsterRegistrationStateHolder internal constructor(
@@ -47,6 +51,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
+    MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
 
     private var originalMonster: Monster? = null
@@ -64,7 +69,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onMonsterChanged(monster: MonsterState) {
-        val newMonster = metadata.monster.editBy(monster)
+        val newMonster = metadata.monster.editBy(monster, appLocalization.getStrings())
         setMetadata(newMonster)
         updateMonster()
     }
@@ -106,6 +111,24 @@ class MonsterRegistrationStateHolder internal constructor(
         }.launchIn(scope)
     }
 
+    override fun onTableContentClick(key: String) {
+        onTableContentClose()
+        scope.launch {
+            delay(300)
+            sendAction(
+                MonsterRegistrationAction.GoToListPosition(state.value.monster.keysList.indexOf(key))
+            )
+        }
+    }
+
+    override fun onTableContentClose() {
+        setState { copy(isTableContentOpen = false)}
+    }
+
+    override fun onTableContentOpen() {
+        setState { copy(isTableContentOpen = true)}
+    }
+
     private fun updateSpells(currentSpellIndex: String, newSpellIndex: String) {
         spellCompendiumEventDispatcher.dispatchEventResult(SpellCompendiumEvent.Hide)
         getSpell(newSpellIndex)
@@ -141,9 +164,13 @@ class MonsterRegistrationStateHolder internal constructor(
 
     private fun updateMonster() {
         setState {
+            val strings = appLocalization.getStrings()
+            val monsterState = metadata.asState(strings)
             copy(
-                monster = metadata.asState(appLocalization.getStrings()),
-                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster
+                monster = monsterState,
+                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster,
+                isLoading = false,
+                tableContent = SectionTitle.entries.associate { it.name to it.name(strings) },
             )
         }
     }
@@ -161,12 +188,7 @@ class MonsterRegistrationStateHolder internal constructor(
             .onEach { monster ->
                 originalMonster = monster
                 setMetadata(monster)
-                setState {
-                    copy(
-                        monster = metadata.asState(appLocalization.getStrings()),
-                        isLoading = false
-                    )
-                }
+                updateMonster()
             }
             .launchIn(scope)
     }
@@ -184,7 +206,13 @@ class MonsterRegistrationStateHolder internal constructor(
                     is MonsterRegistrationEvent.ShowEdit -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
-                        setState { copy(isOpen = true, strings = appLocalization.getStrings()) }
+                        setState {
+                            copy(
+                                isOpen = true,
+                                strings = appLocalization.getStrings(),
+                                isTableContentOpen = false
+                            )
+                        }
                         fetchMonster()
                     }
                 }

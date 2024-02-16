@@ -9,23 +9,23 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterConditionsForm(
+    keys: Iterator<String>,
     title: @Composable () -> String,
     conditions: List<ConditionState>,
     onChanged: (List<ConditionState>) -> Unit = {}
 ) {
     val newConditions = conditions.toMutableList()
-    val key = "conditionImmunities"
     FormLazy(
-        key = key,
+        titleKey = keys.next(),
         title = title,
     ) {
         FormItems(
-            key = key,
+            keys = keys,
             items = newConditions,
             createNew = { ConditionState() },
             onChanged = onChanged
         ) { i, condition ->
-            formItem(key = "$key-name-${condition.key}") {
+            formItem(key = keys.next()) {
                 PickerField(
                     value = condition.name,
                     label = strings.conditionType,

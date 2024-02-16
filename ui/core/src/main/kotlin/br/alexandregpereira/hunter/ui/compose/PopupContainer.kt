@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -26,12 +27,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PopupContainer(
+    modifier: Modifier = Modifier,
     isOpened: Boolean = false,
     onPopupClosed: () -> Unit = {},
-    content: @Composable () -> Unit = {},
-    popupContent: @Composable () -> Unit = {},
+    content: @Composable BoxScope.() -> Unit = {},
+    popupContent: @Composable BoxScope.() -> Unit = {},
 ) {
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         content()
 
         Closeable(opened = isOpened, onClosed = onPopupClosed)

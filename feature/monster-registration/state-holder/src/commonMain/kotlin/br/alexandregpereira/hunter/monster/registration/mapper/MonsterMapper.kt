@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.monster.registration.ActionState
 import br.alexandregpereira.hunter.monster.registration.ConditionState
 import br.alexandregpereira.hunter.monster.registration.DamageDiceState
 import br.alexandregpereira.hunter.monster.registration.DamageState
+import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
 import br.alexandregpereira.hunter.monster.registration.MonsterState
 import br.alexandregpereira.hunter.monster.registration.SavingThrowState
 import br.alexandregpereira.hunter.monster.registration.SkillState
@@ -32,7 +33,10 @@ import br.alexandregpereira.hunter.monster.registration.SpellcastingState
 import br.alexandregpereira.hunter.monster.registration.SpellsByGroupState
 import br.alexandregpereira.hunter.uuid.generateUUID
 
-internal fun Monster.editBy(state: MonsterState): Monster {
+internal fun Monster.editBy(
+    state: MonsterState,
+    strings: MonsterRegistrationStrings,
+): Monster {
     val monster = this
     val spellsMap = mutableMapOf<String, SpellPreview>()
     monster.spellcastings.asSequence()
@@ -78,15 +82,15 @@ internal fun Monster.editBy(state: MonsterState): Monster {
         },
         savingThrows = state.savingThrows.map { it.asDomain() },
         skills = state.skills.map { it.asDomain() },
-        damageVulnerabilities = state.damageVulnerabilities.map { it.asDomain() },
-        damageResistances = state.damageResistances.map { it.asDomain() },
-        damageImmunities = state.damageImmunities.map { it.asDomain() },
+        damageVulnerabilities = state.damageVulnerabilities.map { it.asDomain(strings) },
+        damageResistances = state.damageResistances.map { it.asDomain(strings) },
+        damageImmunities = state.damageImmunities.map { it.asDomain(strings) },
         conditionImmunities = state.conditionImmunities.map { it.asDomain() },
         senses = state.senses,
         languages = state.languages,
         specialAbilities = state.specialAbilities.map { it.asDomain() },
-        actions = state.actions.map { it.asDomain() },
-        legendaryActions = state.legendaryActions.map { it.asDomain() },
+        actions = state.actions.map { it.asDomain(strings) },
+        legendaryActions = state.legendaryActions.map { it.asDomain(strings) },
         reactions = state.reactions.map { it.asDomain() },
         spellcastings = state.spellcastings.map { it.asDomain(spellsMap) },
     )
@@ -108,19 +112,21 @@ private fun SkillState.asDomain(): Skill {
     )
 }
 
-private fun DamageState.asDomain(): Damage {
+private fun DamageState.asDomain(strings: MonsterRegistrationStrings): Damage {
     return Damage(
         index = key,
         type = DamageType.entries[selectedIndex],
-        name = otherName ?: typeName,
+        name = otherName
+            ?: typeName.takeUnless { it.isBlank() }
+            ?: DamageType.entries[selectedIndex].name(strings),
     )
 }
 
-private fun DamageDiceState.asDomain(): DamageDice {
+private fun DamageDiceState.asDomain(strings: MonsterRegistrationStrings): DamageDice {
     return DamageDice(
         index = key,
         dice = dice,
-        damage = damage.asDomain(),
+        damage = damage.asDomain(strings),
     )
 }
 
@@ -140,10 +146,10 @@ private fun AbilityDescriptionState.asDomain(): AbilityDescription {
     )
 }
 
-private fun ActionState.asDomain(): Action {
+private fun ActionState.asDomain(strings: MonsterRegistrationStrings): Action {
     return Action(
         id = key,
-        damageDices = damageDices.map { it.asDomain() },
+        damageDices = damageDices.map { it.asDomain(strings) },
         attackBonus = attackBonus,
         abilityDescription = abilityDescription.asDomain(),
     )

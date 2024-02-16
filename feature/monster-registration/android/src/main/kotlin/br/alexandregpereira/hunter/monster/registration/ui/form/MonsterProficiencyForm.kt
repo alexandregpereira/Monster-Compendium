@@ -9,23 +9,23 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterProficiencyForm(
+    keys: Iterator<String>,
     title: @Composable () -> String,
     proficiencies: List<SkillState>,
     onChanged: (List<SkillState>) -> Unit = {}
 ) {
     val mutableProficiencies = proficiencies.toMutableList()
-    val key = "skills"
     FormLazy(
-        key = key,
+        titleKey = keys.next(),
         title = title,
     ) {
         FormItems(
-            key = key,
+            keys = keys,
             items = mutableProficiencies,
             createNew = { SkillState() },
             onChanged = onChanged
         ) { i, proficiency ->
-            formItem(key = "$key-name-${proficiency.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     text = proficiency.name,
                     label = strings.name,
@@ -35,7 +35,7 @@ internal fun LazyListScope.MonsterProficiencyForm(
                 )
             }
 
-            formItem(key = "$key-modifier-${proficiency.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     value = proficiency.modifier,
                     label = proficiency.name,

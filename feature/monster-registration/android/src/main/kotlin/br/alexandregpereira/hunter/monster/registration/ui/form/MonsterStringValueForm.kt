@@ -6,15 +6,15 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterStringValueForm(
-    key: String,
+    keys: Iterator<String>,
     title: @Composable () -> String,
     value: String,
     onChanged: (String) -> Unit = {}
 ) = FormLazy(
-    key = key,
+    titleKey = keys.next(),
     title = title,
 ) {
-    formItem(key = "$key-string-value") {
+    formItem(key = keys.next()) {
         AppTextField(
             text = value,
             label = title(),
