@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyListScope
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
@@ -49,12 +50,18 @@ internal fun LazyListScope.MonsterHeaderForm(
             )
         }
         formItem(key = "$key-imageBackgroundColor") {
+            val isDarkTheme = isSystemInDarkTheme()
+            val color = if (isDarkTheme) infoState.backgroundColorDark else {
+                infoState.backgroundColorLight
+            }
             AppTextField(
-                text = infoState.backgroundColorLight,
+                text = color,
                 label = strings.imageBackgroundColor,
                 onValueChange = {
                     onMonsterChanged(
-                        infoState.copy(backgroundColorLight = it)
+                        if (isDarkTheme) infoState.copy(backgroundColorDark = it) else {
+                            infoState.copy(backgroundColorLight = it)
+                        }
                     )
                 }
             )

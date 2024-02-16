@@ -37,5 +37,5 @@ fun List<Monster>.sortMonstersByNameAndGroup(): List<Monster> {
 }
 
 private fun Monster.getOrderValue(): String {
-    return if (group != null) "$group-$name" else name
+    return if (group.isNullOrBlank()) name else "$group-$name"
 }

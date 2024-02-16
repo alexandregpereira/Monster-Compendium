@@ -70,12 +70,17 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
 }
 
 private fun Color.normalizeColor(): Color {
-    val newColor = this.light.takeIf { it.isNotBlank() }
-        ?.replace("#", "")?.let { "#$it" }?.uppercase().orEmpty()
+    val newColorLight = this.light.normalizeColorString()
+    val newColorDark = this.dark.normalizeColorString()
     return this.copy(
-        light = newColor,
-        dark = newColor,
+        light = newColorLight,
+        dark = newColorDark,
     )
+}
+
+private fun String.normalizeColorString(): String {
+    return this.takeIf { it.isNotBlank() }
+        ?.replace("#", "")?.let { "#$it" }?.uppercase().orEmpty()
 }
 
 internal fun Monster.filterEmpties(): Monster {
