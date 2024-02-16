@@ -156,7 +156,12 @@ internal class MonsterDaoImpl(
     }
 
     override suspend fun deleteMonster(index: String) = withContext(dispatcher) {
-        monsterQueries.deleteByIndex(index)
+        monsterQueries.transaction {
+            val monsters = monsterQueries.getMonster(index).executeAsList()
+                .queryMonsterCompleteEntities()
+            deleteAllEntries(monsters)
+            monsterQueries.deleteByIndex(index)
+        }
     }
 
     private fun deleteAllEntries(monsters: List<MonsterCompleteEntity>) {

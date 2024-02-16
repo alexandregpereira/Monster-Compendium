@@ -14,12 +14,12 @@ internal fun <T> LazyListScope.FormItems(
     items: MutableList<T>,
     addText: @Composable () -> String = { strings.add },
     removeText: @Composable () -> String = { strings.remove },
-    key: String,
+    keys: Iterator<String>,
     createNew: () -> T,
     onChanged: (List<T>) -> Unit = {},
     content: LazyListScope.(Int, T) -> Unit
 ) {
-    formItem(key = "$key-add-remove-buttons") {
+    formItem(key = keys.next()) {
         AddRemoveButtons(
             addText = addText(),
             removeText = removeText().takeUnless { items.isEmpty() }.orEmpty(),
@@ -35,7 +35,7 @@ internal fun <T> LazyListScope.FormItems(
     items.forEachIndexed { index, item ->
         content(index, item)
 
-        formItem(key = "$key-add-remove-buttons-$index") {
+        formItem(key = keys.next()) {
             AddRemoveButtons(
                 addText = addText(),
                 removeText = removeText().takeUnless { index == items.lastIndex }.orEmpty(),

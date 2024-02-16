@@ -9,25 +9,23 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterAbilityScoresForm(
+    keys: Iterator<String>,
     abilityScores: List<AbilityScoreState>,
     onChanged: (List<AbilityScoreState>) -> Unit = {}
+) = FormLazy(
+    titleKey = keys.next(),
+    title = { strings.abilityScores },
 ) {
-    val key = "abilityScores"
-    FormLazy(
-        key = key,
-        title = { strings.abilityScores },
-    ) {
-        val newAbilityScores = abilityScores.toMutableList()
-        abilityScores.fastForEachIndexed { i, abilityScore ->
-            formItem(key = "$key-$i") {
-                AppTextField(
-                    value = abilityScore.value,
-                    label = abilityScore.name,
-                    onValueChange = { newValue ->
-                        onChanged(newAbilityScores.changeAt(i) { copy(value = newValue) })
-                    }
-                )
-            }
+    val newAbilityScores = abilityScores.toMutableList()
+    abilityScores.fastForEachIndexed { i, abilityScore ->
+        formItem(key = keys.next()) {
+            AppTextField(
+                value = abilityScore.value,
+                label = abilityScore.name,
+                onValueChange = { newValue ->
+                    onChanged(newAbilityScores.changeAt(i) { copy(value = newValue) })
+                }
+            )
         }
     }
 }

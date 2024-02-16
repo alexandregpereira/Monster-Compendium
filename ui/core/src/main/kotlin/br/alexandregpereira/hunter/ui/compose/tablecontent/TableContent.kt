@@ -53,7 +53,7 @@ internal fun TableContent(
 ) {
     LazyHorizontalGrid(
         state = rememberLazyGridState(initialFirstVisibleItemIndex = initialIndex),
-        rows = GridCells.Adaptive(minSize = 56.dp),
+        rows = GridCells.Adaptive(minSize = 60.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(16.dp),
         modifier = modifier

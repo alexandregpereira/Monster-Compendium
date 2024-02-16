@@ -11,23 +11,23 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterActionsForm(
-    key: String,
+    keys: Iterator<String>,
     title: @Composable () -> String,
     actions: List<ActionState>,
     onChanged: (List<ActionState>) -> Unit = {}
-) = FormLazy(key, title) {
+) = FormLazy(titleKey = keys.next(), title) {
     val newActions = actions.toMutableList()
 
     FormItems(
         items = newActions,
         addText = { strings.addAction },
         removeText = { strings.removeAction },
-        key = key,
+        keys = keys,
         createNew = { ActionState() },
         onChanged = onChanged
     ) { actionIndex, action ->
         val abilityDescription = action.abilityDescription
-        formItem(key = "$key-action-name-${action.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 text = abilityDescription.name,
                 label = strings.name,
@@ -45,7 +45,7 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        formItem(key = "$key-action-description-${action.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 text = abilityDescription.description,
                 label = strings.description,
@@ -64,7 +64,7 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        formItem(key = "$key-action-attackBonus-${action.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 value = action.attackBonus ?: 0,
                 label = strings.attackBonus,
@@ -74,12 +74,11 @@ internal fun LazyListScope.MonsterActionsForm(
             )
         }
 
-        val damageDiceKey = "$key-actions-damageDices-${action.key}"
         FormItems(
             items = action.damageDices.toMutableList(),
             addText = { strings.addDamageDice },
             removeText = { strings.removeDamageDice },
-            key = damageDiceKey,
+            keys = keys,
             createNew = { DamageDiceState() },
             onChanged = {
                 onChanged(
@@ -87,7 +86,7 @@ internal fun LazyListScope.MonsterActionsForm(
                 )
             }
         ) { index, damageDice ->
-            formItem(key = "$damageDiceKey-damageDice-type-${damageDice.key}") {
+            formItem(key = keys.next()) {
                 PickerField(
                     value = damageDice.name,
                     label = strings.damageType,
@@ -102,7 +101,7 @@ internal fun LazyListScope.MonsterActionsForm(
                 )
             }
 
-            formItem(key = "$damageDiceKey-damageDice-dice-${damageDice.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     text = damageDice.dice,
                     label = strings.damageDice,

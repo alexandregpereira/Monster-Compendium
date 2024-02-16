@@ -12,23 +12,23 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSpellcastingsForm(
+    keys: Iterator<String>,
     spellcastings: List<SpellcastingState>,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<SpellcastingState>) -> Unit = {}
 ) {
-    val key = "spellcastings"
-    FormLazy(key, { strings.spells }) {
+    FormLazy(titleKey = keys.next(), title = { strings.spells }) {
         val newSpellcastings = spellcastings.toMutableList()
 
         FormItems(
-            key = key,
+            keys = keys,
             items = newSpellcastings,
             addText = { strings.addSpellcastingType },
             removeText = { strings.removeSpellcastingType },
             createNew = { SpellcastingState() },
             onChanged = onChanged
         ) { index, spellcasting ->
-            formItem(key = "$key-type-${spellcasting.key}") {
+            formItem(key = keys.next()) {
                 PickerField(
                     value = spellcasting.name,
                     label = strings.spellcastingTypeLabel,
@@ -40,7 +40,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
                     }
                 )
             }
-            formItem(key = "$key-description-${spellcasting.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     text = spellcasting.description,
                     label = strings.description,
@@ -51,7 +51,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
                 )
             }
             MonsterSpellsUsageForm(
-                key = "$key-spellsUsage-${spellcasting.key}",
+                keys = keys,
                 spellsByGroup = spellcasting.spellsByGroup,
                 onSpellClick = onSpellClick,
                 onChanged = { newSpellsByGroup ->
@@ -66,21 +66,21 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSpellsUsageForm(
-    key: String,
+    keys: Iterator<String>,
     spellsByGroup: List<SpellsByGroupState>,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<SpellsByGroupState>) -> Unit = {}
 ) {
     val newSpellsByGroupState = spellsByGroup.toMutableList()
     FormItems(
-        key = key,
+        keys = keys,
         items = newSpellsByGroupState,
         addText = { strings.addSpellGroup },
         removeText = { strings.removeSpellGroup },
         createNew = { SpellsByGroupState() },
         onChanged = onChanged
     ) { index, spellByGroup ->
-        formItem(key = "$key-group-${spellByGroup.key}") {
+        formItem(key = keys.next()) {
             AppTextField(
                 text = spellByGroup.group,
                 label = strings.spellGroup,
@@ -90,7 +90,7 @@ internal fun LazyListScope.MonsterSpellsUsageForm(
             )
         }
         MonsterSpellsForm(
-            key = "$key-spells-${spellByGroup.key}",
+            keys = keys,
             spells = spellByGroup.spells,
             onSpellClick = onSpellClick,
             onChanged = { newSpells ->
@@ -102,19 +102,19 @@ internal fun LazyListScope.MonsterSpellsUsageForm(
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSpellsForm(
-    key: String,
+    keys: Iterator<String>,
     spells: List<SpellPreviewState>,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<SpellPreviewState>) -> Unit = {}
 ) = FormItems(
-    key = key,
+    keys = keys,
     items = spells.toMutableList(),
     addText = { strings.addSpell },
     removeText = { strings.removeSpell },
     createNew = { SpellPreviewState() },
     onChanged = onChanged
-) { index, spell ->
-    formItem(key = "$key-spell-name-${spell.index}") {
+) { _, spell ->
+    formItem(key = keys.next()) {
         ClickableField(
             text = spell.name,
             label = strings.spellLabel,

@@ -317,7 +317,7 @@ class MonsterDetailStateHolder(
     }
 
     private fun showCloneForm() = setState {
-        this.showCloneForm().saveState(stateRecovery)
+        this.showCloneForm(monsterIndex).saveState(stateRecovery)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

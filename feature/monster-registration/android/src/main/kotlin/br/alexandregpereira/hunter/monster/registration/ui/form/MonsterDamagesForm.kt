@@ -14,24 +14,24 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterDamagesForm(
-    key: String,
+    keys: Iterator<String>,
     title: @Composable () -> String,
     damages: List<DamageState>,
     onChanged: (List<DamageState>) -> Unit = {}
 ) {
     val newDamages = damages.toMutableList()
     FormLazy(
-        key = key,
+        titleKey = keys.next(),
         title = title,
     ) {
         FormItems(
-            key = key,
+            keys = keys,
             items = newDamages,
             createNew = { DamageState() },
             onChanged = onChanged
         ) { i, damage ->
             val otherName = damage.otherName
-            formItem(key = "$key-name-${damage.key}") {
+            formItem(key = keys.next()) {
                 if (i != 0 && otherName != null) Spacer(modifier = Modifier.height(8.dp))
 
                 PickerField(
@@ -48,7 +48,7 @@ internal fun LazyListScope.MonsterDamagesForm(
                 )
             }
 
-            formItem(key = "$key-name-other-${damage.key}") {
+            formItem(key = keys.next()) {
                 if (otherName != null) {
                     AppTextField(
                         text = otherName,

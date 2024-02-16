@@ -15,12 +15,12 @@ import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 
 @Suppress("FunctionName")
 internal fun LazyListScope.FormLazy(
-    key: String,
+    titleKey: String,
     title: @Composable () -> String,
     modifier: Modifier = Modifier,
     content: LazyListScope.() -> Unit,
 ) {
-    formItem(key = "$key-title") {
+    formItem(key = titleKey) {
         Column(modifier) {
             Spacer(modifier = Modifier.height(16.dp))
             ScreenHeader(

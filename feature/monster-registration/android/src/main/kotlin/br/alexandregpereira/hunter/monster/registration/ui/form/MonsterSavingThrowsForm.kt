@@ -9,24 +9,24 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterSavingThrowsForm(
+    keys: Iterator<String>,
     savingThrows: List<SavingThrowState>,
     onChanged: (List<SavingThrowState>) -> Unit = {}
 ) {
     val mutableSavingThrows = savingThrows.toMutableList()
-    val key = "saving-throws"
 
     FormLazy(
-        key = key,
+        titleKey = keys.next(),
         title = { strings.savingThrows },
     ) {
 
         FormItems(
-            key = key,
+            keys = keys,
             items = mutableSavingThrows,
             createNew = { SavingThrowState() },
             onChanged = onChanged
         ) { i, savingThrow ->
-            formItem(key = "$key-name-${savingThrow.key}") {
+            formItem(key = keys.next()) {
                 PickerField(
                     value = savingThrow.name,
                     label = strings.name,
@@ -41,7 +41,7 @@ internal fun LazyListScope.MonsterSavingThrowsForm(
                 )
             }
 
-            formItem(key = "$key-modifier-${savingThrow.key}") {
+            formItem(key = keys.next()) {
                 AppTextField(
                     value = savingThrow.modifier,
                     label = savingThrow.name,

@@ -13,6 +13,7 @@ fun MonsterRegistrationFeature(
     val viewModel: MonsterRegistrationViewModel = koinViewModel()
     MonsterRegistrationScreen(
         state = viewModel.state.collectAsState().value,
+        actionHandler = viewModel,
         contentPadding = contentPadding,
         intent = viewModel,
     )
