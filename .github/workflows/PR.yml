@@ -1,13 +1,6 @@
-name: Android CI
+name: Android PR CI
 
 on:
-  push:
-    branches: 
-      - main
-      - dev
-    paths-ignore:
-      - '**.md'
-      - 'media/**'
   pull_request:
     paths-ignore:
       - '**.md'
@@ -32,18 +25,11 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle
-      env:
-        MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew assembleRelease testReleaseUnitTest jvmTest -Pdev
+      run: ./gradlew assembleDebug testDebugUnitTest jvmTest
 
     - name: Verify database migration
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
 
-    - name: Generate AAB
-      env:
-        MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew bundleRelease
-      
     - name: Upload the test report
       if: failure()
       uses: actions/upload-artifact@v3.1.1
@@ -57,17 +43,11 @@ jobs:
     - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-dev-release.apk
-        path: app/build/outputs/apk/release/app-dev-release.apk
+        name: app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
         
     - name: Upload an APK metadata JSON
       uses: actions/upload-artifact@v3.1.1
       with:
         name: output-metadata.json
-        path: app/build/outputs/apk/release/output-metadata.json
-
-    - name: Upload an AAB
-      uses: actions/upload-artifact@v3.1.1
-      with:
-        name: app-release.aab
-        path: app/build/outputs/bundle/release/app-release.aab
+        path: app/build/outputs/apk/debug/output-metadata.json
