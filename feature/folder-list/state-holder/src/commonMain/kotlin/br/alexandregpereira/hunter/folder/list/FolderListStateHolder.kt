@@ -82,14 +82,16 @@ class FolderListStateHolder internal constructor(
 
     fun onItemSelectionDeleteClick() {
         analytics.trackItemSelectionDeleteClick()
-        onItemSelectionClose()
         flowOf(state.value.itemSelection)
             .map { it.toList() }
             .map { folderNames ->
                 removeMonsterFolders(folderNames).collect()
             }
             .flowOn(dispatcher)
-            .onEach { loadMonsterFolders() }
+            .onEach {
+                onItemSelectionClose()
+                loadMonsterFolders()
+            }
             .launchIn(scope)
     }
 

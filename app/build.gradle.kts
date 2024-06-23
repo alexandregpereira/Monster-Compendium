@@ -143,4 +143,7 @@ dependencies {
     implementation(libs.koin.compose)
     testImplementation(libs.bundles.unittest)
     testImplementation(libs.koin.test)
+    androidTestImplementation(libs.bundles.instrumentedtest)
+    androidTestImplementation(libs.compose.ui.test)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

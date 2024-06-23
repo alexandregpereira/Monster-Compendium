@@ -35,6 +35,8 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
