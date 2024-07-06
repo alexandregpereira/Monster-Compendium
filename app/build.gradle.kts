@@ -99,6 +99,10 @@ java {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     implementation(project(":core:analytics"))
     implementation(project(":core:event"))

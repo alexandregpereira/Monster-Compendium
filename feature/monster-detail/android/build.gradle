@@ -31,6 +31,10 @@ java {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     implementation project(':core:state-holder')
     implementation project(':domain:monster:core')

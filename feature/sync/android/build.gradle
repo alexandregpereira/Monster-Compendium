@@ -27,6 +27,10 @@ java {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     implementation project(':feature:sync:state-holder')
     implementation project(':ui:core')

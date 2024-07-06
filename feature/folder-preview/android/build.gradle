@@ -28,6 +28,10 @@ java {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     implementation project(':feature:folder-preview:state-holder')
     implementation project(':ui:core')
