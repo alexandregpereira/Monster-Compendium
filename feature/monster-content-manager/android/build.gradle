@@ -30,6 +30,10 @@ java {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 dependencies {
     implementation project(':feature:monster-content-manager:state-holder')
     implementation project(':ui:core')

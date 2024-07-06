@@ -10,13 +10,7 @@ android {
         minSdkVersion project.findProperty('minSdk')
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
@@ -28,6 +22,16 @@ android {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'br.alexandregpereira.hunter.monster.compendium'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
 }
 
 dependencies {

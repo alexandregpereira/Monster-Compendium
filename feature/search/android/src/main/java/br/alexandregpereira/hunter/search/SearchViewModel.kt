@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
+@Suppress("OPT_IN_USAGE")
 @OptIn(FlowPreview::class)
 internal class SearchViewModel(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
