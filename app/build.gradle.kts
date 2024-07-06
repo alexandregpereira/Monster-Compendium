@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.compose.compiler)
 }
 
 @Suppress("UnstableApiUsage")
@@ -88,10 +89,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 

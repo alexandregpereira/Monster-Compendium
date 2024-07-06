@@ -24,4 +24,7 @@ android {
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }

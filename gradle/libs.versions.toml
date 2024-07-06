@@ -1,29 +1,28 @@
 [versions]
-android_gradle_plugin = "8.2.2"
-appcompat = "1.6.1"
+android_gradle_plugin = "8.3.0"
+appcompat = "1.7.0"
 arch_core_testing = "2.2.0"
 coil_compose = "2.5.0"
-compose_activity = '1.8.2'
-compose = '1.6.2'
-compose_material = '1.6.7'
-compose_compiler = '1.5.9'
-core_ktx = '1.12.0'
-espresso_core = "3.5.1"
-firebase_bom = "32.7.2"
-googleplay_services = "4.4.1"
-gradle_firebase_crashlytics = "2.9.9"
-junit_ext = "1.1.5"
+compose_activity = '1.9.0'
+compose = '1.6.8'
+compose_material = '1.6.8'
+core_ktx = '1.13.1'
+espresso_core = "3.6.1"
+firebase_bom = "33.1.1"
+googleplay_services = "4.4.2"
+gradle_firebase_crashlytics = "3.0.2"
+junit_ext = "1.2.1"
 junit = "4.13.2"
 koin = '3.5.3'
 koin_compose = "3.5.3"
-kotlin = '1.9.22'
+kotlin = '2.0.0'
 kotlin_coroutines_test = '1.8.1'
 kotlin_coroutines = '1.8.1'
-kotlin_datetime = "0.5.0"
+kotlin_datetime = "0.6.0"
 kotlinx_serialization = "1.6.3"
-ktor = "2.3.8"
-lifecycle = "2.7.0"
-material = "1.11.0"
+ktor = "2.3.9"
+lifecycle = "2.8.3"
+material = "1.12.0"
 mockk = "1.13.9"
 multiplatform-settings = "1.1.1"
 okhttp3_logging_interceptor = "4.12.0"
@@ -88,3 +87,4 @@ viewmodel-bundle = ["viewmodel"]
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
