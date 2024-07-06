@@ -6,7 +6,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'hunter'
-include ':app'
+include ':androidApp'
 
 include ':core:analytics'
 include ':core:event'
