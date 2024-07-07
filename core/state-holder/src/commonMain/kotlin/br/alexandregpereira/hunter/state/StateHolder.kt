@@ -18,18 +18,19 @@ package br.alexandregpereira.hunter.state
 
 import br.alexandregpereira.flow.StateFlowWrapper
 import br.alexandregpereira.flow.wrap
+import br.alexandregpereira.hunter.ui.EmptyStateRecovery
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 abstract class UiModel<State : Any>(
     initialState: State,
-    protected val uiStateRecovery: StateRecovery<State> = StateRecovery(initialState)
+    protected val uiStateRecovery: StateRecovery<State> = EmptyStateRecovery()
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(

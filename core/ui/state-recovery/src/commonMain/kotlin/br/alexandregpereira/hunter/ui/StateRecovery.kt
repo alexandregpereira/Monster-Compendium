@@ -4,6 +4,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.emptyFlow
 
 interface StateRecovery<State> {
     val state: State
@@ -21,6 +22,17 @@ fun <State> State.saveState(
 ): State {
     recovery.saveState(this)
     return this
+}
+
+class EmptyStateRecovery<State> : StateRecovery<State> {
+    override val state: State
+        get() = throw IllegalStateException("No state available")
+
+    override val onStateChanges: Flow<State> = emptyFlow()
+
+    override fun saveState(state: State) {
+        throw IllegalStateException("No state to save when is a empty state recovery")
+    }
 }
 
 private class DefaultMonsterCompendiumStateRecovery<State>(
