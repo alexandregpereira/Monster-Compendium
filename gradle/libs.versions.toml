@@ -3,6 +3,7 @@ android_gradle_plugin = "8.3.0"
 appcompat = "1.7.0"
 arch_core_testing = "2.2.0"
 coil_compose = "2.5.0"
+coil3 = "3.0.0-alpha06"
 compose_activity = '1.9.0'
 compose = '1.6.8'
 compose_plugin = '1.6.11'
@@ -31,7 +32,10 @@ sqldelight = "1.5.5"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }

@@ -64,7 +64,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.MonsterType.CELESTIAL
 import br.alexandregpereira.hunter.monster.detail.ColorState
 import br.alexandregpereira.hunter.monster.detail.MonsterImageState
@@ -381,7 +380,7 @@ private fun MonsterTypeIcon(
 ) {
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
-            iconRes = data.type.toIconRes(),
+            icon = data.type.toIcon(),
             iconSize = 32.dp,
             tint = data.getBackgroundColor(isSystemInDarkTheme()).getTintColor()
         )

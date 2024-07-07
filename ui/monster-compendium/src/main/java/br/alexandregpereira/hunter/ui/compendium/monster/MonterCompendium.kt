@@ -51,7 +51,7 @@ fun MonsterCompendium(
         MonsterCard(
             name = monsterCardState.name,
             url = monsterCardState.imageState.url,
-            iconRes = monsterCardState.imageState.type.iconRes,
+            icon = monsterCardState.imageState.type.icon,
             backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
                 isSystemInDarkTheme()
             ),

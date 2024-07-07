@@ -16,8 +16,22 @@
 
 package br.alexandregpereira.hunter.ui.compendium.monster
 
-import androidx.annotation.DrawableRes
-import br.alexandregpereira.hunter.ui.R as UiR
+import br.alexandregpereira.hunter.ui.resources.Res
+import br.alexandregpereira.hunter.ui.resources.ic_aberration
+import br.alexandregpereira.hunter.ui.resources.ic_beast
+import br.alexandregpereira.hunter.ui.resources.ic_celestial
+import br.alexandregpereira.hunter.ui.resources.ic_construct
+import br.alexandregpereira.hunter.ui.resources.ic_dragon
+import br.alexandregpereira.hunter.ui.resources.ic_elemental
+import br.alexandregpereira.hunter.ui.resources.ic_fey
+import br.alexandregpereira.hunter.ui.resources.ic_fiend
+import br.alexandregpereira.hunter.ui.resources.ic_giant
+import br.alexandregpereira.hunter.ui.resources.ic_humanoid
+import br.alexandregpereira.hunter.ui.resources.ic_monstrosity
+import br.alexandregpereira.hunter.ui.resources.ic_ooze
+import br.alexandregpereira.hunter.ui.resources.ic_plant
+import br.alexandregpereira.hunter.ui.resources.ic_undead
+import org.jetbrains.compose.resources.DrawableResource
 
 data class MonsterCardState(
     val index: String,
@@ -42,19 +56,19 @@ data class ColorState(
     fun getColor(isDarkTheme: Boolean): String = if (isDarkTheme) dark else light
 }
 
-enum class MonsterTypeState(@DrawableRes val iconRes: Int) {
-    ABERRATION(UiR.drawable.ic_aberration),
-    BEAST(UiR.drawable.ic_beast),
-    CELESTIAL(UiR.drawable.ic_celestial),
-    CONSTRUCT(UiR.drawable.ic_construct),
-    DRAGON(UiR.drawable.ic_dragon),
-    ELEMENTAL(UiR.drawable.ic_elemental),
-    FEY(UiR.drawable.ic_fey),
-    FIEND(UiR.drawable.ic_fiend),
-    GIANT(UiR.drawable.ic_giant),
-    HUMANOID(UiR.drawable.ic_humanoid),
-    MONSTROSITY(UiR.drawable.ic_monstrosity),
-    OOZE(UiR.drawable.ic_ooze),
-    PLANT(UiR.drawable.ic_plant),
-    UNDEAD(UiR.drawable.ic_undead)
+enum class MonsterTypeState(val icon: DrawableResource) {
+    ABERRATION(Res.drawable.ic_aberration),
+    BEAST(Res.drawable.ic_beast),
+    CELESTIAL(Res.drawable.ic_celestial),
+    CONSTRUCT(Res.drawable.ic_construct),
+    DRAGON(Res.drawable.ic_dragon),
+    ELEMENTAL(Res.drawable.ic_elemental),
+    FEY(Res.drawable.ic_fey),
+    FIEND(Res.drawable.ic_fiend),
+    GIANT(Res.drawable.ic_giant),
+    HUMANOID(Res.drawable.ic_humanoid),
+    MONSTROSITY(Res.drawable.ic_monstrosity),
+    OOZE(Res.drawable.ic_ooze),
+    PLANT(Res.drawable.ic_plant),
+    UNDEAD(Res.drawable.ic_undead)
 }

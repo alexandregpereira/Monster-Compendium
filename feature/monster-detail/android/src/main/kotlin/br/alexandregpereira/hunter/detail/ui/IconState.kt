@@ -21,6 +21,22 @@ import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.SpeedType
+import br.alexandregpereira.hunter.ui.resources.Res
+import br.alexandregpereira.hunter.ui.resources.ic_aberration
+import br.alexandregpereira.hunter.ui.resources.ic_beast
+import br.alexandregpereira.hunter.ui.resources.ic_celestial
+import br.alexandregpereira.hunter.ui.resources.ic_construct
+import br.alexandregpereira.hunter.ui.resources.ic_dragon
+import br.alexandregpereira.hunter.ui.resources.ic_elemental
+import br.alexandregpereira.hunter.ui.resources.ic_fey
+import br.alexandregpereira.hunter.ui.resources.ic_fiend
+import br.alexandregpereira.hunter.ui.resources.ic_giant
+import br.alexandregpereira.hunter.ui.resources.ic_humanoid
+import br.alexandregpereira.hunter.ui.resources.ic_monstrosity
+import br.alexandregpereira.hunter.ui.resources.ic_ooze
+import br.alexandregpereira.hunter.ui.resources.ic_plant
+import br.alexandregpereira.hunter.ui.resources.ic_undead
+import org.jetbrains.compose.resources.DrawableResource
 import br.alexandregpereira.hunter.ui.R as UiR
 
 internal fun SpeedType.toIconRes(): Int {
@@ -69,21 +85,21 @@ internal fun ConditionType.toIconRes(): Int {
     }
 }
 
-internal fun MonsterType.toIconRes(): Int {
+internal fun MonsterType.toIcon(): DrawableResource {
     return when (this) {
-        MonsterType.ABERRATION -> UiR.drawable.ic_aberration
-        MonsterType.BEAST -> UiR.drawable.ic_beast
-        MonsterType.CELESTIAL -> UiR.drawable.ic_celestial
-        MonsterType.CONSTRUCT -> UiR.drawable.ic_construct
-        MonsterType.DRAGON -> UiR.drawable.ic_dragon
-        MonsterType.ELEMENTAL -> UiR.drawable.ic_elemental
-        MonsterType.FEY -> UiR.drawable.ic_fey
-        MonsterType.FIEND -> UiR.drawable.ic_fiend
-        MonsterType.GIANT -> UiR.drawable.ic_giant
-        MonsterType.HUMANOID -> UiR.drawable.ic_humanoid
-        MonsterType.MONSTROSITY -> UiR.drawable.ic_monstrosity
-        MonsterType.OOZE -> UiR.drawable.ic_ooze
-        MonsterType.PLANT -> UiR.drawable.ic_plant
-        MonsterType.UNDEAD -> UiR.drawable.ic_undead
+        MonsterType.ABERRATION -> Res.drawable.ic_aberration
+        MonsterType.BEAST -> Res.drawable.ic_beast
+        MonsterType.CELESTIAL -> Res.drawable.ic_celestial
+        MonsterType.CONSTRUCT -> Res.drawable.ic_construct
+        MonsterType.DRAGON -> Res.drawable.ic_dragon
+        MonsterType.ELEMENTAL -> Res.drawable.ic_elemental
+        MonsterType.FEY -> Res.drawable.ic_fey
+        MonsterType.FIEND -> Res.drawable.ic_fiend
+        MonsterType.GIANT -> Res.drawable.ic_giant
+        MonsterType.HUMANOID -> Res.drawable.ic_humanoid
+        MonsterType.MONSTROSITY -> Res.drawable.ic_monstrosity
+        MonsterType.OOZE -> Res.drawable.ic_ooze
+        MonsterType.PLANT -> Res.drawable.ic_plant
+        MonsterType.UNDEAD -> Res.drawable.ic_undead
     }
 }

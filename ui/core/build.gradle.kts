@@ -1,49 +1,39 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
     androidMain {
         implementation(libs.core.ktx)
-        implementation(libs.bundles.compose)
-        implementation(libs.compose.util)
+        implementation(libs.compose.activity)
+        implementation(libs.compose.tooling.preview)
         implementation(libs.kotlin.reflect)
-        implementation(libs.coil.compose)
     }
     commonMain {
-
+        implementation(compose.ui)
+        implementation(compose.material)
+        implementation(compose.uiUtil)
+        api(compose.components.resources)
+        implementation(compose.components.uiToolingPreview)
+        implementation(libs.ktor.core)
+        implementation(libs.coil.compose.core)
+        implementation(libs.coil.compose)
+        implementation(libs.coil.mp)
+        implementation(libs.coil.network.ktor)
     }
     jvmMain()
     iosMain()
 }
 
-android {
+androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui"
-    compileSdk = findProperty("compileSdk")?.toString()?.toInt()
-
-    defaultConfig {
-        minSdk = findProperty("minSdk")?.toString()?.toInt()
-    }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
-kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
-        freeCompilerArgs.add("-Xopt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi")
-    }
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "br.alexandregpereira.hunter.ui.resources"
+    generateResClass = always
 }

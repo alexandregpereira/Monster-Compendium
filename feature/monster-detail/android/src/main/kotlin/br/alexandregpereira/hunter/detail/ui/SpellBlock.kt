@@ -42,7 +42,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,6 +57,7 @@ import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
 import br.alexandregpereira.hunter.ui.util.toColor
+import org.jetbrains.compose.resources.painterResource
 
 fun LazyListScope.spellBlock(
     monsters: List<MonsterState>,
@@ -247,7 +247,7 @@ private fun SchoolsOfMagicPreview() = Window {
                 } else school.asState().iconColorLight
             IconInfo(
                 title = school.name,
-                painter = painterResource(school.asState().iconRes),
+                painter = painterResource(school.asState().icon),
                 iconColor = iconColor.toColor()
             )
         }
@@ -268,7 +268,7 @@ private fun SchoolsOfMagicDarkThemePreview() = Window {
                 } else school.asState().iconColorLight
             IconInfo(
                 title = school.name,
-                painter = painterResource(school.asState().iconRes),
+                painter = painterResource(school.asState().icon),
                 iconColor = iconColor.toColor()
             )
         }
