@@ -76,7 +76,6 @@ fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Un
 }
 
 fun KotlinMultiplatformExtension.iosMain(
-    iosFramework: Framework.() -> Unit = {},
     block: KotlinDependencyHandler.() -> Unit = {}
 ) {
     if (Os.isArch("aarch64")) {
@@ -90,7 +89,8 @@ fun KotlinMultiplatformExtension.iosMain(
         )
     }.onEach {
         it.binaries.framework {
-            iosFramework()
+            baseName = "KotlinApp"
+            isStatic = true
         }
     }
 

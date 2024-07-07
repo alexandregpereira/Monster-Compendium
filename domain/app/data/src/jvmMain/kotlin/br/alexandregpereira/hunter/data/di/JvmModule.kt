@@ -19,14 +19,7 @@ package br.alexandregpereira.hunter.data.di
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
-import org.koin.dsl.module
 
-internal actual fun getAdditionalModule(): List<Module> {
-    return listOf(
-        module {
-            factory { DriverFactory() }
-        }
-    )
-}
+internal actual fun getAdditionalModule(): List<Module> = emptyList()
 
 actual fun getDispatcherIO(): CoroutineDispatcher = Dispatchers.IO
