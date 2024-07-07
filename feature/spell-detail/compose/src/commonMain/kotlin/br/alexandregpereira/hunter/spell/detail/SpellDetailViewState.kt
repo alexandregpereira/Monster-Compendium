@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
-import androidx.lifecycle.SavedStateHandle
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 
 internal data class SpellDetailViewState(
@@ -25,7 +24,7 @@ internal data class SpellDetailViewState(
     val strings: SpellDetailStrings = SpellDetailStrings()
 )
 
-data class SpellState(
+internal data class SpellState(
     val index: String = "",
     val name: String = "",
     val subtitle: String = "",
@@ -39,19 +38,6 @@ data class SpellState(
     val description: String = "",
     val higherLevel: String? = null,
 )
-
-internal fun SavedStateHandle.getState(): SpellDetailViewState {
-    return SpellDetailViewState(
-        showDetail = this["showDetail"] ?: false
-    )
-}
-
-internal fun SpellDetailViewState.saveState(
-    savedStateHandle: SavedStateHandle
-): SpellDetailViewState {
-    savedStateHandle["showDetail"] = showDetail
-    return this
-}
 
 internal fun SpellDetailViewState.changeSpell(
     spellState: SpellState,

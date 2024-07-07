@@ -20,7 +20,7 @@ import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val spellCompendiumModule = listOf(spellCompendiumStateModule) + module {
+val spellCompendiumModule = module {
 
     viewModel {
         SpellCompendiumViewModel(get())

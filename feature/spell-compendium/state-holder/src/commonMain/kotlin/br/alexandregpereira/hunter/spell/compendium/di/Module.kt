@@ -14,7 +14,7 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val spellCompendiumStateModule = module {
+val featureSpellCompendiumModule = module {
     single { SpellCompendiumEventManager() }
 
     factory<SpellCompendiumEventResultDispatcher> { get<SpellCompendiumEventManager>() }

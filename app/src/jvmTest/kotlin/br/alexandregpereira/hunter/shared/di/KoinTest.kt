@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.shared.di
 
+import br.alexandregpereira.hunter.app.di.initKoinModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +32,7 @@ class KoinTest {
     @Test
     fun verifyKoinApp() {
         koinApplication {
-            modules(appModules())
+            initKoinModules()
             checkModules()
         }
     }

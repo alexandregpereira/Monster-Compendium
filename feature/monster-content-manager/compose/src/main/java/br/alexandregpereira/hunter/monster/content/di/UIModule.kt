@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.monster.content.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val monsterContentManagerModule = listOf(featureMonsterContentManagerModule) + module {
+val monsterContentManagerModule = module {
     factory {
         val savedStateHandle = get<SavedStateHandle>()
         MonsterContentManagerStateRecovery {

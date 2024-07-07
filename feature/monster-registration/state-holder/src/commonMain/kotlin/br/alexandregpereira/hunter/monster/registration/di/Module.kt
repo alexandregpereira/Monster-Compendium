@@ -18,7 +18,7 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val monsterRegistrationStateModule = module {
+val featureMonsterRegistrationModule = module {
     single<StateHolderParams<MonsterRegistrationParams>>(qualifier = paramsQualifier) {
         StateHolderParams(MonsterRegistrationParams())
     }

@@ -26,10 +26,10 @@ import br.alexandregpereira.hunter.detail.saveMonsterIndexes
 import br.alexandregpereira.hunter.detail.saveState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailState
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateRecovery
-import br.alexandregpereira.hunter.monster.detail.di.monsterDetailStateModule
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val monsterDetailModule = monsterDetailStateModule.apply {
+val monsterDetailModule = module {
     factory<MonsterDetailStateRecovery> {
         AndroidMonsterDetailStateRecovery(
             savedStateHandle = get(),

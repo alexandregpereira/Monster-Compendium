@@ -23,7 +23,6 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewState
@@ -31,6 +30,7 @@ import br.alexandregpereira.hunter.spell.detail.SpellState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun SpellDetailScreen(

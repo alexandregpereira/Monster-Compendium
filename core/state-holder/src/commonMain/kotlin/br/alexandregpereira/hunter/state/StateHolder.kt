@@ -41,9 +41,11 @@ abstract class UiModel<State : Any>(
     override val state: StateFlowWrapper<State> = _state.wrap(scope)
 
     init {
-        uiStateRecovery.onStateChanges.onEach { state ->
-            setState { state }
-        }.launchIn(scope)
+        if (uiStateRecovery !is EmptyStateRecovery) {
+            uiStateRecovery.onStateChanges.onEach { state ->
+                setState { state }
+            }.launchIn(scope)
+        }
     }
 
     protected fun setState(block: State.() -> State) {

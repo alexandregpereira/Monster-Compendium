@@ -3,7 +3,7 @@ package br.alexandregpereira.hunter.spell.detail
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 
-interface SpellDetailStrings {
+internal interface SpellDetailStrings {
     val subtitle: (Int, String) -> String
     val castingTime: String
     val range: String
@@ -85,7 +85,7 @@ internal data class SpellDetailPtStrings(
     override val cantrip: String = "Truque",
 ) : SpellDetailStrings
 
-fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
+internal fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
 
 internal fun AppLocalization.getStrings(): SpellDetailStrings {
     return when (getLanguage()) {

@@ -43,7 +43,6 @@ multiplatform {
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:spell-compendium:compose"))
-        implementation(project(":feature:spell-detail:compose"))
 
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
@@ -69,18 +68,27 @@ multiplatform {
 
         implementation(project(":feature:folder-detail:event"))
         implementation(project(":feature:folder-list:event"))
-        implementation(project(":feature:folder-insert:event")) // TODO Remove later
         implementation(project(":feature:folder-preview:event")) // TODO Remove later
+        implementation(project(":feature:monster-content-manager:event"))
+        implementation(project(":feature:monster-detail:event"))
         implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
         implementation(project(":feature:monster-registration:event")) // TODO Remove later
         implementation(project(":feature:spell-detail:event")) // TODO Remove later
+
+        implementation(project(":feature:folder-detail:state-holder"))
+        implementation(project(":feature:folder-insert:state-holder"))
+        implementation(project(":feature:folder-list:state-holder"))
+        implementation(project(":feature:folder-preview:state-holder"))
         implementation(project(":feature:monster-compendium:state-holder"))
-        implementation(project(":feature:monster-content-manager:event"))
-        implementation(project(":feature:monster-detail:event"))
+        implementation(project(":feature:monster-content-manager:state-holder"))
         implementation(project(":feature:monster-detail:state-holder"))
+        implementation(project(":feature:monster-lore-detail:state-holder"))
+        implementation(project(":feature:monster-registration:state-holder"))
+        implementation(project(":feature:spell-compendium:state-holder"))
         implementation(project(":feature:sync:state-holder"))
 
         implementation(project(":feature:monster-compendium:compose"))
+        implementation(project(":feature:spell-detail:compose"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)

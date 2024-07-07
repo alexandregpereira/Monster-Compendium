@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.folder.preview.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val folderPreviewModule = listOf(featureFolderPreviewModule) + module {
+val folderPreviewModule = module {
     factory {
         val state = get<SavedStateHandle>().getState()
         FolderPreviewStateRecovery {

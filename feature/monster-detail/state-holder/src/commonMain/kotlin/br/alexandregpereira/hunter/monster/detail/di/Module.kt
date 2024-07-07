@@ -31,7 +31,7 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val monsterDetailStateModule = module {
+val featureMonsterDetailModule = module {
     single { MonsterDetailEventManager() }
     single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
     single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }

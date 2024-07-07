@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.sync.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val syncModule = listOf(syncStateModule) + module {
+val syncModule = module {
     factory {
         val savedStateHandle = get<SavedStateHandle>()
         SyncStateRecovery {

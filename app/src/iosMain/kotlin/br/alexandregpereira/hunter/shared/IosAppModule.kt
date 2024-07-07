@@ -16,11 +16,11 @@
 
 package br.alexandregpereira.hunter.shared
 
-import br.alexandregpereira.hunter.shared.di.appModules
+import br.alexandregpereira.hunter.app.di.initKoinModules
 import org.koin.core.context.startKoin
 
 fun initKoin() {
     startKoin {
-        modules(appModules())
+        initKoinModules()
     }
 }

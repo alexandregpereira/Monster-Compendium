@@ -20,7 +20,7 @@ import br.alexandregpereira.hunter.folder.list.FolderListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val folderListModule = listOf(featureFolderListModule) + module {
+val folderListModule = module {
     viewModel {
         FolderListViewModel(get())
     }

@@ -20,7 +20,7 @@ import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreview
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val monsterContentPreviewModule = listOf(featureMonsterContentPreviewModule) + module {
+val monsterContentPreviewModule = module {
     viewModel {
         MonsterContentPreviewViewModel(get())
     }

@@ -26,7 +26,7 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val monsterCompendiumStateModule = module {
+val featureMonsterCompendiumModule = module {
     single(named(StateRecoveryQualifier)) {
         StateRecovery(
             MonsterCompendiumState.Empty,

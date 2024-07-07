@@ -20,7 +20,7 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationViewM
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val monsterRegistrationModule = listOf(monsterRegistrationStateModule) + module {
+val monsterRegistrationModule = module {
 
     viewModel {
         MonsterRegistrationViewModel(get())

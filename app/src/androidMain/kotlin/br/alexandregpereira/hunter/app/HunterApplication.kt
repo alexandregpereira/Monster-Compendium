@@ -17,18 +17,12 @@
 package br.alexandregpereira.hunter.app
 
 import android.app.Application
-import br.alexandregpereira.hunter.analytics.di.analyticsModule
-import br.alexandregpereira.hunter.app.di.appModule
-import br.alexandregpereira.hunter.data.di.dataModules
+import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.detail.di.monsterDetailModule
-import br.alexandregpereira.hunter.domain.di.domainModules
-import br.alexandregpereira.hunter.event.systembar.bottomBarEventModule
 import br.alexandregpereira.hunter.folder.detail.di.folderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
 import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
-import br.alexandregpereira.hunter.localization.di.localizationModule
-import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModule
 import br.alexandregpereira.hunter.monster.content.preview.di.monsterContentPreviewModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModule
@@ -36,13 +30,11 @@ import br.alexandregpereira.hunter.monster.registration.di.monsterRegistrationMo
 import br.alexandregpereira.hunter.search.di.searchModule
 import br.alexandregpereira.hunter.settings.di.settingsModule
 import br.alexandregpereira.hunter.spell.compendium.di.spellCompendiumModule
-import br.alexandregpereira.hunter.spell.detail.di.spellDetailModule
 import br.alexandregpereira.hunter.sync.di.syncModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -60,39 +52,22 @@ class HunterApplication : Application() {
                 module {
                     factory { Firebase.analytics }
                     factory { Firebase.crashlytics }
-                }
-            )
-            initKoinModules()
-        }
-    }
-
-    internal companion object {
-        fun KoinApplication.initKoinModules() {
-            modules(domainModules)
-            modules(dataModules)
-            modules(
-                folderDetailModule +
-                        folderInsertModule +
-                        folderListModule +
-                        folderPreviewModule +
-                        monsterLoreDetailModule +
-                        monsterContentManagerModule +
-                        monsterContentPreviewModule +
-                        syncModule +
-                        monsterRegistrationModule +
-                        spellCompendiumModule
-            )
-            modules(
-                analyticsModule,
-                appModule,
-                monsterCompendiumStateModule,
+                },
+                folderDetailModule,
+                folderInsertModule,
+                folderListModule,
+                folderPreviewModule,
+                monsterContentManagerModule,
+                monsterContentPreviewModule,
                 monsterDetailModule,
+                monsterLoreDetailModule,
+                monsterRegistrationModule,
                 searchModule,
                 settingsModule,
-                spellDetailModule,
-                bottomBarEventModule,
-                localizationModule,
+                spellCompendiumModule,
+                syncModule,
             )
+            initKoinModules()
         }
     }
 }

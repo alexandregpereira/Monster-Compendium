@@ -26,7 +26,7 @@ import br.alexandregpereira.hunter.folder.detail.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val folderDetailModule = listOf(featureFolderDetailModule) + module {
+val folderDetailModule = module {
     factory {
         val state = get<SavedStateHandle>().getState()
         FolderDetailStateRecovery {

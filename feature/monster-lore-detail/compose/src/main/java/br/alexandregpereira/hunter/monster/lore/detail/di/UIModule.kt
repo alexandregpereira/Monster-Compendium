@@ -25,7 +25,7 @@ import br.alexandregpereira.hunter.monster.lore.detail.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val monsterLoreDetailModule = listOf(featureMonsterLoreDetailModule) + module {
+val monsterLoreDetailModule = module {
     factory {
         val savedStateHandle = get<SavedStateHandle>()
         MonsterLoreDetailStateRecovery {

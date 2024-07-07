@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.folder.insert.di
 
 import androidx.lifecycle.SavedStateHandle
-import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.folder.insert.FolderInsertState
 import br.alexandregpereira.hunter.folder.insert.FolderInsertStateRecovery
 import br.alexandregpereira.hunter.folder.insert.FolderInsertViewModel
@@ -25,7 +24,7 @@ import br.alexandregpereira.hunter.folder.insert.getState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val folderInsertModule = listOf(featureFolderInsertModule) + module {
+val folderInsertModule = module {
     factory {
         val state = get<SavedStateHandle>().getState()
         FolderInsertStateRecovery {

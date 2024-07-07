@@ -21,17 +21,15 @@ import br.alexandregpereira.hunter.spell.detail.SpellDetailEventManager
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewModel
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val spellDetailModule = module {
+val featureSpellDetailModule = module {
     single { SpellDetailEventManager() }
     single<SpellDetailEventDispatcher> { get<SpellDetailEventManager>() }
     single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
 
-    viewModel {
+    single {
         SpellDetailViewModel(
-            savedStateHandle = get(),
             getSpell = get(),
             spellDetailEventListener = get(),
             dispatcher = get(),

@@ -16,16 +16,12 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -33,28 +29,17 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 internal class SpellDetailViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val getSpell: GetSpellUseCase,
     private val spellDetailEventListener: SpellDetailEventListener,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: SpellDetailAnalytics,
     private val appLocalization: AppLocalization,
-) : ViewModel() {
+) : UiModel<SpellDetailViewState>(SpellDetailViewState()) {
 
-    private var spellIndex: String
-        get() = savedStateHandle["spellIndex"] ?: ""
-        set(value) {
-            savedStateHandle["spellIndex"] = value
-        }
-
-    private val _state = MutableStateFlow(savedStateHandle.getState())
-    val state: StateFlow<SpellDetailViewState> = _state
+    private var spellIndex: String = ""
 
     init {
         observeEvents()
-        if (state.value.showDetail && state.value.spell.index.isEmpty()) {
-            loadSpell(spellIndex)
-        }
     }
 
     private fun loadSpell(spellIndex: String) {
@@ -69,7 +54,7 @@ internal class SpellDetailViewModel(
             .catch {
                 analytics.logException(it)
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     private fun observeEvents() {
@@ -83,15 +68,11 @@ internal class SpellDetailViewModel(
                     }
                 }
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     fun onClose() {
         analytics.trackSpellClosed()
         setState { hideDetail() }
-    }
-
-    private fun setState(block: SpellDetailViewState.() -> SpellDetailViewState) {
-        _state.value = state.value.block().saveState(savedStateHandle)
     }
 }
