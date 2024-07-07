@@ -6,6 +6,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'hunter'
+include ':app'
+
 include ':core:analytics'
 include ':core:event'
 include ':core:flow'
@@ -70,7 +72,6 @@ include ':feature:sync:android'
 include ':feature:sync:event'
 include ':feature:sync:state-holder'
 
-include ':shared'
 include ':ui:compendium'
 include ':ui:core'
 include ':ui:monster-compendium'
