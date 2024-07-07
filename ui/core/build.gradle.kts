@@ -13,11 +13,11 @@ multiplatform {
         implementation(libs.kotlin.reflect)
     }
     commonMain {
-        implementation(compose.ui)
-        implementation(compose.material)
-        implementation(compose.uiUtil)
+        api(compose.ui)
+        api(compose.material)
+        api(compose.uiUtil)
         api(compose.components.resources)
-        implementation(compose.components.uiToolingPreview)
+        api(compose.components.uiToolingPreview)
         implementation(libs.ktor.core)
         implementation(libs.coil.compose.core)
         implementation(libs.coil.compose)
