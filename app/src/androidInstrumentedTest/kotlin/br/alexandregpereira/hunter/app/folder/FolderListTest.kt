@@ -6,11 +6,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.printToLog
 import androidx.test.espresso.Espresso
 import br.alexandregpereira.hunter.app.MainScreen
 import org.junit.Rule
@@ -38,7 +36,11 @@ class FolderListTest {
         composeTestRule.onNodeWithText("Add to Folder").performClick()
         composeTestRule.onNodeWithText("Folder name").performTextInput("Folder Test")
         composeTestRule.onNodeWithText("Save").performClick()
+        Espresso.closeSoftKeyboard()
         Espresso.pressBack()
+        composeTestRule.waitUntil(timeoutMillis = 5000) {
+            composeTestRule.onNodeWithText("Folders").isDisplayed()
+        }
         composeTestRule.onNodeWithText("Folders").performClick()
         composeTestRule.onNodeWithText("Folder Test").performTouchInput { longClick() }
         composeTestRule.onNodeWithText("Delete").performClick()
