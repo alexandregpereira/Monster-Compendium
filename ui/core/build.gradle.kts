@@ -32,6 +32,10 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui"
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+}
+
 compose.resources {
     publicResClass = true
     packageOfResClass = "br.alexandregpereira.hunter.ui.resources"

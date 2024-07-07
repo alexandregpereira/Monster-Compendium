@@ -18,3 +18,7 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui.compendium.monster"
 }
+
+composeCompiler {
+    enableStrongSkippingMode = true
+}

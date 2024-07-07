@@ -17,3 +17,7 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui.compendium"
 }
+
+composeCompiler {
+    enableStrongSkippingMode = true
+}

@@ -1,18 +1,9 @@
 plugins {
-    id("com.android.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain {
-        implementation(libs.bundles.viewmodel.bundle)
-        implementation(libs.core.ktx)
-        implementation(libs.compose.activity)
-        implementation(libs.compose.tooling.preview)
-        implementation(libs.koin.android.compose)
-    }
     commonMain {
         implementation(project(":core:localization"))
         implementation(project(":feature:folder-preview:event"))
@@ -31,6 +22,6 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.monster.compendium"
+composeCompiler {
+    enableStrongSkippingMode = true
 }

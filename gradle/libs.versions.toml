@@ -2,7 +2,6 @@
 android_gradle_plugin = "8.3.0"
 appcompat = "1.7.0"
 arch_core_testing = "2.2.0"
-coil_compose = "2.5.0"
 coil3 = "3.0.0-alpha06"
 compose_activity = '1.9.0'
 compose = '1.6.8'
