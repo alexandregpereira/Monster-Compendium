@@ -91,6 +91,7 @@ fun MonsterCompendiumState.complete(
     tableContent: List<TableContentItem>,
     alphabetSelectedIndex: Int,
     tableContentIndex: Int,
+    isShowingMonsterFolderPreview: Boolean,
 ) = this.copy(
     isLoading = false,
     items = items,
@@ -98,6 +99,7 @@ fun MonsterCompendiumState.complete(
     tableContent = tableContent,
     alphabetSelectedIndex = alphabetSelectedIndex,
     tableContentIndex = tableContentIndex,
+    isShowingMonsterFolderPreview = isShowingMonsterFolderPreview,
 )
 
 fun MonsterCompendiumState.error(error: Throwable): MonsterCompendiumState {

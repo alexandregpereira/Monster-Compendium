@@ -57,7 +57,7 @@ multiplatform {
         implementation(libs.material)
 
         implementation(libs.koin.android)
-        implementation(libs.koin.compose)
+        implementation(libs.koin.android.compose)
 
         implementation(libs.bundles.viewmodel.bundle)
 

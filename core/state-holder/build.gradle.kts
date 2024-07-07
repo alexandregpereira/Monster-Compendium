@@ -4,7 +4,7 @@ plugins {
 
 multiplatform {
     commonMain {
-        api(project(":core:flow"))
+        api(project(":core:flow:core"))
     }
     jvmMain()
     iosMain()

@@ -39,7 +39,7 @@ dependencies {
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose
 
-    implementation libs.koin.compose
+    implementation libs.koin.android.compose
 
     testImplementation libs.bundles.unittest
 }

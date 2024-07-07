@@ -44,6 +44,8 @@ import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
+import br.alexandregpereira.hunter.ui.StateRecovery
+import br.alexandregpereira.hunter.ui.saveState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -70,10 +72,9 @@ class MonsterCompendiumStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    private val stateRecovery: MonsterCompendiumStateRecovery,
+    private val stateRecovery: StateRecovery<MonsterCompendiumState>,
     appLocalization: AppLocalization,
-    loadOnInit: Boolean = true,
-) : UiModel<MonsterCompendiumState>(stateRecovery.state.copy(strings = appLocalization.getStrings())),
+) : UiModel<MonsterCompendiumState>(MonsterCompendiumState(strings = appLocalization.getStrings())),
     MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
     MonsterCompendiumIntent {
 
@@ -83,10 +84,10 @@ class MonsterCompendiumStateHolder(
 
     init {
         observeEvents()
-        if (loadOnInit) loadMonsters()
+        loadMonsters()
     }
 
-    fun loadMonsters() = scope.launch {
+    private fun loadMonsters() = scope.launch {
         fetchMonsterCompendium()
     }
 
@@ -111,7 +112,8 @@ class MonsterCompendiumStateHolder(
                     alphabetSelectedIndex = alphabet.getAlphabetIndexFromCompendiumItemIndex(
                         scrollItemPosition,
                         items,
-                    )
+                    ),
+                    isShowingMonsterFolderPreview = stateRecovery.state.isShowingMonsterFolderPreview,
                 ) to scrollItemPosition
             }
             .onStart {

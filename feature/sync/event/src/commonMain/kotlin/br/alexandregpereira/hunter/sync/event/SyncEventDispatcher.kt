@@ -20,3 +20,9 @@ interface SyncEventDispatcher {
 
     fun startSync()
 }
+
+fun emptySyncEventDispatcher(): SyncEventDispatcher {
+    return object : SyncEventDispatcher {
+        override fun startSync() {}
+    }
+}

@@ -10,9 +10,11 @@ include ':app'
 
 include ':core:analytics'
 include ':core:event'
-include ':core:flow'
+include ':core:flow:core'
+include ':core:flow:test'
 include ':core:localization'
 include ':core:state-holder'
+include ':core:ui:state-recovery'
 include ':core:uuid'
 
 include ':domain:app:core'

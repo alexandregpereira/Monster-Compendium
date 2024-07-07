@@ -27,7 +27,7 @@ import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
 import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
 import br.alexandregpereira.hunter.localization.di.localizationModule
-import br.alexandregpereira.hunter.monster.compendium.di.monsterCompendiumModule
+import br.alexandregpereira.hunter.monster.compendium.state.di.monsterCompendiumStateModule
 import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModule
 import br.alexandregpereira.hunter.monster.content.preview.di.monsterContentPreviewModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModule
@@ -91,7 +91,7 @@ class HunterApplication : Application() {
             modules(
                 analyticsModule,
                 appModule,
-                monsterCompendiumModule,
+                monsterCompendiumStateModule,
                 monsterDetailModule,
                 searchModule,
                 settingsModule,

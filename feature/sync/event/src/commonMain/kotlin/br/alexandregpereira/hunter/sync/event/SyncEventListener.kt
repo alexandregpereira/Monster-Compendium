@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.sync.event
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 
@@ -28,5 +29,12 @@ interface SyncEventListener {
 fun SyncEventListener.collectSyncFinishedEvents(action: () -> Unit): Flow<Unit> {
     return events.filterIsInstance<SyncEvent.Finished>().map {
         action()
+    }
+}
+
+fun emptySyncEventListener(): SyncEventListener {
+    return object : SyncEventListener {
+        override val events: Flow<SyncEvent>
+            get() = emptyFlow()
     }
 }

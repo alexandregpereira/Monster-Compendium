@@ -7,7 +7,7 @@ interface Analytics {
     fun logException(throwable: Throwable)
 }
 
-internal class EmptyAnalytics : Analytics {
+class EmptyAnalytics : Analytics {
 
     override fun track(eventName: String, params: Map<String, Any?>) {}
 

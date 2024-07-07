@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.search
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.alexandregpereira.hunter.search.ui.SearchScreen
 import org.koin.androidx.compose.koinViewModel
 

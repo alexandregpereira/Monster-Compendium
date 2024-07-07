@@ -48,7 +48,7 @@ dependencies {
     implementation libs.compose.util
     implementation libs.coil.compose
 
-    implementation libs.koin.compose
+    implementation libs.koin.android.compose
     implementation libs.kotlin.reflect
 
     testImplementation libs.bundles.unittest

@@ -84,6 +84,12 @@ fun KotlinMultiplatformExtension.commonMain(block: KotlinDependencyHandler.() ->
     }
 }
 
+fun KotlinMultiplatformExtension.commonTest(block: KotlinDependencyHandler.() -> Unit = {}) {
+    sourceSets.apply {
+        commonTest.dependencies(block)
+    }
+}
+
 fun KotlinMultiplatformExtension.androidMain(block: KotlinDependencyHandler.() -> Unit = {}) {
     androidTarget()
 

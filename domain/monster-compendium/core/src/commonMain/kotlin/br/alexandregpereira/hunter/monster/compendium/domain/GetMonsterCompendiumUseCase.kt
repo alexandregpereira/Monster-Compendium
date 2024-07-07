@@ -19,12 +19,13 @@ package br.alexandregpereira.hunter.monster.compendium.domain
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
 import kotlinx.coroutines.flow.Flow
 
-class GetMonsterCompendiumUseCase internal constructor(
-    private val getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
-    private val getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase
-) {
+fun interface GetMonsterCompendiumUseCase {
+    operator fun invoke(): Flow<MonsterCompendium>
+}
 
-    operator fun invoke(): Flow<MonsterCompendium> {
-        return getMonsterCompendiumBaseUseCase(getMonsterPreviewsBySectionUseCase())
-    }
+fun GetMonsterCompendiumUseCase(
+    getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
+    getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase
+) : GetMonsterCompendiumUseCase = GetMonsterCompendiumUseCase {
+    getMonsterCompendiumBaseUseCase(getMonsterPreviewsBySectionUseCase())
 }

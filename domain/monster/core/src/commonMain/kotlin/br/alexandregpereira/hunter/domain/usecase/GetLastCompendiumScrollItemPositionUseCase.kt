@@ -19,11 +19,12 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetLastCompendiumScrollItemPositionUseCase internal constructor(
-    private val repository: CompendiumRepository
-) {
+fun interface GetLastCompendiumScrollItemPositionUseCase {
+    operator fun invoke(): Flow<Int>
+}
 
-    operator fun invoke(): Flow<Int> {
-        return repository.getLastCompendiumScrollItemPosition()
-    }
+fun GetLastCompendiumScrollItemPositionUseCase(
+    repository: CompendiumRepository
+): GetLastCompendiumScrollItemPositionUseCase = GetLastCompendiumScrollItemPositionUseCase {
+    repository.getLastCompendiumScrollItemPosition()
 }
