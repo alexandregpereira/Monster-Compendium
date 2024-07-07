@@ -71,7 +71,7 @@ fun KotlinMultiplatformExtension.jvmMain(block: KotlinDependencyHandler.() -> Un
 
 fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Unit = {}) {
     sourceSets.apply {
-        jvmMain.dependencies(block)
+        jvmTest.dependencies(block)
     }
 }
 
