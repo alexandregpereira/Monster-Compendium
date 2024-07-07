@@ -94,7 +94,7 @@ multiplatform {
     }
 
     jvmMain()
-    iosMain(iosFramework = { linkerOpts("-l", "sqlite3") })
+    iosMain()
 
     jvmTest {
         implementation(libs.bundles.unittest)

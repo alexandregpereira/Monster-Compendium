@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import shared
+import KotlinApp
 
 class MonsterDetailStringsWrapper: ObservableObject {
     @Published var value: MonsterDetailStrings

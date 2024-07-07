@@ -32,7 +32,7 @@ import org.koin.dsl.module
 
 val databaseModule = module {
     single {
-        createDatabase(get())
+        Database(createSqlDriver())
     }
     factory<AlternativeSourceDao> {
         AlternativeSourceDaoImpl(
@@ -82,8 +82,3 @@ val databaseModule = module {
 }
 
 expect fun getDispatcherIO(): CoroutineDispatcher
-
-private fun createDatabase(driverFactory: DriverFactory): Database {
-    val driver = driverFactory.createDriver()
-    return Database(driver)
-}

@@ -5,7 +5,7 @@
 //  Created by Alexandre G Pereira on 02/03/23.
 //
 
-import shared
+import KotlinApp
 import SwiftUI
 
 struct MonsterDetailView : View {

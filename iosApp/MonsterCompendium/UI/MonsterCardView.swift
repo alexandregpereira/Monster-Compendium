@@ -6,7 +6,7 @@
 //
 
 import SDWebImageSwiftUI
-import shared
+import KotlinApp
 import SwiftUI
 
 struct MonsterCardView: View {

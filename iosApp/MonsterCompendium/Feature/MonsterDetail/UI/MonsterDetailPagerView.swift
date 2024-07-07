@@ -5,7 +5,7 @@
 //  Created by Alexandre G Pereira on 26/03/23.
 //
 
-import shared
+import KotlinApp
 import SwiftUI
 
 // Not working properly

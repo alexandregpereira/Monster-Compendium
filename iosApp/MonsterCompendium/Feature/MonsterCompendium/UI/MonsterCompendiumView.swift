@@ -5,7 +5,7 @@
 //  Created by Alexandre G Pereira on 29/01/23.
 //
 
-import shared
+import KotlinApp
 import SwiftUI
 
 struct MonsterCompendiumView: View {

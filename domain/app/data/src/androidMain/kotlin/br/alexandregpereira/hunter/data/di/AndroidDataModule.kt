@@ -26,7 +26,6 @@ internal actual fun getAdditionalModule(): List<Module> {
     return listOf(
         module {
             factory { get<Context>().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
-            factory { DriverFactory(get()) }
         }
     )
 }

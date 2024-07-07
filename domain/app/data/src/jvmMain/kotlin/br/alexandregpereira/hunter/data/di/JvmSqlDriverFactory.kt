@@ -19,11 +19,10 @@ package br.alexandregpereira.hunter.data.di
 import br.alexandregpereira.hunter.data.Database
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import org.koin.core.scope.Scope
 
-actual class DriverFactory{
-    actual fun createDriver(): SqlDriver {
-        val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        Database.Schema.create(driver)
-        return driver
-    }
+internal actual fun Scope.createSqlDriver(): SqlDriver {
+    val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+    Database.Schema.create(driver)
+    return driver
 }

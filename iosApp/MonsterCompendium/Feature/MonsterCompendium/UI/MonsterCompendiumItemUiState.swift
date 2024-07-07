@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import shared
+import KotlinApp
 
 extension MonsterCompendiumItemState {
     static let sampleData: [MonsterCompendiumItemState] = (0...100).map {

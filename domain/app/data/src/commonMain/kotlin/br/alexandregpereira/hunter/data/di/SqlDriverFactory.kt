@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.data.di
 
 import com.squareup.sqldelight.db.SqlDriver
+import org.koin.core.scope.Scope
 
-expect class DriverFactory {
-    fun createDriver(): SqlDriver
-}
+internal expect fun Scope.createSqlDriver(): SqlDriver
