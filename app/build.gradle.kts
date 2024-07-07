@@ -40,7 +40,7 @@ multiplatform {
         implementation(project(":feature:folder-insert:android"))
         implementation(project(":feature:folder-list:android"))
         implementation(project(":feature:folder-preview:android"))
-        implementation(project(":feature:monster-compendium:android"))
+        implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-content-manager:android"))
         implementation(project(":feature:monster-detail:android"))
         implementation(project(":feature:monster-lore-detail:android"))
