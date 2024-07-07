@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.shared.di
 
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
+import br.alexandregpereira.hunter.app.di.appModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.domain.di.domainModules
 import br.alexandregpereira.hunter.event.folder.insert.emptyFolderInsertEventDispatcher
@@ -40,8 +41,8 @@ fun appModules(): List<Module> = domainModules + dataModules +
         syncStateModule +
         analyticsModule +
         localizationModule +
+        appModule +
         module {
-            factory { Dispatchers.Default }
             factory {
                 emptySpellDetailEventDispatcher()
             }

@@ -54,7 +54,6 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
@@ -63,6 +62,8 @@ import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 @Composable
@@ -96,7 +97,7 @@ fun BoxScope.AppBottomNavigation(
                         totalItems = bottomBarItems.size,
                         indexSelected = bottomBarItemSelectedIndex,
                         currentIndex = i,
-                        iconRes = bottomBarItem.icon.iconRes,
+                        icon = bottomBarItem.icon.value,
                         name = bottomBarItem.text,
                         onClick = { onClick(bottomBarItem) }
                     )
@@ -111,7 +112,7 @@ private fun RowScope.AppBottomNavigationItem(
     totalItems: Int,
     indexSelected: Int,
     currentIndex: Int,
-    iconRes: Int,
+    icon: DrawableResource,
     name: String,
     onClick: () -> Unit
 ) {
@@ -121,7 +122,7 @@ private fun RowScope.AppBottomNavigationItem(
         onClick = onClick,
         icon = {
             Icon(
-                painter = painterResource(iconRes),
+                painter = painterResource(icon),
                 contentDescription = name
             )
         },

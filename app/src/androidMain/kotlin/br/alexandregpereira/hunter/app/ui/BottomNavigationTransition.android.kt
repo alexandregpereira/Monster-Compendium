@@ -28,9 +28,9 @@ import br.alexandregpereira.hunter.search.SearchScreenFeature
 import br.alexandregpereira.hunter.settings.SettingsFeature
 
 @Composable
-fun BottomNavigationTransition(
+actual fun BottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
-    contentPadding: PaddingValues = PaddingValues()
+    contentPadding: PaddingValues,
 ) {
     if (bottomBarItemSelected == null) return
     Crossfade(targetState = bottomBarItemSelected, label = "BottomNavigationTransition") { item ->

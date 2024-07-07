@@ -45,7 +45,6 @@ import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import br.alexandregpereira.hunter.ui.StateRecovery
-import br.alexandregpereira.hunter.ui.saveState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -72,10 +71,12 @@ class MonsterCompendiumStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    private val stateRecovery: StateRecovery<MonsterCompendiumState>,
+    stateRecovery: StateRecovery<MonsterCompendiumState>,
     appLocalization: AppLocalization,
-) : UiModel<MonsterCompendiumState>(MonsterCompendiumState(strings = appLocalization.getStrings())),
-    MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
+) : UiModel<MonsterCompendiumState>(
+    initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
+    uiStateRecovery = stateRecovery
+), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
     MonsterCompendiumIntent {
 
     var initialScrollItemPosition: Int = 0
@@ -113,7 +114,6 @@ class MonsterCompendiumStateHolder(
                         scrollItemPosition,
                         items,
                     ),
-                    isShowingMonsterFolderPreview = stateRecovery.state.isShowingMonsterFolderPreview,
                 ) to scrollItemPosition
             }
             .onStart {
@@ -127,7 +127,7 @@ class MonsterCompendiumStateHolder(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                setState { state.saveState(stateRecovery) }
+                setState { state }
             }
     }
 
@@ -260,7 +260,7 @@ class MonsterCompendiumStateHolder(
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
-        setState { showMonsterFolderPreview(isShowing).saveState(stateRecovery) }
+        setStateAndSave { showMonsterFolderPreview(isShowing) }
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {

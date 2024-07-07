@@ -23,9 +23,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import br.alexandregpereira.hunter.ui.StateRecovery
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 abstract class UiModel<State : Any>(
-    initialState: State
+    initialState: State,
+    protected val uiStateRecovery: StateRecovery<State> = StateRecovery(initialState)
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(
@@ -35,8 +39,18 @@ abstract class UiModel<State : Any>(
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlowWrapper<State> = _state.wrap(scope)
 
+    init {
+        uiStateRecovery.onStateChanges.onEach { state ->
+            setState { state }
+        }.launchIn(scope)
+    }
+
     protected fun setState(block: State.() -> State) {
         _state.value = _state.value.block()
+    }
+
+    protected fun setStateAndSave(block: State.() -> State) {
+        uiStateRecovery.saveState(state.value.block())
     }
 
     open fun onCleared() {

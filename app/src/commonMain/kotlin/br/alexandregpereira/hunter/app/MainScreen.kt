@@ -14,44 +14,46 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.compendium
+package br.alexandregpereira.hunter.app
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
-import br.alexandregpereira.hunter.monster.compendium.state.di.StateRecoveryQualifier
-import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
+import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
+import br.alexandregpereira.hunter.app.ui.MainScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecovery
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-fun MonsterCompendiumFeature(
+fun MainScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = KoinContext {
-    val stateHolder: MonsterCompendiumStateHolder = koinInject()
-
-    MonsterCompendiumScreen(
-        state = stateHolder.state.collectAsState().value,
-        actionHandler = stateHolder,
-        initialScrollItemPosition = stateHolder.initialScrollItemPosition,
+    val viewModel: MainViewModel = koinInject()
+    val state by viewModel.state.collectAsState()
+    MainScreen(
+        state = state,
         contentPadding = contentPadding,
-        events = stateHolder,
+        onEvent = viewModel::onEvent
     )
 
     StateRecovery(
         key = "MonsterCompendiumStateHolder",
-        stateRecovery = koinInject(named(StateRecoveryQualifier)),
-        stateSaver = MonsterCompendiumStateSaver,
+        stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
+        stateSaver = AppStateSaver,
     )
 }
 
-private val MonsterCompendiumStateSaver = listSaver(
-    save = { listOf(it.isShowingMonsterFolderPreview) },
-    restore = { MonsterCompendiumState(isShowingMonsterFolderPreview = it[0]) }
+private val AppStateSaver = listSaver(
+    save = { listOf(it.bottomBarItemSelectedIndex, it.topContentStack) },
+    restore = {
+        MainViewState(
+            bottomBarItemSelectedIndex = it[0] as Int,
+            topContentStack = it[1] as Set<String>
+        )
+    }
 )

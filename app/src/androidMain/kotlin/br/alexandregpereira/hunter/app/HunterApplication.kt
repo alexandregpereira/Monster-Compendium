@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.app
 
 import android.app.Application
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
+import br.alexandregpereira.hunter.app.di.appModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.detail.di.monsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModules
@@ -40,9 +41,7 @@ import br.alexandregpereira.hunter.sync.di.syncModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -68,11 +67,6 @@ class HunterApplication : Application() {
     }
 
     internal companion object {
-        private val appModule = module {
-            factory { Dispatchers.Default }
-            viewModel { MainViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-        }
-
         fun KoinApplication.initKoinModules() {
             modules(domainModules)
             modules(dataModules)

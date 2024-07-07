@@ -52,5 +52,3 @@ fun ComposeView.setContentWithPadding(
         )
     }
 }
-
-val BottomNavigationHeight = 56.dp

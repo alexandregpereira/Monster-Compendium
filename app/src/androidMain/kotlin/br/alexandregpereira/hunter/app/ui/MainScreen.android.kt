@@ -38,9 +38,9 @@ import br.alexandregpereira.hunter.sync.SyncFeature
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 
 @Composable
-fun MainScreen(
+actual fun MainScreen(
     state: MainViewState,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+    contentPadding: PaddingValues,
     onEvent: (MainViewEvent) -> Unit
 ) {
     Box {

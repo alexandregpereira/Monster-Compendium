@@ -14,25 +14,17 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.app.ui.MainScreen
-import org.koin.androidx.compose.koinViewModel
+import br.alexandregpereira.hunter.app.MainViewEvent
+import br.alexandregpereira.hunter.app.MainViewState
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel = koinViewModel(),
+expect fun MainScreen(
+    state: MainViewState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) {
-    val state by viewModel.state.collectAsState()
-    MainScreen(
-        state = state,
-        contentPadding = contentPadding,
-        onEvent = viewModel::onEvent
-    )
-}
+    onEvent: (MainViewEvent) -> Unit
+)
