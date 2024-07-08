@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,7 +30,14 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 fun Window(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
-) = HunterTheme {
+) = Window(darkTheme = isSystemInDarkTheme(), modifier = modifier, content = content)
+
+@Composable
+fun Window(
+    darkTheme: Boolean = false,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) = HunterTheme(darkTheme = darkTheme,) {
     Surface(modifier = modifier, content = content)
 }
 

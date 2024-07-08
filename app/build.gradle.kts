@@ -37,7 +37,6 @@ multiplatform {
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
         implementation(project(":feature:monster-content-manager:compose"))
-        implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
         implementation(project(":feature:search:compose"))
@@ -88,6 +87,7 @@ multiplatform {
         implementation(project(":feature:sync:state-holder"))
 
         implementation(project(":feature:monster-compendium:compose"))
+        implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:spell-detail:compose"))
         implementation(project(":feature:sync:compose"))
 

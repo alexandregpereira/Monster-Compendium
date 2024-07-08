@@ -55,6 +55,7 @@ import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -72,7 +73,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterDetailStateHolder", exact = true)
-class MonsterDetailStateHolder(
+class MonsterDetailStateHolder internal constructor(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val cloneMonster: CloneMonsterUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
@@ -87,8 +88,8 @@ class MonsterDetailStateHolder(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
-    private val stateRecovery: MonsterDetailStateRecovery,
-) : UiModel<MonsterDetailState>(stateRecovery.state.copy(strings = appLocalization.getStrings())) {
+    private val stateRecovery: StateRecovery,
+) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
         get() = stateRecovery.monsterIndex
@@ -101,6 +102,7 @@ class MonsterDetailStateHolder(
     private var metadata: List<Monster> = emptyList()
 
     init {
+        setState { updateState(stateRecovery) }
         observeEvents()
         state.value.run {
             if (showDetail && monsters.isEmpty()) {

@@ -20,11 +20,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.MainScreen
-import br.alexandregpereira.hunter.ui.compose.StateRecovery
+import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -33,6 +32,11 @@ import org.koin.core.qualifier.named
 internal fun MainScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = KoinContext {
+    StateRecoveryLaunchedEffect(
+        key = AppStateRecoveryQualifier,
+        stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
+    )
+
     val viewModel: MainViewModel = koinInject()
     val state by viewModel.state.collectAsState()
     MainScreen(
@@ -40,20 +44,4 @@ internal fun MainScreen(
         contentPadding = contentPadding,
         onEvent = viewModel::onEvent
     )
-
-    StateRecovery(
-        key = "MonsterCompendiumStateHolder",
-        stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
-        stateSaver = AppStateSaver,
-    )
 }
-
-private val AppStateSaver = listSaver(
-    save = { listOf(it.bottomBarItemSelectedIndex, it.topContentStack) },
-    restore = {
-        MainViewState(
-            bottomBarItemSelectedIndex = it[0] as Int,
-            topContentStack = it[1] as Set<String>
-        )
-    }
-)

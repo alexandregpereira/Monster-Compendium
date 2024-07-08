@@ -21,12 +21,13 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListen
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateRecovery
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
@@ -36,7 +37,13 @@ val featureMonsterDetailModule = module {
     single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
     single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
     factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
-    factory {
+
+
+    single(named(MonsterDetailStateRecoveryQualifier)) {
+        StateRecovery(tag = MonsterDetailStateRecoveryQualifier)
+    }
+
+    single {
         MonsterDetailStateHolder(
             getMonsterDetailUseCase = get(),
             cloneMonster = get(),
@@ -52,9 +59,11 @@ val featureMonsterDetailModule = module {
             dispatcher = get(),
             analytics = MonsterDetailAnalytics(get()),
             appLocalization = get(),
-            stateRecovery = getOrNull() ?: MonsterDetailStateRecovery(),
+            stateRecovery = get(named(MonsterDetailStateRecoveryQualifier))
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }
     factory { DeleteMonsterUseCase(repository = get()) }
 }
+
+const val MonsterDetailStateRecoveryQualifier = "MonsterDetailStateRecovery"

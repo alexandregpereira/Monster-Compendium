@@ -36,10 +36,11 @@ internal class MainViewModel(
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val bottomBarEventManager: BottomBarEventManager,
     private val appLocalization: AppReactiveLocalization,
-    stateRecovery: StateRecovery<MainViewState>,
-) : UiModel<MainViewState>(MainViewState(), stateRecovery) {
+    private val stateRecovery: StateRecovery,
+) : UiModel<MainViewState>(MainViewState()) {
 
     init {
+        setState { updateState(stateRecovery) }
         observeBottomBarEvents()
         observeMonsterDetailEvents()
         observeFolderDetailResults()
@@ -153,6 +154,25 @@ internal class MainViewModel(
         } else {
             dispatchRemoveTopContentEvent(topContentId)
         }
+    }
+
+    private fun setStateAndSave(block: MainViewState.() -> MainViewState) {
+        setState { block().saveState(stateRecovery) }
+    }
+
+    private fun MainViewState.saveState(stateRecovery: StateRecovery): MainViewState {
+        stateRecovery["app:bottomBarItemSelectedIndex"] = bottomBarItemSelectedIndex
+        stateRecovery["app:topContentStack"] = topContentStack
+        stateRecovery.dispatchChanges()
+        return this
+    }
+
+    private fun MainViewState.updateState(bundle: Map<String, Any?>): MainViewState {
+        return copy(
+            bottomBarItemSelectedIndex = bundle["app:bottomBarItemSelectedIndex"] as? Int ?: 0,
+            topContentStack = (bundle["app:topContentStack"] as? Set<*>)
+                ?.map { it as String }?.toSet() ?: emptySet(),
+        )
     }
 }
 

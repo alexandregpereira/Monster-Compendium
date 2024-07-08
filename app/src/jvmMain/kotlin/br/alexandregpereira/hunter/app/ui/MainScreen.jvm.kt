@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
+import br.alexandregpereira.hunter.detail.MonsterDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 
@@ -31,6 +32,10 @@ internal actual fun MainScreen(
         BottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
+        )
+
+        MonsterDetailFeature(
+            contentPadding = contentPadding,
         )
 
         AppBottomNavigation(

@@ -19,13 +19,11 @@ package br.alexandregpereira.hunter.monster.compendium
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.state.di.StateRecoveryQualifier
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
-import br.alexandregpereira.hunter.ui.compose.StateRecovery
+import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -34,6 +32,11 @@ import org.koin.core.qualifier.named
 fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = KoinContext {
+    StateRecoveryLaunchedEffect(
+        key = StateRecoveryQualifier,
+        stateRecovery = koinInject(named(StateRecoveryQualifier)),
+    )
+
     val stateHolder: MonsterCompendiumStateHolder = koinInject()
 
     MonsterCompendiumScreen(
@@ -43,15 +46,4 @@ fun MonsterCompendiumFeature(
         contentPadding = contentPadding,
         events = stateHolder,
     )
-
-    StateRecovery(
-        key = "MonsterCompendiumStateHolder",
-        stateRecovery = koinInject(named(StateRecoveryQualifier)),
-        stateSaver = MonsterCompendiumStateSaver,
-    )
 }
-
-private val MonsterCompendiumStateSaver = listSaver(
-    save = { listOf(it.isShowingMonsterFolderPreview) },
-    restore = { MonsterCompendiumState(isShowingMonsterFolderPreview = it[0]) }
-)

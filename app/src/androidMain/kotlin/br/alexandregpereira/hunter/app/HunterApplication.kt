@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.app
 
 import android.app.Application
 import br.alexandregpereira.hunter.app.di.initKoinModules
-import br.alexandregpereira.hunter.detail.di.monsterDetailModule
 import br.alexandregpereira.hunter.folder.detail.di.folderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
@@ -58,7 +57,6 @@ class HunterApplication : Application() {
                 folderPreviewModule,
                 monsterContentManagerModule,
                 monsterContentPreviewModule,
-                monsterDetailModule,
                 monsterLoreDetailModule,
                 monsterRegistrationModule,
                 searchModule,

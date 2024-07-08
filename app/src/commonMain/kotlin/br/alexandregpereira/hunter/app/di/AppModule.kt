@@ -56,7 +56,7 @@ private val appModule = module {
     factory { Dispatchers.Default }
 
     single(named(AppStateRecoveryQualifier)) {
-        StateRecovery(MainViewState())
+        StateRecovery(tag = AppStateRecoveryQualifier)
     }
 
     single {

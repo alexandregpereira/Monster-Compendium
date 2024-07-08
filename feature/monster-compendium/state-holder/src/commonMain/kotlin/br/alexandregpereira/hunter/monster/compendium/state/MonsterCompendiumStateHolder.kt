@@ -58,7 +58,7 @@ import kotlinx.coroutines.launch
 import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterCompendiumStateHolder", exact = true)
-class MonsterCompendiumStateHolder(
+class MonsterCompendiumStateHolder internal constructor(
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -71,11 +71,10 @@ class MonsterCompendiumStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    stateRecovery: StateRecovery<MonsterCompendiumState>,
+    private val stateRecovery: StateRecovery,
     appLocalization: AppLocalization,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
-    uiStateRecovery = stateRecovery
 ), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
     MonsterCompendiumIntent {
 
@@ -84,6 +83,7 @@ class MonsterCompendiumStateHolder(
     private var metadata: List<MonsterCompendiumItem> = emptyList()
 
     init {
+        setState { updateState(stateRecovery) }
         observeEvents()
         loadMonsters()
     }
@@ -114,6 +114,7 @@ class MonsterCompendiumStateHolder(
                         scrollItemPosition,
                         items,
                     ),
+                    isShowingMonsterFolderPreview = stateRecovery.isShowingMonsterFolderPreview
                 ) to scrollItemPosition
             }
             .onStart {
@@ -260,7 +261,7 @@ class MonsterCompendiumStateHolder(
     }
 
     private fun showMonsterFolderPreview(isShowing: Boolean) {
-        setStateAndSave { showMonsterFolderPreview(isShowing) }
+        setState { showMonsterFolderPreview(isShowing).saveState(stateRecovery) }
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {

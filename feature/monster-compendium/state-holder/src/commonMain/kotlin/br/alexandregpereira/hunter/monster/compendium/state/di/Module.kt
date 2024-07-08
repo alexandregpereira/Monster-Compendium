@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.monster.compendium.state.di
 
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -28,9 +27,7 @@ import kotlin.native.HiddenFromObjC
 @HiddenFromObjC
 val featureMonsterCompendiumModule = module {
     single(named(StateRecoveryQualifier)) {
-        StateRecovery(
-            MonsterCompendiumState.Empty,
-        )
+        StateRecovery(tag = StateRecoveryQualifier)
     }
 
     single {

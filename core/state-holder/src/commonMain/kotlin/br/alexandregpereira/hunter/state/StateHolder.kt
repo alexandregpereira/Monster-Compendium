@@ -18,19 +18,14 @@ package br.alexandregpereira.hunter.state
 
 import br.alexandregpereira.flow.StateFlowWrapper
 import br.alexandregpereira.flow.wrap
-import br.alexandregpereira.hunter.ui.EmptyStateRecovery
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 abstract class UiModel<State : Any>(
     initialState: State,
-    protected val uiStateRecovery: StateRecovery<State> = EmptyStateRecovery(),
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(
@@ -40,20 +35,8 @@ abstract class UiModel<State : Any>(
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlowWrapper<State> = _state.wrap(scope)
 
-    init {
-        if (uiStateRecovery !is EmptyStateRecovery) {
-            uiStateRecovery.onStateChanges.onEach { state ->
-                setState { state }
-            }.launchIn(scope)
-        }
-    }
-
     protected fun setState(block: State.() -> State) {
         _state.value = _state.value.block()
-    }
-
-    protected fun setStateAndSave(block: State.() -> State) {
-        uiStateRecovery.saveState(state.value.block())
     }
 
     open fun onCleared() {

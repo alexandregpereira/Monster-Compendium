@@ -6,52 +6,89 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
 
-interface StateRecovery<State> {
-    val state: State
-    val onStateChanges: Flow<State>
+interface StateRecovery : MutableMap<String, Any?> {
+    val onStateChanges: Flow<Map<String, Any?>>
 
-    fun saveState(state: State)
+    fun save(state: Map<String, Any?>)
+
+    fun dispatchChanges()
 }
 
-fun <State> StateRecovery(
-    initialState: State,
-): StateRecovery<State> = DefaultMonsterCompendiumStateRecovery(initialState)
+fun StateRecovery(tag: String): StateRecovery = ReactiveStateRecovery(
+    tag = tag,
+    stateRecovery = MemoryStateRecoveryImpl(tag)
+)
 
-fun <State> State.saveState(
-    recovery: StateRecovery<State>
-): State {
-    recovery.saveState(this)
-    return this
-}
+private class MemoryStateRecoveryImpl(
+    private val tag: String,
+) : StateRecovery {
 
-class EmptyStateRecovery<State> : StateRecovery<State> {
-    override val state: State
-        get() = throw IllegalStateException("No state available")
+    override val onStateChanges: Flow<Map<String, Any?>> = emptyFlow()
 
-    override val onStateChanges: Flow<State> = emptyFlow()
+    private var _state: MutableMap<String, Any?> = mutableMapOf()
 
-    override fun saveState(state: State) {
-        throw IllegalStateException("No state to save when is a empty state recovery")
+    override fun save(state: Map<String, Any?>) {
+        _state = state.toMutableMap()
     }
+
+    override fun dispatchChanges() {
+        println("$tag: dispatchChanges empty")
+    }
+
+    override fun get(key: String): Any? = _state[key]
+
+    override val entries: MutableSet<MutableMap.MutableEntry<String, Any?>>
+        get() = _state.entries
+
+    override val keys: MutableSet<String>
+        get() = _state.keys
+
+    override val size: Int
+        get() = _state.size
+
+    override val values: MutableCollection<Any?>
+        get() = _state.values
+
+    override fun clear() = _state.clear()
+
+    override fun containsKey(key: String): Boolean =_state.containsKey(key)
+
+    override fun containsValue(value: Any?): Boolean = _state.containsValue(value)
+
+    override fun isEmpty(): Boolean = _state.isEmpty()
+
+    override fun put(key: String, value: Any?): Any? = _state.put(key, value)
+
+    override fun putAll(from: Map<out String, Any?>) {
+        from.forEach { (key, value) -> put(key, value) }
+    }
+
+    override fun remove(key: String): Any? = _state.remove(key)
+
+    override fun toString(): String = _state.toString()
 }
 
-private class DefaultMonsterCompendiumStateRecovery<State>(
-    initialState: State,
-) : StateRecovery<State> {
+private class ReactiveStateRecovery(
+    private val tag: String,
+    private val stateRecovery: StateRecovery
+) : StateRecovery by stateRecovery {
 
-    private val dispatcher: MutableSharedFlow<State> = MutableSharedFlow(
+    private val dispatcher: MutableSharedFlow<Map<String, Any?>> = MutableSharedFlow(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    override val onStateChanges: Flow<State> = dispatcher.asSharedFlow()
 
-    private var _state: State = initialState
-    override val state: State
-        get() = _state
+    override val onStateChanges: Flow<Map<String, Any?>> = dispatcher.asSharedFlow()
 
-    override fun saveState(state: State) {
-        if (_state == state) return
-        _state = state
-        dispatcher.tryEmit(state)
+    override fun save(state: Map<String, Any?>) {
+        println("$tag: state saved: $state")
+        stateRecovery.save(state)
     }
+
+    override fun dispatchChanges() {
+        println("$tag: dispatchChanges: $stateRecovery")
+        dispatcher.tryEmit(stateRecovery)
+    }
+
+    override fun toString(): String = stateRecovery.toString()
 }
