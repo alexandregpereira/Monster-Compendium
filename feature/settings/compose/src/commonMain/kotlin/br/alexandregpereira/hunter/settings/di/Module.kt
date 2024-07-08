@@ -17,19 +17,18 @@
 package br.alexandregpereira.hunter.settings.di
 
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
-import br.alexandregpereira.hunter.settings.SettingsViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import org.koin.dsl.module
 
-val settingsModule = module {
-    viewModel {
-        SettingsViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
+val featureSettingsModule = module {
+    single {
+        SettingsStateHolder(
+            getMonsterImageJsonUrl = get(),
+            getAlternativeSourceJsonUrl = get(),
+            saveUrls = get(),
+            monsterContentManagerEventDispatcher = get(),
+            dispatcher = get(),
+            syncEventDispatcher = get(),
             analytics = SettingsAnalytics(get()),
             bottomBarEventDispatcher = get(),
             appLocalization = get(),

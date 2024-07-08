@@ -16,31 +16,28 @@
 
 package br.alexandregpereira.hunter.settings
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent
-import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
+import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
+import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.zip
 
-internal class SettingsViewModel(
+internal class SettingsStateHolder(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
     private val getAlternativeSourceJsonUrl: GetAlternativeSourceJsonUrlUseCase,
     private val saveUrls: SaveUrlsUseCase,
@@ -51,10 +48,8 @@ internal class SettingsViewModel(
     private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
     private val appLocalization: AppLocalization,
     private val saveLanguage: SaveLanguageUseCase,
-) : ViewModel(), SettingsViewIntent {
+) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent {
 
-    private val _state = MutableStateFlow(SettingsViewState())
-    val state: StateFlow<SettingsViewState> = _state
     private val strings: SettingsStrings
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
@@ -64,11 +59,11 @@ internal class SettingsViewModel(
     }
 
     override fun onImageBaseUrlChange(value: String) {
-        _state.value = state.value.copy(imageBaseUrl = value)
+        setState { copy(imageBaseUrl = value) }
     }
 
     override fun onAlternativeSourceBaseUrlChange(value: String) {
-        _state.value = state.value.copy(alternativeSourceBaseUrl = value)
+        setState { copy(alternativeSourceBaseUrl = value) }
     }
 
     override fun onSaveButtonClick() {
@@ -81,7 +76,7 @@ internal class SettingsViewModel(
                 closeAdvancedSettings()
                 syncEventDispatcher.startSync()
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     override fun onManageMonsterContentClick() {
@@ -91,7 +86,7 @@ internal class SettingsViewModel(
 
     override fun onAdvancedSettingsClick() {
         analytics.trackAdvancedSettingsClick()
-        _state.value = state.value.copy(advancedSettingsOpened = true)
+        setState { copy(advancedSettingsOpened = true) }
         bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
@@ -99,18 +94,18 @@ internal class SettingsViewModel(
 
     override fun onSettingsClick() {
         analytics.trackSettingsClick()
-        _state.value = state.value.copy(settingsOpened = true)
+        setState { copy(settingsOpened = true) }
         bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = SETTINGS_CONTENT)
     }
 
     override fun onSettingsCloseClick() {
-        _state.value = state.value.copy(settingsOpened = false)
+        setState { copy(settingsOpened = false) }
         bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
     }
 
     override fun onSettingsSaveClick() {
         analytics.trackCommonSettingSaveButtonClick(state.value.settingsState)
-        _state.value = state.value.copy(settingsOpened = false)
+        setState { copy(settingsOpened = false) }
         bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
         saveLanguage(state.value.settingsState.language.code)
             .flowOn(dispatcher)
@@ -119,18 +114,14 @@ internal class SettingsViewModel(
                     syncEventDispatcher.startSync()
                     originalSettingsState = state.value.settingsState
                 }
-                _state.value = state.value.copy(
-                    strings = this.strings
-                )
+                setState { copy(strings = this@SettingsStateHolder.strings)  }
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     override fun onLanguageChange(language: SettingsLanguageState) {
         analytics.trackLanguageChange(language)
-        _state.value = state.value.copy(
-            settingsState = state.value.settingsState.copy(language = language)
-        )
+        setState { copy(settingsState = settingsState.copy(language = language)) }
     }
 
     private fun load() {
@@ -139,7 +130,7 @@ internal class SettingsViewModel(
                 state.value.copy(
                     imageBaseUrl = imageBaseUrl,
                     alternativeSourceBaseUrl = alternativeSourceBaseUrl,
-                    strings = this@SettingsViewModel.strings,
+                    strings = this@SettingsStateHolder.strings,
                     settingsState = SettingsState(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
@@ -153,13 +144,13 @@ internal class SettingsViewModel(
             .onEach { state ->
                 analytics.trackLoadSettings(state)
                 originalSettingsState = state.settingsState
-                _state.value = state
+                setState { state }
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     private fun closeAdvancedSettings() {
-        _state.value = state.value.copy(advancedSettingsOpened = false)
+        setState { copy(advancedSettingsOpened = false) }
         bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 

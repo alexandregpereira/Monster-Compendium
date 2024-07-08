@@ -40,7 +40,6 @@ multiplatform {
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
         implementation(project(":feature:search:compose"))
-        implementation(project(":feature:settings:compose"))
 
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
@@ -87,6 +86,7 @@ multiplatform {
 
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))
+        implementation(project(":feature:settings:compose"))
         implementation(project(":feature:spell-compendium:compose"))
         implementation(project(":feature:spell-detail:compose"))
         implementation(project(":feature:sync:compose"))

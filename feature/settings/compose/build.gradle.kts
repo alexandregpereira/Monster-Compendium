@@ -8,10 +8,13 @@ multiplatform {
     androidMain()
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:event"))
+        implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
-        implementation(project(":feature:spell-compendium:state-holder"))
+        implementation(project(":domain:settings:core"))
+        implementation(project(":feature:monster-content-manager:event"))
+        implementation(project(":feature:sync:event"))
         implementation(project(":ui:core"))
-        implementation(project(":ui:compendium"))
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
@@ -21,7 +24,7 @@ multiplatform {
 }
 
 androidLibrary {
-    namespace = "br.alexandregpereira.hunter.spell.compendium"
+    namespace = "br.alexandregpereira.hunter.settings"
 }
 
 composeCompiler {

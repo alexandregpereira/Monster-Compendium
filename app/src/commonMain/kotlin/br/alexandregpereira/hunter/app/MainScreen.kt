@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.MainScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
+import br.alexandregpereira.hunter.ui.compose.Window
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -31,17 +32,19 @@ import org.koin.core.qualifier.named
 @Composable
 internal fun MainScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) = KoinContext {
-    StateRecoveryLaunchedEffect(
-        key = AppStateRecoveryQualifier,
-        stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
-    )
+) = Window {
+    KoinContext {
+        StateRecoveryLaunchedEffect(
+            key = AppStateRecoveryQualifier,
+            stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
+        )
 
-    val viewModel: MainViewModel = koinInject()
-    val state by viewModel.state.collectAsState()
-    MainScreen(
-        state = state,
-        contentPadding = contentPadding,
-        onEvent = viewModel::onEvent
-    )
+        val viewModel: MainViewModel = koinInject()
+        val state by viewModel.state.collectAsState()
+        MainScreen(
+            state = state,
+            contentPadding = contentPadding,
+            onEvent = viewModel::onEvent
+        )
+    }
 }

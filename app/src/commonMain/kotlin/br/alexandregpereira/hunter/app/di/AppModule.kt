@@ -2,7 +2,6 @@ package br.alexandregpereira.hunter.app.di
 
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.MainViewModel
-import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.domain.di.domainModules
 import br.alexandregpereira.hunter.event.systembar.bottomBarEventModule
@@ -17,6 +16,7 @@ import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterCont
 import br.alexandregpereira.hunter.monster.detail.di.featureMonsterDetailModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDetailModule
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
+import br.alexandregpereira.hunter.settings.di.featureSettingsModule
 import br.alexandregpereira.hunter.spell.compendium.di.featureSpellCompendiumModule
 import br.alexandregpereira.hunter.spell.detail.di.featureSpellDetailModule
 import br.alexandregpereira.hunter.sync.di.featureSyncModule
@@ -42,6 +42,7 @@ internal fun KoinApplication.initKoinModules() {
         featureMonsterContentPreviewModule,
         featureSyncModule,
         featureMonsterRegistrationModule,
+        featureSettingsModule,
         featureSpellCompendiumModule,
         featureSpellDetailModule,
     )

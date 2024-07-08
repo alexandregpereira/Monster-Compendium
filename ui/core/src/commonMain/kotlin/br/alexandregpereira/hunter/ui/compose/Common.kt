@@ -37,7 +37,7 @@ fun Window(
     darkTheme: Boolean = false,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
-) = HunterTheme(darkTheme = darkTheme,) {
+) = HunterTheme(darkTheme = darkTheme) {
     Surface(modifier = modifier, content = content)
 }
 

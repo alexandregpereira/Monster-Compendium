@@ -20,14 +20,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import br.alexandregpereira.hunter.settings.ui.MenuScreen
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun SettingsFeature(
     versionName: String,
     contentPadding: PaddingValues,
 ) {
-    val viewModel: SettingsViewModel = koinViewModel()
+    val viewModel: SettingsStateHolder = koinInject()
     MenuScreen(
         state = viewModel.state.collectAsState().value,
         versionName = versionName,
