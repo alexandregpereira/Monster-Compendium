@@ -66,8 +66,8 @@ fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
 
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
-            freeCompilerArgs.add("-Xopt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi")
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs.add("-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi")
         }
     }
 

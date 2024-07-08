@@ -17,10 +17,21 @@ struct MonsterCompendiumApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                MonsterCompendiumScreenView()
-                MonsterDetailScreenView()
-            }
+            ComposeView()
         }
+    }
+}
+
+struct ComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerFactory().create()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct ContentView: View {
+    var body: some View {
+        ComposeView().ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }

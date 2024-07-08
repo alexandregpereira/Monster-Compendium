@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.shared
+package br.alexandregpereira.hunter.app
 
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import br.alexandregpereira.hunter.app.di.initKoinModules
+import org.koin.core.context.startKoin
 
-class MonsterDetailFeature : KoinComponent {
-
-    val stateHolder: MonsterDetailStateHolder by inject()
+fun initKoin() {
+    startKoin {
+        initKoinModules()
+    }
 }

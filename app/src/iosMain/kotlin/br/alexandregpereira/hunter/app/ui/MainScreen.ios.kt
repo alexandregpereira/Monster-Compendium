@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
+import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.sync.SyncFeature
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
@@ -30,6 +31,14 @@ actual fun MainScreen(
         BottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
+        )
+
+        AppBottomNavigation(
+            showBottomBar = state.showBottomBar,
+            bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
+            bottomBarItems = state.bottomBarItems,
+            contentPadding = contentPadding,
+            onClick = { onEvent(BottomNavigationItemClick(item = it)) }
         )
 
         SyncFeature()

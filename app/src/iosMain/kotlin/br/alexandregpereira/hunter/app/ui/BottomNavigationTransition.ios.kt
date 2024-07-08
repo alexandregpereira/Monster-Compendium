@@ -2,11 +2,13 @@ package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.app.BottomBarItemIcon
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
+import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 actual fun BottomNavigationTransition(
@@ -19,13 +21,13 @@ actual fun BottomNavigationTransition(
             BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature(
                 contentPadding = contentPadding,
             )
-            BottomBarItemIcon.FOLDERS -> Surface {
+            BottomBarItemIcon.FOLDERS -> Window(Modifier.fillMaxSize()) {
 
             }
-            BottomBarItemIcon.SEARCH -> Surface {
+            BottomBarItemIcon.SEARCH -> Window(Modifier.fillMaxSize()) {
 
             }
-            BottomBarItemIcon.SETTINGS -> Surface {
+            BottomBarItemIcon.SETTINGS -> Window(Modifier.fillMaxSize()) {
 
             }
         }
