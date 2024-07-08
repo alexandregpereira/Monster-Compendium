@@ -20,13 +20,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import br.alexandregpereira.hunter.search.ui.SearchScreen
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun SearchScreenFeature(
     contentPadding: PaddingValues = PaddingValues(),
 ) {
-    val viewModel: SearchViewModel = koinViewModel()
+    val viewModel: SearchStateHolder = koinInject()
 
     SearchScreen(
         state = viewModel.state.collectAsState().value,

@@ -26,7 +26,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 
 @Composable
-fun SearchGrid(
+internal fun SearchGrid(
     monsterRows: List<MonsterCardState>,
     totalResults: String,
     contentPadding: PaddingValues = PaddingValues(),

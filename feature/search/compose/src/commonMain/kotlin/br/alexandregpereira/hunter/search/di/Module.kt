@@ -17,15 +17,14 @@
 package br.alexandregpereira.hunter.search.di
 
 import br.alexandregpereira.hunter.search.SearchAnalytics
-import br.alexandregpereira.hunter.search.SearchViewModel
+import br.alexandregpereira.hunter.search.SearchStateHolder
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val searchModule = module {
+val featureSearchModule = module {
     factory { SearchMonstersByUseCase(get(), get(), get()) }
-    viewModel {
-        SearchViewModel(
+    single {
+        SearchStateHolder(
             searchMonstersByNameUseCase = get(),
             folderPreviewEventDispatcher = get(),
             monsterDetailEventDispatcher = get(),

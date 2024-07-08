@@ -16,4 +16,4 @@
 
 package br.alexandregpereira.hunter.search.domain
 
-class SearchMonstersByNameUnexpectedException(cause: Throwable) : Throwable(cause)
+internal class SearchMonstersByNameUnexpectedException(cause: Throwable) : Throwable(cause)

@@ -16,8 +16,6 @@
 
 package br.alexandregpereira.hunter.search
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
@@ -27,10 +25,10 @@ import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
+import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapConcat
@@ -41,20 +39,16 @@ import kotlinx.coroutines.flow.onEach
 
 @Suppress("OPT_IN_USAGE")
 @OptIn(FlowPreview::class)
-internal class SearchViewModel(
+internal class SearchStateHolder(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
     private val analytics: SearchAnalytics,
     dispatcher: CoroutineDispatcher,
     private val appLocalization: AppReactiveLocalization,
-) : ViewModel() {
+) : UiModel<SearchViewState>(SearchViewState(searchLabel = appLocalization.getStrings().search)) {
 
-    private val _state = MutableStateFlow(
-        SearchViewState(searchLabel = appLocalization.getStrings().search)
-    )
-    val state: StateFlow<SearchViewState> = _state
-    private val searchQuery = MutableStateFlow(_state.value.searchValue)
+    private val searchQuery = MutableStateFlow(state.value.searchValue)
 
     init {
         searchQuery.debounce(500L)
@@ -65,11 +59,13 @@ internal class SearchViewModel(
                 result.size to result.asState()
             }
             .onEach { (totalResults, monsterRows) ->
-                _state.value = state.value.copy(
-                    monsterRows = monsterRows,
-                    totalResults = totalResults,
-                    searchResults = appLocalization.getStrings().searchResults(totalResults)
-                )
+                setState {
+                    copy(
+                        monsterRows = monsterRows,
+                        totalResults = totalResults,
+                        searchResults = appLocalization.getStrings().searchResults(totalResults)
+                    )
+                }
             }
             .flowOn(dispatcher)
             .catch {
@@ -78,7 +74,7 @@ internal class SearchViewModel(
             .onEach { (totalResults, _) ->
                 analytics.trackSearch(totalResults, searchQuery.value)
             }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
 
         observeLanguageChanges()
     }
@@ -86,15 +82,17 @@ internal class SearchViewModel(
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach { language ->
             val strings = language.getStrings()
-            _state.value = state.value.copy(
-                searchLabel = strings.search,
-                searchResults = strings.searchResults(state.value.totalResults)
-            )
-        }.launchIn(viewModelScope)
+            setState {
+                copy(
+                    searchLabel = strings.search,
+                    searchResults = strings.searchResults(state.value.totalResults)
+                )
+            }
+        }.launchIn(scope)
     }
 
     fun onSearchValueChange(value: String) {
-        _state.value = state.value.changeSearchValue(value)
+        setState { changeSearchValue(value) }
         searchQuery.value = value
     }
 

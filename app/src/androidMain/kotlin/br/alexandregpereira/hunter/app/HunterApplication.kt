@@ -26,7 +26,6 @@ import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModul
 import br.alexandregpereira.hunter.monster.content.preview.di.monsterContentPreviewModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.monsterLoreDetailModule
 import br.alexandregpereira.hunter.monster.registration.di.monsterRegistrationModule
-import br.alexandregpereira.hunter.search.di.searchModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -57,7 +56,6 @@ class HunterApplication : Application() {
                 monsterContentPreviewModule,
                 monsterLoreDetailModule,
                 monsterRegistrationModule,
-                searchModule,
             )
             initKoinModules()
         }
