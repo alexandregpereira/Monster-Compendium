@@ -23,8 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.MainScreen
+import br.alexandregpereira.hunter.ui.compose.AppWindow
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
-import br.alexandregpereira.hunter.ui.compose.Window
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -32,7 +32,7 @@ import org.koin.core.qualifier.named
 @Composable
 internal fun MainScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) = Window {
+) = AppWindow {
     KoinContext {
         StateRecoveryLaunchedEffect(
             key = AppStateRecoveryQualifier,

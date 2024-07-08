@@ -27,18 +27,26 @@ import androidx.compose.ui.composed
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
-fun Window(
+fun AppWindow(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
-) = Window(darkTheme = isSystemInDarkTheme(), modifier = modifier, content = content)
+) = HunterTheme {
+    Window(modifier = modifier, content = content)
+}
 
 @Composable
 fun Window(
-    darkTheme: Boolean = false,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) = Surface(modifier = modifier, content = content)
+
+@Composable
+fun PreviewWindow(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = HunterTheme(darkTheme = darkTheme) {
-    Surface(modifier = modifier, content = content)
+    Window(modifier = modifier, content = content)
 }
 
 fun Modifier.noIndicationClick(onClick: () -> Unit = {}): Modifier = composed {

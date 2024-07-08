@@ -49,6 +49,7 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.monster.detail.MonsterState
 import br.alexandregpereira.hunter.monster.detail.SpellPreviewState
 import br.alexandregpereira.hunter.monster.detail.SpellcastingState
+import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -254,7 +255,7 @@ private fun SchoolsOfMagicPreview() = Window {
 }
 
 @Composable
-private fun SchoolsOfMagicDarkThemePreview() = Window(darkTheme = true) {
+private fun SchoolsOfMagicDarkThemePreview() = PreviewWindow(darkTheme = true) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 4),
         verticalArrangement = Arrangement.spacedBy(16.dp),
