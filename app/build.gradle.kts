@@ -38,7 +38,6 @@ multiplatform {
         implementation(project(":feature:folder-preview:compose"))
         implementation(project(":feature:monster-content-manager:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
-        implementation(project(":feature:monster-registration:compose"))
 
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
@@ -68,7 +67,6 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:monster-detail:event"))
         implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
-        implementation(project(":feature:monster-registration:event")) // TODO Remove later
         implementation(project(":feature:spell-detail:event")) // TODO Remove later
 
         implementation(project(":feature:folder-detail:state-holder"))
@@ -79,12 +77,12 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:state-holder"))
         implementation(project(":feature:monster-detail:state-holder"))
         implementation(project(":feature:monster-lore-detail:state-holder"))
-        implementation(project(":feature:monster-registration:state-holder"))
         implementation(project(":feature:spell-compendium:state-holder"))
         implementation(project(":feature:sync:state-holder"))
 
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))
+        implementation(project(":feature:monster-registration:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:spell-compendium:compose"))

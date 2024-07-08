@@ -16,13 +16,4 @@
 
 package br.alexandregpereira.hunter.monster.registration.di
 
-import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
-
-val monsterRegistrationModule = module {
-
-    viewModel {
-        MonsterRegistrationViewModel(get())
-    }
-}
+val featureMonsterRegistrationModule = monsterRegistrationModule

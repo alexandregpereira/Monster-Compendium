@@ -1,9 +1,7 @@
 package br.alexandregpereira.hunter.monster.registration.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -14,6 +12,7 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationActio
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationState
 import br.alexandregpereira.hunter.state.ActionHandler
+import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.Window
 import kotlinx.coroutines.flow.collectLatest

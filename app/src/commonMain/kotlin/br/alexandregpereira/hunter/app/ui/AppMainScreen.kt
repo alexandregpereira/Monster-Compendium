@@ -10,6 +10,7 @@ import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
@@ -39,6 +40,8 @@ internal fun AppMainScreen(
         MonsterDetailFeature(
             contentPadding = contentPadding,
         )
+
+        MonsterRegistrationFeature(contentPadding = contentPadding)
 
         SpellCompendiumFeature(
             contentPadding = contentPadding,
