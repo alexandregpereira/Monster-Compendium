@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.sync.di
 
-import br.alexandregpereira.hunter.sync.EmptySyncStateRecovery
 import br.alexandregpereira.hunter.sync.SyncAnalytics
 import br.alexandregpereira.hunter.sync.SyncEventManager
 import br.alexandregpereira.hunter.sync.SyncStateHolder
@@ -31,7 +30,6 @@ val featureSyncModule = module {
 
     factory {
         SyncStateHolder(
-            stateRecovery = getOrNull() ?: EmptySyncStateRecovery(),
             dispatcher = get(),
             syncEventManager = get(),
             syncUseCase = get(),

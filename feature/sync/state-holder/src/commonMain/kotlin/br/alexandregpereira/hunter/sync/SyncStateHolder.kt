@@ -28,12 +28,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class SyncStateHolder internal constructor(
-    stateRecovery: SyncStateRecovery,
     private val dispatcher: CoroutineDispatcher,
     private val syncEventManager: SyncEventManager,
     private val syncUseCase: SyncUseCase,
     private val analytics: SyncAnalytics
-) : UiModel<SyncState>(stateRecovery.getState()) {
+) : UiModel<SyncState>(SyncState()) {
 
     init {
         observeEvents()

@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewState
+import br.alexandregpereira.hunter.sync.SyncFeature
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 
 @Composable
@@ -30,5 +31,7 @@ actual fun MainScreen(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
         )
+
+        SyncFeature()
     }
 }

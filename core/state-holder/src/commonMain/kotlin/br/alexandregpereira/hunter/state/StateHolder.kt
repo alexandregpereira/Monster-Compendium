@@ -34,7 +34,7 @@ abstract class UiModel<State : Any>(
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Default
+        SupervisorJob() + Dispatchers.Main.immediate
     )
 
     private val _state = MutableStateFlow(initialState)

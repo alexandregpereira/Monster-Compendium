@@ -30,7 +30,6 @@ import br.alexandregpereira.hunter.monster.registration.di.monsterRegistrationMo
 import br.alexandregpereira.hunter.search.di.searchModule
 import br.alexandregpereira.hunter.settings.di.settingsModule
 import br.alexandregpereira.hunter.spell.compendium.di.spellCompendiumModule
-import br.alexandregpereira.hunter.sync.di.syncModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -65,7 +64,6 @@ class HunterApplication : Application() {
                 searchModule,
                 settingsModule,
                 spellCompendiumModule,
-                syncModule,
             )
             initKoinModules()
         }
