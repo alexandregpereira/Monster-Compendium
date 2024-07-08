@@ -1,6 +1,5 @@
 package br.alexandregpereira.hunter.spell.compendium.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +11,7 @@ import br.alexandregpereira.hunter.spell.compendium.EmptySpellCompendiumIntent
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumIntent
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumState
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.Window
 
