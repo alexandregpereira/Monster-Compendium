@@ -22,8 +22,8 @@ import br.alexandregpereira.hunter.folder.detail.di.folderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.folderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.folderListModule
 import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
-import br.alexandregpereira.hunter.monster.content.di.monsterContentManagerModule
-import br.alexandregpereira.hunter.monster.content.preview.di.monsterContentPreviewModule
+import br.alexandregpereira.hunter.monster.content.di.featureMonsterContentManagerModule
+import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterContentPreviewModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -50,8 +50,6 @@ class HunterApplication : Application() {
                 folderInsertModule,
                 folderListModule,
                 folderPreviewModule,
-                monsterContentManagerModule,
-                monsterContentPreviewModule,
             )
             initKoinModules()
         }

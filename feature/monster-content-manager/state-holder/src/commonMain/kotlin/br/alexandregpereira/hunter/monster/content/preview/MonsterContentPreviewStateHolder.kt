@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAction.Companion.goToCompendiumIndex
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -33,7 +34,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MonsterContentPreviewStateHolder internal constructor(
-    private val stateRecovery: MonsterContentPreviewStateRecovery,
+    private val stateRecovery: StateRecovery,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterContentPreviewAnalytics,
     private val getRemoteMonsterCompendiumUseCase: GetRemoteMonsterCompendiumUseCase,
@@ -54,8 +55,9 @@ class MonsterContentPreviewStateHolder internal constructor(
                 when (event) {
                     is MonsterContentPreviewEvent.Show -> {
                         stateRecovery.sourceAcronym = event.sourceAcronym
-                        stateRecovery.title = event.title
-                        setState { open() }
+                        setState {
+                            copy(isOpen = true, title = event.title).saveState(stateRecovery)
+                        }
                         load()
                     }
                 }
@@ -69,8 +71,7 @@ class MonsterContentPreviewStateHolder internal constructor(
             .map { monsterCompendium ->
                 val tableContent = monsterCompendium.tableContent
                 val alphabet = monsterCompendium.alphabet
-                MonsterContentPreviewState(
-                    title = stateRecovery.title,
+                state.value.copy(
                     monsterCompendiumItems = monsterCompendium.items,
                     alphabet = monsterCompendium.alphabet,
                     tableContent = monsterCompendium.tableContent,
@@ -100,7 +101,7 @@ class MonsterContentPreviewStateHolder internal constructor(
 
     fun onClose() {
         analytics.trackClose(stateRecovery.sourceAcronym)
-        setState { hide() }
+        setState { hide().saveState(stateRecovery) }
     }
 
     fun onTableContentOpenButtonClick() {

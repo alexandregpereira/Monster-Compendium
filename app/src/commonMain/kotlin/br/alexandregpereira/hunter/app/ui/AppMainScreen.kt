@@ -10,6 +10,7 @@ import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
@@ -36,6 +37,10 @@ internal fun AppMainScreen(
         BottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
+        )
+
+        MonsterContentManagerFeature(
+            contentPadding = contentPadding,
         )
 
         MonsterDetailFeature(

@@ -17,20 +17,23 @@
 package br.alexandregpereira.hunter.monster.content.preview.di
 
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAnalytics
-import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewDefaultStateRecovery
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewEventManager
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewStateHolder
-import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewStateRecovery
-import org.koin.core.scope.Scope
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureMonsterContentPreviewModule = module {
+val monsterContentPreviewModule = module {
 
     single { MonsterContentPreviewEventManager() }
 
-    factory {
+    single(named(MonsterContentPreviewStateRecoveryQualifier)) {
+        StateRecovery()
+    }
+
+    single {
         MonsterContentPreviewStateHolder(
-            stateRecovery = createStateRecovery() ?: MonsterContentPreviewDefaultStateRecovery(),
+            stateRecovery = get(named(MonsterContentPreviewStateRecoveryQualifier)),
             analytics = MonsterContentPreviewAnalytics(get()),
             dispatcher = get(),
             getRemoteMonsterCompendiumUseCase = get(),
@@ -39,4 +42,4 @@ val featureMonsterContentPreviewModule = module {
     }
 }
 
-internal expect fun Scope.createStateRecovery(): MonsterContentPreviewStateRecovery?
+const val MonsterContentPreviewStateRecoveryQualifier = "MonsterContentPreviewStateRecovery"

@@ -36,7 +36,6 @@ multiplatform {
         implementation(project(":feature:folder-insert:compose"))
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
-        implementation(project(":feature:monster-content-manager:compose"))
 
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
@@ -72,11 +71,11 @@ multiplatform {
         implementation(project(":feature:folder-list:state-holder"))
         implementation(project(":feature:folder-preview:state-holder"))
         implementation(project(":feature:monster-compendium:state-holder"))
-        implementation(project(":feature:monster-content-manager:state-holder"))
         implementation(project(":feature:monster-detail:state-holder"))
         implementation(project(":feature:spell-compendium:state-holder"))
         implementation(project(":feature:sync:state-holder"))
 
+        implementation(project(":feature:monster-content-manager:compose"))
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))

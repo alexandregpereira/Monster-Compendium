@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.monster.content
+package br.alexandregpereira.hunter.monster.content.preview.di
 
-import br.alexandregpereira.hunter.ui.StateRecovery
-
-internal fun StateRecovery.getState(): MonsterContentManagerState {
-    return MonsterContentManagerState(
-        isOpen = this["monsterContentManager:isOpen"] as? Boolean ?: false,
-    )
-}
-
-internal fun MonsterContentManagerState.saveState(
-    stateRecovery: StateRecovery
-): MonsterContentManagerState {
-    stateRecovery["monsterContentManager:isOpen"] = isOpen
-    stateRecovery.dispatchChanges()
-    return this
-}
+val featureMonsterContentPreviewModule = monsterContentPreviewModule
