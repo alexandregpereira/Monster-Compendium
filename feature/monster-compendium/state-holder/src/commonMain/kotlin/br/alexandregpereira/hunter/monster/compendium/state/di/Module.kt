@@ -27,7 +27,7 @@ import kotlin.native.HiddenFromObjC
 @HiddenFromObjC
 val featureMonsterCompendiumModule = module {
     single(named(StateRecoveryQualifier)) {
-        StateRecovery(tag = StateRecoveryQualifier)
+        StateRecovery()
     }
 
     single {

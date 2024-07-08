@@ -19,15 +19,22 @@ package br.alexandregpereira.hunter.monster.lore.detail
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import br.alexandregpereira.hunter.monster.lore.detail.di.MonsterLoreDetailRecoveryQualifier
 import br.alexandregpereira.hunter.monster.lore.detail.ui.MonsterLoreDetailScreen
-import org.koin.androidx.compose.koinViewModel
+import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
 fun MonsterLoreDetailFeature(
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {}
 ) {
-    val viewModel: MonsterLoreDetailViewModel = koinViewModel()
+    StateRecoveryLaunchedEffect(
+        key = MonsterLoreDetailRecoveryQualifier,
+        stateRecovery = koinInject(named(MonsterLoreDetailRecoveryQualifier)),
+    )
+    val viewModel: MonsterLoreDetailStateHolder = koinInject()
     MonsterLoreDetailScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,

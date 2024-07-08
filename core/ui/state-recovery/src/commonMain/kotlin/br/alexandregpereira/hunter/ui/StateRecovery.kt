@@ -14,14 +14,11 @@ interface StateRecovery : MutableMap<String, Any?> {
     fun dispatchChanges()
 }
 
-fun StateRecovery(tag: String): StateRecovery = ReactiveStateRecovery(
-    tag = tag,
-    stateRecovery = MemoryStateRecoveryImpl(tag)
+fun StateRecovery(): StateRecovery = ReactiveStateRecovery(
+    stateRecovery = MemoryStateRecoveryImpl()
 )
 
-private class MemoryStateRecoveryImpl(
-    private val tag: String,
-) : StateRecovery {
+private class MemoryStateRecoveryImpl : StateRecovery {
 
     override val onStateChanges: Flow<Map<String, Any?>> = emptyFlow()
 
@@ -69,7 +66,6 @@ private class MemoryStateRecoveryImpl(
 }
 
 private class ReactiveStateRecovery(
-    private val tag: String,
     private val stateRecovery: StateRecovery
 ) : StateRecovery by stateRecovery {
 

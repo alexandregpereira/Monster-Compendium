@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.di
+package br.alexandregpereira.hunter.monster.lore.detail.di
 
-import br.alexandregpereira.hunter.data.Database
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
-import org.koin.core.scope.Scope
-
-internal actual fun Scope.createSqlDriver(): SqlDriver {
-    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:hunter-database.db")
-    Database.Schema.create(driver)
-    return driver
-}
+val featureMonsterLoreDetailModule = monsterLoreDetailModule

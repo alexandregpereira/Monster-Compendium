@@ -40,7 +40,7 @@ val featureMonsterDetailModule = module {
 
 
     single(named(MonsterDetailStateRecoveryQualifier)) {
-        StateRecovery(tag = MonsterDetailStateRecoveryQualifier)
+        StateRecovery()
     }
 
     single {

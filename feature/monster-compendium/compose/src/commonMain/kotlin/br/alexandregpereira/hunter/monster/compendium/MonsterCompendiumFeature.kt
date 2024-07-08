@@ -24,14 +24,13 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumSta
 import br.alexandregpereira.hunter.monster.compendium.state.di.StateRecoveryQualifier
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
 fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) = KoinContext {
+) {
     StateRecoveryLaunchedEffect(
         key = StateRecoveryQualifier,
         stateRecovery = koinInject(named(StateRecoveryQualifier)),

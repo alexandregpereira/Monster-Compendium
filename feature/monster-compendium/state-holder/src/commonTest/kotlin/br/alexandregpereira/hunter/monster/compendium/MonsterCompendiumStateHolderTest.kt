@@ -373,7 +373,7 @@ class MonsterCompendiumStateHolderTest {
             appLocalization = object : AppLocalization {
                 override fun getLanguage(): Language = Language.ENGLISH
             },
-            stateRecovery = StateRecovery(tag = "MonsterCompendiumStateHolderTest")
+            stateRecovery = StateRecovery()
         )
     }
 

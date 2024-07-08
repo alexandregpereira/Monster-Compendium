@@ -18,13 +18,13 @@ package br.alexandregpereira.hunter.monster.lore.detail.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailViewState
+import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun MonsterLoreDetailScreen(
-    state: MonsterLoreDetailViewState,
+    state: MonsterLoreDetailState,
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {}
 ) = HunterTheme {

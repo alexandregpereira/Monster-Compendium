@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEv
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -27,10 +28,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class MonsterLoreDetailStateHolder internal constructor(
-    stateRecovery: MonsterLoreDetailStateRecovery,
+    private val stateRecovery: StateRecovery,
     private val getMonsterLoreUseCase: GetMonsterLoreDetailUseCase,
     private val monsterLoreDetailEventListener: MonsterLoreDetailEventListener,
-    private val monsterLoreIndexStateRecovery: MonsterLoreIndexStateRecovery,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterLoreDetailAnalytics,
 ) : UiModel<MonsterLoreDetailState>(stateRecovery.getState()) {
@@ -38,7 +38,7 @@ class MonsterLoreDetailStateHolder internal constructor(
     init {
         observeEvents()
         if (state.value.showDetail && state.value.monsterLore == null) {
-            loadMonsterLore(monsterLoreIndexStateRecovery.getState())
+            loadMonsterLore(stateRecovery.monsterLoreIndex)
         }
     }
 
@@ -47,7 +47,7 @@ class MonsterLoreDetailStateHolder internal constructor(
             .flowOn(dispatcher)
             .onEach { monsterLore ->
                 analytics.trackMonsterLoreDetailLoaded(monsterLore)
-                setState { changeMonsterLore(monsterLore) }
+                setState { changeMonsterLore(monsterLore).saveState(stateRecovery) }
             }
             .catch {
                 analytics.logException(it)
@@ -61,7 +61,7 @@ class MonsterLoreDetailStateHolder internal constructor(
                 when (event) {
                     is MonsterLoreDetailEvent.Show -> {
                         analytics.trackMonsterLoreDetailOpened(event.index)
-                        monsterLoreIndexStateRecovery.saveState(event.index)
+                        stateRecovery.saveMonsterLoreIndex(event.index)
                         loadMonsterLore(event.index)
                     }
                 }
@@ -71,6 +71,6 @@ class MonsterLoreDetailStateHolder internal constructor(
 
     fun onClose() {
         analytics.trackMonsterLoreDetailClosed()
-        setState { hideDetail() }
+        setState { hideDetail().saveState(stateRecovery) }
     }
 }

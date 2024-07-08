@@ -21,14 +21,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun MonsterLoreDetail(
-    monsterLore: MonsterLoreState
+    monsterLore: MonsterLore
 ) = SelectionContainer {
     Column(modifier = Modifier.padding(16.dp)) {
         ScreenHeader(
@@ -50,14 +52,14 @@ internal fun MonsterLoreDetail(
 @Composable
 private fun MonsterLoreDetailPreview() = Window {
     MonsterLoreDetail(
-        monsterLore = MonsterLoreState(
+        monsterLore = MonsterLore(
             index = "",
             name = "Lich",
             entries = listOf(
-                MonsterLoreEntryState(
+                MonsterLoreEntry(
                     description = "asdas asdasd asd asd \nas dasasdas as x as asd d as"
                 ),
-                MonsterLoreEntryState(
+                MonsterLoreEntry(
                     title = "Title",
                     description = "asdas asdasd asd asd \nas dasasdas as x as asd d as"
                 )
