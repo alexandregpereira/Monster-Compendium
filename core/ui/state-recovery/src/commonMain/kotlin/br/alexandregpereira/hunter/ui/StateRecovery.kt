@@ -32,7 +32,7 @@ private class MemoryStateRecoveryImpl(
     }
 
     override fun dispatchChanges() {
-        println("$tag: dispatchChanges empty")
+        // empty
     }
 
     override fun get(key: String): Any? = _state[key]
@@ -81,12 +81,10 @@ private class ReactiveStateRecovery(
     override val onStateChanges: Flow<Map<String, Any?>> = dispatcher.asSharedFlow()
 
     override fun save(state: Map<String, Any?>) {
-        println("$tag: state saved: $state")
         stateRecovery.save(state)
     }
 
     override fun dispatchChanges() {
-        println("$tag: dispatchChanges: $stateRecovery")
         dispatcher.tryEmit(stateRecovery)
     }
 

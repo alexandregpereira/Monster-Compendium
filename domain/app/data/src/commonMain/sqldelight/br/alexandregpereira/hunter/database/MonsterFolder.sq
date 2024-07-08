@@ -27,7 +27,7 @@ WHERE folderName == ? AND monsterIndex IN ?
 removeMonsterFolders:
 DELETE FROM MonsterFolderEntity WHERE folderName IN ?;
 
-CREATE VIEW MonsterFolderCompleteEntityView AS
+CREATE VIEW IF NOT EXISTS MonsterFolderCompleteEntityView AS
 SELECT * FROM MonsterFolderEntity
 INNER JOIN MonsterEntity
 ON MonsterEntity.`index` == MonsterFolderEntity.`monsterIndex`

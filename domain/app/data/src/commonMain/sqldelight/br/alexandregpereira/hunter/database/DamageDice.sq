@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS DamageDiceEntity (
 `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`)
 );
 
-CREATE INDEX index_DamageDiceEntity_actionId ON DamageDiceEntity (actionId);
+CREATE INDEX IF NOT EXISTS index_DamageDiceEntity_actionId ON DamageDiceEntity (actionId);
 
 insert:
 INSERT OR REPLACE INTO DamageDiceEntity VALUES ?;
