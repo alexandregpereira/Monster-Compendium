@@ -42,7 +42,7 @@ dependencies {
     implementation project(':ui:core')
     implementation project(':ui:monster-compendium')
 
-    implementation libs.kotlin.coroutines
+    implementation libs.kotlin.coroutines.android
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

@@ -41,7 +41,7 @@ dependencies {
     implementation project(':feature:sync:event')
     implementation project(':ui:core')
 
-    implementation libs.kotlin.coroutines
+    implementation libs.kotlin.coroutines.android
 
     implementation libs.bundles.viewmodel.bundle
     implementation libs.bundles.compose

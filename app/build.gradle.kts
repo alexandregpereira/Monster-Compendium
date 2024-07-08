@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import java.time.Instant
@@ -101,7 +102,10 @@ multiplatform {
         implementation(compose.components.uiToolingPreview)
     }
 
-    jvmMain()
+    jvmMain {
+        implementation(compose.desktop.currentOs)
+    }
+
     iosMain()
 
     jvmTest {
@@ -207,6 +211,18 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "br.alexandregpereira.hunter"
+            packageVersion = "1.0.0"
+        }
     }
 }
 

@@ -30,11 +30,11 @@ import kotlinx.coroutines.flow.onEach
 
 abstract class UiModel<State : Any>(
     initialState: State,
-    protected val uiStateRecovery: StateRecovery<State> = EmptyStateRecovery()
+    protected val uiStateRecovery: StateRecovery<State> = EmptyStateRecovery(),
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Main.immediate
+        SupervisorJob() + Dispatchers.Default
     )
 
     private val _state = MutableStateFlow(initialState)
