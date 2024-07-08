@@ -28,7 +28,7 @@ import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class MainViewModel(
+internal class MainViewModel(
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val folderDetailResultListener: FolderDetailResultListener,
     private val folderListResultListener: FolderListResultListener,

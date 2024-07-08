@@ -11,7 +11,7 @@ import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
-actual fun BottomNavigationTransition(
+internal actual fun BottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
     contentPadding: PaddingValues
 ) {

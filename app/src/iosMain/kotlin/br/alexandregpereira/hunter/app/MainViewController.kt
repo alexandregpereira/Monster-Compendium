@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.app.ui
+package br.alexandregpereira.hunter.app
 
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController

@@ -16,6 +16,6 @@
 
 package br.alexandregpereira.hunter.app
 
-sealed class MainViewEvent {
+internal sealed class MainViewEvent {
     data class BottomNavigationItemClick(val item: BottomBarItem) : MainViewEvent()
 }

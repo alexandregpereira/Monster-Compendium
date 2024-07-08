@@ -30,7 +30,7 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-fun MainScreen(
+internal fun MainScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = KoinContext {
     val viewModel: MainViewModel = koinInject()

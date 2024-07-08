@@ -26,7 +26,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-fun KoinApplication.initKoinModules() {
+internal fun KoinApplication.initKoinModules() {
     modules(domainModules)
     modules(dataModules)
     modules(
@@ -73,4 +73,4 @@ private val appModule = module {
     }
 }
 
-const val AppStateRecoveryQualifier: String = "AppStateRecovery"
+internal const val AppStateRecoveryQualifier: String = "AppStateRecovery"

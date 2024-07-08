@@ -23,7 +23,7 @@ import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewState
 
 @Composable
-expect fun MainScreen(
+internal expect fun MainScreen(
     state: MainViewState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onEvent: (MainViewEvent) -> Unit

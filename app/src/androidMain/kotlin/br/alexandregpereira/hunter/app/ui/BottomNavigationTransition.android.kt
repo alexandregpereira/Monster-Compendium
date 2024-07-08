@@ -28,7 +28,7 @@ import br.alexandregpereira.hunter.search.SearchScreenFeature
 import br.alexandregpereira.hunter.settings.SettingsFeature
 
 @Composable
-actual fun BottomNavigationTransition(
+internal actual fun BottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
     contentPadding: PaddingValues,
 ) {

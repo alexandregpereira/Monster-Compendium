@@ -21,7 +21,7 @@ import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.app.BottomBarItem
 
 @Composable
-expect fun BottomNavigationTransition(
+internal expect fun BottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
     contentPadding: PaddingValues = PaddingValues()
 )

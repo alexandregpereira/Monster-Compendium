@@ -2,7 +2,7 @@ package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.localization.Language
 
-interface MainStrings {
+internal interface MainStrings {
     val compendium: String
     val search: String
     val folders: String

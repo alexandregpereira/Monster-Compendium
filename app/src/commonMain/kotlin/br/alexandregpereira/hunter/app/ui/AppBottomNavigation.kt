@@ -67,7 +67,7 @@ import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 @Composable
-fun BoxScope.AppBottomNavigation(
+internal fun BoxScope.AppBottomNavigation(
     showBottomBar: Boolean,
     bottomBarItemSelectedIndex: Int,
     bottomBarItems: List<BottomBarItem>,
