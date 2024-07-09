@@ -16,10 +16,18 @@
 
 package br.alexandregpereira.hunter.folder.detail
 
-fun interface FolderDetailStateRecovery {
-    fun getState(): FolderDetailState
+import br.alexandregpereira.hunter.ui.StateRecovery
+
+internal fun StateRecovery.getState(): FolderDetailState {
+    return FolderDetailState(
+        isOpen = this["folderDetail:isOpen"] as? Boolean ?: false,
+        folderName = this["folderDetail:folderName"] as? String ?: ""
+    )
 }
 
-internal class EmptyFolderDetailStateRecovery : FolderDetailStateRecovery {
-    override fun getState(): FolderDetailState = FolderDetailState()
+internal fun FolderDetailState.saveState(stateRecovery: StateRecovery): FolderDetailState {
+    stateRecovery["folderDetail:isOpen"] = isOpen
+    stateRecovery["folderDetail:folderName"] = folderName
+    stateRecovery.dispatchChanges()
+    return this
 }

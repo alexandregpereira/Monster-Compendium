@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -47,7 +48,8 @@ class FolderListStateHolder internal constructor(
     private val syncEventListener: SyncEventListener,
     private val analytics: FolderListAnalytics,
     private val appLocalization: AppLocalization,
-) : UiModel<FolderListState>(FolderListState()) {
+    private val stateRecovery: StateRecovery,
+) : UiModel<FolderListState>(stateRecovery.getState()) {
 
     private val strings: FolderListStrings
         get() = getFolderListStrings(appLocalization.getLanguage())
@@ -75,7 +77,7 @@ class FolderListStateHolder internal constructor(
                     it.copy(selected = false)
                 },
                 isItemSelectionOpen = false,
-            )
+            ).saveState(stateRecovery)
         }
         folderListEventManager.dispatchResult(OnItemSelectionVisibilityChanges(isShowing = false))
     }
@@ -112,7 +114,7 @@ class FolderListStateHolder internal constructor(
                 },
                 isItemSelectionOpen = isItemSelectionOpen,
                 itemSelectionCount = itemSelectionCount,
-            )
+            ).saveState(stateRecovery)
         }
         folderListEventManager.dispatchResult(
             OnItemSelectionVisibilityChanges(isShowing = state.value.isItemSelectionOpen)
@@ -120,8 +122,9 @@ class FolderListStateHolder internal constructor(
     }
 
     private fun loadMonsterFolders() {
+        val selectedFolders = state.value.itemSelection
         getMonsterFolders()
-            .map { it.map { folder -> folder to false } }
+            .map { it.map { folder -> folder to selectedFolders.contains(folder.name) } }
             .flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
@@ -132,7 +135,7 @@ class FolderListStateHolder internal constructor(
                     copy(
                         folders = folders.asState(),
                         strings = this@FolderListStateHolder.strings
-                    )
+                    ).saveState(stateRecovery)
                 }
             }
             .launchIn(scope)

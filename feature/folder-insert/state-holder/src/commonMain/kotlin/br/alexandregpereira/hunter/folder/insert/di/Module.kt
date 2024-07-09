@@ -18,20 +18,18 @@ package br.alexandregpereira.hunter.folder.insert.di
 
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
-import br.alexandregpereira.hunter.folder.insert.EmptyFolderInsertStateRecovery
 import br.alexandregpereira.hunter.folder.insert.FolderInsertAnalytics
 import br.alexandregpereira.hunter.folder.insert.FolderInsertEventManager
 import br.alexandregpereira.hunter.folder.insert.FolderInsertStateHolder
 import org.koin.dsl.module
 
-val featureFolderInsertModule = module {
+val folderInsertModule = module {
     single { FolderInsertEventManager() }
     single<FolderInsertEventDispatcher> { get<FolderInsertEventManager>() }
     single<FolderInsertResultListener> { get<FolderInsertEventManager>() }
 
-    factory {
+    single {
         FolderInsertStateHolder(
-            stateRecovery = getOrNull() ?: EmptyFolderInsertStateRecovery(),
             getMonsterFolders = get(),
             getFolderMonsterPreviewsByIds = get(),
             addMonstersToFolder = get(),

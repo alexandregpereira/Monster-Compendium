@@ -32,9 +32,6 @@ plugins {
 
 multiplatform {
     androidMain {
-        implementation(project(":feature:folder-detail:compose"))
-        implementation(project(":feature:folder-insert:compose"))
-        implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
 
         implementation(libs.core.ktx)
@@ -61,20 +58,19 @@ multiplatform {
 
         implementation(project(":feature:folder-detail:event"))
         implementation(project(":feature:folder-list:event"))
-        implementation(project(":feature:folder-preview:event")) // TODO Remove later
+        implementation(project(":feature:folder-preview:event"))
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:monster-detail:event"))
-        implementation(project(":feature:spell-detail:event")) // TODO Remove later
 
-        implementation(project(":feature:folder-detail:state-holder"))
-        implementation(project(":feature:folder-insert:state-holder"))
-        implementation(project(":feature:folder-list:state-holder"))
         implementation(project(":feature:folder-preview:state-holder"))
         implementation(project(":feature:monster-compendium:state-holder"))
         implementation(project(":feature:monster-detail:state-holder"))
         implementation(project(":feature:spell-compendium:state-holder"))
         implementation(project(":feature:sync:state-holder"))
 
+        implementation(project(":feature:folder-detail:compose"))
+        implementation(project(":feature:folder-insert:compose"))
+        implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:monster-content-manager:compose"))
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))

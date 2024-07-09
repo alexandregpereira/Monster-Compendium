@@ -18,20 +18,25 @@ package br.alexandregpereira.hunter.folder.detail.di
 
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
-import br.alexandregpereira.hunter.folder.detail.EmptyFolderDetailStateRecovery
 import br.alexandregpereira.hunter.folder.detail.FolderDetailAnalytics
 import br.alexandregpereira.hunter.folder.detail.FolderDetailEventManager
 import br.alexandregpereira.hunter.folder.detail.FolderDetailStateHolder
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureFolderDetailModule = module {
+val folderDetailModule = module {
     single { FolderDetailEventManager() }
     single<FolderDetailEventDispatcher> { get<FolderDetailEventManager>() }
     single<FolderDetailResultListener> { get<FolderDetailEventManager>() }
 
+    single(named(FolderDetailStateRecoveryQualifier)) {
+        StateRecovery()
+    }
+
     factory {
         FolderDetailStateHolder(
-            stateRecovery = getOrNull() ?: EmptyFolderDetailStateRecovery(),
+            stateRecovery = get(named(FolderDetailStateRecoveryQualifier)),
             getMonstersByFolder = get(),
             folderDetailEventManager = get(),
             folderPreviewEventDispatcher = get(),
@@ -42,3 +47,5 @@ val featureFolderDetailModule = module {
         )
     }
 }
+
+const val FolderDetailStateRecoveryQualifier = "FolderDetailStateRecovery"

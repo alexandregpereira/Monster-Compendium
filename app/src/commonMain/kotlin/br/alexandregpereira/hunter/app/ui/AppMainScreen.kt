@@ -10,6 +10,8 @@ import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
+import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
@@ -43,6 +45,10 @@ internal fun AppMainScreen(
             contentPadding = contentPadding,
         )
 
+        FolderDetailFeature(
+            contentPadding = contentPadding
+        )
+
         MonsterDetailFeature(
             contentPadding = contentPadding,
         )
@@ -66,6 +72,8 @@ internal fun AppMainScreen(
             contentPadding = contentPadding,
             onClick = { onEvent(BottomNavigationItemClick(item = it)) }
         )
+
+        FolderInsertFeature(contentPadding = contentPadding)
 
         SyncFeature()
     }

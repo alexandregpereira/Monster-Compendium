@@ -40,19 +40,20 @@ internal class FolderInsertEventManager : FolderInsertEventDispatcher, FolderIns
 
     override val result: Flow<FolderInsertResult> = _result
 
-    private lateinit var eventResult: MutableSharedFlow<FolderInsertResult>
+    private var eventResult: MutableSharedFlow<FolderInsertResult>? = null
 
     override fun dispatchEvent(event: FolderInsertEvent): Flow<FolderInsertResult> {
-        eventResult = MutableSharedFlow(
+        val eventResult = MutableSharedFlow<FolderInsertResult>(
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
+        this.eventResult = eventResult
         _events.tryEmit(event)
         return eventResult
     }
 
     fun dispatchResult(result: FolderInsertResult) {
-        eventResult.tryEmit(result)
+        eventResult?.tryEmit(result)
         _result.tryEmit(result)
     }
 }

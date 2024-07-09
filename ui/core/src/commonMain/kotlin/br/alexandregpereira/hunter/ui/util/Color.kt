@@ -19,12 +19,12 @@ package br.alexandregpereira.hunter.ui.util
 import androidx.compose.ui.graphics.Color
 
 fun String.toColor(): Color {
-    val colorHEX = this
-    if (colorHEX[0] != '#') return Color.Transparent
-    var colorARGB = colorHEX.substring(1).toLong(16)
-    if (colorHEX.length == 7) {
+    val colorHex = this
+    if (colorHex.firstOrNull() != '#') return Color.Transparent
+    var colorARGB = colorHex.substring(1).toLong(16)
+    if (colorHex.length == 7) {
         colorARGB = colorARGB or 0x00000000ff000000
-    } else if (colorHEX.length != 9) {
+    } else if (colorHex.length != 9) {
         return Color.Transparent
     }
     return Color(
