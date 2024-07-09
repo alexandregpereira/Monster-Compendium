@@ -201,22 +201,23 @@ android {
     }
 }
 
-compose.desktop {
-    application {
-        mainClass = "MainKt"
+compose {
+    desktop {
+        application {
+            mainClass = "MainKt"
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "br.alexandregpereira.hunter"
-            packageVersion = "1.0.0"
+            nativeDistributions {
+                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+                packageName = "br.alexandregpereira.hunter"
+                packageVersion = "1.0.0"
+            }
         }
     }
-}
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
-    generateResClass = always
+    resources {
+        publicResClass = false
+        packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
+        generateResClass = always
+    }
 }
 
 composeCompiler {
