@@ -34,7 +34,3 @@ data class MonsterContentPreviewState(
 internal fun MonsterContentPreviewState.hide(): MonsterContentPreviewState {
     return copy(isOpen = false)
 }
-
-internal fun open(): MonsterContentPreviewState {
-    return MonsterContentPreviewState(isOpen = true)
-}

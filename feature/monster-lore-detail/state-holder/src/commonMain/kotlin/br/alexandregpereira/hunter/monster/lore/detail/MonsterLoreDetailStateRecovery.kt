@@ -16,26 +16,29 @@
 
 package br.alexandregpereira.hunter.monster.lore.detail
 
-fun interface MonsterLoreDetailStateRecovery {
-    fun getState(): MonsterLoreDetailState
+import br.alexandregpereira.hunter.ui.StateRecovery
+
+internal val StateRecovery.monsterLoreIndex: String
+    get() = this["monsterLoreDetail:monsterLoreIndex"] as? String ?: ""
+
+internal fun StateRecovery.saveMonsterLoreIndex(monsterLoreIndex: String) {
+    this["monsterLoreDetail:monsterLoreIndex"] = monsterLoreIndex
+    dispatchChanges()
 }
 
-interface MonsterLoreIndexStateRecovery {
-    fun getState(): String
-    fun saveState(value: String)
+internal val Map<String, Any?>.showDetail: Boolean
+    get() = this["monsterLoreDetail:showDetail"] as? Boolean ?: false
+
+internal fun MonsterLoreDetailState.saveState(
+    stateRecovery: StateRecovery
+): MonsterLoreDetailState {
+    stateRecovery["monsterLoreDetail:showDetail"] = showDetail
+    stateRecovery.dispatchChanges()
+    return this
 }
 
-internal class EmptyMonsterLoreDetailStateRecovery : MonsterLoreDetailStateRecovery {
-    override fun getState(): MonsterLoreDetailState = MonsterLoreDetailState()
-}
-
-internal class EmptyMonsterLoreIndexStateRecovery : MonsterLoreIndexStateRecovery {
-
-    private var index: String = ""
-
-    override fun getState(): String = index
-
-    override fun saveState(value: String) {
-        index = value
-    }
+internal fun StateRecovery.getState(): MonsterLoreDetailState {
+    return MonsterLoreDetailState(
+        showDetail = this.showDetail,
+    )
 }

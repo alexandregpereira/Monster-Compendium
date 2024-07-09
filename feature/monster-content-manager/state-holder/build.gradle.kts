@@ -11,6 +11,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:localization"))
+        implementation(project(":core:ui:state-recovery"))
         api(project(":core:state-holder"))
         api(project(":domain:alternative-source:core"))
         api(project(":domain:monster:core"))

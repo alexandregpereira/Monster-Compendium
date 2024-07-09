@@ -16,10 +16,18 @@
 
 package br.alexandregpereira.hunter.monster.content
 
-fun interface MonsterContentManagerStateRecovery {
-    fun getState(): MonsterContentManagerState
+import br.alexandregpereira.hunter.ui.StateRecovery
+
+internal fun StateRecovery.getState(): MonsterContentManagerState {
+    return MonsterContentManagerState(
+        isOpen = this["monsterContentManager:isOpen"] as? Boolean ?: false,
+    )
 }
 
-internal class EmptyMonsterContentManagerStateRecovery : MonsterContentManagerStateRecovery {
-    override fun getState(): MonsterContentManagerState = MonsterContentManagerState()
+internal fun MonsterContentManagerState.saveState(
+    stateRecovery: StateRecovery
+): MonsterContentManagerState {
+    stateRecovery["monsterContentManager:isOpen"] = isOpen
+    stateRecovery.dispatchChanges()
+    return this
 }

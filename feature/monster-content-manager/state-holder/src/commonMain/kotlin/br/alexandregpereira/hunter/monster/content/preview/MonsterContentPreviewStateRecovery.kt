@@ -1,25 +1,29 @@
 package br.alexandregpereira.hunter.monster.content.preview
 
-import br.alexandregpereira.hunter.state.StateRecovery
+import br.alexandregpereira.hunter.ui.StateRecovery
 
-interface MonsterContentPreviewStateRecovery : StateRecovery<MonsterContentPreviewState> {
-
-    var sourceAcronym: String
-
-    var title: String
+internal fun StateRecovery.getState(): MonsterContentPreviewState {
+    return MonsterContentPreviewState(
+        title = this.title,
+        isOpen = this["monsterContentPreview:isOpen"] as? Boolean ?: false,
+    )
 }
 
-internal class MonsterContentPreviewDefaultStateRecovery : MonsterContentPreviewStateRecovery {
+internal fun MonsterContentPreviewState.saveState(
+    stateRecovery: StateRecovery
+): MonsterContentPreviewState {
+    stateRecovery["monsterContentPreview:title"] = title
+    stateRecovery["monsterContentPreview:isOpen"] = isOpen
+    stateRecovery.dispatchChanges()
+    return this
+}
 
-    private var state: MonsterContentPreviewState = MonsterContentPreviewState()
+internal val StateRecovery.title: String
+    get() = this["monsterContentPreview:title"] as? String ?: ""
 
-    override var sourceAcronym: String = ""
-
-    override var title: String = ""
-
-    override fun getState(): MonsterContentPreviewState = state
-
-    override fun saveState(state: MonsterContentPreviewState) {
-        this.state = state
+internal var StateRecovery.sourceAcronym: String
+    get() = this["monsterContentPreview:sourceAcronym"] as? String ?: ""
+    set(value) {
+        this["monsterContentPreview:sourceAcronym"] = value
+        dispatchChanges()
     }
-}

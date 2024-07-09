@@ -44,6 +44,7 @@ import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -57,7 +58,7 @@ import kotlinx.coroutines.launch
 import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterCompendiumStateHolder", exact = true)
-class MonsterCompendiumStateHolder(
+class MonsterCompendiumStateHolder internal constructor(
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
@@ -70,11 +71,11 @@ class MonsterCompendiumStateHolder(
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    private val stateRecovery: MonsterCompendiumStateRecovery,
+    private val stateRecovery: StateRecovery,
     appLocalization: AppLocalization,
-    loadOnInit: Boolean = true,
-) : UiModel<MonsterCompendiumState>(stateRecovery.state.copy(strings = appLocalization.getStrings())),
-    MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
+) : UiModel<MonsterCompendiumState>(
+    initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
+), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
     MonsterCompendiumIntent {
 
     var initialScrollItemPosition: Int = 0
@@ -82,11 +83,12 @@ class MonsterCompendiumStateHolder(
     private var metadata: List<MonsterCompendiumItem> = emptyList()
 
     init {
+        setState { updateState(stateRecovery) }
         observeEvents()
-        if (loadOnInit) loadMonsters()
+        loadMonsters()
     }
 
-    fun loadMonsters() = scope.launch {
+    private fun loadMonsters() = scope.launch {
         fetchMonsterCompendium()
     }
 
@@ -111,7 +113,8 @@ class MonsterCompendiumStateHolder(
                     alphabetSelectedIndex = alphabet.getAlphabetIndexFromCompendiumItemIndex(
                         scrollItemPosition,
                         items,
-                    )
+                    ),
+                    isShowingMonsterFolderPreview = stateRecovery.isShowingMonsterFolderPreview
                 ) to scrollItemPosition
             }
             .onStart {
@@ -125,7 +128,7 @@ class MonsterCompendiumStateHolder(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                setState { state.saveState(stateRecovery) }
+                setState { state }
             }
     }
 

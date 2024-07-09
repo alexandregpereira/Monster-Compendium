@@ -18,14 +18,19 @@ package br.alexandregpereira.hunter.monster.compendium.state.di
 
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
-import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateRecovery
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val monsterCompendiumStateModule = module {
-    factory {
+val monsterCompendiumModule = module {
+    single(named(StateRecoveryQualifier)) {
+        StateRecovery()
+    }
+
+    single {
         MonsterCompendiumStateHolder(
             getMonsterCompendiumUseCase = get(),
             getLastCompendiumScrollItemPositionUseCase = get(),
@@ -40,7 +45,9 @@ val monsterCompendiumStateModule = module {
             dispatcher = get(),
             analytics = MonsterCompendiumAnalytics(get()),
             appLocalization = get(),
-            stateRecovery = getOrNull() ?: MonsterCompendiumStateRecovery(),
+            stateRecovery = get(named(StateRecoveryQualifier)),
         )
     }
 }
+
+const val StateRecoveryQualifier: String = "MonsterCompendiumStateRecovery"

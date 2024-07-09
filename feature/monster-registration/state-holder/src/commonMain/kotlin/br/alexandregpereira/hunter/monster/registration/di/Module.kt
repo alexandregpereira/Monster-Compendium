@@ -15,10 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
-import kotlin.native.HiddenFromObjC
 
-@HiddenFromObjC
-val monsterRegistrationStateModule = module {
+val monsterRegistrationModule = module {
     single<StateHolderParams<MonsterRegistrationParams>>(qualifier = paramsQualifier) {
         StateHolderParams(MonsterRegistrationParams())
     }
@@ -40,7 +38,7 @@ val monsterRegistrationStateModule = module {
     }
     factory { NormalizeMonsterUseCase() }
 
-    factory {
+    single {
         MonsterRegistrationStateHolder(
             params = get(qualifier = paramsQualifier),
             eventManager = get(qualifier = eventManagerQualifier),

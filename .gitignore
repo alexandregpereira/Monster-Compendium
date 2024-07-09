@@ -90,3 +90,5 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+# Hunter JVM database
+hunter-database.db

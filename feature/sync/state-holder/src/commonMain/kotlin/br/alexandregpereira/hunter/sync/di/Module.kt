@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.sync.di
 
-import br.alexandregpereira.hunter.sync.EmptySyncStateRecovery
 import br.alexandregpereira.hunter.sync.SyncAnalytics
 import br.alexandregpereira.hunter.sync.SyncEventManager
 import br.alexandregpereira.hunter.sync.SyncStateHolder
@@ -24,14 +23,13 @@ import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import org.koin.dsl.module
 
-val syncStateModule = module {
+val syncModule = module {
     single { SyncEventManager() }
     single<SyncEventListener> { get<SyncEventManager>() }
     single<SyncEventDispatcher> { get<SyncEventManager>() }
 
     factory {
         SyncStateHolder(
-            stateRecovery = getOrNull() ?: EmptySyncStateRecovery(),
             dispatcher = get(),
             syncEventManager = get(),
             syncUseCase = get(),

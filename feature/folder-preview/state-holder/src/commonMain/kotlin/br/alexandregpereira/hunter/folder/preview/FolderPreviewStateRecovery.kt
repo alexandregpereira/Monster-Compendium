@@ -16,10 +16,16 @@
 
 package br.alexandregpereira.hunter.folder.preview
 
-fun interface FolderPreviewStateRecovery {
-    fun getState(): FolderPreviewState
+import br.alexandregpereira.hunter.ui.StateRecovery
+
+internal fun StateRecovery.getState(): FolderPreviewState {
+    return FolderPreviewState(
+        showPreview = this["folderPreview:showPreview"] as? Boolean ?: false,
+    )
 }
 
-internal class EmptyFolderPreviewStateRecovery : FolderPreviewStateRecovery {
-    override fun getState(): FolderPreviewState = FolderPreviewState()
+internal fun FolderPreviewState.saveState(stateRecovery: StateRecovery): FolderPreviewState {
+    stateRecovery["folderPreview:showPreview"] = this.showPreview
+    stateRecovery.dispatchChanges()
+    return this
 }

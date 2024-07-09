@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.espresso.Espresso
-import br.alexandregpereira.hunter.app.MainScreen
+import br.alexandregpereira.hunter.app.HunterApp
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,7 +22,7 @@ class FolderListTest {
     @Test
     fun folderDeletion() {
         composeTestRule.setContent {
-            MainScreen()
+            HunterApp()
         }
 
         composeTestRule.waitUntil(timeoutMillis = 5000) {

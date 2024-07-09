@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS ConditionEntity (`index` TEXT NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`index`, `monsterIndex`));
 
-CREATE INDEX index_ConditionEntity_monsterIndex ON ConditionEntity (monsterIndex);
+CREATE INDEX IF NOT EXISTS index_ConditionEntity_monsterIndex ON ConditionEntity (monsterIndex);
 
 insert:
 INSERT OR REPLACE INTO ConditionEntity VALUES ?;

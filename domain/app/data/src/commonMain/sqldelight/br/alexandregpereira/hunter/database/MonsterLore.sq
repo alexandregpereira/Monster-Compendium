@@ -14,7 +14,7 @@ WHERE monsterLoreIndex IN ?
 getMonsterLore:
 SELECT * FROM MonsterLoreCompleteEntityView WHERE monsterLoreIndex == ?;
 
-CREATE VIEW MonsterLoreCompleteEntityView AS
+CREATE VIEW IF NOT EXISTS MonsterLoreCompleteEntityView AS
 SELECT * FROM MonsterLoreEntity
 INNER JOIN MonsterLoreEntryEntity
 ON MonsterLoreEntryEntity.monsterIndex = MonsterLoreEntity.monsterLoreIndex

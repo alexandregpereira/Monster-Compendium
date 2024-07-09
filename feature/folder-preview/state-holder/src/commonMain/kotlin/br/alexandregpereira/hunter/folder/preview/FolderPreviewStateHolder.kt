@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowF
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -40,7 +41,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class FolderPreviewStateHolder internal constructor(
-    stateRecovery: FolderPreviewStateRecovery,
+    private val stateRecovery: StateRecovery,
     private val folderPreviewEventManager: FolderPreviewEventManager,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,
     private val addMonsterToFolderPreview: AddMonsterToFolderPreviewUseCase,
@@ -138,6 +139,7 @@ class FolderPreviewStateHolder internal constructor(
                                 analytics.trackLoadMonstersResult(it)
                             }
                         }.copy(strings = appLocalization.getStrings())
+                        .saveState(stateRecovery)
                 }
                 dispatchFolderPreviewVisibilityChangesEvent()
             }
@@ -151,6 +153,7 @@ class FolderPreviewStateHolder internal constructor(
                 val showPreview = monsters.isNotEmpty()
                 setState {
                     changeMonsters(monsters = monsters).changeShowPreview(showPreview)
+                        .saveState(stateRecovery)
                 }
                 if (showPreview.not()) {
                     dispatchFolderPreviewVisibilityChangesEvent()
@@ -170,7 +173,7 @@ class FolderPreviewStateHolder internal constructor(
     }
 
     private fun hideFolderPreview() {
-        setState { changeShowPreview(show = false) }
+        setState { changeShowPreview(show = false).saveState(stateRecovery) }
         dispatchFolderPreviewVisibilityChangesEvent()
     }
 

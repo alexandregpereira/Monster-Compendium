@@ -2,7 +2,7 @@
 android_gradle_plugin = "8.3.0"
 appcompat = "1.7.0"
 arch_core_testing = "2.2.0"
-coil_compose = "2.5.0"
+coil3 = "3.0.0-alpha06"
 compose_activity = '1.9.0'
 compose = '1.6.8'
 compose_plugin = '1.6.11'
@@ -14,8 +14,8 @@ googleplay_services = "4.4.2"
 gradle_firebase_crashlytics = "3.0.2"
 junit_ext = "1.2.1"
 junit = "4.13.2"
-koin = '3.5.3'
-koin_compose = "3.5.3"
+koin = '3.5.6'
+koin_compose = "1.1.5"
 kotlin = '2.0.0'
 kotlin_coroutines_test = '1.8.1'
 kotlin_coroutines = '1.8.1'
@@ -31,7 +31,10 @@ sqldelight = "1.5.5"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -55,12 +58,14 @@ gradle-sqldelight = { module = "com.squareup.sqldelight:gradle-plugin", version.
 junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit_ext" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin_compose" }
+koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin_coroutines" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
+kotlin-coroutines-desktop = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin_coroutines" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin_datetime" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }

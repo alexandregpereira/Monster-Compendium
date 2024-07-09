@@ -19,11 +19,12 @@ package br.alexandregpereira.hunter.domain.usecase
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
 
-class SaveCompendiumScrollItemPositionUseCase internal constructor(
-    private val repository: CompendiumRepository
-) {
+fun interface SaveCompendiumScrollItemPositionUseCase {
+    operator fun invoke(position: Int): Flow<Unit>
+}
 
-    operator fun invoke(position: Int): Flow<Unit> {
-        return repository.saveCompendiumScrollItemPosition(position)
-    }
+fun SaveCompendiumScrollItemPositionUseCase(
+    repository: CompendiumRepository
+): SaveCompendiumScrollItemPositionUseCase = SaveCompendiumScrollItemPositionUseCase { position ->
+    repository.saveCompendiumScrollItemPosition(position)
 }

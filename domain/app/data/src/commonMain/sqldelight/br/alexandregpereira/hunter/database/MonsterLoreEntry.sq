@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS MonsterLoreEntryEntity (`id` TEXT NOT NULL, `title` TEXT, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
 
-CREATE INDEX index_MonsterLoreEntryEntity_monsterIndex ON MonsterLoreEntryEntity (monsterIndex);
+CREATE INDEX IF NOT EXISTS index_MonsterLoreEntryEntity_monsterIndex ON MonsterLoreEntryEntity (monsterIndex);
 
 insert:
 INSERT OR REPLACE INTO MonsterLoreEntryEntity VALUES ?;

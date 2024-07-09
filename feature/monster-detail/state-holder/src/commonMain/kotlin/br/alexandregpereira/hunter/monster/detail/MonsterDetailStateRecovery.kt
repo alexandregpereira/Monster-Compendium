@@ -1,61 +1,35 @@
-/*
- * Copyright 2023 Alexandre Gomes Pereira
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package br.alexandregpereira.hunter.monster.detail
 
-interface MonsterDetailStateRecovery {
-    val state: MonsterDetailState
-    val monsterIndex: String
-    val monsterIndexes: List<String>
+import br.alexandregpereira.hunter.ui.StateRecovery
 
-    fun saveState(state: MonsterDetailState)
+internal val StateRecovery.monsterIndex: String
+    get() = this["monsterDetail:monsterIndex"] as? String ?: ""
 
-    fun saveMonsterIndex(index: String)
+internal val StateRecovery.monsterIndexes: List<String>
+    get() = (this["monsterDetail:monsterIndexes"] as? List<*>)?.map { it as String } ?: emptyList()
 
-    fun saveMonsterIndexes(indexes: List<String>)
+internal fun StateRecovery.saveMonsterIndex(monsterIndex: String) {
+    this["monsterDetail:monsterIndex"] = monsterIndex
+    dispatchChanges()
 }
 
-fun MonsterDetailStateRecovery(): MonsterDetailStateRecovery = DefaultMonsterDetailStateRecovery()
+internal fun StateRecovery.saveMonsterIndexes(monsterIndexes: List<String>) {
+    this["monsterDetail:monsterIndexes"] = monsterIndexes
+    dispatchChanges()
+}
 
-internal fun MonsterDetailState.saveState(
-    recovery: MonsterDetailStateRecovery
-): MonsterDetailState {
-    recovery.saveState(this)
+internal fun MonsterDetailState.saveState(stateRecovery: StateRecovery): MonsterDetailState {
+    stateRecovery["monsterDetail:showDetail"] = showDetail
+    stateRecovery["monsterDetail:showCloneForm"] = showCloneForm
+    stateRecovery["monsterDetail:monsterCloneName"] = monsterCloneName
+    stateRecovery.dispatchChanges()
     return this
 }
 
-private class DefaultMonsterDetailStateRecovery : MonsterDetailStateRecovery {
-
-    override val state: MonsterDetailState = MonsterDetailState.Empty
-
-    private var _monsterIndex: String = ""
-    override val monsterIndex: String
-        get() = _monsterIndex
-
-    private var _monsterIndexes: List<String> = emptyList()
-    override val monsterIndexes: List<String>
-        get() = _monsterIndexes
-
-    override fun saveState(state: MonsterDetailState) {}
-
-    override fun saveMonsterIndex(index: String) {
-        _monsterIndex = index
-    }
-
-    override fun saveMonsterIndexes(indexes: List<String>) {
-        _monsterIndexes = indexes
-    }
+internal fun MonsterDetailState.updateState(bundle: Map<String, Any?>): MonsterDetailState {
+    return copy(
+        showDetail = bundle["monsterDetail:showDetail"] as? Boolean ?: false,
+        showCloneForm = bundle["monsterDetail:showCloneForm"] as? Boolean ?: false,
+        monsterCloneName = bundle["monsterDetail:monsterCloneName"] as? String ?: ""
+    )
 }

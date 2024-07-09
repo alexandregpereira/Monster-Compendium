@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispat
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
@@ -34,7 +35,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class FolderDetailStateHolder internal constructor(
-    stateRecovery: FolderDetailStateRecovery,
+    private val stateRecovery: StateRecovery,
     private val getMonstersByFolder: GetMonstersByFolderUseCase,
     private val folderDetailEventManager: FolderDetailEventManager,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
@@ -70,7 +71,7 @@ class FolderDetailStateHolder internal constructor(
 
     fun onClose() {
         analytics.trackClose()
-        setState { copy(isOpen = false) }
+        setState { copy(isOpen = false).saveState(stateRecovery) }
         folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = false))
     }
 
@@ -84,6 +85,7 @@ class FolderDetailStateHolder internal constructor(
                 analytics.trackMonstersLoaded(monsters)
                 setState {
                     copy(monsters = monsters, folderName = folderName, isOpen = true)
+                        .saveState(stateRecovery)
                 }
                 folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = true))
             }

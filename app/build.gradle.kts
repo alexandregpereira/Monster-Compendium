@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import java.time.Instant
@@ -31,37 +32,12 @@ plugins {
 
 multiplatform {
     androidMain {
-        implementation(project(":core:event"))
-        implementation(project(":feature:folder-detail:event"))
-        implementation(project(":feature:folder-list:event"))
-        implementation(project(":feature:monster-content-manager:event"))
-        implementation(project(":feature:monster-detail:event"))
-        implementation(project(":feature:folder-detail:android"))
-        implementation(project(":feature:folder-insert:android"))
-        implementation(project(":feature:folder-list:android"))
-        implementation(project(":feature:folder-preview:android"))
-        implementation(project(":feature:monster-compendium:android"))
-        implementation(project(":feature:monster-content-manager:android"))
-        implementation(project(":feature:monster-detail:android"))
-        implementation(project(":feature:monster-lore-detail:android"))
-        implementation(project(":feature:monster-registration:android"))
-        implementation(project(":feature:sync:android"))
-        implementation(project(":feature:search:android"))
-        implementation(project(":feature:settings:android"))
-        implementation(project(":feature:spell-compendium:android"))
-        implementation(project(":feature:spell-detail:android"))
-        implementation(project(":ui:core"))
-
         implementation(libs.core.ktx)
         implementation(libs.appcompat)
         implementation(libs.material)
 
         implementation(libs.koin.android)
-        implementation(libs.koin.compose)
 
-        implementation(libs.bundles.viewmodel.bundle)
-
-        implementation(compose.preview)
         implementation(libs.compose.activity)
 
         implementation(project.dependencies.platform(libs.firebase.bom))
@@ -71,20 +47,39 @@ multiplatform {
 
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:event"))
         implementation(project(":core:localization"))
+        implementation(project(":core:state-holder"))
+        implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
         implementation(project(":domain:sync:core"))
-        implementation(project(":feature:folder-insert:event")) // TODO Remove later
-        implementation(project(":feature:folder-preview:event")) // TODO Remove later
-        implementation(project(":feature:monster-lore-detail:event")) // TODO Remove later
-        implementation(project(":feature:monster-registration:event")) // TODO Remove later
-        implementation(project(":feature:spell-detail:event")) // TODO Remove later
-        implementation(project(":feature:monster-compendium:state-holder"))
-        implementation(project(":feature:monster-detail:state-holder"))
-        implementation(project(":feature:sync:state-holder"))
+
+        implementation(project(":feature:folder-detail:event"))
+        implementation(project(":feature:folder-list:event"))
+        implementation(project(":feature:folder-preview:event"))
+        implementation(project(":feature:monster-content-manager:event"))
+        implementation(project(":feature:monster-detail:event"))
+
+        implementation(project(":feature:folder-detail:compose"))
+        implementation(project(":feature:folder-insert:compose"))
+        implementation(project(":feature:folder-list:compose"))
+        implementation(project(":feature:folder-preview:compose"))
+        implementation(project(":feature:monster-content-manager:compose"))
+        implementation(project(":feature:monster-compendium:compose"))
+        implementation(project(":feature:monster-detail:compose"))
+        implementation(project(":feature:monster-lore-detail:compose"))
+        implementation(project(":feature:monster-registration:compose"))
+        implementation(project(":feature:search:compose"))
+        implementation(project(":feature:settings:compose"))
+        implementation(project(":feature:spell-compendium:compose"))
+        implementation(project(":feature:spell-detail:compose"))
+        implementation(project(":feature:sync:compose"))
+
+        implementation(project(":ui:core"))
+
         implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
+        implementation(libs.koin.compose)
         implementation(compose.runtime)
         implementation(compose.foundation)
         implementation(compose.material)
@@ -93,7 +88,11 @@ multiplatform {
         implementation(compose.components.uiToolingPreview)
     }
 
-    jvmMain()
+    jvmMain {
+        implementation(compose.desktop.currentOs)
+        implementation(libs.kotlin.coroutines.desktop)
+    }
+
     iosMain()
 
     jvmTest {
@@ -200,6 +199,24 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "br.alexandregpereira.hunter"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
+    generateResClass = always
 }
 
 composeCompiler {

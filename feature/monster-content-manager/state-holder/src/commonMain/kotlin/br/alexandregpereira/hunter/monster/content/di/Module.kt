@@ -16,22 +16,27 @@
 
 package br.alexandregpereira.hunter.monster.content.di
 
-import br.alexandregpereira.hunter.monster.content.EmptyMonsterContentManagerStateRecovery
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerAnalytics
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEventManager
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStateHolder
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureMonsterContentManagerModule = module {
+val monsterContentManagerModule = module {
     single { MonsterContentManagerEventManager() }
     single<MonsterContentManagerEventDispatcher> { get<MonsterContentManagerEventManager>() }
     single<MonsterContentManagerEventListener> { get<MonsterContentManagerEventManager>() }
 
-    factory {
+    single(named(MonsterContentManagerStateRecoveryQualifier)) {
+        StateRecovery()
+    }
+
+    single {
         MonsterContentManagerStateHolder(
-            stateRecovery = getOrNull() ?: EmptyMonsterContentManagerStateRecovery(),
+            stateRecovery = get(named(MonsterContentManagerStateRecoveryQualifier)),
             getAlternativeSourcesUseCase = get(),
             addAlternativeSourceUseCase = get(),
             removeAlternativeSourceUseCase = get(),
@@ -45,3 +50,5 @@ val featureMonsterContentManagerModule = module {
         )
     }
 }
+
+const val MonsterContentManagerStateRecoveryQualifier = "MonsterContentManagerStateRecovery"

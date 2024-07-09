@@ -18,28 +18,33 @@ package br.alexandregpereira.hunter.monster.lore.detail.di
 
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventListener
-import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreIndexStateRecovery
-import br.alexandregpereira.hunter.monster.lore.detail.EmptyMonsterLoreDetailStateRecovery
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailAnalytics
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailEventManager
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailStateHolder
 import br.alexandregpereira.hunter.monster.lore.detail.domain.GetMonsterLoreDetailUseCase
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureMonsterLoreDetailModule = module {
+val monsterLoreDetailModule = module {
     single { MonsterLoreDetailEventManager() }
     single<MonsterLoreDetailEventDispatcher> { get<MonsterLoreDetailEventManager>() }
     single<MonsterLoreDetailEventListener> { get<MonsterLoreDetailEventManager>() }
     factory { GetMonsterLoreDetailUseCase(get(), get()) }
 
-    factory {
+    single(named(MonsterLoreDetailRecoveryQualifier)) {
+        StateRecovery()
+    }
+
+    single {
         MonsterLoreDetailStateHolder(
-            stateRecovery = getOrNull() ?: EmptyMonsterLoreDetailStateRecovery(),
+            stateRecovery = get(named(MonsterLoreDetailRecoveryQualifier)),
             getMonsterLoreUseCase = get(),
             monsterLoreDetailEventListener = get(),
-            monsterLoreIndexStateRecovery = getOrNull() ?: EmptyMonsterLoreIndexStateRecovery(),
             dispatcher = get(),
             analytics = MonsterLoreDetailAnalytics(get()),
         )
     }
 }
+
+const val MonsterLoreDetailRecoveryQualifier: String = "MonsterLoreDetailRecovery"

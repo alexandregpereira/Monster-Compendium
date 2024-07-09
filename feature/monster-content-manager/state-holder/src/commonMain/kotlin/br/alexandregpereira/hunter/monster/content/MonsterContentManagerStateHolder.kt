@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEv
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewEventManager
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -33,7 +34,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class MonsterContentManagerStateHolder internal constructor(
-    stateRecovery: MonsterContentManagerStateRecovery,
+    private val stateRecovery: StateRecovery,
     private val dispatcher: CoroutineDispatcher,
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
     private val addAlternativeSourceUseCase: AddAlternativeSourceUseCase,
@@ -78,11 +79,11 @@ class MonsterContentManagerStateHolder internal constructor(
             .onEach { event ->
                 when (event) {
                     is MonsterContentManagerEvent.Show -> {
-                        setState { copy(isOpen = true) }
+                        setState { copy(isOpen = true).saveState(stateRecovery) }
                         load()
                     }
                     is MonsterContentManagerEvent.Hide -> {
-                        setState { hide() }
+                        setState { hide().saveState(stateRecovery) }
                     }
                 }
             }

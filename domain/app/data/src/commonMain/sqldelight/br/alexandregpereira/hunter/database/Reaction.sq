@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS ReactionEntity (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`name`, `monsterIndex`));
 
-CREATE INDEX index_ReactionEntity_monsterIndex ON ReactionEntity (monsterIndex);
+CREATE INDEX IF NOT EXISTS index_ReactionEntity_monsterIndex ON ReactionEntity (monsterIndex);
 
 insert:
 INSERT OR REPLACE INTO ReactionEntity VALUES ?;

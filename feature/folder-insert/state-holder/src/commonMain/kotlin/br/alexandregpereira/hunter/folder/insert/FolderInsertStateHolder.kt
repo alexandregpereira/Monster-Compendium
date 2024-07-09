@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 
 class FolderInsertStateHolder internal constructor(
-    stateRecovery: FolderInsertStateRecovery,
     private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val getFolderMonsterPreviewsByIds: GetFolderMonsterPreviewsByIdsUseCase,
     private val addMonstersToFolder: AddMonstersToFolderUseCase,
@@ -41,7 +40,7 @@ class FolderInsertStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderInsertAnalytics,
     private val appLocalization: AppLocalization,
-) : UiModel<FolderInsertState>(stateRecovery.getState()) {
+) : UiModel<FolderInsertState>(FolderInsertState()) {
 
     private val strings: FolderInsertStrings
         get() = getFolderInsertStrings(appLocalization.getLanguage())

@@ -25,7 +25,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 abstract class UiModel<State : Any>(
-    initialState: State
+    initialState: State,
 ) : StateHolder<State> {
 
     protected val scope = CoroutineScope(

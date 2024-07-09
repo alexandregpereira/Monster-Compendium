@@ -6,6 +6,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:localization"))
+        implementation(project(":core:ui:state-recovery"))
         api(project(":core:state-holder"))
         api(project(":domain:monster-folder:core"))
         implementation(project(":feature:folder-preview:event"))

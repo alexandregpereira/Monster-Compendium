@@ -5,6 +5,7 @@ plugins {
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:ui:state-recovery"))
         api(project(":core:state-holder"))
         api(project(":domain:monster-lore:core"))
         implementation(project(":domain:monster:core"))
