@@ -12,6 +12,7 @@ import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
 import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
@@ -36,7 +37,7 @@ internal fun AppMainScreen(
             bottom = contentPadding.calculateBottomPadding() + bottomBarNavigationSize,
         )
 
-        BottomNavigationTransition(
+        AppBottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
             contentPadding = contentPaddingWithBottomBar
         )
@@ -63,6 +64,10 @@ internal fun AppMainScreen(
 
         SpellDetailFeature(
             contentPadding = contentPadding,
+        )
+
+        FolderPreviewFeature(
+            contentPadding = contentPaddingWithBottomBar,
         )
 
         AppBottomNavigation(

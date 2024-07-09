@@ -14,37 +14,34 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.folder.preview
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
-import br.alexandregpereira.hunter.app.ui.MainScreen
-import br.alexandregpereira.hunter.ui.compose.AppWindow
+import br.alexandregpereira.hunter.folder.preview.di.FolderPreviewStateRecoveryQualifier
+import br.alexandregpereira.hunter.folder.preview.ui.FolderPreviewScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-internal fun MainScreen(
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-) = AppWindow {
-    KoinContext {
-        StateRecoveryLaunchedEffect(
-            key = AppStateRecoveryQualifier,
-            stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
-        )
+fun FolderPreviewFeature(
+    contentPadding: PaddingValues = PaddingValues()
+) {
+    StateRecoveryLaunchedEffect(
+        key = FolderPreviewStateRecoveryQualifier,
+        stateRecovery = koinInject(named(FolderPreviewStateRecoveryQualifier))
+    )
+    val stateHolder: FolderPreviewStateHolder = koinInject()
+    val state by stateHolder.state.collectAsState()
 
-        val viewModel: MainViewModel = koinInject()
-        val state by viewModel.state.collectAsState()
-        MainScreen(
-            state = state,
-            contentPadding = contentPadding,
-            onEvent = viewModel::onEvent
-        )
-    }
+    FolderPreviewScreen(
+        state = state,
+        contentPadding = contentPadding,
+        onClick = stateHolder::onItemClick,
+        onLongClick = stateHolder::onItemLongClick,
+        onSave = stateHolder::onSave
+    )
 }

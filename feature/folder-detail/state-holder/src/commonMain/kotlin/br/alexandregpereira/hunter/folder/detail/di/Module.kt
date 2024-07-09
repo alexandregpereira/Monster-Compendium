@@ -34,7 +34,7 @@ val folderDetailModule = module {
         StateRecovery()
     }
 
-    factory {
+    single {
         FolderDetailStateHolder(
             stateRecovery = get(named(FolderDetailStateRecoveryQualifier)),
             getMonstersByFolder = get(),

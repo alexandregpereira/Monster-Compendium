@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.app.ui
+package br.alexandregpereira.hunter.folder.preview.di
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
-import br.alexandregpereira.hunter.app.BottomBarItem
-
-@Composable
-internal expect fun BottomNavigationTransition(
-    bottomBarItemSelected: BottomBarItem?,
-    contentPadding: PaddingValues = PaddingValues()
-)
+val featureFolderPreviewModule = folderPreviewModule

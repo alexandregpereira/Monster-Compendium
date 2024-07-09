@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.app
 
 import android.app.Application
 import br.alexandregpereira.hunter.app.di.initKoinModules
-import br.alexandregpereira.hunter.folder.preview.di.folderPreviewModule
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -40,8 +39,7 @@ class HunterApplication : Application() {
                 module {
                     factory { Firebase.analytics }
                     factory { Firebase.crashlytics }
-                },
-                folderPreviewModule,
+                }
             )
             initKoinModules()
         }

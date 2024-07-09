@@ -9,11 +9,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import br.alexandregpereira.hunter.app.HunterApp
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
 import org.koin.core.context.startKoin
-import br.alexandregpereira.hunter.app.MainScreen as AppMainScreen
 
 fun main() = application {
     startKoin {
@@ -37,7 +37,7 @@ fun main() = application {
         CompositionLocalProvider(
             LocalBackDispatcher provides backDispatcher
         ) {
-            AppMainScreen()
+            HunterApp()
         }
     }
 }

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view = createComposeView { contentPadding ->
-            MainScreen(contentPadding = contentPadding)
+            HunterApp(contentPadding = contentPadding)
         }
         setContentView(view)
         view.apply {

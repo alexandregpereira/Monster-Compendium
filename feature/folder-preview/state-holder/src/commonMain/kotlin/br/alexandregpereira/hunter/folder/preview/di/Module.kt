@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.folder.preview.di
 
-import br.alexandregpereira.hunter.folder.preview.EmptyFolderPreviewStateRecovery
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewAnalytics
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewEventManager
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewStateHolder
@@ -26,9 +25,11 @@ import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPr
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
+import br.alexandregpereira.hunter.ui.StateRecovery
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureFolderPreviewModule = module {
+val folderPreviewModule = module {
     single { FolderPreviewEventManager() }
     single<FolderPreviewEventDispatcher> { get<FolderPreviewEventManager>() }
     single<FolderPreviewResultListener> { get<FolderPreviewEventManager>() }
@@ -37,9 +38,13 @@ val featureFolderPreviewModule = module {
     factory { ClearFolderPreviewUseCase(get()) }
     factory { RemoveMonsterFromFolderPreviewUseCase(get(), get()) }
 
-    factory {
+    single(named(FolderPreviewStateRecoveryQualifier)) {
+        StateRecovery()
+    }
+
+    single {
         FolderPreviewStateHolder(
-            stateRecovery = getOrNull() ?: EmptyFolderPreviewStateRecovery(),
+            stateRecovery = get(named(FolderPreviewStateRecoveryQualifier)),
             folderPreviewEventManager = get(),
             getMonstersFromFolderPreview = get(),
             addMonsterToFolderPreview = get(),
@@ -53,3 +58,5 @@ val featureFolderPreviewModule = module {
         )
     }
 }
+
+const val FolderPreviewStateRecoveryQualifier = "FolderPreviewStateRecovery"
