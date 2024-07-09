@@ -3,6 +3,7 @@ package br.alexandregpereira.hunter.app.di
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.MainViewModel
 import br.alexandregpereira.hunter.data.di.dataModules
+import br.alexandregpereira.hunter.detail.di.featureMonsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModules
 import br.alexandregpereira.hunter.event.systembar.bottomBarEventModule
 import br.alexandregpereira.hunter.folder.detail.di.featureFolderDetailModule
@@ -10,10 +11,9 @@ import br.alexandregpereira.hunter.folder.insert.di.featureFolderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.featureFolderListModule
 import br.alexandregpereira.hunter.folder.preview.di.featureFolderPreviewModule
 import br.alexandregpereira.hunter.localization.di.localizationModule
-import br.alexandregpereira.hunter.monster.compendium.state.di.featureMonsterCompendiumModule
+import br.alexandregpereira.hunter.monster.compendium.di.featureMonsterCompendiumModule
 import br.alexandregpereira.hunter.monster.content.di.featureMonsterContentManagerModule
 import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterContentPreviewModule
-import br.alexandregpereira.hunter.monster.detail.di.featureMonsterDetailModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDetailModule
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
 import br.alexandregpereira.hunter.search.di.featureSearchModule

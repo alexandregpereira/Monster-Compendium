@@ -49,6 +49,7 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
+        implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
@@ -59,12 +60,6 @@ multiplatform {
         implementation(project(":feature:folder-preview:event"))
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:monster-detail:event"))
-
-        implementation(project(":feature:folder-preview:state-holder"))
-        implementation(project(":feature:monster-compendium:state-holder"))
-        implementation(project(":feature:monster-detail:state-holder"))
-        implementation(project(":feature:spell-compendium:state-holder"))
-        implementation(project(":feature:sync:state-holder"))
 
         implementation(project(":feature:folder-detail:compose"))
         implementation(project(":feature:folder-insert:compose"))

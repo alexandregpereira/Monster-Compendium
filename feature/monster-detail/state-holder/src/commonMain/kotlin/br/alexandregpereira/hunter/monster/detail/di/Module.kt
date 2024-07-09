@@ -32,12 +32,11 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
-val featureMonsterDetailModule = module {
+val monsterDetailModule = module {
     single { MonsterDetailEventManager() }
     single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
     single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
     factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
-
 
     single(named(MonsterDetailStateRecoveryQualifier)) {
         StateRecovery()

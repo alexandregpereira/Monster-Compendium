@@ -23,7 +23,7 @@ import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import org.koin.dsl.module
 
-val featureSyncModule = module {
+val syncModule = module {
     single { SyncEventManager() }
     single<SyncEventListener> { get<SyncEventManager>() }
     single<SyncEventDispatcher> { get<SyncEventManager>() }

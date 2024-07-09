@@ -11,10 +11,8 @@ import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.koin.dsl.module
-import kotlin.native.HiddenFromObjC
 
-@HiddenFromObjC
-val featureSpellCompendiumModule = module {
+val spellCompendiumModule = module {
     single { SpellCompendiumEventManager() }
 
     factory<SpellCompendiumEventResultDispatcher> { get<SpellCompendiumEventManager>() }
