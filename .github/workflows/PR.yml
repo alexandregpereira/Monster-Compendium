@@ -78,7 +78,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: gradlew :app:packageMsi
+        run: ./gradlew :app:packageMsi
 
       - name: Upload Msi
         uses: actions/upload-artifact@v3.1.1
