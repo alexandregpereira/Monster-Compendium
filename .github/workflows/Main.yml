@@ -92,7 +92,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: MonsterCompendium-deb
-          path: app/build/compose/binaries/main/msi/*.deb
+          path: app/build/compose/binaries/main/deb/*.deb
 
   windows-desktop-distribution:
     name: Windows Desktop Distribution
