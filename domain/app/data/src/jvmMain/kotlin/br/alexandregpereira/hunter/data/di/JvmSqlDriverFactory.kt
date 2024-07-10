@@ -20,9 +20,16 @@ import br.alexandregpereira.hunter.data.Database
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.koin.core.scope.Scope
+import java.io.File
 
 internal actual fun Scope.createSqlDriver(): SqlDriver {
-    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:hunter-database.db")
+    val userFolder = System.getProperty("user.home")
+    val appDataFolder = File(userFolder, ".monster-compendium")
+    if (appDataFolder.exists().not()) {
+        appDataFolder.mkdirs()
+    }
+    val databasePath = File(appDataFolder, "hunter-database.db")
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:${databasePath.absolutePath}")
     Database.Schema.create(driver)
     return driver
 }
