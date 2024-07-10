@@ -29,7 +29,7 @@ jobs:
     - name: Build with Gradle
       env:
         MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-      run: ./gradlew assembleRelease testReleaseUnitTest jvmTest -Pdev
+      run: ./gradlew testReleaseUnitTest jvmTest assembleRelease :app:packageDmg -Pdev
 
     - name: Verify database migration
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -48,6 +48,11 @@ jobs:
           feature-monster-compendium/build/reports/tests
           data/build/reports/tests
           domain/build/reports/tests
+
+    - name: Upload Dmg
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        path: app/build/compose/binaries/main/dmg/*.dmg
           
     - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1
