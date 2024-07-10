@@ -10,7 +10,6 @@
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
 		C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8629847A85002F517C /* Assets.xcassets */; };
 		C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8929847A85002F517C /* Preview Assets.xcassets */; };
-		C1D25EB22985DD3700F0EBF9 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +43,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1D25EB22985DD3700F0EBF9 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +117,6 @@
 			);
 			name = MonsterCompendium;
 			packageProductDependencies = (
-				C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */,
 			);
 			productName = MonsterCompendium;
 			productReference = C1BC0E7F29847A84002F517C /* MonsterCompendium.app */;
@@ -195,7 +192,6 @@
 			);
 			mainGroup = C1BC0E7629847A83002F517C;
 			packageReferences = (
-				C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = C1BC0E8029847A84002F517C /* Products */;
 			projectDirPath = "";
@@ -591,25 +587,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C1D25EB12985DD3700F0EBF9 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C1D25EB02985DD3700F0EBF9 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C1BC0E7729847A83002F517C /* Project object */;
 }
