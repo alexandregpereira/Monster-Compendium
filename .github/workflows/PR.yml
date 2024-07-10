@@ -44,19 +44,19 @@ jobs:
     - name: Upload Dmg
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: MonsterCompendium.dmg
+        name: MonsterCompendium-dmg
         path: app/build/compose/binaries/main/dmg/*.dmg
           
     - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-debug.apk
+        name: app-debug-apk
         path: app/build/outputs/apk/debug/app-debug.apk
         
     - name: Upload an APK metadata JSON
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: output-metadata.json
+        name: app-output-metadata-json
         path: app/build/outputs/apk/debug/output-metadata.json
 
   windows-desktop-distribution:
@@ -83,5 +83,5 @@ jobs:
       - name: Upload Msi
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: MonsterCompendium.msi
+          name: MonsterCompendium-msi
           path: app/build/compose/binaries/main/msi/*.msi

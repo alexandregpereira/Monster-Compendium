@@ -1,10 +1,6 @@
 name: Multiplatform Main
 
 on:
-  pull_request:
-    paths-ignore:
-      - '**.md'
-      - 'media/**'
   push:
     branches: 
       - main
@@ -57,25 +53,25 @@ jobs:
     - name: Upload Dmg
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: MonsterCompendium.dmg
+        name: MonsterCompendium-dmg
         path: app/build/compose/binaries/main/dmg/*.dmg
           
     - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-dev-release.apk
+        name: app-dev-release-apk
         path: app/build/outputs/apk/release/app-dev-release.apk
         
     - name: Upload an APK metadata JSON
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: output-metadata.json
+        name: app-output-metadata.json
         path: app/build/outputs/apk/release/output-metadata.json
 
     - name: Upload an AAB
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: app-release.aab
+        name: app-release-aab
         path: app/build/outputs/bundle/release/app-release.aab
 
   windows-desktop-distribution:
@@ -102,5 +98,5 @@ jobs:
       - name: Upload Msi
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: MonsterCompendium.msi
+          name: MonsterCompendium-msi
           path: app/build/compose/binaries/main/msi/*.msi
