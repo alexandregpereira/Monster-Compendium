@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2.5.0
     
@@ -25,7 +25,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle
-      run: ./gradlew assembleDebug testDebugUnitTest jvmTest
+      run: ./gradlew testDebugUnitTest jvmTest assembleDebug :app:packageDmg
 
     - name: Verify database migration
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -39,6 +39,11 @@ jobs:
           feature-monster-compendium/build/reports/tests
           data/build/reports/tests
           domain/build/reports/tests
+
+    - name: Upload Dmg
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        path: app/build/compose/binaries/dmg/*.dmg
           
     - name: Upload an APK
       uses: actions/upload-artifact@v3.1.1

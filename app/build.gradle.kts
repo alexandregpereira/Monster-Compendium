@@ -207,8 +207,9 @@ compose {
             mainClass = "MainKt"
 
             nativeDistributions {
+                modules("java.sql")
                 targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-                packageName = "br.alexandregpereira.hunter"
+                packageName = "MonsterCompendium"
                 packageVersion = "1.0.0"
             }
         }
