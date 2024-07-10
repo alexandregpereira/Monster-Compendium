@@ -28,10 +28,17 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
+      env:
+        MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
       run: ./gradlew testReleaseUnitTest jvmTest assembleRelease :app:packageDmg linkReleaseFrameworkIosSimulatorArm64 -Pdev
 
     - name: Verify database migration
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
+
+    - name: Generate AAB
+      env:
+        MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+      run: ./gradlew bundleRelease
 
     - name: Upload the test report
       if: failure()
