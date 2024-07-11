@@ -35,7 +35,7 @@ jobs:
       - name: Build with Gradle
         env:
           MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-        run: ./gradlew testReleaseUnitTest jvmTest bundleRelease :app:packageDmg linkReleaseFrameworkIosSimulatorArm64
+        run: ./gradlew testReleaseUnitTest jvmTest assembleRelease bundleRelease :app:packageDmg linkReleaseFrameworkIosSimulatorArm64
 
       - name: Verify database migration
         run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -64,23 +64,29 @@ jobs:
           name: MonsterCompendium-dmg
           path: app/build/compose/binaries/main/dmg/*.dmg
 
-      - name: Upload an APK
+      - name: Upload APK
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: app-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: app-release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Upload Dev APK
         uses: actions/upload-artifact@v3.1.1
         with:
           name: app-dev-release-apk
           path: app/build/outputs/apk/release/app-dev-release.apk
 
-      - name: Upload an APK metadata JSON
+      - name: Upload APK metadata JSON
         uses: actions/upload-artifact@v3.1.1
         with:
           name: app-output-metadata-json
           path: app/build/outputs/apk/release/output-metadata.json
-
-      - name: Upload an AAB
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: app-release-aab
-          path: app/build/outputs/bundle/release/app-release.aab
 
   ubuntu-desktop-distribution:
     name: Ubuntu Desktop Distribution
