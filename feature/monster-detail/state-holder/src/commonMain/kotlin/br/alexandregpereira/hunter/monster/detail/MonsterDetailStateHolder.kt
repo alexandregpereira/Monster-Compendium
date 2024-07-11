@@ -39,8 +39,6 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Compa
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CHANGE_TO_FEET
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.CLONE
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ChangeToFeet
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ChangeToMeters
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
@@ -340,10 +338,7 @@ class MonsterDetailStateHolder internal constructor(
         }
 
         return copy(
-            options = listOf(AddToFolder(strings), Clone(strings)) + editOption + when (measurementUnit) {
-                MeasurementUnit.FEET -> ChangeToFeet(strings)
-                MeasurementUnit.METER -> ChangeToMeters(strings)
-            }
+            options = listOf(AddToFolder(strings), Clone(strings)) + editOption
         )
     }
 
