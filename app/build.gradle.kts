@@ -209,8 +209,18 @@ compose {
             nativeDistributions {
                 modules("java.sql")
                 targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-                packageName = "MonsterCompendium"
+                packageName = "DnD Monster Compendium"
                 packageVersion = "1.0.0"
+
+                macOS {
+                    iconFile.set(project.file("icon-mac.icns"))
+                }
+                windows {
+                    iconFile.set(project.file("icon-windows.ico"))
+                }
+                linux {
+                    iconFile.set(project.file("icon-linux.png"))
+                }
             }
         }
     }
