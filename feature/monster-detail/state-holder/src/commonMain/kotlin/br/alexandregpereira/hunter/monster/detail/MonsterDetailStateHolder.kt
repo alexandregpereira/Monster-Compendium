@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
@@ -45,9 +46,12 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Compa
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.EDIT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Edit
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.RESET_TO_ORIGINAL
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetToOriginal
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.ResetMonsterToOriginal
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
@@ -55,6 +59,9 @@ import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
+import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -70,14 +77,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlin.native.ObjCName
 
-@ObjCName(name = "MonsterDetailStateHolder", exact = true)
 class MonsterDetailStateHolder internal constructor(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val cloneMonster: CloneMonsterUseCase,
     private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val deleteMonster: DeleteMonsterUseCase,
+    private val resetMonsterToOriginal: ResetMonsterToOriginal,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterDetailEventListener: MonsterDetailEventListener,
     private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
@@ -85,6 +91,8 @@ class MonsterDetailStateHolder internal constructor(
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
+    private val syncEventDispatcher: SyncEventDispatcher,
+    private val syncEventListener: SyncEventListener,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
@@ -135,6 +143,10 @@ class MonsterDetailStateHolder internal constructor(
         }.launchIn(scope)
 
         monsterRegistrationEventListener.collectOnSaved {
+            getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
+        }.launchIn(scope)
+
+        syncEventListener.collectSyncFinishedEvents {
             getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
         }.launchIn(scope)
     }
@@ -191,6 +203,11 @@ class MonsterDetailStateHolder internal constructor(
                 setState { copy(showDeleteConfirmation = true) }
             }
 
+            RESET_TO_ORIGINAL -> {
+                analytics.trackMonsterDetailResetToOriginalClicked(monsterIndex)
+                setState { copy(showResetConfirmation = true) }
+            }
+
             CHANGE_TO_FEET -> {
                 changeMeasurementUnit(MeasurementUnit.FEET)
             }
@@ -240,6 +257,16 @@ class MonsterDetailStateHolder internal constructor(
     fun onDeleteClosed() {
         analytics.trackMonsterDetailDeleteCanceled(monsterIndex)
         setState { copy(showDeleteConfirmation = false) }
+    }
+
+    fun onResetConfirmed() {
+        analytics.trackMonsterDetailResetConfirmed(monsterIndex)
+        setState { copy(showResetConfirmation = false) }
+        resetMonster()
+    }
+
+    fun onResetClosed() {
+        setState { copy(showResetConfirmation = false) }
     }
 
     private fun getMonsterDetail(
@@ -306,9 +333,11 @@ class MonsterDetailStateHolder internal constructor(
 
     private fun MonsterDetailState.changeOptions(): MonsterDetailState {
         val monster = metadata.find { monster -> monster.index == monsterIndex } ?: return this
-        val editOption = if (monster.isClone) {
-            listOf(Edit(strings), Delete(strings))
-        } else emptyList()
+        val editOption = when (monster.status) {
+            MonsterStatus.Original -> listOf(Edit(strings))
+            MonsterStatus.Clone -> listOf(Edit(strings), Delete(strings))
+            MonsterStatus.Edited -> listOf(Edit(strings), ResetToOriginal(strings))
+        }
 
         return copy(
             options = listOf(AddToFolder(strings), Clone(strings)) + editOption + when (measurementUnit) {
@@ -355,6 +384,15 @@ class MonsterDetailStateHolder internal constructor(
             .onEach {
                 monsterDetailEventDispatcher.dispatchEvent(OnCompendiumChanges)
                 monsterDetailEventDispatcher.dispatchEvent(Hide)
+            }
+            .launchIn(scope)
+    }
+
+    private fun resetMonster() {
+        resetMonsterToOriginal(monsterIndex)
+            .flowOn(dispatcher)
+            .onEach {
+                syncEventDispatcher.startSync()
             }
             .launchIn(scope)
     }

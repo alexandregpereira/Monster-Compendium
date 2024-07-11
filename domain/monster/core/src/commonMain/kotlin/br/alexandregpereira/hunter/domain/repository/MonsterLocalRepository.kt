@@ -23,6 +23,7 @@ interface MonsterLocalRepository {
 
     fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
     fun getMonsterPreviews(): Flow<List<Monster>>
+    fun getMonsterPreviewsEdited(): Flow<List<Monster>>
     fun getMonsters(): Flow<List<Monster>>
     fun getMonsters(indexes: List<String>): Flow<List<Monster>>
     fun getMonster(index: String): Flow<Monster>

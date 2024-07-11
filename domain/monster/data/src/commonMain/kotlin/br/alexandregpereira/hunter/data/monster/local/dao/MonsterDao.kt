@@ -25,6 +25,8 @@ interface MonsterDao {
 
     suspend fun getMonsterPreviews(indexes: List<String>): List<MonsterEntity>
 
+    suspend fun getMonstersPreviewsEdited(): List<MonsterEntity>
+
     suspend fun getMonsters(): List<MonsterCompleteEntity>
 
     suspend fun getMonsters(indexes: List<String>): List<MonsterCompleteEntity>

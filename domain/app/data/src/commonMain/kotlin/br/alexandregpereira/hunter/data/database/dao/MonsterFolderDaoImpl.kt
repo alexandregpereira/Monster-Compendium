@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.database.dao
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.database.MonsterFolderCompleteEntityView
 import br.alexandregpereira.hunter.database.MonsterFolderQueries
 import kotlinx.coroutines.CoroutineDispatcher
@@ -95,7 +96,7 @@ internal class MonsterFolderDaoImpl(
                 senses = it.senses,
                 languages = it.languages,
                 sourceName = it.sourceName,
-                isClone = it.isClone == 1L,
+                status = MonsterEntityStatus.entries[it.isClone.toInt()],
             )
         }.groupBy(keySelector = { it.first }, valueTransform = { it.second })
     }

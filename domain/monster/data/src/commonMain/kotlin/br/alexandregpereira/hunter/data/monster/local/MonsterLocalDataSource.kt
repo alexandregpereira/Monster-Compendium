@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface MonsterLocalDataSource {
 
     fun getMonsterPreviews(): Flow<List<MonsterEntity>>
+    fun getMonsterPreviewsEdited(): Flow<List<MonsterEntity>>
     fun getMonsters(): Flow<List<MonsterCompleteEntity>>
     fun getMonsters(indexes: List<String>): Flow<List<MonsterCompleteEntity>>
     fun getMonstersByQuery(query: String): Flow<List<MonsterEntity>>

@@ -27,13 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.LocalStrings
-import br.alexandregpereira.hunter.detail.ui.MonsterDeleteConfirmation
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.detail.ui.strings
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.di.MonsterDetailStateRecoveryQualifier
 import br.alexandregpereira.hunter.ui.compose.BackHandler
+import br.alexandregpereira.hunter.ui.compose.ConfirmationBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormField
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
@@ -112,11 +112,22 @@ fun MonsterDetailFeature(
                     onSaved = viewModel::onCloneFormSaved,
                 )
 
-                MonsterDeleteConfirmation(
+                ConfirmationBottomSheet(
                     show = viewState.showDeleteConfirmation,
+                    description = strings.deleteQuestion,
+                    buttonText = strings.deleteConfirmation,
                     contentPadding = contentPadding,
                     onConfirmed = viewModel::onDeleteConfirmed,
                     onClosed = viewModel::onDeleteClosed
+                )
+
+                ConfirmationBottomSheet(
+                    show = viewState.showResetConfirmation,
+                    description = strings.resetQuestion,
+                    buttonText = strings.resetConfirmation,
+                    contentPadding = contentPadding,
+                    onConfirmed = viewModel::onResetConfirmed,
+                    onClosed = viewModel::onResetClosed
                 )
             }
         }

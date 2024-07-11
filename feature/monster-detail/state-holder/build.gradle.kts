@@ -32,6 +32,7 @@ multiplatform {
         implementation(project(":feature:monster-lore-detail:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:spell-detail:event"))
+        implementation(project(":feature:sync:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)
     }

@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.detail.domain
 
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
@@ -25,7 +26,7 @@ internal fun CloneMonsterUseCase(
             monster.copy(
                 index = "$monsterNameIndex-$monsterIndex-k4k4sh1",
                 name = monsterName,
-                isClone = true,
+                status = MonsterStatus.Clone,
             )
         }
         .map { monster ->

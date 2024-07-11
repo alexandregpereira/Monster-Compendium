@@ -8,10 +8,10 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
-import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
+import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
@@ -43,7 +43,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val eventManager: EventManager<MonsterRegistrationEvent>,
     private val eventResultManager: EventManager<MonsterRegistrationResult>,
     private val getMonster: GetMonsterUseCase,
-    private val saveMonsters: SaveMonstersUseCase,
+    private val saveMonster: SaveMonsterUseCase,
     private val normalizeMonster: NormalizeMonsterUseCase,
     private val analytics: Analytics,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
@@ -78,7 +78,7 @@ class MonsterRegistrationStateHolder internal constructor(
         normalizeMonster(metadata.monster)
             .flatMapConcat { monster ->
                 analytics.trackMonsterRegistrationSaved(monster)
-                saveMonsters(monsters = listOf(monster))
+                saveMonster(monster)
             }
             .flowOn(dispatcher)
             .onEach {

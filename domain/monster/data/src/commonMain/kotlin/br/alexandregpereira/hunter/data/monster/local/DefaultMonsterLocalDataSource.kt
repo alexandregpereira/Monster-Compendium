@@ -38,6 +38,10 @@ internal class DefaultMonsterLocalDataSource(
         }
     }
 
+    override fun getMonsterPreviewsEdited(): Flow<List<MonsterEntity>> = flow {
+        emit(mutex.withLock { monsterDao.getMonstersPreviewsEdited() })
+    }
+
     override fun getMonsters(): Flow<List<MonsterCompleteEntity>> = flow {
         mutex.withLock {
             monsterDao.getMonsters()

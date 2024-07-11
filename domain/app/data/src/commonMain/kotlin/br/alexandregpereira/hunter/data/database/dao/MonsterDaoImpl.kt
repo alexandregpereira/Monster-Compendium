@@ -79,6 +79,14 @@ internal class MonsterDaoImpl(
                 .map { it.toLocalEntity() }
         }
 
+    override suspend fun getMonstersPreviewsEdited(): List<MonsterEntity> {
+        return withContext(dispatcher) {
+            monsterQueries.getMonstersEdited()
+                .executeAsList()
+                .map { it.toLocalEntity() }
+        }
+    }
+
     override suspend fun getMonsters(): List<MonsterCompleteEntity> = withContext(dispatcher) {
         monsterQueries.getMonsters().executeAsList().queryMonsterCompleteEntities()
     }

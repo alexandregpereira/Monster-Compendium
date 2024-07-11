@@ -36,5 +36,9 @@ data class MonsterEntity(
     val senses: String,
     val languages: String,
     val sourceName: String,
-    val isClone: Boolean
+    val status: MonsterEntityStatus,
 )
+
+enum class MonsterEntityStatus {
+    Original, Clone, Edited
+}

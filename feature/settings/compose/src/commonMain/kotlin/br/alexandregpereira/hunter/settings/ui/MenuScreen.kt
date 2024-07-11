@@ -70,15 +70,17 @@ internal fun MenuScreen(
             )
         }
 
-        Text(
-            text = "v$versionName",
-            fontWeight = FontWeight.Light,
-            fontSize = 12.sp,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(contentPadding)
-                .padding(8.dp)
-        )
+        if (versionName.isNotBlank()) {
+            Text(
+                text = "v$versionName",
+                fontWeight = FontWeight.Light,
+                fontSize = 12.sp,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(contentPadding)
+                    .padding(8.dp)
+            )
+        }
 
         BottomSheet(
             opened = state.advancedSettingsOpened,

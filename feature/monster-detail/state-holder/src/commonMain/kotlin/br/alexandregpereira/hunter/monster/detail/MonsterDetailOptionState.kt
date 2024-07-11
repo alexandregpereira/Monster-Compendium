@@ -31,6 +31,15 @@ data class MonsterDetailOptionState(
         internal const val DELETE = "delete"
         internal const val CHANGE_TO_FEET = "change_to_feet"
         internal const val CHANGE_TO_METERS = "change_to_meters"
+        internal const val RESET_TO_ORIGINAL = "reset_to_original"
+
+        @Suppress("FunctionName")
+        internal fun ResetToOriginal(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = RESET_TO_ORIGINAL,
+                name = strings.resetToOriginal
+            )
+        }
 
         @Suppress("FunctionName")
         internal fun AddToFolder(strings: MonsterDetailStrings): MonsterDetailOptionState {
