@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterActionsFo
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterConditionsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterDamagesForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterHeaderForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterImageForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterProficiencyForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSavingThrowsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSpeedValuesForm
@@ -115,6 +116,11 @@ private fun MonsterRegistrationForm(
     ),
 ) {
     MonsterHeaderForm(
+        keys = monster.keys,
+        infoState = monster.info,
+        onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },
+    )
+    MonsterImageForm(
         keys = monster.keys,
         infoState = monster.info,
         onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },

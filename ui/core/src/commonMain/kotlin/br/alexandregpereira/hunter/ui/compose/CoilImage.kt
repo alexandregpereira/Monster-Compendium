@@ -16,18 +16,19 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import br.alexandregpereira.hunter.ui.util.toColor
+import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
-import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 
@@ -37,27 +38,40 @@ fun CoilImage(
     contentDescription: String,
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    backgroundColor: String? = null,
+    backgroundColor: String,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
-) {
-    Image(
-        painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(LocalPlatformContext.current)
-                .data(data = imageUrl)
-                .crossfade(durationMillis = 300)
-                .build()
-        ),
-        contentDescription = contentDescription,
-        modifier = modifier
-            .run {
-                backgroundColor?.let {
-                    background(
-                        color = it.toColor(),
-                        shape = shape
-                    )
-                } ?: this
-            }
-            .clip(shape = shape)
-            .graphicsLayer(graphicsLayerBlock)
-    )
-}
+) = CoilImage(
+    imageUrl = imageUrl,
+    contentDescription = contentDescription,
+    modifier = modifier,
+    shape = shape,
+    backgroundColor = remember(backgroundColor) { backgroundColor.toColor() },
+    graphicsLayerBlock = graphicsLayerBlock
+)
+
+@Composable
+fun CoilImage(
+    imageUrl: String,
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+    shape: Shape = RectangleShape,
+    backgroundColor: Color? = null,
+    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
+) = AsyncImage(
+    model = ImageRequest.Builder(LocalPlatformContext.current)
+        .data(data = imageUrl)
+        .crossfade(durationMillis = 300)
+        .build(),
+    contentDescription = contentDescription,
+    modifier = modifier
+        .run {
+            backgroundColor?.let { color ->
+                background(
+                    color = color,
+                    shape = shape
+                )
+            } ?: this
+        }
+        .clip(shape = shape)
+        .graphicsLayer(graphicsLayerBlock)
+)

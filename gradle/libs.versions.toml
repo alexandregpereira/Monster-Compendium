@@ -6,7 +6,6 @@ coil3 = "3.0.0-alpha06"
 compose_activity = '1.9.0'
 compose = '1.6.8'
 compose_plugin = '1.6.11'
-compose_material = '1.6.8'
 core_ktx = '1.13.1'
 espresso_core = "3.6.1"
 firebase_bom = "33.1.1"
@@ -22,11 +21,9 @@ kotlin_coroutines = '1.8.1'
 kotlin_datetime = "0.6.0"
 kotlinx_serialization = "1.6.3"
 ktor = "2.3.12"
-lifecycle = "2.8.3"
 material = "1.12.0"
 mockk = "1.13.9"
 multiplatform-settings = "1.1.1"
-okhttp3_logging_interceptor = "4.12.0"
 sqldelight = "1.5.5"
 
 [libraries]
@@ -36,14 +33,9 @@ coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
-compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose_material" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing" }
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso_core" }
@@ -58,12 +50,10 @@ gradle-sqldelight = { module = "com.squareup.sqldelight:gradle-plugin", version.
 junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit_ext" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
-kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-desktop = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin_coroutines" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin_datetime" }
@@ -77,18 +67,13 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3_logging_interceptor" }
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
 
 [bundles]
-compose = ["compose-ui", "compose-tooling", "compose-tooling-preview", "compose-material", "compose-activity", "compose-util"]
 instrumentedtest = ["espresso", "junit-ext"]
 unittest = ["kotlin-coroutines-test", "core-testing", "mockk", "junit", "kotlin-test"]
-viewmodel-bundle = ["viewmodel"]
 
 [plugins]
 compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }

@@ -60,6 +60,7 @@ data class MonsterInfoState(
     val imageUrl: String= "",
     val backgroundColorLight: String = "",
     val backgroundColorDark: String = "",
+    val isImageHorizontal: Boolean = false,
     val typeIndex: Int = 0,
     val typeOptions: List<String> = emptyList(),
 ) {
@@ -191,6 +192,7 @@ data class SpellPreviewState(
 
 internal enum class SectionTitle {
     Header,
+    Image,
     Stats,
     Speed,
     AbilityScores,
