@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -98,6 +99,7 @@ internal fun MonsterDetailScreen(
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {}
 ) = Surface {
+    HorizontalPagerTransitionController(pagerState)
 
     MonsterImageCompose(
         monsters,
@@ -186,6 +188,13 @@ internal fun MonsterDetailScreen(
         }
     )
     OnMonsterChanged(monsters, initialMonsterIndex, pagerState, onMonsterChanged)
+}
+
+@Composable
+private fun HorizontalPagerTransitionController(pagerState: PagerState) = HorizontalPager(
+    state = pagerState,
+) {
+    Box(Modifier.fillMaxWidth())
 }
 
 @Composable

@@ -51,8 +51,12 @@ internal fun LazyListScope.MonsterImageForm(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = TopCenter
                 ) {
-                    val imageWidth by animateDpAsState(targetValue = if (infoState.isImageHorizontal) 360.dp else 270.dp)
-                    val imageHeight by animateDpAsState(targetValue = if (infoState.isImageHorizontal) 270.dp else 360.dp)
+                    val imageWidth by animateDpAsState(
+                        targetValue = if (infoState.isImageHorizontal) 208.dp else 156.dp
+                    )
+                    val imageHeight by animateDpAsState(
+                        targetValue = if (infoState.isImageHorizontal) 156.dp else 208.dp
+                    )
                     MonsterCoilImage(
                         imageUrl = infoState.imageUrl,
                         contentDescription = infoState.name,
