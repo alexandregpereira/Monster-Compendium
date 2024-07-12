@@ -18,11 +18,13 @@ package br.alexandregpereira.hunter.data.monster.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
@@ -80,7 +82,11 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             senses = senses.joinToString(),
             languages = languages,
             sourceName = sourceName,
-            isClone = isClone,
+            status = when (status) {
+                MonsterStatus.Original -> MonsterEntityStatus.Original
+                MonsterStatus.Clone -> MonsterEntityStatus.Clone
+                MonsterStatus.Edited -> MonsterEntityStatus.Edited
+            },
         ),
         speed = speed.toEntity(index),
         abilityScores = toAbilityScoreEntity(),
@@ -130,6 +136,10 @@ private fun MonsterEntity.toDomain(): Monster {
         sourceName = monster.sourceName,
         senses = monster.senses.split(", "),
         languages = monster.languages,
-        isClone = monster.isClone
+        status = when (monster.status) {
+            MonsterEntityStatus.Original -> MonsterStatus.Original
+            MonsterEntityStatus.Clone -> MonsterStatus.Clone
+            MonsterEntityStatus.Edited -> MonsterStatus.Edited
+        }
     )
 }

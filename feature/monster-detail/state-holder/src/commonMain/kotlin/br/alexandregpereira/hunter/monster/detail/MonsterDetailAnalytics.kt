@@ -133,4 +133,22 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackMonsterDetailResetToOriginalClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - reset to original clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackMonsterDetailResetConfirmed(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - reset confirmed",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
 }

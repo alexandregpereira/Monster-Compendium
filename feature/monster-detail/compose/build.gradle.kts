@@ -18,6 +18,7 @@ multiplatform {
         implementation(project(":feature:monster-lore-detail:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:spell-detail:event"))
+        implementation(project(":feature:sync:event"))
         implementation(project(":feature:monster-detail:state-holder"))
         implementation(project(":ui:core"))
 

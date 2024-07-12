@@ -36,6 +36,7 @@ data class MonsterDetailState(
     val showCloneForm: Boolean = false,
     val monsterCloneName: String = "",
     val showDeleteConfirmation: Boolean = false,
+    val showResetConfirmation: Boolean = false,
     val strings: MonsterDetailStrings = MonsterDetailStrings(),
 ) {
 

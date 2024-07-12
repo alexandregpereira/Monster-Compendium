@@ -20,7 +20,8 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterSource
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
-import br.alexandregpereira.hunter.domain.repository.MonsterRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -30,10 +31,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
 
 class SyncMonstersUseCase internal constructor(
-    private val repository: MonsterRepository,
+    private val remoteRepository: MonsterRemoteRepository,
+    private val localRepository: MonsterLocalRepository,
     private val alternativeSourceRepository: MonsterAlternativeSourceRepository,
     private val monsterSettingsRepository: MonsterSettingsRepository,
     private val getMonsterImages: GetMonsterImagesUseCase,
@@ -56,8 +59,9 @@ class SyncMonstersUseCase internal constructor(
                     }
                     .reduce { accumulator, value -> accumulator + value }
             }
-            .flatMapLatest {
-                saveMonstersUseCase(monsters = it, isSync = true)
+            .filterMonstersNotEdited()
+            .flatMapLatest { monsters ->
+                saveMonstersUseCase(monsters = monsters, isSync = true)
             }.flatMapLatest {
                 saveCompendiumScrollItemPositionUseCase(position = 0)
             }
@@ -67,11 +71,11 @@ class SyncMonstersUseCase internal constructor(
     private fun MonsterSource.getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
         return if (this == srdSource) {
             monsterSettingsRepository.getLanguage().flatMapLatest {
-                repository.getRemoteMonsters(lang = it)
+                remoteRepository.getMonsters(lang = it)
             }
         } else {
             monsterSettingsRepository.getLanguage().flatMapLatest {
-                repository.getRemoteMonsters(
+                remoteRepository.getMonsters(
                     sourceAcronym = this.acronym,
                     lang = it
                 ).catch { error ->
@@ -86,5 +90,12 @@ class SyncMonstersUseCase internal constructor(
         monsterImages: List<MonsterImage>
     ): Flow<List<Monster>> = map {
         it.appendMonsterImages(monsterImages)
+    }
+
+    private fun Flow<List<Monster>>.filterMonstersNotEdited(): Flow<List<Monster>> = map { monsters ->
+        val monstersEditedIndexes = localRepository.getMonsterPreviewsEdited().single()
+            .map { it.index }
+            .toSet()
+        monsters.filterNot { monstersEditedIndexes.contains(it.index) }
     }
 }

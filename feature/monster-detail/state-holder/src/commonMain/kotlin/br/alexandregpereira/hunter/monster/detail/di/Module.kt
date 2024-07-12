@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
+import br.alexandregpereira.hunter.monster.detail.domain.ResetMonsterToOriginal
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -58,11 +59,15 @@ val monsterDetailModule = module {
             dispatcher = get(),
             analytics = MonsterDetailAnalytics(get()),
             appLocalization = get(),
-            stateRecovery = get(named(MonsterDetailStateRecoveryQualifier))
+            stateRecovery = get(named(MonsterDetailStateRecoveryQualifier)),
+            resetMonsterToOriginal = get(),
+            syncEventDispatcher = get(),
+            syncEventListener = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }
     factory { DeleteMonsterUseCase(repository = get()) }
+    factory { ResetMonsterToOriginal(get(), get()) }
 }
 
 const val MonsterDetailStateRecoveryQualifier = "MonsterDetailStateRecovery"

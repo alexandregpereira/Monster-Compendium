@@ -23,3 +23,6 @@ SELECT * FROM MonsterEntity WHERE `index` == ?;
 
 getMonsters:
 SELECT * FROM MonsterEntity;
+
+getMonstersEdited:
+SELECT * FROM MonsterEntity WHERE isClone == 2;

@@ -37,6 +37,10 @@ internal class DefaultMonsterLocalRepository(
         return localDataSource.getMonsterPreviews().map { it.toDomainMonsterEntity() }
     }
 
+    override fun getMonsterPreviewsEdited(): Flow<List<Monster>> {
+        return localDataSource.getMonsterPreviewsEdited().map { it.toDomainMonsterEntity() }
+    }
+
     override fun getMonsters(): Flow<List<Monster>> {
         return localDataSource.getMonsters().map { it.toDomain() }
     }
