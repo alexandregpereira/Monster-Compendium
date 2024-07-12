@@ -4,9 +4,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain {
-        implementation(libs.viewmodel.savedstate)
-    }
+    androidMain()
 
     commonMain {
         implementation(project(":core:analytics"))

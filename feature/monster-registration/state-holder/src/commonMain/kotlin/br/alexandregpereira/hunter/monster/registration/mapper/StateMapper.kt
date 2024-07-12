@@ -48,6 +48,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
             imageUrl = monster.imageData.url,
             backgroundColorLight = monster.imageData.backgroundColor.light,
             backgroundColorDark = monster.imageData.backgroundColor.dark,
+            isImageHorizontal = monster.imageData.isHorizontal,
             typeIndex = MonsterType.entries.indexOf(monster.type),
             typeOptions = MonsterType.entries.map { it.name(strings) },
         ),
@@ -319,6 +320,7 @@ private fun SpellcastingType.name(strings: MonsterRegistrationStrings): String {
 internal fun SectionTitle.name(strings: MonsterRegistrationStrings): String {
     return when (this) {
         SectionTitle.Header -> strings.edit
+        SectionTitle.Image -> strings.imageFormTitle
         SectionTitle.Stats -> strings.stats
         SectionTitle.Speed -> strings.speed
         SectionTitle.AbilityScores -> strings.abilityScores
@@ -345,9 +347,12 @@ private fun MonsterState.createKeys(): List<String> {
         add("monsterHeader-name")
         add("monsterHeader-subtitle")
         add("monsterHeader-group")
-        add("monsterHeader-imageUrl")
-        add("monsterHeader-imageBackgroundColor")
         add("monsterHeader-type")
+        add(SectionTitle.Image.name)
+        add("monsterHeader-image")
+        add("monsterHeader-image-url")
+        add("monsterHeader-image-color-light")
+        add("monsterHeader-image-color-dark")
         add(SectionTitle.Stats.name)
         add("stats-armorClass")
         add("stats-hitPoints")

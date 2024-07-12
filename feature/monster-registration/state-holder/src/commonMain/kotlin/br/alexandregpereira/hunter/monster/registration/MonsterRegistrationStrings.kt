@@ -82,7 +82,8 @@ interface MonsterRegistrationStrings {
     val specialAbilities: String
     val reactions: String
     val legendaryActions: String
-    val imageBackgroundColor: String
+    val imageBackgroundColorLight: String
+    val imageBackgroundColorDark: String
     val speedTypeWalk: String
     val speedTypeFly: String
     val speedTypeSwim: String
@@ -109,6 +110,9 @@ interface MonsterRegistrationStrings {
     val removeReaction: String
     val add: String
     val remove: String
+    val imageFormTitle: String
+    val imageHorizontalSwitchLabel: String
+    val darkThemeSwitchLabel: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -190,7 +194,8 @@ internal data class MonsterRegistrationEnStrings(
     override val specialAbilities: String = "Special Abilities",
     override val reactions: String = "Reactions",
     override val legendaryActions: String = "Legendary Actions",
-    override val imageBackgroundColor: String = "Image Background Color",
+    override val imageBackgroundColorLight: String = "Background Color Light",
+    override val imageBackgroundColorDark: String = "Background Color Dark",
     override val speedTypeWalk: String = "Speed",
     override val speedTypeFly: String = "Fly",
     override val speedTypeSwim: String = "Swim",
@@ -217,6 +222,9 @@ internal data class MonsterRegistrationEnStrings(
     override val removeReaction: String = "Remove reaction",
     override val add: String = "Add",
     override val remove: String = "Remove",
+    override val imageFormTitle: String = "Image",
+    override val imageHorizontalSwitchLabel: String = "Horizontal Image",
+    override val darkThemeSwitchLabel: String = "Dark Theme",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -298,7 +306,8 @@ internal data class MonsterRegistrationPtStrings(
     override val specialAbilities: String = "Habilidades Especiais",
     override val reactions: String = "Reações",
     override val legendaryActions: String = "Ações Lendárias",
-    override val imageBackgroundColor: String = "Cor de Fundo da Imagem",
+    override val imageBackgroundColorLight: String = "Cor de Fundo Light",
+    override val imageBackgroundColorDark: String = "Cor de Fundo Dark",
     override val speedTypeWalk: String = "Deslocamento",
     override val speedTypeFly: String = "Voo",
     override val speedTypeSwim: String = "Natação",
@@ -325,6 +334,9 @@ internal data class MonsterRegistrationPtStrings(
     override val removeReaction: String = "Remover reação",
     override val add: String = "Adicionar",
     override val remove: String = "Remover",
+    override val imageFormTitle: String = "Imagem",
+    override val imageHorizontalSwitchLabel: String = "Imagem Horizontal",
+    override val darkThemeSwitchLabel: String = "Tema Escuro",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()

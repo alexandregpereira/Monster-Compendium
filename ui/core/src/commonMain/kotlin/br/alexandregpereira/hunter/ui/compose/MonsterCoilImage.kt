@@ -20,7 +20,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.GraphicsLayerScope
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 
@@ -29,9 +31,9 @@ fun MonsterCoilImage(
     imageUrl: String,
     contentDescription: String,
     height: Dp,
-    shape: Shape,
+    shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
-    backgroundColor: String? = null,
+    backgroundColor: String,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
     MonsterCoilImage(
@@ -50,9 +52,50 @@ fun MonsterCoilImage(
 fun MonsterCoilImage(
     imageUrl: String,
     contentDescription: String,
-    shape: Shape,
+    height: Dp,
+    shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
-    backgroundColor: String? = null,
+    backgroundColor: Color? = null,
+    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
+) {
+    MonsterCoilImage(
+        imageUrl,
+        contentDescription,
+        shape,
+        modifier
+            .height(height)
+            .fillMaxWidth(),
+        backgroundColor,
+        graphicsLayerBlock
+    )
+}
+
+@Composable
+fun MonsterCoilImage(
+    imageUrl: String,
+    contentDescription: String,
+    shape: Shape = RectangleShape,
+    modifier: Modifier = Modifier,
+    backgroundColor: String,
+    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
+) {
+    CoilImage(
+        imageUrl,
+        contentDescription,
+        modifier,
+        shape,
+        backgroundColor,
+        graphicsLayerBlock
+    )
+}
+
+@Composable
+fun MonsterCoilImage(
+    imageUrl: String,
+    contentDescription: String,
+    shape: Shape = RectangleShape,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color? = null,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
     CoilImage(
