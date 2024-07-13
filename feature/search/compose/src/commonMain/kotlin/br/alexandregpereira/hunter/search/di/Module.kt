@@ -27,7 +27,7 @@ val featureSearchModule = module {
         SearchStateHolder(
             searchMonstersByNameUseCase = get(),
             folderPreviewEventDispatcher = get(),
-            monsterDetailEventDispatcher = get(),
+            monsterEventDispatcher = get(),
             analytics = SearchAnalytics(get()),
             dispatcher = get(),
             appLocalization = get(),

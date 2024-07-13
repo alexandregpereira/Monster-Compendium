@@ -25,10 +25,6 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.event.monster.detail.emptyMonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.emptyMonsterDetailEventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
@@ -47,6 +43,8 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIte
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.emptyMonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -74,10 +72,8 @@ class MonsterCompendiumStateHolderTest {
 
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
     private val folderPreviewResultListener: FolderPreviewResultListener = emptyFolderPreviewResultListener()
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher = emptyMonsterDetailEventDispatcher()
-    private val monsterDetailEventListener: MonsterDetailEventListener = emptyMonsterDetailEventListener()
+    private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
-    private val syncEventListener: SyncEventListener = emptySyncEventListener()
     private val monsterRegistrationEventListener: MonsterRegistrationEventListener = emptyMonsterRegistrationEventListener()
 
     private lateinit var stateHolder: MonsterCompendiumStateHolder
@@ -363,10 +359,8 @@ class MonsterCompendiumStateHolderTest {
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             folderPreviewResultListener = folderPreviewResultListener,
-            monsterDetailEventDispatcher = monsterDetailEventDispatcher,
-            monsterDetailEventListener = monsterDetailEventListener,
+            monsterEventDispatcher = monsterDetailEventDispatcher,
             syncEventDispatcher = syncEventDispatcher,
-            syncEventListener = syncEventListener,
             monsterRegistrationEventListener = monsterRegistrationEventListener,
             dispatcher = testCoroutineDispatcher,
             analytics = MonsterCompendiumAnalytics(analytics = EmptyAnalytics()),

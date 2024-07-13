@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppSwitch(
     checked: Boolean,
-    description: String,
+    label: String,
     modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit = {}
 ) = Row(
@@ -26,6 +26,6 @@ fun AppSwitch(
     )
     Spacer(Modifier.padding(start = 8.dp))
     Text(
-        text = description,
+        text = label,
     )
 }

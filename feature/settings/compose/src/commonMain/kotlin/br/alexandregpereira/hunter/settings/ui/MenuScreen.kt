@@ -31,24 +31,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.settings.EmptySettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.Window
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun MenuScreen(
     state: SettingsViewState,
     versionName: String,
     contentPadding: PaddingValues = PaddingValues(),
-    viewIntent: SettingsViewIntent = EmptySettingsViewIntent(),
+    viewIntent: SettingsViewIntent,
 ) = Window {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(Modifier.padding(contentPadding)) {
+            MenuItem(
+                text = state.strings.manageMonsterContent,
+                onClick = viewIntent::onManageMonsterContentClick
+            )
+
+            Divider()
+
+            MenuItem(
+                text = state.strings.appearanceSettingsTitle,
+                onClick = viewIntent::onAppearanceSettingsClick
+            )
+
+            Divider()
 
             MenuItem(
                 text = state.strings.settingsTitle,
@@ -60,13 +71,6 @@ internal fun MenuScreen(
             MenuItem(
                 text = state.strings.manageAdvancedSettings,
                 onClick = viewIntent::onAdvancedSettingsClick
-            )
-
-            Divider()
-
-            MenuItem(
-                text = state.strings.manageMonsterContent,
-                onClick = viewIntent::onManageMonsterContentClick
             )
         }
 
@@ -107,6 +111,16 @@ internal fun MenuScreen(
             onSaveButtonClick = viewIntent::onSettingsSaveClick,
             onClose = viewIntent::onSettingsCloseClick
         )
+
+        AppearanceSettingsBottomSheet(
+            opened = state.appearanceSettingsOpened,
+            state = state.appearanceState,
+            strings = state.strings,
+            contentPadding = contentPadding,
+            onStateChange = viewIntent::onAppearanceChange,
+            onSaveButtonClick = viewIntent::onAppearanceSettingsSaveClick,
+            onClose = viewIntent::onAppearanceSettingsCloseClick
+        )
     }
 }
 
@@ -129,13 +143,3 @@ private fun MenuItem(
         )
     }
 }
-
-@Preview
-@Composable
-private fun SettingsScreenPreview() {
-    MenuScreen(
-        state = SettingsViewState(),
-        versionName = "1.20.1"
-    )
-}
-

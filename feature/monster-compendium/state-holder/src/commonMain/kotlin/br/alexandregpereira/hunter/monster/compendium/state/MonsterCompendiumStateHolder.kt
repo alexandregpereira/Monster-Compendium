@@ -19,11 +19,6 @@ package br.alexandregpereira.hunter.monster.compendium.state
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.EventListener
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterCompendiumChanges
-import br.alexandregpereira.hunter.event.monster.detail.collectOnMonsterPageChanges
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
@@ -37,13 +32,15 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentInde
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterPageChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
-import br.alexandregpereira.hunter.sync.event.SyncEventListener
-import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -64,9 +61,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val folderPreviewResultListener: FolderPreviewResultListener,
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
-    private val monsterDetailEventListener: MonsterDetailEventListener,
-    private val syncEventListener: SyncEventListener,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
@@ -134,7 +129,7 @@ class MonsterCompendiumStateHolder internal constructor(
 
     override fun onItemClick(index: String) {
         analytics.trackItemClick(index)
-        monsterDetailEventDispatcher.dispatchEvent(
+        monsterEventDispatcher.dispatchEvent(
             Show(index, enableMonsterPageChangesEventDispatch = true)
         )
     }
@@ -240,15 +235,11 @@ class MonsterCompendiumStateHolder internal constructor(
             }
         }
 
-        monsterDetailEventListener.collectOnMonsterPageChanges { event ->
+        monsterEventDispatcher.collectOnMonsterPageChanges { event ->
             navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex)
         }.launchIn(scope)
 
-        monsterDetailEventListener.collectOnMonsterCompendiumChanges {
-            loadMonsters()
-        }.launchIn(scope)
-
-        syncEventListener.collectSyncFinishedEvents {
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             loadMonsters()
         }.launchIn(scope)
 

@@ -11,6 +11,8 @@ multiplatform {
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
+        implementation(project(":domain:monster:core"))
+        implementation(project(":domain:monster:event"))
         implementation(project(":domain:settings:core"))
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))

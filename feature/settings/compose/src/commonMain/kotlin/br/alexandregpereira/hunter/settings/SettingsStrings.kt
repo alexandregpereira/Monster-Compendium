@@ -12,6 +12,10 @@ interface SettingsStrings {
     val settingsTitle: String
     val languageLabel: String
     val save: String
+    val appearanceSettingsTitle: String
+    val forceLightImageBackground: String
+    val defaultLightBackground: String
+    val defaultDarkBackground: String
 }
 
 
@@ -25,6 +29,10 @@ internal data class SettingsEnStrings(
     override val settingsTitle: String = "Settings",
     override val languageLabel: String = "Language",
     override val save: String = "Save",
+    override val appearanceSettingsTitle: String = "Appearance",
+    override val forceLightImageBackground: String = "Use Light Background Color in Images",
+    override val defaultLightBackground: String = "Default Light Background Color",
+    override val defaultDarkBackground: String = "Default Dark Background Color",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -37,6 +45,10 @@ internal data class SettingsPtStrings(
     override val settingsTitle: String = "Configurações",
     override val languageLabel: String = "Idioma",
     override val save: String = "Salvar",
+    override val appearanceSettingsTitle: String = "Aparência",
+    override val forceLightImageBackground: String = "Usar Cor de Fundo Claro nas Imagens",
+    override val defaultLightBackground: String = "Cor Padrão de Fundo das Imagens Light",
+    override val defaultDarkBackground: String = "Cor Padrão de Fundo das Imagens Dark",
 ) : SettingsStrings
 
 internal data class SettingsEmptyStrings(
@@ -49,6 +61,10 @@ internal data class SettingsEmptyStrings(
     override val settingsTitle: String = "",
     override val languageLabel: String = "",
     override val save: String = "",
+    override val appearanceSettingsTitle: String = "",
+    override val forceLightImageBackground: String = "",
+    override val defaultLightBackground: String = "",
+    override val defaultDarkBackground: String = "",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

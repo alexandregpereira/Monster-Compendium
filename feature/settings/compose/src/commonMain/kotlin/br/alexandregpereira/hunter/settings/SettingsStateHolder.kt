@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.settings
 
+import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
@@ -28,13 +29,21 @@ import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
+import br.alexandregpereira.hunter.monster.event.MonsterEvent
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
+import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
 
 internal class SettingsStateHolder(
@@ -44,10 +53,13 @@ internal class SettingsStateHolder(
     private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val analytics: SettingsAnalytics,
     private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
     private val appLocalization: AppLocalization,
     private val saveLanguage: SaveLanguageUseCase,
+    private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
+    private val applyAppearanceSettings: ApplyAppearanceSettings,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent {
 
     private val strings: SettingsStrings
@@ -114,7 +126,7 @@ internal class SettingsStateHolder(
                     syncEventDispatcher.startSync()
                     originalSettingsState = state.value.settingsState
                 }
-                setState { copy(strings = this@SettingsStateHolder.strings)  }
+                setState { copy(strings = this@SettingsStateHolder.strings) }
             }
             .launchIn(scope)
     }
@@ -122,6 +134,45 @@ internal class SettingsStateHolder(
     override fun onLanguageChange(language: SettingsLanguageState) {
         analytics.trackLanguageChange(language)
         setState { copy(settingsState = settingsState.copy(language = language)) }
+    }
+
+    override fun onAppearanceSettingsClick() {
+        fillAppearanceSettingsState()
+        setState { copy(appearanceSettingsOpened = true) }
+        bottomBarEventDispatcher.dispatchAddTopContentEvent(
+            topContentId = APPEARANCE_SETTINGS_CONTENT
+        )
+    }
+
+    override fun onAppearanceSettingsCloseClick() {
+        setState { copy(appearanceSettingsOpened = false) }
+        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(
+            topContentId = APPEARANCE_SETTINGS_CONTENT
+        )
+    }
+
+    override fun onAppearanceSettingsSaveClick() {
+        onAppearanceSettingsCloseClick()
+        val appearanceState = state.value.appearanceState
+        flow {
+            AppearanceSettings(
+                forceLightImageBackground = appearanceState.forceLightImageBackground,
+                defaultLightBackground = appearanceState.defaultLightBackground,
+                defaultDarkBackground = appearanceState.defaultDarkBackground,
+            ).let { appearance ->
+                emit(appearance)
+            }
+        }.map { appearance ->
+            applyAppearanceSettings(appearance = appearance).single()
+        }.flowOn(dispatcher)
+            .onCompletion {
+                monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges)
+            }
+            .launchIn(scope)
+    }
+
+    override fun onAppearanceChange(appearance: AppearanceSettingsState) {
+        setState { copy(appearanceState = appearance) }
     }
 
     private fun load() {
@@ -149,13 +200,31 @@ internal class SettingsStateHolder(
             .launchIn(scope)
     }
 
+    private fun fillAppearanceSettingsState() {
+        getAppearanceSettings()
+            .flowOn(dispatcher)
+            .map { appearanceSettings ->
+                state.value.copy(
+                    appearanceState = AppearanceSettingsState(
+                        forceLightImageBackground = appearanceSettings.forceLightImageBackground,
+                        defaultLightBackground = appearanceSettings.defaultLightBackground,
+                        defaultDarkBackground = appearanceSettings.defaultDarkBackground
+                    )
+                )
+            }
+            .onEach { state ->
+                setState { state }
+            }
+            .launchIn(scope)
+    }
+
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }
         bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
     private fun Language.asState(): SettingsLanguageState {
-        val string =  when (this) {
+        val string = when (this) {
             Language.ENGLISH -> "English (United States)"
             Language.PORTUGUESE -> "Português (Brasil)"
         }
@@ -169,5 +238,6 @@ internal class SettingsStateHolder(
     private companion object {
         private const val SETTINGS_CONTENT = "Settings"
         private const val ADVANCED_SETTINGS_CONTENT = "AdvancedSettings"
+        private const val APPEARANCE_SETTINGS_CONTENT = "AppearanceSettings"
     }
 }

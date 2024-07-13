@@ -45,10 +45,11 @@ fun AppTextField(
     keyboardType: AppKeyboardType = AppKeyboardType.TEXT,
     multiline: Boolean = false,
     capitalize: Boolean = true,
+    enabled: Boolean = true,
     onValueChange: (String) -> Unit = {},
     trailingIcon: @Composable (() -> Unit)? = {
         AnimatedVisibility(
-            visible = text.isNotEmpty(),
+            visible = text.isNotEmpty() && enabled,
             enter = fadeIn(),
             exit = fadeOut(),
         ) {
@@ -63,6 +64,7 @@ fun AppTextField(
             }
         }
     },
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     val focusManager = LocalFocusManager.current
     val capitalization = if (capitalize) {
@@ -89,7 +91,9 @@ fun AppTextField(
             capitalization = capitalization,
         ),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        trailingIcon = trailingIcon
+        trailingIcon = trailingIcon,
+        leadingIcon = leadingIcon,
+        enabled = enabled,
     )
 }
 

@@ -22,7 +22,9 @@ internal data class SettingsViewState(
     val saveButtonEnabled: Boolean = true,
     val advancedSettingsOpened: Boolean = false,
     val settingsOpened: Boolean = false,
+    val appearanceSettingsOpened: Boolean = false,
     val settingsState: SettingsState = SettingsState(),
+    val appearanceState: AppearanceSettingsState = AppearanceSettingsState(),
     val strings: SettingsStrings = SettingsEmptyStrings(),
 )
 
@@ -35,3 +37,11 @@ internal data class SettingsLanguageState(
     val code: String = "",
     val value: String = "",
 )
+
+internal data class AppearanceSettingsState(
+    val forceLightImageBackground: Boolean = false,
+    val defaultLightBackground: String = "",
+    val defaultDarkBackground: String = "",
+) {
+    val defaultDarkBackgroundEnabled: Boolean = forceLightImageBackground.not()
+}

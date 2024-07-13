@@ -5,11 +5,6 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(project(":core:localization"))
-        implementation(project(":feature:folder-preview:event"))
-        implementation(project(":feature:monster-detail:event"))
-        implementation(project(":feature:monster-registration:event"))
-        implementation(project(":feature:sync:event"))
         implementation(project(":feature:monster-compendium:state-holder"))
         implementation(project(":ui:core"))
         implementation(project(":ui:monster-compendium"))

@@ -16,10 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.detail.di
 
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailAnalytics
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailEventManager
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
@@ -30,13 +27,8 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.ui.StateRecovery
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import kotlin.native.HiddenFromObjC
 
-@HiddenFromObjC
 val monsterDetailModule = module {
-    single { MonsterDetailEventManager() }
-    single<MonsterDetailEventDispatcher> { get<MonsterDetailEventManager>() }
-    single<MonsterDetailEventListener> { get<MonsterDetailEventManager>() }
     factory { GetMonsterDetailUseCase(get(), get(), get(), get(), get(), get()) }
 
     single(named(MonsterDetailStateRecoveryQualifier)) {
@@ -50,8 +42,7 @@ val monsterDetailModule = module {
             changeMonstersMeasurementUnitUseCase = get(),
             deleteMonster = get(),
             spellDetailEventDispatcher = get(),
-            monsterDetailEventListener = get(),
-            monsterDetailEventDispatcher = get(),
+            monsterEventDispatcher = get(),
             monsterLoreDetailEventDispatcher = get(),
             folderInsertEventDispatcher = get(),
             monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
@@ -62,7 +53,6 @@ val monsterDetailModule = module {
             stateRecovery = get(named(MonsterDetailStateRecoveryQualifier)),
             resetMonsterToOriginal = get(),
             syncEventDispatcher = get(),
-            syncEventListener = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

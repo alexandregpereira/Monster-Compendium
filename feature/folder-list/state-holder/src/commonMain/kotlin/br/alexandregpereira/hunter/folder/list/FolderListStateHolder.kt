@@ -24,9 +24,9 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSave
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.state.UiModel
-import br.alexandregpereira.hunter.sync.event.SyncEventListener
-import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -45,7 +45,7 @@ class FolderListStateHolder internal constructor(
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val folderListEventManager: FolderListEventManager,
     private val dispatcher: CoroutineDispatcher,
-    private val syncEventListener: SyncEventListener,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val analytics: FolderListAnalytics,
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
@@ -153,7 +153,7 @@ class FolderListStateHolder internal constructor(
     }
 
     private fun observeEvents() {
-        syncEventListener.collectSyncFinishedEvents {
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             loadMonsterFolders()
         }.launchIn(scope)
     }

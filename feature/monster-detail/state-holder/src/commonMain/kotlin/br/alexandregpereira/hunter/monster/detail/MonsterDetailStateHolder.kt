@@ -24,13 +24,6 @@ import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnCompendiumChanges
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnMonsterPageChanges
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Hide
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
@@ -51,6 +44,13 @@ import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.ResetMonsterToOriginal
 import br.alexandregpereira.hunter.monster.detail.domain.model.MonsterDetail
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnCompendiumChanges
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnMonsterPageChanges
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Hide
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
+import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
@@ -58,8 +58,6 @@ import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
-import br.alexandregpereira.hunter.sync.event.SyncEventListener
-import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -83,14 +81,12 @@ class MonsterDetailStateHolder internal constructor(
     private val deleteMonster: DeleteMonsterUseCase,
     private val resetMonsterToOriginal: ResetMonsterToOriginal,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
-    private val monsterDetailEventListener: MonsterDetailEventListener,
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val syncEventDispatcher: SyncEventDispatcher,
-    private val syncEventListener: SyncEventListener,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
@@ -118,7 +114,7 @@ class MonsterDetailStateHolder internal constructor(
     }
 
     private fun observeEvents() {
-        monsterDetailEventListener.collectOnVisibilityChanges { event ->
+        monsterEventDispatcher.collectOnVisibilityChanges { event ->
             when (event) {
                 is Show -> {
                     analytics.trackMonsterDetailShown(event)
@@ -144,7 +140,7 @@ class MonsterDetailStateHolder internal constructor(
             getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
         }.launchIn(scope)
 
-        syncEventListener.collectSyncFinishedEvents {
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
         }.launchIn(scope)
     }
@@ -162,7 +158,7 @@ class MonsterDetailStateHolder internal constructor(
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
         if (enableMonsterPageChangesEventDispatch && scrolled && monsterIndex != this.monsterIndex) {
             analytics.trackMonsterPageChanged(monsterIndex, scrolled)
-            monsterDetailEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
+            monsterEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
         }
         stateRecovery.saveMonsterIndex(monsterIndex)
         setState { changeOptions() }
@@ -228,7 +224,7 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onClose() {
         analytics.trackMonsterDetailClosed()
-        monsterDetailEventDispatcher.dispatchEvent(Hide)
+        monsterEventDispatcher.dispatchEvent(Hide)
     }
 
     fun onCloneFormClosed() {
@@ -365,7 +361,7 @@ class MonsterDetailStateHolder internal constructor(
             .map { (state, monsterIndex) ->
                 onMonsterChanged(monsterIndex, scrolled = true)
                 if (monsterIndexes.isNotEmpty()) {
-                    monsterDetailEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                    monsterEventDispatcher.dispatchEvent(OnCompendiumChanges)
                 }
                 state
             }
@@ -375,11 +371,11 @@ class MonsterDetailStateHolder internal constructor(
 
     private fun deleteMonster() {
         deleteMonster(monsterIndex)
-            .flowOn(dispatcher)
             .onEach {
-                monsterDetailEventDispatcher.dispatchEvent(OnCompendiumChanges)
-                monsterDetailEventDispatcher.dispatchEvent(Hide)
+                monsterEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                monsterEventDispatcher.dispatchEvent(Hide)
             }
+            .flowOn(dispatcher)
             .launchIn(scope)
     }
 
