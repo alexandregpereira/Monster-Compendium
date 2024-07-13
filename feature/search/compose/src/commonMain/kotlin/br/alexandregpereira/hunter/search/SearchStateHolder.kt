@@ -16,18 +16,20 @@
 
 package br.alexandregpereira.hunter.search
 
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -42,9 +44,9 @@ import kotlinx.coroutines.flow.onEach
 internal class SearchStateHolder(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val analytics: SearchAnalytics,
-    dispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher,
     private val appLocalization: AppReactiveLocalization,
 ) : UiModel<SearchViewState>(SearchViewState(searchLabel = appLocalization.getStrings().search)) {
 
@@ -53,8 +55,19 @@ internal class SearchStateHolder(
     init {
         searchQuery.debounce(500L)
             .flatMapConcat {
-                searchMonstersByNameUseCase(state.value.searchValue)
+                search()
             }
+            .launchIn(scope)
+
+        observeLanguageChanges()
+
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            search().launchIn(scope)
+        }.launchIn(scope)
+    }
+
+    private fun search(): Flow<Unit> {
+        return searchMonstersByNameUseCase(state.value.searchValue)
             .map { result ->
                 result.size to result.asState()
             }
@@ -71,12 +84,9 @@ internal class SearchStateHolder(
             .catch {
                 analytics.logException(it)
             }
-            .onEach { (totalResults, _) ->
+            .map { (totalResults, _) ->
                 analytics.trackSearch(totalResults, searchQuery.value)
             }
-            .launchIn(scope)
-
-        observeLanguageChanges()
     }
 
     private fun observeLanguageChanges() {
@@ -98,7 +108,7 @@ internal class SearchStateHolder(
 
     fun onItemClick(index: String) {
         analytics.trackItemClick(index, searchQuery.value)
-        monsterDetailEventDispatcher.dispatchEvent(
+        monsterEventDispatcher.dispatchEvent(
             Show(index = index, indexes = listOf(index))
         )
     }

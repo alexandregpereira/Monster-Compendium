@@ -20,27 +20,12 @@ internal interface SettingsViewIntent {
     fun onSettingsSaveClick()
 
     fun onLanguageChange(language: SettingsLanguageState)
-}
 
-internal class EmptySettingsViewIntent : SettingsViewIntent {
+    fun onAppearanceSettingsClick()
 
-    override fun onImageBaseUrlChange(value: String) {}
+    fun onAppearanceSettingsCloseClick()
 
-    override fun onAlternativeSourceBaseUrlChange(value: String) {}
+    fun onAppearanceSettingsSaveClick()
 
-    override fun onSaveButtonClick() {}
-
-    override fun onManageMonsterContentClick() {}
-
-    override fun onAdvancedSettingsClick() {}
-
-    override fun onAdvancedSettingsCloseClick() {}
-
-    override fun onSettingsClick() {}
-
-    override fun onSettingsCloseClick() {}
-
-    override fun onSettingsSaveClick() {}
-
-    override fun onLanguageChange(language: SettingsLanguageState) {}
+    fun onAppearanceChange(appearance: AppearanceSettingsState)
 }

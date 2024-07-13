@@ -17,6 +17,6 @@
 package br.alexandregpereira.hunter.sync.event
 
 sealed class SyncEvent {
-    object Start: SyncEvent()
-    object Finished: SyncEvent()
+    data object Start: SyncEvent()
+    data object Finished: SyncEvent()
 }

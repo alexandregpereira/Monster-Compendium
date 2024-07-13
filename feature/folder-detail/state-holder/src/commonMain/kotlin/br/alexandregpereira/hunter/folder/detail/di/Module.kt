@@ -41,7 +41,7 @@ val folderDetailModule = module {
             folderDetailEventManager = get(),
             folderPreviewEventDispatcher = get(),
             folderInsertResultListener = get(),
-            monsterDetailEventDispatcher = get(),
+            monsterEventDispatcher = get(),
             dispatcher = get(),
             analytics = FolderDetailAnalytics(get()),
         )

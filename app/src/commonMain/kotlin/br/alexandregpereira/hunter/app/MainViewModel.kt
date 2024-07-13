@@ -9,10 +9,6 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListene
 import br.alexandregpereira.hunter.event.folder.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
 import br.alexandregpereira.hunter.event.folder.list.collectOnItemSelectionVisibilityChanges
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Hide
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventListener
-import br.alexandregpereira.hunter.event.monster.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.AddTopContent
 import br.alexandregpereira.hunter.event.systembar.BottomBarEvent.RemoveTopContent
 import br.alexandregpereira.hunter.event.systembar.BottomBarEventManager
@@ -23,13 +19,17 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispat
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
 import br.alexandregpereira.hunter.monster.content.event.collectOnVisibilityChanges
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Hide
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 internal class MainViewModel(
-    private val monsterDetailEventListener: MonsterDetailEventListener,
+    private val monsterDetailEventListener: MonsterEventDispatcher,
     private val folderDetailResultListener: FolderDetailResultListener,
     private val folderListResultListener: FolderListResultListener,
     private val monsterContentManagerEventListener: MonsterContentManagerEventListener,

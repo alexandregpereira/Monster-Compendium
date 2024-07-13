@@ -20,8 +20,6 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.*
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
@@ -31,12 +29,17 @@ import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideF
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -47,7 +50,7 @@ class FolderPreviewStateHolder internal constructor(
     private val addMonsterToFolderPreview: AddMonsterToFolderPreviewUseCase,
     private val removeMonsterFromFolderPreview: RemoveMonsterFromFolderPreviewUseCase,
     private val clearFolderPreviewUseCase: ClearFolderPreviewUseCase,
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
@@ -57,7 +60,7 @@ class FolderPreviewStateHolder internal constructor(
     init {
         observeEvents()
         if (state.value.showPreview && state.value.monsters.isEmpty()) {
-            loadMonsters()
+            loadMonsters().launchIn(scope)
         }
     }
 
@@ -102,10 +105,25 @@ class FolderPreviewStateHolder internal constructor(
                     }
                     is ShowFolderPreview -> {
                         loadMonsters()
+                            .onEach {
+                                val showPreview = state.value.monsters.isNotEmpty()
+                                setState {
+                                    changeShowPreview(showPreview).also {
+                                        if (it.monsters.isNotEmpty() || it.showPreview) {
+                                            analytics.trackLoadMonstersResult(it)
+                                        }
+                                    }
+                                }
+                                dispatchFolderPreviewVisibilityChangesEvent()
+                            }
+                            .launchIn(scope)
                     }
                 }
             }
         }
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            loadMonsters().launchIn(scope)
+        }.launchIn(scope)
     }
 
     private fun clear() {
@@ -124,26 +142,19 @@ class FolderPreviewStateHolder internal constructor(
             .launchIn(scope)
     }
 
-    private fun loadMonsters() {
-        getMonstersFromFolderPreview()
+    private fun loadMonsters(): Flow<Unit> {
+        return getMonstersFromFolderPreview()
             .flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
             }
-            .onEach { monsters ->
-                val showPreview = monsters.isNotEmpty()
+            .map { monsters ->
                 setState {
                     changeMonsters(monsters = monsters)
-                        .changeShowPreview(showPreview).also {
-                            if (it.monsters.isNotEmpty() || it.showPreview) {
-                                analytics.trackLoadMonstersResult(it)
-                            }
-                        }.copy(strings = appLocalization.getStrings())
+                        .copy(strings = appLocalization.getStrings())
                         .saveState(stateRecovery)
                 }
-                dispatchFolderPreviewVisibilityChangesEvent()
             }
-            .launchIn(scope)
     }
 
     private fun removeMonster(monsterIndex: String) {
@@ -184,7 +195,7 @@ class FolderPreviewStateHolder internal constructor(
     }
 
     private fun navigateToMonsterDetail(monsterIndex: String) {
-        monsterDetailEventDispatcher.dispatchEvent(
+        monsterEventDispatcher.dispatchEvent(
             Show(index = monsterIndex, indexes = state.value.monsters.map { it.index })
         )
     }

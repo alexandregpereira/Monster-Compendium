@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -67,19 +68,17 @@ internal fun LazyListScope.MonsterImageForm(
                 }
                 AppSwitch(
                     checked = isDarkThemeMutable,
-                    description = strings.darkThemeSwitchLabel,
+                    label = strings.darkThemeSwitchLabel,
                     onCheckedChange = {
                         isDarkThemeMutable = it
                     },
-                    modifier = Modifier,
                 )
                 AppSwitch(
                     checked = infoState.isImageHorizontal,
-                    description = strings.imageHorizontalSwitchLabel,
+                    label = strings.imageHorizontalSwitchLabel,
                     onCheckedChange = {
                         onMonsterChanged(infoState.copy(isImageHorizontal = it))
                     },
-                    modifier = Modifier,
                 )
             }
         }
@@ -93,7 +92,7 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
-            AppTextField(
+            ColorTextField(
                 text = infoState.backgroundColorLight,
                 label = strings.imageBackgroundColorLight,
                 onValueChange = {
@@ -106,7 +105,7 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
-            AppTextField(
+            ColorTextField(
                 text = infoState.backgroundColorDark,
                 label = strings.imageBackgroundColorDark,
                 onValueChange = {

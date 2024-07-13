@@ -2,7 +2,7 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent
+import br.alexandregpereira.hunter.monster.event.MonsterEvent
 
 class MonsterDetailAnalytics(
     private val analytics: Analytics
@@ -26,7 +26,7 @@ class MonsterDetailAnalytics(
         loadTracked = true
     }
 
-    fun trackMonsterDetailShown(event: MonsterDetailEvent.OnVisibilityChanges.Show) {
+    fun trackMonsterDetailShown(event: MonsterEvent.OnVisibilityChanges.Show) {
         analytics.track(
             eventName = "MonsterDetail - monster detail shown",
             params = mapOf(

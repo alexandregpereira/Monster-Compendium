@@ -21,10 +21,11 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResult.OnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEvent.OnVisibilityChanges.Show
-import br.alexandregpereira.hunter.event.monster.detail.MonsterDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,7 +41,7 @@ class FolderDetailStateHolder internal constructor(
     private val folderDetailEventManager: FolderDetailEventManager,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val folderInsertResultListener: FolderInsertResultListener,
-    private val monsterDetailEventDispatcher: MonsterDetailEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderDetailAnalytics,
 ) : UiModel<FolderDetailState>(stateRecovery.getState()) {
@@ -55,7 +56,7 @@ class FolderDetailStateHolder internal constructor(
 
     fun onItemClick(index: String) {
         analytics.trackItemClicked(index)
-        monsterDetailEventDispatcher.dispatchEvent(
+        monsterEventDispatcher.dispatchEvent(
             Show(
                 index = index,
                 indexes = state.value.monsters.map { it.index }
@@ -84,10 +85,9 @@ class FolderDetailStateHolder internal constructor(
             .onEach { monsters ->
                 analytics.trackMonstersLoaded(monsters)
                 setState {
-                    copy(monsters = monsters, folderName = folderName, isOpen = true)
+                    copy(monsters = monsters, folderName = folderName)
                         .saveState(stateRecovery)
                 }
-                folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = true))
             }
             .launchIn(scope)
     }
@@ -97,9 +97,15 @@ class FolderDetailStateHolder internal constructor(
             when (event) {
                 is FolderDetailEvent.Show -> {
                     analytics.trackShow()
+                    setState { copy(isOpen = true).saveState(stateRecovery) }
+                    folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = true))
                     loadMonsters(event.folderName)
                 }
             }
+        }.launchIn(scope)
+
+        monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            loadMonsters(state.value.folderName)
         }.launchIn(scope)
     }
 

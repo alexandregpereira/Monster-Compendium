@@ -17,9 +17,11 @@
 package br.alexandregpereira.hunter.domain.settings.di
 
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
+import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
+import br.alexandregpereira.hunter.domain.settings.SaveAppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
@@ -33,4 +35,6 @@ val settingsDomainModule = module {
     factory { SaveContentVersionUseCase(get()) }
     factory { SaveLanguageUseCase(get(), get()) }
     factory { SaveUrlsUseCase(get()) }
+    factory { SaveAppearanceSettings(get()) }
+    factory { GetAppearanceSettings(get()) }
 }

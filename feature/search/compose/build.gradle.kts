@@ -13,7 +13,7 @@ multiplatform {
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:folder-preview:event"))
-        implementation(project(":feature:monster-detail:event"))
+        implementation(project(":domain:monster:event"))
         implementation(project(":ui:core"))
         implementation(project(":ui:monster-compendium"))
 

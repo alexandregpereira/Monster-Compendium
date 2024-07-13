@@ -18,9 +18,13 @@ package br.alexandregpereira.hunter.settings.di
 
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
+import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
+import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import org.koin.dsl.module
 
 val featureSettingsModule = module {
+    factory { GetAppearanceSettingsFromMonsters(get(), get()) }
+    factory { ApplyAppearanceSettings(get(), get(), get(), get()) }
     single {
         SettingsStateHolder(
             getMonsterImageJsonUrl = get(),
@@ -33,6 +37,9 @@ val featureSettingsModule = module {
             bottomBarEventDispatcher = get(),
             appLocalization = get(),
             saveLanguage = get(),
+            applyAppearanceSettings = get(),
+            getAppearanceSettings = get(),
+            monsterEventDispatcher = get(),
         )
     }
 }

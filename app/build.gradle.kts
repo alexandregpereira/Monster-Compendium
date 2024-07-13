@@ -59,7 +59,7 @@ multiplatform {
         implementation(project(":feature:folder-list:event"))
         implementation(project(":feature:folder-preview:event"))
         implementation(project(":feature:monster-content-manager:event"))
-        implementation(project(":feature:monster-detail:event"))
+        implementation(project(":domain:monster:event"))
 
         implementation(project(":feature:folder-detail:compose"))
         implementation(project(":feature:folder-insert:compose"))
