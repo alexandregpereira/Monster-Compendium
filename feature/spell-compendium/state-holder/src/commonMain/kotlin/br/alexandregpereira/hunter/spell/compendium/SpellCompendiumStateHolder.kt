@@ -4,6 +4,7 @@ import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.search.removeAccents
 import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @OptIn(FlowPreview::class)
@@ -67,11 +69,14 @@ class SpellCompendiumStateHolder internal constructor(
 
     private fun debounceSearch() {
         searchQuery.debounce(500L)
+            .map {
+                it.removeAccents().trim()
+            }
             .onEach { text ->
                 setState {
                     val spellsGroupByLevel = if (text.isNotBlank()){
                         val spellsFiltered = originalSpellsGroupByLevel.values.flatten()
-                            .filter { it.name.contains(text, ignoreCase = true) }
+                            .filter { it.name.removeAccents().contains(text, ignoreCase = true) }
                         mapOf(strings.searchResults(spellsFiltered.size) to spellsFiltered)
                     } else originalSpellsGroupByLevel
 

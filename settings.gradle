@@ -16,6 +16,7 @@ include ':core:localization'
 include ':core:state-holder'
 include ':core:ui:state-recovery'
 include ':core:uuid'
+include ':core:search'
 
 include ':domain:app:core'
 include ':domain:monster:core'
