@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsCacheUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
+import br.alexandregpereira.hunter.search.removeAccents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -177,21 +178,6 @@ internal class SearchMonstersByUseCase internal constructor(
                         spellPreview.index.replace("-", " ")
                             .contains(value, ignoreCase = true)
             } ?: false
-    }
-
-    private fun String.removeAccents(): String {
-        val accentMappings = mapOf(
-            'á' to 'a', 'é' to 'e', 'í' to 'i', 'ó' to 'o', 'ú' to 'u',
-            'â' to 'a', 'ê' to 'e', 'î' to 'i', 'ô' to 'o', 'û' to 'u',
-            'ã' to 'a', 'õ' to 'o', 'ç' to 'c',
-            'à' to 'a', 'è' to 'e', 'ì' to 'i', 'ò' to 'o', 'ù' to 'u',
-            'Á' to 'A', 'É' to 'E', 'Í' to 'I', 'Ó' to 'O', 'Ú' to 'U',
-            'Â' to 'A', 'Ê' to 'E', 'Î' to 'I', 'Ô' to 'O', 'Û' to 'U',
-            'Ã' to 'A', 'Õ' to 'O', 'Ç' to 'C',
-            'À' to 'A', 'È' to 'E', 'Ì' to 'I', 'Ò' to 'O', 'Ù' to 'U'
-        )
-
-        return map { char -> accentMappings[char] ?: char }.joinToString("")
     }
 
     private enum class KeySearch {
