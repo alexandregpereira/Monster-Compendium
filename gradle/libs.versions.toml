@@ -1,5 +1,5 @@
 [versions]
-android_gradle_plugin = "8.3.0"
+android_gradle_plugin = "8.5.1"
 appcompat = "1.7.0"
 arch_core_testing = "2.2.0"
 coil3 = "3.0.0-alpha06"
