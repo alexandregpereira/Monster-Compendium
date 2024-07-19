@@ -25,4 +25,4 @@ getMonsters:
 SELECT * FROM MonsterEntity;
 
 getMonstersEdited:
-SELECT * FROM MonsterEntity WHERE isClone == 2;
+SELECT * FROM MonsterEntity WHERE isClone > 0;
