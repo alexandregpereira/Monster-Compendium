@@ -119,6 +119,7 @@ internal fun MonsterEntity.toDatabaseEntity(): MonsterDatabaseEntity {
             MonsterEntityStatus.Original -> 0L
             MonsterEntityStatus.Clone -> 1L
             MonsterEntityStatus.Edited -> 2L
+            MonsterEntityStatus.Imported -> 3L
         }
     )
 }

@@ -17,9 +17,7 @@
 package br.alexandregpereira.hunter.domain.model
 
 import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
 
-@ObjCName(name = "Action", exact = true)
 data class Action(
     val id: String,
     val damageDices: List<DamageDice>,
@@ -27,7 +25,6 @@ data class Action(
     val abilityDescription: AbilityDescription
 )
 
-@ObjCName(name = "DamageDice", exact = true)
 data class DamageDice(
     val dice: String,
     val damage: Damage,

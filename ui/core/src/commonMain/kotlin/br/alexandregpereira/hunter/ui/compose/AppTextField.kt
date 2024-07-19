@@ -46,10 +46,11 @@ fun AppTextField(
     multiline: Boolean = false,
     capitalize: Boolean = true,
     enabled: Boolean = true,
+    showClearIcon: Boolean = enabled,
     onValueChange: (String) -> Unit = {},
     trailingIcon: @Composable (() -> Unit)? = {
         AnimatedVisibility(
-            visible = text.isNotEmpty() && enabled,
+            visible = text.isNotEmpty() && showClearIcon,
             enter = fadeIn(),
             exit = fadeOut(),
         ) {

@@ -28,19 +28,13 @@ import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRemoteRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
 import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
-import org.koin.core.module.Module
-import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val spellDataModule = module {
     factory<SpellLocalDataSource> { DefaultSpellLocalDataSource(get()) }
     factory<SpellRepository> { DefaultSpellRepository(get(), get()) }
-    factory { createLocalRepository() ?: DefaultSpellLocalRepository(get()) }
+    factory<SpellLocalRepository> { DefaultSpellLocalRepository(get()) }
     factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
     factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
-}.apply { includes(getAdditionalModule()) }
-
-internal expect fun getAdditionalModule(): Module
-
-internal expect fun Scope.createLocalRepository(): SpellLocalRepository?
+}

@@ -17,9 +17,7 @@
 package br.alexandregpereira.hunter.domain.model
 
 import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
 
-@ObjCName(name = "SavingThrow", exact = true)
 data class SavingThrow(
     val index: String,
     val modifier: Int,

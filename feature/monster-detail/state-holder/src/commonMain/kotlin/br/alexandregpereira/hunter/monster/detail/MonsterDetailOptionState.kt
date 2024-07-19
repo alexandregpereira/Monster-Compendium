@@ -16,22 +16,30 @@
 
 package br.alexandregpereira.hunter.monster.detail
 
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_FEET
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_METERS
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterDetailOptionState", exact = true)
 data class MonsterDetailOptionState(
-    val id: String = "",
+    val id: MonsterDetailOptionStateId = ADD_TO_FOLDER,
     val name: String = "",
 ) {
 
     companion object {
-        internal const val ADD_TO_FOLDER = "add_to_folder"
-        internal const val CLONE = "clone"
-        internal const val EDIT = "edit"
-        internal const val DELETE = "delete"
-        internal const val CHANGE_TO_FEET = "change_to_feet"
-        internal const val CHANGE_TO_METERS = "change_to_meters"
-        internal const val RESET_TO_ORIGINAL = "reset_to_original"
+        @Suppress("FunctionName")
+        internal fun Export(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = EXPORT,
+                name = strings.export
+            )
+        }
 
         @Suppress("FunctionName")
         internal fun ResetToOriginal(strings: MonsterDetailStrings): MonsterDetailOptionState {
@@ -89,4 +97,15 @@ data class MonsterDetailOptionState(
             )
         }
     }
+}
+
+enum class MonsterDetailOptionStateId {
+    ADD_TO_FOLDER,
+    CLONE,
+    EDIT,
+    DELETE,
+    CHANGE_TO_FEET,
+    CHANGE_TO_METERS,
+    RESET_TO_ORIGINAL,
+    EXPORT,
 }

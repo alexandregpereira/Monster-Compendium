@@ -16,6 +16,8 @@
 
 package br.alexandregpereira.hunter.settings
 
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
@@ -54,6 +56,7 @@ internal class SettingsStateHolder(
     private val dispatcher: CoroutineDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
+    private val shareContentEventDispatcher: ShareContentEventDispatcher,
     private val analytics: SettingsAnalytics,
     private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
     private val appLocalization: AppLocalization,
@@ -173,6 +176,10 @@ internal class SettingsStateHolder(
 
     override fun onAppearanceChange(appearance: AppearanceSettingsState) {
         setState { copy(appearanceState = appearance) }
+    }
+
+    override fun onImport() {
+        shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
     }
 
     private fun load() {

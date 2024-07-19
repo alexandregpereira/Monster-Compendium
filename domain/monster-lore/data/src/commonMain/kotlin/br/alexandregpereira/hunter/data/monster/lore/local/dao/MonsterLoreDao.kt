@@ -17,8 +17,6 @@
 package br.alexandregpereira.hunter.data.monster.lore.local.dao
 
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreCompleteEntity
-import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntity
-import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntryEntity
 
 interface MonsterLoreDao {
 

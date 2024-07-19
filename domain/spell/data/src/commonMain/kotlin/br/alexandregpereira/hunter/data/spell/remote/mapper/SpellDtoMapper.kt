@@ -20,6 +20,7 @@ import br.alexandregpereira.hunter.data.spell.remote.model.SpellDto
 import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.model.Spell
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 
 internal fun List<SpellDto>.toDomain(): List<Spell> {
     return map {
@@ -37,7 +38,8 @@ internal fun List<SpellDto>.toDomain(): List<Spell> {
             damageType = it.damageType,
             school = SchoolOfMagic.valueOf(it.school.name),
             description = it.description,
-            higherLevel = it.higherLevel
+            higherLevel = it.higherLevel,
+            status = SpellStatus.Original,
         )
     }
 }

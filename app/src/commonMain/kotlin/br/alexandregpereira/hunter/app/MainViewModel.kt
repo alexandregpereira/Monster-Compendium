@@ -5,6 +5,7 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
+import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
 import br.alexandregpereira.hunter.event.folder.detail.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
@@ -37,6 +38,7 @@ internal class MainViewModel(
     private val bottomBarEventManager: BottomBarEventManager,
     private val appLocalization: AppReactiveLocalization,
     private val stateRecovery: StateRecovery,
+    appEventDispatcher: AppEventDispatcher,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
@@ -47,6 +49,7 @@ internal class MainViewModel(
         observeFolderListResults()
         observeMonsterContentManagerEvents()
         observeLanguageChanges()
+        appEventDispatcher.observeEvents()
     }
 
     private fun observeLanguageChanges() {

@@ -86,6 +86,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
                 MonsterStatus.Original -> MonsterEntityStatus.Original
                 MonsterStatus.Clone -> MonsterEntityStatus.Clone
                 MonsterStatus.Edited -> MonsterEntityStatus.Edited
+                MonsterStatus.Imported -> MonsterEntityStatus.Imported
             },
         ),
         speed = speed.toEntity(index),
@@ -140,6 +141,7 @@ private fun MonsterEntity.toDomain(): Monster {
             MonsterEntityStatus.Original -> MonsterStatus.Original
             MonsterEntityStatus.Clone -> MonsterStatus.Clone
             MonsterEntityStatus.Edited -> MonsterStatus.Edited
+            MonsterEntityStatus.Imported -> MonsterStatus.Imported
         }
     )
 }

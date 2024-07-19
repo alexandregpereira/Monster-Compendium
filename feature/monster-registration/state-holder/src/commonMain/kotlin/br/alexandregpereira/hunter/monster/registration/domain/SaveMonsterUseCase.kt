@@ -15,6 +15,7 @@ internal fun SaveMonsterUseCase(
     val newMonster = when (monster.status) {
         MonsterStatus.Original -> monster.copy(status = MonsterStatus.Edited)
         MonsterStatus.Edited,
+        MonsterStatus.Imported,
         MonsterStatus.Clone -> monster
     }
     saveMonsters(listOf(newMonster))

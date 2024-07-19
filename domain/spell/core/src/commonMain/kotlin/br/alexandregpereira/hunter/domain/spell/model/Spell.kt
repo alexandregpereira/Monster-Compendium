@@ -30,5 +30,11 @@ data class Spell(
     val damageType: String?,
     val school: SchoolOfMagic,
     val description: String,
-    val higherLevel: String?
+    val higherLevel: String?,
+    val status: SpellStatus,
 )
+
+enum class SpellStatus {
+    Original,
+    Imported
+}

@@ -17,9 +17,7 @@
 package br.alexandregpereira.hunter.domain.model
 
 import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
 
-@ObjCName(name = "Skill", exact = true)
 data class Skill(
     val index: String,
     val modifier: Int,

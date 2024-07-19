@@ -47,6 +47,7 @@ interface MonsterDetailStrings {
     val resetToOriginal: String
     val resetQuestion: String
     val resetConfirmation: String
+    val export: String
 }
 
 internal data class MonsterDetailEnStrings(
@@ -91,6 +92,7 @@ internal data class MonsterDetailEnStrings(
     override val resetToOriginal: String = "Reset to Original",
     override val resetQuestion: String = "Are you sure you want to reset this monster to its original state?",
     override val resetConfirmation: String = "I'm sure",
+    override val export: String = "Share",
 ) : MonsterDetailStrings
 
 internal data class MonsterDetailPtStrings(
@@ -135,6 +137,7 @@ internal data class MonsterDetailPtStrings(
     override val resetToOriginal: String = "Restaurar para o Original",
     override val resetQuestion: String = "Tem certeza que deseja restaurar esse monstro para o estado original?",
     override val resetConfirmation: String = "Tenho certeza",
+    override val export: String = "Compartilhar",
 ) : MonsterDetailStrings
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()

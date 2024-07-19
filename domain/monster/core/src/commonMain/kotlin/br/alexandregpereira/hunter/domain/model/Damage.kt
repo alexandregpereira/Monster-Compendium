@@ -16,16 +16,12 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "Damage", exact = true)
 data class Damage(
     val index: String,
     val type: DamageType,
     val name: String
 )
 
-@ObjCName(name = "DamageType", exact = true)
 enum class DamageType {
     ACID,
     BLUDGEONING,

@@ -151,4 +151,13 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackMonsterDetailExportClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - export clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
 }

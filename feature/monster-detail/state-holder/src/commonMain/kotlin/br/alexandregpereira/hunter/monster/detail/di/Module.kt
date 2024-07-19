@@ -53,6 +53,7 @@ val monsterDetailModule = module {
             stateRecovery = get(named(MonsterDetailStateRecoveryQualifier)),
             resetMonsterToOriginal = get(),
             syncEventDispatcher = get(),
+            shareContentEventDispatcher = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

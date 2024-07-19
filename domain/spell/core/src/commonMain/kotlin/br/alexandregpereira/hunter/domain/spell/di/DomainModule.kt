@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.domain.spell.di
 
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
+import br.alexandregpereira.hunter.domain.spell.SaveSpells
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import org.koin.dsl.module
 
@@ -25,4 +26,5 @@ val spellDomainModule = module {
     factory { GetSpellsByIdsUseCase(get()) }
     factory { GetSpellUseCase(get()) }
     factory { SyncSpellsUseCase(get(), get()) }
+    factory { SaveSpells(get()) }
 }

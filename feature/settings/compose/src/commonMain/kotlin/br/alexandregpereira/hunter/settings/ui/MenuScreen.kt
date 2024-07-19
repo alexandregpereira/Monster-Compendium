@@ -62,6 +62,13 @@ internal fun MenuScreen(
             Divider()
 
             MenuItem(
+                text = state.strings.importContent,
+                onClick = viewIntent::onImport
+            )
+
+            Divider()
+
+            MenuItem(
                 text = state.strings.settingsTitle,
                 onClick = viewIntent::onSettingsClick
             )

@@ -27,7 +27,6 @@ import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -39,7 +38,7 @@ internal fun FolderInsertScreen(
     onLongClick: (String) -> Unit = {},
     onSave: () -> Unit = {},
     onClose: () -> Unit = {},
-) = HunterTheme {
+) {
     BottomSheet(opened = state.isOpen, contentPadding = contentPadding, onClose = onClose) {
         ScreenHeader(
             title = state.strings.addToFolder,

@@ -16,23 +16,17 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
-
-@ObjCName(name = "Speed", exact = true)
 data class Speed(
     val hover: Boolean,
     val values: List<SpeedValue>,
 )
 
-@ObjCName(name = "SpeedValue", exact = true)
 data class SpeedValue(
     val type: SpeedType,
     val valueFormatted: String,
     val index: String = "",
 )
 
-@ObjCName(name = "SpeedType", exact = true)
 enum class SpeedType {
     BURROW,
     CLIMB,
