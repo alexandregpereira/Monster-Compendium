@@ -48,8 +48,8 @@ fun ShareContentImportFeature(
         val stateHolder = koinInject<ShareContentStateHolder>()
         ShareContentImportScreen(
             state = stateHolder.state.collectAsState().value,
-            onContentEncodedChanges = stateHolder::onContentToImportChanges,
             onImport = stateHolder::onImport,
+            onPaste = stateHolder::onPasteImportContent,
         )
     }
 }

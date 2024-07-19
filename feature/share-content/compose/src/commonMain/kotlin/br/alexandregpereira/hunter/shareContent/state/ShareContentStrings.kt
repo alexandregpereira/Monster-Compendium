@@ -10,6 +10,7 @@ interface ShareContentStrings {
     val importTitle: String
     val exportTitle: String
     val importInvalidContentErrorMessage: String
+    val pasteContent: String
 }
 
 internal data class ShareContentEnStrings(
@@ -20,6 +21,7 @@ internal data class ShareContentEnStrings(
     override val importTitle: String = "Import Content",
     override val exportTitle: String = "Share Content",
     override val importInvalidContentErrorMessage: String = "Invalid content",
+    override val pasteContent: String = "Paste content",
 ) : ShareContentStrings
 
 internal data class ShareContentPtStrings(
@@ -30,6 +32,7 @@ internal data class ShareContentPtStrings(
     override val importTitle: String = "Importar Conteúdo",
     override val exportTitle: String = "Compartilhar Conteúdo",
     override val importInvalidContentErrorMessage: String = "Conteúdo inválido",
+    override val pasteContent: String = "Colar conteúdo",
 ) : ShareContentStrings
 
 fun ShareContentStrings(): ShareContentStrings = ShareContentEnStrings()

@@ -55,6 +55,11 @@ internal class ShareContentStateHolder(
             .launchIn(scope)
     }
 
+    fun onPasteImportContent(content: String) = setState {
+        val contentFormatted = content.trim().replace("\n", "")
+        copy(contentToImport = contentFormatted, importError = null)
+    }
+
     fun fetchMonsterContentToExport(monsterIndex: String, actualClipboardContent: String?) {
         getMonsterContentToExport(monsterIndex)
             .flowOn(dispatcher)
@@ -67,13 +72,6 @@ internal class ShareContentStateHolder(
                 }
             }
             .launchIn(scope)
-    }
-
-    fun onContentToImportChanges(content: String) {
-        setState {
-            val importError = if (content.isBlank()) null else importError
-            copy(contentToImport = content, importError = importError)
-        }
     }
 
     fun onCopyContentToExport() {

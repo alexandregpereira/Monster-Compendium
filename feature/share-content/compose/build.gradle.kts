@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -36,4 +37,10 @@ androidLibrary {
 
 composeCompiler {
     enableStrongSkippingMode = true
+}
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "br.alexandregpereira.hunter.shareContent.ui.resources"
+    generateResClass = always
 }

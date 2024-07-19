@@ -22,7 +22,7 @@ internal fun ShareContentExportScreen(
     Spacer(modifier = Modifier.height(16.dp))
 
     AppTextField(
-        text = state.contentToExport,
+        text = state.contentToExportShort,
         label = state.strings.contentToImportLabel,
         enabled = false,
     )
