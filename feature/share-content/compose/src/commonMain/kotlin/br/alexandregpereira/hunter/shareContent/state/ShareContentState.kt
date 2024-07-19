@@ -20,7 +20,11 @@ internal data class ShareContentState(
         .takeIf { it.isNotBlank() }?.let { "$it..." }.orEmpty()
 
     val contentToImportShort: String = contentToImport.take(1000)
-        .takeIf { it.isNotBlank() }?.let { "$it..." }.orEmpty()
+        .takeIf { it.isNotBlank() }
+        ?.replace("\t", "")
+        ?.replace("\n", "")
+        ?.let { "$it..." }
+        .orEmpty()
 }
 
 internal enum class ShareContentImportError {

@@ -56,8 +56,7 @@ internal class ShareContentStateHolder(
     }
 
     fun onPasteImportContent(content: String) = setState {
-        val contentFormatted = content.trim().replace("\n", "")
-        copy(contentToImport = contentFormatted, importError = null)
+        copy(contentToImport = content.trim(), importError = null)
     }
 
     fun fetchMonsterContentToExport(monsterIndex: String, actualClipboardContent: String?) {
