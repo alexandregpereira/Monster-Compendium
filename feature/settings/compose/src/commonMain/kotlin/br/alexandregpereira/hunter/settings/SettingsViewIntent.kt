@@ -28,4 +28,6 @@ internal interface SettingsViewIntent {
     fun onAppearanceSettingsSaveClick()
 
     fun onAppearanceChange(appearance: AppearanceSettingsState)
+
+    fun onImport()
 }

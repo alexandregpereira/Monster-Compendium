@@ -28,14 +28,28 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.zip
 
-class SaveMonstersUseCase internal constructor(
+interface SaveMonstersUseCase {
+    operator fun invoke(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
+}
+
+fun SaveMonstersUseCase(
+    getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
+    monsterRepository: MonsterRepository,
+    measurementUnitRepository: MeasurementUnitRepository,
+): SaveMonstersUseCase = SaveMonstersUseCaseImpl(
+    getMeasurementUnitUseCase,
+    monsterRepository,
+    measurementUnitRepository
+)
+
+private class SaveMonstersUseCaseImpl(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val monsterRepository: MonsterRepository,
     private val measurementUnitRepository: MeasurementUnitRepository,
-) {
+) : SaveMonstersUseCase {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit> {
+    override operator fun invoke(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
         return getMeasurementUnitUseCase()
             .zip(measurementUnitRepository.getPreviousMeasurementUnit()) { unit, previousUnit ->
                 monsters.changeMonstersMeasurementUnit(previousUnit, unit)

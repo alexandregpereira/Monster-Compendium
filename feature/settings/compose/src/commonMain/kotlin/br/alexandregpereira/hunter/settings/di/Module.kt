@@ -40,6 +40,7 @@ val featureSettingsModule = module {
             applyAppearanceSettings = get(),
             getAppearanceSettings = get(),
             monsterEventDispatcher = get(),
+            shareContentEventDispatcher = get(),
         )
     }
 }

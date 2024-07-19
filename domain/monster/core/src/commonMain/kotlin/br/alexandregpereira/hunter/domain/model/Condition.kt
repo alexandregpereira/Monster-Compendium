@@ -17,9 +17,7 @@
 package br.alexandregpereira.hunter.domain.model
 
 import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
 
-@ObjCName(name = "Condition", exact = true)
 data class Condition(
     val index: String,
     val type: ConditionType,
@@ -39,7 +37,6 @@ data class Condition(
     }
 }
 
-@ObjCName(name = "ConditionType", exact = true)
 enum class ConditionType {
     BLINDED,
     CHARMED,

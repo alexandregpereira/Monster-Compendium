@@ -16,6 +16,8 @@ import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
+import br.alexandregpereira.hunter.shareContent.ShareContentExportMonsterFeature
+import br.alexandregpereira.hunter.shareContent.ShareContentImportFeature
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
@@ -79,6 +81,10 @@ internal fun AppMainScreen(
         )
 
         FolderInsertFeature(contentPadding = contentPadding)
+
+        ShareContentExportMonsterFeature(contentPadding = contentPadding)
+
+        ShareContentImportFeature(contentPadding = contentPadding)
 
         SyncFeature()
     }

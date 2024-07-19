@@ -38,18 +38,20 @@ import br.alexandregpereira.hunter.ui.compose.animatePressed
 internal fun MonsterDetailOptionPicker(
     options: List<MonsterDetailOptionState>,
     showOptions: Boolean,
+    contentPadding: PaddingValues = PaddingValues(),
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
     onClosed: () -> Unit = {}
 ) = BottomSheet(
     opened = showOptions,
     onClose = onClosed,
 ) {
-    MonsterDetailOptions(options, onOptionSelected)
+    MonsterDetailOptions(options, contentPadding, onOptionSelected)
 }
 
 @Composable
 private fun MonsterDetailOptions(
     options: List<MonsterDetailOptionState>,
+    contentPadding: PaddingValues = PaddingValues(),
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
 ) {
     Column {
@@ -78,7 +80,7 @@ private fun MonsterDetailOptions(
 
         Spacer(
             modifier = Modifier
-                .height(PaddingValues(all = 32.dp).calculateBottomPadding())
+                .height(contentPadding.calculateBottomPadding() + 16.dp)
                 .fillMaxWidth()
         )
     }

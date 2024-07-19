@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "MonsterType", exact = true)
 enum class MonsterType {
     ABERRATION,
     BEAST,

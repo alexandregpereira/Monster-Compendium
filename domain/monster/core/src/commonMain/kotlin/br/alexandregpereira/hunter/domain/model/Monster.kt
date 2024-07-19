@@ -57,7 +57,7 @@ data class Monster(
 }
 
 enum class MonsterStatus {
-    Original, Edited, Clone
+    Original, Edited, Clone, Imported
 }
 
 private fun Float.getChallengeRatingFormatted(): String {

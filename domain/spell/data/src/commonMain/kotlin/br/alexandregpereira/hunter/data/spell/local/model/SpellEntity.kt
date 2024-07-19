@@ -30,5 +30,6 @@ data class SpellEntity(
     val damageType: String?,
     val school: String,
     val description: String,
-    val higherLevel: String?
+    val higherLevel: String?,
+    val status: Int,
 )

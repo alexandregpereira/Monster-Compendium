@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.app.di
 
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.MainViewModel
+import br.alexandregpereira.hunter.app.event.appEventModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.detail.di.featureMonsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModules
@@ -19,6 +20,7 @@ import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDeta
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
 import br.alexandregpereira.hunter.search.di.featureSearchModule
 import br.alexandregpereira.hunter.settings.di.featureSettingsModule
+import br.alexandregpereira.hunter.shareContent.featureShareContentModule
 import br.alexandregpereira.hunter.spell.compendium.di.featureSpellCompendiumModule
 import br.alexandregpereira.hunter.spell.detail.di.featureSpellDetailModule
 import br.alexandregpereira.hunter.sync.di.featureSyncModule
@@ -48,12 +50,14 @@ internal fun KoinApplication.initKoinModules() {
         featureSettingsModule,
         featureSpellCompendiumModule,
         featureSpellDetailModule,
+        featureShareContentModule,
     )
     modules(
         analyticsModule,
         bottomBarEventModule,
         localizationModule,
         monsterEventModule,
+        appEventModule,
     )
 }
 
@@ -74,6 +78,7 @@ private val appModule = module {
             bottomBarEventManager = get(),
             appLocalization = get(),
             stateRecovery = get(named(AppStateRecoveryQualifier)),
+            appEventDispatcher = get(),
         )
     }
 }

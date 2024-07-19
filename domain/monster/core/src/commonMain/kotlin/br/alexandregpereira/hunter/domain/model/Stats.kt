@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "Stats", exact = true)
 data class Stats(
     val armorClass: Int = 0,
     val hitPoints: Int = 0,

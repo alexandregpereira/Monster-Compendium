@@ -59,6 +59,7 @@ multiplatform {
         implementation(project(":feature:folder-list:event"))
         implementation(project(":feature:folder-preview:event"))
         implementation(project(":feature:monster-content-manager:event"))
+        implementation(project(":feature:share-content:event"))
         implementation(project(":domain:monster:event"))
 
         implementation(project(":feature:folder-detail:compose"))
@@ -72,6 +73,7 @@ multiplatform {
         implementation(project(":feature:monster-registration:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
+        implementation(project(":feature:share-content:compose"))
         implementation(project(":feature:spell-compendium:compose"))
         implementation(project(":feature:spell-detail:compose"))
         implementation(project(":feature:sync:compose"))

@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BottomSheet(
+    modifier: Modifier = Modifier,
     opened: Boolean = false,
     backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     contentPadding: PaddingValues = PaddingValues(),
@@ -74,7 +75,7 @@ fun BottomSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        modifier = Modifier.padding(
+                        modifier = modifier.padding(
                             start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
                             end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
                         )

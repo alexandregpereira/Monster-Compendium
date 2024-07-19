@@ -91,7 +91,8 @@ fun MonsterDetailFeature(
                     options = viewState.options,
                     showOptions = viewState.showOptions,
                     onOptionSelected = viewModel::onOptionClicked,
-                    onClosed = viewModel::onShowOptionsClosed
+                    onClosed = viewModel::onShowOptionsClosed,
+                    contentPadding = contentPadding,
                 )
 
                 FormBottomSheet(

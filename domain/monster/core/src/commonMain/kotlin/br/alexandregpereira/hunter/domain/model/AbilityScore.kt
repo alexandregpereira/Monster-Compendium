@@ -16,16 +16,12 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "AbilityScore", exact = true)
 data class AbilityScore(
     val type: AbilityScoreType,
     val value: Int,
     val modifier: Int
 )
 
-@ObjCName(name = "AbilityScoreType", exact = true)
 enum class AbilityScoreType {
     STRENGTH,
     DEXTERITY,

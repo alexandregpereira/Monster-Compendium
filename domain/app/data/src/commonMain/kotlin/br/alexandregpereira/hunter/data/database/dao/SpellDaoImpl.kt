@@ -46,7 +46,8 @@ internal class SpellDaoImpl(
                         damageType = it.damageType,
                         school = it.school,
                         description = it.description,
-                        higherLevel = it.higherLevel
+                        higherLevel = it.higherLevel,
+                        status = it.status.toLong(),
                     )
                 )
             }
@@ -86,7 +87,8 @@ internal class SpellDaoImpl(
             damageType = damageType,
             school = school,
             description = description,
-            higherLevel = higherLevel
+            higherLevel = higherLevel,
+            status = status.toInt(),
         )
     }
 }

@@ -16,9 +16,6 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "AbilityDescription", exact = true)
 data class AbilityDescription(
     val name: String,
     val description: String,

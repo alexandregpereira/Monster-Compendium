@@ -16,9 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.monster.spell.model
 
-import kotlin.native.ObjCName
 
-@ObjCName(name = "SpellcastingType", exact = true)
 enum class SpellcastingType {
     SPELLCASTER, INNATE
 }

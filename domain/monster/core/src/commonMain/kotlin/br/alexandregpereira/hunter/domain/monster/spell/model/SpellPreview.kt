@@ -17,9 +17,7 @@
 package br.alexandregpereira.hunter.domain.monster.spell.model
 
 import br.alexandregpereira.hunter.uuid.generateUUID
-import kotlin.native.ObjCName
 
-@ObjCName(name = "SpellPreview", exact = true)
 data class SpellPreview(
     val index: String,
     val name: String,
@@ -42,7 +40,6 @@ data class SpellPreview(
     }
 }
 
-@ObjCName(name = "SchoolOfMagic", exact = true)
 enum class SchoolOfMagic {
     ABJURATION,
     CONJURATION,
