@@ -23,30 +23,34 @@ import org.koin.core.scope.Scope
 import java.io.File
 
 internal actual fun Scope.createSqlDriver(): SqlDriver {
-    val databasePath = getDatabasePath()
-    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$databasePath")
+    val databaseFile = getDatabaseFile()
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:${databaseFile.absolutePath}")
 
-    val currentVersion = driver.getDatabaseVersion()
-    val schemaVersion = Database.Schema.version
-    if (schemaVersion > currentVersion) {
-        Database.Schema.migrate(driver, currentVersion, schemaVersion)
-        driver.setDatabaseVersion(schemaVersion)
-        println("init: migrated from $currentVersion to $schemaVersion")
+    if (databaseFile.exists()) {
+        val currentVersion = driver.getDatabaseVersion()
+        val schemaVersion = Database.Schema.version
+        if (schemaVersion > currentVersion) {
+            Database.Schema.migrate(driver, currentVersion, schemaVersion)
+            driver.setDatabaseVersion(schemaVersion)
+            println("init: migrated from $currentVersion to $schemaVersion")
+        } else {
+            Database.Schema.create(driver)
+        }
     } else {
+        driver.setDatabaseVersion(Database.Schema.version)
         Database.Schema.create(driver)
     }
 
     return driver
 }
 
-private fun getDatabasePath(): String {
+private fun getDatabaseFile(): File {
     val userFolder = System.getProperty("user.home")
     val appDataFolder = File(userFolder, ".monster-compendium")
     if (appDataFolder.exists().not()) {
         appDataFolder.mkdirs()
     }
-    val databasePath = File(appDataFolder, "hunter-database.db")
-    return databasePath.absolutePath
+    return File(appDataFolder, "hunter-database.db")
 }
 
 private fun SqlDriver.getDatabaseVersion(): Int {
