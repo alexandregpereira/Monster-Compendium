@@ -7,7 +7,7 @@ import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
 internal fun ShareMonsterLore.toMonsterLore(): MonsterLore {
     return MonsterLore(
         index = index,
-        name = name,
+        name = "",
         entries = entries.map {
             MonsterLoreEntry(
                 title = it.title,

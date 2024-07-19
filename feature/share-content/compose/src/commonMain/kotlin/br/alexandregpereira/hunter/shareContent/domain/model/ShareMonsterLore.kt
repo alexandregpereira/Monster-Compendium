@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ShareMonsterLore(
     val index: String,
-    val name: String,
     val entries: List<ShareMonsterLoreEntry>,
 )
 
