@@ -16,9 +16,13 @@
 
 package br.alexandregpereira.hunter.domain.sync.di
 
+import br.alexandregpereira.hunter.domain.sync.IsFirstTime
+import br.alexandregpereira.hunter.domain.sync.ResetFirstTime
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import org.koin.dsl.module
 
 val syncDomainModule = module {
-    factory { SyncUseCase(get(), get(), get(), get(), get(), get(), get()) }
+    factory { IsFirstTime(get()) }
+    factory { ResetFirstTime(get()) }
+    factory { SyncUseCase(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 }

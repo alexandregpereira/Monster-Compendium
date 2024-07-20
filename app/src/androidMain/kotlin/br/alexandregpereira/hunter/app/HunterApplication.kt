@@ -22,6 +22,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -34,14 +35,18 @@ class HunterApplication : Application() {
 
     private fun initKoin() {
         startKoin {
-            androidContext(this@HunterApplication)
-            modules(
-                module {
-                    factory { Firebase.analytics }
-                    factory { Firebase.crashlytics }
-                }
-            )
-            initKoinModules()
+            initAndroidModules(this@HunterApplication)
         }
     }
+}
+
+internal fun KoinApplication.initAndroidModules(app: Application) {
+    androidContext(app)
+    modules(
+        module {
+            factory { Firebase.analytics }
+            factory { Firebase.crashlytics }
+        }
+    )
+    initKoinModules()
 }

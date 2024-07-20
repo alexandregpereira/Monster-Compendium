@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.event.EventListener
@@ -67,6 +68,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
     private val stateRecovery: StateRecovery,
+    private val isFirstTime: IsFirstTime,
     appLocalization: AppLocalization,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
@@ -88,6 +90,11 @@ class MonsterCompendiumStateHolder internal constructor(
     }
 
     private suspend fun fetchMonsterCompendium() {
+        if (isFirstTime()) {
+            setState { loading(isLoading = true) }
+            return
+        }
+
         getMonsterCompendiumUseCase()
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()

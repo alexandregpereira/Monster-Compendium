@@ -50,15 +50,13 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compose.BackHandler
+import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -71,15 +69,13 @@ internal fun MonsterContentPreviewScreen(
     onTableContentClose: () -> Unit = {},
     onTableContentClick: (Int) -> Unit = {},
     onFirstVisibleItemChange: (Int) -> Unit = {},
-) = HunterTheme {
-    BackHandler(enabled = state.isOpen, onBack = onClose)
-
+) {
     Closeable(
         opened = state.isOpen,
         onClosed = onClose,
     )
 
-    SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
+    AppScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
         Surface(
             Modifier
                 .fillMaxSize()

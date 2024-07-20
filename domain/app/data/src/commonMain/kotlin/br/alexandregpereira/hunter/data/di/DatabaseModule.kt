@@ -27,12 +27,16 @@ import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
 import br.alexandregpereira.hunter.data.source.local.dao.AlternativeSourceDao
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
+import com.squareup.sqldelight.db.SqlDriver
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.dsl.module
 
 val databaseModule = module {
+    factory<SqlDriver> {
+        createSqlDriver()
+    }
     single {
-        Database(createSqlDriver())
+        Database(get())
     }
     factory<AlternativeSourceDao> {
         AlternativeSourceDaoImpl(

@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
@@ -59,7 +60,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -71,6 +71,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterState
 import br.alexandregpereira.hunter.monster.detail.SpeedState
 import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
+import br.alexandregpereira.hunter.ui.compose.BoxCloseButton
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
@@ -83,6 +84,7 @@ import br.alexandregpereira.hunter.ui.transition.transitionHorizontalScrollable
 import br.alexandregpereira.hunter.ui.util.toColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun MonsterDetailScreen(
@@ -97,7 +99,8 @@ internal fun MonsterDetailScreen(
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
     onSpellClicked: (String) -> Unit = {},
-    onLoreClicked: (String) -> Unit = {}
+    onLoreClicked: (String) -> Unit = {},
+    onClose: () -> Unit = {},
 ) = Surface {
     HorizontalPagerTransitionController(pagerState)
 
@@ -116,8 +119,8 @@ internal fun MonsterDetailScreen(
     ScrollableBackground(
         getScrollPositionOffset = {
             scrollState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == MONSTER_TITLE_ITEM_KEY }
-                ?.run {
-                    offset.coerceAtLeast(0) + (size / 2)
+                ?.let { itemInfo: LazyListItemInfo ->
+                    itemInfo.offset.coerceAtLeast(0)
                 } ?: 0
         }
     )
@@ -142,7 +145,7 @@ internal fun MonsterDetailScreen(
         }
 
         item(key = MONSTER_TITLE_ITEM_KEY) {
-            val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+            val shape = remember { RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) }
             MonsterTitleCompose(
                 monsterTitleStates = monsters.map {
                     MonsterTitleState(
@@ -171,6 +174,8 @@ internal fun MonsterDetailScreen(
             onLoreClick = onLoreClicked
         )
     }
+
+    BoxCloseButton(onClick = onClose)
 
     MonsterTopBar(
         monsters,
@@ -205,7 +210,10 @@ private fun ScrollableBackground(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(
+                    shape = remember { RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) },
+                    color = MaterialTheme.colors.surface
+                )
         )
     }
 ) { measurables, constraints ->

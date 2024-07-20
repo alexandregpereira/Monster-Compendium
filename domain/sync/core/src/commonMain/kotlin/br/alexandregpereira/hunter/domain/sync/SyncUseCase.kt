@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.domain.sync
 import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.settings.GetContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
-import br.alexandregpereira.hunter.domain.settings.IsLanguageSupported
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
@@ -46,6 +45,8 @@ class SyncUseCase internal constructor(
     private val saveLanguageUseCase: SaveLanguageUseCase,
     private val getContentVersionUseCase: GetContentVersionUseCase,
     private val saveContentVersionUseCase: SaveContentVersionUseCase,
+    private val isFirstTime: IsFirstTime,
+    private val resetFirstTime: ResetFirstTime,
 ) {
 
     private val contentVersion = 3
@@ -67,6 +68,7 @@ class SyncUseCase internal constructor(
                         runCatching { saveContentVersionUseCase(lastContentVersionRollback).single() }
                     }
                 }
+                resetFirstTime()
                 emit(SyncStatus.SYNCED)
             } else {
                 emit(SyncStatus.IDLE)
@@ -77,7 +79,8 @@ class SyncUseCase internal constructor(
     private fun isToSync(): Flow<Triple<Boolean, String, Int>> {
         return isLangSyncScenario()
             .zip(isContentVersionSyncScenario()) { (isLangSyncScenario, lastLanguageRollback), (isContentVersionSyncScenario, lastContentVersionRollback) ->
-                Triple((isLangSyncScenario || isContentVersionSyncScenario), lastLanguageRollback, lastContentVersionRollback)
+                val isToSync = isFirstTime() || isLangSyncScenario || isContentVersionSyncScenario
+                Triple(isToSync, lastLanguageRollback, lastContentVersionRollback)
             }
     }
 

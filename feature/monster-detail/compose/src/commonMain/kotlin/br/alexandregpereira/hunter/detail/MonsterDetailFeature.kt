@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.detail.ui.MonsterDetailScreen
 import br.alexandregpereira.hunter.detail.ui.strings
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.di.MonsterDetailStateRecoveryQualifier
+import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.ConfirmationBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
@@ -41,7 +42,6 @@ import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.compose.getPlatformScreenSizeInfo
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -49,7 +49,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun MonsterDetailFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-) = HunterTheme {
+) {
     StateRecoveryLaunchedEffect(
         key = MonsterDetailStateRecoveryQualifier,
         stateRecovery = koinInject(named(MonsterDetailStateRecoveryQualifier)),
@@ -58,11 +58,12 @@ fun MonsterDetailFeature(
     val viewModel: MonsterDetailStateHolder = koinInject()
     val viewState by viewModel.state.collectAsState()
 
-    BackHandler(enabled = viewState.showDetail) {
-        viewModel.onClose()
-    }
-
-    SwipeVerticalToDismiss(visible = viewState.showDetail, onClose = viewModel::onClose) {
+    AppScreen(
+        isOpen = viewState.showDetail,
+        contentPaddingValues = contentPadding,
+        closeable = false,
+        onClose = viewModel::onClose
+    ) {
         LoadingScreen(
             isLoading = viewState.isLoading,
             showCircularLoading = false,
@@ -85,6 +86,7 @@ fun MonsterDetailFeature(
                     onOptionsClicked = viewModel::onShowOptionsClicked,
                     onSpellClicked = viewModel::onSpellClicked,
                     onLoreClicked = viewModel::onLoreClicked,
+                    onClose = viewModel::onClose,
                 )
 
                 MonsterDetailOptionPicker(

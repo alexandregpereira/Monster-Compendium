@@ -11,6 +11,7 @@ multiplatform {
         api(project(":core:ui:state-recovery"))
         implementation(project(":domain:monster:event"))
         api(project(":domain:monster-compendium:core"))
+        implementation(project(":domain:sync:core"))
         implementation(project(":feature:folder-preview:event"))
         implementation(project(":feature:sync:event"))
         implementation(project(":feature:monster-registration:event"))

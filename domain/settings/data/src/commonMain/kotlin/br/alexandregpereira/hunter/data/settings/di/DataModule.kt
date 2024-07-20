@@ -25,7 +25,7 @@ import org.koin.dsl.module
 
 val settingsDataModule = module {
     factory { AlternativeSourceUrlBuilder(get()) }
-    single { get<Settings.Factory>().create("preferences") }
+    single<Settings> { get<Settings.Factory>().create("preferences") }
     factory<SettingsRepository> { DefaultSettingsRepository(get()) }
     getAdditionalSettingsModule()
 }

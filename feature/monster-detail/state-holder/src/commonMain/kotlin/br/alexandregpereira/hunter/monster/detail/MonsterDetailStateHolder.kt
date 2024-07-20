@@ -125,13 +125,13 @@ class MonsterDetailStateHolder internal constructor(
                     analytics.trackMonsterDetailShown(event)
                     enableMonsterPageChangesEventDispatch =
                         event.enableMonsterPageChangesEventDispatch
-                    getMonstersByInitialIndex(event.index, event.indexes)
                     setState {
                         copy(
                             showDetail = true,
                             strings = appLocalization.getStrings()
                         ).saveState(stateRecovery)
                     }
+                    getMonstersByInitialIndex(event.index, event.indexes)
                 }
 
                 Hide -> {
@@ -155,6 +155,8 @@ class MonsterDetailStateHolder internal constructor(
         monsterIndexes: List<String>,
         invalidateCache: Boolean = false
     ) {
+        if (state.value.showDetail.not()) return
+
         stateRecovery.saveMonsterIndexes(monsterIndexes)
         onMonsterChanged(monsterIndex, scrolled = false)
         getMonsterDetail(invalidateCache = invalidateCache).collectDetail()

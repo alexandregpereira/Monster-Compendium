@@ -112,6 +112,9 @@ kotlin {
             dependencies {
                 implementation(libs.bundles.instrumentedtest)
                 implementation(libs.compose.ui.test)
+                implementation(libs.sqldelight.android)
+                implementation(libs.multiplatform.settings)
+                implementation(libs.multiplatform.settings.test)
                 debugImplementation(libs.compose.ui.test.manifest)
             }
         }
@@ -173,7 +176,7 @@ android {
             setProperty("archivesBaseName", "app-dev")
         }
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
     }
 
     signingConfigs {
