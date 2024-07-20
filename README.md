@@ -6,7 +6,7 @@
 
 [![CI/CD](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml) <a href="https://devlibrary.withgoogle.com/products/android/repos/alexandregpereira-monster-compendium" target="_blank"><img alt="Android Dev Library" src="https://img.shields.io/badge/Google%20Dev%20Library-alexandregpereira-blue?style=flat&logo=android"/></a>
 
-Monsters Compendium is an open-source Kotlin Multiplatform application for both Android and iOS, offering extensive information on monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
+Monsters Compendium is an open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
 
 <a href='https://play.google.com/store/apps/details?id=br.alexandregpereira.hunter.app&hl=en_US&gl=US&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
@@ -26,19 +26,26 @@ Monsters Compendium is an open-source Kotlin Multiplatform application for both 
 - A powerful search functionality that allows users to quickly find specific monsters.
 - A user-friendly interface to organize monsters into customizable folders for better campaign management.
 
+## Runnning
+### Desktop
+Run the following command on the root project directory.
+```gradlew
+./gradlew app:jvmRun -DmainClass=MainKt --quiet
+```
+### Mobile
+You can run the app using [Android Studio](https://developer.android.com/studio?_gl=1*1pkmy4x*_up*MQ..&gclid=Cj0KCQjwwO20BhCJARIsAAnTIVQceG8rGFe0Y8EdcMPTFhZV4VUSSj2ugNkUxKFyFpnTttvY7EljITAaAv6WEALw_wcB&gclsrc=aw.ds) for Android and [xCode](https://developer.apple.com/xcode/) for iOS.
+
 ## Tech Stack
 
 The following is an overview of the key technologies and libraries used in this Kotlin Multiplatform project, each with a brief description and a URL for further information:
 
 - [Jetpack Compose](https://developer.android.com/jetpack/compose): Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
-- [SwiftUI:](https://developer.apple.com/documentation/swiftui): A user interface toolkit for building modern, responsive apps for iOS, macOS, and more using Swift.
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html): A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
 - [Kotlin Flow](https://kotlinlang.org/docs/flow.html): Stream of data that can be computed asynchronously. Built in top of the Kotlin Coroutines.
 - [Koin](https://github.com/InsertKoinIO/koin): A pragmatic lightweight dependency injection framework for Kotlin & Kotlin Multiplatform.
 - [SQLDelight](https://github.com/cashapp/sqldelight): A multiplatform SQLite library that generates Kotlin typesafe APIs from SQL statements.
 - [Ktor-client](https://github.com/ktorio/ktor): A multiplatform asynchronous HTTP client for Kotlin, providing a clean and extensible API for making network requests.
 - [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings): A library that provides a simple and consistent API for persisting key-value data across iOS, Android, and JVM platforms.
-- [Accompanist](https://github.com/google/accompanist): A group of libraries that aim to supplement Jetpack Compose with features that are commonly required by developers but not yet available.
 - [Coil Compose](https://coil-kt.github.io/coil/compose): An image loading library for Android backed by Kotlin Coroutines and Jetpack Compose.
 - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html): A library for parsing and serializing JSON data, seamlessly converting API responses into Kotlin objects.
 
@@ -46,39 +53,15 @@ The following is an overview of the key technologies and libraries used in this 
 
 The app's architecture is based on the Model-View-Intent (MVI) pattern with Clean Architecture principles, implemented in a multi-module project, as illustrated in the image below:
 
-![](media/app-architecture.jpg)
+![image](https://github.com/user-attachments/assets/f3aca4fb-5229-448d-985f-686b7490c333)
 
 ### Components Responsibilities
 
 - **UI**: It is responsible for displaying data from the UI State to the user and handling user interactions.
-- **ViewModel**: It transforms the domain model into a UI Model and sends it to the UI.
-- **StateHolder**: It holds the UI State, manages the app's UI state and logic, and dispatches changes when receiving intents, enabling a reactive UI experience.
+- **StateHolder**: It holds and send the UI State, manages the app's UI state and logic, and dispatches changes when receiving intents, enabling a reactive UI experience.
 - **UseCases**: It contains the business logic, retrieving data from the Repository interface or coordinating with other use cases to perform complex tasks.
-- **Repository**:  It acts as a mediator between different data sources (network or database) and converts the data models into domain models, ensuring a clean separation of concerns
+- **Repository**:  It acts as a mediator between different data sources (network or database) and converts the data models into domain models, ensuring a clean separation of concerns.
 - **DataSources**: It is responsible for fetching and transferring data from a single source, such as an API or a local database, and returning the data in a consistent format.
-
-## Roadmap
-
-### UI
-- Monster detail (iOS): In Progress
-- Master Lore Detail (iOS): To Do
-- Spell detail (iOS): To Do
-- Bottom Bar Navigation (iOS): To Do
-- Configuration screen (iOS): To Do
-- Folder preview (iOS): To Do
-- Monster folders (iOS): To Do
-- Add Monster to Folder (iOS): To Do
-- Search (iOS): To Do
-
-### Feature
-- Remove monsters from folder (Android, iOS): To Do
-
-### Bugs
-- Fix duplication of damage dice when changing to meters: To Fix
-
-## Adding New Content
-
-You can add custom image and new monsters to the app. The tutorial can be found [here](CONTENT.md).
 
 ## API
 
@@ -94,7 +77,7 @@ The icons used in this app have a free license. They are designed by [macrovecto
 
 ## License
 
-    Copyright 2023 Alexandre Gomes Pereira
+    Copyright 2024 Alexandre Gomes Pereira
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
