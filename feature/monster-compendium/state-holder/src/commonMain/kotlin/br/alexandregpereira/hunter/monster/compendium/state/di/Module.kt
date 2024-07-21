@@ -44,6 +44,7 @@ val monsterCompendiumModule = module {
             analytics = MonsterCompendiumAnalytics(get()),
             appLocalization = get(),
             stateRecovery = get(named(StateRecoveryQualifier)),
+            isFirstTime = get(),
         )
     }
 }

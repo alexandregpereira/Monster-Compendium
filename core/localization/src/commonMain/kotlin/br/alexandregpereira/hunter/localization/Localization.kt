@@ -20,9 +20,11 @@ interface MutableAppLocalization : AppLocalization {
     fun setLanguage(language: String)
 }
 
-internal class AppLocalizationImpl : MutableAppLocalization, AppReactiveLocalization {
+internal class AppLocalizationImpl(
+    private val defaultLanguage: Language,
+) : MutableAppLocalization, AppReactiveLocalization {
 
-    private var language: Language = getDefaultLanguage()
+    private var language: Language = defaultLanguage
     private val _languageFlow: MutableSharedFlow<Language> = MutableSharedFlow(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
@@ -34,14 +36,8 @@ internal class AppLocalizationImpl : MutableAppLocalization, AppReactiveLocaliza
     }
 
     override fun setLanguage(language: String) {
-        this.language = Language.entries.firstOrNull { it.code == language } ?: getDefaultLanguage()
+        this.language = Language.entries.firstOrNull { it.code == language } ?: defaultLanguage
         _languageFlow.tryEmit(this.language)
-    }
-
-    private fun getDefaultLanguage(): Language {
-        return Language.entries.firstOrNull {
-            it.code == getDeviceLangCode()
-        } ?: Language.ENGLISH
     }
 }
 

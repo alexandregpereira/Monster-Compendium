@@ -9,7 +9,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
-import androidx.test.espresso.Espresso
 import br.alexandregpereira.hunter.app.HunterApp
 import org.junit.Rule
 import org.junit.Test
@@ -36,8 +35,7 @@ class FolderListTest {
         composeTestRule.onNodeWithText("Add to Folder").performClick()
         composeTestRule.onNodeWithText("Folder name").performTextInput("Folder Test")
         composeTestRule.onNodeWithText("Save").performClick()
-        Espresso.closeSoftKeyboard()
-        Espresso.pressBack()
+        composeTestRule.onNodeWithContentDescription("Close").performClick()
         composeTestRule.waitUntil(timeoutMillis = 5000) {
             composeTestRule.onNodeWithText("Folders").isDisplayed()
         }

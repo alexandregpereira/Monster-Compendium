@@ -31,6 +31,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal fun KoinApplication.initKoinModules() {
+    allowOverride(false)
     modules(domainModules)
     modules(dataModules)
     modules(

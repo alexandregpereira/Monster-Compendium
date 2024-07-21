@@ -17,10 +17,8 @@
 package br.alexandregpereira.hunter.folder.detail.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.folder.detail.FolderDetailState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
@@ -30,9 +28,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
-import br.alexandregpereira.hunter.ui.compose.BackHandler
-import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
-import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 
 @Composable
 internal fun FolderDetailScreen(
@@ -41,29 +37,23 @@ internal fun FolderDetailScreen(
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
     onClose: () -> Unit = {}
-) {
-    BackHandler(enabled = state.isOpen, onBack = onClose)
-
+) = AppFullScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
     val monsters = remember(state.monsters) { state.monsters.asState() }
-    SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
-        Window(Modifier.fillMaxSize()) {
-            val items = listOf(
-                Title(
-                    value = state.folderName,
-                    isHeader = true
-                ),
-            ) + monsters.map {
-                Item(value = it)
-            }
-            MonsterCompendium(
-                items = items,
-                animateItems = true,
-                contentPadding = contentPadding,
-                onItemCLick = onItemCLick,
-                onItemLongCLick = onItemLongCLick
-            )
-        }
+    val items = listOf(
+        Title(
+            value = state.folderName,
+            isHeader = true
+        ),
+    ) + monsters.map {
+        Item(value = it)
     }
+    MonsterCompendium(
+        items = items,
+        animateItems = true,
+        contentPadding = contentPadding,
+        onItemCLick = onItemCLick,
+        onItemLongCLick = onItemLongCLick
+    )
 }
 
 private fun List<MonsterPreviewFolder>.asState(): List<MonsterCardState> = map {

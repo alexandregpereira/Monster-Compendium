@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerState
 import br.alexandregpereira.hunter.monster.content.MonsterContentState
+import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
@@ -41,48 +42,42 @@ internal fun MonsterContentManagerScreen(
     onAddClick: (String) -> Unit = {},
     onRemoveClick: (String) -> Unit = {},
     onPreviewClick: (String, String) -> Unit = { _, _ -> },
-) {
-    BackHandler(enabled = state.isOpen, onBack = onClose)
+) = AppFullScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
+    LazyColumn(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(
+            top = 24.dp + contentPadding.calculateTopPadding(),
+            bottom = contentPadding.calculateBottomPadding()
+        )
+    ) {
+        item(key = "title") {
+            SectionTitle(
+                title = state.strings.title,
+                isHeader = true,
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+            )
+        }
 
-    SwipeVerticalToDismiss(visible = state.isOpen, onClose = onClose) {
-        Window(Modifier.fillMaxSize()) {
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                contentPadding = PaddingValues(
-                    top = 24.dp + contentPadding.calculateTopPadding(),
-                    bottom = contentPadding.calculateBottomPadding()
-                )
-            ) {
-                item(key = "title") {
-                    SectionTitle(
-                        title = state.strings.title,
-                        isHeader = true,
-                        modifier = Modifier
-                            .padding(bottom = 32.dp)
+        items(state.monsterContents, key = { it.acronym }) { monsterContent ->
+            MonsterContentCard(
+                name = monsterContent.name,
+                originalName = monsterContent.originalName,
+                totalMonsters = monsterContent.totalMonsters,
+                summary = monsterContent.summary,
+                coverImageUrl = monsterContent.coverImageUrl,
+                isEnabled = monsterContent.isEnabled,
+                strings = state.strings,
+                onAddClick = { onAddClick(monsterContent.acronym) },
+                onRemoveClick = { onRemoveClick(monsterContent.acronym) },
+                onPreviewClick = {
+                    onPreviewClick(
+                        monsterContent.acronym,
+                        monsterContent.name
                     )
-                }
-
-                items(state.monsterContents, key = { it.acronym }) { monsterContent ->
-                    MonsterContentCard(
-                        name = monsterContent.name,
-                        originalName = monsterContent.originalName,
-                        totalMonsters = monsterContent.totalMonsters,
-                        summary = monsterContent.summary,
-                        coverImageUrl = monsterContent.coverImageUrl,
-                        isEnabled = monsterContent.isEnabled,
-                        strings =  state.strings,
-                        onAddClick = { onAddClick(monsterContent.acronym) },
-                        onRemoveClick = { onRemoveClick(monsterContent.acronym) },
-                        onPreviewClick = {
-                            onPreviewClick(
-                                monsterContent.acronym,
-                                monsterContent.name
-                            )
-                        },
-                    )
-                    Spacer(modifier = Modifier.padding(bottom = 48.dp))
-                }
-            }
+                },
+            )
+            Spacer(modifier = Modifier.padding(bottom = 48.dp))
         }
     }
 }

@@ -34,9 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.AppButton
-import br.alexandregpereira.hunter.ui.compose.BackHandler
+import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
-import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -49,33 +48,29 @@ internal fun BoxScope.ItemSelection(
     contentBottomPadding: Dp = 0.dp,
     onClose: () -> Unit = {},
     onDeleteClick: () -> Unit = {}
+) = AppScreen(
+    isOpen = isOpen,
+    onClose = onClose,
+    modifier = Modifier.align(BottomCenter)
 ) {
-    BackHandler(enabled = isOpen, onBack = onClose)
-
-    SwipeVerticalToDismiss(
-        visible = isOpen,
-        onClose = onClose,
-        modifier = Modifier.align(BottomCenter)
+    Card(
+        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(state = rememberScrollState())
     ) {
-        Card(
-            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            modifier = modifier
-                .fillMaxWidth()
-                .verticalScroll(state = rememberScrollState())
-        ) {
-            Column(Modifier.padding(16.dp)) {
-                ScreenHeader(
-                    title = itemSelectionText,
-                )
+        Column(Modifier.padding(16.dp)) {
+            ScreenHeader(
+                title = itemSelectionText,
+            )
 
-                AppButton(
-                    text = deleteText,
-                    modifier = Modifier.padding(top = 24.dp),
-                    onClick = onDeleteClick
-                )
+            AppButton(
+                text = deleteText,
+                modifier = Modifier.padding(top = 24.dp),
+                onClick = onDeleteClick
+            )
 
-                Spacer(modifier = Modifier.height(contentBottomPadding))
-            }
+            Spacer(modifier = Modifier.height(contentBottomPadding))
         }
     }
 }

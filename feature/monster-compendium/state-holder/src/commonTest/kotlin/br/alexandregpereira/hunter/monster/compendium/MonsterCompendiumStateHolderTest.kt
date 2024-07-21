@@ -48,9 +48,7 @@ import br.alexandregpereira.hunter.monster.event.emptyMonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
-import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.emptySyncEventDispatcher
-import br.alexandregpereira.hunter.sync.event.emptySyncEventListener
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -367,7 +365,8 @@ class MonsterCompendiumStateHolderTest {
             appLocalization = object : AppLocalization {
                 override fun getLanguage(): Language = Language.ENGLISH
             },
-            stateRecovery = StateRecovery()
+            stateRecovery = StateRecovery(),
+            isFirstTime = { false },
         )
     }
 
