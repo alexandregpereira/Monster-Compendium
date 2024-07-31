@@ -28,9 +28,11 @@ internal fun AppBottomNavigationTransition(
                 contentPadding = contentPadding,
             )
             BottomBarItemIcon.SETTINGS -> SettingsFeature(
-                versionName = "",
+                versionName = getVersionName(),
                 contentPadding = contentPadding,
             )
         }
     }
 }
+
+internal expect fun getVersionName(): String
