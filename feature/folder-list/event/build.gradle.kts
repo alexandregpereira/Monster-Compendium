@@ -20,7 +20,6 @@ plugins {
 
 multiplatform {
     commonMain {
-
         implementation(libs.kotlin.coroutines.core)
     }
     jvmMain()
