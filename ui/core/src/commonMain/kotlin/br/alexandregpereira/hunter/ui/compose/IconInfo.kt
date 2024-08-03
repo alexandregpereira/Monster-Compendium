@@ -56,7 +56,7 @@ fun IconInfo(
     iconAlpha: Float = 0.7f,
     title: String? = null,
     iconText: String? = null,
-    iconTextPadding: PaddingValues = PaddingValues(0.dp)
+    iconPadding: PaddingValues = PaddingValues(0.dp)
 ) = Column(
     modifier,
     horizontalAlignment = Alignment.CenterHorizontally
@@ -70,15 +70,14 @@ fun IconInfo(
             modifier = Modifier
                 .size(iconSize)
                 .alpha(iconAlpha)
+                .padding(iconPadding)
         )
 
         iconText?.let {
             Text(
                 text = it,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = Color.White,
-                modifier = Modifier.padding(iconTextPadding)
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
             )
         }
     }
@@ -122,7 +121,7 @@ fun IconInfoHitPointPreview() {
                 iconColor = Color.Red,
                 iconText = "100",
                 iconAlpha = 1f,
-                iconTextPadding = PaddingValues(bottom = 4.dp)
+                iconPadding = PaddingValues(bottom = 4.dp)
             )
         }
     }

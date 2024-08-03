@@ -17,14 +17,11 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.resources.Res
+import br.alexandregpereira.hunter.detail.ui.resources.ic_hit_point
 import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
 import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -47,18 +44,16 @@ private fun StatsGrid(
     IconInfo(
         title = strings.armorClass,
         painter = painterResource(Res.drawable.ic_shield),
-        iconColor = Color.Blue,
+        iconSize = 72.dp,
         iconText = stats.armorClass.toString(),
-        iconAlpha = 1f
     )
 
     IconInfo(
         title = stats.hitDice,
-        painter = rememberVectorPainter(image = Icons.Filled.Favorite),
-        iconColor = Color.Red,
+        painter = painterResource(Res.drawable.ic_hit_point),
+        iconSize = 72.dp,
         iconText = stats.hitPoints.toString(),
-        iconAlpha = 1f,
-        iconTextPadding = PaddingValues(bottom = 4.dp)
+        iconTextPadding = PaddingValues(top = 4.dp),
     )
 }
 

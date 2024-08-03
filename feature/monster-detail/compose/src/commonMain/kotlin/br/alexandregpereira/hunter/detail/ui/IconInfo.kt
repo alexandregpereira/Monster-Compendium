@@ -53,7 +53,7 @@ internal fun IconInfo(
     iconSize = iconSize,
     iconAlpha = iconAlpha,
     iconText = iconText,
-    iconTextPadding = iconTextPadding,
+    iconPadding = iconTextPadding,
     modifier = modifier
 )
 

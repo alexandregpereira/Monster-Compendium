@@ -1,25 +1,9 @@
-<!--
-  ~ Copyright 2022 Alexandre Gomes Pereira
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
   <path
-      android:pathData="M12,1L3,5v6c0,5.55 3.84,10.74 9,12 5.16,-1.26 9,-6.45 9,-12V5l-9,-4z"
-      android:fillColor="#000000"/>
+      android:pathData="M480,838.23q-120.77,-36.54 -200.38,-147.88Q200,579 200,440.85v-213.39l280,-104.61 280,104.61v213.39q0,138.15 -79.62,249.5Q600.77,801.69 480,838.23ZM480,805.46q108.85,-34.92 179.04,-136.96t70.19,-227.65v-192.16L480,155.31l-249.23,93.38v192.16q0,125.61 70.19,227.65T480,805.46ZM480,480.77Z"
+      android:fillColor="#00000"/>
 </vector>
