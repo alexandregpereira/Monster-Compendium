@@ -53,7 +53,7 @@ private fun StatsGrid(
         painter = painterResource(Res.drawable.ic_hit_point),
         iconSize = 72.dp,
         iconText = stats.hitPoints.toString(),
-        iconTextPadding = PaddingValues(top = 4.dp),
+        iconPadding = PaddingValues(top = 4.dp),
     )
 }
 
