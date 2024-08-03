@@ -45,7 +45,7 @@ internal fun IconInfo(
     iconColor: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
     iconAlpha: Float = 0.7f,
     iconText: String? = null,
-    iconTextPadding: PaddingValues = PaddingValues(0.dp)
+    iconPadding: PaddingValues = PaddingValues(0.dp)
 ) = IconInfoUi(
     title = title,
     painter = painter,
@@ -53,7 +53,7 @@ internal fun IconInfo(
     iconSize = iconSize,
     iconAlpha = iconAlpha,
     iconText = iconText,
-    iconTextPadding = iconTextPadding,
+    iconPadding = iconPadding,
     modifier = modifier
 )
 
@@ -84,7 +84,7 @@ private fun IconInfoHitPointPreview() {
                 iconColor = Color.Red,
                 iconText = "100",
                 iconAlpha = 1f,
-                iconTextPadding = PaddingValues(bottom = 4.dp)
+                iconPadding = PaddingValues(bottom = 4.dp)
             )
         }
     }

@@ -134,9 +134,6 @@ internal fun MonsterDetailScreen(
                 modifier = Modifier
                     .height(
                         getImageHeightInDp()
-                                + MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING
-                                + MONSTER_IMAGE_COMPOSE_TOP_PADDING
-                                + contentPadding.calculateTopPadding()
                     )
                     .fillMaxWidth()
                     .transitionHorizontalScrollable(pagerState)
@@ -264,10 +261,6 @@ private fun MonsterImageCompose(
             pagerState = pagerState,
             height = getImageHeightInDp(),
             shape = RectangleShape,
-            contentPadding = PaddingValues(
-                top = MONSTER_IMAGE_COMPOSE_TOP_PADDING + contentPadding.calculateTopPadding(),
-                bottom = MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING
-            )
         )
 
         ChallengeRatingCompose(
@@ -405,14 +398,11 @@ private fun MonsterTypeIcon(
 @Composable
 private fun getImageHeightInDp(): Dp {
     val screenSizeInfo = LocalScreenSize.current
-    return (screenSizeInfo.hDP.value * 0.75).dp
+    return (screenSizeInfo.hDP.value * 0.84).dp
 }
 
-private val MONSTER_IMAGE_COMPOSE_TOP_PADDING = 24.dp
-private val MONSTER_IMAGE_COMPOSE_BOTTOM_PADDING = 16.dp
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
 
-@OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
 private fun MonsterDetailPreview() = Window {
