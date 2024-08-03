@@ -32,8 +32,8 @@ internal data class SettingsEnStrings(
     override val save: String = "Save",
     override val appearanceSettingsTitle: String = "Appearance",
     override val forceLightImageBackground: String = "Use Light Background Color in Images",
-    override val defaultLightBackground: String = "Default Light Background Color",
-    override val defaultDarkBackground: String = "Default Dark Background Color",
+    override val defaultLightBackground: String = "Default Image Light Background Color",
+    override val defaultDarkBackground: String = "Default Image Dark Background Color",
     override val importContent: String = "Import Shared Content",
 ) : SettingsStrings
 

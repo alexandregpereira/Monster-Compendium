@@ -48,8 +48,15 @@ internal fun MenuScreen(
     ) {
         Column(Modifier.padding(contentPadding)) {
             MenuItem(
-                text = state.strings.manageMonsterContent,
-                onClick = viewIntent::onManageMonsterContentClick
+                text = state.strings.settingsTitle,
+                onClick = viewIntent::onSettingsClick
+            )
+
+            Divider()
+
+            MenuItem(
+                text = state.strings.manageAdvancedSettings,
+                onClick = viewIntent::onAdvancedSettingsClick
             )
 
             Divider()
@@ -69,15 +76,8 @@ internal fun MenuScreen(
             Divider()
 
             MenuItem(
-                text = state.strings.settingsTitle,
-                onClick = viewIntent::onSettingsClick
-            )
-
-            Divider()
-
-            MenuItem(
-                text = state.strings.manageAdvancedSettings,
-                onClick = viewIntent::onAdvancedSettingsClick
+                text = state.strings.manageMonsterContent,
+                onClick = viewIntent::onManageMonsterContentClick
             )
         }
 
