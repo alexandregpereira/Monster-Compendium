@@ -273,6 +273,7 @@ private fun MonsterImageCompose(
             monsters = monsters,
             pagerState = pagerState,
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding())
+                .align(Alignment.TopEnd)
         )
     }
 }

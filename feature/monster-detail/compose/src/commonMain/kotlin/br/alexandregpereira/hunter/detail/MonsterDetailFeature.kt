@@ -33,15 +33,11 @@ import br.alexandregpereira.hunter.detail.ui.strings
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailStateHolder
 import br.alexandregpereira.hunter.monster.detail.di.MonsterDetailStateRecoveryQualifier
 import br.alexandregpereira.hunter.ui.compose.AppScreen
-import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.ConfirmationBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormField
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
-import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
-import br.alexandregpereira.hunter.ui.compose.SwipeVerticalToDismiss
-import br.alexandregpereira.hunter.ui.compose.getPlatformScreenSizeInfo
 import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -74,7 +70,6 @@ fun MonsterDetailFeature(
             if (viewState.monsters.isEmpty()) return@LoadingScreen
             CompositionLocalProvider(
                 LocalStrings provides viewState.strings,
-                LocalScreenSize provides getPlatformScreenSizeInfo()
             ) {
                 MonsterDetailScreen(
                     viewState.monsters,

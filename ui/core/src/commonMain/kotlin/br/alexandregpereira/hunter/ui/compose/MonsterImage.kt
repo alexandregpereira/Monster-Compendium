@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -40,17 +41,14 @@ fun MonsterImage(
 ) {
     val shape = Shapes.large
     val iconSize = 24.dp
-    val height = 208.dp
     val challengeRatingSize = 48.dp
     val challengeRatingFontSize = 14.sp
     Box(
-        modifier
-            .clip(shape)
+        modifier.clip(shape)
     ) {
         MonsterCoilImage(
             imageUrl = url,
             contentDescription = contentDescription,
-            height = height,
             backgroundColor = backgroundColor,
             shape = shape,
         )
@@ -64,7 +62,8 @@ fun MonsterImage(
         MonsterTypeIcon(
             icon = icon,
             iconSize = iconSize,
-            tint = backgroundColor.getTintColor()
+            tint = backgroundColor.getTintColor(),
+            modifier = Modifier.align(Alignment.TopEnd),
         )
     }
 }

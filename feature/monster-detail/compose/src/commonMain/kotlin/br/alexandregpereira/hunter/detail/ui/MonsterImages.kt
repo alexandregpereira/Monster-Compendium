@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
@@ -45,8 +46,7 @@ internal fun MonsterImages(
     MonsterCoilImage(
         imageUrl = image.url,
         contentDescription = image.contentDescription,
-        height = height,
         shape = shape,
-        modifier = Modifier.padding(contentPadding)
+        modifier = Modifier.height(height).padding(contentPadding)
     )
 }

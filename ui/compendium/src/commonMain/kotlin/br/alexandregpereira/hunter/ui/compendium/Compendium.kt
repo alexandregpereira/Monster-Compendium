@@ -29,7 +29,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 
@@ -54,7 +56,10 @@ fun Compendium(
             top = contentPadding.calculateTopPadding(),
             bottom = contentPadding.calculateBottomPadding() + 64.dp
         ),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(
+            space = 16.dp,
+            alignment = Alignment.CenterHorizontally
+        ),
     ) {
         items.forEach { item ->
             val sectionTitlePaddingTop = 32.dp
@@ -86,9 +91,7 @@ fun Compendium(
                     item(
                         key = key(item),
                         span = {
-                            val lineSpan = if (isHorizontalCard(item)) {
-                                maxLineSpan
-                            } else 1
+                            val lineSpan = if (isHorizontalCard(item)) 2 else 1
                             GridItemSpan(lineSpan)
                         }
                     ) {
@@ -112,11 +115,14 @@ sealed class CompendiumColumns {
     data class Adaptive(
         val minSize: Int,
     ) : CompendiumColumns()
+
+    class FixedSize(val size: Dp) : CompendiumColumns()
 }
 
 private fun CompendiumColumns.toGridCells(): GridCells = when (this) {
     is CompendiumColumns.Fixed -> GridCells.Fixed(count)
     is CompendiumColumns.Adaptive -> GridCells.Adaptive(minSize.dp)
+    is CompendiumColumns.FixedSize -> GridCells.FixedSize(size)
 }
 
 @OptIn(ExperimentalFoundationApi::class)

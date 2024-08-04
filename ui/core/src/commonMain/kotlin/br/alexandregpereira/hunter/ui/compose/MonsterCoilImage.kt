@@ -16,59 +16,15 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
-
-@Composable
-fun MonsterCoilImage(
-    imageUrl: String,
-    contentDescription: String,
-    height: Dp,
-    shape: Shape = RectangleShape,
-    modifier: Modifier = Modifier,
-    backgroundColor: String,
-    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
-) {
-    MonsterCoilImage(
-        imageUrl,
-        contentDescription,
-        shape,
-        modifier
-            .height(height)
-            .fillMaxWidth(),
-        backgroundColor,
-        graphicsLayerBlock
-    )
-}
-
-@Composable
-fun MonsterCoilImage(
-    imageUrl: String,
-    contentDescription: String,
-    height: Dp,
-    shape: Shape = RectangleShape,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color? = null,
-    graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
-) {
-    MonsterCoilImage(
-        imageUrl,
-        contentDescription,
-        shape,
-        modifier
-            .height(height)
-            .fillMaxWidth(),
-        backgroundColor,
-        graphicsLayerBlock
-    )
-}
+import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
 fun MonsterCoilImage(
@@ -78,16 +34,14 @@ fun MonsterCoilImage(
     modifier: Modifier = Modifier,
     backgroundColor: String,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
-) {
-    CoilImage(
-        imageUrl,
-        contentDescription,
-        modifier,
-        shape,
-        backgroundColor,
-        graphicsLayerBlock
-    )
-}
+) = MonsterCoilImage(
+    imageUrl = imageUrl,
+    contentDescription = contentDescription,
+    modifier = modifier,
+    shape = shape,
+    backgroundColor = remember(backgroundColor) { backgroundColor.toColor() },
+    graphicsLayerBlock = graphicsLayerBlock
+)
 
 @Composable
 fun MonsterCoilImage(
@@ -101,7 +55,7 @@ fun MonsterCoilImage(
     CoilImage(
         imageUrl,
         contentDescription,
-        modifier,
+        modifier.fillMaxSize(),
         shape,
         backgroundColor,
         graphicsLayerBlock

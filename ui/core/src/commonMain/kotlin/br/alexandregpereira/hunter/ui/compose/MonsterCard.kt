@@ -16,10 +16,12 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,15 +39,17 @@ fun MonsterCard(
     icon: DrawableResource,
     backgroundColor: String,
     challengeRating: String,
+    isHorizontal: Boolean = false,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
     onLongCLick: () -> Unit = {},
 ) {
-    Column(
+    val aspectRatio = if (isHorizontal) 85 / 72f else 9 / 16f
+    Box(
         modifier.animatePressed(
             onClick = onCLick,
             onLongClick = onLongCLick
-        )
+        ).aspectRatio(aspectRatio)
     ) {
         MonsterImage(
             url = url,
@@ -61,7 +65,7 @@ fun MonsterCard(
             modifier = Modifier.padding(
                 vertical = 4.dp,
                 horizontal = 4.dp
-            )
+            ).align(Alignment.BottomStart)
         )
     }
 }

@@ -18,13 +18,16 @@ package br.alexandregpereira.hunter.app
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.AppMainScreen
 import br.alexandregpereira.hunter.ui.compose.AppWindow
+import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
+import br.alexandregpereira.hunter.ui.compose.getPlatformScreenSizeInfo
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -41,10 +44,14 @@ internal fun HunterApp(
 
         val viewModel: MainViewModel = koinInject()
         val state by viewModel.state.collectAsState()
-        AppMainScreen(
-            state = state,
-            contentPadding = contentPadding,
-            onEvent = viewModel::onEvent
-        )
+        CompositionLocalProvider(
+            LocalScreenSize provides getPlatformScreenSizeInfo()
+        ) {
+            AppMainScreen(
+                state = state,
+                contentPadding = contentPadding,
+                onEvent = viewModel::onEvent
+            )
+        }
     }
 }
