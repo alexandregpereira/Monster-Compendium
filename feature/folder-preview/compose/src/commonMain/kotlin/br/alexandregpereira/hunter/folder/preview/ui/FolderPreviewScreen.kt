@@ -35,22 +35,20 @@ internal fun FolderPreviewScreen(
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
-) = HunterTheme {
-    AnimatedVisibility(
-        visible = state.showPreview,
-        enter = slideInVertically { fullHeight -> fullHeight * 2 },
-        exit = slideOutVertically { fullHeight -> fullHeight * 2 },
-    ) {
-        Box(Modifier.fillMaxSize()) {
-            FolderPreview(
-                monsters = state.monsters,
-                saveButtonText = state.strings.save,
-                contentPadding = contentPadding,
-                onClick = onClick,
-                onLongClick = onLongClick,
-                onSave = onSave,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
-        }
+) = AnimatedVisibility(
+    visible = state.showPreview,
+    enter = slideInVertically { fullHeight -> fullHeight * 2 },
+    exit = slideOutVertically { fullHeight -> fullHeight * 2 },
+) {
+    Box(Modifier.fillMaxSize()) {
+        FolderPreview(
+            monsters = state.monsters,
+            saveButtonText = state.strings.save,
+            contentPadding = contentPadding,
+            onClick = onClick,
+            onLongClick = onLongClick,
+            onSave = onSave,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }

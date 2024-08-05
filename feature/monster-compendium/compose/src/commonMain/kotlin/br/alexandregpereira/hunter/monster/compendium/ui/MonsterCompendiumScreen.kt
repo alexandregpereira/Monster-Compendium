@@ -55,6 +55,7 @@ internal fun MonsterCompendiumScreen(
     events: MonsterCompendiumIntent,
 ) = Window(Modifier.fillMaxSize()) {
     LoadingScreen<MonsterCompendiumError>(
+        modifier = Modifier.fillMaxSize(),
         state = when {
             state.errorState != null -> LoadingScreenState.Error(state.errorState)
             state.isLoading -> LoadingScreenState.LoadingScreen

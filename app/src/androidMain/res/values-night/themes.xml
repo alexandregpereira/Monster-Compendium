@@ -26,8 +26,8 @@
         <item name="colorSecondaryVariant">@color/gray_scale_900</item>
 
         <item name="android:colorBackground">@color/black</item>
-        <item name="android:statusBarColor">@color/gray_scale_900_alpha_060</item>
-        <item name="android:navigationBarColor">@color/black_alpha_020</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
 
         <!--System/Platform attributes-->
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>

@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.app.BottomBarItem
+import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 import org.jetbrains.compose.resources.DrawableResource
@@ -80,11 +81,7 @@ internal fun BoxScope.AppBottomNavigation(
         exit = slideOutVertically { fullHeight -> fullHeight },
         modifier = Modifier.align(Alignment.BottomStart)
     ) {
-        Surface(
-            modifier = Modifier
-                .background(MaterialTheme.colors.surface),
-            elevation = 4.dp
-        ) {
+        Window(elevation = 4.dp) {
             val paddingBottom = contentPadding.calculateBottomPadding()
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,

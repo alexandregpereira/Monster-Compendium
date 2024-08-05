@@ -24,7 +24,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title =  "Monster Compendium",
         state = rememberWindowState(
-            size = DpSize(600.dp, 800.dp)
+            size = DpSize(1600.dp, 900.dp)
         ),
         onKeyEvent = onKeyEvent@ { keyEvent ->
             val keyPressedHandled = keyEvent.asKeyPressedHandled() ?: return@onKeyEvent false

@@ -16,8 +16,6 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -37,9 +35,14 @@ fun MonsterTypeIcon(
     iconSize: Dp,
     modifier: Modifier = Modifier,
     contentDescription: String = "",
+    size: Dp = 48.dp,
     tint: Color = Color.Black,
-) = Box(
-    modifier = modifier.padding(8.dp),
+    backgroundColor: Color = Color.Transparent,
+) = CornerCircle(
+    modifier = modifier,
+    color = backgroundColor,
+    size = size,
+    direction = Direction.RIGHT,
 ) {
     Icon(
         painter = painterResource(icon),
@@ -51,8 +54,10 @@ fun MonsterTypeIcon(
     )
 }
 
-fun String.getTintColor(): Color {
-    val color = this.toColor()
+fun String.getTintColor(): Color = this.toColor().getTintColor()
+
+fun Color.getTintColor(): Color {
+    val color = this
     val luminance = colorToLuminance(color.red, color.green, color.blue)
     return if (luminance > 0.5) Color.Black else Color.White
 }
