@@ -18,15 +18,15 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 
 data class ImageState(val url: String, val contentDescription: String)
@@ -36,7 +36,6 @@ data class ImageState(val url: String, val contentDescription: String)
 internal fun MonsterImages(
     images: List<ImageState>,
     pagerState: PagerState,
-    height: Dp,
     shape: Shape,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) = AlphaTransition(
@@ -47,6 +46,6 @@ internal fun MonsterImages(
         imageUrl = image.url,
         contentDescription = image.contentDescription,
         shape = shape,
-        modifier = Modifier.height(height).padding(contentPadding)
+        modifier = Modifier.monsterAspectRatio().padding(contentPadding)
     )
 }

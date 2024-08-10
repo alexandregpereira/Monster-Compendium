@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
-import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun MenuScreen(
@@ -42,7 +41,7 @@ internal fun MenuScreen(
     versionName: String,
     contentPadding: PaddingValues = PaddingValues(),
     viewIntent: SettingsViewIntent,
-) = Window {
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {

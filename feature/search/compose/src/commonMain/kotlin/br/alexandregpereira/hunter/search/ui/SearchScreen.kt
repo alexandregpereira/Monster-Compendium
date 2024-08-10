@@ -20,15 +20,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun SearchScreen(
@@ -37,38 +34,36 @@ internal fun SearchScreen(
     onSearchValueChange: (String) -> Unit = {},
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
-) = HunterTheme {
-    Surface(Modifier.fillMaxSize()) {
-        Column(Modifier) {
-            Box {
-                val focusManager = LocalFocusManager.current
-                SearchGrid(
-                    monsterRows = state.monsterRows,
-                    totalResults = state.searchResults,
-                    contentPadding = PaddingValues(
-                        top = contentPaddingValues.calculateTopPadding() + 56.dp + 8.dp,
-                        bottom = contentPaddingValues.calculateBottomPadding()
-                    ),
-                    onCardClick = {
-                        focusManager.clearFocus()
-                        onCardClick(it)
-                    },
-                    onCardLongClick = {
-                        focusManager.clearFocus()
-                        onCardLongClick(it)
-                    }
-                )
+) {
+    Column(Modifier) {
+        Box {
+            val focusManager = LocalFocusManager.current
+            SearchGrid(
+                monsterRows = state.monsterRows,
+                totalResults = state.searchResults,
+                contentPadding = PaddingValues(
+                    top = contentPaddingValues.calculateTopPadding() + 56.dp + 8.dp,
+                    bottom = contentPaddingValues.calculateBottomPadding()
+                ),
+                onCardClick = {
+                    focusManager.clearFocus()
+                    onCardClick(it)
+                },
+                onCardLongClick = {
+                    focusManager.clearFocus()
+                    onCardLongClick(it)
+                }
+            )
 
-                SearchBar(
-                    text = state.searchValue,
-                    searchLabel = state.searchLabel,
-                    onValueChange = onSearchValueChange,
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
-                )
-            }
-            Spacer(modifier = Modifier.height(contentPaddingValues.calculateBottomPadding()))
+            SearchBar(
+                text = state.searchValue,
+                searchLabel = state.searchLabel,
+                onValueChange = onSearchValueChange,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
+            )
         }
+        Spacer(modifier = Modifier.height(contentPaddingValues.calculateBottomPadding()))
     }
 }

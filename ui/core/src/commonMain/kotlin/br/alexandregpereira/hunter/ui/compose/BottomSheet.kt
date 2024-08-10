@@ -70,8 +70,7 @@ fun BottomSheet(
                         .height(topSpaceHeight + contentPadding.calculateTopPadding())
                         .noIndicationClick(onClick = onClose)
                 )
-                Card(
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                Window(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(

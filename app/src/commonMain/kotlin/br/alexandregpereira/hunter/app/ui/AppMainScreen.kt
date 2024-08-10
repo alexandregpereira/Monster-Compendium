@@ -36,7 +36,7 @@ internal fun AppMainScreen(
         )
         val contentPaddingWithBottomBar = PaddingValues(
             top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding() + bottomBarNavigationSize,
+            bottom = contentPadding.calculateBottomPadding() + bottomBarNavigationSize + 8.dp,
         )
 
         AppBottomNavigationTransition(

@@ -30,14 +30,16 @@ fun AppScreen(
     BackHandler(enabled = isOpen, onBack = onClose)
 
     SwipeVerticalToDismiss(visible = isOpen, onClose = onClose, modifier = modifier) {
-        if (closeable) {
-            BoxClosable(
-                contentPaddingValues = contentPaddingValues,
-                onClick = onClose,
-                content = content,
-            )
-        } else {
-            content()
+        Window {
+            if (closeable) {
+                BoxClosable(
+                    contentPaddingValues = contentPaddingValues,
+                    onClick = onClose,
+                    content = content,
+                )
+            } else {
+                content()
+            }
         }
     }
 }

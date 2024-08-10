@@ -26,8 +26,8 @@
         <item name="colorSecondaryVariant">@color/white</item>
 
         <item name="android:colorBackground">@color/gray_scale_100</item>
-        <item name="android:statusBarColor">@color/white_alpha_060</item>
-        <item name="android:navigationBarColor">@color/white_alpha_020</item>
+        <item name="android:statusBarColor">@color/gray_scale_100</item>
+        <item name="android:navigationBarColor">@color/gray_scale_100</item>
 
         <!--Styles-->
         <item name="navigationViewStyle">@style/Widget.Hunter.NavigationView</item>

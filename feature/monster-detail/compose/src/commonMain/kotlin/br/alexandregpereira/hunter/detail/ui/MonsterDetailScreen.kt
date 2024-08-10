@@ -77,6 +77,7 @@ import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.getTintColor
+import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -259,7 +260,6 @@ private fun MonsterImageCompose(
         MonsterImages(
             images = monsters.map { ImageState(it.imageUrl, it.name) },
             pagerState = pagerState,
-            height = getImageHeightInDp(),
             shape = RectangleShape,
         )
 

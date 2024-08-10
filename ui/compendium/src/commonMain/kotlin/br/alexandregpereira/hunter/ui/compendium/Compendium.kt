@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,62 +45,62 @@ fun Compendium(
     key: (CompendiumItemState.Item) -> Any? = { null },
     isHorizontalCard: (CompendiumItemState.Item) -> Boolean = { false },
     cardContent: @Composable (CompendiumItemState.Item) -> Unit,
-) = Surface(modifier) {
-    LazyVerticalGrid(
-        columns = columns.toGridCells(),
-        state = listState,
-        contentPadding = PaddingValues(
-            start = 16.dp,
-            end = 16.dp,
-            top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding() + 64.dp
-        ),
-        horizontalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
-            alignment = Alignment.CenterHorizontally
-        ),
-    ) {
-        items.forEach { item ->
-            val sectionTitlePaddingTop = 32.dp
-            val sectionTitlePaddingBottom = 16.dp
+) = LazyVerticalGrid(
+    columns = columns.toGridCells(),
+    state = listState,
+    contentPadding = PaddingValues(
+        start = 16.dp,
+        end = 16.dp,
+        top = contentPadding.calculateTopPadding(),
+        bottom = contentPadding.calculateBottomPadding() + 64.dp
+    ),
+    horizontalArrangement = Arrangement.spacedBy(
+        space = 16.dp,
+        alignment = Alignment.CenterHorizontally
+    ),
+    modifier = modifier,
+) {
+    items.forEach { item ->
+        val sectionTitlePaddingTop = 32.dp
+        val sectionTitlePaddingBottom = 16.dp
 
-            when (item) {
-                is CompendiumItemState.Title -> {
-                    item(
-                        key = item.id,
-                        span = { GridItemSpan(maxLineSpan) }
-                    ) {
-                        val paddingTop = when {
-                            item.isHeader -> sectionTitlePaddingTop
-                            else -> 24.dp
-                        }
-                        SectionTitle(
-                            title = item.value,
-                            isHeader = item.isHeader,
-                            modifier = Modifier
-                                .animateItems(this, animateItems)
-                                .padding(
-                                    top = paddingTop,
-                                    bottom = sectionTitlePaddingBottom
-                                )
-                        )
+        when (item) {
+            is CompendiumItemState.Title -> {
+                item(
+                    key = item.id,
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
+                    val paddingTop = when {
+                        item.isHeader -> sectionTitlePaddingTop
+                        else -> 24.dp
                     }
+                    SectionTitle(
+                        title = item.value,
+                        isHeader = item.isHeader,
+                        modifier = Modifier
+                            .animateItems(this, animateItems)
+                            .padding(
+                                top = paddingTop,
+                                bottom = sectionTitlePaddingBottom
+                            )
+                    )
                 }
-                is CompendiumItemState.Item -> {
-                    item(
-                        key = key(item),
-                        span = {
-                            val lineSpan = if (isHorizontalCard(item)) 2 else 1
-                            GridItemSpan(lineSpan)
-                        }
+            }
+
+            is CompendiumItemState.Item -> {
+                item(
+                    key = key(item),
+                    span = {
+                        val lineSpan = if (isHorizontalCard(item)) 2 else 1
+                        GridItemSpan(lineSpan)
+                    }
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .animateItems(this, animateItems)
+                            .padding(vertical = 8.dp),
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .animateItems(this, animateItems)
-                                .padding(vertical = 8.dp),
-                        ) {
-                            cardContent(item)
-                        }
+                        cardContent(item)
                     }
                 }
             }

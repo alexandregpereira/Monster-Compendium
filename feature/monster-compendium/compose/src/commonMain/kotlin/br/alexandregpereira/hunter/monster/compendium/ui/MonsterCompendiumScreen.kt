@@ -42,7 +42,6 @@ import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 import kotlinx.coroutines.flow.collectLatest
 
@@ -53,8 +52,9 @@ internal fun MonsterCompendiumScreen(
     initialScrollItemPosition: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumIntent,
-) = Window(Modifier.fillMaxSize()) {
+) {
     LoadingScreen<MonsterCompendiumError>(
+        modifier = Modifier.fillMaxSize(),
         state = when {
             state.errorState != null -> LoadingScreenState.Error(state.errorState)
             state.isLoading -> LoadingScreenState.LoadingScreen
@@ -148,7 +148,7 @@ private fun MonsterCompendiumScreen(
                 modifier = Modifier
                     .padding(
                         top = contentPadding.calculateTopPadding(),
-                        bottom = contentPadding.calculateBottomPadding() + paddingBottom
+                        bottom = paddingBottom
                     )
             )
         }

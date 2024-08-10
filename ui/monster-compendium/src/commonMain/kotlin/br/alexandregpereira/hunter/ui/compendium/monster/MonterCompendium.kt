@@ -35,14 +35,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun MonsterCompendium(
     items: List<CompendiumItemState>,
     modifier: Modifier = Modifier,
-    animateItems: Boolean = true,
+    animateItems: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
 ) {
     val currentWidth = LocalScreenSize.current.wDP
-    val cardWidth = 170.dp
+    val cardWidth = 160.dp
     Compendium(
         items = items,
         modifier = modifier,

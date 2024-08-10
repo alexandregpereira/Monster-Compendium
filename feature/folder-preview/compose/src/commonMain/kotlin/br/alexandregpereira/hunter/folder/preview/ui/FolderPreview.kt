@@ -62,8 +62,8 @@ fun FolderPreview(
                 .align(Alignment.BottomCenter),
             elevation = 0.dp,
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.surface),
-            backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
+            border = BorderStroke(width = 2.dp, color = MaterialTheme.colors.background),
+            backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.5f)
         ) {}
         Column {
             Row {

@@ -17,16 +17,21 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.resources.Res
 import br.alexandregpereira.hunter.ui.resources.ic_aberration
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,35 +42,43 @@ fun MonsterImage(
     backgroundColor: String,
     challengeRating: String,
     modifier: Modifier = Modifier,
+    borderColor: Color = MaterialTheme.colors.surface,
     contentDescription: String = "",
 ) {
-    val shape = Shapes.large
-    val iconSize = 24.dp
+    val iconSize = 20.dp
     val challengeRatingSize = 48.dp
-    val challengeRatingFontSize = 14.sp
-    Box(
-        modifier.clip(shape)
-    ) {
+    val challengeRatingFontSize = 18.sp
+    Box(modifier) {
         MonsterCoilImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
-            shape = shape,
         )
 
         ChallengeRatingCircle(
             challengeRating = challengeRating,
             size = challengeRatingSize,
-            fontSize = challengeRatingFontSize
+            fontSize = challengeRatingFontSize,
+            backgroundColor = borderColor,
         )
 
         MonsterTypeIcon(
             icon = icon,
             iconSize = iconSize,
-            tint = backgroundColor.getTintColor(),
+            tint = borderColor.getTintColor(),
             modifier = Modifier.align(Alignment.TopEnd),
+            size = challengeRatingSize,
+            backgroundColor = borderColor,
         )
     }
+}
+
+@Composable
+fun Modifier.monsterAspectRatio(
+    isHorizontal: Boolean = false
+): Modifier {
+    return fillMaxWidth().heightIn(max = LocalScreenSize.current.hDP)
+        .aspectRatio(if (isHorizontal) 1 / 1f else 9 / 16f)
 }
 
 @Preview

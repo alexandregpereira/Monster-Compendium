@@ -16,14 +16,24 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -31,14 +41,28 @@ fun AppWindow(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = HunterTheme {
-    Window(modifier = modifier, content = content)
+    Box(modifier = modifier.background(MaterialTheme.colors.background)) {
+        content()
+    }
 }
 
 @Composable
 fun Window(
     modifier: Modifier = Modifier,
+    elevation: Dp = 0.dp,
+    color: Color = MaterialTheme.colors.surface,
     content: @Composable () -> Unit
-) = Surface(modifier = modifier, content = content)
+) {
+    val shape = RoundedCornerShape(16.dp)
+    Surface(
+        color = color,
+        content = content,
+        elevation = elevation,
+        modifier = modifier
+            .padding(8.dp)
+            .clip(shape = shape),
+    )
+}
 
 @Composable
 fun PreviewWindow(
