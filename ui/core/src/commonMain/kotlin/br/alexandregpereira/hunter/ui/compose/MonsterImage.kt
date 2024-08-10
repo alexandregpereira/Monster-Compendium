@@ -16,12 +16,14 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,10 +80,14 @@ fun MonsterImage(
 fun Modifier.monsterAspectRatio(
     isHorizontal: Boolean = false,
     heightFraction: Float = 1f,
+    widthFraction: Float = 1f,
     maxHeight: Dp = LocalScreenSize.current.hDP,
 ): Modifier {
-    return fillMaxWidth().heightIn(max = maxHeight)
-        .aspectRatio(if (isHorizontal) 18.84f / 16f else 9 / (16f * heightFraction))
+    val aspectRatio by animateFloatAsState(
+        targetValue = if (isHorizontal) 18.84f / 16f else 9 / (16f * heightFraction)
+    )
+    return fillMaxWidth(widthFraction).heightIn(max = maxHeight)
+        .aspectRatio(aspectRatio)
 }
 
 @Preview
