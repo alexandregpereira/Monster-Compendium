@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -24,13 +25,14 @@ fun AppScreen(
     contentPaddingValues: PaddingValues = PaddingValues(),
     modifier: Modifier = Modifier,
     closeable: Boolean = true,
+    backgroundColor: Color = MaterialTheme.colors.surface,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
     BackHandler(enabled = isOpen, onBack = onClose)
 
     SwipeVerticalToDismiss(visible = isOpen, onClose = onClose, modifier = modifier) {
-        Window {
+        Window(backgroundColor = backgroundColor) {
             if (closeable) {
                 BoxClosable(
                     contentPaddingValues = contentPaddingValues,

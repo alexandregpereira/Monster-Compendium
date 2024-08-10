@@ -56,8 +56,10 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
@@ -76,7 +78,9 @@ import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.cardShape
 import br.alexandregpereira.hunter.ui.compose.getTintColor
+import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -85,6 +89,7 @@ import br.alexandregpereira.hunter.ui.util.toColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.math.absoluteValue
 
 @Composable
 internal fun MonsterDetailScreen(
@@ -101,7 +106,7 @@ internal fun MonsterDetailScreen(
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {},
     onClose: () -> Unit = {},
-) = Surface {
+) = Surface(color = Color.Transparent) {
     HorizontalPagerTransitionController(pagerState)
 
     MonsterImageCompose(
@@ -109,6 +114,12 @@ internal fun MonsterDetailScreen(
         pagerState,
         contentPadding = contentPadding,
     )
+
+    val getImagesScrollOffset = {
+        scrollState.layoutInfo.visibleItemsInfo.firstOrNull {
+            it.key == "MonsterImageCompose"
+        }?.offset ?: 200
+    }
 
     /*
     To avoid seeing the image below LazyColumn when horizontal pager transition is happening,
@@ -122,7 +133,8 @@ internal fun MonsterDetailScreen(
                 ?.let { itemInfo: LazyListItemInfo ->
                     itemInfo.offset.coerceAtLeast(0)
                 } ?: 0
-        }
+        },
+        getImageScrollOffset = getImagesScrollOffset,
     )
 
     LazyColumn(
@@ -132,17 +144,13 @@ internal fun MonsterDetailScreen(
         item(key = "MonsterImageCompose") {
             Box(
                 modifier = Modifier
-                    .height(
-                        getImageHeightInDp()
-                    )
-                    .fillMaxWidth()
+                    .monsterAspectRatio(heightFraction = 0.9f, maxHeight = getImageHeightInDp())
                     .transitionHorizontalScrollable(pagerState)
                     .animateItemPlacement()
             )
         }
 
         item(key = MONSTER_TITLE_ITEM_KEY) {
-            val shape = remember { RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) }
             MonsterTitleCompose(
                 monsterTitleStates = monsters.map {
                     MonsterTitleState(
@@ -152,13 +160,7 @@ internal fun MonsterDetailScreen(
                 },
                 pagerState = pagerState,
                 onOptionsClicked = onOptionsClicked,
-                modifier = Modifier
-                    .clip(shape)
-                    .background(
-                        shape = shape,
-                        color = MaterialTheme.colors.surface
-                    )
-                    .animateItemPlacement()
+                modifier = Modifier.animateItemPlacement()
             )
         }
 
@@ -201,15 +203,42 @@ private fun HorizontalPagerTransitionController(pagerState: PagerState) = Horizo
 
 @Composable
 private fun ScrollableBackground(
-    getScrollPositionOffset: () -> Int
+    getScrollPositionOffset: () -> Int,
+    getImageScrollOffset: () -> Int,
 ) = Layout(
     content = {
+        val offset = getImageScrollOffset().absoluteValue
+        val fraction = offset.coerceAtMost(200) / 200f
+        val backgroundColor = MaterialTheme.colors.background.copy(alpha = .99f)
+        val initialColor = lerp(
+            start = Color.Transparent,
+            stop = backgroundColor,
+            fraction = fraction
+        )
+        val colorStop1 = lerp(
+            start = backgroundColor.copy(alpha = .7f),
+            stop = backgroundColor,
+            fraction = fraction
+        )
+        val colorStop2 = lerp(
+            start = backgroundColor.copy(alpha = .8f),
+            stop = backgroundColor,
+            fraction = fraction
+        )
+        val colorStops = arrayOf(
+            .0f to initialColor,
+            .1f to colorStop1,
+            .2f to colorStop2,
+            .3f to backgroundColor,
+        )
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     shape = remember { RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) },
-                    color = MaterialTheme.colors.surface
+                    brush = Brush.verticalGradient(
+                        colorStops = colorStops
+                    )
                 )
         )
     }
@@ -253,13 +282,16 @@ private fun MonsterImageCompose(
 ) {
     Box(
         Modifier
-            .fillMaxSize()
-            .monsterImageBackground(monsters, getPageOffset = { pagerState.getPageOffset() })
+            .monsterImageBackground(
+                monsters = monsters,
+                shape = cardShape,
+                getPageOffset = { pagerState.getPageOffset() }
+            )
     ) {
         MonsterImages(
             images = monsters.map { ImageState(it.imageUrl, it.name) },
             pagerState = pagerState,
-            shape = RectangleShape,
+            shape = cardShape,
         )
 
         ChallengeRatingCompose(
@@ -279,6 +311,7 @@ private fun MonsterImageCompose(
 
 private fun Modifier.monsterImageBackground(
     monsters: List<MonsterState>,
+    shape: Shape = RectangleShape,
     getPageOffset: () -> Float,
 ) = composed {
     val transitionData = getTransitionData(monsters, getPageOffset)
@@ -293,7 +326,7 @@ private fun Modifier.monsterImageBackground(
         fraction = transitionData.fraction
     )
 
-    this.background(backgroundColor)
+    this.background(backgroundColor, shape)
 }
 
 @Composable
@@ -319,7 +352,7 @@ private fun MonsterTopBar(
         Column {
             Row(
                 Modifier
-                    .background(color = MaterialTheme.colors.surface),
+                    .background(color = MaterialTheme.colors.background),
             ) {
 
                 val composableScope = rememberCoroutineScope()

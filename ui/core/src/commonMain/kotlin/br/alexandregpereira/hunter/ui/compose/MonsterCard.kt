@@ -17,10 +17,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -89,7 +86,7 @@ fun MonsterCard(
                 text = name,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 12.dp)
                     .padding(bottom = 12.dp, top = 24.dp)
                     .align(Alignment.BottomStart)
             )

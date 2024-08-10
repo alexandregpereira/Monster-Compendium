@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -47,21 +46,22 @@ fun AppWindow(
     }
 }
 
+val cardShape = RoundedCornerShape(16.dp)
+
 @Composable
 fun Window(
     modifier: Modifier = Modifier,
     elevation: Dp = 0.dp,
-    color: Color = MaterialTheme.colors.surface,
+    backgroundColor: Color = MaterialTheme.colors.surface,
     content: @Composable () -> Unit
 ) {
-    val shape = RoundedCornerShape(16.dp)
     Surface(
-        color = color,
+        color = backgroundColor,
         content = content,
         elevation = elevation,
         modifier = modifier
             .padding(8.dp)
-            .clip(shape = shape),
+            .clip(shape = cardShape),
     )
 }
 

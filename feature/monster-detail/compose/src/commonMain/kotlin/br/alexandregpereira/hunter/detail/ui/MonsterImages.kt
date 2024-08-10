@@ -18,7 +18,6 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
@@ -37,10 +36,12 @@ internal fun MonsterImages(
     images: List<ImageState>,
     pagerState: PagerState,
     shape: Shape,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = AlphaTransition(
     dataList = images,
-    pagerState = pagerState
+    pagerState = pagerState,
+    modifier = modifier,
 ) { image ->
     MonsterCoilImage(
         imageUrl = image.url,

@@ -42,7 +42,7 @@ fun MonsterCompendium(
     onItemLongCLick: (index: String) -> Unit = {},
 ) {
     val currentWidth = LocalScreenSize.current.wDP
-    val cardWidth = 160.dp
+    val cardWidth = 148.dp
     Compendium(
         items = items,
         modifier = modifier,

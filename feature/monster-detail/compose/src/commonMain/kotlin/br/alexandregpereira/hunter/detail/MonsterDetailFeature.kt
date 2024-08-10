@@ -16,15 +16,12 @@
 
 package br.alexandregpereira.hunter.detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.LocalStrings
 import br.alexandregpereira.hunter.detail.ui.MonsterDetailOptionPicker
@@ -38,7 +35,6 @@ import br.alexandregpereira.hunter.ui.compose.FormBottomSheet
 import br.alexandregpereira.hunter.ui.compose.FormField
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
-import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -58,14 +54,12 @@ fun MonsterDetailFeature(
         isOpen = viewState.showDetail,
         contentPaddingValues = contentPadding,
         closeable = false,
+        backgroundColor = MaterialTheme.colors.background,
         onClose = viewModel::onClose
     ) {
         LoadingScreen(
             isLoading = viewState.isLoading,
             showCircularLoading = false,
-            modifier = Modifier
-                .background(MaterialTheme.colors.surface)
-                .clip(Shapes.large)
         ) {
             if (viewState.monsters.isEmpty()) return@LoadingScreen
             CompositionLocalProvider(

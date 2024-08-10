@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.resources.Res
@@ -75,10 +76,12 @@ fun MonsterImage(
 
 @Composable
 fun Modifier.monsterAspectRatio(
-    isHorizontal: Boolean = false
+    isHorizontal: Boolean = false,
+    heightFraction: Float = 1f,
+    maxHeight: Dp = LocalScreenSize.current.hDP,
 ): Modifier {
-    return fillMaxWidth().heightIn(max = LocalScreenSize.current.hDP)
-        .aspectRatio(if (isHorizontal) 18.84f / 16f else 9 / 16f)
+    return fillMaxWidth().heightIn(max = maxHeight)
+        .aspectRatio(if (isHorizontal) 18.84f / 16f else 9 / (16f * heightFraction))
 }
 
 @Preview
