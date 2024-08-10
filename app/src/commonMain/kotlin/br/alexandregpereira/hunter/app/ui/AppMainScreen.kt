@@ -3,8 +3,10 @@ package br.alexandregpereira.hunter.app.ui
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
@@ -29,7 +31,7 @@ internal fun AppMainScreen(
     contentPadding: PaddingValues,
     onEvent: (MainViewEvent) -> Unit
 ) {
-    Box {
+    Box(Modifier.fillMaxSize()) {
         val bottomBarNavigationSize by animateDpAsState(
             targetValue = if (state.showBottomBar) BottomNavigationHeight else 0.dp,
             label = "bottomBarNavigationSize",

@@ -20,13 +20,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.resources.Res
@@ -46,13 +45,14 @@ fun MonsterImage(
     contentDescription: String = "",
 ) {
     val iconSize = 20.dp
-    val challengeRatingSize = 48.dp
+    val challengeRatingSize = 64.dp
     val challengeRatingFontSize = 18.sp
     Box(modifier) {
         MonsterCoilImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
+            contentScale = ContentScale.Crop,
         )
 
         ChallengeRatingCircle(
@@ -78,7 +78,7 @@ fun Modifier.monsterAspectRatio(
     isHorizontal: Boolean = false
 ): Modifier {
     return fillMaxWidth().heightIn(max = LocalScreenSize.current.hDP)
-        .aspectRatio(if (isHorizontal) 1 / 1f else 9 / 16f)
+        .aspectRatio(if (isHorizontal) 18.84f / 16f else 9 / 16f)
 }
 
 @Preview

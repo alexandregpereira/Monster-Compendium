@@ -2,19 +2,22 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Alignment.Companion.TopStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.RadialGradientShader
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,23 +35,37 @@ fun CornerCircle(
     } else {
         RoundedCornerShape(bottomStart = 48.dp)
     }
-    val contentPadding = if (direction == Direction.LEFT) {
-        PaddingValues(start = 0.dp, top = 0.dp, end = 8.dp, bottom = 8.dp)
-    } else {
-        PaddingValues(start = 8.dp, top = 0.dp, end = 0.dp, bottom = 8.dp)
+    val brush = object : ShaderBrush() {
+        override fun createShader(size: Size): Shader {
+            val center = if (direction == Direction.LEFT) {
+                Offset.Zero
+            } else {
+                Offset(size.width, 0f)
+            }
+            val biggerDimension = maxOf(size.height, size.width)
+            return RadialGradientShader(
+                colors = listOf(
+                    color.copy(alpha = .5f),
+                    Color.Transparent,
+                ),
+                center = center,
+                radius = biggerDimension,
+                colorStops = listOf(0.5f, 1f)
+            )
+        }
     }
     Box(
         modifier
             .size(size)
-            .background(color = color, shape = shape)
+            .background(brush = brush, shape = shape)
             .clip(shape),
-        contentAlignment = if (direction == Direction.LEFT) {
+    ) {
+        val contentAlignment = if (direction == Direction.LEFT) {
             TopStart
         } else {
             TopEnd
         }
-    ) {
-        Box(Modifier.fillMaxSize().padding(contentPadding), contentAlignment = Center) {
+        Box(Modifier.fillMaxSize().padding(12.dp), contentAlignment = contentAlignment) {
             content()
         }
     }

@@ -17,9 +17,9 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -43,7 +43,7 @@ fun ChallengeRatingCircle(
     xp: String = "",
     fontSize: TextUnit = 16.sp,
     contentTopPadding: Dp = 0.dp,
-    xpFontSize: TextUnit = 10.sp,
+    xpFontSize: TextUnit = 16.sp,
     backgroundColor: Color = MaterialTheme.colors.surface,
 ) = Box(
     modifier = modifier
@@ -54,48 +54,28 @@ fun ChallengeRatingCircle(
         color = backgroundColor,
         size = size,
     ) {
-        Text(
-            challengeRating,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = fontSize,
-            color = MaterialTheme.colors.onSurface,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-        )
+        Column {
+            Text(
+                challengeRating,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = fontSize,
+                color = MaterialTheme.colors.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+            )
+            if (xp.isNotBlank()) {
+                Text(
+                    xp,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = xpFontSize,
+                    color = MaterialTheme.colors.onSurface,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
     }
-//    Column(
-//        modifier = Modifier.background(
-//            color = backgroundColor,
-//            shape = RoundedCornerShape(bottomEndPercent = 25)
-//        )
-//    ) {
-//        Spacer(modifier = Modifier.height(4.dp))
-//
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            modifier = Modifier
-//                .padding(vertical = 4.dp)
-//                .padding(top = contentTopPadding)
-//        ) {
-//            Box(
-//                modifier = Modifier
-//                    .width(size - 16.dp)
-//            )
-//
-//            if (xp.isNotBlank()) {
-//                Text(
-//                    xp,
-//                    fontWeight = FontWeight.Normal,
-//                    fontSize = xpFontSize,
-//                    color = MaterialTheme.colors.onSurface,
-//                    textAlign = TextAlign.Center,
-//                    maxLines = 1,
-//                    modifier = Modifier
-//                        .padding(start = 4.dp, end = 8.dp)
-//                )
-//            }
-//        }
-//    }
 }
 
 @Preview

@@ -19,8 +19,8 @@ internal fun AppBottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
     contentPadding: PaddingValues
 ) {
-    if (bottomBarItemSelected == null) return
     Window(Modifier.fillMaxSize().padding(bottom = contentPadding.calculateBottomPadding())) {
+        if (bottomBarItemSelected == null) return@Window
         Crossfade(targetState = bottomBarItemSelected, label = "BottomNavigationTransition") { item ->
             when (item.icon) {
                 BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature(

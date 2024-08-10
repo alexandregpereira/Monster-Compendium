@@ -60,8 +60,8 @@ fun MonsterCard(
         modifier.animatePressed(
             onClick = onCLick,
             onLongClick = onLongCLick
-        ).monsterAspectRatio(isHorizontal).clip(shape)
-            .border(4.dp, borderColor, shape = shape),
+        ).clip(shape)
+            .monsterAspectRatio(isHorizontal)
     ) {
         MonsterImage(
             url = url,
@@ -72,9 +72,8 @@ fun MonsterCard(
         )
 
         val colorStops = arrayOf(
-            0.0f to Color.Transparent,
-            0.3f to borderColor.copy(alpha = alpha),
-            .8f to borderColor
+            .0f to Color.Transparent,
+            .8f to borderColor.copy(alpha = alpha),
         )
         Box(
             modifier = Modifier
@@ -89,8 +88,10 @@ fun MonsterCard(
             Text(
                 text = name,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 16.sp,
-                modifier = Modifier.padding(16.dp).align(Alignment.BottomStart)
+                fontSize = 18.sp,
+                modifier = Modifier.padding(horizontal = 16.dp)
+                    .padding(bottom = 12.dp, top = 24.dp)
+                    .align(Alignment.BottomStart)
             )
         }
     }

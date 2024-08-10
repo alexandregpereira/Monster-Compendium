@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -37,7 +38,7 @@ fun MonsterTypeIcon(
     contentDescription: String = "",
     size: Dp = 48.dp,
     tint: Color = Color.Black,
-    backgroundColor: Color = Color.Transparent,
+    backgroundColor: Color = MaterialTheme.colors.surface,
 ) = CornerCircle(
     modifier = modifier,
     color = backgroundColor,
@@ -50,7 +51,6 @@ fun MonsterTypeIcon(
         tint = tint,
         modifier = Modifier
             .size(iconSize)
-            .alpha(0.7f),
     )
 }
 

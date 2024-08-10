@@ -22,6 +22,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -41,7 +42,7 @@ fun AppWindow(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = HunterTheme {
-    Box(modifier = modifier.background(MaterialTheme.colors.background)) {
+    Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background)) {
         content()
     }
 }

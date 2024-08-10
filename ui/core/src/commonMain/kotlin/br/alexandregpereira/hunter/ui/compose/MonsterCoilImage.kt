@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
 import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
@@ -33,6 +34,7 @@ fun MonsterCoilImage(
     shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
     backgroundColor: String,
+    contentScale: ContentScale = ContentScale.Fit,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) = MonsterCoilImage(
     imageUrl = imageUrl,
@@ -40,6 +42,7 @@ fun MonsterCoilImage(
     modifier = modifier,
     shape = shape,
     backgroundColor = remember(backgroundColor) { backgroundColor.toColor() },
+    contentScale = contentScale,
     graphicsLayerBlock = graphicsLayerBlock
 )
 
@@ -50,6 +53,7 @@ fun MonsterCoilImage(
     shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
     backgroundColor: Color? = null,
+    contentScale: ContentScale = ContentScale.Fit,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
     CoilImage(
@@ -58,6 +62,7 @@ fun MonsterCoilImage(
         modifier.fillMaxSize(),
         shape,
         backgroundColor,
+        contentScale,
         graphicsLayerBlock
     )
 }

@@ -77,7 +77,6 @@ import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.getTintColor
-import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -373,9 +372,9 @@ private fun ChallengeRatingCompose(
         ChallengeRatingCircle(
             challengeRating = data.challengeRating,
             xp = data.xp,
-            size = 62.dp,
-            fontSize = 18.sp,
-            xpFontSize = 12.sp,
+            size = 100.dp,
+            fontSize = 22.sp,
+            xpFontSize = 16.sp,
             contentTopPadding = contentTopPadding
         )
     }
@@ -390,7 +389,8 @@ private fun MonsterTypeIcon(
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
             icon = data.type.toIcon(),
-            iconSize = 32.dp,
+            iconSize = 24.dp,
+            size = 80.dp,
             tint = data.getBackgroundColor(isSystemInDarkTheme()).getTintColor()
         )
     }

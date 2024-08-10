@@ -20,7 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -36,7 +35,6 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
@@ -61,7 +59,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.ui.compose.Window
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -74,7 +71,7 @@ internal fun BoxScope.AppBottomNavigation(
     bottomBarItems: List<BottomBarItem>,
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (BottomBarItem) -> Unit = {}
-) = HunterTheme {
+) {
     AnimatedVisibility(
         visible = showBottomBar,
         enter = slideInVertically { fullHeight -> fullHeight },

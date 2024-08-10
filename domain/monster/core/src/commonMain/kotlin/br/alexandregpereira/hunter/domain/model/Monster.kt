@@ -61,6 +61,8 @@ enum class MonsterStatus {
 }
 
 private fun Float.getChallengeRatingFormatted(): String {
+    if (this == 0f) return "0"
+
     return if (this < 1) {
         val value = 1 / this
         "1/${value.toInt()}"
