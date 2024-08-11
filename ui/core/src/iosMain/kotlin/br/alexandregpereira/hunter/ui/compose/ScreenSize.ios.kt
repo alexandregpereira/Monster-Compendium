@@ -12,9 +12,9 @@ actual fun getPlatformScreenSizeInfo(): ScreenSizeInfo {
     val config = LocalWindowInfo.current.containerSize
 
     return ScreenSizeInfo(
-        hPX = config.height,
-        wPX = config.width,
-        hDP = with(density) { config.height.toDp() },
-        wDP = with(density) { config.width.toDp() }
+        heightInPixels = config.height,
+        widthInPixels = config.width,
+        heightInDp = with(density) { config.height.toDp() },
+        widthInDp = with(density) { config.width.toDp() }
     )
 }

@@ -22,8 +22,6 @@ import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositi
 import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
@@ -42,7 +40,6 @@ import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -61,13 +58,11 @@ class MonsterCompendiumStateHolder internal constructor(
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
-    private val folderPreviewResultListener: FolderPreviewResultListener,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
-    private val stateRecovery: StateRecovery,
     private val isFirstTime: IsFirstTime,
     appLocalization: AppLocalization,
 ) : UiModel<MonsterCompendiumState>(
@@ -80,7 +75,6 @@ class MonsterCompendiumStateHolder internal constructor(
     private var metadata: List<MonsterCompendiumItem> = emptyList()
 
     init {
-        setState { updateState(stateRecovery) }
         observeEvents()
         loadMonsters()
     }
@@ -116,7 +110,6 @@ class MonsterCompendiumStateHolder internal constructor(
                         scrollItemPosition,
                         items,
                     ),
-                    isShowingMonsterFolderPreview = stateRecovery.isShowingMonsterFolderPreview
                 ) to scrollItemPosition
             }
             .onStart {
@@ -144,7 +137,6 @@ class MonsterCompendiumStateHolder internal constructor(
     override fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
-        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.ShowFolderPreview)
     }
 
     override fun onFirstVisibleItemChange(position: Int) {
@@ -201,7 +193,10 @@ class MonsterCompendiumStateHolder internal constructor(
         }
     }
 
-    private fun navigateToCompendiumIndexFromMonsterIndex(monsterIndex: String) {
+    private fun navigateToCompendiumIndexFromMonsterIndex(
+        monsterIndex: String,
+        shouldAnimate: Boolean,
+    ) {
         flowOf(metadata)
             .map { items ->
                 items.compendiumIndexOf(monsterIndex)
@@ -210,13 +205,13 @@ class MonsterCompendiumStateHolder internal constructor(
             }
             .flowOn(dispatcher)
             .onEach { compendiumIndex ->
-                sendAction(GoToCompendiumIndex(compendiumIndex))
+                sendAction(GoToCompendiumIndex(compendiumIndex, shouldAnimate))
             }
             .catch {  error ->
                 if (error is NavigateToCompendiumIndexError) {
                     fetchMonsterCompendium()
                     metadata.compendiumIndexOf(monsterIndex).takeIf { it >= 0 }?.let {
-                        sendAction(GoToCompendiumIndex(it))
+                        sendAction(GoToCompendiumIndex(it, shouldAnimate))
                     }
                 } else {
                     analytics.logException(error)
@@ -232,18 +227,8 @@ class MonsterCompendiumStateHolder internal constructor(
     }
 
     private fun observeEvents() {
-        scope.launch {
-            folderPreviewResultListener.result.collect { event ->
-                when (event) {
-                    is FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges -> showMonsterFolderPreview(
-                        event.isShowing
-                    )
-                }
-            }
-        }
-
         monsterEventDispatcher.collectOnMonsterPageChanges { event ->
-            navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex)
+            navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex, shouldAnimate = true)
         }.launchIn(scope)
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
@@ -253,13 +238,9 @@ class MonsterCompendiumStateHolder internal constructor(
         monsterRegistrationEventListener.collectOnSaved { monsterIndex ->
             scope.launch {
                 fetchMonsterCompendium()
-                navigateToCompendiumIndexFromMonsterIndex(monsterIndex)
+                navigateToCompendiumIndexFromMonsterIndex(monsterIndex, shouldAnimate = false)
             }
         }.launchIn(scope)
-    }
-
-    private fun showMonsterFolderPreview(isShowing: Boolean) {
-        setState { showMonsterFolderPreview(isShowing).saveState(stateRecovery) }
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {
@@ -291,7 +272,7 @@ class MonsterCompendiumStateHolder internal constructor(
                 .getCompendiumIndexFromTableContentIndex(tableContent, tableContentIndex)
                 .flowOn(dispatcher)
                 .collect { compendiumIndex ->
-                    sendAction(GoToCompendiumIndex(compendiumIndex))
+                    sendAction(GoToCompendiumIndex(compendiumIndex, shouldAnimate = false))
                 }
         }
     }

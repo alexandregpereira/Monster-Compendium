@@ -432,7 +432,7 @@ private fun MonsterTypeIcon(
 @Composable
 private fun getImageHeightInDp(): Dp {
     val screenSizeInfo = LocalScreenSize.current
-    return (screenSizeInfo.hDP.value * 0.84).dp
+    return (screenSizeInfo.heightInDp.value * 0.84).dp
 }
 
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"

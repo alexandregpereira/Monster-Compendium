@@ -7,7 +7,6 @@ plugins {
 multiplatform {
     androidMain()
     commonMain {
-        implementation(project(":core:ui:state-recovery"))
         implementation(project(":feature:folder-preview:state-holder"))
         implementation(project(":ui:core"))
 

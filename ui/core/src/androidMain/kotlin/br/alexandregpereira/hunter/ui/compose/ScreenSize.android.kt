@@ -13,9 +13,9 @@ actual fun getPlatformScreenSizeInfo(): ScreenSizeInfo {
     val wDp = config.screenWidthDp.dp
 
     return ScreenSizeInfo(
-        hPX = with(density) { hDp.roundToPx() },
-        wPX = with(density) { wDp.roundToPx() },
-        hDP = hDp,
-        wDP = wDp
+        heightInPixels = with(density) { hDp.roundToPx() },
+        widthInPixels = with(density) { wDp.roundToPx() },
+        heightInDp = hDp,
+        widthInDp = wDp
     )
 }

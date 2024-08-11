@@ -1,20 +1,16 @@
 package br.alexandregpereira.hunter.app.ui
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
 import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
-import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
@@ -23,7 +19,6 @@ import br.alexandregpereira.hunter.shareContent.ShareContentImportFeature
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
-import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 
 @Composable
 internal fun AppMainScreen(
@@ -32,18 +27,12 @@ internal fun AppMainScreen(
     onEvent: (MainViewEvent) -> Unit
 ) {
     Box(Modifier.fillMaxSize()) {
-        val bottomBarNavigationSize by animateDpAsState(
-            targetValue = if (state.showBottomBar) BottomNavigationHeight else 0.dp,
-            label = "bottomBarNavigationSize",
-        )
-        val contentPaddingWithBottomBar = PaddingValues(
-            top = contentPadding.calculateTopPadding(),
-            bottom = contentPadding.calculateBottomPadding() + bottomBarNavigationSize + 8.dp,
-        )
-
         AppBottomNavigationTransition(
             bottomBarItemSelected = state.bottomBarItemSelected,
-            contentPadding = contentPaddingWithBottomBar
+            contentPadding = contentPadding,
+            bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
+            bottomBarItems = state.bottomBarItems,
+            onClick = { onEvent(BottomNavigationItemClick(item = it)) },
         )
 
         MonsterContentManagerFeature(
@@ -68,18 +57,6 @@ internal fun AppMainScreen(
 
         SpellDetailFeature(
             contentPadding = contentPadding,
-        )
-
-        FolderPreviewFeature(
-            contentPadding = contentPaddingWithBottomBar,
-        )
-
-        AppBottomNavigation(
-            showBottomBar = state.showBottomBar,
-            bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
-            bottomBarItems = state.bottomBarItems,
-            contentPadding = contentPadding,
-            onClick = { onEvent(BottomNavigationItemClick(item = it)) }
         )
 
         FolderInsertFeature(contentPadding = contentPadding)

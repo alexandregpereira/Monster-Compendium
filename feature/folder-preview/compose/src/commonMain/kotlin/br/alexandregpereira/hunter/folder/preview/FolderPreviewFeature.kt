@@ -20,20 +20,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import br.alexandregpereira.hunter.folder.preview.di.FolderPreviewStateRecoveryQualifier
+import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.preview.ui.FolderPreviewScreen
-import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
 @Composable
 fun FolderPreviewFeature(
+    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    StateRecoveryLaunchedEffect(
-        key = FolderPreviewStateRecoveryQualifier,
-        stateRecovery = koinInject(named(FolderPreviewStateRecoveryQualifier))
-    )
     val stateHolder: FolderPreviewStateHolder = koinInject()
     val state by stateHolder.state.collectAsState()
 
@@ -42,6 +37,7 @@ fun FolderPreviewFeature(
         contentPadding = contentPadding,
         onClick = stateHolder::onItemClick,
         onLongClick = stateHolder::onItemLongClick,
+        modifier = modifier,
         onSave = stateHolder::onSave
     )
 }

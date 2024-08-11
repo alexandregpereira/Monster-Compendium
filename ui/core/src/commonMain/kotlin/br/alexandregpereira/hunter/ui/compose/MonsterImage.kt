@@ -81,7 +81,7 @@ fun Modifier.monsterAspectRatio(
     isHorizontal: Boolean = false,
     heightFraction: Float = 1f,
     widthFraction: Float = 1f,
-    maxHeight: Dp = LocalScreenSize.current.hDP,
+    maxHeight: Dp = LocalScreenSize.current.heightInDp,
 ): Modifier {
     val aspectRatio by animateFloatAsState(
         targetValue = if (isHorizontal) 18.84f / 16f else 9 / (16f * heightFraction)

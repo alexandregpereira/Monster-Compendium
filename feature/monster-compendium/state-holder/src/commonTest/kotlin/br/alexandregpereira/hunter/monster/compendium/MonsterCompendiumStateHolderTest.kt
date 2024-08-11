@@ -26,9 +26,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewResultListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
@@ -49,7 +47,6 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.emptySyncEventDispatcher
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -69,7 +66,6 @@ class MonsterCompendiumStateHolderTest {
     private val testCoroutineDispatcher = StandardTestDispatcher()
 
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
-    private val folderPreviewResultListener: FolderPreviewResultListener = emptyFolderPreviewResultListener()
     private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
     private val monsterRegistrationEventListener: MonsterRegistrationEventListener = emptyMonsterRegistrationEventListener()
@@ -227,7 +223,7 @@ class MonsterCompendiumStateHolderTest {
             expected = states[2].copy(popupOpened = false),
             actual = states[3]
         )
-        actions.assertFinalValue(GoToCompendiumIndex(4))
+        actions.assertFinalValue(GoToCompendiumIndex(4, shouldAnimate = false))
     }
 
     @Test
@@ -356,7 +352,6 @@ class MonsterCompendiumStateHolderTest {
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
-            folderPreviewResultListener = folderPreviewResultListener,
             monsterEventDispatcher = monsterDetailEventDispatcher,
             syncEventDispatcher = syncEventDispatcher,
             monsterRegistrationEventListener = monsterRegistrationEventListener,
@@ -365,7 +360,6 @@ class MonsterCompendiumStateHolderTest {
             appLocalization = object : AppLocalization {
                 override fun getLanguage(): Language = Language.ENGLISH
             },
-            stateRecovery = StateRecovery(),
             isFirstTime = { false },
         )
     }

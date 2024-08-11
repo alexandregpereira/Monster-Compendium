@@ -16,7 +16,7 @@ ORDER BY createdAt DESC
 getMonstersFromFolder:
 SELECT * FROM MonsterFolderCompleteEntityView
 WHERE folderName == ?
-ORDER BY createdAt
+ORDER BY createdAt DESC
 ;
 
 removeMonsterFromFolder:

@@ -24,8 +24,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.AppMainScreen
+import br.alexandregpereira.hunter.app.ui.AppMainWidthSplitScreen
 import br.alexandregpereira.hunter.ui.compose.AppWindow
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
+import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.LandscapeCompact
+import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.LandscapeExpanded
+import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.Portrait
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import br.alexandregpereira.hunter.ui.compose.getPlatformScreenSizeInfo
 import org.koin.compose.KoinContext
@@ -47,11 +51,27 @@ internal fun HunterApp(
         CompositionLocalProvider(
             LocalScreenSize provides getPlatformScreenSizeInfo()
         ) {
-            AppMainScreen(
-                state = state,
-                contentPadding = contentPadding,
-                onEvent = viewModel::onEvent
-            )
+            val screenSize = LocalScreenSize.current
+
+            when (screenSize.type) {
+                Portrait -> AppMainScreen(
+                    state = state,
+                    contentPadding = contentPadding,
+                    onEvent = viewModel::onEvent
+                )
+                LandscapeCompact,
+                LandscapeExpanded -> {
+                    val leftPanelFraction = if (screenSize.type == LandscapeExpanded) {
+                        0.7f
+                    } else 0.5f
+                    AppMainWidthSplitScreen(
+                        state = state,
+                        contentPadding = contentPadding,
+                        leftPanelFraction = leftPanelFraction,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+            }
         }
     }
 }

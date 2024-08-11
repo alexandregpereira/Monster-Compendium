@@ -22,7 +22,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
@@ -65,20 +64,21 @@ import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 @Composable
-internal fun BoxScope.AppBottomNavigation(
+internal fun AppBottomNavigation(
     showBottomBar: Boolean,
     bottomBarItemSelectedIndex: Int,
     bottomBarItems: List<BottomBarItem>,
     contentPadding: PaddingValues = PaddingValues(),
+    modifier: Modifier = Modifier,
     onClick: (BottomBarItem) -> Unit = {}
 ) {
     AnimatedVisibility(
         visible = showBottomBar,
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight },
-        modifier = Modifier.align(Alignment.BottomStart)
+        modifier = modifier,
     ) {
-        Window(elevation = 4.dp) {
+        Window {
             val paddingBottom = contentPadding.calculateBottomPadding()
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,

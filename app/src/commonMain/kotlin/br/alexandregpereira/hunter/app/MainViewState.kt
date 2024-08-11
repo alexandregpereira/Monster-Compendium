@@ -26,29 +26,9 @@ import org.jetbrains.compose.resources.DrawableResource
 internal data class MainViewState(
     val bottomBarItemSelectedIndex: Int = 0,
     val bottomBarItems: List<BottomBarItem> = emptyList(),
-    internal val topContentStack: Set<String> = setOf(),
 ) {
 
-    val showBottomBar: Boolean = topContentStack.isEmpty()
     val bottomBarItemSelected: BottomBarItem? = bottomBarItems.getOrNull(bottomBarItemSelectedIndex)
-}
-
-internal fun MainViewState.addTopContentStack(
-    topContent: String,
-): MainViewState {
-    val topContentStack = topContentStack + topContent
-    return copy(topContentStack = topContentStack)
-}
-
-internal fun MainViewState.removeTopContentStack(
-    topContent: String,
-): MainViewState {
-    val topContentStack = topContentStack.toMutableSet().apply {
-        remove(topContent)
-    }.toSet()
-    return copy(
-        topContentStack = topContentStack,
-    )
 }
 
 internal enum class BottomBarItemIcon(val value: DrawableResource) {

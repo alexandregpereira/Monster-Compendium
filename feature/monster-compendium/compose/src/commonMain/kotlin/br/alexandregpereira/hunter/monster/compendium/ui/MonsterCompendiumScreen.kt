@@ -73,7 +73,6 @@ internal fun MonsterCompendiumScreen(
         )
         MonsterCompendiumScreen(
             items = state.items,
-            isShowingMonsterFolderPreview = state.isShowingMonsterFolderPreview,
             popupOpened = state.popupOpened,
             alphabet = state.alphabet,
             tableContent = state.tableContent,
@@ -92,7 +91,11 @@ internal fun MonsterCompendiumScreen(
             actionHandler.action.collectLatest { action ->
                 when (action) {
                     is MonsterCompendiumAction.GoToCompendiumIndex -> {
-                        listState.scrollToItem(action.index)
+                        if (action.shouldAnimate) {
+                            listState.animateScrollToItem(action.index)
+                        } else {
+                            listState.scrollToItem(action.index)
+                        }
                     }
                 }
             }
@@ -103,7 +106,6 @@ internal fun MonsterCompendiumScreen(
 @Composable
 private fun MonsterCompendiumScreen(
     items: List<MonsterCompendiumItemState>,
-    isShowingMonsterFolderPreview: Boolean,
     popupOpened: Boolean,
     alphabet: List<String>,
     alphabetSelectedIndex: Int,
@@ -128,10 +130,7 @@ private fun MonsterCompendiumScreen(
             )
         },
         popupContent = {
-            val paddingBottom by animateDpAsState(
-                if (isShowingMonsterFolderPreview) 72.dp else 8.dp
-            )
-
+            val paddingBottom = 8.dp
             TableContentPopup(
                 alphabet = alphabet,
                 tableContent = remember(tableContent) { tableContent.asStateTableContentItem() },
