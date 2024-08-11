@@ -24,11 +24,8 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewState
 
 @Composable
@@ -53,7 +50,6 @@ internal fun FolderPreviewScreen(
             onClick = onClick,
             onLongClick = onLongClick,
             onSave = onSave,
-            modifier = Modifier.align(Alignment.BottomCenter).padding(top = 8.dp)
         )
     }
 }
