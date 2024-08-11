@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
-import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
@@ -89,7 +88,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
                         index = "air-elemental3",
                         name = "Air Elemental3",
                         group = "Elementals",
-                        imageData = MonsterImageData(isHorizontal = true)
                     )
                 ),
                 Title(id = "E1", value = "E", isHeader = false),
@@ -97,7 +95,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
                     monster = Monster(
                         index = "elemental",
                         name = "Elemental",
-                        imageData = MonsterImageData(isHorizontal = true)
                     )
                 ),
             )
@@ -149,7 +146,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
                     monster = Monster(
                         index = "air-elemental3",
                         name = "Air Elemental3",
-                        imageData = MonsterImageData(isHorizontal = true)
                     )
                 ),
                 Title(id = "E0", value = "E", isHeader = true),
@@ -157,7 +153,6 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
                     monster = Monster(
                         index = "elemental",
                         name = "Elemental",
-                        imageData = MonsterImageData(isHorizontal = true)
                     )
                 ),
             )
