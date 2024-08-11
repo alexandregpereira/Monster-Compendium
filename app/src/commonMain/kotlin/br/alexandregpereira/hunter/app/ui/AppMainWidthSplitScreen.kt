@@ -42,12 +42,6 @@ internal fun AppMainWidthSplitScreen(
             FolderDetailFeature(
                 contentPadding = contentPadding
             )
-
-            FolderInsertFeature(contentPadding = contentPadding)
-
-            ShareContentExportMonsterFeature(contentPadding = contentPadding)
-
-            ShareContentImportFeature(contentPadding = contentPadding)
         }
 
         Box(Modifier.fillMaxHeight().weight(1 - leftPanelFraction)) {
@@ -72,6 +66,12 @@ internal fun AppMainWidthSplitScreen(
     MonsterContentManagerFeature(
         contentPadding = contentPadding,
     )
+
+    FolderInsertFeature(contentPadding = contentPadding)
+
+    ShareContentExportMonsterFeature(contentPadding = contentPadding)
+
+    ShareContentImportFeature(contentPadding = contentPadding)
 
     SyncFeature()
 }

@@ -26,10 +26,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,11 +41,11 @@ import androidx.compose.ui.unit.dp
 fun BottomSheet(
     modifier: Modifier = Modifier,
     opened: Boolean = false,
-    backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
+    val backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.7f)
     Closeable(
         opened = opened,
         backgroundColor = backgroundColor,
@@ -62,16 +61,19 @@ fun BottomSheet(
                 modifier = Modifier
                     .verticalScroll(state = rememberScrollState())
                     .align(Alignment.BottomCenter)
+                    .noIndicationClick(onClick = onClose),
+                horizontalAlignment = Alignment.End,
             ) {
                 val topSpaceHeight = 288.dp
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                        .noIndicationClick(onClick = onClose)
                 )
                 Window(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.widthIn(max = 720.dp)
+                        .fillMaxWidth()
+                        .noIndicationClick(),
                 ) {
                     Column(
                         modifier = modifier.padding(
