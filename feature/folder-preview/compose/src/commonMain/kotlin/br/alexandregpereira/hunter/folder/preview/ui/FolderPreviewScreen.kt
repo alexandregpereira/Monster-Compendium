@@ -18,15 +18,17 @@ package br.alexandregpereira.hunter.folder.preview.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewState
 
 @Composable
@@ -37,11 +39,11 @@ internal fun FolderPreviewScreen(
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
-) = Box(modifier = modifier.fillMaxWidth().animateContentSize()) {
+) = Box(modifier = modifier.fillMaxWidth().animateContentSize(animationSpec = spring())) {
     AnimatedVisibility(
         visible = state.showPreview,
-        enter = fadeIn(),
-        exit = fadeOut(),
+        enter = fadeIn(animationSpec = spring()),
+        exit = fadeOut(animationSpec = spring()),
         modifier = modifier
     ) {
         FolderPreview(
@@ -51,7 +53,7 @@ internal fun FolderPreviewScreen(
             onClick = onClick,
             onLongClick = onLongClick,
             onSave = onSave,
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(top = 8.dp)
         )
     }
 }

@@ -55,10 +55,6 @@ internal fun AppMainWidthSplitScreen(
                 contentPadding = contentPadding,
             )
 
-            MonsterContentManagerFeature(
-                contentPadding = contentPadding,
-            )
-
             MonsterLoreDetailFeature(contentPadding = contentPadding)
 
             MonsterRegistrationFeature(contentPadding = contentPadding)
@@ -72,6 +68,10 @@ internal fun AppMainWidthSplitScreen(
             )
         }
     }
+
+    MonsterContentManagerFeature(
+        contentPadding = contentPadding,
+    )
 
     SyncFeature()
 }

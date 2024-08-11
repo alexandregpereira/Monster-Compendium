@@ -1,19 +1,23 @@
 package br.alexandregpereira.hunter.monster.content.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEmptyStrings
@@ -22,6 +26,7 @@ import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.CoilImage
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
+import br.alexandregpereira.hunter.ui.compose.cardShape
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -35,42 +40,42 @@ internal fun MonsterContentCard(
     coverImageUrl: String,
     isEnabled: Boolean,
     strings: MonsterContentManagerStrings,
+    modifier: Modifier = Modifier,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
-) = Column {
-    Title(
-        name = name,
-        originalName = originalName,
-        modifier = Modifier.padding(bottom = 16.dp)
-    )
-    Row {
+) = Surface(modifier.clip(cardShape).background(MaterialTheme.colors.surface, cardShape), elevation = 1.dp) {
+    Column(Modifier.padding(8.dp)) {
+        Title(
+            name = name,
+            originalName = originalName,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
         Cover(
             coverImageUrl = coverImageUrl,
             name = name,
             totalMonsters = strings.totalMonsters(totalMonsters),
-            modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         )
-        Summary(
-            summary = summary,
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 8.dp)
+
+        Spacer(Modifier.height(8.dp))
+
+        Summary(summary = summary)
+
+        Spacer(Modifier.height(8.dp))
+
+        Buttons(
+            isEnabled = isEnabled,
+            removeText = strings.remove,
+            addText = strings.add,
+            previewLabel = strings.preview,
+            onAddClick = onAddClick,
+            onRemoveClick = onRemoveClick,
+            onPreviewClick = onPreviewClick,
+            modifier = Modifier.padding(top = 8.dp),
         )
     }
-
-    Buttons(
-        isEnabled = isEnabled,
-        removeText = strings.remove,
-        addText = strings.add,
-        previewLabel = strings.preview,
-        onAddClick = onAddClick,
-        onRemoveClick = onRemoveClick,
-        onPreviewClick = onPreviewClick,
-        modifier = Modifier.padding(top = 8.dp),
-    )
 }
 
 @Composable
@@ -78,16 +83,19 @@ private fun Cover(
     coverImageUrl: String,
     name: String,
     totalMonsters: String,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CoilImage(
             imageUrl = coverImageUrl,
             contentDescription = name,
             shape = Shapes.large,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
+                .background(color = MaterialTheme.colors.surface, shape = Shapes.large)
                 .height(IMAGE_HEIGHT.dp)
                 .width(172.dp)
                 .align(alignment = Alignment.CenterHorizontally)
@@ -136,9 +144,8 @@ private fun Summary(
 ) = Text(
     text = summary,
     fontWeight = FontWeight.Light,
-    fontSize = 14.sp,
-    overflow = Ellipsis,
-    modifier = modifier.sizeIn(maxHeight = IMAGE_HEIGHT.dp)
+    fontSize = 16.sp,
+    modifier = modifier,
 )
 
 @Composable

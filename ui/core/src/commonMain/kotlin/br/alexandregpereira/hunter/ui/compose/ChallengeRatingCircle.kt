@@ -18,8 +18,8 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -53,6 +53,7 @@ fun ChallengeRatingCircle(
     CornerCircle(
         color = backgroundColor,
         size = size,
+        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Column {
             Text(
@@ -71,7 +72,6 @@ fun ChallengeRatingCircle(
                     color = MaterialTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
-                    modifier = Modifier.padding(top = 8.dp)
                 )
             }
         }

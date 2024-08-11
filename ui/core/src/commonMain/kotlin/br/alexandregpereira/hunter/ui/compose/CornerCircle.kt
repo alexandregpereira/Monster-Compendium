@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +29,7 @@ fun CornerCircle(
     modifier: Modifier = Modifier,
     size: Dp = 48.dp,
     direction: Direction = Direction.LEFT,
+    contentPadding: PaddingValues = PaddingValues(12.dp),
     content: @Composable () -> Unit = {}
 ) {
     val shape = if (direction == Direction.LEFT) {
@@ -65,7 +67,7 @@ fun CornerCircle(
         } else {
             TopEnd
         }
-        Box(Modifier.fillMaxSize().padding(12.dp), contentAlignment = contentAlignment) {
+        Box(Modifier.fillMaxSize().padding(contentPadding), contentAlignment = contentAlignment) {
             content()
         }
     }

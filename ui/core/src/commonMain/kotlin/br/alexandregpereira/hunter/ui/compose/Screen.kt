@@ -31,8 +31,8 @@ fun AppScreen(
 ) {
     BackHandler(enabled = isOpen, onBack = onClose)
 
-    SwipeVerticalToDismiss(visible = isOpen, onClose = onClose, modifier = modifier) {
-        Window(backgroundColor = backgroundColor) {
+    SwipeVerticalToDismiss(visible = isOpen, onClose = onClose) {
+        Window(backgroundColor = backgroundColor, modifier = modifier) {
             if (closeable) {
                 BoxClosable(
                     contentPaddingValues = contentPaddingValues,
@@ -50,19 +50,17 @@ fun AppScreen(
 fun AppFullScreen(
     isOpen: Boolean,
     contentPaddingValues: PaddingValues,
+    backgroundColor: Color = MaterialTheme.colors.surface,
     onClose: () -> Unit,
     content: @Composable () -> Unit
-) {
-    AppScreen(isOpen = isOpen, contentPaddingValues = contentPaddingValues, onClose = onClose) {
-        Window(Modifier.fillMaxSize()) {
-            BoxClosable(
-                contentPaddingValues = contentPaddingValues,
-                onClick = onClose,
-                content = content,
-            )
-        }
-    }
-}
+) = AppScreen(
+    isOpen = isOpen,
+    contentPaddingValues = contentPaddingValues,
+    modifier = Modifier.fillMaxSize(),
+    backgroundColor = backgroundColor,
+    onClose = onClose,
+    content = content
+)
 
 @Composable
 fun BoxClosable(
