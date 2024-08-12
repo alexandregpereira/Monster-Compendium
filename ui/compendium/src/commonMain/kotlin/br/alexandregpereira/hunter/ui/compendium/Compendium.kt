@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -44,6 +45,7 @@ fun Compendium(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     key: (CompendiumItemState.Item) -> Any? = { null },
     isHorizontalCard: (CompendiumItemState.Item) -> Boolean = { false },
+    titleLineSpan: LazyGridItemSpanScope.() -> Int? = { null },
     cardContent: @Composable (CompendiumItemState.Item) -> Unit,
 ) = LazyVerticalGrid(
     columns = columns.toGridCells(),
@@ -60,7 +62,7 @@ fun Compendium(
     ),
     modifier = modifier,
 ) {
-    items.forEach { item ->
+    items.forEachIndexed { index, item ->
         val sectionTitlePaddingTop = 32.dp
         val sectionTitlePaddingBottom = 16.dp
 
@@ -68,7 +70,13 @@ fun Compendium(
             is CompendiumItemState.Title -> {
                 item(
                     key = item.id,
-                    span = { GridItemSpan(maxLineSpan) }
+                    span = {
+                        val lineSpan = when {
+                            index == 0 -> maxLineSpan
+                            else -> titleLineSpan()
+                        }
+                        GridItemSpan(currentLineSpan = lineSpan ?: maxLineSpan)
+                    }
                 ) {
                     val paddingTop = when {
                         item.isHeader -> sectionTitlePaddingTop

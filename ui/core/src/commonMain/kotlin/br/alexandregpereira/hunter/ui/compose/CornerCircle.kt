@@ -15,11 +15,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RadialGradientShader
 import androidx.compose.ui.graphics.Shader
 import androidx.compose.ui.graphics.ShaderBrush
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -71,51 +69,6 @@ fun CornerCircle(
             content()
         }
     }
-}
-
-private fun DrawScope.drawLeftCornerCircle(color: Color, contentTopPadding: Dp) {
-    val width = size.width - 8.dp.toPx()
-    val height = size.height - 8.dp.toPx()
-    val topPadding = contentTopPadding.toPx()
-    drawPath(
-        path = Path().apply {
-            lineTo(0f, 0f)
-            lineTo(width, 0f)
-            lineTo(width, topPadding)
-            cubicTo(
-                x1 = width, y1 = height * 0.7f,
-                x2 = width * 0.7f, y2 = height,
-                x3 = 0f, y3 = height
-            )
-            close()
-        },
-        color = color
-    )
-}
-
-private fun DrawScope.drawRightCornerCircle(color: Color, contentTopPadding: Dp) {
-    val start = 8.dp.toPx()
-    val width = size.width
-    val height = size.height - 8.dp.toPx()
-    val topPadding = contentTopPadding.toPx()
-    drawPath(
-        path = Path().apply {
-            lineTo(width, 0f)
-            lineTo(start, 0f)
-            lineTo(start, topPadding)
-//            lineTo(start, height)
-//            lineTo(width, height)
-
-            cubicTo(
-                x1 = start, y2 = height * 0.7f,
-                x2 = start + (width + .7f), y1 = height,
-                x3 = width, y3 = height
-            )
-            lineTo(width, 0f)
-            close()
-        },
-        color = color
-    )
 }
 
 enum class Direction {

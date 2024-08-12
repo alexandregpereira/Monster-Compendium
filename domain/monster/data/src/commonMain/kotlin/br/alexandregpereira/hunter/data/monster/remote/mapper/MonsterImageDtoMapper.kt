@@ -24,7 +24,6 @@ internal fun List<MonsterImageDto>.toDomain(): List<MonsterImage> {
         MonsterImage(
             monsterIndex = it.monsterIndex,
             backgroundColor = it.backgroundColor.toDomain(),
-            isHorizontalImage = it.isHorizontalImage,
             imageUrl = it.imageUrl
         )
     }

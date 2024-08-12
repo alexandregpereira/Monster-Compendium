@@ -25,8 +25,6 @@ data class MonsterImageDto(
     val monsterIndex: String,
     @SerialName("background_color")
     val backgroundColor: ColorDto = ColorDto(),
-    @SerialName("is_horizontal_image")
-    val isHorizontalImage: Boolean,
     @SerialName("image_url")
     val imageUrl: String,
 )
