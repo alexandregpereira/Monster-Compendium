@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -16,12 +17,16 @@ fun FormBottomSheet(
     title: String? = null,
     buttonEnabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(),
+    maxWidth: Dp = maxBottomSheetWidth,
+    widthFraction: Float = 1f,
     onFormChanged: (FormField) -> Unit = {},
     onClosed: () -> Unit = {},
     onSaved: () -> Unit = {},
 ) = BottomSheet(
     opened = opened,
     onClose = onClosed,
+    maxWidth = maxWidth,
+    widthFraction = widthFraction,
     contentPadding = contentPadding,
 ) {
     Form(

@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,7 +37,6 @@ fun MonsterTypeIcon(
     modifier: Modifier = Modifier,
     contentDescription: String = "",
     size: Dp = 48.dp,
-    tint: Color = Color.Black,
     backgroundColor: Color = MaterialTheme.colors.surface,
 ) = CornerCircle(
     modifier = modifier,
@@ -48,7 +47,7 @@ fun MonsterTypeIcon(
     Icon(
         painter = painterResource(icon),
         contentDescription = contentDescription,
-        tint = tint,
+        tint = remember(backgroundColor) { backgroundColor.getTintColor() },
         modifier = Modifier
             .size(iconSize)
     )

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -13,6 +14,8 @@ fun ConfirmationBottomSheet(
     description: String,
     buttonText: String,
     contentPadding: PaddingValues = PaddingValues(),
+    maxWidth: Dp = Dp.Unspecified,
+    widthFraction: Float = 1f,
     onConfirmed: () -> Unit = {},
     onClosed: () -> Unit = {}
 ) = BottomSheet(
@@ -23,6 +26,8 @@ fun ConfirmationBottomSheet(
         start = 16.dp,
         end = 16.dp,
     ),
+    maxWidth = maxWidth,
+    widthFraction = widthFraction,
     onClose = onClosed,
 ) {
     Spacer(modifier = Modifier.height(16.dp))

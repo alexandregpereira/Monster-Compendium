@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.domain.model.MonsterType.CELESTIAL
 import br.alexandregpereira.hunter.monster.detail.ColorState
 import br.alexandregpereira.hunter.monster.detail.MonsterImageState
@@ -79,7 +80,6 @@ import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.cardShape
-import br.alexandregpereira.hunter.ui.compose.getTintColor
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
@@ -209,26 +209,26 @@ private fun ScrollableBackground(
     content = {
         val offset = getImageScrollOffset().absoluteValue
         val fraction = offset.coerceAtMost(200) / 200f
-        val backgroundColor = MaterialTheme.colors.background.copy(alpha = .99f)
-        val initialColor = lerp(
-            start = Color.Transparent,
-            stop = backgroundColor,
+        val backgroundColor = MaterialTheme.colors.background
+        val initialAlpha = lerp(
+            start = 0f,
+            stop = 1f,
             fraction = fraction
         )
-        val colorStop1 = lerp(
-            start = backgroundColor.copy(alpha = .7f),
-            stop = backgroundColor,
+        val alpha1 = lerp(
+            start = .7f,
+            stop = 1f,
             fraction = fraction
         )
-        val colorStop2 = lerp(
-            start = backgroundColor.copy(alpha = .8f),
-            stop = backgroundColor,
+        val alpha2 = lerp(
+            start = .8f,
+            stop = 1f,
             fraction = fraction
         )
         val colorStops = arrayOf(
-            .0f to initialColor,
-            .1f to colorStop1,
-            .2f to colorStop2,
+            .0f to backgroundColor.copy(alpha = initialAlpha),
+            .1f to backgroundColor.copy(alpha = alpha1),
+            .2f to backgroundColor.copy(alpha = alpha2),
             .3f to backgroundColor,
         )
         Box(
@@ -424,7 +424,6 @@ private fun MonsterTypeIcon(
             icon = data.type.toIcon(),
             iconSize = 24.dp,
             size = 80.dp,
-            tint = data.getBackgroundColor(isSystemInDarkTheme()).getTintColor()
         )
     }
 }

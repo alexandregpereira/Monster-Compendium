@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.animation.EnterExitState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -24,16 +25,24 @@ fun AppScreen(
     isOpen: Boolean,
     contentPaddingValues: PaddingValues = PaddingValues(),
     modifier: Modifier = Modifier,
-    closeable: Boolean = true,
+    showCloseButton: Boolean = true,
     backgroundColor: Color = MaterialTheme.colors.surface,
+    backHandlerEnabled: Boolean = isOpen,
+    swipeVerticalState: SwipeVerticalState? = null,
+    onAnimationStateChange: (EnterExitState) -> Unit = {},
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    BackHandler(enabled = isOpen, onBack = onClose)
+    BackHandler(enabled = backHandlerEnabled, onBack = onClose)
 
-    SwipeVerticalToDismiss(visible = isOpen, onClose = onClose) {
+    SwipeVerticalToDismiss(
+        visible = isOpen,
+        swipeVerticalState = swipeVerticalState,
+        onAnimationStateChange = onAnimationStateChange,
+        onClose = onClose
+    ) {
         Window(backgroundColor = backgroundColor, modifier = modifier) {
-            if (closeable) {
+            if (showCloseButton) {
                 BoxClosable(
                     contentPaddingValues = contentPaddingValues,
                     onClick = onClose,

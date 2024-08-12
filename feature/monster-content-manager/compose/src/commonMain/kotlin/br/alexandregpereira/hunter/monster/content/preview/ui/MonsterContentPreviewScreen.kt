@@ -17,11 +17,9 @@
 package br.alexandregpereira.hunter.monster.content.preview.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -30,8 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
@@ -51,7 +47,6 @@ import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
@@ -69,7 +64,7 @@ internal fun MonsterContentPreviewScreen(
     onFirstVisibleItemChange: (Int) -> Unit = {},
 ) {
     Closeable(
-        opened = state.isOpen,
+        isOpen = state.isOpen,
         onClosed = onClose,
     )
 

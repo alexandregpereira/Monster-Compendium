@@ -36,7 +36,7 @@ fun PopupContainer(
     Box(modifier.fillMaxSize()) {
         content()
 
-        Closeable(opened = isOpened, onClosed = onPopupClosed)
+        Closeable(isOpen = isOpened, onClosed = onPopupClosed)
 
         Box(
             Modifier

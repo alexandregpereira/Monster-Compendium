@@ -68,7 +68,6 @@ fun MonsterImage(
         MonsterTypeIcon(
             icon = icon,
             iconSize = iconSize,
-            tint = borderColor.getTintColor(),
             modifier = Modifier.align(Alignment.TopEnd),
             size = challengeRatingSize,
             backgroundColor = borderColor,

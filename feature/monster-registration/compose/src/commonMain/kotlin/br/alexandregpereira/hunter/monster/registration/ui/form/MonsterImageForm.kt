@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.getValue
@@ -61,7 +62,7 @@ internal fun LazyListScope.MonsterImageForm(
                         backgroundColor = color,
                         shape = RoundedCornerShape(16.dp),
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.monsterAspectRatio(
+                        modifier = Modifier.widthIn(max = 500.dp).monsterAspectRatio(
                             isHorizontal = infoState.isImageHorizontal,
                             widthFraction = widthFraction,
                         ),

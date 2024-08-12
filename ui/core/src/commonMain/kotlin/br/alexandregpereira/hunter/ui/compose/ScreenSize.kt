@@ -47,5 +47,11 @@ private enum class ScreenWidthOrHeightSizeType {
     Expanded,
 }
 
+val ScreenSizeInfo.isLandscape: Boolean
+    get() = when (type) {
+        ScreenSizeType.LandscapeCompact, ScreenSizeType.LandscapeExpanded -> true
+        ScreenSizeType.Portrait -> false
+    }
+
 @Composable
 expect fun getPlatformScreenSizeInfo(): ScreenSizeInfo
