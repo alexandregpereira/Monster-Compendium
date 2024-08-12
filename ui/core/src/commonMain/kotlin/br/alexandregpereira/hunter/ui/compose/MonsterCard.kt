@@ -18,14 +18,15 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -53,43 +54,48 @@ fun MonsterCard(
     val shape = Shapes.large
     val alpha = 0.7f
     val borderColor = MaterialTheme.colors.surface
-    Box(
-        modifier.animatePressed(
+    Card(
+        backgroundColor = Color.Transparent,
+        contentColor = MaterialTheme.colors.onSurface,
+        elevation = 2.dp,
+        shape = shape,
+        modifier = modifier.animatePressed(
             onClick = onCLick,
             onLongClick = onLongCLick
-        ).clip(shape)
-            .monsterAspectRatio(isHorizontal)
+        ).monsterAspectRatio(isHorizontal)
     ) {
-        MonsterImage(
-            url = url,
-            icon = icon,
-            backgroundColor = backgroundColor,
-            challengeRating = challengeRating,
-            borderColor = borderColor,
-        )
-
-        val colorStops = arrayOf(
-            .0f to Color.Transparent,
-            .8f to borderColor.copy(alpha = alpha),
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomStart)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colorStops = colorStops
-                    )
-                )
-        ) {
-            Text(
-                text = name,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 12.dp)
-                    .padding(bottom = 12.dp, top = 24.dp)
-                    .align(Alignment.BottomStart)
+        Box(Modifier.fillMaxSize()) {
+            MonsterImage(
+                url = url,
+                icon = icon,
+                backgroundColor = backgroundColor,
+                challengeRating = challengeRating,
+                borderColor = borderColor,
             )
+
+            val colorStops = arrayOf(
+                .0f to Color.Transparent,
+                .8f to borderColor.copy(alpha = alpha),
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colorStops = colorStops
+                        )
+                    )
+            ) {
+                Text(
+                    text = name,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                        .padding(bottom = 12.dp, top = 24.dp)
+                        .align(Alignment.BottomStart)
+                )
+            }
         }
     }
 }
