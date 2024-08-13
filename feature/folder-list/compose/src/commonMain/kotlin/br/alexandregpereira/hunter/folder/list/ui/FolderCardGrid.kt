@@ -21,6 +21,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.list.FolderCardImageState
 import br.alexandregpereira.hunter.folder.list.FolderCardState
+import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,6 +39,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 internal fun FolderCardGrid(
     folders: List<FolderCardState>,
+    title: String,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     onCLick: (String) -> Unit = {},
@@ -44,7 +47,7 @@ internal fun FolderCardGrid(
 ) {
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Adaptive(minSize = 140.dp),
+        columns = GridCells.Adaptive(minSize = 320.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(32.dp),
         contentPadding = PaddingValues(
@@ -54,6 +57,10 @@ internal fun FolderCardGrid(
             bottom = 16.dp + contentPadding.calculateBottomPadding()
         )
     ) {
+        item(key = "header", span = { GridItemSpan(maxLineSpan) }) {
+            SectionTitle(title = title, isHeader = true)
+        }
+
         items(folders, key = { it.folderName.lowercase() }) { folder ->
             val scale by animateFloatAsState(
                 targetValue = if (folder.selected) 0.8f else 1f,
@@ -140,6 +147,7 @@ private fun FolderCardGridPreview() = Window {
                     backgroundColorLight = "#b2b2b2"
                 ),
             )
-        )
+        ),
+        title = "Folders",
     )
 }

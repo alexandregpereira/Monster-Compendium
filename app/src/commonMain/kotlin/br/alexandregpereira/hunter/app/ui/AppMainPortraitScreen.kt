@@ -8,7 +8,6 @@ import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.MainViewState
 import br.alexandregpereira.hunter.detail.MonsterDetailBottomSheets
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
-import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 
 @Composable
@@ -24,7 +23,6 @@ internal fun AppMainPortraitScreen(
         bottomBarItems = state.bottomBarItems,
         onClick = { onEvent(BottomNavigationItemClick(item = it)) },
     )
-    FolderDetailFeature(contentPadding = contentPadding)
     Box {
         MonsterDetailFeature(contentPadding = contentPadding)
         MonsterDetailBottomSheets()

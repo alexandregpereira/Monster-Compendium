@@ -35,6 +35,7 @@ internal fun FolderListScreen(
     Box(Modifier.fillMaxSize()) {
         FolderCardGrid(
             folders = state.folders,
+            title = state.strings.title,
             contentPadding = contentPadding,
             onCLick = onCLick,
             onLongCLick = onLongCLick

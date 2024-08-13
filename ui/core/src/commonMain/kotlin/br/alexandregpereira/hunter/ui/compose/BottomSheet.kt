@@ -48,17 +48,20 @@ fun BottomSheet(
     contentPadding: PaddingValues = PaddingValues(),
     maxWidth: Dp = maxBottomSheetWidth,
     widthFraction: Float = 1f,
+    closeClickingOutside: Boolean = true,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     var enterExitState: EnterExitState? by remember { mutableStateOf(null) }
     val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
 
-    Closeable(
-        isOpen = opened,
-        onClosed = onClose,
-        getScrollOffset = { swipeVerticalState.offset.toInt() }
-    )
+    if (closeClickingOutside) {
+        Closeable(
+            isOpen = opened,
+            onClosed = onClose,
+            getScrollOffset = { swipeVerticalState.offset.toInt() }
+        )
+    }
 
     SwipeVerticalToDismiss(
         swipeVerticalState = swipeVerticalState,
@@ -73,15 +76,21 @@ fun BottomSheet(
                 modifier = Modifier
                     .verticalScroll(state = rememberScrollState())
                     .align(Alignment.BottomCenter)
-                    .noIndicationClick(onClick = onClose),
+                    .run {
+                        if (closeClickingOutside) {
+                            noIndicationClick(onClick = onClose)
+                        } else this
+                    },
                 horizontalAlignment = Alignment.End,
             ) {
-                val topSpaceHeight = 288.dp
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                )
+                if (closeClickingOutside) {
+                    val topSpaceHeight = 288.dp
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(topSpaceHeight + contentPadding.calculateTopPadding())
+                    )
+                }
                 val screenSize = LocalScreenSize.current
                 Window(
                     modifier = Modifier.widthIn(

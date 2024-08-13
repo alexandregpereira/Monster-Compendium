@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationAction
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
@@ -27,6 +28,7 @@ import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.SwipeVerticalState
 import br.alexandregpereira.hunter.ui.compose.isLandscape
 import br.alexandregpereira.hunter.ui.compose.maxBottomSheetWidth
+import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.compose.rememberSwipeVerticalState
 import kotlinx.coroutines.flow.collectLatest
 
@@ -79,7 +81,7 @@ internal fun MonsterRegistrationScreen(
                 tableContent = state.tableContent,
                 isTableContentOpen = state.isTableContentOpen,
                 modifier = Modifier,
-                contentPadding = contentPadding,
+                contentPadding = contentPadding + PaddingValues(top = 24.dp),
                 intent = intent,
             )
         }

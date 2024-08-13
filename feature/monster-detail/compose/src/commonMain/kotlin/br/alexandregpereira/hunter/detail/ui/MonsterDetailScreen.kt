@@ -212,7 +212,11 @@ private fun ScrollableBackground(
     content = {
         val offset = getImageScrollOffset().absoluteValue
         val fraction = offset.coerceAtMost(200) / 200f
-        val backgroundColor = MaterialTheme.colors.surface
+        val backgroundColor = lerp(
+            start = MaterialTheme.colors.background,
+            stop = MaterialTheme.colors.surface,
+            fraction = fraction
+        )
         val initialAlpha = lerp(
             start = 0f,
             stop = 1f,

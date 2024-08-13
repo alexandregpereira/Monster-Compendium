@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.animation.EnterExitState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -9,10 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,6 +35,7 @@ fun AppScreen(
     backHandlerEnabled: Boolean = isOpen,
     swipeVerticalState: SwipeVerticalState? = null,
     onAnimationStateChange: (EnterExitState) -> Unit = {},
+    level: Int = 1,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -41,7 +47,7 @@ fun AppScreen(
         onAnimationStateChange = onAnimationStateChange,
         onClose = onClose
     ) {
-        Window(backgroundColor = backgroundColor, modifier = modifier) {
+        Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
             if (showCloseButton) {
                 BoxClosable(
                     contentPaddingValues = contentPaddingValues,
@@ -58,8 +64,9 @@ fun AppScreen(
 @Composable
 fun AppFullScreen(
     isOpen: Boolean,
-    contentPaddingValues: PaddingValues,
+    contentPaddingValues: PaddingValues = PaddingValues(),
     backgroundColor: Color = MaterialTheme.colors.surface,
+    level: Int = 1,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) = AppScreen(
@@ -67,19 +74,21 @@ fun AppFullScreen(
     contentPaddingValues = contentPaddingValues,
     modifier = Modifier.fillMaxSize(),
     backgroundColor = backgroundColor,
+    level = level,
     onClose = onClose,
     content = content
 )
 
 @Composable
 fun BoxClosable(
-    contentPaddingValues: PaddingValues,
+    contentPaddingValues: PaddingValues = PaddingValues(),
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = Box(modifier) {
     content()
     BoxCloseButton(
+        showIcon = true,
         onClick = onClick,
         modifier = Modifier
             .padding(top = contentPaddingValues.calculateTopPadding())
@@ -89,7 +98,8 @@ fun BoxClosable(
 @Composable
 fun BoxCloseButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showIcon: Boolean = false,
 ) = Box(
     modifier = modifier.size(48.dp)
         .clickable(
@@ -98,5 +108,18 @@ fun BoxCloseButton(
             onClick = onClick
         )
         .clip(CircleShape)
-        .semantics { contentDescription = "Close" }
-)
+        .run {
+            if (showIcon) {
+                background(MaterialTheme.colors.surface.copy(alpha = .8f))
+            } else this
+        }
+        .semantics { contentDescription = "Close" },
+    contentAlignment = Alignment.Center
+) {
+    if (showIcon) {
+        Icon(
+            imageVector = Icons.Default.Close,
+            contentDescription = null,
+        )
+    }
+}

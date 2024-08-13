@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.app.BottomBarItemIcon
+import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
 import br.alexandregpereira.hunter.folder.list.FolderListFeature
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
 import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
@@ -35,13 +36,12 @@ internal fun AppBottomNavigationTransition(
                         contentPadding = contentPadding,
                     )
 
-                    BottomBarItemIcon.FOLDERS -> FolderListFeature(
-                        contentPadding = contentPadding,
-                    )
+                    BottomBarItemIcon.FOLDERS -> {
+                        FolderListFeature(contentPadding = contentPadding)
+                        FolderDetailFeature(contentPadding = contentPadding)
+                    }
 
-                    BottomBarItemIcon.SEARCH -> SearchScreenFeature(
-                        contentPadding = contentPadding,
-                    )
+                    BottomBarItemIcon.SEARCH -> SearchScreenFeature(contentPadding = contentPadding)
 
                     BottomBarItemIcon.SETTINGS -> SettingsFeature(
                         versionName = getVersionName(),

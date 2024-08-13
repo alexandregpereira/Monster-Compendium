@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
@@ -47,6 +48,7 @@ import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
+import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
@@ -78,7 +80,7 @@ internal fun MonsterContentPreviewScreen(
             }
             MonsterContentPreviewScreenContent(
                 state = state,
-                contentPadding = contentPadding,
+                contentPadding = contentPadding + PaddingValues(top = 24.dp),
                 compendiumIndex = compendiumIndex,
                 onTableContentOpenButtonClick = onTableContentOpenButtonClick,
                 onTableContentClose = onTableContentClose,
@@ -118,7 +120,8 @@ internal fun MonsterContentPreviewScreenContent(
             val listState = rememberLazyGridState()
             MonsterCompendium(
                 items = (listOf(title) + state.monsterCompendiumItems).asState(),
-                listState = listState
+                listState = listState,
+                contentPadding = contentPadding,
             )
 
             OnFirstVisibleItemChange(listState, onFirstVisibleItemChange)
