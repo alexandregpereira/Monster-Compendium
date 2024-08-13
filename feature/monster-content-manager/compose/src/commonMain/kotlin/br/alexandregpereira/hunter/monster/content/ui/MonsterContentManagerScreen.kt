@@ -53,7 +53,7 @@ internal fun MonsterContentManagerScreen(
             columns = StaggeredGridCells.Adaptive(300.dp),
             modifier = Modifier.padding(horizontal = 16.dp),
             contentPadding = PaddingValues(
-                top = 48.dp + contentPadding.calculateTopPadding(),
+                top = 56.dp + contentPadding.calculateTopPadding(),
                 bottom = 24.dp + contentPadding.calculateBottomPadding()
             ),
             verticalItemSpacing = 16.dp,
@@ -67,7 +67,7 @@ internal fun MonsterContentManagerScreen(
                     title = state.strings.title,
                     isHeader = true,
                     modifier = Modifier
-                        .padding(bottom = 32.dp)
+                        .padding(bottom = 8.dp)
                 )
             }
 
