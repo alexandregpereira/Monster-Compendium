@@ -212,7 +212,7 @@ private fun ScrollableBackground(
     content = {
         val offset = getImageScrollOffset().absoluteValue
         val fraction = offset.coerceAtMost(200) / 200f
-        val backgroundColor = MaterialTheme.colors.background
+        val backgroundColor = MaterialTheme.colors.surface
         val initialAlpha = lerp(
             start = 0f,
             stop = 1f,
@@ -355,7 +355,7 @@ private fun MonsterTopBar(
         Column {
             Row(
                 Modifier
-                    .background(color = MaterialTheme.colors.background),
+                    .background(color = MaterialTheme.colors.surface),
             ) {
 
                 val composableScope = rememberCoroutineScope()
