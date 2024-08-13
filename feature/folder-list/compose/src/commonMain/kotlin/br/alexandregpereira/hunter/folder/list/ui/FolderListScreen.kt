@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.list.FolderListState
-import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun FolderListScreen(
@@ -32,10 +31,11 @@ internal fun FolderListScreen(
     onLongCLick: (String) -> Unit = {},
     onItemSelectionClose: () -> Unit = {},
     onItemSelectionDeleteClick: () -> Unit = {}
-) = Window {
+) {
     Box(Modifier.fillMaxSize()) {
         FolderCardGrid(
             folders = state.folders,
+            title = state.strings.title,
             contentPadding = contentPadding,
             onCLick = onCLick,
             onLongCLick = onLongCLick

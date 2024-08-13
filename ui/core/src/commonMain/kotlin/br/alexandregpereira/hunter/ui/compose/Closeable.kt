@@ -25,31 +25,37 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.util.lerp
+import kotlin.math.absoluteValue
 
 @Composable
 fun Closeable(
-    opened: Boolean,
+    isOpen: Boolean,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
+    backHandlerEnabled: Boolean = isOpen,
+    getScrollOffset: () -> Int = { 0 },
     onClosed: () -> Unit,
-    content: @Composable () -> Unit = {}
 ) {
-    BackHandler(enabled = opened, onBack = onClosed)
+    BackHandler(enabled = backHandlerEnabled, onBack = onClosed)
 
     AnimatedVisibility(
         modifier = modifier,
-        visible = opened,
+        visible = isOpen,
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
+        val offset = getScrollOffset().absoluteValue
+        val fraction = offset.coerceAtMost(300) / 300f
+        val alpha = lerp(
+            start = .7f,
+            stop = .3f,
+            fraction = fraction
+        )
         Box(
             Modifier
                 .fillMaxSize()
-                .background(backgroundColor)
+                .background(MaterialTheme.colors.background.copy(alpha = alpha))
                 .noIndicationClick(onClick = onClosed)
         )
     }
-
-    content()
 }

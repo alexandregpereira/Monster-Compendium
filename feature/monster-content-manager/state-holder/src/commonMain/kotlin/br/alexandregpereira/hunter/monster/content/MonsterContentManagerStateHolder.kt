@@ -57,6 +57,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     private fun load() {
+        setState { copy(isLoading = true) }
         getAlternativeSourcesUseCase(onlyContentEnabled = false)
             .flowOn(dispatcher)
             .onEach { alternativeSources ->
@@ -65,6 +66,7 @@ class MonsterContentManagerStateHolder internal constructor(
                     copy(
                         monsterContents = alternativeSources.map { it.asState() },
                         strings = appLocalization.getStrings(),
+                        isLoading = false,
                     )
                 }
             }

@@ -39,7 +39,6 @@ val monsterDetailModule = module {
         MonsterDetailStateHolder(
             getMonsterDetailUseCase = get(),
             cloneMonster = get(),
-            changeMonstersMeasurementUnitUseCase = get(),
             deleteMonster = get(),
             spellDetailEventDispatcher = get(),
             monsterEventDispatcher = get(),

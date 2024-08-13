@@ -23,10 +23,6 @@ import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUs
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
-import br.alexandregpereira.hunter.event.EventDispatcher
-import br.alexandregpereira.hunter.event.systembar.BottomBarEvent
-import br.alexandregpereira.hunter.event.systembar.dispatchAddTopContentEvent
-import br.alexandregpereira.hunter.event.systembar.dispatchRemoveTopContentEvent
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
@@ -58,7 +54,6 @@ internal class SettingsStateHolder(
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
     private val analytics: SettingsAnalytics,
-    private val bottomBarEventDispatcher: EventDispatcher<BottomBarEvent>,
     private val appLocalization: AppLocalization,
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
@@ -102,7 +97,6 @@ internal class SettingsStateHolder(
     override fun onAdvancedSettingsClick() {
         analytics.trackAdvancedSettingsClick()
         setState { copy(advancedSettingsOpened = true) }
-        bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
     override fun onAdvancedSettingsCloseClick() = closeAdvancedSettings()
@@ -110,18 +104,15 @@ internal class SettingsStateHolder(
     override fun onSettingsClick() {
         analytics.trackSettingsClick()
         setState { copy(settingsOpened = true) }
-        bottomBarEventDispatcher.dispatchAddTopContentEvent(topContentId = SETTINGS_CONTENT)
     }
 
     override fun onSettingsCloseClick() {
         setState { copy(settingsOpened = false) }
-        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
     }
 
     override fun onSettingsSaveClick() {
         analytics.trackCommonSettingSaveButtonClick(state.value.settingsState)
         setState { copy(settingsOpened = false) }
-        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = SETTINGS_CONTENT)
         saveLanguage(state.value.settingsState.language.code)
             .flowOn(dispatcher)
             .onEach {
@@ -142,16 +133,10 @@ internal class SettingsStateHolder(
     override fun onAppearanceSettingsClick() {
         fillAppearanceSettingsState()
         setState { copy(appearanceSettingsOpened = true) }
-        bottomBarEventDispatcher.dispatchAddTopContentEvent(
-            topContentId = APPEARANCE_SETTINGS_CONTENT
-        )
     }
 
     override fun onAppearanceSettingsCloseClick() {
         setState { copy(appearanceSettingsOpened = false) }
-        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(
-            topContentId = APPEARANCE_SETTINGS_CONTENT
-        )
     }
 
     override fun onAppearanceSettingsSaveClick() {
@@ -227,7 +212,6 @@ internal class SettingsStateHolder(
 
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }
-        bottomBarEventDispatcher.dispatchRemoveTopContentEvent(topContentId = ADVANCED_SETTINGS_CONTENT)
     }
 
     private fun Language.asState(): SettingsLanguageState {
@@ -240,11 +224,5 @@ internal class SettingsStateHolder(
             code = this.code,
             value = string
         )
-    }
-
-    private companion object {
-        private const val SETTINGS_CONTENT = "Settings"
-        private const val ADVANCED_SETTINGS_CONTENT = "AdvancedSettings"
-        private const val APPEARANCE_SETTINGS_CONTENT = "AppearanceSettings"
     }
 }

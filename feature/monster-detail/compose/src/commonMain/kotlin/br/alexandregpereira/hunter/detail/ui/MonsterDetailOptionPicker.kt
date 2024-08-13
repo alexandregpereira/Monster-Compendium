@@ -27,22 +27,27 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.animatePressed
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun MonsterDetailOptionPicker(
     options: List<MonsterDetailOptionState>,
     showOptions: Boolean,
     contentPadding: PaddingValues = PaddingValues(),
+    maxWidth: Dp = Dp.Unspecified,
+    widthFraction: Float = .3f,
     onOptionSelected: (MonsterDetailOptionState) -> Unit = {},
     onClosed: () -> Unit = {}
 ) = BottomSheet(
     opened = showOptions,
+    maxWidth = maxWidth,
+    widthFraction = widthFraction,
     onClose = onClosed,
 ) {
     MonsterDetailOptions(options, contentPadding, onOptionSelected)

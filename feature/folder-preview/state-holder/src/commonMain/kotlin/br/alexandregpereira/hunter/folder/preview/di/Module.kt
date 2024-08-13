@@ -24,27 +24,18 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultListener
-import br.alexandregpereira.hunter.ui.StateRecovery
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val folderPreviewModule = module {
     single { FolderPreviewEventManager() }
     single<FolderPreviewEventDispatcher> { get<FolderPreviewEventManager>() }
-    single<FolderPreviewResultListener> { get<FolderPreviewEventManager>() }
     factory { GetMonstersFromFolderPreviewUseCase(get()) }
     factory { AddMonsterToFolderPreviewUseCase(get(), get()) }
     factory { ClearFolderPreviewUseCase(get()) }
     factory { RemoveMonsterFromFolderPreviewUseCase(get(), get()) }
 
-    single(named(FolderPreviewStateRecoveryQualifier)) {
-        StateRecovery()
-    }
-
     single {
         FolderPreviewStateHolder(
-            stateRecovery = get(named(FolderPreviewStateRecoveryQualifier)),
             folderPreviewEventManager = get(),
             getMonstersFromFolderPreview = get(),
             addMonsterToFolderPreview = get(),
@@ -58,5 +49,3 @@ val folderPreviewModule = module {
         )
     }
 }
-
-const val FolderPreviewStateRecoveryQualifier = "FolderPreviewStateRecovery"

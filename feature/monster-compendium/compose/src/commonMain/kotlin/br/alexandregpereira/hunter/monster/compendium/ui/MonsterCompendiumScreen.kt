@@ -42,7 +42,6 @@ import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 import kotlinx.coroutines.flow.collectLatest
 
@@ -53,8 +52,9 @@ internal fun MonsterCompendiumScreen(
     initialScrollItemPosition: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumIntent,
-) = Window(Modifier.fillMaxSize()) {
+) {
     LoadingScreen<MonsterCompendiumError>(
+        modifier = Modifier.fillMaxSize(),
         state = when {
             state.errorState != null -> LoadingScreenState.Error(state.errorState)
             state.isLoading -> LoadingScreenState.LoadingScreen
@@ -73,7 +73,6 @@ internal fun MonsterCompendiumScreen(
         )
         MonsterCompendiumScreen(
             items = state.items,
-            isShowingMonsterFolderPreview = state.isShowingMonsterFolderPreview,
             popupOpened = state.popupOpened,
             alphabet = state.alphabet,
             tableContent = state.tableContent,
@@ -92,7 +91,11 @@ internal fun MonsterCompendiumScreen(
             actionHandler.action.collectLatest { action ->
                 when (action) {
                     is MonsterCompendiumAction.GoToCompendiumIndex -> {
-                        listState.scrollToItem(action.index)
+                        if (action.shouldAnimate) {
+                            listState.animateScrollToItem(action.index)
+                        } else {
+                            listState.scrollToItem(action.index)
+                        }
                     }
                 }
             }
@@ -103,7 +106,6 @@ internal fun MonsterCompendiumScreen(
 @Composable
 private fun MonsterCompendiumScreen(
     items: List<MonsterCompendiumItemState>,
-    isShowingMonsterFolderPreview: Boolean,
     popupOpened: Boolean,
     alphabet: List<String>,
     alphabetSelectedIndex: Int,
@@ -128,10 +130,7 @@ private fun MonsterCompendiumScreen(
             )
         },
         popupContent = {
-            val paddingBottom by animateDpAsState(
-                if (isShowingMonsterFolderPreview) 72.dp else 8.dp
-            )
-
+            val paddingBottom = 8.dp
             TableContentPopup(
                 alphabet = alphabet,
                 tableContent = remember(tableContent) { tableContent.asStateTableContentItem() },
@@ -148,7 +147,7 @@ private fun MonsterCompendiumScreen(
                 modifier = Modifier
                     .padding(
                         top = contentPadding.calculateTopPadding(),
-                        bottom = contentPadding.calculateBottomPadding() + paddingBottom
+                        bottom = paddingBottom
                     )
             )
         }

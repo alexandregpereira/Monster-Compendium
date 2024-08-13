@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -60,7 +61,7 @@ fun AppTextField(
                 Icon(
                     imageVector = Icons.Filled.Clear,
                     contentDescription = "Clear",
-                    tint = MaterialTheme.colors.onSurface
+                    tint = LocalContentColor.current
                 )
             }
         }
@@ -81,8 +82,7 @@ fun AppTextField(
         maxLines = if (multiline) 6 else 1,
         modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = MaterialTheme.colors.onSurface,
-            backgroundColor = MaterialTheme.colors.surface
+            textColor = LocalContentColor.current,
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = when (keyboardType) {

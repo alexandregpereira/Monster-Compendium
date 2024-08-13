@@ -22,47 +22,6 @@ class GetMonstersBySectionUseCase internal constructor() {
         return this.first().uppercaseChar().toString().removeSpecialCharacters()
     }
 
-    private fun List<Monster>.appendIsHorizontal(): List<Monster> {
-        val monsterRowsMap: LinkedHashMap<Monster, Monster?> = linkedMapOf()
-        var lastMonsterHorizontalIndex = -1
-        var mod = 0
-        val totalMonsters = this.size
-        this.mapIndexed { index, monster ->
-            if ((index + mod) % 2 == 0) {
-                if (monster.imageData.isHorizontal &&
-                    isIndexEligibleToBeHorizontal(index, lastMonsterHorizontalIndex, totalMonsters)
-                ) {
-                    lastMonsterHorizontalIndex = index
-                    ++mod
-                }
-                monsterRowsMap[monster] = null
-            } else {
-                val lastIndex = index - 1
-                val lastMonster = this[lastIndex]
-                monsterRowsMap[lastMonster] = monster
-            }
-        }
-        return this.map { monster ->
-            val isHorizontal =
-                monsterRowsMap.containsKey(monster) && monsterRowsMap[monster] == null
-            monster.changeIsHorizontalImage(isHorizontal = isHorizontal)
-        }
-    }
-
-    private fun isIndexEligibleToBeHorizontal(
-        currentIndex: Int,
-        lastMonsterHorizontalIndex: Int,
-        totalMonsters: Int
-    ): Boolean {
-        return (lastMonsterHorizontalIndex == -1 && currentIndex < (totalMonsters - 2)) ||
-                ((currentIndex - lastMonsterHorizontalIndex) >= HORIZONTAL_IMAGE_INTERVAL &&
-                        currentIndex < (totalMonsters - 2))
-    }
-
-    private fun Monster.changeIsHorizontalImage(isHorizontal: Boolean): Monster {
-        return copy(imageData = imageData.copy(isHorizontal = isHorizontal))
-    }
-
     private fun Flow<List<Monster>>.toMonsterCompendiumItems(): Flow<List<MonsterCompendiumItem>> {
         return map { monsters ->
             val items = mutableListOf<MonsterCompendiumItem>()
@@ -107,41 +66,7 @@ class GetMonstersBySectionUseCase internal constructor() {
                     MonsterCompendiumItem.Item(monster = monster)
                 )
             }
-            items.appendIsMonsterImageHorizontal()
-        }
-    }
-
-    private fun List<MonsterCompendiumItem>.appendIsMonsterImageHorizontal(): List<MonsterCompendiumItem> {
-        val monsters = mutableListOf<Monster>()
-        val monstersBySection = mutableListOf<List<Monster>>()
-        val lastIndex = lastIndex
-        forEachIndexed { i, item ->
-            if (item is MonsterCompendiumItem.Item) {
-                monsters.add(item.monster)
-            }
-
-            if ((item is MonsterCompendiumItem.Title || lastIndex == i) && monsters.isNotEmpty()) {
-                monstersBySection.add(monsters.appendIsHorizontal())
-                monsters.clear()
-            }
-        }
-
-        val newMonsters = monstersBySection
-            .takeIf { it.isNotEmpty() }
-            ?.reduce { acc, value -> acc + value }
-            .orEmpty()
-
-        return map { item ->
-            when (item) {
-                is MonsterCompendiumItem.Title -> item
-                is MonsterCompendiumItem.Item -> item.copy(
-                    monster = newMonsters.firstOrNull {
-                        it.index == item.monster.index
-                    } ?: throw IllegalArgumentException("appendIsMonsterImageHorizontal error")
-                )
-            }
+            items
         }
     }
 }
-
-private const val HORIZONTAL_IMAGE_INTERVAL = 2

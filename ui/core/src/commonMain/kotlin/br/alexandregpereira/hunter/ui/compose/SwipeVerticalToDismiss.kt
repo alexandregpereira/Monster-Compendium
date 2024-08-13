@@ -17,10 +17,12 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 
@@ -28,7 +30,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 fun SwipeVerticalToDismiss(
     visible: Boolean,
     modifier: Modifier = Modifier,
+    swipeVerticalState: SwipeVerticalState? = null,
     onClose: () -> Unit = {},
+    onAnimationStateChange: (EnterExitState) -> Unit = {},
     content: @Composable () -> Unit
 ) {
     AnimatedVisibility(
@@ -37,15 +41,21 @@ fun SwipeVerticalToDismiss(
         exit = slideOutVertically { fullHeight -> fullHeight },
         modifier = modifier
     ) {
-        val swipeVerticalState = rememberSwipeVerticalState()
+        val animationState = this.transition.currentState
+        LaunchedEffect(animationState) {
+            onAnimationStateChange(animationState)
+        }
+        val safeSwipeVerticalState = swipeVerticalState ?: rememberSwipeVerticalState(
+            key = animationState
+        )
         SwipeVertical(
-            state = swipeVerticalState,
+            state = safeSwipeVerticalState,
             onSwipeTriggered = onClose,
         ) {
             Box(
                 modifier = Modifier
                     .graphicsLayer {
-                        this.translationY = swipeVerticalState.offset
+                        this.translationY = safeSwipeVerticalState.offset
                     }
             ) {
                 content()

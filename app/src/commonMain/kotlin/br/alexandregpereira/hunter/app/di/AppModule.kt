@@ -6,7 +6,6 @@ import br.alexandregpereira.hunter.app.event.appEventModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.detail.di.featureMonsterDetailModule
 import br.alexandregpereira.hunter.domain.di.domainModules
-import br.alexandregpereira.hunter.event.systembar.bottomBarEventModule
 import br.alexandregpereira.hunter.folder.detail.di.featureFolderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.featureFolderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.featureFolderListModule
@@ -55,7 +54,6 @@ internal fun KoinApplication.initKoinModules() {
     )
     modules(
         analyticsModule,
-        bottomBarEventModule,
         localizationModule,
         monsterEventModule,
         appEventModule,
@@ -71,12 +69,6 @@ private val appModule = module {
 
     single {
         MainViewModel(
-            monsterDetailEventListener = get(),
-            folderDetailResultListener = get(),
-            folderListResultListener = get(),
-            monsterContentManagerEventListener = get(),
-            folderPreviewEventDispatcher = get(),
-            bottomBarEventManager = get(),
             appLocalization = get(),
             stateRecovery = get(named(AppStateRecoveryQualifier)),
             appEventDispatcher = get(),

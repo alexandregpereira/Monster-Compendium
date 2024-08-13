@@ -16,15 +16,12 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -39,25 +36,27 @@ fun MonsterTypeIcon(
     iconSize: Dp,
     modifier: Modifier = Modifier,
     contentDescription: String = "",
-    tint: Color = Color.Black,
-) = Box(
-    contentAlignment = Alignment.TopEnd,
-    modifier = modifier
-        .fillMaxWidth()
-        .padding(8.dp),
+    size: Dp = 48.dp,
+    backgroundColor: Color = MaterialTheme.colors.surface,
+) = CornerCircle(
+    modifier = modifier,
+    color = backgroundColor,
+    size = size,
+    direction = Direction.RIGHT,
 ) {
     Icon(
         painter = painterResource(icon),
         contentDescription = contentDescription,
-        tint = tint,
+        tint = remember(backgroundColor) { backgroundColor.getTintColor() },
         modifier = Modifier
             .size(iconSize)
-            .alpha(0.7f)
     )
 }
 
-fun String.getTintColor(): Color {
-    val color = this.toColor()
+fun String.getTintColor(): Color = this.toColor().getTintColor()
+
+fun Color.getTintColor(): Color {
+    val color = this
     val luminance = colorToLuminance(color.red, color.green, color.blue)
     return if (luminance > 0.5) Color.Black else Color.White
 }

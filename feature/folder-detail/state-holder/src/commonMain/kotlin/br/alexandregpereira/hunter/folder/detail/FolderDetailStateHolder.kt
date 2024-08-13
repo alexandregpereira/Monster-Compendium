@@ -67,7 +67,6 @@ class FolderDetailStateHolder internal constructor(
     fun onItemLongClick(index: String) {
         analytics.trackItemLongClicked(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
-        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.ShowFolderPreview)
     }
 
     fun onClose() {

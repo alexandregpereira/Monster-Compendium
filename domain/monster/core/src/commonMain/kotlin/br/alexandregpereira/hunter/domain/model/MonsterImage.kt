@@ -16,12 +16,9 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import kotlin.native.ObjCName
-
-@ObjCName(name = "MonsterImage", exact = true)
 data class MonsterImage(
     val monsterIndex: String,
     val backgroundColor: Color,
-    val isHorizontalImage: Boolean,
+    val isHorizontalImage: Boolean = false,
     val imageUrl: String,
 )

@@ -18,13 +18,17 @@ package br.alexandregpereira.hunter.ui.compendium.monster
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
+import br.alexandregpereira.hunter.ui.compendium.CompendiumColumns
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterCard
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -38,30 +42,48 @@ fun MonsterCompendium(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
-) = Compendium(
-    items = items,
-    modifier = modifier,
-    animateItems = animateItems,
-    listState = listState,
-    contentPadding = contentPadding,
-    key = { it.getMonsterCardState().index },
-    isHorizontalCard = { it.getMonsterCardState().imageState.isHorizontal },
-    cardContent = { item ->
-        val monsterCardState = item.getMonsterCardState()
-        MonsterCard(
-            name = monsterCardState.name,
-            url = monsterCardState.imageState.url,
-            icon = monsterCardState.imageState.type.icon,
-            backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
-                isSystemInDarkTheme()
-            ),
-            challengeRating = monsterCardState.imageState.challengeRating,
-            modifier = Modifier,
-            onCLick = { onItemCLick(monsterCardState.index) },
-            onLongCLick = { onItemLongCLick(monsterCardState.index) }
-        )
+) {
+    val screenSizes = LocalScreenSize.current
+    val currentWidth = screenSizes.widthInDp
+    val cardWidth = 148
+    val titleLineSpan: LazyGridItemSpanScope.() -> Int = remember(screenSizes.type) {
+        {
+            when {
+                maxLineSpan > 2 -> 1
+                else -> maxLineSpan
+            }
+        }
     }
-)
+    Compendium(
+        items = items,
+        modifier = modifier,
+        animateItems = animateItems,
+        listState = listState,
+        contentPadding = contentPadding,
+        columns = CompendiumColumns.Adaptive(cardWidth),
+        titleLineSpan = titleLineSpan,
+        key = { it.getMonsterCardState().index },
+        isHorizontalCard = {
+            it.getMonsterCardState().imageState.isHorizontal &&
+                    currentWidth - 56.dp >= cardWidth.dp * 2
+        },
+        cardContent = { item ->
+            val monsterCardState = item.getMonsterCardState()
+            MonsterCard(
+                name = monsterCardState.name,
+                url = monsterCardState.imageState.url,
+                icon = monsterCardState.imageState.type.icon,
+                backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
+                    isSystemInDarkTheme()
+                ),
+                isHorizontal = monsterCardState.imageState.isHorizontal,
+                challengeRating = monsterCardState.imageState.challengeRating,
+                onCLick = { onItemCLick(monsterCardState.index) },
+                onLongCLick = { onItemLongCLick(monsterCardState.index) }
+            )
+        }
+    )
+}
 
 private fun CompendiumItemState.Item.getMonsterCardState() = this.value as MonsterCardState
 

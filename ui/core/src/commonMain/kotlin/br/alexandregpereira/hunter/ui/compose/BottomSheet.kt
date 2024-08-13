@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.animation.EnterExitState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,15 +27,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
@@ -42,37 +45,59 @@ import androidx.compose.ui.unit.dp
 fun BottomSheet(
     modifier: Modifier = Modifier,
     opened: Boolean = false,
-    backgroundColor: Color = MaterialTheme.colors.background.copy(alpha = 0.3f),
     contentPadding: PaddingValues = PaddingValues(),
+    maxWidth: Dp = maxBottomSheetWidth,
+    widthFraction: Float = 1f,
+    closeClickingOutside: Boolean = true,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    Closeable(
-        opened = opened,
-        backgroundColor = backgroundColor,
-        onClosed = onClose,
-    )
+    var enterExitState: EnterExitState? by remember { mutableStateOf(null) }
+    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
+
+    if (closeClickingOutside) {
+        Closeable(
+            isOpen = opened,
+            onClosed = onClose,
+            getScrollOffset = { swipeVerticalState.offset.toInt() }
+        )
+    }
 
     SwipeVerticalToDismiss(
+        swipeVerticalState = swipeVerticalState,
         visible = opened,
-        onClose = onClose
+        onClose = onClose,
+        onAnimationStateChange = { state ->
+            enterExitState = state
+        }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .verticalScroll(state = rememberScrollState())
                     .align(Alignment.BottomCenter)
+                    .run {
+                        if (closeClickingOutside) {
+                            noIndicationClick(onClick = onClose)
+                        } else this
+                    },
+                horizontalAlignment = Alignment.End,
             ) {
-                val topSpaceHeight = 288.dp
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(topSpaceHeight + contentPadding.calculateTopPadding())
-                        .noIndicationClick(onClick = onClose)
-                )
-                Card(
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                    modifier = Modifier.fillMaxWidth()
+                if (closeClickingOutside) {
+                    val topSpaceHeight = 288.dp
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(topSpaceHeight + contentPadding.calculateTopPadding())
+                    )
+                }
+                val screenSize = LocalScreenSize.current
+                Window(
+                    modifier = Modifier.widthIn(
+                        max = maxWidth.takeIf { screenSize.isLandscape } ?: maxBottomSheetWidth
+                    ).fillMaxWidth(
+                        fraction = widthFraction.takeIf { screenSize.isLandscape } ?: 1f
+                    ).noIndicationClick(),
                 ) {
                     Column(
                         modifier = modifier.padding(
@@ -88,3 +113,5 @@ fun BottomSheet(
         }
     }
 }
+
+val maxBottomSheetWidth get() = 720.dp

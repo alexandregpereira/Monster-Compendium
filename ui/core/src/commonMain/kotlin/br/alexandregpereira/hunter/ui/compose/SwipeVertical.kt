@@ -85,9 +85,10 @@ fun SwipeVertical(
 
 @Composable
 fun rememberSwipeVerticalState(
+    key: Any? = null,
     swipeTriggerPercentage: Float = 0.1f
 ): SwipeVerticalState {
-    return remember {
+    return remember(key) {
         SwipeVerticalState(swipeTriggerPercentage)
     }
 }

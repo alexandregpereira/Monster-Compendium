@@ -16,15 +16,10 @@
 
 package br.alexandregpereira.hunter.monster.content.preview.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -33,7 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
@@ -54,6 +48,7 @@ import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
+import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
@@ -71,39 +66,31 @@ internal fun MonsterContentPreviewScreen(
     onFirstVisibleItemChange: (Int) -> Unit = {},
 ) {
     Closeable(
-        opened = state.isOpen,
+        isOpen = state.isOpen,
         onClosed = onClose,
     )
 
     AppScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
-        Surface(
-            Modifier
-                .fillMaxSize()
-                .padding(top = 24.dp + contentPadding.calculateTopPadding())
-                .clip(shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp))
+        LoadingScreen(
+            isLoading = state.isLoading,
+            showCircularLoading = false,
         ) {
-            LoadingScreen(
-                isLoading = state.isLoading,
-                showCircularLoading = false,
-                modifier = Modifier.background(MaterialTheme.colors.surface)
-            ) {
-                var compendiumIndex by remember {
-                    mutableStateOf(-1)
-                }
-                MonsterContentPreviewScreenContent(
-                    state = state,
-                    contentPadding = contentPadding,
-                    compendiumIndex = compendiumIndex,
-                    onTableContentOpenButtonClick = onTableContentOpenButtonClick,
-                    onTableContentClose = onTableContentClose,
-                    onTableContentClick = onTableContentClick,
-                    onFirstVisibleItemChange = onFirstVisibleItemChange,
-                )
-                LaunchedEffect(actionHandler) {
-                    actionHandler.action.collect { action ->
-                        when (action.type) {
-                            GO_TO_COMPENDIUM_INDEX -> compendiumIndex = action.index
-                        }
+            var compendiumIndex by remember {
+                mutableStateOf(-1)
+            }
+            MonsterContentPreviewScreenContent(
+                state = state,
+                contentPadding = contentPadding + PaddingValues(top = 24.dp),
+                compendiumIndex = compendiumIndex,
+                onTableContentOpenButtonClick = onTableContentOpenButtonClick,
+                onTableContentClose = onTableContentClose,
+                onTableContentClick = onTableContentClick,
+                onFirstVisibleItemChange = onFirstVisibleItemChange,
+            )
+            LaunchedEffect(actionHandler) {
+                actionHandler.action.collect { action ->
+                    when (action.type) {
+                        GO_TO_COMPENDIUM_INDEX -> compendiumIndex = action.index
                     }
                 }
             }
@@ -133,7 +120,8 @@ internal fun MonsterContentPreviewScreenContent(
             val listState = rememberLazyGridState()
             MonsterCompendium(
                 items = (listOf(title) + state.monsterCompendiumItems).asState(),
-                listState = listState
+                listState = listState,
+                contentPadding = contentPadding,
             )
 
             OnFirstVisibleItemChange(listState, onFirstVisibleItemChange)

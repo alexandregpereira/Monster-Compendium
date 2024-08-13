@@ -3,11 +3,13 @@ package br.alexandregpereira.hunter.folder.list
 import br.alexandregpereira.hunter.localization.Language
 
 interface FolderListStrings {
+    val title: String
     val delete: String
     val itemSelected: (Int) -> String
 }
 
 internal data class FolderListEnStrings(
+    override val title: String = "Folders",
     override val delete: String = "Delete",
     override val itemSelected: (Int) -> String = { count ->
         if (count == 1) {
@@ -19,6 +21,7 @@ internal data class FolderListEnStrings(
 ) : FolderListStrings
 
 internal data class FolderListPtStrings(
+    override val title: String = "Pastas",
     override val delete: String = "Deletar",
     override val itemSelected: (Int) -> String = { count ->
         if (count == 1) {
@@ -30,6 +33,7 @@ internal data class FolderListPtStrings(
 ) : FolderListStrings
 
 internal data class FolderListEmptyStrings(
+    override val title: String = "",
     override val delete: String = "",
     override val itemSelected: (Int) -> String = { _ -> "" }
 ) : FolderListStrings

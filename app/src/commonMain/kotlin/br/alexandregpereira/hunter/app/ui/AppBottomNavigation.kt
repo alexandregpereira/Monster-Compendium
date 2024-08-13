@@ -20,10 +20,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
@@ -36,7 +34,6 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
@@ -60,31 +57,28 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import br.alexandregpereira.hunter.app.BottomBarItem
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.BottomNavigationHeight
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 @Composable
-internal fun BoxScope.AppBottomNavigation(
+internal fun AppBottomNavigation(
     showBottomBar: Boolean,
     bottomBarItemSelectedIndex: Int,
     bottomBarItems: List<BottomBarItem>,
     contentPadding: PaddingValues = PaddingValues(),
+    modifier: Modifier = Modifier,
     onClick: (BottomBarItem) -> Unit = {}
-) = HunterTheme {
+) {
     AnimatedVisibility(
         visible = showBottomBar,
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight },
-        modifier = Modifier.align(Alignment.BottomStart)
+        modifier = modifier,
     ) {
-        Surface(
-            modifier = Modifier
-                .background(MaterialTheme.colors.surface),
-            elevation = 4.dp
-        ) {
+        Window {
             val paddingBottom = contentPadding.calculateBottomPadding()
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,

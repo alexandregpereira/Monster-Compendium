@@ -21,23 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
-import br.alexandregpereira.hunter.monster.compendium.state.di.StateRecoveryQualifier
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
-import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
 @Composable
 fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    StateRecoveryLaunchedEffect(
-        key = StateRecoveryQualifier,
-        stateRecovery = koinInject(named(StateRecoveryQualifier)),
-    )
-
     val stateHolder: MonsterCompendiumStateHolder = koinInject()
-
     MonsterCompendiumScreen(
         state = stateHolder.state.collectAsState().value,
         actionHandler = stateHolder,

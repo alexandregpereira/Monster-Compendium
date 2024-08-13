@@ -18,27 +18,24 @@ package br.alexandregpereira.hunter.folder.list.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.folder.list.FolderCardImageState
+import br.alexandregpereira.hunter.ui.compose.ImageCard
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.Window
-import br.alexandregpereira.hunter.ui.compose.animatePressed
-import br.alexandregpereira.hunter.ui.theme.Shapes
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -50,28 +47,21 @@ internal fun FolderCard(
     image3: FolderCardImageState? = null,
     onCLick: () -> Unit = {},
     onLongCLick: () -> Unit = {},
+) = ImageCard(
+    name = folderName,
+    isHorizontal = true,
+    fontSize = 24.sp,
+    modifier = modifier,
+    onCLick = onCLick,
+    onLongCLick = onLongCLick,
 ) {
-    Column(
-        modifier.animatePressed(
-            onClick = onCLick,
-            onLongClick = onLongCLick
-        )
+    FolderCardImageLayout(
+        isHorizontalImage = image1.isHorizontalImage
     ) {
-        FolderCardImageLayout(
-            isHorizontalImage = image1.isHorizontalImage
-        ) {
-            FolderCardImage(
-                image1 = image1,
-                image2 = image2,
-                image3 = image3
-            )
-        }
-
-        Text(
-            text = folderName,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)
+        FolderCardImage(
+            image1 = image1,
+            image2 = image2,
+            image3 = image3
         )
     }
 }
@@ -91,6 +81,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
+            contentScale = ContentScale.Crop,
             shape = RectangleShape,
         )
     }
@@ -104,6 +95,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
+            contentScale = ContentScale.Crop,
             shape = RectangleShape,
         )
     }
@@ -117,6 +109,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
+            contentScale = ContentScale.Crop,
             shape = RectangleShape,
         )
     }
@@ -128,9 +121,7 @@ private fun FolderCardImageLayout(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = Layout(
-    modifier = modifier
-        .height(140.dp)
-        .clip(shape = Shapes.large),
+    modifier = modifier.fillMaxSize(),
     content = content
 ) { measurables, constraints ->
     val firstImagePadding: Int

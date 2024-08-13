@@ -23,9 +23,9 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 
 data class ImageState(val url: String, val contentDescription: String)
@@ -35,18 +35,18 @@ data class ImageState(val url: String, val contentDescription: String)
 internal fun MonsterImages(
     images: List<ImageState>,
     pagerState: PagerState,
-    height: Dp,
     shape: Shape,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = AlphaTransition(
     dataList = images,
-    pagerState = pagerState
+    pagerState = pagerState,
+    modifier = modifier,
 ) { image ->
     MonsterCoilImage(
         imageUrl = image.url,
         contentDescription = image.contentDescription,
-        height = height,
         shape = shape,
-        modifier = Modifier.padding(contentPadding)
+        modifier = Modifier.monsterAspectRatio().padding(contentPadding)
     )
 }

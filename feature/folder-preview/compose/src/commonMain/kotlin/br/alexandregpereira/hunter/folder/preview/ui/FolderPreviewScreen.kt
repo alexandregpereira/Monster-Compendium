@@ -17,40 +17,39 @@
 package br.alexandregpereira.hunter.folder.preview.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewState
-import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun FolderPreviewScreen(
     state: FolderPreviewState,
     contentPadding: PaddingValues = PaddingValues(),
+    modifier: Modifier = Modifier,
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
-) = HunterTheme {
+) = Box(modifier = modifier.fillMaxWidth().animateContentSize(animationSpec = spring())) {
     AnimatedVisibility(
         visible = state.showPreview,
-        enter = slideInVertically { fullHeight -> fullHeight * 2 },
-        exit = slideOutVertically { fullHeight -> fullHeight * 2 },
+        enter = fadeIn(animationSpec = spring()),
+        exit = fadeOut(animationSpec = spring()),
+        modifier = modifier
     ) {
-        Box(Modifier.fillMaxSize()) {
-            FolderPreview(
-                monsters = state.monsters,
-                saveButtonText = state.strings.save,
-                contentPadding = contentPadding,
-                onClick = onClick,
-                onLongClick = onLongClick,
-                onSave = onSave,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
-        }
+        FolderPreview(
+            monsters = state.monsters,
+            saveButtonText = state.strings.save,
+            contentPadding = contentPadding,
+            onClick = onClick,
+            onLongClick = onLongClick,
+            onSave = onSave,
+        )
     }
 }

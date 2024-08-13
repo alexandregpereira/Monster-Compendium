@@ -17,30 +17,26 @@
 package br.alexandregpereira.hunter.folder.list.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.AppButton
-import br.alexandregpereira.hunter.ui.compose.AppScreen
+import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-internal fun BoxScope.ItemSelection(
+internal fun ItemSelection(
     itemSelectionText: String,
     deleteText: String,
     modifier: Modifier = Modifier,
@@ -48,16 +44,16 @@ internal fun BoxScope.ItemSelection(
     contentBottomPadding: Dp = 0.dp,
     onClose: () -> Unit = {},
     onDeleteClick: () -> Unit = {}
-) = AppScreen(
-    isOpen = isOpen,
+) = BottomSheet(
+    opened = isOpen,
+    maxWidth = Dp.Unspecified,
+    closeClickingOutside = false,
     onClose = onClose,
-    modifier = Modifier.align(BottomCenter)
 ) {
     Card(
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         modifier = modifier
             .fillMaxWidth()
-            .verticalScroll(state = rememberScrollState())
     ) {
         Column(Modifier.padding(16.dp)) {
             ScreenHeader(

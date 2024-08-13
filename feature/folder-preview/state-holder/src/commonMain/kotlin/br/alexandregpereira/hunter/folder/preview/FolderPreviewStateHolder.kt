@@ -25,17 +25,12 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.HideFolderPreview
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult.OnFolderPreviewPreviewVisibilityChanges
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.state.UiModel
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -44,7 +39,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class FolderPreviewStateHolder internal constructor(
-    private val stateRecovery: StateRecovery,
     private val folderPreviewEventManager: FolderPreviewEventManager,
     private val getMonstersFromFolderPreview: GetMonstersFromFolderPreviewUseCase,
     private val addMonsterToFolderPreview: AddMonsterToFolderPreviewUseCase,
@@ -55,13 +49,11 @@ class FolderPreviewStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
     private val appLocalization: AppLocalization,
-) : UiModel<FolderPreviewState>(stateRecovery.getState()) {
+) : UiModel<FolderPreviewState>(FolderPreviewState()) {
 
     init {
         observeEvents()
-        if (state.value.showPreview && state.value.monsters.isEmpty()) {
-            loadMonsters().launchIn(scope)
-        }
+        loadMonsters()
     }
 
     fun onItemClick(monsterIndex: String) {
@@ -100,36 +92,20 @@ class FolderPreviewStateHolder internal constructor(
                         analytics.trackAddMonster(event.index)
                         addMonster(event.index)
                     }
-                    is HideFolderPreview -> {
-                        hideFolderPreview()
-                    }
-                    is ShowFolderPreview -> {
-                        loadMonsters()
-                            .onEach {
-                                val showPreview = state.value.monsters.isNotEmpty()
-                                setState {
-                                    changeShowPreview(showPreview).also {
-                                        if (it.monsters.isNotEmpty() || it.showPreview) {
-                                            analytics.trackLoadMonstersResult(it)
-                                        }
-                                    }
-                                }
-                                dispatchFolderPreviewVisibilityChangesEvent()
-                            }
-                            .launchIn(scope)
-                    }
                 }
             }
         }
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
-            loadMonsters().launchIn(scope)
+            loadMonsters()
         }.launchIn(scope)
     }
 
     private fun clear() {
-        hideFolderPreview()
         clearFolderPreviewUseCase()
             .flowOn(dispatcher)
+            .onEach {
+                loadMonsters()
+            }
             .launchIn(scope)
     }
 
@@ -142,8 +118,8 @@ class FolderPreviewStateHolder internal constructor(
             .launchIn(scope)
     }
 
-    private fun loadMonsters(): Flow<Unit> {
-        return getMonstersFromFolderPreview()
+    private fun loadMonsters() {
+        getMonstersFromFolderPreview()
             .flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
@@ -152,46 +128,26 @@ class FolderPreviewStateHolder internal constructor(
                 setState {
                     changeMonsters(monsters = monsters)
                         .copy(strings = appLocalization.getStrings())
-                        .saveState(stateRecovery)
                 }
             }
+            .launchIn(scope)
     }
 
     private fun removeMonster(monsterIndex: String) {
         removeMonsterFromFolderPreview(monsterIndex)
             .flowOn(dispatcher)
             .onEach { monsters ->
-                val showPreview = monsters.isNotEmpty()
                 setState {
-                    changeMonsters(monsters = monsters).changeShowPreview(showPreview)
-                        .saveState(stateRecovery)
-                }
-                if (showPreview.not()) {
-                    dispatchFolderPreviewVisibilityChangesEvent()
+                    changeMonsters(monsters = monsters).trackShowPreview()
                 }
             }
             .launchIn(scope)
     }
 
-    private fun FolderPreviewState.changeShowPreview(
-        show: Boolean,
-    ): FolderPreviewState {
-        if (show != showPreview) {
-            if (show) analytics.trackShowFolderPreview()
-            else analytics.trackHideFolderPreview()
-        }
-        return this.copy(showPreview = show)
-    }
-
-    private fun hideFolderPreview() {
-        setState { changeShowPreview(show = false).saveState(stateRecovery) }
-        dispatchFolderPreviewVisibilityChangesEvent()
-    }
-
-    private fun dispatchFolderPreviewVisibilityChangesEvent() {
-        folderPreviewEventManager.dispatchResult(
-            OnFolderPreviewPreviewVisibilityChanges(isShowing = state.value.showPreview)
-        )
+    private fun FolderPreviewState.trackShowPreview(): FolderPreviewState {
+        if (showPreview) analytics.trackShowFolderPreview()
+        else analytics.trackHideFolderPreview()
+        return this
     }
 
     private fun navigateToMonsterDetail(monsterIndex: String) {

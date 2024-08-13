@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
-import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun MenuScreen(
@@ -42,7 +41,7 @@ internal fun MenuScreen(
     versionName: String,
     contentPadding: PaddingValues = PaddingValues(),
     viewIntent: SettingsViewIntent,
-) = Window {
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -92,42 +91,6 @@ internal fun MenuScreen(
                     .padding(8.dp)
             )
         }
-
-        BottomSheet(
-            opened = state.advancedSettingsOpened,
-            onClose = viewIntent::onAdvancedSettingsCloseClick,
-            contentPadding = contentPadding
-        ) {
-            AdvancedSettings(
-                imageBaseUrl = state.imageBaseUrl,
-                alternativeSourceBaseUrl = state.alternativeSourceBaseUrl,
-                saveButtonEnabled = state.saveButtonEnabled,
-                strings = state.strings,
-                onImageBaseUrlChange = viewIntent::onImageBaseUrlChange,
-                onAlternativeSourceBaseUrlChange = viewIntent::onAlternativeSourceBaseUrlChange,
-                onSaveButtonClick = viewIntent::onSaveButtonClick,
-            )
-        }
-
-        SettingsBottomSheet(
-            settingsOpened = state.settingsOpened,
-            state = state.settingsState,
-            strings = state.strings,
-            contentPadding = contentPadding,
-            onLanguageChange = viewIntent::onLanguageChange,
-            onSaveButtonClick = viewIntent::onSettingsSaveClick,
-            onClose = viewIntent::onSettingsCloseClick
-        )
-
-        AppearanceSettingsBottomSheet(
-            opened = state.appearanceSettingsOpened,
-            state = state.appearanceState,
-            strings = state.strings,
-            contentPadding = contentPadding,
-            onStateChange = viewIntent::onAppearanceChange,
-            onSaveButtonClick = viewIntent::onAppearanceSettingsSaveClick,
-            onClose = viewIntent::onAppearanceSettingsCloseClick
-        )
     }
 }
 

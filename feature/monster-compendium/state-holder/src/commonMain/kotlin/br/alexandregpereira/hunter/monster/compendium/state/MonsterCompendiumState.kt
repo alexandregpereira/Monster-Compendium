@@ -32,15 +32,9 @@ data class MonsterCompendiumState(
     val tableContentIndex: Int = -1,
     val tableContentInitialIndex: Int = 0,
     val tableContentOpened: Boolean = false,
-    val isShowingMonsterFolderPreview: Boolean = false,
     val errorState: MonsterCompendiumError? = null,
     val strings: MonsterCompendiumStrings = MonsterCompendiumStrings(),
-) {
-
-    companion object {
-        val Empty = MonsterCompendiumState()
-    }
-}
+)
 
 @ObjCName(name = "MonsterCompendiumItemState", exact = true)
 sealed class MonsterCompendiumItemState {
@@ -60,13 +54,6 @@ sealed class MonsterCompendiumItemState {
     data class Item(
         val monster: MonsterPreviewState
     ) : MonsterCompendiumItemState()
-
-    fun isHorizontal(): Boolean {
-        return when (this) {
-            is Title -> true
-            is Item -> monster.isImageHorizontal
-        }
-    }
 }
 
 @ObjCName(name = "MonsterPreviewState", exact = true)
@@ -91,7 +78,6 @@ fun MonsterCompendiumState.complete(
     tableContent: List<TableContentItem>,
     alphabetSelectedIndex: Int,
     tableContentIndex: Int,
-    isShowingMonsterFolderPreview: Boolean,
 ) = this.copy(
     isLoading = false,
     items = items,
@@ -99,7 +85,6 @@ fun MonsterCompendiumState.complete(
     tableContent = tableContent,
     alphabetSelectedIndex = alphabetSelectedIndex,
     tableContentIndex = tableContentIndex,
-    isShowingMonsterFolderPreview = isShowingMonsterFolderPreview,
 )
 
 fun MonsterCompendiumState.error(error: Throwable): MonsterCompendiumState {
@@ -130,10 +115,4 @@ fun MonsterCompendiumState.tableContentOpened(
     tableContentOpened: Boolean,
 ) = this.copy(
     tableContentOpened = tableContentOpened,
-)
-
-fun MonsterCompendiumState.showMonsterFolderPreview(
-    isShowing: Boolean
-) = this.copy(
-    isShowingMonsterFolderPreview = isShowing,
 )

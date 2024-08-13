@@ -27,7 +27,6 @@ import kotlin.native.ObjCName
 @ObjCName(name = "MonsterDetailState", exact = true)
 data class MonsterDetailState(
     val isLoading: Boolean = true,
-    val initialMonsterListPositionIndex: Int = 0,
     val monsters: List<MonsterState> = emptyList(),
     val showOptions: Boolean = false,
     val options: List<MonsterDetailOptionState> = emptyList(),
@@ -195,12 +194,10 @@ val MonsterDetailState.HideOptions: MonsterDetailState
     get() = this.copy(showOptions = false)
 
 fun MonsterDetailState.complete(
-    initialMonsterListPositionIndex: Int,
     monsters: List<MonsterState>,
     options: List<MonsterDetailOptionState>
 ): MonsterDetailState = this.copy(
     isLoading = false,
-    initialMonsterListPositionIndex = initialMonsterListPositionIndex,
     monsters = monsters,
     options = options
 )

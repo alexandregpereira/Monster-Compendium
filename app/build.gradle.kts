@@ -55,10 +55,6 @@ multiplatform {
         implementation(project(":domain:app:core"))
         implementation(project(":domain:sync:core"))
 
-        implementation(project(":feature:folder-detail:event"))
-        implementation(project(":feature:folder-list:event"))
-        implementation(project(":feature:folder-preview:event"))
-        implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":domain:monster:event"))
 

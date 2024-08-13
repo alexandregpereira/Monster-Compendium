@@ -18,6 +18,4 @@ package br.alexandregpereira.hunter.folder.preview.event
 
 sealed class FolderPreviewEvent {
     data class AddMonster(val index: String) : FolderPreviewEvent()
-    object HideFolderPreview : FolderPreviewEvent()
-    object ShowFolderPreview : FolderPreviewEvent()
 }

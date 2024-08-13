@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.content
 data class MonsterContentManagerState(
     val monsterContents: List<MonsterContentState> = emptyList(),
     val isOpen: Boolean = false,
+    val isLoading: Boolean = false,
     val strings: MonsterContentManagerStrings = MonsterContentManagerEmptyStrings(),
 )
 

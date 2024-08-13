@@ -34,7 +34,6 @@ val featureSettingsModule = module {
             dispatcher = get(),
             syncEventDispatcher = get(),
             analytics = SettingsAnalytics(get()),
-            bottomBarEventDispatcher = get(),
             appLocalization = get(),
             saveLanguage = get(),
             applyAppearanceSettings = get(),

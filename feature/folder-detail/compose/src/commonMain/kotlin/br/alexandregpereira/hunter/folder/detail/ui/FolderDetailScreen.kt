@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.folder.detail.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.folder.detail.FolderDetailState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
@@ -29,6 +30,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
+import br.alexandregpereira.hunter.ui.compose.plus
 
 @Composable
 internal fun FolderDetailScreen(
@@ -37,7 +39,12 @@ internal fun FolderDetailScreen(
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
     onClose: () -> Unit = {}
-) = AppFullScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
+) = AppFullScreen(
+    isOpen = state.isOpen,
+    contentPaddingValues = contentPadding,
+    level = 0,
+    onClose = onClose
+) {
     val monsters = remember(state.monsters) { state.monsters.asState() }
     val items = listOf(
         Title(
@@ -50,7 +57,7 @@ internal fun FolderDetailScreen(
     MonsterCompendium(
         items = items,
         animateItems = true,
-        contentPadding = contentPadding,
+        contentPadding = contentPadding + PaddingValues(top = 24.dp),
         onItemCLick = onItemCLick,
         onItemLongCLick = onItemLongCLick
     )

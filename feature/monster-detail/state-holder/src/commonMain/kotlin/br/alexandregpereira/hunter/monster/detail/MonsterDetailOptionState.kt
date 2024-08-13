@@ -17,8 +17,6 @@
 package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_FEET
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
@@ -80,22 +78,6 @@ data class MonsterDetailOptionState(
                 name = strings.delete
             )
         }
-
-        @Suppress("FunctionName")
-        internal fun ChangeToFeet(strings: MonsterDetailStrings): MonsterDetailOptionState {
-            return MonsterDetailOptionState(
-                id = CHANGE_TO_FEET,
-                name = strings.optionsChangeToFeet
-            )
-        }
-
-        @Suppress("FunctionName")
-        internal fun ChangeToMeters(strings: MonsterDetailStrings): MonsterDetailOptionState {
-            return MonsterDetailOptionState(
-                id = CHANGE_TO_METERS,
-                name = strings.optionsChangeToMeters
-            )
-        }
     }
 }
 
@@ -104,8 +86,6 @@ enum class MonsterDetailOptionStateId {
     CLONE,
     EDIT,
     DELETE,
-    CHANGE_TO_FEET,
-    CHANGE_TO_METERS,
     RESET_TO_ORIGINAL,
     EXPORT,
 }

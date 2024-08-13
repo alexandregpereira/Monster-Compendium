@@ -17,7 +17,6 @@
 package br.alexandregpereira.hunter.search
 
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
-import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.ShowFolderPreview
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
@@ -116,6 +115,5 @@ internal class SearchStateHolder(
     fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index, searchQuery.value)
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
-        folderPreviewEventDispatcher.dispatchEvent(ShowFolderPreview)
     }
 }
