@@ -44,6 +44,7 @@ fun MonsterDetailFeature(
 
     val viewModel: MonsterDetailStateHolder = koinInject()
     val viewState by viewModel.state.collectAsState()
+    val initialMonsterIndex = viewModel.initialMonsterListPositionIndex
 
     AppScreen(
         isOpen = viewState.showDetail,
@@ -62,7 +63,7 @@ fun MonsterDetailFeature(
             ) {
                 MonsterDetailScreen(
                     viewState.monsters,
-                    viewState.initialMonsterListPositionIndex,
+                    initialMonsterIndex,
                     contentPadding,
                     onMonsterChanged = { monster ->
                         viewModel.onMonsterChanged(monster.index)

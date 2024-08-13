@@ -18,10 +18,8 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
-import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
-import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
@@ -36,8 +34,6 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Compa
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Export
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetToOriginal
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_FEET
-import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CHANGE_TO_METERS
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
@@ -64,24 +60,24 @@ import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.withContext
 
 class MonsterDetailStateHolder internal constructor(
     private val getMonsterDetailUseCase: GetMonsterDetailUseCase,
     private val cloneMonster: CloneMonsterUseCase,
-    private val changeMonstersMeasurementUnitUseCase: ChangeMonstersMeasurementUnitUseCase,
     private val deleteMonster: DeleteMonsterUseCase,
     private val resetMonsterToOriginal: ResetMonsterToOriginal,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
@@ -107,6 +103,8 @@ class MonsterDetailStateHolder internal constructor(
     private var currentJob: Job? = null
     private var enableMonsterPageChangesEventDispatch = false
     private var metadata: List<Monster> = emptyList()
+    var initialMonsterListPositionIndex: Int = 0
+        private set
 
     init {
         setState { updateState(stateRecovery) }
@@ -155,17 +153,37 @@ class MonsterDetailStateHolder internal constructor(
         monsterIndexes: List<String>,
         invalidateCache: Boolean = false
     ) {
-        if (state.value.showDetail.not()) return
-
         stateRecovery.saveMonsterIndexes(monsterIndexes)
         onMonsterChanged(monsterIndex, scrolled = false)
-        getMonsterDetail(invalidateCache = invalidateCache).collectDetail()
+        currentJob?.cancel()
+        currentJob = getMonsterDetail(invalidateCache = invalidateCache)
+            .cancellable()
+            .toMonsterDetailState()
+            .flowOn(dispatcher)
+            .onStart {
+                setState { copy(isLoading = true) }
+            }
+            .catch {
+                setState { copy(isLoading = false) }
+                it.printStackTrace()
+                analytics.logException(it)
+            }
+            .emitState()
+            .onEach { state ->
+                analytics.trackMonsterDetailLoaded(monsterIndex, state.monsters)
+            }
+            .launchIn(scope)
     }
 
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
-        if (enableMonsterPageChangesEventDispatch && scrolled && monsterIndex != this.monsterIndex) {
-            analytics.trackMonsterPageChanged(monsterIndex, scrolled)
-            monsterEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
+        if (scrolled && monsterIndex != this.monsterIndex) {
+            initialMonsterListPositionIndex = state.value.monsters.indexOfFirst {
+                it.index == monsterIndex
+            }
+            if (enableMonsterPageChangesEventDispatch) {
+                analytics.trackMonsterPageChanged(monsterIndex, scrolled)
+                monsterEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
+            }
         }
         stateRecovery.saveMonsterIndex(monsterIndex)
         setState { changeOptions() }
@@ -207,14 +225,6 @@ class MonsterDetailStateHolder internal constructor(
             RESET_TO_ORIGINAL -> {
                 analytics.trackMonsterDetailResetToOriginalClicked(monsterIndex)
                 setState { copy(showResetConfirmation = true) }
-            }
-
-            CHANGE_TO_FEET -> {
-                changeMeasurementUnit(MeasurementUnit.FEET)
-            }
-
-            CHANGE_TO_METERS -> {
-                changeMeasurementUnit(MeasurementUnit.METER)
             }
 
             EXPORT -> {
@@ -288,41 +298,17 @@ class MonsterDetailStateHolder internal constructor(
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private fun changeMeasurementUnit(measurementUnit: MeasurementUnit) {
-        changeMonstersMeasurementUnitUseCase(monsterIndex, measurementUnit)
-            .flatMapLatest { getMonsterDetail() }
-            .collectDetail()
-    }
-
-    private fun Flow<MonsterDetail>.collectDetail() {
-        currentJob?.cancel()
-        currentJob = this.cancellable()
-            .toMonsterDetailState()
-            .flowOn(dispatcher)
-            .onStart {
-                setState { copy(isLoading = true) }
-            }
-            .catch {
-                setState { copy(isLoading = false) }
-                it.printStackTrace()
-                analytics.logException(it)
-            }
-            .emitState()
-            .onEach { state ->
-                analytics.trackMonsterDetailLoaded(monsterIndex, state.monsters)
-            }
-            .launchIn(scope)
-    }
-
     private fun Flow<MonsterDetail>.toMonsterDetailState(): Flow<MonsterDetailState> {
         return map {
-            metadata = it.monsters
             val strings = appLocalization.getStrings()
+            withContext(Dispatchers.Main) {
+                metadata = it.monsters
+                initialMonsterListPositionIndex = it.monsterIndexSelected
+            }
             MonsterDetailState(
-                initialMonsterListPositionIndex = it.monsterIndexSelected,
                 monsters = it.monsters.asState(strings),
                 measurementUnit = it.measurementUnit,
+                strings = strings,
             ).changeOptions()
         }
     }
@@ -331,7 +317,6 @@ class MonsterDetailStateHolder internal constructor(
         return onEach { state ->
             setState {
                 complete(
-                    initialMonsterListPositionIndex = state.initialMonsterListPositionIndex,
                     monsters = state.monsters,
                     options = state.options
                 ).saveState(stateRecovery)

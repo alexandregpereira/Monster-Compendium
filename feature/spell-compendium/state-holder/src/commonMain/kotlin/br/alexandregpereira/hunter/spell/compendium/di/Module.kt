@@ -19,7 +19,7 @@ val spellCompendiumModule = module {
 
     factory { GetSpellsUseCase(repository = get()) }
 
-    factory {
+    single {
         SpellCompendiumStateHolder(
             dispatcher = Dispatchers.Default,
             getSpellsUseCase = get(),

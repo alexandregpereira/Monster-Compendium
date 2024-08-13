@@ -29,8 +29,6 @@ interface MonsterDetailStrings {
     val innateSpellcasting: String
     val abilityScores: String
     val optionsAddToFolder: String
-    val optionsChangeToFeet: String
-    val optionsChangeToMeters: String
     val savingThrowStrength: String
     val savingThrowDexterity: String
     val savingThrowConstitution: String
@@ -74,8 +72,6 @@ internal data class MonsterDetailEnStrings(
     override val innateSpellcasting: String = "Innate Spellcasting",
     override val abilityScores: String = "Ability Scores",
     override val optionsAddToFolder: String = "Add to Folder",
-    override val optionsChangeToFeet: String = "Change to Feet",
-    override val optionsChangeToMeters: String = "Change to Meters",
     override val savingThrowStrength: String = "Strength",
     override val savingThrowDexterity: String = "Dexterity",
     override val savingThrowConstitution: String = "Constitution",
@@ -119,8 +115,6 @@ internal data class MonsterDetailPtStrings(
     override val innateSpellcasting: String = "Conjuração Inata",
     override val abilityScores: String = "Atributos",
     override val optionsAddToFolder: String = "Adicionar à Pasta",
-    override val optionsChangeToFeet: String = "Mudar para Pés",
-    override val optionsChangeToMeters: String = "Mudar para Metros",
     override val savingThrowStrength: String = "Força",
     override val savingThrowDexterity: String = "Destreza",
     override val savingThrowConstitution: String = "Constituição",

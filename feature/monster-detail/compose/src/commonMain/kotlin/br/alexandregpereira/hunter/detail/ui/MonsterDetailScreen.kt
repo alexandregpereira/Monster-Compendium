@@ -48,6 +48,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -96,10 +97,12 @@ internal fun MonsterDetailScreen(
     monsters: List<MonsterState>,
     initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    pagerState: PagerState = rememberPagerState(
-        initialPage = initialMonsterIndex,
-        pageCount = { monsters.size }
-    ),
+    pagerState: PagerState = key(monsters) {
+        rememberPagerState(
+            initialPage = initialMonsterIndex,
+            pageCount = { monsters.size }
+        )
+    },
     scrollState: LazyListState = rememberLazyListState(),
     onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
