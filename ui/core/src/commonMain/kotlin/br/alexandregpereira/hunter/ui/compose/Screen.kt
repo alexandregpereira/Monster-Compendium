@@ -16,7 +16,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,18 +36,23 @@ fun AppScreen(
     showCloseButton: Boolean = true,
     backgroundColor: Color = MaterialTheme.colors.surface,
     backHandlerEnabled: Boolean = isOpen,
-    swipeVerticalState: SwipeVerticalState? = null,
-    onAnimationStateChange: (EnterExitState) -> Unit = {},
     level: Int = 1,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    BackHandler(enabled = backHandlerEnabled, onBack = onClose)
+    var enterExitState: EnterExitState? by remember { mutableStateOf(null) }
+    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
+    Closeable(
+        isOpen = isOpen,
+        backHandlerEnabled = backHandlerEnabled,
+        onClosed = onClose,
+        getScrollOffset = { swipeVerticalState.offset.toInt() }
+    )
 
     SwipeVerticalToDismiss(
         visible = isOpen,
         swipeVerticalState = swipeVerticalState,
-        onAnimationStateChange = onAnimationStateChange,
+        onAnimationStateChange = { enterExitState = it },
         onClose = onClose
     ) {
         Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
