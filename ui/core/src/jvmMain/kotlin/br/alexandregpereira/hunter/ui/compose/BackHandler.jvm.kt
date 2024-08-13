@@ -8,7 +8,7 @@ val LocalBackDispatcher = compositionLocalOf {
 }
 
 @Composable
-actual fun BackHandler(enabled: Boolean, onBack: () -> Unit) {
+actual fun BackPlatformHandler(enabled: Boolean, onBack: () -> Unit) {
     if (!enabled) return
     LocalBackDispatcher.current.onBackPressed(onBack)
 }
