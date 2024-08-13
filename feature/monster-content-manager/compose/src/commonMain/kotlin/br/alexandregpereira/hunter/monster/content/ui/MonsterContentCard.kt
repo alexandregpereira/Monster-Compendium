@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,8 +44,8 @@ internal fun MonsterContentCard(
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
-) = Surface(modifier.clip(cardShape).background(MaterialTheme.colors.surface, cardShape), elevation = 1.dp) {
-    Column(Modifier.padding(8.dp)) {
+) = Card(modifier = modifier, shape = cardShape) {
+    Column(Modifier.padding(16.dp)) {
         Title(
             name = name,
             originalName = originalName,

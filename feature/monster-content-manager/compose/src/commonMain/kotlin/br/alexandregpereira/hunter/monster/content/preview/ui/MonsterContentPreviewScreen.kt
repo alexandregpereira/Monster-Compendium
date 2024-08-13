@@ -45,7 +45,6 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppScreen
-import br.alexandregpereira.hunter.ui.compose.Closeable
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.plus
@@ -64,34 +63,32 @@ internal fun MonsterContentPreviewScreen(
     onTableContentClose: () -> Unit = {},
     onTableContentClick: (Int) -> Unit = {},
     onFirstVisibleItemChange: (Int) -> Unit = {},
+) = AppScreen(
+    isOpen = state.isOpen,
+    contentPaddingValues = contentPadding,
+    backHandlerEnabled = false,
+    onClose = onClose
 ) {
-    Closeable(
-        isOpen = state.isOpen,
-        onClosed = onClose,
-    )
-
-    AppScreen(isOpen = state.isOpen, contentPadding, onClose = onClose) {
-        LoadingScreen(
-            isLoading = state.isLoading,
-            showCircularLoading = false,
-        ) {
-            var compendiumIndex by remember {
-                mutableStateOf(-1)
-            }
-            MonsterContentPreviewScreenContent(
-                state = state,
-                contentPadding = contentPadding + PaddingValues(top = 24.dp),
-                compendiumIndex = compendiumIndex,
-                onTableContentOpenButtonClick = onTableContentOpenButtonClick,
-                onTableContentClose = onTableContentClose,
-                onTableContentClick = onTableContentClick,
-                onFirstVisibleItemChange = onFirstVisibleItemChange,
-            )
-            LaunchedEffect(actionHandler) {
-                actionHandler.action.collect { action ->
-                    when (action.type) {
-                        GO_TO_COMPENDIUM_INDEX -> compendiumIndex = action.index
-                    }
+    LoadingScreen(
+        isLoading = state.isLoading,
+        showCircularLoading = false,
+    ) {
+        var compendiumIndex by remember {
+            mutableStateOf(-1)
+        }
+        MonsterContentPreviewScreenContent(
+            state = state,
+            contentPadding = contentPadding + PaddingValues(top = 24.dp),
+            compendiumIndex = compendiumIndex,
+            onTableContentOpenButtonClick = onTableContentOpenButtonClick,
+            onTableContentClose = onTableContentClose,
+            onTableContentClick = onTableContentClick,
+            onFirstVisibleItemChange = onFirstVisibleItemChange,
+        )
+        LaunchedEffect(actionHandler) {
+            actionHandler.action.collect { action ->
+                when (action.type) {
+                    GO_TO_COMPENDIUM_INDEX -> compendiumIndex = action.index
                 }
             }
         }

@@ -18,8 +18,6 @@ package br.alexandregpereira.hunter.monster.content.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -51,7 +49,7 @@ internal fun MonsterContentManagerScreen(
     LoadingScreen(isLoading = state.isLoading) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(300.dp),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 8.dp),
             contentPadding = PaddingValues(
                 top = 56.dp + contentPadding.calculateTopPadding(),
                 bottom = 24.dp + contentPadding.calculateBottomPadding()
@@ -80,7 +78,6 @@ internal fun MonsterContentManagerScreen(
                     coverImageUrl = monsterContent.coverImageUrl,
                     isEnabled = monsterContent.isEnabled,
                     strings = state.strings,
-                    modifier = Modifier.fillMaxHeight(),
                     onAddClick = { onAddClick(monsterContent.acronym) },
                     onRemoveClick = { onRemoveClick(monsterContent.acronym) },
                     onPreviewClick = {
@@ -90,7 +87,6 @@ internal fun MonsterContentManagerScreen(
                         )
                     },
                 )
-                Spacer(modifier = Modifier.padding(bottom = 48.dp))
             }
         }
     }
