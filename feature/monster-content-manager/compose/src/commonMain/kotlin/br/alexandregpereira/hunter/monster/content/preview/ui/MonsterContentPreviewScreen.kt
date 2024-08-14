@@ -66,7 +66,6 @@ internal fun MonsterContentPreviewScreen(
 ) = AppScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
-    backHandlerEnabled = false,
     onClose = onClose
 ) {
     LoadingScreen(

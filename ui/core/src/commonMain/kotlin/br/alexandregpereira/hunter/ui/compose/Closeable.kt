@@ -32,11 +32,10 @@ import kotlin.math.absoluteValue
 fun Closeable(
     isOpen: Boolean,
     modifier: Modifier = Modifier,
-    backHandlerEnabled: Boolean = isOpen,
     getScrollOffset: () -> Int = { 0 },
     onClosed: () -> Unit,
 ) {
-    BackHandler(enabled = backHandlerEnabled, onBack = onClosed)
+    BackHandler(enabled = isOpen, onBack = onClosed)
 
     AnimatedVisibility(
         modifier = modifier,
