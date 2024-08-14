@@ -76,13 +76,13 @@ fun ImageCard(
     onLongCLick: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    val shape = Shapes.large
+    val shape = imageCardShape
     val alpha = 0.7f
     val borderColor = MaterialTheme.colors.surface
     Card(
         backgroundColor = Color.Transparent,
         contentColor = MaterialTheme.colors.onSurface,
-        elevation = 2.dp,
+        elevation = imageCardElevation,
         shape = shape,
         modifier = modifier.animatePressed(
             onClick = onCLick,
@@ -118,6 +118,9 @@ fun ImageCard(
         }
     }
 }
+
+val imageCardShape = Shapes.large
+val imageCardElevation = 2.dp
 
 @Preview
 @Composable

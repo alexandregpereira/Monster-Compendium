@@ -21,19 +21,22 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun SectionTitle(
     title: String,
     isHeader: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign? = null,
 ) {
     val fontSize = if (isHeader) 40.sp else 24.sp
     Text(
         text = title,
         fontWeight = FontWeight.Bold,
         fontSize = fontSize,
+        textAlign = textAlign,
         modifier = modifier.fillMaxWidth()
     )
 }
