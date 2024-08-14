@@ -20,7 +20,9 @@ import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.local.mapper.toDomainMonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.mapper.toEntity
+import br.alexandregpereira.hunter.data.monster.local.mapper.toEntityStatus
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -59,5 +61,10 @@ internal class DefaultMonsterLocalRepository(
 
     override fun deleteMonster(index: String): Flow<Unit> {
         return localDataSource.deleteMonster(index)
+    }
+
+    override fun getMonstersByStatus(status: Set<MonsterStatus>): Flow<List<Monster>> {
+        return localDataSource.getMonstersByStatus(status.map { it.toEntityStatus() }.toSet())
+            .map { it.toDomain() }
     }
 }

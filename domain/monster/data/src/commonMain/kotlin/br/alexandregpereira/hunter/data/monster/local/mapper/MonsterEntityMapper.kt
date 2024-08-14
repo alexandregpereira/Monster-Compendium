@@ -82,12 +82,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             senses = senses.joinToString(),
             languages = languages,
             sourceName = sourceName,
-            status = when (status) {
-                MonsterStatus.Original -> MonsterEntityStatus.Original
-                MonsterStatus.Clone -> MonsterEntityStatus.Clone
-                MonsterStatus.Edited -> MonsterEntityStatus.Edited
-                MonsterStatus.Imported -> MonsterEntityStatus.Imported
-            },
+            status = status.toEntityStatus(),
         ),
         speed = speed.toEntity(index),
         abilityScores = toAbilityScoreEntity(),
@@ -103,6 +98,15 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
         spellcastings = spellcastings.toEntity(index),
         legendaryActions = legendaryActions.toEntity(index)
     )
+}
+
+internal fun MonsterStatus.toEntityStatus(): MonsterEntityStatus {
+    return when (this) {
+        MonsterStatus.Original -> MonsterEntityStatus.Original
+        MonsterStatus.Clone -> MonsterEntityStatus.Clone
+        MonsterStatus.Edited -> MonsterEntityStatus.Edited
+        MonsterStatus.Imported -> MonsterEntityStatus.Imported
+    }
 }
 
 internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {

@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.SettingsViewIntent
 import br.alexandregpereira.hunter.settings.SettingsViewState
-import br.alexandregpereira.hunter.ui.compose.BottomSheet
 
 @Composable
 internal fun MenuScreen(
@@ -70,6 +69,13 @@ internal fun MenuScreen(
             MenuItem(
                 text = state.strings.importContent,
                 onClick = viewIntent::onImport
+            )
+
+            Divider()
+
+            MenuItem(
+                text = state.strings.exportEditedContent,
+                onClick = viewIntent::onExportContent
             )
 
             Divider()

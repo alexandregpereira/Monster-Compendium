@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.monster.local
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.sync.Mutex
@@ -78,5 +79,11 @@ internal class DefaultMonsterLocalDataSource(
 
     override fun deleteMonster(index: String): Flow<Unit> = flow {
         emit(monsterDao.deleteMonster(index))
+    }
+
+    override fun getMonstersByStatus(
+        status: Set<MonsterEntityStatus>
+    ): Flow<List<MonsterCompleteEntity>> = flow {
+        emit(monsterDao.getMonstersByStatus(status))
     }
 }
