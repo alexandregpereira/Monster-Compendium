@@ -186,12 +186,11 @@ class MonsterDetailStateHolder internal constructor(
             }
         }
         stateRecovery.saveMonsterIndex(monsterIndex)
-        setState { changeOptions() }
     }
 
     fun onShowOptionsClicked() {
         analytics.trackMonsterDetailOptionsShown()
-        setState { ShowOptions }
+        setState { ShowOptions.changeOptions() }
     }
 
     fun onShowOptionsClosed() {
