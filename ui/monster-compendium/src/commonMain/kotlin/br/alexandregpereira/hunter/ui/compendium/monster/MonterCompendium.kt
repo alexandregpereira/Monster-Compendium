@@ -18,11 +18,9 @@ package br.alexandregpereira.hunter.ui.compendium.monster
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
@@ -30,7 +28,9 @@ import br.alexandregpereira.hunter.ui.compendium.CompendiumColumns
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterCard
+import br.alexandregpereira.hunter.ui.compose.ScreenSizeType
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.isHeightExpanded
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -45,14 +45,13 @@ fun MonsterCompendium(
 ) {
     val screenSizes = LocalScreenSize.current
     val currentWidth = screenSizes.widthInDp
-    val cardWidth = 148
-    val titleLineSpan: LazyGridItemSpanScope.() -> Int = remember(screenSizes.type) {
-        {
-            when {
-                maxLineSpan > 2 -> 1
-                else -> maxLineSpan
-            }
-        }
+    val defaultCardWidth = 148
+    val cardWidth = when (screenSizes.type) {
+        ScreenSizeType.LandscapeExpanded -> if (screenSizes.isHeightExpanded) {
+            180
+        } else defaultCardWidth
+        ScreenSizeType.Portrait,
+        ScreenSizeType.LandscapeCompact -> defaultCardWidth
     }
     Compendium(
         items = items,
@@ -61,7 +60,7 @@ fun MonsterCompendium(
         listState = listState,
         contentPadding = contentPadding,
         columns = CompendiumColumns.Adaptive(cardWidth),
-        titleLineSpan = titleLineSpan,
+        isHorizontalReading = true,
         key = { it.getMonsterCardState().index },
         isHorizontalCard = {
             it.getMonsterCardState().imageState.isHorizontal &&

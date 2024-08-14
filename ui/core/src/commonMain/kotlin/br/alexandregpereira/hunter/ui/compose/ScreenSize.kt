@@ -16,7 +16,7 @@ data class ScreenSizeInfo(
     val heightInDp: Dp,
     val widthInDp: Dp,
 ) {
-    private val heightSizeType: ScreenWidthOrHeightSizeType = when {
+    internal val heightSizeType: ScreenWidthOrHeightSizeType = when {
         heightInDp < 480.dp -> Compact
         heightInDp < 900.dp -> Medium
         else -> Expanded
@@ -41,7 +41,7 @@ enum class ScreenSizeType {
     LandscapeExpanded,
 }
 
-private enum class ScreenWidthOrHeightSizeType {
+internal enum class ScreenWidthOrHeightSizeType {
     Compact,
     Medium,
     Expanded,
@@ -51,6 +51,12 @@ val ScreenSizeInfo.isLandscape: Boolean
     get() = when (type) {
         ScreenSizeType.LandscapeCompact, ScreenSizeType.LandscapeExpanded -> true
         ScreenSizeType.Portrait -> false
+    }
+
+val ScreenSizeInfo.isHeightExpanded: Boolean
+    get() = when (heightSizeType) {
+        Expanded -> true
+        Medium, Compact -> false
     }
 
 @Composable
