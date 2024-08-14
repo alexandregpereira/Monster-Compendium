@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.data.monster.local
 
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import kotlinx.coroutines.flow.Flow
 
 internal interface MonsterLocalDataSource {
@@ -30,4 +31,5 @@ internal interface MonsterLocalDataSource {
     fun saveMonsters(monsters: List<MonsterCompleteEntity>, isSync: Boolean): Flow<Unit>
     fun getMonster(index: String): Flow<MonsterCompleteEntity>
     fun deleteMonster(index: String): Flow<Unit>
+    fun getMonstersByStatus(status: Set<MonsterEntityStatus>): Flow<List<MonsterCompleteEntity>>
 }

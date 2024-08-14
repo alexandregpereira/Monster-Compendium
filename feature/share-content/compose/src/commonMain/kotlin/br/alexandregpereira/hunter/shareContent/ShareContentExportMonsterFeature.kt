@@ -28,8 +28,8 @@ fun ShareContentExportMonsterFeature(
     var isOpen by rememberSaveable {
         mutableStateOf(false)
     }
-    var monsterIndex by rememberSaveable {
-        mutableStateOf("")
+    var monsterIndex: String? by rememberSaveable {
+        mutableStateOf(null)
     }
     LaunchedEffect(eventDispatcher.events) {
         eventDispatcher.exportEvents().collect { event ->

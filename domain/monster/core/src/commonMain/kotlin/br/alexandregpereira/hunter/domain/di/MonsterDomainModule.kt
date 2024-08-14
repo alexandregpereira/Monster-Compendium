@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersAroundIndexUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersByStatus
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetRemoteMonstersBySourceUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
@@ -49,4 +50,5 @@ val monsterDomainModule = module {
     factory { SaveMonstersUseCase(get(), get(), get()) }
     factory { SyncMonstersUseCase(get(), get(), get(), get(), get(), get(), get()) }
     factory { GetRemoteMonstersBySourceUseCase(get(), get()) }
+    factory { GetMonstersByStatus(get()) }
 }

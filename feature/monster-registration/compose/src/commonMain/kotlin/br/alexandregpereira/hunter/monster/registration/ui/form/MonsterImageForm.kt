@@ -3,19 +3,24 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.TopCenter
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
@@ -23,6 +28,7 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.getMonsterImageAspectRatio
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.util.toColor
 
@@ -49,9 +55,9 @@ internal fun LazyListScope.MonsterImageForm(
                         lightColor
                     }
                 )
-                Box(
+                Column(
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = TopCenter
+                    horizontalAlignment = CenterHorizontally,
                 ) {
                     val widthFraction by animateFloatAsState(
                         targetValue = if (infoState.isImageHorizontal) .8f else .4f
@@ -66,6 +72,13 @@ internal fun LazyListScope.MonsterImageForm(
                             isHorizontal = infoState.isImageHorizontal,
                             widthFraction = widthFraction,
                         ),
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    val aspectRatio = getMonsterImageAspectRatio(infoState.isImageHorizontal)
+                    Text(
+                        text = strings.imageProportion(aspectRatio.toString()),
+                        fontWeight = FontWeight.Light,
+                        fontSize = 14.sp,
                     )
                 }
                 AppSwitch(

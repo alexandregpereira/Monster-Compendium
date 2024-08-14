@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.domain.repository
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import kotlinx.coroutines.flow.Flow
 
 interface MonsterLocalRepository {
@@ -29,4 +30,5 @@ interface MonsterLocalRepository {
     fun getMonster(index: String): Flow<Monster>
     fun getMonstersByQuery(query: String): Flow<List<Monster>>
     fun deleteMonster(index: String): Flow<Unit>
+    fun getMonstersByStatus(status: Set<MonsterStatus>): Flow<List<Monster>>
 }

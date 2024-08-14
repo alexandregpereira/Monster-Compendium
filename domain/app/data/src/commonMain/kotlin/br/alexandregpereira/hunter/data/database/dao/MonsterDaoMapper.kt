@@ -115,13 +115,17 @@ internal fun MonsterEntity.toDatabaseEntity(): MonsterDatabaseEntity {
         senses = this.senses,
         languages = this.languages,
         sourceName = this.sourceName,
-        isClone = when (this.status) {
-            MonsterEntityStatus.Original -> 0L
-            MonsterEntityStatus.Clone -> 1L
-            MonsterEntityStatus.Edited -> 2L
-            MonsterEntityStatus.Imported -> 3L
-        }
+        isClone = this.status.toStatusInt()
     )
+}
+
+internal fun MonsterEntityStatus.toStatusInt(): Long {
+    return when (this) {
+        MonsterEntityStatus.Original -> 0L
+        MonsterEntityStatus.Clone -> 1L
+        MonsterEntityStatus.Edited -> 2L
+        MonsterEntityStatus.Imported -> 3L
+    }
 }
 
 internal fun ReactionEntity.toDatabaseEntity(): ReactionDatabaseEntity {

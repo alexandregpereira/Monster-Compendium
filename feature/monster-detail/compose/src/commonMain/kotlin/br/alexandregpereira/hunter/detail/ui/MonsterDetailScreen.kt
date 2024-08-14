@@ -45,15 +45,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -95,16 +90,11 @@ import kotlin.math.absoluteValue
 @Composable
 internal fun MonsterDetailScreen(
     monsters: List<MonsterState>,
-    initialMonsterIndex: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    pagerState: PagerState = key(monsters) {
-        rememberPagerState(
-            initialPage = initialMonsterIndex,
-            pageCount = { monsters.size }
-        )
-    },
+    pagerState: PagerState = rememberPagerState(
+        pageCount = { monsters.size }
+    ),
     scrollState: LazyListState = rememberLazyListState(),
-    onMonsterChanged: (monster: MonsterState) -> Unit = {},
     onOptionsClicked: () -> Unit = {},
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {},
@@ -147,7 +137,7 @@ internal fun MonsterDetailScreen(
         item(key = "MonsterImageCompose") {
             Box(
                 modifier = Modifier
-                    .monsterAspectRatio(heightFraction = 0.9f, maxHeight = getImageHeightInDp())
+                    .monsterAspectRatio(maxHeight = getImageHeightInDp())
                     .transitionHorizontalScrollable(pagerState)
                     .animateItemPlacement()
             )
@@ -194,7 +184,6 @@ internal fun MonsterDetailScreen(
             scrollState.animateScrollToItem(0)
         }
     )
-    OnMonsterChanged(monsters, initialMonsterIndex, pagerState, onMonsterChanged)
 }
 
 @Composable
@@ -254,30 +243,6 @@ private fun ScrollableBackground(
     layout(constraints.maxWidth, constraints.maxHeight) {
         val offset = getScrollPositionOffset()
         placeable.placeRelative(x = 0, y = offset)
-    }
-}
-
-@Composable
-private fun OnMonsterChanged(
-    monsters: List<MonsterState>,
-    initialMonsterIndex: Int,
-    pagerState: PagerState,
-    onMonsterChanged: (monster: MonsterState) -> Unit
-) {
-    var initialMonsterIndexState by remember { mutableIntStateOf(initialMonsterIndex) }
-
-    LaunchedEffect(key1 = initialMonsterIndex) {
-        pagerState.scrollToPage(initialMonsterIndex)
-    }
-
-    LaunchedEffect(pagerState, monsters) {
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            if (initialMonsterIndexState == initialMonsterIndex) {
-                onMonsterChanged(monsters[page])
-            } else {
-                initialMonsterIndexState = initialMonsterIndex
-            }
-        }
     }
 }
 
@@ -482,7 +447,6 @@ private fun MonsterDetailPreview() = Window {
                 reactions = listOf()
             )
         },
-        initialMonsterIndex = 2
     )
 }
 

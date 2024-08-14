@@ -38,7 +38,6 @@ internal fun MonsterRegistrationScreen(
         modifier = Modifier.widthIn(
             max = maxBottomSheetWidth.takeIf { screenSize.isLandscape } ?: Dp.Unspecified
         ),
-        backHandlerEnabled = false,
         onClose = intent::onClose
     ) {
         CompositionLocalProvider(LocalStrings provides state.strings) {

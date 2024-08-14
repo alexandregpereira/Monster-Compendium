@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.database.dao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import br.alexandregpereira.hunter.database.AbilityScoreQueries
@@ -169,6 +170,15 @@ internal class MonsterDaoImpl(
                 .queryMonsterCompleteEntities()
             deleteAllEntries(monsters)
             monsterQueries.deleteByIndex(index)
+        }
+    }
+
+    override suspend fun getMonstersByStatus(
+        status: Set<MonsterEntityStatus>
+    ): List<MonsterCompleteEntity> {
+        return withContext(dispatcher) {
+            monsterQueries.getMonstersByStatus(status.map { it.toStatusInt() }).executeAsList()
+                .queryMonsterCompleteEntities()
         }
     }
 

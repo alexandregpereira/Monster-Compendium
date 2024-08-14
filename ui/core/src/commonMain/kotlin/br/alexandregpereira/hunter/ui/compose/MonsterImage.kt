@@ -78,15 +78,31 @@ fun MonsterImage(
 @Composable
 fun Modifier.monsterAspectRatio(
     isHorizontal: Boolean = false,
-    heightFraction: Float = 1f,
     widthFraction: Float = 1f,
     maxHeight: Dp = LocalScreenSize.current.heightInDp,
 ): Modifier {
     val aspectRatio by animateFloatAsState(
-        targetValue = if (isHorizontal) 18.84f / 16f else 9 / (16f * heightFraction)
+        targetValue = getMonsterImageAspectRatio(isHorizontal).value
     )
     return fillMaxWidth(widthFraction).heightIn(max = maxHeight)
         .aspectRatio(aspectRatio)
+}
+
+fun getMonsterImageAspectRatio(isHorizontal: Boolean): MonsterImageAspectRatio {
+    return if (isHorizontal) {
+        MonsterImageAspectRatio(width = 179f, height = 152f)
+    } else {
+        MonsterImageAspectRatio(width = 9f, height = 16f)
+    }
+}
+
+data class MonsterImageAspectRatio internal constructor(
+    val width: Float,
+    val height: Float,
+) {
+    val value: Float = width / height
+
+    override fun toString(): String = "${width.toInt()}:${height.toInt()}"
 }
 
 @Preview

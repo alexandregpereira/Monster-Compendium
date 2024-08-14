@@ -24,7 +24,6 @@ import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import kotlin.native.ObjCName
 
-@ObjCName(name = "MonsterDetailState", exact = true)
 data class MonsterDetailState(
     val isLoading: Boolean = true,
     val monsters: List<MonsterState> = emptyList(),

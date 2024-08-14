@@ -35,7 +35,6 @@ fun AppScreen(
     modifier: Modifier = Modifier,
     showCloseButton: Boolean = true,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    backHandlerEnabled: Boolean = isOpen,
     level: Int = 1,
     onClose: () -> Unit,
     content: @Composable () -> Unit
@@ -44,7 +43,6 @@ fun AppScreen(
     val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
     Closeable(
         isOpen = isOpen,
-        backHandlerEnabled = backHandlerEnabled,
         onClosed = onClose,
         getScrollOffset = { swipeVerticalState.offset.toInt() }
     )

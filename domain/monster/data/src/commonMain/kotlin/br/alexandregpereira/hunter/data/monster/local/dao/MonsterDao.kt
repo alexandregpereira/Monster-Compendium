@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.data.monster.local.dao
 
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 
 interface MonsterDao {
 
@@ -38,4 +39,6 @@ interface MonsterDao {
     suspend fun insert(monsters: List<MonsterCompleteEntity>, deleteAll: Boolean)
 
     suspend fun deleteMonster(index: String)
+
+    suspend fun getMonstersByStatus(status: Set<MonsterEntityStatus>): List<MonsterCompleteEntity>
 }

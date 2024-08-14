@@ -30,4 +30,6 @@ internal interface SettingsViewIntent {
     fun onAppearanceChange(appearance: AppearanceSettingsState)
 
     fun onImport()
+
+    fun onExportContent()
 }

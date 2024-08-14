@@ -1,12 +1,13 @@
 package br.alexandregpereira.hunter.shareContent.state
 
-import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.*
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.shareContent.domain.GetMonsterContentToExport
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentException
-import br.alexandregpereira.hunter.shareContent.state.ShareContentImportError.*
+import br.alexandregpereira.hunter.shareContent.state.ShareContentImportError.InvalidContent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,6 +23,7 @@ internal class ShareContentStateHolder(
     private val eventDispatcher: ShareContentEventDispatcher,
     private val importContent: ImportContent,
     private val getMonsterContentToExport: GetMonsterContentToExport,
+    private val getMonstersContentToExport: GetMonstersContentToExport,
 ) : UiModel<ShareContentState>(
     ShareContentState(strings = appLocalization.getLanguage().getStrings())
 ), MutableActionHandler<ShareContentUiEvent> by MutableActionHandler() {
@@ -59,8 +61,10 @@ internal class ShareContentStateHolder(
         copy(contentToImport = content.trim(), importError = null)
     }
 
-    fun fetchMonsterContentToExport(monsterIndex: String, actualClipboardContent: String?) {
-        getMonsterContentToExport(monsterIndex)
+    fun fetchMonsterContentToExport(monsterIndex: String?, actualClipboardContent: String?) {
+        val contentToExportFlow = monsterIndex?.let { getMonsterContentToExport(it) }
+            ?: getMonstersContentToExport()
+        contentToExportFlow
             .flowOn(dispatcher)
             .onEach { contentToExport ->
                 setState {
