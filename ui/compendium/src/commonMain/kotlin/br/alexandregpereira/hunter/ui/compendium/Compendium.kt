@@ -115,6 +115,7 @@ fun Compendium(
                                         top = paddingTop,
                                         bottom = sectionTitlePaddingBottom
                                     )
+                                    .padding(horizontal = 16.dp.takeIf { isTileCard } ?: 0.dp)
                             )
                         }
                     }
