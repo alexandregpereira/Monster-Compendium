@@ -147,7 +147,7 @@ internal fun MonsterDetailScreen(
         item(key = "MonsterImageCompose") {
             Box(
                 modifier = Modifier
-                    .monsterAspectRatio(heightFraction = 0.9f, maxHeight = getImageHeightInDp())
+                    .monsterAspectRatio(maxHeight = getImageHeightInDp())
                     .transitionHorizontalScrollable(pagerState)
                     .animateItemPlacement()
             )
