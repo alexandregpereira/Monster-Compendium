@@ -154,7 +154,7 @@ internal class SettingsStateHolder(
             applyAppearanceSettings(appearance = appearance).single()
         }.flowOn(dispatcher)
             .onCompletion {
-                monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges)
+                monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges())
             }
             .launchIn(scope)
     }

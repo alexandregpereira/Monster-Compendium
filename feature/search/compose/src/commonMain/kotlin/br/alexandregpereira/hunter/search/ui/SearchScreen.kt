@@ -61,6 +61,7 @@ internal fun SearchScreen(
                 text = state.searchValue,
                 searchLabel = state.searchLabel,
                 onValueChange = onSearchValueChange,
+                isSearching = state.isSearching,
                 modifier = Modifier
                     .background(color = MaterialTheme.colors.surface)
                     .padding(horizontal = 8.dp)

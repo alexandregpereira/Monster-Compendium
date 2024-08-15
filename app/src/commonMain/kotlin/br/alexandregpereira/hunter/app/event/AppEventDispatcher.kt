@@ -27,7 +27,7 @@ internal class AppEventDispatcherImpl(
     private fun observeShareContentEvents() {
         shareContentEventDispatcher.events.filterIsInstance<ShareContentEvent.Import.OnFinish>()
             .onEach {
-                monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges)
+                monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges())
             }.launchIn(scope)
     }
 }

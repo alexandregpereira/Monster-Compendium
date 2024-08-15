@@ -16,14 +16,17 @@
 
 package br.alexandregpereira.hunter.search.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.LoadingIndicator
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -32,6 +35,7 @@ internal fun SearchBar(
     text: String,
     searchLabel: String,
     modifier: Modifier = Modifier,
+    isSearching: Boolean = false,
     onValueChange: (String) -> Unit = {}
 ) {
     AppTextField(
@@ -39,7 +43,12 @@ internal fun SearchBar(
         capitalize = false,
         onValueChange = onValueChange,
         label = searchLabel,
-        modifier = modifier
+        modifier = modifier,
+        leadingIcon = {
+            Box(Modifier.size(24.dp)) {
+                LoadingIndicator(showCircularLoading = isSearching, size = 24.dp)
+            }
+        }
     )
 }
 

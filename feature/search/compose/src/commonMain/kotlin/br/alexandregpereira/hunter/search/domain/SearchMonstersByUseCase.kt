@@ -17,6 +17,7 @@
 package br.alexandregpereira.hunter.search.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.model.Spell
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 
 internal class SearchMonstersByUseCase internal constructor(
@@ -38,25 +40,29 @@ internal class SearchMonstersByUseCase internal constructor(
     private val getSpellsByIdsUseCase: GetSpellsByIdsUseCase,
 ) {
 
+    private val monsters: MutableList<Monster> = mutableListOf()
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(value: String): Flow<List<SearchMonsterResult>> {
+    operator fun invoke(value: String, clearCache: Boolean): Flow<List<SearchMonsterResult>> {
         if (value.isBlank()) return flowOf(emptyList())
 
-        return flow { emit(getKeySearchValueMap(value)) }
-            .flatMapLatest { keySearchValueMap ->
-                if (keySearchValueMap.containsKey(KeySearch.SPELL)) {
-                    getMonstersUseCase().appendSpellcastings()
-                } else {
-                    getMonsterPreviewsCacheUseCase()
+        if (clearCache) monsters.clear()
+        return flow { emit(getSearchKeyValues(value).toMap()) }
+            .flatMapLatest { searchKeyValueMap ->
+                if (monsters.isNotEmpty()) return@flatMapLatest flowOf(monsters)
+                when {
+                    clearCache.not() && searchKeyValueMap.keys.all { it.hasOnPreview } -> {
+                        getMonsterPreviewsCacheUseCase()
+                    }
+
+                    else -> {
+                        getMonstersUseCase().appendSpellcastings().saveToSearchCache()
+                    }
                 }
             }
             .map { monsters ->
-                val keySearchValueMap = getKeySearchValueMap(value)
-                monsters.filter { monster ->
-                    keySearchValueMap.map { (key, value) ->
-                        monster.containsByKey(key, value)
-                    }.all { it }
-                }
+                val searchKeyValues = getSearchKeyValues(value)
+                monsters.search(searchKeyValues.toMutableList())
             }
             .catch { error ->
                 throw SearchMonstersByNameUnexpectedException(cause = error)
@@ -75,6 +81,24 @@ internal class SearchMonstersByUseCase internal constructor(
                     )
                 }
             }
+    }
+
+    private fun List<Monster>.search(
+        searchKeyValues: MutableList<Pair<SearchKey, String>>
+    ): List<Monster> {
+        if (searchKeyValues.isEmpty()) return this
+        val (key, value) = searchKeyValues.first()
+        searchKeyValues.removeFirst()
+        return filter { monster ->
+            monster.containsByKey(key, value)
+        }.search(searchKeyValues.toMutableList())
+    }
+
+    private fun Flow<List<Monster>>.saveToSearchCache(): Flow<List<Monster>> {
+        return onEach { monsters ->
+            this@SearchMonstersByUseCase.monsters.clear()
+            this@SearchMonstersByUseCase.monsters.addAll(monsters)
+        }
     }
 
     //TODO It is duplicated with GetMonsterDetailUseCase logic
@@ -123,46 +147,75 @@ internal class SearchMonstersByUseCase internal constructor(
         }
     }
 
-    private fun getKeySearchValueMap(name: String): Map<KeySearch, String> {
-        return name.split("&").map { it.trim() }.map { value ->
-            val valueSplit = value.split(":")
-            if (valueSplit.size == 2) {
-                val keySearch = when (valueSplit.first()) {
-                    "type" -> KeySearch.TYPE
-                    "cr" -> KeySearch.CHALLENGE_RATING
-                    "spell" -> KeySearch.SPELL
-                    else -> KeySearch.NAME
+    private fun getSearchKeyValues(name: String): List<Pair<SearchKey, String>> {
+        return name.split("&").map { it.trim() }.map { valueWithSymbols ->
+            val searchKey = SearchKey.entries.find {
+                valueWithSymbols.startsWith(it.key, ignoreCase = true)
+            } ?: SearchKey.Name
+
+            when (searchKey.valueType) {
+                SearchValueType.String -> {
+                    searchKey.getSearchKeyValue(delimiter = "=", valueWithSymbols)
                 }
-                keySearch to valueSplit.last()
-            } else {
-                KeySearch.NAME to value
+                SearchValueType.Boolean -> searchKey to "true"
+                SearchValueType.Float -> {
+                    val delimiter = when {
+                        valueWithSymbols.contains(">") -> ">"
+                        valueWithSymbols.contains("<") -> "<"
+                        else -> "="
+                    }
+                    searchKey.getSearchKeyValue(delimiter, valueWithSymbols)
+                }
             }
-        }.toMap()
+        }
     }
 
-    private fun Monster.containsByKey(keySearch: KeySearch, value: String): Boolean {
-        return when (keySearch) {
-            KeySearch.NAME -> containsByName(value)
-            KeySearch.TYPE -> containsByType(value)
-            KeySearch.CHALLENGE_RATING -> containsByChallengeRating(value)
-            KeySearch.SPELL -> containsBySpell(value)
+    private fun SearchKey.getSearchKeyValue(
+        delimiter: String,
+        valueWithSymbols: String
+    ): Pair<SearchKey, String> {
+        val valueSplit = valueWithSymbols.split(delimiter)
+        val value = valueSplit.lastOrNull()
+        return if (value == null) SearchKey.Name to valueWithSymbols
+        else this to "$delimiter$value"
+    }
+
+    private fun Monster.containsByKey(searchKey: SearchKey, valueWithDelimiter: String): Boolean {
+        val delimiter = valueWithDelimiter.first().toString()
+        val value = when (delimiter) {
+            "=", ">", "<" -> valueWithDelimiter.removePrefix(delimiter)
+            else -> valueWithDelimiter
+        }
+        val valueWithNoAccents = value.removeAccents().takeIf { it.isNotBlank() } ?: return false
+        return when (searchKey) {
+            SearchKey.Name -> containsByName(valueWithNoAccents)
+            SearchKey.Type -> containsByType(valueWithNoAccents)
+            SearchKey.Cr -> containsByChallengeRating(valueWithNoAccents, delimiter)
+            SearchKey.Spell -> containsBySpell(valueWithNoAccents)
+            SearchKey.Legendary -> containsByLegendary()
+            SearchKey.Source -> containsBySource(valueWithNoAccents)
+            SearchKey.Edited -> containsByEdited()
+            SearchKey.Cloned -> containsByCloned()
+            SearchKey.Imported -> containsByImported()
         }
     }
 
     private fun Monster.containsByName(value: String): Boolean {
-        return name.removeAccents()
-            .contains(value.removeAccents(), ignoreCase = true) ||
-                index.replace("-", " ")
-                    .contains(value.removeAccents(), ignoreCase = true)
+        return name.removeAccents().contains(value, ignoreCase = true) ||
+                index.replace("-", " ").contains(value, ignoreCase = true)
     }
 
     private fun Monster.containsByType(value: String): Boolean {
-        return type.name.removeAccents()
-            .contains(value.removeAccents(), ignoreCase = true)
+        return type.name.removeAccents().contains(value, ignoreCase = true)
     }
 
-    private fun Monster.containsByChallengeRating(value: String): Boolean {
-        return challengeRating.toString() == value
+    private fun Monster.containsByChallengeRating(value: String, delimiter: String): Boolean {
+        val crValue = value.toFloatOrNull() ?: return false
+        return when (delimiter) {
+            ">" -> return challengeRating > crValue
+            "<" -> return challengeRating < crValue
+            else -> return challengeRating == crValue
+        }
     }
 
     private fun Monster.containsBySpell(value: String): Boolean {
@@ -174,13 +227,29 @@ internal class SearchMonstersByUseCase internal constructor(
             ?.reduce { acc, spellPreviews -> acc + spellPreviews }
             ?.any { spellPreview ->
                 spellPreview.name.removeAccents()
-                    .contains(value.removeAccents(), ignoreCase = true) ||
+                    .contains(value, ignoreCase = true) ||
                         spellPreview.index.replace("-", " ")
                             .contains(value, ignoreCase = true)
             } ?: false
     }
 
-    private enum class KeySearch {
-        NAME, TYPE, CHALLENGE_RATING, SPELL
+    private fun Monster.containsByLegendary(): Boolean {
+        return legendaryActions.isNotEmpty()
+    }
+
+    private fun Monster.containsBySource(value: String): Boolean {
+        return sourceName.removeAccents().contains(value, ignoreCase = true)
+    }
+
+    private fun Monster.containsByEdited(): Boolean {
+        return status == MonsterStatus.Edited
+    }
+
+    private fun Monster.containsByCloned(): Boolean {
+        return status == MonsterStatus.Clone
+    }
+
+    private fun Monster.containsByImported(): Boolean {
+        return status == MonsterStatus.Imported
     }
 }

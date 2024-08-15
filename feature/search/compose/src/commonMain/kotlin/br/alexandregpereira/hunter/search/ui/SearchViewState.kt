@@ -24,6 +24,7 @@ internal data class SearchViewState(
     val monsterRows: List<MonsterCardState> = emptyList(),
     val searchLabel: String = "",
     val searchResults: String = "",
+    val isSearching: Boolean = false,
 )
 
 internal fun SearchViewState.changeSearchValue(value: String): SearchViewState {

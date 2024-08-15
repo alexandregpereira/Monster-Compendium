@@ -53,7 +53,6 @@ import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChang
 import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
-import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
@@ -86,7 +85,6 @@ class MonsterDetailStateHolder internal constructor(
     private val monsterLoreDetailEventDispatcher: MonsterLoreDetailEventDispatcher,
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val monsterRegistrationEventDispatcher: EventDispatcher<MonsterRegistrationEvent>,
-    private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterDetailAnalytics,
@@ -137,10 +135,6 @@ class MonsterDetailStateHolder internal constructor(
                     setState { copy(showDetail = false).saveState(stateRecovery) }
                 }
             }
-        }.launchIn(scope)
-
-        monsterRegistrationEventListener.collectOnSaved {
-            getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = true)
         }.launchIn(scope)
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
@@ -360,7 +354,7 @@ class MonsterDetailStateHolder internal constructor(
             .map { (state, monsterIndex) ->
                 onMonsterChanged(monsterIndex, scrolled = true)
                 if (monsterIndexes.isNotEmpty()) {
-                    monsterEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                    monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 }
                 state
             }
@@ -371,7 +365,7 @@ class MonsterDetailStateHolder internal constructor(
     private fun deleteMonster() {
         deleteMonster(monsterIndex)
             .onEach {
-                monsterEventDispatcher.dispatchEvent(OnCompendiumChanges)
+                monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 monsterEventDispatcher.dispatchEvent(Hide)
             }
             .flowOn(dispatcher)
