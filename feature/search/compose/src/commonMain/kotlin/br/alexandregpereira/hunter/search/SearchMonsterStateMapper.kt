@@ -16,7 +16,10 @@
 
 package br.alexandregpereira.hunter.search
 
+import br.alexandregpereira.hunter.search.domain.SearchKey
 import br.alexandregpereira.hunter.search.domain.SearchMonsterResult
+import br.alexandregpereira.hunter.search.domain.SearchValueType
+import br.alexandregpereira.hunter.search.ui.SearchKeyState
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
@@ -44,4 +47,22 @@ internal fun List<SearchMonsterResult>.asMonsterCardStates(): List<MonsterCardSt
             ),
         )
     }
+}
+
+internal fun List<SearchKey>.toState(): List<SearchKeyState> {
+    return this.associateWith { searchKey ->
+        val symbols = when (searchKey.valueType) {
+            SearchValueType.String -> listOf("=")
+            SearchValueType.Boolean -> listOf("!")
+            SearchValueType.Float -> listOf(">", "<", "=")
+        }
+        symbols
+    }.map { (searchKey, symbols) ->
+        symbols.map { symbol ->
+            SearchKeyState(
+                key = searchKey.key,
+                symbol = symbol,
+            )
+        }
+    }.flatten()
 }

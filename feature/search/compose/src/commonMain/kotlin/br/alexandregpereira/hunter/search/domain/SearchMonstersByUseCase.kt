@@ -148,7 +148,7 @@ internal class SearchMonstersByUseCase internal constructor(
     }
 
     private fun getSearchKeyValues(name: String): List<Pair<SearchKey, String>> {
-        return name.split("&").map { it.trim() }.map { valueWithSymbols ->
+        return name.split(SearchKeySymbolAnd).map { it.trim() }.map { valueWithSymbols ->
             val searchKey = SearchKey.entries.find {
                 valueWithSymbols.startsWith(it.key, ignoreCase = true)
             } ?: SearchKey.Name
@@ -253,3 +253,5 @@ internal class SearchMonstersByUseCase internal constructor(
         return status == MonsterStatus.Imported
     }
 }
+
+internal const val SearchKeySymbolAnd = "&"

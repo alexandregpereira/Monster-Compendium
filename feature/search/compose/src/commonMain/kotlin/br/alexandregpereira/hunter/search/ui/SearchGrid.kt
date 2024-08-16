@@ -17,8 +17,11 @@
 package br.alexandregpereira.hunter.search.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
@@ -29,12 +32,14 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 internal fun SearchGrid(
     monsterRows: List<MonsterCardState>,
     totalResults: String,
+    listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
 ) = AnimatedVisibility(
     visible = monsterRows.isNotEmpty(),
-    enter = fadeIn(),
+    enter = fadeIn(animationSpec = spring()),
+    exit = fadeOut(animationSpec = spring()),
 ) {
     val monstersBySection = listOf(
         Title(
@@ -46,6 +51,7 @@ internal fun SearchGrid(
     }
     MonsterCompendium(
         items = monstersBySection,
+        listState = listState,
         contentPadding = contentPadding,
         onItemCLick = onCardClick,
         onItemLongCLick = onCardLongClick

@@ -10,10 +10,10 @@ internal enum class SearchKey(
     Cr("-cr", hasOnPreview = true, valueType = SearchValueType.Float),
     Spell("-spell"),
     Legendary("-legendary", valueType = SearchValueType.Boolean),
-    Source("-source"),
     Edited("-edited", valueType = SearchValueType.Boolean),
     Cloned("-cloned", valueType = SearchValueType.Boolean),
-    Imported("-imported", valueType = SearchValueType.Boolean);
+    Imported("-imported", valueType = SearchValueType.Boolean),
+    Source("-source"),
 }
 
 internal enum class SearchValueType {

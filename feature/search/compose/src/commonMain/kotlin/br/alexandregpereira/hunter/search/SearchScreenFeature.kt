@@ -34,5 +34,6 @@ fun SearchScreenFeature(
         onSearchValueChange = viewModel::onSearchValueChange,
         onCardClick = viewModel::onItemClick,
         onCardLongClick = viewModel::onItemLongClick,
+        onSearchKeyClick = viewModel::onSearchKeyClick,
     )
 }
