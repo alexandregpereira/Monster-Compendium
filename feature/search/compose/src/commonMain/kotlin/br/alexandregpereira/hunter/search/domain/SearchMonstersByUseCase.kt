@@ -16,8 +16,13 @@
 
 package br.alexandregpereira.hunter.search.domain
 
+import br.alexandregpereira.hunter.domain.model.Action
+import br.alexandregpereira.hunter.domain.model.Damage
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
+import br.alexandregpereira.hunter.domain.model.SpeedType
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.model.Spell
@@ -38,15 +43,20 @@ internal class SearchMonstersByUseCase internal constructor(
     private val getMonsterPreviewsCacheUseCase: GetMonsterPreviewsCacheUseCase,
     private val getMonstersUseCase: GetMonstersUseCase,
     private val getSpellsByIdsUseCase: GetSpellsByIdsUseCase,
+    private val getMonstersLoreByIdsUseCase: GetMonstersLoreByIdsUseCase,
 ) {
 
     private val monsters: MutableList<Monster> = mutableListOf()
+    private val monstersLoreCache: MutableMap<String, List<MonsterLore>> = mutableMapOf()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(value: String, clearCache: Boolean): Flow<List<SearchMonsterResult>> {
         if (value.isBlank()) return flowOf(emptyList())
 
-        if (clearCache) monsters.clear()
+        if (clearCache) {
+            monsters.clear()
+            monstersLoreCache.clear()
+        }
         return flow { emit(getSearchKeyValues(value).toMap()) }
             .flatMapLatest { searchKeyValueMap ->
                 if (monsters.isNotEmpty()) return@flatMapLatest flowOf(monsters)
@@ -57,6 +67,7 @@ internal class SearchMonstersByUseCase internal constructor(
 
                     else -> {
                         getMonstersUseCase().appendSpellcastings().saveToSearchCache()
+                            .saveMonsterLoreToSearchCache()
                     }
                 }
             }
@@ -98,6 +109,17 @@ internal class SearchMonstersByUseCase internal constructor(
         return onEach { monsters ->
             this@SearchMonstersByUseCase.monsters.clear()
             this@SearchMonstersByUseCase.monsters.addAll(monsters)
+        }
+    }
+
+    private fun Flow<List<Monster>>.saveMonsterLoreToSearchCache(): Flow<List<Monster>> {
+        return onEach { monsters ->
+            val monsterIndexes = monsters.map { it.index }
+            val monstersLore = getMonstersLoreByIdsUseCase(monsterIndexes)
+                .single().groupBy { it.index }
+
+            monstersLoreCache.clear()
+            monstersLoreCache.putAll(monstersLore)
         }
     }
 
@@ -197,6 +219,25 @@ internal class SearchMonstersByUseCase internal constructor(
             SearchKey.Edited -> containsByEdited()
             SearchKey.Cloned -> containsByCloned()
             SearchKey.Imported -> containsByImported()
+            SearchKey.Spellcaster -> containsBySpellcaster()
+            SearchKey.Fly -> containsByFly()
+            SearchKey.Burrow -> containsByBurrow()
+            SearchKey.Hover -> containsByHover()
+            SearchKey.Swim -> containsBySwim()
+            SearchKey.Group -> containsByGroup(valueWithNoAccents)
+            SearchKey.Alignment -> containsByAlignment(valueWithNoAccents)
+            SearchKey.Size -> containsBySize(valueWithNoAccents)
+            SearchKey.ImagePortrait -> containsByImagePortrait()
+            SearchKey.ImageLandscape -> containsByImageLandscape()
+            SearchKey.ImageUrl -> containsByImageUrl(valueWithNoAccents)
+            SearchKey.Lore -> containsByLore(valueWithNoAccents)
+            SearchKey.DamageVulnerability -> damageVulnerabilities.containsByDamage(valueWithNoAccents)
+            SearchKey.DamageResistance -> damageResistances.containsByDamage(valueWithNoAccents)
+            SearchKey.DamageImmunity -> damageImmunities.containsByDamage(valueWithNoAccents)
+            SearchKey.SpecialAbility -> containsBySpecialAbility(valueWithNoAccents)
+            SearchKey.Action -> actions.containsByAction(valueWithNoAccents)
+            SearchKey.LegendaryAction -> legendaryActions.containsByAction(valueWithNoAccents)
+            SearchKey.Senses -> containsBySense(valueWithNoAccents)
         }
     }
 
@@ -251,6 +292,89 @@ internal class SearchMonstersByUseCase internal constructor(
 
     private fun Monster.containsByImported(): Boolean {
         return status == MonsterStatus.Imported
+    }
+
+    private fun Monster.containsBySpellcaster(): Boolean {
+        return spellcastings.isNotEmpty()
+    }
+
+    private fun Monster.containsByFly(): Boolean {
+        return speed.values.any { it.type == SpeedType.FLY }
+    }
+
+    private fun Monster.containsByBurrow(): Boolean {
+        return speed.values.any { it.type == SpeedType.BURROW }
+    }
+
+    private fun Monster.containsByHover(): Boolean {
+        return speed.hover
+    }
+
+    private fun Monster.containsBySwim(): Boolean {
+        return speed.values.any { it.type == SpeedType.SWIM }
+    }
+
+    private fun Monster.containsByGroup(value: String): Boolean {
+        return group?.removeAccents()?.contains(value, ignoreCase = true) ?: false
+    }
+
+    private fun Monster.containsByAlignment(value: String): Boolean {
+        return alignment.removeAccents().contains(value, ignoreCase = true)
+    }
+
+    private fun Monster.containsBySize(value: String): Boolean {
+        return size.removeAccents().contains(value, ignoreCase = true)
+    }
+
+    private fun Monster.containsByImagePortrait(): Boolean {
+        return imageData.isHorizontal.not()
+    }
+
+    private fun Monster.containsByImageLandscape(): Boolean {
+        return imageData.isHorizontal
+    }
+
+    private fun Monster.containsByLore(value: String): Boolean {
+        return monstersLoreCache[index]?.any { lore ->
+            lore.entries.any { entry ->
+                entry.description.removeAccents()
+                    .contains(value, ignoreCase = true) ||
+                        entry.title?.removeAccents()
+                            ?.contains(value, ignoreCase = true) ?: false
+            }
+        } ?: false
+    }
+
+    private fun List<Damage>.containsByDamage(value: String): Boolean {
+        return this.any { damage ->
+            damage.name.removeAccents().contains(value, ignoreCase = true)
+        }
+    }
+
+    private fun Monster.containsBySpecialAbility(value: String): Boolean {
+        return specialAbilities.any { ability ->
+            ability.name.removeAccents().contains(value, ignoreCase = true) ||
+                ability.description.removeAccents()
+                    .contains(value, ignoreCase = true)
+        }
+    }
+
+    private fun List<Action>.containsByAction(value: String): Boolean {
+        return this.any { action ->
+            action.abilityDescription.name.removeAccents().contains(value, ignoreCase = true) ||
+                action.abilityDescription.description.removeAccents()
+                    .contains(value, ignoreCase = true)
+        }
+    }
+
+    private fun Monster.containsBySense(value: String): Boolean {
+        return senses.any { sense ->
+            sense.removeAccents().contains(value, ignoreCase = true)
+        }
+    }
+
+    private fun Monster.containsByImageUrl(value: String): Boolean {
+        return imageData.url.removeAccents().contains(value, ignoreCase = true)
     }
 }
 

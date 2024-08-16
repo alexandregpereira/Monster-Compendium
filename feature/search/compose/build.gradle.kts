@@ -12,6 +12,7 @@ multiplatform {
         implementation(project(":core:state-holder"))
         implementation(project(":core:search"))
         implementation(project(":domain:monster:core"))
+        implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:folder-preview:event"))
         implementation(project(":domain:monster:event"))

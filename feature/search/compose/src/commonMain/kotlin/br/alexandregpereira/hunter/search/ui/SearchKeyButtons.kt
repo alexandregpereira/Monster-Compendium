@@ -21,20 +21,23 @@ internal fun SearchKeyButtons(
     shouldShow: () -> Boolean,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit,
-) = AnimatedVisibility(
-    visible = shouldShow(),
-    enter = fadeIn(),
-    exit = fadeOut(),
 ) {
-    Row(
-        modifier = modifier.horizontalScroll(
-            state = rememberScrollState(),
-        ).padding(horizontal = 16.dp),
+    val scrollState = rememberScrollState()
+    AnimatedVisibility(
+        visible = shouldShow(),
+        enter = fadeIn(),
+        exit = fadeOut(),
     ) {
-        searchKeys.forEachIndexed { index, searchKey ->
-            SearchKeyButton(searchKey = searchKey, onClick = { onClick(index) })
+        Row(
+            modifier = modifier.horizontalScroll(
+                state = scrollState,
+            ).padding(horizontal = 16.dp),
+        ) {
+            searchKeys.forEachIndexed { index, searchKey ->
+                SearchKeyButton(searchKey = searchKey, onClick = { onClick(index) })
+                Spacer(modifier = Modifier.width(8.dp))
+            }
         }
-        Spacer(modifier = Modifier.width(16.dp))
     }
 }
 

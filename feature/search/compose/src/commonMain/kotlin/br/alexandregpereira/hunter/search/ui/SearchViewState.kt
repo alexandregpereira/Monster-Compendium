@@ -31,8 +31,12 @@ internal data class SearchViewState(
 )
 
 internal data class SearchKeyState(
-    val key: String,
-    val symbol: String
+    private val key: String,
+    private val symbol: String
 ) {
     val keyWithSymbols: String = if (symbol == "!") key else "$key$symbol"
+
+    override fun toString(): String {
+        return keyWithSymbols
+    }
 }
