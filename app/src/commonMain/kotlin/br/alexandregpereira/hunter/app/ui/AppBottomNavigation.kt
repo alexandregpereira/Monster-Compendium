@@ -82,6 +82,7 @@ internal fun AppBottomNavigation(
             val paddingBottom = contentPadding.calculateBottomPadding()
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.surface,
+                contentColor = MaterialTheme.colors.onSurface,
                 elevation = 0.dp,
                 modifier = Modifier.height(BottomNavigationHeight + paddingBottom)
                     .padding(bottom = paddingBottom)

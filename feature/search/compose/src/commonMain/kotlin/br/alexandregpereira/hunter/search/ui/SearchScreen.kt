@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import kotlin.math.absoluteValue
 
 @Composable
@@ -51,6 +52,8 @@ internal fun SearchScreen(
     Box {
         val listState = rememberLazyGridState()
         val focusManager = LocalFocusManager.current
+
+        ClearFocusWhenScrolling(listState)
 
         SearchGrid(
             monsterRows = state.monsterRows,

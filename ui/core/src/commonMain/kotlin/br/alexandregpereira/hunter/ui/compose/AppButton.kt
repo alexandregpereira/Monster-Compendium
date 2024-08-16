@@ -16,17 +16,21 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,21 +44,21 @@ fun AppButton(
     enabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
-    Button(
-        enabled = enabled,
-        shape = RoundedCornerShape(24.dp),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.surface,
-        ),
-        elevation = ButtonDefaults.elevation(
-            defaultElevation = 8.dp,
-            pressedElevation = 2.dp,
-        ),
+    val backgroundColorAlpha by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0.5f
+    )
+
+    Box(
         modifier = modifier
             .height(size.height.dp)
             .fillMaxWidth()
-            .animatePressed(),
-        onClick = onClick
+            .animatePressed(
+                enabled = enabled,
+                onClick = onClick
+            )
+            .clip(RoundedCornerShape(24.dp))
+            .background(color = MaterialTheme.colors.primary.copy(alpha = backgroundColorAlpha)),
+        contentAlignment = Alignment.Center
     ) {
         val fontSizes = when (size) {
             AppButtonSize.VERY_SMALL -> 12.sp
@@ -64,7 +68,9 @@ fun AppButton(
         Text(
             text = text,
             fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colors.onPrimary.copy(alpha = backgroundColorAlpha),
             fontSize = fontSizes,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
 }

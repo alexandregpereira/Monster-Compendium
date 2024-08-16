@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
@@ -27,13 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.resources.Res
 import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
+import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.ui.compose.IconInfo as IconInfoUi
 
 @Composable
@@ -61,7 +61,7 @@ internal fun IconInfo(
 @Composable
 private fun IconInfoArmorClassPreview() {
     HunterTheme {
-        Surface {
+        AppSurface {
             IconInfo(
                 title = "Armor Class",
                 painter = painterResource(Res.drawable.ic_shield),
@@ -77,7 +77,7 @@ private fun IconInfoArmorClassPreview() {
 @Composable
 private fun IconInfoHitPointPreview() {
     HunterTheme {
-        Surface {
+        AppSurface {
             IconInfo(
                 title = "28d20 + 252",
                 painter = rememberVectorPainter(image = Icons.Filled.Favorite),

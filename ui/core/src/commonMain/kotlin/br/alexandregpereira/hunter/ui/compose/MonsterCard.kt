@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -79,7 +78,7 @@ fun ImageCard(
     val shape = imageCardShape
     val alpha = 0.7f
     val borderColor = MaterialTheme.colors.surface
-    Card(
+    AppCard(
         backgroundColor = Color.Transparent,
         contentColor = MaterialTheme.colors.onSurface,
         elevation = imageCardElevation,

@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.ui.compose
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -32,6 +33,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -181,4 +183,12 @@ fun AppTextField(
 enum class AppKeyboardType {
     TEXT,
     NUMBER
+}
+
+@Composable
+fun ClearFocusWhenScrolling(scrollableState: ScrollableState) {
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(scrollableState.isScrollInProgress) {
+        if (scrollableState.isScrollInProgress) focusManager.clearFocus()
+    }
 }

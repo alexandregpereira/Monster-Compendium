@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.AppCard
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.imageCardElevation
 import br.alexandregpereira.hunter.ui.compose.imageCardShape
@@ -95,7 +95,7 @@ fun Compendium(
                     }
                     val titleModifier = Modifier.monsterAspectRatio().takeIf { isTileCard }
                         ?: Modifier
-                    Card(
+                    AppCard(
                         shape = imageCardShape,
                         elevation = imageCardElevation.takeIf { isTileCard } ?: 0.dp,
                         backgroundColor = colors.surface.takeIf { isTileCard }
