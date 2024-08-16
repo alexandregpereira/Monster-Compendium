@@ -21,8 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PickerField(
@@ -47,7 +47,6 @@ fun PickerField(
                 }
             )
             DropdownMenu(
-                modifier = Modifier.fillMaxWidth(),
                 expanded = isOpen.value,
                 onDismissRequest = { isOpen.value = false },
             ) {
@@ -59,9 +58,13 @@ fun PickerField(
                             onValueChange(index)
                         }
                     ) {
-                        Text(option, modifier = Modifier
+                        Text(
+                            option,
+                            color = MaterialTheme.colors.onSurface,
+                            modifier = Modifier
                             .wrapContentWidth()
-                            .align(Alignment.CenterVertically))
+                            .align(Alignment.CenterVertically)
+                        )
                     }
                 }
             }

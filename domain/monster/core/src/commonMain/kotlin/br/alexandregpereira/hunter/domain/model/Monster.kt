@@ -23,7 +23,7 @@ data class Monster(
     val index: String,
     val name: String = "",
     val type: MonsterType = MonsterType.ABERRATION,
-    val challengeRating: Float = 0f,
+    val challengeRatingData: ChallengeRating = ChallengeRating(),
     val imageData: MonsterImageData = MonsterImageData(),
     val subtype: String? = null,
     val group: String? = null,
@@ -51,16 +51,27 @@ data class Monster(
     val status: MonsterStatus = MonsterStatus.Original,
 ) {
 
-    val xp: Int = challengeRatingToXp()
+    val xp: Int
+        get() = challengeRatingToXp()
 
-    val challengeRatingFormatted: String = challengeRating.getChallengeRatingFormatted()
+    val challengeRating: Float
+        get() = challengeRatingData.value
+
+    val challengeRatingFormatted: String
+        get() = challengeRatingData.value.getChallengeRatingFormatted()
 }
 
 enum class MonsterStatus {
     Original, Edited, Clone, Imported
 }
 
-private fun Float.getChallengeRatingFormatted(): String {
+data class ChallengeRating(
+    val value: Float = 0f,
+    val valueInString: String = value.toString(),
+    val formatted: String = value.getChallengeRatingFormatted()
+)
+
+fun Float.getChallengeRatingFormatted(): String {
     if (this == 0f) return "0"
 
     return if (this < 1) {
@@ -86,40 +97,45 @@ fun Monster.isComplete() = abilityScores.isNotEmpty()
 
 private fun Monster.challengeRatingToXp(): Int {
     return when (challengeRating) {
-        0.125f -> 25
-        0.25f -> 50
-        0.5f -> 100
-        1f -> 200
-        2f -> 450
-        3f -> 700
-        4f -> 1100
-        5f -> 1800
-        6f -> 2300
-        7f -> 2900
-        8f -> 3900
-        9f -> 5000
-        10f -> 5900
-        11f -> 7200
-        12f -> 8400
-        13f -> 10000
-        14f -> 11500
-        15f -> 13000
-        16f -> 15000
-        17f -> 18000
-        18f -> 20000
-        19f -> 22000
-        20f -> 25000
-        21f -> 33000
-        22f -> 41000
-        23f -> 50000
-        24f -> 62000
-        25f -> 75000
-        26f -> 90000
-        27f -> 105000
-        28f -> 120000
-        29f -> 135000
-        30f -> 155000
-        else -> 10
+        in 0.125f..0.24f -> 25
+        in 0.25f..0.49f -> 50
+        in 0.5f..0.9f -> 100
+        else -> when (val intValue = challengeRating.toInt()) {
+            0 -> 10
+            1 -> 200
+            2 -> 450
+            3 -> 700
+            4 -> 1100
+            5 -> 1800
+            6 -> 2300
+            7 -> 2900
+            8 -> 3900
+            9 -> 5000
+            10 -> 5900
+            11 -> 7200
+            12 -> 8400
+            13 -> 10000
+            14 -> 11500
+            15 -> 13000
+            16 -> 15000
+            17 -> 18000
+            18 -> 20000
+            19 -> 22000
+            20 -> 25000
+            21 -> 33000
+            22 -> 41000
+            23 -> 50000
+            24 -> 62000
+            25 -> 75000
+            26 -> 90000
+            27 -> 105000
+            28 -> 120000
+            29 -> 135000
+            30 -> 155000
+            else -> if (challengeRating > 30) {
+                (155000 + (intValue - 30) * 10000).coerceAtMost(300000)
+            } else 0
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 import androidx.compose.foundation.lazy.LazyListScope
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
+import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
@@ -36,6 +37,16 @@ internal fun LazyListScope.MonsterHeaderForm(
                 label = strings.group,
                 onValueChange = {
                     onMonsterChanged(infoState.copy(group = it.takeUnless { it.isBlank() }.orEmpty()))
+                }
+            )
+        }
+        formItem(key = keys.next()) {
+            AppTextField(
+                text = infoState.challengeRating,
+                label = strings.challengeRating,
+                keyboardType = AppKeyboardType.DECIMAL,
+                onValueChange = {
+                    onMonsterChanged(infoState.copy(challengeRating = it))
                 }
             )
         }

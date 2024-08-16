@@ -63,6 +63,7 @@ data class MonsterInfoState(
     val isImageHorizontal: Boolean = false,
     val typeIndex: Int = 0,
     val typeOptions: List<String> = emptyList(),
+    val challengeRating: String = "",
 ) {
     val type: String = typeOptions.getOrNull(typeIndex).orEmpty()
 }

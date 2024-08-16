@@ -4,6 +4,7 @@ import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.Action
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -35,7 +36,7 @@ internal fun ShareMonster.toMonster(): Monster {
         index = index,
         name = name,
         type = MonsterType.valueOf(type),
-        challengeRating = challengeRating,
+        challengeRatingData = ChallengeRating(challengeRating),
         imageData = MonsterImageData(
             url = imageUrl,
             backgroundColor = Color(

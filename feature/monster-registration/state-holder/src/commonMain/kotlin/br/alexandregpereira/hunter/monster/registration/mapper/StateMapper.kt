@@ -51,6 +51,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
             isImageHorizontal = monster.imageData.isHorizontal,
             typeIndex = MonsterType.entries.indexOf(monster.type),
             typeOptions = MonsterType.entries.map { it.name(strings) },
+            challengeRating = monster.challengeRatingData.valueInString,
         ),
         stats = StatsState(
             armorClass = monster.stats.armorClass,
@@ -347,6 +348,7 @@ private fun MonsterState.createKeys(): List<String> {
         add("monsterHeader-name")
         add("monsterHeader-subtitle")
         add("monsterHeader-group")
+        add("monsterHeader-challengeRating")
         add("monsterHeader-type")
         add(SectionTitle.Image.name)
         add("monsterHeader-image")

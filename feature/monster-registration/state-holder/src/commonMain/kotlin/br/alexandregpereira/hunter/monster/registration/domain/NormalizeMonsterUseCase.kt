@@ -18,8 +18,10 @@ package br.alexandregpereira.hunter.monster.registration.domain
 
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.getChallengeRatingFormatted
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import kotlinx.coroutines.flow.Flow
@@ -66,7 +68,16 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
         imageData = monster.imageData.copy(
             backgroundColor = monster.imageData.backgroundColor.normalizeColor(),
         ),
+        challengeRatingData = monster.challengeRatingData.normalizeChallengeRating()
     ).filterEmpties().createIndexes()
+}
+
+private fun ChallengeRating.normalizeChallengeRating(): ChallengeRating {
+    val newValue = (this.valueInString.toFloatOrNull() ?: 0f).coerceAtMost(50f)
+    return this.copy(
+        value = newValue,
+        formatted = newValue.getChallengeRatingFormatted()
+    )
 }
 
 private fun Color.normalizeColor(): Color {
