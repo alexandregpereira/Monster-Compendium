@@ -24,13 +24,19 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewAction
 import br.alexandregpereira.hunter.folder.preview.FolderPreviewState
+import br.alexandregpereira.hunter.state.ActionHandler
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun FolderPreviewScreen(
     state: FolderPreviewState,
+    actionHandler: ActionHandler<FolderPreviewAction>,
     contentPadding: PaddingValues = PaddingValues(),
     modifier: Modifier = Modifier,
     onClick: (index: String) -> Unit = {},
@@ -43,8 +49,21 @@ internal fun FolderPreviewScreen(
         exit = fadeOut(animationSpec = spring()),
         modifier = modifier
     ) {
+        val lazyListState = rememberLazyListState()
+
+        LaunchedEffect(lazyListState, actionHandler) {
+            actionHandler.action.collectLatest { event ->
+                when (event) {
+                    is FolderPreviewAction.ScrollToStart -> {
+                        lazyListState.animateScrollToItem(0)
+                    }
+                }
+            }
+        }
+
         FolderPreview(
             monsters = state.monsters,
+            lazyListState = lazyListState,
             saveButtonText = state.strings.save,
             contentPadding = contentPadding,
             onClick = onClick,
