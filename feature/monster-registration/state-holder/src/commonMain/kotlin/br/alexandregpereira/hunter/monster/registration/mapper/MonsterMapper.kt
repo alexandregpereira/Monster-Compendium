@@ -3,7 +3,6 @@ package br.alexandregpereira.hunter.monster.registration.mapper
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.Action
-import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Damage
@@ -54,7 +53,7 @@ internal fun Monster.editBy(
         name = state.info.name,
         subtitle = state.info.subtitle,
         group = state.info.group,
-        challengeRatingData = ChallengeRating(
+        challengeRatingData = monster.challengeRatingData.copy(
             valueInString = state.info.challengeRating,
         ),
         imageData = monster.imageData.copy(
