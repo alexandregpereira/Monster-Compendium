@@ -25,6 +25,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Error
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
@@ -71,6 +72,7 @@ sealed class LoadingScreenState {
 @Composable
 fun LoadingIndicator(
     showCircularLoading: Boolean = true,
+    size: Dp = 40.dp
 ) = Box(
     contentAlignment = Alignment.Center,
     modifier = Modifier.fillMaxSize()
@@ -78,7 +80,7 @@ fun LoadingIndicator(
     if (showCircularLoading) {
         CircularProgressIndicator(
             color = MaterialTheme.colors.onBackground,
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier.size(size)
         )
     }
 }

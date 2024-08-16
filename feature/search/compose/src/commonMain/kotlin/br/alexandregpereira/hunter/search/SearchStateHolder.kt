@@ -16,29 +16,32 @@
 
 package br.alexandregpereira.hunter.search
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
+import br.alexandregpereira.hunter.search.domain.SearchKey
+import br.alexandregpereira.hunter.search.domain.SearchKeySymbolAnd
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
-import br.alexandregpereira.hunter.search.ui.changeSearchValue
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-@Suppress("OPT_IN_USAGE")
 @OptIn(FlowPreview::class)
 internal class SearchStateHolder(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
@@ -49,11 +52,12 @@ internal class SearchStateHolder(
     private val appLocalization: AppReactiveLocalization,
 ) : UiModel<SearchViewState>(SearchViewState(searchLabel = appLocalization.getStrings().search)) {
 
-    private val searchQuery = MutableStateFlow(state.value.searchValue)
+    private val searchQuery = MutableStateFlow(state.value.searchValue.text)
+    private var job: Job? = null
 
     init {
-        searchQuery.debounce(500L)
-            .flatMapConcat {
+        searchQuery.debounce(800L)
+            .onEach {
                 search()
             }
             .launchIn(scope)
@@ -61,12 +65,19 @@ internal class SearchStateHolder(
         observeLanguageChanges()
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
-            search().launchIn(scope)
+            search(clearCache = true)
         }.launchIn(scope)
+
+        setState {
+            copy(searchKeys = SearchKey.entries.filter { it != SearchKey.Name }.toState())
+        }
     }
 
-    private fun search(): Flow<Unit> {
-        return searchMonstersByNameUseCase(state.value.searchValue)
+    private fun search(clearCache: Boolean = false) {
+        setState { copy(isSearching = true) }
+        job?.cancel()
+        job = searchMonstersByNameUseCase(state.value.searchValue.text, clearCache)
+            .cancellable()
             .map { result ->
                 result.size to result.asState()
             }
@@ -82,10 +93,15 @@ internal class SearchStateHolder(
             .flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
+                delay(300)
+                setState { copy(isSearching = false) }
             }
             .map { (totalResults, _) ->
                 analytics.trackSearch(totalResults, searchQuery.value)
+                delay(300)
+                setState { copy(isSearching = false) }
             }
+            .launchIn(scope)
     }
 
     private fun observeLanguageChanges() {
@@ -100,9 +116,9 @@ internal class SearchStateHolder(
         }.launchIn(scope)
     }
 
-    fun onSearchValueChange(value: String) {
-        setState { changeSearchValue(value) }
-        searchQuery.value = value
+    fun onSearchValueChange(value: TextFieldValue) {
+        setState { copy(searchValue = value) }
+        searchQuery.value = value.text
     }
 
     fun onItemClick(index: String) {
@@ -115,5 +131,16 @@ internal class SearchStateHolder(
     fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index, searchQuery.value)
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
+    }
+
+    fun onSearchKeyClick(searchKeyIndex: Int) {
+        val currentSearchValue = state.value.searchValue
+        val searchKey = state.value.searchKeys[searchKeyIndex]
+        val newSearchValue = if (currentSearchValue.text.isBlank()) {
+            searchKey.keyWithSymbols
+        } else {
+            "${currentSearchValue.text} $SearchKeySymbolAnd ${searchKey.keyWithSymbols}"
+        }
+        onSearchValueChange(TextFieldValue(newSearchValue, TextRange(newSearchValue.length)))
     }
 }

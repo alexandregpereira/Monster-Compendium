@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.monster.compendium.state
 import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
-import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
@@ -35,8 +34,6 @@ import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChange
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterPageChanges
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
-import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -60,7 +57,6 @@ class MonsterCompendiumStateHolder internal constructor(
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
-    private val monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
     private val isFirstTime: IsFirstTime,
@@ -232,13 +228,11 @@ class MonsterCompendiumStateHolder internal constructor(
         }.launchIn(scope)
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
-            loadMonsters()
-        }.launchIn(scope)
-
-        monsterRegistrationEventListener.collectOnSaved { monsterIndex ->
             scope.launch {
                 fetchMonsterCompendium()
-                navigateToCompendiumIndexFromMonsterIndex(monsterIndex, shouldAnimate = false)
+                it.monsterIndex?.let { monsterIndex ->
+                    navigateToCompendiumIndexFromMonsterIndex(monsterIndex, shouldAnimate = false)
+                }
             }
         }.launchIn(scope)
     }

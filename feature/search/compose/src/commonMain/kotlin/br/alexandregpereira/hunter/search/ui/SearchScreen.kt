@@ -23,50 +23,90 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import kotlin.math.absoluteValue
 
 @Composable
 internal fun SearchScreen(
     state: SearchViewState,
     contentPaddingValues: PaddingValues = PaddingValues(),
-    onSearchValueChange: (String) -> Unit = {},
+    onSearchValueChange: (TextFieldValue) -> Unit = {},
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
+    onSearchKeyClick: (Int) -> Unit = {},
 ) {
-    Column(Modifier) {
-        Box {
-            val focusManager = LocalFocusManager.current
-            SearchGrid(
-                monsterRows = state.monsterRows,
-                totalResults = state.searchResults,
-                contentPadding = PaddingValues(
-                    top = contentPaddingValues.calculateTopPadding() + 56.dp + 8.dp,
-                    bottom = contentPaddingValues.calculateBottomPadding()
-                ),
-                onCardClick = {
-                    focusManager.clearFocus()
-                    onCardClick(it)
-                },
-                onCardLongClick = {
-                    focusManager.clearFocus()
-                    onCardLongClick(it)
-                }
-            )
+    Box {
+        val listState = rememberLazyGridState()
+        val focusManager = LocalFocusManager.current
 
+        SearchGrid(
+            monsterRows = state.monsterRows,
+            totalResults = state.searchResults,
+            listState = listState,
+            contentPadding = PaddingValues(
+                top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
+                bottom = contentPaddingValues.calculateBottomPadding()
+            ),
+            onCardClick = {
+                focusManager.clearFocus()
+                onCardClick(it)
+            },
+            onCardLongClick = {
+                focusManager.clearFocus()
+                onCardLongClick(it)
+            }
+        )
+
+        Column {
+            var isProgrammaticChange by remember { mutableStateOf(false) }
+            val focusRequester = remember { FocusRequester() }
             SearchBar(
                 text = state.searchValue,
                 searchLabel = state.searchLabel,
-                onValueChange = onSearchValueChange,
+                onValueChange = { newValue ->
+                    if (!isProgrammaticChange) {
+                        onSearchValueChange(newValue)
+                    }
+                },
+                isSearching = state.isSearching,
                 modifier = Modifier
+                    .focusRequester(focusRequester)
                     .background(color = MaterialTheme.colors.surface)
                     .padding(horizontal = 8.dp)
                     .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
             )
+
+            val density = LocalDensity.current
+            val scrollTriggerInPixels = with(density) { 56.dp.toPx() }
+            Spacer(modifier = Modifier.height(8.dp))
+            SearchKeyButtons(
+                shouldShow = {
+                    val offset: Int = listState.layoutInfo.visibleItemsInfo
+                        .firstOrNull()?.offset?.y?.absoluteValue ?: 0
+                    offset < scrollTriggerInPixels
+                },
+                modifier = Modifier,
+                searchKeys = state.searchKeys,
+                onClick = {
+                    isProgrammaticChange = true
+                    onSearchKeyClick(it)
+                    focusRequester.requestFocus()
+                    isProgrammaticChange = false
+                },
+            )
         }
-        Spacer(modifier = Modifier.height(contentPaddingValues.calculateBottomPadding()))
     }
 }

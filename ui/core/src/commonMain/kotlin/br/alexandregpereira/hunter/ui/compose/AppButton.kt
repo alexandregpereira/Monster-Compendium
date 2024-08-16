@@ -56,15 +56,21 @@ fun AppButton(
             .animatePressed(),
         onClick = onClick
     ) {
+        val fontSizes = when (size) {
+            AppButtonSize.VERY_SMALL -> 12.sp
+            AppButtonSize.SMALL,
+            AppButtonSize.MEDIUM -> 16.sp
+        }
         Text(
             text = text,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = fontSizes,
         )
     }
 }
 
 enum class AppButtonSize(val height: Int) {
+    VERY_SMALL(32),
     SMALL(40),
     MEDIUM(48),
 }

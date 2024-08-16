@@ -1,6 +1,9 @@
 package br.alexandregpereira.hunter.monster.event
 
+import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.monster.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
 import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.MainScope
@@ -9,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -35,11 +37,12 @@ sealed class MonsterEvent {
         val monsterIndex: String
     ) : MonsterEvent()
 
-    data object OnCompendiumChanges : MonsterEvent()
+    data class OnCompendiumChanges(val monsterIndex: String? = null) : MonsterEvent()
 }
 
 internal fun MonsterEventDispatcher(
     syncEventListener: SyncEventListener,
+    monsterRegistrationEventListener: EventListener<MonsterRegistrationResult>,
 ): MonsterEventDispatcher = object : MonsterEventDispatcher {
     private val _events: MutableSharedFlow<MonsterEvent> = MutableSharedFlow(
         extraBufferCapacity = 10,
@@ -51,7 +54,11 @@ internal fun MonsterEventDispatcher(
 
     init {
         syncEventListener.collectSyncFinishedEvents {
-            dispatchEvent(MonsterEvent.OnCompendiumChanges)
+            dispatchEvent(MonsterEvent.OnCompendiumChanges())
+        }.launchIn(scope)
+
+        monsterRegistrationEventListener.collectOnSaved { index ->
+            dispatchEvent(MonsterEvent.OnCompendiumChanges(index))
         }.launchIn(scope)
     }
 
@@ -73,9 +80,9 @@ fun MonsterEventDispatcher.collectOnMonsterPageChanges(
 }
 
 fun MonsterEventDispatcher.collectOnMonsterCompendiumChanges(
-    action: () -> Unit
-): Flow<Unit> {
-    return events.filter { it is MonsterEvent.OnCompendiumChanges }.map { action() }
+    action: (MonsterEvent.OnCompendiumChanges) -> Unit
+): Flow<MonsterEvent.OnCompendiumChanges> {
+    return events.map { it as? MonsterEvent.OnCompendiumChanges }.filterNotNull().onEach(action)
 }
 
 fun emptyMonsterEventDispatcher(): MonsterEventDispatcher {

@@ -22,7 +22,7 @@ import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import org.koin.dsl.module
 
 val featureSearchModule = module {
-    factory { SearchMonstersByUseCase(get(), get(), get()) }
+    factory { SearchMonstersByUseCase(get(), get(), get(), get()) }
     single {
         SearchStateHolder(
             searchMonstersByNameUseCase = get(),

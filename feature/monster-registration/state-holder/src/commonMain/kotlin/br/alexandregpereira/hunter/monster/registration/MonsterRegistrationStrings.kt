@@ -224,7 +224,7 @@ internal data class MonsterRegistrationEnStrings(
     override val add: String = "Add",
     override val remove: String = "Remove",
     override val imageFormTitle: String = "Image",
-    override val imageHorizontalSwitchLabel: String = "Horizontal Image",
+    override val imageHorizontalSwitchLabel: String = "Landscape Image",
     override val darkThemeSwitchLabel: String = "Preview Dark Theme",
     override val imageProportion: (String) -> String = { "Proportion - $it" },
 ) : MonsterRegistrationStrings
@@ -337,7 +337,7 @@ internal data class MonsterRegistrationPtStrings(
     override val add: String = "Adicionar",
     override val remove: String = "Remover",
     override val imageFormTitle: String = "Imagem",
-    override val imageHorizontalSwitchLabel: String = "Imagem Horizontal",
+    override val imageHorizontalSwitchLabel: String = "Imagem Landscape",
     override val darkThemeSwitchLabel: String = "Pré visualizar em Tema Escuro",
     override val imageProportion: (String) -> String = { "Proporção - $it" },
 ) : MonsterRegistrationStrings
