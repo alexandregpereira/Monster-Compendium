@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +22,8 @@ import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEmptyStr
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
+import br.alexandregpereira.hunter.ui.compose.AppCard
+import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.CoilImage
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.cardShape
@@ -44,7 +44,7 @@ internal fun MonsterContentCard(
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
-) = Card(modifier = modifier, shape = cardShape) {
+) = AppCard(modifier = modifier, shape = cardShape) {
     Column(Modifier.padding(16.dp)) {
         Title(
             name = name,
@@ -189,7 +189,7 @@ private fun Buttons(
 @Preview
 @Composable
 private fun MonsterContentCardPreview() = HunterTheme {
-    Surface {
+    AppSurface {
         MonsterContentCard(
             name = "Name",
             originalName = "Other name",

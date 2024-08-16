@@ -41,7 +41,6 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
@@ -70,6 +69,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterState
 import br.alexandregpereira.hunter.monster.detail.SpeedState
 import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
+import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.BoxCloseButton
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
@@ -99,7 +99,7 @@ internal fun MonsterDetailScreen(
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {},
     onClose: () -> Unit = {},
-) = Surface(color = Color.Transparent) {
+) = AppSurface(color = Color.Transparent) {
     HorizontalPagerTransitionController(pagerState)
 
     MonsterImageCompose(

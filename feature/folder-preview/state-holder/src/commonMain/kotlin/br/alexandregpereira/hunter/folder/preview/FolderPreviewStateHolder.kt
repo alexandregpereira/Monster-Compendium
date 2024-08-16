@@ -29,8 +29,10 @@ import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -49,7 +51,8 @@ class FolderPreviewStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
     private val appLocalization: AppLocalization,
-) : UiModel<FolderPreviewState>(FolderPreviewState()) {
+) : UiModel<FolderPreviewState>(FolderPreviewState()),
+    MutableActionHandler<FolderPreviewAction> by MutableActionHandler() {
 
     init {
         observeEvents()
@@ -113,7 +116,12 @@ class FolderPreviewStateHolder internal constructor(
         addMonsterToFolderPreview(index)
             .flowOn(dispatcher)
             .onEach { monsters ->
+                val previousMonsterListSize = state.value.monsters.size
                 setState { changeMonsters(monsters) }
+                if (monsters.size > previousMonsterListSize) {
+                    delay(300)
+                    sendAction(FolderPreviewAction.ScrollToStart)
+                }
             }
             .launchIn(scope)
     }

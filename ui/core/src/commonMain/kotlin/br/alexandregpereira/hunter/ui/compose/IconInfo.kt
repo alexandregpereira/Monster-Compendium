@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -99,7 +98,7 @@ fun IconInfo(
 @Composable
 fun IconInfoArmorClassPreview() {
     HunterTheme {
-        Surface {
+        AppSurface {
             IconInfo(
                 painter = painterResource(resource =  Res.drawable.ic_school_conjuration),
                 iconColor = Color.Blue,
@@ -114,7 +113,7 @@ fun IconInfoArmorClassPreview() {
 @Composable
 fun IconInfoHitPointPreview() {
     HunterTheme {
-        Surface {
+        AppSurface {
             IconInfo(
                 title = "28d20 + 252",
                 painter = rememberVectorPainter(image = Icons.Filled.Favorite),

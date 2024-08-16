@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -59,16 +58,14 @@ fun Window(
     backgroundColor: Color = MaterialTheme.colors.surface,
     level: Int = 1,
     content: @Composable () -> Unit
-) {
-    Surface(
-        color = backgroundColor,
-        content = content,
-        elevation = elevation,
-        modifier = modifier
-            .padding((level * 4).dp)
-            .clip(shape = cardShape),
-    )
-}
+) = AppSurface(
+    color = backgroundColor,
+    content = content,
+    elevation = elevation,
+    modifier = modifier
+        .padding((level * 4).dp)
+        .clip(shape = cardShape),
+)
 
 @Composable
 fun PreviewWindow(
