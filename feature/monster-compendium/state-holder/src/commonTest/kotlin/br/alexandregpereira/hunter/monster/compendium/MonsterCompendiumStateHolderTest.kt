@@ -43,8 +43,6 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumSta
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.emptyMonsterEventDispatcher
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
-import br.alexandregpereira.hunter.monster.registration.event.emptyMonsterRegistrationEventListener
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.emptySyncEventDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +66,6 @@ class MonsterCompendiumStateHolderTest {
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
     private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
-    private val monsterRegistrationEventListener: MonsterRegistrationEventListener = emptyMonsterRegistrationEventListener()
 
     private lateinit var stateHolder: MonsterCompendiumStateHolder
 
@@ -354,7 +351,6 @@ class MonsterCompendiumStateHolderTest {
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             monsterEventDispatcher = monsterDetailEventDispatcher,
             syncEventDispatcher = syncEventDispatcher,
-            monsterRegistrationEventListener = monsterRegistrationEventListener,
             dispatcher = testCoroutineDispatcher,
             analytics = MonsterCompendiumAnalytics(analytics = EmptyAnalytics()),
             appLocalization = object : AppLocalization {
