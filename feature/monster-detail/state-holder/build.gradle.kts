@@ -30,7 +30,7 @@ multiplatform {
         implementation(project(":feature:folder-insert:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))
-        implementation(project(":feature:monster-lore-detail:event"))
+        implementation(project(":feature:monster-lore:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:sync:event"))

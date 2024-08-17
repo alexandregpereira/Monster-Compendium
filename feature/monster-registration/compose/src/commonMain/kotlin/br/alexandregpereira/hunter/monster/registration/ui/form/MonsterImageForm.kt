@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 import br.alexandregpereira.hunter.ui.compose.getMonsterImageAspectRatio
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.util.toColor

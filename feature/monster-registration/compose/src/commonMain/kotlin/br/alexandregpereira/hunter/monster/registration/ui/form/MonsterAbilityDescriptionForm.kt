@@ -6,6 +6,9 @@ import br.alexandregpereira.hunter.monster.registration.AbilityDescriptionState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.form.FormItems
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterAbilityDescriptionForm(

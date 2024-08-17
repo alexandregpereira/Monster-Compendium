@@ -21,22 +21,27 @@ import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.event.EventDispatcher
-import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.event.monster.lore.registration.MonsterLoreRegistrationEvent
+import br.alexandregpereira.hunter.event.monster.lore.registration.MonsterLoreRegistrationEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddLore
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddToFolder
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Edit
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.EditLore
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Export
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetToOriginal
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_LORE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT_LORE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
@@ -52,7 +57,6 @@ import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
@@ -90,6 +94,7 @@ class MonsterDetailStateHolder internal constructor(
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
+    private val monsterLoreRegistrationEventDispatcher: MonsterLoreRegistrationEventDispatcher,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -226,6 +231,20 @@ class MonsterDetailStateHolder internal constructor(
                     ShareContentEvent.Export.OnStart(monsterIndex)
                 )
             }
+
+            EDIT_LORE -> {
+                analytics.trackMonsterDetailEditLoreClicked(monsterIndex)
+                monsterLoreRegistrationEventDispatcher.dispatchEvent(
+                    MonsterLoreRegistrationEvent.Show(monsterIndex)
+                )
+            }
+
+            ADD_LORE -> {
+                analytics.trackMonsterDetailAddLoreClicked(monsterIndex)
+                monsterLoreRegistrationEventDispatcher.dispatchEvent(
+                    MonsterLoreRegistrationEvent.Show(monsterIndex)
+                )
+            }
         }
     }
 
@@ -319,11 +338,12 @@ class MonsterDetailStateHolder internal constructor(
 
     private fun MonsterDetailState.changeOptions(): MonsterDetailState {
         val monster = metadata.find { monster -> monster.index == monsterIndex } ?: return this
+        val editOrAddLore = if (monster.lore.isNullOrBlank()) AddLore(strings) else EditLore(strings)
         val editOption = when (monster.status) {
-            MonsterStatus.Original -> listOf(Edit(strings))
+            MonsterStatus.Original -> listOf(Edit(strings), editOrAddLore)
             MonsterStatus.Imported,
-            MonsterStatus.Clone -> listOf(Edit(strings), Delete(strings))
-            MonsterStatus.Edited -> listOf(Edit(strings), ResetToOriginal(strings))
+            MonsterStatus.Clone -> listOf(Edit(strings), editOrAddLore, Delete(strings))
+            MonsterStatus.Edited -> listOf(Edit(strings), editOrAddLore, ResetToOriginal(strings))
         }
 
         return copy(

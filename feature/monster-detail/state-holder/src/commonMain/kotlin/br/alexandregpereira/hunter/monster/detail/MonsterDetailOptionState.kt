@@ -16,10 +16,12 @@
 
 package br.alexandregpereira.hunter.monster.detail
 
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_LORE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT_LORE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import kotlin.native.ObjCName
@@ -72,6 +74,22 @@ data class MonsterDetailOptionState(
         }
 
         @Suppress("FunctionName")
+        internal fun EditLore(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = EDIT_LORE,
+                name = strings.editLore
+            )
+        }
+
+        @Suppress("FunctionName")
+        internal fun AddLore(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = ADD_LORE,
+                name = strings.addLore
+            )
+        }
+
+        @Suppress("FunctionName")
         internal fun Delete(strings: MonsterDetailStrings): MonsterDetailOptionState {
             return MonsterDetailOptionState(
                 id = DELETE,
@@ -85,6 +103,8 @@ enum class MonsterDetailOptionStateId {
     ADD_TO_FOLDER,
     CLONE,
     EDIT,
+    EDIT_LORE,
+    ADD_LORE,
     DELETE,
     RESET_TO_ORIGINAL,
     EXPORT,

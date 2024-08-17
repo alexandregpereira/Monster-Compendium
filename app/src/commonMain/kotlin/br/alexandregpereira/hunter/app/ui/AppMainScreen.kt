@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
+import br.alexandregpereira.hunter.monster.lore.registration.MonsterLoreRegistrationFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
 import br.alexandregpereira.hunter.settings.SettingsBottomSheets
 import br.alexandregpereira.hunter.shareContent.ShareContentExportMonsterFeature
@@ -23,6 +24,7 @@ internal fun AppMainScreen(
     content()
     MonsterContentManagerFeature(contentPadding = contentPadding)
     MonsterRegistrationFeature(contentPadding = contentPadding)
+    MonsterLoreRegistrationFeature()
     SpellCompendiumFeature(contentPadding = contentPadding)
     SpellDetailFeature(contentPadding = contentPadding)
     FolderInsertFeature(contentPadding = contentPadding)

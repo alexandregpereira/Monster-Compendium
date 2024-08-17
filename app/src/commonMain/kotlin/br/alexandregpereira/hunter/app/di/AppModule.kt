@@ -16,6 +16,7 @@ import br.alexandregpereira.hunter.monster.content.di.featureMonsterContentManag
 import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterContentPreviewModule
 import br.alexandregpereira.hunter.monster.event.monsterEventModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDetailModule
+import br.alexandregpereira.hunter.monster.lore.registration.di.featureMonsterLoreRegistrationModule
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
 import br.alexandregpereira.hunter.search.di.featureSearchModule
 import br.alexandregpereira.hunter.settings.di.featureSettingsModule
@@ -42,6 +43,7 @@ internal fun KoinApplication.initKoinModules() {
         featureMonsterCompendiumModule,
         featureMonsterDetailModule,
         featureMonsterLoreDetailModule,
+        featureMonsterLoreRegistrationModule,
         featureMonsterContentManagerModule,
         featureMonsterContentPreviewModule,
         featureSyncModule,

@@ -1,7 +1,6 @@
 package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.analytics.Analytics
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 
 class MonsterDetailAnalytics(
@@ -155,6 +154,24 @@ class MonsterDetailAnalytics(
     fun trackMonsterDetailExportClicked(monsterIndex: String) {
         analytics.track(
             eventName = "MonsterDetail - export clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackMonsterDetailEditLoreClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - edit lore clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackMonsterDetailAddLoreClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - add lore clicked",
             params = mapOf(
                 "monsterIndex" to monsterIndex,
             )

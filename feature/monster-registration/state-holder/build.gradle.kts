@@ -21,6 +21,7 @@ plugins {
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:dynamic-formulary"))
         implementation(project(":core:event"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:localization"))

@@ -6,6 +6,8 @@ import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterHeaderForm(

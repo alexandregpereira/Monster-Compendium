@@ -11,6 +11,9 @@ import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
+import br.alexandregpereira.hunter.ui.compose.form.FormItems
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterDamagesForm(
@@ -28,6 +31,8 @@ internal fun LazyListScope.MonsterDamagesForm(
             keys = keys,
             items = newDamages,
             createNew = { DamageState() },
+            addText = { strings.add },
+            removeText = { strings.remove },
             onChanged = onChanged
         ) { i, damage ->
             val otherName = damage.otherName

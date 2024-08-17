@@ -7,6 +7,7 @@ plugins {
 multiplatform {
     androidMain()
     commonMain {
+        implementation(project(":core:dynamic-formulary"))
         implementation(project(":core:state-holder"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))

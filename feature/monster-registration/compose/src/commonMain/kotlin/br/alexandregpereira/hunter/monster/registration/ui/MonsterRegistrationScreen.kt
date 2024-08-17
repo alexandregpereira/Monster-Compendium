@@ -18,7 +18,6 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationInten
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationState
 import br.alexandregpereira.hunter.state.ActionHandler
 import br.alexandregpereira.hunter.ui.compose.AppScreen
-import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.isLandscape
 import br.alexandregpereira.hunter.ui.compose.maxBottomSheetWidth
@@ -53,8 +52,6 @@ internal fun MonsterRegistrationScreen(
                     }
                 }
             }
-
-            ClearFocusWhenScrolling(lazyListState)
 
             MonsterRegistrationForm(
                 monster = state.monster,

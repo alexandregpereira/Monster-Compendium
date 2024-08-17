@@ -3,6 +3,8 @@ package br.alexandregpereira.hunter.monster.registration.ui.form
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterStringValueForm(

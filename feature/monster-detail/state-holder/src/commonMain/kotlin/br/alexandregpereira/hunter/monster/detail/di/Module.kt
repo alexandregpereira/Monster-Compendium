@@ -51,6 +51,7 @@ val monsterDetailModule = module {
             resetMonsterToOriginal = get(),
             syncEventDispatcher = get(),
             shareContentEventDispatcher = get(),
+            monsterLoreRegistrationEventDispatcher = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

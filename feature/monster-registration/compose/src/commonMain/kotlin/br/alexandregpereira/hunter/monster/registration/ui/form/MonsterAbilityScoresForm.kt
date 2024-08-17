@@ -6,6 +6,8 @@ import br.alexandregpereira.hunter.monster.registration.AbilityScoreState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterAbilityScoresForm(

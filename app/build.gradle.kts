@@ -65,7 +65,7 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:compose"))
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))
-        implementation(project(":feature:monster-lore-detail:compose"))
+        implementation(project(":feature:monster-lore:compose"))
         implementation(project(":feature:monster-registration:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))

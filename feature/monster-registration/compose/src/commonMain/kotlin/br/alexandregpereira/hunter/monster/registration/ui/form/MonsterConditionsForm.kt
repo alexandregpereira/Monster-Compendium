@@ -6,6 +6,9 @@ import br.alexandregpereira.hunter.monster.registration.ConditionState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.ui.compose.PickerField
+import br.alexandregpereira.hunter.ui.compose.form.FormItems
+import br.alexandregpereira.hunter.ui.compose.form.FormLazy
+import br.alexandregpereira.hunter.ui.compose.form.formItem
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterConditionsForm(
@@ -23,6 +26,8 @@ internal fun LazyListScope.MonsterConditionsForm(
             keys = keys,
             items = newConditions,
             createNew = { ConditionState() },
+            addText = { strings.add },
+            removeText = { strings.remove },
             onChanged = onChanged
         ) { i, condition ->
             formItem(key = keys.next()) {

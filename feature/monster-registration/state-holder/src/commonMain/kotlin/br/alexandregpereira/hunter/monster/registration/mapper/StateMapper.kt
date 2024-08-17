@@ -18,6 +18,7 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
+import br.alexandregpereira.hunter.dynamicFormulary.createDynamicFormKeys
 import br.alexandregpereira.hunter.monster.registration.AbilityDescriptionState
 import br.alexandregpereira.hunter.monster.registration.AbilityScoreState
 import br.alexandregpereira.hunter.monster.registration.ActionState
@@ -496,26 +497,5 @@ private fun MonsterState.createKeys(): List<String> {
                 ).also { addAll(it) }
             }
         ).also { addAll(it) }
-    }
-}
-
-private fun <T> List<T>.createDynamicFormKeys(
-    key: Any,
-    getItemKey: (T) -> String,
-    hasTitle: Boolean = true,
-    addKeys: MutableList<String>.(T) -> Unit,
-): List<String> {
-    val list = this
-    return buildList {
-        if (hasTitle) add("$key")
-        add("$key-add-remove-buttons")
-        list.forEach { item ->
-            mutableListOf<String>().also {
-                it.addKeys(item)
-            }.forEach {
-                add("$key-$it-${getItemKey(item)}")
-            }
-            add("$key-add-remove-buttons-${getItemKey(item)}")
-        }
     }
 }

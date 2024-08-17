@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.hunter.dynamicFormulary.KeyIterator
 import br.alexandregpereira.hunter.uuid.generateUUID
 
 data class MonsterRegistrationState(
@@ -35,22 +36,6 @@ data class MonsterState(
     internal val keysList: List<String> = emptyList(),
 ) {
     val keys: Iterator<String> = KeyIterator(keysList)
-}
-
-private class KeyIterator(
-    private val keysList: List<String> = emptyList(),
-) : Iterator<String> {
-    private var keys: Iterator<String> = keysList.iterator()
-
-    override fun hasNext(): Boolean = keys.hasNext()
-
-    override fun next(): String {
-        if (!hasNext()) {
-            keys = keysList.iterator()
-        }
-
-        return keys.next()
-    }
 }
 
 data class MonsterInfoState(
