@@ -121,21 +121,23 @@ private fun LazyListScope.monsterInfoPart1(
         }
     }
     item(key = "speed") {
-        MonsterRequireSectionAlphaTransition(
-            monsters,
-            pagerState,
+        MonsterOptionalSectionAlphaTransition(
+            dataList = monsters,
+            pagerState = pagerState,
             getItemsKeys = getItemsKeys,
+            valueToValidate = { it.speed.values.isNotEmpty() },
         ) { monster ->
             SpeedBlock(speed = monster.speed)
         }
     }
     item(key = "abilityScores") {
-        MonsterRequireSectionAlphaTransition(
-            monsters,
-            pagerState,
+        ListOptionalSectionAlphaTransition(
+            dataList = monsters,
+            pagerState = pagerState,
             getItemsKeys = getItemsKeys,
-        ) { monster ->
-            AbilityScoreBlock(abilityScores = monster.abilityScores)
+            valueToValidate = { it.abilityScores }
+        ) { abilityScores ->
+            AbilityScoreBlock(abilityScores = abilityScores)
         }
     }
 }
@@ -146,7 +148,7 @@ private fun LazyListScope.monsterInfoPart2(
     getItemsKeys: () -> List<Any> = { emptyList() },
 ) {
     item(key = "savingThrows") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.savingThrows },
             dataList = monsters,
             pagerState = pagerState,
@@ -165,7 +167,7 @@ private fun LazyListScope.monsterInfoPart2(
         }
     }
     item(key = "skills") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.skills },
             dataList = monsters,
             pagerState = pagerState,
@@ -185,7 +187,7 @@ private fun LazyListScope.monsterInfoPart3(
     getItemsKeys: () -> List<Any> = { emptyList() },
 ) {
     item(key = "damageVulnerabilities") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.damageVulnerabilities },
             dataList = monsters,
             pagerState = pagerState,
@@ -195,7 +197,7 @@ private fun LazyListScope.monsterInfoPart3(
         }
     }
     item(key = "damageResistances") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.damageResistances },
             dataList = monsters,
             pagerState = pagerState,
@@ -205,7 +207,7 @@ private fun LazyListScope.monsterInfoPart3(
         }
     }
     item(key = "damageImmunities") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.damageImmunities },
             dataList = monsters,
             pagerState = pagerState,
@@ -215,7 +217,7 @@ private fun LazyListScope.monsterInfoPart3(
         }
     }
     item(key = "conditionImmunities") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.conditionImmunities },
             dataList = monsters,
             pagerState = pagerState,
@@ -233,16 +235,16 @@ private fun LazyListScope.monsterInfoPart4(
 ) {
     item(key = "senses") {
         MonsterOptionalSectionAlphaTransition(
-            valueToValidate = { it.senses },
+            valueToValidate = { monster -> monster.senses.all { it.isNotBlank() } },
             dataList = monsters,
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            SensesBlock(senses = it)
+            SensesBlock(senses = it.senses)
         }
     }
     item(key = "languages") {
-        MonsterOptionalSectionAlphaTransition(
+        StringOptionalSectionAlphaTransition(
             valueToValidate = { it.languages },
             dataList = monsters,
             pagerState = pagerState,
@@ -262,7 +264,7 @@ private fun LazyListScope.monsterInfoPart5(
     getItemsKeys: () -> List<Any> = { emptyList() },
 ) {
     item(key = "specialAbilities") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.specialAbilities },
             dataList = monsters,
             pagerState = pagerState,
@@ -273,7 +275,7 @@ private fun LazyListScope.monsterInfoPart5(
     }
 
     item(key = "actions") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.actions },
             dataList = monsters,
             pagerState = pagerState,
@@ -284,7 +286,7 @@ private fun LazyListScope.monsterInfoPart5(
     }
 
     item(key = "reactions") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.reactions },
             dataList = monsters,
             pagerState = pagerState,
@@ -295,7 +297,7 @@ private fun LazyListScope.monsterInfoPart5(
     }
 
     item(key = "legendaryActions") {
-        MonsterOptionalSectionAlphaTransition(
+        ListOptionalSectionAlphaTransition(
             valueToValidate = { it.legendaryActions },
             dataList = monsters,
             pagerState = pagerState,
@@ -352,19 +354,55 @@ internal fun LazyItemScope.MonsterRequireSectionAlphaTransition(
 }
 
 @Composable
-internal fun <T> LazyItemScope.MonsterOptionalSectionAlphaTransition(
-    valueToValidate: (MonsterState) -> T,
+internal fun LazyItemScope.MonsterOptionalSectionAlphaTransition(
+    valueToValidate: (MonsterState) -> Boolean,
     dataList: List<MonsterState>,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     getItemsKeys: () -> List<Any> = { emptyList() },
     showDivider: Boolean = true,
-    content: @Composable ColumnScope.(T) -> Unit
+    content: @Composable ColumnScope.(MonsterState) -> Unit
 ) = MonsterSectionAlphaTransition(
     dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
 ) { monster ->
-    OptionalBlockSection(valueToValidate(monster), showDivider = showDivider) { value ->
-        content(value)
+    OptionalBlockSection(isValid = { valueToValidate(monster) }, showDivider = showDivider) {
+        content(monster)
+    }
+}
+
+@Composable
+internal fun <T> LazyItemScope.ListOptionalSectionAlphaTransition(
+    valueToValidate: (MonsterState) -> List<T>,
+    dataList: List<MonsterState>,
+    pagerState: PagerState,
+    modifier: Modifier = Modifier,
+    getItemsKeys: () -> List<Any> = { emptyList() },
+    showDivider: Boolean = true,
+    content: @Composable ColumnScope.(List<T>) -> Unit
+) = MonsterSectionAlphaTransition(
+    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+) { monster ->
+    val list = valueToValidate(monster)
+    OptionalBlockSection(isValid = { list.isNotEmpty() }, showDivider = showDivider) {
+        content(list)
+    }
+}
+
+@Composable
+internal fun LazyItemScope.StringOptionalSectionAlphaTransition(
+    valueToValidate: (MonsterState) -> String,
+    dataList: List<MonsterState>,
+    pagerState: PagerState,
+    modifier: Modifier = Modifier,
+    getItemsKeys: () -> List<Any> = { emptyList() },
+    showDivider: Boolean = true,
+    content: @Composable ColumnScope.(String) -> Unit
+) = MonsterSectionAlphaTransition(
+    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+) { monster ->
+    val string = valueToValidate(monster)
+    OptionalBlockSection(isValid = { string.isNotBlank() }, showDivider = showDivider) {
+        content(string)
     }
 }
 
@@ -378,14 +416,14 @@ private fun MonsterInfoSectionColumn(
 )
 
 @Composable
-private fun <T> ColumnScope.OptionalBlockSection(
-    value: T,
+private fun ColumnScope.OptionalBlockSection(
+    isValid: () -> Boolean,
     showDivider: Boolean = true,
-    content: @Composable ColumnScope.(T) -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
-    if ((value is String && value.trim().isEmpty()) || (value is List<*> && value.isEmpty())) return
+    if (isValid().not()) return
     BlockSection(showDivider = showDivider) {
-        content(value)
+        content()
     }
 }
 

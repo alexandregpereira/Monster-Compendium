@@ -144,7 +144,8 @@ class MonsterDetailStateHolder internal constructor(
     private fun getMonstersByInitialIndex(
         monsterIndex: String,
         monsterIndexes: List<String>,
-        invalidateCache: Boolean = false
+        invalidateCache: Boolean = false,
+        loadingSubtle: Boolean = false,
     ) {
         stateRecovery.saveMonsterIndexes(monsterIndexes)
         onMonsterChanged(monsterIndex, scrolled = false)
@@ -154,7 +155,9 @@ class MonsterDetailStateHolder internal constructor(
             .toMonsterDetailState()
             .flowOn(dispatcher)
             .onStart {
-                setState { copy(isLoading = true) }
+                if (loadingSubtle.not()) {
+                    setState { copy(isLoading = true) }
+                }
             }
             .catch {
                 setState { copy(isLoading = false) }
@@ -170,12 +173,18 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onMonsterChanged(monsterIndex: String, scrolled: Boolean = true) {
         if (scrolled && monsterIndex != this.monsterIndex) {
-            initialMonsterListPositionIndex = state.value.monsters.indexOfFirst {
-                it.index == monsterIndex
-            }.takeIf { it >= 0 } ?: initialMonsterListPositionIndex
+            val monsterPositionIndex = state.value.monsters.indexOfFirst { it.index == monsterIndex }
+            initialMonsterListPositionIndex = monsterPositionIndex.takeIf { it >= 0 }
+                ?: initialMonsterListPositionIndex
             if (enableMonsterPageChangesEventDispatch) {
                 analytics.trackMonsterPageChanged(monsterIndex, scrolled)
                 monsterEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
+            }
+
+            state.value.monsters.getOrNull(monsterPositionIndex)?.let { monster ->
+                if (monster.isComplete().not()) {
+                    getMonstersByInitialIndex(monsterIndex, monsterIndexes, loadingSubtle = true)
+                }
             }
         }
         stateRecovery.saveMonsterIndex(monsterIndex)
