@@ -85,6 +85,8 @@ data class MonsterState(
     }
 }
 
+internal fun MonsterState.isComplete(): Boolean = abilityScores.isNotEmpty()
+
 @ObjCName(name = "StatsState", exact = true)
 data class StatsState(
     val armorClass: Int = 0,
