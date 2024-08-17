@@ -45,4 +45,8 @@ internal class DefaultMonsterLoreRepository(
     ): Flow<List<MonsterLore>> {
         return remoteRepository.getRemoteMonstersLore(sourceAcronym, lang)
     }
+
+    override fun getMonstersLoreEdited(): Flow<List<MonsterLore>> {
+        return localRepository.getMonstersLoreEdited()
+    }
 }

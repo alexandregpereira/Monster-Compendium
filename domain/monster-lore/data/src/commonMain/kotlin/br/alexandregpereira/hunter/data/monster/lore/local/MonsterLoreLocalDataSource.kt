@@ -40,6 +40,12 @@ internal class MonsterLoreLocalDataSource(
         }
     }
 
+    fun getMonstersLoreEdited(): Flow<List<MonsterLoreCompleteEntity>> {
+        return flow {
+            emit(monsterLoreDao.getMonstersLoreEdited())
+        }
+    }
+
     fun save(
         monsters: List<MonsterLoreCompleteEntity>,
         isSync: Boolean = false

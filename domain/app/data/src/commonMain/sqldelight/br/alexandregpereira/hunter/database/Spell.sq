@@ -14,3 +14,6 @@ SELECT * FROM SpellEntity WHERE spellIndex IN ?;
 
 getSpells:
 SELECT * FROM SpellEntity ORDER BY level ASC, name ASC;
+
+getSpellsEdited:
+SELECT * FROM SpellEntity WHERE status > 0;

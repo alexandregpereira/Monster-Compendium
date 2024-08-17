@@ -44,4 +44,8 @@ internal class DefaultSpellLocalDataSource(
     override fun getSpells(): Flow<List<SpellEntity>> = flow {
         emit(spellDao.getSpells())
     }
+
+    override fun getSpellsEdited(): Flow<List<SpellEntity>> = flow {
+        emit(spellDao.getSpellsEdited())
+    }
 }

@@ -20,12 +20,14 @@ import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreDto
 import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreEntryDto
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 
 internal fun MonsterLoreDto.toDomain(): MonsterLore {
     return MonsterLore(
         index = index,
         name = "",
-        entries = entries.map { it.toDomain() }
+        entries = entries.map { it.toDomain() },
+        status = MonsterLoreStatus.Original,
     )
 }
 

@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.domain.monster.lore
 
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -26,14 +27,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.flow.single
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SyncMonstersLoreUseCase(
     private val repository: MonsterLoreRepository,
     private val saveMonstersLore: SaveMonstersLoreUseCase,
     private val alternativeSourceRepository: MonsterLoreSourceRepository,
     private val settingsRepository: MonsterLoreSettingsRepository,
+    private val getMonstersLoreEdited: GetMonstersLoreEdited,
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
         return alternativeSourceRepository.getMonsterLoreSources()
             .catch { emit(emptyList()) }
@@ -46,8 +48,18 @@ class SyncMonstersLoreUseCase(
                             .catch { emit(emptyList()) }
                     }?.reduce { accumulator, value -> accumulator + value } ?: emptyList()
             }
+            .removeMonstersLoreEdited()
             .flatMapLatest { monstersLore ->
                 saveMonstersLore(monstersLore, isSync = true)
             }
+    }
+
+    private fun Flow<List<MonsterLore>>.removeMonstersLoreEdited(): Flow<List<MonsterLore>> {
+        return map { monstersLore ->
+            val monstersLoreEditedIndexes = getMonstersLoreEdited().single()
+                .map { it.index }
+                .toSet()
+            monstersLore.filterNot { it.index in monstersLoreEditedIndexes }
+        }
     }
 }

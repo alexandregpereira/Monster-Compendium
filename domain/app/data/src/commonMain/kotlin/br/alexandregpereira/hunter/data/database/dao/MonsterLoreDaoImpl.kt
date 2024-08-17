@@ -19,18 +19,17 @@ package br.alexandregpereira.hunter.data.database.dao
 import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreCompleteEntity
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntity
+import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntityStatus
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntryEntity
 import br.alexandregpereira.hunter.database.MonsterLoreCompleteEntityView
 import br.alexandregpereira.hunter.database.MonsterLoreEntryQueries
 import br.alexandregpereira.hunter.database.MonsterLoreQueries
-import br.alexandregpereira.hunter.database.MonsterQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import br.alexandregpereira.hunter.database.MonsterLoreEntity as MonsterLoreDatabaseEntity
 import br.alexandregpereira.hunter.database.MonsterLoreEntryEntity as MonsterLoreEntryDatabaseEntity
 
 internal class MonsterLoreDaoImpl(
-    private val monsterQueries: MonsterQueries,
     private val queries: MonsterLoreQueries,
     private val monsterLoreEntryQueries: MonsterLoreEntryQueries,
     private val dispatcher: CoroutineDispatcher
@@ -48,14 +47,20 @@ internal class MonsterLoreDaoImpl(
         queries.getMonsterLore(monsterIndex).executeAsList().asEntities().first()
     }
 
+    override suspend fun getMonstersLoreEdited(): List<MonsterLoreCompleteEntity> {
+        return withContext(dispatcher) {
+            queries.getMonstersLoreEdited().executeAsList().asEntities()
+        }
+    }
+
     override suspend fun insert(
         monstersLore: List<MonsterLoreCompleteEntity>,
         deleteAll: Boolean
     ) = withContext(dispatcher) {
         queries.transaction {
             val monsterIndexes = if (deleteAll) {
-                monsterQueries.getMonstersThatIsNotCloned().executeAsList()
-                    .map { it.index }.also { monsterIndexes ->
+                queries.getOriginalMonstersLore().executeAsList()
+                    .map { it.monsterLoreIndex }.also { monsterIndexes ->
                         queries.deleteWithIndexes(monsterIndexes)
                     }
             } else {
@@ -67,7 +72,11 @@ internal class MonsterLoreDaoImpl(
             monstersLore.map { it.monsterLore }.forEach {
                 queries.insert(
                     MonsterLoreDatabaseEntity(
-                        monsterLoreIndex = it.monsterLoreIndex
+                        monsterLoreIndex = it.monsterLoreIndex,
+                        status = when (it.status) {
+                            MonsterLoreEntityStatus.Original -> 0L
+                            MonsterLoreEntityStatus.Imported -> 1L
+                        }
                     )
                 )
             }
@@ -88,7 +97,11 @@ internal class MonsterLoreDaoImpl(
     private fun List<MonsterLoreCompleteEntityView>.asEntities(): List<MonsterLoreCompleteEntity> {
         return map {
             MonsterLoreEntity(
-                monsterLoreIndex = it.monsterLoreIndex
+                monsterLoreIndex = it.monsterLoreIndex,
+                status = when (it.status) {
+                    0L -> MonsterLoreEntityStatus.Original
+                    else -> MonsterLoreEntityStatus.Imported
+                },
             ) to MonsterLoreEntryEntity(
                 id = it.id,
                 title = it.title,

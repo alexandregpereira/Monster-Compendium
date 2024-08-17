@@ -48,6 +48,12 @@ internal class DefaultSpellLocalRepository(
         }
     }
 
+    override fun getLocalSpellsEdited(): Flow<List<Spell>> {
+        return localDataSource.getSpellsEdited().map { spells ->
+            spells.map { it.toDomain() }
+        }
+    }
+
     override fun deleteLocalSpells(): Flow<Unit> {
         return localDataSource.deleteSpells()
     }
