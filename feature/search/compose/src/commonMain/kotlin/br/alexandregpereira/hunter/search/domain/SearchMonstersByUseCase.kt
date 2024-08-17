@@ -347,7 +347,8 @@ internal class SearchMonstersByUseCase internal constructor(
 
     private fun List<Damage>.containsByDamage(value: String): Boolean {
         return this.any { damage ->
-            damage.name.removeAccents().contains(value, ignoreCase = true)
+            damage.name.removeAccents().contains(value, ignoreCase = true) ||
+                damage.type.name.contains(value, ignoreCase = true)
         }
     }
 

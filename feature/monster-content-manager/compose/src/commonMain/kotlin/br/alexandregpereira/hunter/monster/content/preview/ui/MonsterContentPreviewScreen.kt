@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
@@ -173,7 +174,7 @@ private fun MonsterContentPreviewScreenPreview() {
                         index = "usu+$it",
                         name = "Raphael Bolton",
                         type = MonsterType.ABERRATION,
-                        challengeRating = 13f,
+                        challengeRatingData = ChallengeRating(13f),
                     )
                 )
             },

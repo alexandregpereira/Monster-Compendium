@@ -53,6 +53,9 @@ internal fun Monster.editBy(
         name = state.info.name,
         subtitle = state.info.subtitle,
         group = state.info.group,
+        challengeRatingData = monster.challengeRatingData.copy(
+            valueInString = state.info.challengeRating,
+        ),
         imageData = monster.imageData.copy(
             url = state.info.imageUrl,
             backgroundColor = monster.imageData.backgroundColor.copy(

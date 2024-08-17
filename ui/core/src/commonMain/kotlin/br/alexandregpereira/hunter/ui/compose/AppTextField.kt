@@ -90,6 +90,7 @@ fun AppTextField(
             keyboardType = when (keyboardType) {
                 AppKeyboardType.TEXT -> KeyboardType.Text
                 AppKeyboardType.NUMBER -> KeyboardType.Number
+                AppKeyboardType.DECIMAL -> KeyboardType.Decimal
             },
             capitalization = capitalization,
         ),
@@ -152,6 +153,7 @@ fun AppTextField(
             keyboardType = when (keyboardType) {
                 AppKeyboardType.TEXT -> KeyboardType.Text
                 AppKeyboardType.NUMBER -> KeyboardType.Number
+                AppKeyboardType.DECIMAL -> KeyboardType.Decimal
             },
             capitalization = capitalization,
         ),
@@ -182,7 +184,8 @@ fun AppTextField(
 
 enum class AppKeyboardType {
     TEXT,
-    NUMBER
+    NUMBER,
+    DECIMAL
 }
 
 @Composable

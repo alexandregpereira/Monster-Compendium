@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
@@ -118,7 +119,7 @@ private fun MonsterEntity.toDomain(): Monster {
     return Monster(
         index = monster.index,
         type = MonsterType.valueOf(monster.type),
-        challengeRating = monster.challengeRating,
+        challengeRatingData = ChallengeRating(monster.challengeRating),
         name = monster.name,
         imageData = MonsterImageData(
             url = monster.imageUrl,

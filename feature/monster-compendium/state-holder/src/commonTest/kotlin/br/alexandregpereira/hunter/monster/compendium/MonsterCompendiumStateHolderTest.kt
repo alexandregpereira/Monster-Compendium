@@ -21,6 +21,7 @@ import br.alexandregpereira.flow.test.assertHasNoMoreValues
 import br.alexandregpereira.flow.test.assertNextValue
 import br.alexandregpereira.flow.test.testFlows
 import br.alexandregpereira.hunter.analytics.EmptyAnalytics
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
@@ -90,12 +91,12 @@ class MonsterCompendiumStateHolderTest {
                 Monster(
                     index = "zariel1",
                     name = "Zariel",
-                    challengeRating = 0.5f,
+                    challengeRatingData = ChallengeRating(0.5f),
                 ).asItem(),
                 Monster(
                     index = "zariel2",
                     name = "Zariel",
-                    challengeRating = 1f,
+                    challengeRatingData = ChallengeRating(1f),
                 ).asItem()
             ),
             tableContent = listOf(
