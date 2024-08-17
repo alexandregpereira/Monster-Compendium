@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
+import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -159,7 +160,7 @@ class SaveMonstersUseCaseTest {
                 index = "",
                 name = "",
                 type = MonsterType.CELESTIAL,
-                challengeRating = 0.0f,
+                challengeRatingData = ChallengeRating(0.0f),
                 imageData = MonsterImageData(
                     url = "something.png",
                     backgroundColor = Color(light = "", dark = ""),
@@ -213,7 +214,7 @@ class SaveMonstersUseCaseTest {
                 index = "",
                 name = "",
                 type = MonsterType.CELESTIAL,
-                challengeRating = 0.0f,
+                challengeRatingData = ChallengeRating(0.0f),
                 imageData = MonsterImageData(
                     url = "something.png",
                     backgroundColor = Color(light = "", dark = ""),
