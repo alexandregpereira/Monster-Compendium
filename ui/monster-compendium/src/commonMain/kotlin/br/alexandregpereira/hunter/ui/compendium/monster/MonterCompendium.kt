@@ -38,6 +38,7 @@ fun MonsterCompendium(
     items: List<CompendiumItemState>,
     modifier: Modifier = Modifier,
     animateItems: Boolean = false,
+    enableHorizontalImage: Boolean = false,
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
@@ -63,7 +64,7 @@ fun MonsterCompendium(
         isHorizontalReading = true,
         key = { it.getMonsterCardState().index },
         isHorizontalCard = {
-            it.getMonsterCardState().imageState.isHorizontal &&
+            enableHorizontalImage && it.getMonsterCardState().imageState.isHorizontal &&
                     currentWidth - 56.dp >= cardWidth.dp * 2
         },
         cardContent = { item ->
@@ -75,7 +76,7 @@ fun MonsterCompendium(
                 backgroundColor = monsterCardState.imageState.backgroundColor.getColor(
                     isSystemInDarkTheme()
                 ),
-                isHorizontal = monsterCardState.imageState.isHorizontal,
+                isHorizontal = enableHorizontalImage && monsterCardState.imageState.isHorizontal,
                 challengeRating = monsterCardState.imageState.challengeRating,
                 onCLick = { onItemCLick(monsterCardState.index) },
                 onLongCLick = { onItemLongCLick(monsterCardState.index) }

@@ -29,4 +29,6 @@ interface SpellDao {
     suspend fun getSpells(indexes: List<String>): List<SpellEntity>
 
     suspend fun getSpells(): List<SpellEntity>
+
+    suspend fun getSpellsEdited(): List<SpellEntity>
 }

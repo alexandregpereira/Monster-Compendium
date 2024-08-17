@@ -59,7 +59,7 @@ class SyncMonstersUseCase internal constructor(
                     }
                     .reduce { accumulator, value -> accumulator + value }
             }
-            .filterModifiedMonsters()
+            .removeModifiedMonsters()
             .flatMapLatest { monsters ->
                 saveMonstersUseCase(monsters = monsters, isSync = true)
             }.flatMapLatest {
@@ -92,7 +92,7 @@ class SyncMonstersUseCase internal constructor(
         it.appendMonsterImages(monsterImages)
     }
 
-    private fun Flow<List<Monster>>.filterModifiedMonsters(): Flow<List<Monster>> = map { monsters ->
+    private fun Flow<List<Monster>>.removeModifiedMonsters(): Flow<List<Monster>> = map { monsters ->
         val monstersEditedIndexes = localRepository.getMonsterPreviewsEdited().single()
             .map { it.index }
             .toSet()

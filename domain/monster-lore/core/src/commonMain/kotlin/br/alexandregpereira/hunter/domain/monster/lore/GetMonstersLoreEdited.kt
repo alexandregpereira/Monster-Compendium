@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster.lore.local.dao
+package br.alexandregpereira.hunter.domain.monster.lore
 
-import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreCompleteEntity
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import kotlinx.coroutines.flow.Flow
 
-interface MonsterLoreDao {
+class GetMonstersLoreEdited(
+    private val repository: MonsterLoreLocalRepository
+) {
 
-    suspend fun getMonstersLore(indexes: List<String>): List<MonsterLoreCompleteEntity>
-
-    suspend fun getMonsterLore(monsterIndex: String): MonsterLoreCompleteEntity
-
-    suspend fun getMonstersLoreEdited(): List<MonsterLoreCompleteEntity>
-
-    suspend fun insert(
-        monstersLore: List<MonsterLoreCompleteEntity>,
-        deleteAll: Boolean
-    )
+    operator fun invoke(): Flow<List<MonsterLore>> {
+        return repository.getMonstersLoreEdited()
+    }
 }

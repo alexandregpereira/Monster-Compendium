@@ -20,4 +20,9 @@ data class MonsterLore(
     val index: String,
     val name: String,
     val entries: List<MonsterLoreEntry>,
+    val status: MonsterLoreStatus,
 )
+
+enum class MonsterLoreStatus {
+    Original, Imported
+}

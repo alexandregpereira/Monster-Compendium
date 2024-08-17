@@ -35,6 +35,7 @@ internal fun MonsterCompendium(
     items = items,
     listState = listState,
     contentPadding = contentPadding,
+    enableHorizontalImage = true,
     onItemCLick = onItemCLick,
     onItemLongCLick = onItemLongCLick
 )

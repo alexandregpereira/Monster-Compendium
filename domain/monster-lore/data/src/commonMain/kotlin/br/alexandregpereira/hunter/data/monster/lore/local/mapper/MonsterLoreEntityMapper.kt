@@ -18,15 +18,21 @@ package br.alexandregpereira.hunter.data.monster.lore.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreCompleteEntity
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntity
+import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntityStatus
 import br.alexandregpereira.hunter.data.monster.lore.local.entity.MonsterLoreEntryEntity
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 
 internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
     return MonsterLore(
         index = monsterLore.monsterLoreIndex,
         name = "",
-        entries = entries.map { it.toDomain() }
+        entries = entries.map { it.toDomain() },
+        status = when (monsterLore.status) {
+            MonsterLoreEntityStatus.Original -> MonsterLoreStatus.Original
+            MonsterLoreEntityStatus.Imported -> MonsterLoreStatus.Imported
+        }
     )
 }
 
@@ -40,7 +46,11 @@ internal fun MonsterLoreEntryEntity.toDomain(): MonsterLoreEntry {
 internal fun MonsterLore.toEntity(): MonsterLoreCompleteEntity {
     return MonsterLoreCompleteEntity(
         monsterLore = MonsterLoreEntity(
-            monsterLoreIndex = index
+            monsterLoreIndex = index,
+            status = when (status) {
+                MonsterLoreStatus.Original -> MonsterLoreEntityStatus.Original
+                MonsterLoreStatus.Imported -> MonsterLoreEntityStatus.Imported
+            }
         ),
         entries = entries.map { it.toEntity(index) }
     )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 Alexandre Gomes Pereira
+ * Copyright 2022 Alexandre Gomes Pereira
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.data.monster.lore.local.entity
+package br.alexandregpereira.hunter.domain.spell
 
-data class MonsterLoreEntity(
-    val monsterLoreIndex: String,
-    val status: MonsterLoreEntityStatus,
-)
+import br.alexandregpereira.hunter.domain.spell.model.Spell
+import kotlinx.coroutines.flow.Flow
 
-enum class MonsterLoreEntityStatus {
-    Original, Imported
+class GetSpellsEdited(
+    private val spellRepository: SpellLocalRepository
+) {
+
+    operator fun invoke(): Flow<List<Spell>> {
+        return spellRepository.getLocalSpellsEdited()
+    }
 }

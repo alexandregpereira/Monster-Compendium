@@ -16,23 +16,32 @@
 
 package br.alexandregpereira.hunter.domain.spell
 
+import br.alexandregpereira.hunter.domain.spell.model.Spell
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SyncSpellsUseCase(
     private val repository: SpellRepository,
-    private val spellSettingsRepository: SpellSettingsRepository
+    private val spellSettingsRepository: SpellSettingsRepository,
+    private val getSpellsEdited: GetSpellsEdited,
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
         return spellSettingsRepository.getLanguage().flatMapLatest { lang ->
             repository.getRemoteSpells(lang)
-        }.flatMapLatest { spells ->
+        }.removeSpellsEdited().flatMapLatest { spells ->
             repository.deleteLocalSpells().flatMapLatest {
                 repository.saveSpells(spells)
             }
         }
+    }
+
+    private fun Flow<List<Spell>>.removeSpellsEdited(): Flow<List<Spell>> = map { spells ->
+        val spellsEditedIndexes = getSpellsEdited().single().map { it.index }.toSet()
+        spells.filterNot { it.index in spellsEditedIndexes }
     }
 }

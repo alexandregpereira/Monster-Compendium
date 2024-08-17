@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.shareContent.domain.mapper
 
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
 
 internal fun ShareMonsterLore.toMonsterLore(): MonsterLore {
@@ -13,6 +14,7 @@ internal fun ShareMonsterLore.toMonsterLore(): MonsterLore {
                 title = it.title,
                 description = it.description,
             )
-        }
+        },
+        status = MonsterLoreStatus.Imported,
     )
 }

@@ -38,6 +38,12 @@ internal class DefaultMonsterLoreLocalRepository(
         }
     }
 
+    override fun getMonstersLoreEdited(): Flow<List<MonsterLore>> {
+        return monsterLoreLocalDataSource.getMonstersLoreEdited().map { monsters ->
+            monsters.map { it.toDomain() }
+        }
+    }
+
     override fun save(monstersLore: List<MonsterLore>, isSync: Boolean): Flow<Unit> {
         return monsterLoreLocalDataSource.save(monstersLore.map { it.toEntity() }, isSync)
     }

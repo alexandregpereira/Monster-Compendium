@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -63,7 +64,8 @@ private fun MonsterLoreDetailPreview() = Window {
                     title = "Title",
                     description = "asdas asdasd asd asd \nas dasasdas as x as asd d as"
                 )
-            )
+            ),
+            status = MonsterLoreStatus.Original
         )
     )
 }
