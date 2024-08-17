@@ -21,7 +21,6 @@ import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.event.EventDispatcher
-import br.alexandregpereira.hunter.event.EventListener
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
@@ -52,7 +51,6 @@ import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
-import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
@@ -66,6 +64,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -173,7 +172,7 @@ class MonsterDetailStateHolder internal constructor(
         if (scrolled && monsterIndex != this.monsterIndex) {
             initialMonsterListPositionIndex = state.value.monsters.indexOfFirst {
                 it.index == monsterIndex
-            }
+            }.takeIf { it >= 0 } ?: initialMonsterListPositionIndex
             if (enableMonsterPageChangesEventDispatch) {
                 analytics.trackMonsterPageChanged(monsterIndex, scrolled)
                 monsterEventDispatcher.dispatchEvent(OnMonsterPageChanges(monsterIndex))
@@ -351,14 +350,15 @@ class MonsterDetailStateHolder internal constructor(
                     }
             } else flowOf(currentState to currentMonsterIndex)
         }.flowOn(dispatcher)
-            .map { (state, monsterIndex) ->
+            .flatMapLatest { (state, monsterIndex) ->
+                flowOf(state).emitState().map { monsterIndex }
+            }
+            .onEach { monsterIndex ->
                 onMonsterChanged(monsterIndex, scrolled = true)
                 if (monsterIndexes.isNotEmpty()) {
                     monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 }
-                state
             }
-            .emitState()
             .launchIn(scope)
     }
 
