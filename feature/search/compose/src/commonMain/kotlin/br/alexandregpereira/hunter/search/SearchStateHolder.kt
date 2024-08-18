@@ -149,4 +149,17 @@ internal class SearchStateHolder(
         val monsterIndexes = state.value.monsterRows.map { it.index }
         folderPreviewEventDispatcher.dispatchEvent(AddMonster(monsterIndexes))
     }
+
+    fun onScrollChanges(firstVisibleItemIndex: Int, firstVisibleItemScrollOffset: Int) {
+        setState {
+            copy(
+                firstVisibleItemIndex = firstVisibleItemIndex,
+                firstVisibleItemScrollOffset = firstVisibleItemScrollOffset
+            )
+        }
+    }
+
+    fun onSearchKeysScrollChanges(scrollOffset: Int) {
+        setState { copy(searchKeysScrollOffset = scrollOffset) }
+    }
 }

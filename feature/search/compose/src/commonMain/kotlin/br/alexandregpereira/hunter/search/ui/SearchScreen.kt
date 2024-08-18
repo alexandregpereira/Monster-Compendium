@@ -46,28 +46,49 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.AppCircleButton
 import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import kotlin.math.absoluteValue
 
 @Composable
 internal fun SearchScreen(
-    state: SearchViewState,
+    searchValue: TextFieldValue,
+    monsterRows: List<MonsterCardState>,
+    searchLabel: String,
+    searchResults: String,
+    isSearching: Boolean,
+    searchKeys: List<SearchKeyState>,
+    initialFirstVisibleItemIndex: Int = 0,
+    initialFirstVisibleItemScrollOffset: Int = 0,
+    initialSearchKeysScrollOffset: Int = 0,
     contentPaddingValues: PaddingValues = PaddingValues(),
     onSearchValueChange: (TextFieldValue) -> Unit = {},
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
     onSearchKeyClick: (Int) -> Unit = {},
     onAddClick: () -> Unit = {},
+    onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
+    onSearchKeysScrollChanges: (Int) -> Unit = {},
 ) = Box(modifier = Modifier.fillMaxSize()) {
-    val listState = rememberLazyGridState()
+    val listState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
+    )
     val focusManager = LocalFocusManager.current
 
     ClearFocusWhenScrolling(listState)
+    
+    OnScrollChanges(
+        getFirstVisibleItemValues = {
+            listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
+        },
+        onScrollChanges = onScrollChanges
+    )
 
     SearchGrid(
-        monsterRows = state.monsterRows,
-        totalResults = state.searchResults,
+        monsterRows = monsterRows,
+        totalResults = searchResults,
         listState = listState,
         contentPadding = PaddingValues(
             top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
@@ -87,14 +108,14 @@ internal fun SearchScreen(
         var isProgrammaticChange by remember { mutableStateOf(false) }
         val focusRequester = remember { FocusRequester() }
         SearchBar(
-            text = state.searchValue,
-            searchLabel = state.searchLabel,
+            text = searchValue,
+            searchLabel = searchLabel,
             onValueChange = { newValue ->
                 if (!isProgrammaticChange) {
                     onSearchValueChange(newValue)
                 }
             },
-            isSearching = state.isSearching,
+            isSearching = isSearching,
             modifier = Modifier
                 .focusRequester(focusRequester)
                 .background(color = MaterialTheme.colors.surface)
@@ -111,8 +132,10 @@ internal fun SearchScreen(
                     .firstOrNull()?.offset?.y?.absoluteValue ?: 0
                 offset < scrollTriggerInPixels
             },
+            initialScrollOffset = initialSearchKeysScrollOffset,
             modifier = Modifier,
-            searchKeys = state.searchKeys,
+            searchKeys = searchKeys,
+            onScrollChanges = onSearchKeysScrollChanges,
             onClick = {
                 isProgrammaticChange = true
                 onSearchKeyClick(it)
@@ -123,7 +146,7 @@ internal fun SearchScreen(
     }
 
     AnimatedVisibility(
-        visible = state.monsterRows.isNotEmpty(),
+        visible = monsterRows.isNotEmpty(),
         modifier = Modifier.align(Alignment.BottomEnd),
         enter = fadeIn(spring()),
         exit = fadeOut(spring()),
@@ -138,4 +161,16 @@ internal fun SearchScreen(
             )
         }
     }
+}
+
+@Composable
+private fun OnScrollChanges(
+    getFirstVisibleItemValues: () -> Pair<Int, Int>,
+    onScrollChanges: (Int, Int) -> Unit
+) {
+    val (firstVisibleItemIndex, firstVisibleItemScrollOffset) = getFirstVisibleItemValues()
+    onScrollChanges(
+        firstVisibleItemIndex,
+        firstVisibleItemScrollOffset
+    )
 }

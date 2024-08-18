@@ -27,7 +27,9 @@ internal data class SearchViewState(
     val searchResults: String = "",
     val isSearching: Boolean = false,
     val searchKeys: List<SearchKeyState> = emptyList(),
-    val cursorAtTheEnd: Boolean = false,
+    val firstVisibleItemIndex: Int = 0,
+    val firstVisibleItemScrollOffset: Int = 0,
+    val searchKeysScrollOffset: Int = 0,
 )
 
 internal data class SearchKeyState(

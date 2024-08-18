@@ -16,7 +16,6 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

@@ -117,6 +117,15 @@ class FolderListStateHolder internal constructor(
             .launchIn(scope)
     }
 
+    fun onScrollChanges(firstVisibleItemIndex: Int, firstVisibleItemScrollOffset: Int) {
+        setState {
+            copy(
+                firstVisibleItemIndex = firstVisibleItemIndex,
+                firstVisibleItemScrollOffset = firstVisibleItemScrollOffset,
+            )
+        }
+    }
+
     fun onItemSelect(folderName: String) {
         analytics.trackItemSelect(folderName)
         setState {

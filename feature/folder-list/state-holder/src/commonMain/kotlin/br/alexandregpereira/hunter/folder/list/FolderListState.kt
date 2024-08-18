@@ -21,6 +21,8 @@ data class FolderListState(
     val strings: FolderListStrings = FolderListEmptyStrings(),
     val isItemSelectionOpen: Boolean = false,
     val itemSelectionCount: Int = 0,
+    val firstVisibleItemIndex: Int = 0,
+    val firstVisibleItemScrollOffset: Int = 0,
 ) {
 
     internal val itemSelection: Set<String> = folders

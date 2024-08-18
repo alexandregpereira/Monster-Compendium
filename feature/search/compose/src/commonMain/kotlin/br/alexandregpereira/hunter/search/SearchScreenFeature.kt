@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.search
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import br.alexandregpereira.hunter.search.ui.SearchScreen
 import org.koin.compose.koinInject
 
@@ -26,15 +28,30 @@ import org.koin.compose.koinInject
 fun SearchScreenFeature(
     contentPadding: PaddingValues = PaddingValues(),
 ) {
-    val viewModel: SearchStateHolder = koinInject()
+    val stateHolder: SearchStateHolder = koinInject()
+    val state by stateHolder.state.collectAsState()
+
+    val initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex }
+    val initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset }
+    val initialSearchKeysScrollOffset = remember { state.searchKeysScrollOffset }
 
     SearchScreen(
-        state = viewModel.state.collectAsState().value,
+        searchValue = state.searchValue,
+        monsterRows = state.monsterRows,
+        searchLabel = state.searchLabel,
+        searchResults = state.searchResults,
+        isSearching = state.isSearching,
+        searchKeys = state.searchKeys,
+        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
+        initialSearchKeysScrollOffset = initialSearchKeysScrollOffset,
         contentPaddingValues = contentPadding,
-        onSearchValueChange = viewModel::onSearchValueChange,
-        onCardClick = viewModel::onItemClick,
-        onCardLongClick = viewModel::onItemLongClick,
-        onSearchKeyClick = viewModel::onSearchKeyClick,
-        onAddClick = viewModel::onAddClick,
+        onSearchValueChange = stateHolder::onSearchValueChange,
+        onCardClick = stateHolder::onItemClick,
+        onCardLongClick = stateHolder::onItemLongClick,
+        onSearchKeyClick = stateHolder::onSearchKeyClick,
+        onAddClick = stateHolder::onAddClick,
+        onScrollChanges = stateHolder::onScrollChanges,
+        onSearchKeysScrollChanges = stateHolder::onSearchKeysScrollChanges,
     )
 }

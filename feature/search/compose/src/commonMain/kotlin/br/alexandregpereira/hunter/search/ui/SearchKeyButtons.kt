@@ -18,11 +18,17 @@ import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 @Composable
 internal fun SearchKeyButtons(
     searchKeys: List<SearchKeyState>,
+    initialScrollOffset: Int,
     shouldShow: () -> Boolean,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit,
+    onScrollChanges: (Int) -> Unit,
 ) {
-    val scrollState = rememberScrollState()
+    val scrollState = rememberScrollState(initial = initialScrollOffset)
+    onScrollChanges(
+        getScrollPosition = { scrollState.value },
+        onScrollChanges = onScrollChanges,
+    )
     AnimatedVisibility(
         visible = shouldShow(),
         enter = fadeIn(),
@@ -39,6 +45,14 @@ internal fun SearchKeyButtons(
             }
         }
     }
+}
+
+@Composable
+private fun onScrollChanges(
+    getScrollPosition: () -> Int,
+    onScrollChanges: (Int) -> Unit,
+) {
+    onScrollChanges(getScrollPosition())
 }
 
 @Composable

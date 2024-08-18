@@ -42,5 +42,6 @@ fun FolderListFeature(
         onItemSelectionClose = viewModel::onItemSelectionClose,
         onItemSelectionDeleteClick = viewModel::onItemSelectionDeleteClick,
         onItemSelectionAddToPreviewClick = viewModel::onItemSelectionAddToPreviewClick,
+        onScrollChanges = viewModel::onScrollChanges,
     )
 }
