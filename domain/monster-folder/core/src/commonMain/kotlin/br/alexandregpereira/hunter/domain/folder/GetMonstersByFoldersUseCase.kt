@@ -16,16 +16,16 @@
 
 package br.alexandregpereira.hunter.domain.folder
 
-import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import kotlinx.coroutines.flow.Flow
 
-interface MonsterFolderRepository {
+class GetMonstersByFolders(
+    private val monsterFolderRepository: MonsterFolderRepository
+) {
 
-    fun addMonsters(folderName: String, indexes: List<String>): Flow<Unit>
-    fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit>
-    fun getMonsterFolders(): Flow<List<MonsterFolder>>
-    fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?>
-    fun getMonstersFromFolders(foldersName: List<String>): Flow<List<MonsterPreviewFolder>>
-    fun removeMonsterFolders(folderNames: List<String>): Flow<Unit>
+    operator fun invoke(foldersName: List<String>): Flow<List<MonsterPreviewFolder>> {
+        return monsterFolderRepository.getMonstersFromFolders(
+            foldersName = foldersName
+        )
+    }
 }

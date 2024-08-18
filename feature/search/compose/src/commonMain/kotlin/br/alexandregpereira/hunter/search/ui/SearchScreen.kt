@@ -129,7 +129,7 @@ internal fun SearchScreen(
         exit = fadeOut(spring()),
     ) {
         AppCircleButton(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(vertical = 16.dp, horizontal = 12.dp),
             onClick = onAddClick
         ) {
             Icon(

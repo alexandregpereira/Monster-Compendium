@@ -35,7 +35,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -90,7 +90,7 @@ fun FolderPreview(
                         modifier = Modifier.animateItemPlacement()
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Delete,
+                            imageVector = Icons.Filled.Clear,
                             contentDescription = null
                         )
                     }

@@ -85,4 +85,8 @@ internal class DefaultMonsterFolderLocalDataSource(
     override fun removeMonsterFolders(folderNames: List<String>): Flow<Unit> = flow {
         emit(monsterFolderDao.removeMonsterFolders(folderNames))
     }
+
+    override fun getMonstersFromFolders(foldersName: List<String>): Flow<List<MonsterEntity>> = flow {
+        emit(monsterFolderDao.getMonstersFromFolders(foldersName))
+    }
 }

@@ -30,4 +30,6 @@ interface MonsterFolderDao {
     suspend fun removeMonsterFromFolder(folderName: String, monsterIndexes: List<String>)
 
     suspend fun removeMonsterFolders(folderNames: List<String>)
+
+    suspend fun getMonstersFromFolders(foldersName: List<String>): List<MonsterEntity>
 }

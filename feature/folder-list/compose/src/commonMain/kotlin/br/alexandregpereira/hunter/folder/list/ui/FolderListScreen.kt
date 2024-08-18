@@ -30,7 +30,8 @@ internal fun FolderListScreen(
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
     onItemSelectionClose: () -> Unit = {},
-    onItemSelectionDeleteClick: () -> Unit = {}
+    onItemSelectionDeleteClick: () -> Unit = {},
+    onItemSelectionAddToPreviewClick: () -> Unit = {},
 ) {
     Box(Modifier.fillMaxSize()) {
         FolderCardGrid(
@@ -44,9 +45,11 @@ internal fun FolderListScreen(
         ItemSelection(
             itemSelectionText = state.strings.itemSelected(state.itemSelectionCount),
             deleteText = state.strings.delete,
+            addToPreviewText = state.strings.addToPreview,
             contentBottomPadding = contentPadding.calculateBottomPadding(),
             onClose = onItemSelectionClose,
             onDeleteClick = onItemSelectionDeleteClick,
+            onAddToPreviewClick = onItemSelectionAddToPreviewClick,
             isOpen = state.isItemSelectionOpen,
         )
     }

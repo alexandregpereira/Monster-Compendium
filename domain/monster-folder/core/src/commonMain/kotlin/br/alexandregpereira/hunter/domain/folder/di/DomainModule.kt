@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.domain.folder.ClearTemporaryFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.GetFolderMonsterPreviewsByIdsUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolders
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonsterFoldersUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromTemporaryFolderUseCase
@@ -37,4 +38,5 @@ val monsterFolderDomainModule = module {
     factory { GetMonstersByTemporaryFolderUseCase(get()) }
     factory { RemoveMonsterFoldersUseCase(get()) }
     factory { RemoveMonstersFromTemporaryFolderUseCase(get()) }
+    factory { GetMonstersByFolders(get()) }
 }

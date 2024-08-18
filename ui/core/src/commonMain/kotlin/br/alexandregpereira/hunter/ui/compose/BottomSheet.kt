@@ -49,6 +49,7 @@ fun BottomSheet(
     maxWidth: Dp = maxBottomSheetWidth,
     widthFraction: Float = 1f,
     closeClickingOutside: Boolean = true,
+    topSpaceHeight: Dp = 288.dp,
     onClose: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
@@ -72,9 +73,11 @@ fun BottomSheet(
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            val scrollState = rememberScrollState()
+            ClearFocusWhenScrolling(scrollState)
             Column(
                 modifier = Modifier
-                    .verticalScroll(state = rememberScrollState())
+                    .verticalScroll(scrollState)
                     .align(Alignment.BottomCenter)
                     .run {
                         if (closeClickingOutside) {
@@ -84,7 +87,6 @@ fun BottomSheet(
                 horizontalAlignment = Alignment.End,
             ) {
                 if (closeClickingOutside) {
-                    val topSpaceHeight = 288.dp
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()

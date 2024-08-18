@@ -39,45 +39,48 @@ internal fun FolderInsertScreen(
     onSave: () -> Unit = {},
     onClose: () -> Unit = {},
     onShare: () -> Unit = {},
+) = BottomSheet(
+    opened = state.isOpen,
+    contentPadding = contentPadding,
+    topSpaceHeight = 0.dp,
+    onClose = onClose
 ) {
-    BottomSheet(opened = state.isOpen, contentPadding = contentPadding, onClose = onClose) {
-        ScreenHeader(
-            title = state.strings.addToFolder,
-            modifier = Modifier.padding(16.dp)
-        )
+    ScreenHeader(
+        title = state.strings.addToFolder,
+        modifier = Modifier.padding(16.dp)
+    )
 
-        MonsterPreviewRow(
-            monsters = state.monsterPreviews,
-            onLongClick = onLongClick,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+    MonsterPreviewRow(
+        monsters = state.monsterPreviews,
+        onLongClick = onLongClick,
+        modifier = Modifier.padding(top = 8.dp)
+    )
 
-        AppTextField(
-            text = state.folderName,
-            label = state.strings.folderNameLabel,
-            modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
-            onValueChange = onFolderNameFieldChange
-        )
+    AppTextField(
+        text = state.folderName,
+        label = state.strings.folderNameLabel,
+        modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
+        onValueChange = onFolderNameFieldChange
+    )
 
-        MonsterFolderGrid(
-            folders = state.folders,
-            onFolderSelected = onFolderSelected,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+    MonsterFolderGrid(
+        folders = state.folders,
+        onFolderSelected = onFolderSelected,
+        modifier = Modifier.padding(bottom = 16.dp)
+    )
 
-        AppButton(
-            text = state.strings.share,
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp).padding(horizontal = 16.dp),
-            isPrimary = false,
-            onClick = onShare
-        )
+    AppButton(
+        text = state.strings.share,
+        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp).padding(horizontal = 16.dp),
+        isPrimary = false,
+        onClick = onShare
+    )
 
-        AppButton(
-            text = state.strings.save,
-            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp).padding(horizontal = 16.dp),
-            onClick = onSave
-        )
-    }
+    AppButton(
+        text = state.strings.save,
+        modifier = Modifier.padding(bottom = 16.dp, top = 8.dp).padding(horizontal = 16.dp),
+        onClick = onSave
+    )
 }
 
 @Preview

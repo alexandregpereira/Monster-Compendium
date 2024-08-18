@@ -40,6 +40,11 @@ internal class DefaultFolderRepository(
         return monsterFolderLocalDataSource.getMonstersFromFolder(folderName).map { it?.asDomain() }
     }
 
+    override fun getMonstersFromFolders(foldersName: List<String>): Flow<List<MonsterPreviewFolder>> {
+        return monsterFolderLocalDataSource.getMonstersFromFolders(foldersName)
+            .map { it.asDomainMonsterPreviewFolderEntity() }
+    }
+
     override fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
         return monsterFolderLocalDataSource.removeMonsters(folderName, monsterIndexes = indexes)
     }

@@ -17,7 +17,6 @@ interface SettingsStrings {
     val defaultLightBackground: String
     val defaultDarkBackground: String
     val importContent: String
-    val exportEditedContent: String
 }
 
 internal data class SettingsEnStrings(
@@ -35,7 +34,6 @@ internal data class SettingsEnStrings(
     override val defaultLightBackground: String = "Default Image Light Background Color",
     override val defaultDarkBackground: String = "Default Image Dark Background Color",
     override val importContent: String = "Import Shared Content",
-    override val exportEditedContent: String = "Export Edited Content",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -53,7 +51,6 @@ internal data class SettingsPtStrings(
     override val defaultLightBackground: String = "Cor Padrão de Fundo das Imagens Light",
     override val defaultDarkBackground: String = "Cor Padrão de Fundo das Imagens Dark",
     override val importContent: String = "Importar Conteúdo Compartilhado",
-    override val exportEditedContent: String = "Exportar Conteúdo Editado",
 ) : SettingsStrings
 
 internal data class SettingsEmptyStrings(
@@ -71,7 +68,6 @@ internal data class SettingsEmptyStrings(
     override val defaultLightBackground: String = "",
     override val defaultDarkBackground: String = "",
     override val importContent: String = "",
-    override val exportEditedContent: String = "",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

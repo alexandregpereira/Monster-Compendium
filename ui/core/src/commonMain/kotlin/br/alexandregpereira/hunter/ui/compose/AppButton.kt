@@ -49,12 +49,14 @@ fun AppButton(
     size: AppButtonSize = AppButtonSize.MEDIUM,
     enabled: Boolean = true,
     isPrimary: Boolean = true,
+    elevation: Int = 1,
     onClick: () -> Unit = {}
 ) {
     AppBasicButton(
         modifier = modifier.height(size.height.dp).fillMaxWidth(),
         enabled = enabled,
         isPrimary = isPrimary,
+        elevation = elevation,
         onClick = onClick
     ) {
         val fontSizes = when (size) {
@@ -98,6 +100,7 @@ private fun AppBasicButton(
     enabled: Boolean = true,
     shape: RoundedCornerShape = RoundedCornerShape(24.dp),
     isPrimary: Boolean = true,
+    elevation: Int = 1,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
@@ -108,7 +111,7 @@ private fun AppBasicButton(
     val backgroundColor = if (isPrimary) {
         MaterialTheme.colors.primary
     } else {
-        val alpha = ((4.5f * ln(1f + 1)) + 2f) / 100f
+        val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
         MaterialTheme.colors.onSurface.copy(alpha = alpha)
             .compositeOver(MaterialTheme.colors.surface)
     }

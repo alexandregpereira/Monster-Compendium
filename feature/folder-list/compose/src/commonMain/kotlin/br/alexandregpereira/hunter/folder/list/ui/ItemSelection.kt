@@ -39,11 +39,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal fun ItemSelection(
     itemSelectionText: String,
     deleteText: String,
+    addToPreviewText: String,
     modifier: Modifier = Modifier,
     isOpen: Boolean = true,
     contentBottomPadding: Dp = 0.dp,
     onClose: () -> Unit = {},
-    onDeleteClick: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    onAddToPreviewClick: () -> Unit = {},
 ) = BottomSheet(
     opened = isOpen,
     maxWidth = Dp.Unspecified,
@@ -61,8 +63,16 @@ internal fun ItemSelection(
             )
 
             AppButton(
-                text = deleteText,
+                text = addToPreviewText,
                 modifier = Modifier.padding(top = 24.dp),
+                isPrimary = false,
+                elevation = 4,
+                onClick = onAddToPreviewClick
+            )
+
+            AppButton(
+                text = deleteText,
+                modifier = Modifier.padding(top = 16.dp),
                 onClick = onDeleteClick
             )
 
@@ -78,6 +88,7 @@ private fun ItemSelectionPreview() = HunterTheme {
         ItemSelection(
             itemSelectionText = "Item Selection",
             deleteText = "Delete",
+            addToPreviewText = "Add to Preview",
         )
     }
 }

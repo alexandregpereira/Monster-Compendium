@@ -167,10 +167,6 @@ internal class SettingsStateHolder(
         shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
     }
 
-    override fun onExportContent() {
-        shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Export.OnStart())
-    }
-
     private fun load() {
         getMonsterImageJsonUrl()
             .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->

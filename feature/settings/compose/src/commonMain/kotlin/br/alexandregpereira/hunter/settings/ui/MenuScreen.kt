@@ -74,13 +74,6 @@ internal fun MenuScreen(
             Divider()
 
             MenuItem(
-                text = state.strings.exportEditedContent,
-                onClick = viewIntent::onExportContent
-            )
-
-            Divider()
-
-            MenuItem(
                 text = state.strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
             )

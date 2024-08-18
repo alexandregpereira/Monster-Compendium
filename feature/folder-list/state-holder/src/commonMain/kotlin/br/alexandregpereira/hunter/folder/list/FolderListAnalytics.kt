@@ -49,4 +49,10 @@ internal class FolderListAnalytics(
             )
         )
     }
+
+    fun trackItemSelectionAddToPreviewClick() {
+        analytics.track(
+            eventName = "Folder List - item selection add to preview click",
+        )
+    }
 }

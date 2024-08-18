@@ -19,6 +19,12 @@ WHERE folderName == ?
 ORDER BY createdAt DESC
 ;
 
+getMonstersFromFolders:
+SELECT * FROM MonsterFolderCompleteEntityView
+WHERE folderName IN ?
+ORDER BY createdAt DESC
+;
+
 removeMonsterFromFolder:
 DELETE FROM MonsterFolderEntity
 WHERE folderName == ? AND monsterIndex IN ?
