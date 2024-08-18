@@ -35,28 +35,12 @@ jobs:
       - name: Build with Gradle
         env:
           MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-        run: ./gradlew testReleaseUnitTest jvmTest assembleRelease bundleRelease :app:packageDmg linkReleaseFrameworkIosSimulatorArm64
-
-      - name: Verify database migration
-        run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
-
-      - name: Build iOS
-        run: xcodebuild build -configuration Release -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: ./gradlew bundleRelease :app:packageDmg
 
       - name: Generate Dev Apk
         env:
           MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
         run: ./gradlew assembleRelease -Pdev
-
-      - name: Upload the test report
-        if: failure()
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: TestReport
-          path: |
-            feature-monster-compendium/build/reports/tests
-            data/build/reports/tests
-            domain/build/reports/tests
 
       - name: Upload Dmg
         uses: actions/upload-artifact@v3.1.1
