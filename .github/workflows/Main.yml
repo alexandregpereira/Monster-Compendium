@@ -10,7 +10,7 @@ on:
 
 jobs:
   multiplatform-build:
-    name: Multiplatform Build
+    name: Android and MacOS Distribution
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -70,6 +70,7 @@ jobs:
           path: app/build/outputs/apk/release/output-metadata.json
 
   android-dev-distribution:
+    name: Android APK Dev Distribution
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
