@@ -115,12 +115,12 @@ private fun MonsterRegistrationForm(
         bottom = contentPadding.calculateBottomPadding() + 16.dp,
     ),
 ) {
-    MonsterHeaderForm(
+    MonsterImageForm(
         keys = monster.keys,
         infoState = monster.info,
         onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },
     )
-    MonsterImageForm(
+    MonsterHeaderForm(
         keys = monster.keys,
         infoState = monster.info,
         onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },

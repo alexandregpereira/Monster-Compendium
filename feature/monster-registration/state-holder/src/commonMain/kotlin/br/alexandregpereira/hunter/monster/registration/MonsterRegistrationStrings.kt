@@ -60,7 +60,7 @@ interface MonsterRegistrationStrings {
     val damageType: String
     val damageDice: String
     val conditionType: String
-    val edit: String
+    val header: String
     val group: String
     val imageUrl: String
     val type: String
@@ -174,7 +174,7 @@ internal data class MonsterRegistrationEnStrings(
     override val damageType: String = "Damage Type",
     override val damageDice: String = "Damage Dice",
     override val conditionType: String = "Condition Type",
-    override val edit: String = "Edit",
+    override val header: String = "Header",
     override val group: String = "Group",
     override val imageUrl: String = "Image Url",
     override val type: String = "Type",
@@ -288,7 +288,7 @@ internal data class MonsterRegistrationPtStrings(
     override val damageType: String = "Tipo de Dano",
     override val damageDice: String = "Dados de Dano",
     override val conditionType: String = "Tipo de Condição",
-    override val edit: String = "Editar",
+    override val header: String = "Cabeçalho",
     override val group: String = "Grupo",
     override val imageUrl: String = "Url da Imagem",
     override val type: String = "Tipo",

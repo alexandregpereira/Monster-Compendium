@@ -52,7 +52,7 @@ internal fun Monster.editBy(
     return monster.copy(
         name = state.info.name,
         subtitle = state.info.subtitle,
-        group = state.info.group,
+        group = state.info.group.takeUnless { it.isBlank() },
         challengeRatingData = monster.challengeRatingData.copy(
             valueInString = state.info.challengeRating,
         ),
