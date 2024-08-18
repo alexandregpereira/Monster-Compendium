@@ -34,7 +34,7 @@ fun MonsterCoilImage(
     shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
     backgroundColor: String,
-    contentScale: ContentScale = ContentScale.Fit,
+    contentScale: ContentScale = ContentScale.Crop,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) = MonsterCoilImage(
     imageUrl = imageUrl,
@@ -53,7 +53,7 @@ fun MonsterCoilImage(
     shape: Shape = RectangleShape,
     modifier: Modifier = Modifier,
     backgroundColor: Color? = null,
-    contentScale: ContentScale = ContentScale.Fit,
+    contentScale: ContentScale = ContentScale.Crop,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) {
     CoilImage(
