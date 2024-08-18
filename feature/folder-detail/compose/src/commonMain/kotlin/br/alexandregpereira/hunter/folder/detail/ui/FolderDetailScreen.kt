@@ -17,45 +17,56 @@
 package br.alexandregpereira.hunter.folder.detail.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
-import br.alexandregpereira.hunter.folder.detail.FolderDetailState
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
-import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import br.alexandregpereira.hunter.ui.compose.plus
 
 @Composable
 internal fun FolderDetailScreen(
-    state: FolderDetailState,
+    isOpen: Boolean,
+    folderName: String,
+    monsters: List<MonsterCardState>,
+    initialFirstVisibleItemIndex: Int = 0,
+    initialFirstVisibleItemScrollOffset: Int = 0,
     contentPadding: PaddingValues = PaddingValues(),
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
-    onClose: () -> Unit = {}
+    onClose: () -> Unit = {},
+    onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
 ) = AppFullScreen(
-    isOpen = state.isOpen,
+    isOpen = isOpen,
     contentPaddingValues = contentPadding,
     level = 0,
     onClose = onClose
 ) {
-    val monsters = remember(state.monsters) { state.monsters.asState() }
     val items = listOf(
         Title(
-            value = state.folderName,
+            value = folderName,
             isHeader = true
         ),
     ) + monsters.map {
         Item(value = it)
     }
+    val listState: LazyGridState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset
+    )
+    OnScrollChanges(
+        getScrollItemScrollValues = {
+            listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
+        },
+        onScrollChanges = onScrollChanges,
+    )
     MonsterCompendium(
         items = items,
+        listState = listState,
         animateItems = true,
         contentPadding = contentPadding + PaddingValues(top = 24.dp),
         onItemCLick = onItemCLick,
@@ -63,22 +74,11 @@ internal fun FolderDetailScreen(
     )
 }
 
-private fun List<MonsterPreviewFolder>.asState(): List<MonsterCardState> = map {
-    it.run {
-        MonsterCardState(
-            index = index,
-            name = name,
-            imageState = MonsterImageState(
-                url = imageUrl,
-                type = MonsterTypeState.valueOf(type.name),
-                backgroundColor = ColorState(
-                    light = backgroundColorLight,
-                    dark = backgroundColorDark
-                ),
-                challengeRating = challengeRating,
-                isHorizontal = isHorizontalImage,
-                contentDescription = name
-            )
-        )
-    }
+@Composable
+private fun OnScrollChanges(
+    getScrollItemScrollValues: () -> Pair<Int, Int>,
+    onScrollChanges: (Int, Int) -> Unit
+) {
+    val (firstVisibleItemIndex, firstVisibleItemScrollOffset) = getScrollItemScrollValues()
+    onScrollChanges(firstVisibleItemIndex, firstVisibleItemScrollOffset)
 }

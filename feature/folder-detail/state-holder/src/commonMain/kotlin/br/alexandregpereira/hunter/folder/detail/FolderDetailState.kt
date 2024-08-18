@@ -21,5 +21,7 @@ import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 data class FolderDetailState(
     val isOpen: Boolean = false,
     val folderName: String = "",
-    val monsters: List<MonsterPreviewFolder> = emptyList()
+    val monsters: List<MonsterPreviewFolder> = emptyList(),
+    val firstVisibleItemIndex: Int = 0,
+    val firstVisibleItemScrollOffset: Int = 0,
 )
