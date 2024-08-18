@@ -192,8 +192,8 @@ data class SpellPreviewState(
 )
 
 internal enum class SectionTitle {
-    Header,
     Image,
+    Header,
     Stats,
     Speed,
     AbilityScores,

@@ -15,7 +15,7 @@ internal fun LazyListScope.MonsterHeaderForm(
 ) {
     FormLazy(
         titleKey = keys.next(),
-        title = { strings.edit }
+        title = { strings.header }
     ) {
         formItem(key = keys.next()) {
             AppTextField(
