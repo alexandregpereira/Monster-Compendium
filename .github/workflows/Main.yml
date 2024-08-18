@@ -27,13 +27,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Verify database migration
-        run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
-
       - name: Build with Gradle
         env:
           MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
         run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease :app:packageDmg
+
+      - name: Verify database migration
+        run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
 
       - name: Upload the test report
         if: failure()
