@@ -23,7 +23,7 @@ import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUs
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
-import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
@@ -54,7 +54,7 @@ internal class SettingsStateHolder(
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
     private val analytics: SettingsAnalytics,
-    private val appLocalization: AppLocalization,
+    private val appLocalization: AppReactiveLocalization,
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
@@ -65,7 +65,14 @@ internal class SettingsStateHolder(
     private var originalSettingsState: SettingsState = SettingsState()
 
     init {
+        observeLanguageChanges()
         load()
+    }
+
+    private fun observeLanguageChanges() {
+        appLocalization.languageFlow.onEach {
+            load()
+        }.launchIn(scope)
     }
 
     override fun onImageBaseUrlChange(value: String) {
