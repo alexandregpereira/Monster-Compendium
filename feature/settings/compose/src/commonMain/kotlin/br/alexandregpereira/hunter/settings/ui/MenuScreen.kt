@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +46,7 @@ internal fun MenuScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        Column(Modifier.padding(contentPadding)) {
+        Column(Modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
             MenuItem(
                 text = state.strings.settingsTitle,
                 onClick = viewIntent::onSettingsClick

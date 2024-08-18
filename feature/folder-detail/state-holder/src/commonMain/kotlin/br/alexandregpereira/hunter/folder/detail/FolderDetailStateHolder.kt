@@ -75,6 +75,15 @@ class FolderDetailStateHolder internal constructor(
         folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = false))
     }
 
+    fun onScrollChanges(firstVisibleItemIndex: Int, firstVisibleItemScrollOffset: Int) {
+        setState {
+            copy(
+                firstVisibleItemIndex = firstVisibleItemIndex,
+                firstVisibleItemScrollOffset = firstVisibleItemScrollOffset
+            )
+        }
+    }
+
     private fun loadMonsters(folderName: String) {
         getMonstersByFolder(folderName)
             .flowOn(dispatcher)

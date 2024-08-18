@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,12 +42,24 @@ internal fun FolderCardGrid(
     folders: List<FolderCardState>,
     title: String,
     modifier: Modifier = Modifier,
+    initialFirstVisibleItemIndex: Int = 0,
+    initialFirstVisibleItemScrollOffset: Int = 0,
     contentPadding: PaddingValues = PaddingValues(),
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
+    onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
 ) {
+    val lazyListState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
+    )
+    val getFirstVisibleItemValues = {
+        lazyListState.firstVisibleItemIndex to lazyListState.firstVisibleItemScrollOffset
+    }
+    OnScrollChanges(getFirstVisibleItemValues, onScrollChanges)
     LazyVerticalGrid(
         modifier = modifier,
+        state = lazyListState,
         columns = GridCells.Adaptive(minSize = 320.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(32.dp),
@@ -83,6 +96,18 @@ internal fun FolderCardGrid(
             )
         }
     }
+}
+
+@Composable
+private fun OnScrollChanges(
+    getFirstVisibleItemValues: () -> Pair<Int, Int>,
+    onScrollChanges: (Int, Int) -> Unit
+) {
+    val (firstVisibleItemIndex, firstVisibleItemScrollOffset) = getFirstVisibleItemValues()
+    onScrollChanges(
+        firstVisibleItemIndex,
+        firstVisibleItemScrollOffset
+    )
 }
 
 @Preview
