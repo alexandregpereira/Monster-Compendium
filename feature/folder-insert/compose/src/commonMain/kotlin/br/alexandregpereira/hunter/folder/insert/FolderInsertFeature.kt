@@ -35,6 +35,7 @@ fun FolderInsertFeature(
         onFolderSelected = stateHolder::onFolderNameFieldChange,
         onLongClick = stateHolder::onRemoveMonster,
         onSave = stateHolder::onSave,
-        onClose = stateHolder::onClose
+        onClose = stateHolder::onClose,
+        onShare = stateHolder::onShare,
     )
 }

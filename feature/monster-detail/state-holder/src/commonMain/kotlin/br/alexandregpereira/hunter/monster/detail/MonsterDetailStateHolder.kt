@@ -231,7 +231,7 @@ class MonsterDetailStateHolder internal constructor(
             EXPORT -> {
                 analytics.trackMonsterDetailExportClicked(monsterIndex)
                 shareContentEventDispatcher.dispatchEvent(
-                    ShareContentEvent.Export.OnStart(monsterIndex)
+                    ShareContentEvent.Export.OnStart(listOf(monsterIndex))
                 )
             }
         }

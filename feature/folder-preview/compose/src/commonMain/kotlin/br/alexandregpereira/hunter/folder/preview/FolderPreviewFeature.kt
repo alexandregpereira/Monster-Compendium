@@ -40,6 +40,7 @@ fun FolderPreviewFeature(
         onClick = stateHolder::onItemClick,
         onLongClick = stateHolder::onItemLongClick,
         modifier = modifier,
-        onSave = stateHolder::onSave
+        onSave = stateHolder::onSave,
+        onClear = stateHolder::onClear,
     )
 }

@@ -13,7 +13,7 @@ sealed class ShareContentEvent {
         data object OnFinish : Import()
     }
     sealed class Export : ShareContentEvent() {
-        data class OnStart(val monsterIndex: String? = null) : Export()
+        data class OnStart(val monsterIndexes: List<String> = emptyList()) : Export()
         data object OnFinish : Export()
     }
 }

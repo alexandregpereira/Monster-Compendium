@@ -4,7 +4,7 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(project(":core:event"))
+        api(project(":core:event"))
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }

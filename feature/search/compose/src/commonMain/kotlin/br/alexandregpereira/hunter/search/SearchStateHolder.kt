@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.search
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
@@ -130,7 +131,7 @@ internal class SearchStateHolder(
 
     fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index, searchQuery.value)
-        folderPreviewEventDispatcher.dispatchEvent(AddMonster(index))
+        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
     }
 
     fun onSearchKeyClick(searchKeyIndex: Int) {
@@ -142,5 +143,10 @@ internal class SearchStateHolder(
             "${currentSearchValue.text} $SearchKeySymbolAnd ${searchKey.keyWithSymbols}"
         }
         onSearchValueChange(TextFieldValue(newSearchValue, TextRange(newSearchValue.length)))
+    }
+
+    fun onAddClick() {
+        val monsterIndexes = state.value.monsterRows.map { it.index }
+        folderPreviewEventDispatcher.dispatchEvent(AddMonster(monsterIndexes))
     }
 }

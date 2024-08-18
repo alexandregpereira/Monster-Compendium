@@ -42,6 +42,7 @@ internal fun FolderPreviewScreen(
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
+    onClear: () -> Unit = {},
 ) = Box(modifier = modifier.fillMaxWidth().animateContentSize(animationSpec = spring())) {
     AnimatedVisibility(
         visible = state.showPreview,
@@ -64,11 +65,11 @@ internal fun FolderPreviewScreen(
         FolderPreview(
             monsters = state.monsters,
             lazyListState = lazyListState,
-            saveButtonText = state.strings.save,
             contentPadding = contentPadding,
             onClick = onClick,
             onLongClick = onLongClick,
             onSave = onSave,
+            onClear = onClear,
         )
     }
 }

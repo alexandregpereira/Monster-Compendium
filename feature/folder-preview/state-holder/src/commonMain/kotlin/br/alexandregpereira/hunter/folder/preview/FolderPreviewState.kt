@@ -20,13 +20,10 @@ import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPrev
 
 data class FolderPreviewState(
     val monsters: List<MonsterFolderPreview> = emptyList(),
-    val strings: FolderPreviewStrings = FolderPreviewEmptyStrings(),
-) {
-    val showPreview: Boolean = monsters.isNotEmpty()
-}
-
+    val showPreview: Boolean = false,
+)
 internal fun FolderPreviewState.changeMonsters(
     monsters: List<MonsterFolderPreview>
 ): FolderPreviewState {
-    return this.copy(monsters = monsters)
+    return this.copy(monsters = monsters, showPreview = monsters.isNotEmpty())
 }

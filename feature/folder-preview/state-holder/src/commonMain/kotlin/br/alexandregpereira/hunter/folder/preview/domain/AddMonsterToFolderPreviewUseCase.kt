@@ -28,8 +28,8 @@ internal class AddMonsterToFolderPreviewUseCase(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(index: String): Flow<List<MonsterFolderPreview>> {
-        return addMonsterToTemporaryFolder(index).flatMapLatest {
+    operator fun invoke(indexes: List<String>): Flow<List<MonsterFolderPreview>> {
+        return addMonsterToTemporaryFolder(indexes).flatMapLatest {
             getMonstersFromFolderPreview()
         }
     }

@@ -57,11 +57,11 @@ internal class FolderPreviewAnalytics(
         )
     }
 
-    fun trackAddMonster(index: String) {
+    fun trackAddMonster(indexes: List<String>) {
         analytics.track(
             eventName = "Folder Preview - add monster",
             params = mapOf(
-                "monsterIndex" to index
+                "monsterIndexes" to indexes
             )
         )
     }
@@ -75,6 +75,12 @@ internal class FolderPreviewAnalytics(
     fun trackShowFolderPreview() {
         analytics.track(
             eventName = "Folder Preview - show",
+        )
+    }
+
+    fun trackClear() {
+        analytics.track(
+            eventName = "Folder Preview - clear",
         )
     }
 }

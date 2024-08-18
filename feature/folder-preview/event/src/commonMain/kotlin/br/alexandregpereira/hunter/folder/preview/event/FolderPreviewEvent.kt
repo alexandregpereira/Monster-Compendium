@@ -17,5 +17,11 @@
 package br.alexandregpereira.hunter.folder.preview.event
 
 sealed class FolderPreviewEvent {
-    data class AddMonster(val index: String) : FolderPreviewEvent()
+    data class AddMonster(val indexes: List<String>) : FolderPreviewEvent()
+
+    companion object {
+        fun AddMonster(index: String): AddMonster {
+            return AddMonster(listOf(index))
+        }
+    }
 }

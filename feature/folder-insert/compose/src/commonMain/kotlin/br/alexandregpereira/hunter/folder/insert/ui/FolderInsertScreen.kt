@@ -38,6 +38,7 @@ internal fun FolderInsertScreen(
     onLongClick: (String) -> Unit = {},
     onSave: () -> Unit = {},
     onClose: () -> Unit = {},
+    onShare: () -> Unit = {},
 ) {
     BottomSheet(opened = state.isOpen, contentPadding = contentPadding, onClose = onClose) {
         ScreenHeader(
@@ -65,8 +66,15 @@ internal fun FolderInsertScreen(
         )
 
         AppButton(
+            text = state.strings.share,
+            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp).padding(horizontal = 16.dp),
+            isPrimary = false,
+            onClick = onShare
+        )
+
+        AppButton(
             text = state.strings.save,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp).padding(horizontal = 16.dp),
             onClick = onSave
         )
     }

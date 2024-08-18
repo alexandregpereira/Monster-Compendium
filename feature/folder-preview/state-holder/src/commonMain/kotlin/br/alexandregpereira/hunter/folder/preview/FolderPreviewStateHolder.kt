@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
-import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -50,7 +49,6 @@ class FolderPreviewStateHolder internal constructor(
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
-    private val appLocalization: AppLocalization,
 ) : UiModel<FolderPreviewState>(FolderPreviewState()),
     MutableActionHandler<FolderPreviewAction> by MutableActionHandler() {
 
@@ -87,13 +85,22 @@ class FolderPreviewStateHolder internal constructor(
         }.launchIn(scope)
     }
 
+    fun onClear() {
+        analytics.trackClear()
+        scope.launch {
+            setState { copy(showPreview = false) }
+            delay(300)
+            clear()
+        }
+    }
+
     private fun observeEvents() {
         scope.launch {
             folderPreviewEventManager.events.collect { event ->
                 when (event) {
                     is AddMonster -> {
-                        analytics.trackAddMonster(event.index)
-                        addMonster(event.index)
+                        analytics.trackAddMonster(event.indexes)
+                        addMonster(event.indexes)
                     }
                 }
             }
@@ -112,8 +119,8 @@ class FolderPreviewStateHolder internal constructor(
             .launchIn(scope)
     }
 
-    private fun addMonster(index: String) {
-        addMonsterToFolderPreview(index)
+    private fun addMonster(indexes: List<String>) {
+        addMonsterToFolderPreview(indexes)
             .flowOn(dispatcher)
             .onEach { monsters ->
                 val previousMonsterListSize = state.value.monsters.size
@@ -135,7 +142,6 @@ class FolderPreviewStateHolder internal constructor(
             .map { monsters ->
                 setState {
                     changeMonsters(monsters = monsters)
-                        .copy(strings = appLocalization.getStrings())
                 }
             }
             .launchIn(scope)
