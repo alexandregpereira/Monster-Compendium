@@ -3,7 +3,6 @@ package br.alexandregpereira.hunter.shareContent.state
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
-import br.alexandregpereira.hunter.shareContent.domain.GetMonsterContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentException
@@ -22,7 +21,6 @@ internal class ShareContentStateHolder(
     appLocalization: AppReactiveLocalization,
     private val eventDispatcher: ShareContentEventDispatcher,
     private val importContent: ImportContent,
-    private val getMonsterContentToExport: GetMonsterContentToExport,
     private val getMonstersContentToExport: GetMonstersContentToExport,
 ) : UiModel<ShareContentState>(
     ShareContentState(strings = appLocalization.getLanguage().getStrings())
@@ -61,9 +59,8 @@ internal class ShareContentStateHolder(
         copy(contentToImport = content.trim(), importError = null)
     }
 
-    fun fetchMonsterContentToExport(monsterIndex: String?, actualClipboardContent: String?) {
-        val contentToExportFlow = monsterIndex?.let { getMonsterContentToExport(it) }
-            ?: getMonstersContentToExport()
+    fun fetchMonsterContentToExport(monsterIndexes: List<String>, actualClipboardContent: String?) {
+        val contentToExportFlow = getMonstersContentToExport(monsterIndexes)
         contentToExportFlow
             .flowOn(dispatcher)
             .onEach { contentToExport ->

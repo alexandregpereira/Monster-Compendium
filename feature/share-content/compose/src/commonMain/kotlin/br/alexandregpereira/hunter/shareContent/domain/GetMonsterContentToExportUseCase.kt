@@ -2,21 +2,26 @@ package br.alexandregpereira.hunter.shareContent.domain
 
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal fun interface GetMonsterContentToExport {
+internal fun interface GetMonstersContentToExport {
 
-    operator fun invoke(monsterIndex: String): Flow<String>
+    operator fun invoke(monsterIndexes: List<String>): Flow<String>
 }
 
-internal fun GetMonsterContentToExport(
-    getMonster: GetMonsterUseCase,
+internal fun GetMonstersContentToExport(
+    getMonsters: GetMonstersByIdsUseCase,
     getMonstersLore: GetMonstersLoreByIdsUseCase,
-    getSpellsByIds: GetSpellsByIdsUseCase
-): GetMonsterContentToExport = GetMonsterContentToExport { monsterIndex ->
-    getMonster(monsterIndex).map { monster ->
-        listOf(monster).getContentToExport(getMonstersLore, getSpellsByIds)
+    getSpellsByIds: GetSpellsByIdsUseCase,
+    getMonstersContentEditedToExport: GetMonstersContentEditedToExport,
+): GetMonstersContentToExport = GetMonstersContentToExport { monsterIndexes ->
+    if (monsterIndexes.isEmpty()) {
+        getMonstersContentEditedToExport()
+    } else {
+        getMonsters(monsterIndexes).map { monsters ->
+            monsters.getContentToExport(getMonstersLore, getSpellsByIds)
+        }
     }
 }

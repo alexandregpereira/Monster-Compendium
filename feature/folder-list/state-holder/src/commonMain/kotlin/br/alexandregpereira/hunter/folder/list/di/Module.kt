@@ -44,6 +44,8 @@ val folderListModule = module {
             analytics = FolderListAnalytics(get()),
             appLocalization = get(),
             stateRecovery = get(named(FolderListStateRecoveryQualifier)),
+            folderPreviewEventDispatcher = get(),
+            getMonstersByFolders = get(),
         )
     }
 }

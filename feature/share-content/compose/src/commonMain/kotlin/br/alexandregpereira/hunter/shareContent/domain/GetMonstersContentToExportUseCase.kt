@@ -14,16 +14,16 @@ import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.serialization.encodeToString
 
-internal fun interface GetMonstersContentToExport {
+internal fun interface GetMonstersContentEditedToExport {
 
     operator fun invoke(): Flow<String>
 }
 
-internal fun GetMonstersContentToExport(
+internal fun GetMonstersContentEditedToExport(
     getMonstersByStatus: GetMonstersByStatus,
     getMonstersLore: GetMonstersLoreByIdsUseCase,
     getSpellsByIds: GetSpellsByIdsUseCase
-): GetMonstersContentToExport = GetMonstersContentToExport {
+): GetMonstersContentEditedToExport = GetMonstersContentEditedToExport {
     val status = setOf(MonsterStatus.Edited, MonsterStatus.Clone, MonsterStatus.Imported)
     getMonstersByStatus(status).map { monsters ->
         monsters.getContentToExport(getMonstersLore, getSpellsByIds)

@@ -28,14 +28,14 @@ fun ShareContentExportMonsterFeature(
     var isOpen by rememberSaveable {
         mutableStateOf(false)
     }
-    var monsterIndex: String? by rememberSaveable {
-        mutableStateOf(null)
+    var monsterIndexes: List<String> by rememberSaveable {
+        mutableStateOf(emptyList())
     }
     LaunchedEffect(eventDispatcher.events) {
         eventDispatcher.exportEvents().collect { event ->
             isOpen = when (event) {
                 is Export.OnStart -> {
-                    monsterIndex = event.monsterIndex
+                    monsterIndexes = event.monsterIndexes
                     true
                 }
                 is Export.OnFinish -> false
@@ -53,9 +53,9 @@ fun ShareContentExportMonsterFeature(
     ) {
         val stateHolder = koinInject<ShareContentStateHolder>()
         val clipboardManager = LocalClipboardManager.current
-        LaunchedEffect(monsterIndex) {
+        LaunchedEffect(monsterIndexes) {
             stateHolder.fetchMonsterContentToExport(
-                monsterIndex = monsterIndex,
+                monsterIndexes = monsterIndexes,
                 actualClipboardContent = clipboardManager.getText()?.text
             )
         }

@@ -58,6 +58,16 @@ internal class MonsterFolderDaoImpl(
         queries.getMonstersFromFolder(folderName).executeAsList().groupByMonsterFolder()
     }
 
+    override suspend fun getMonstersFromFolders(
+        foldersName: List<String>
+    ): List<MonsterEntity> {
+        return withContext(dispatcher) {
+            queries.getMonstersFromFolders(foldersName).executeAsList().map {
+                it.toMonsterEntity()
+            }
+        }
+    }
+
     override suspend fun removeMonsterFromFolder(
         folderName: String,
         monsterIndexes: List<String>
@@ -76,28 +86,32 @@ internal class MonsterFolderDaoImpl(
                 folderName = it.folderName,
                 monsterIndex = it.monsterIndex,
                 createdAt = it.createdAt
-            ) to MonsterEntity(
-                index = it.index,
-                type = it.type,
-                subtype = it.subtype,
-                group = it.subtitle,
-                challengeRating = it.challengeRating.toFloat(),
-                name = it.name,
-                subtitle = it.subtitle,
-                imageUrl = it.imageUrl,
-                backgroundColorLight = it.backgroundColorLight,
-                backgroundColorDark = it.backgroundColorDark,
-                isHorizontalImage = it.isHorizontalImage == 1L,
-                size = it.size,
-                alignment = it.alignment,
-                armorClass = it.armorClass.toInt(),
-                hitPoints = it.hitPoints.toInt(),
-                hitDice = it.hitDice,
-                senses = it.senses,
-                languages = it.languages,
-                sourceName = it.sourceName,
-                status = MonsterEntityStatus.entries[it.isClone.toInt()],
-            )
+            ) to it.toMonsterEntity()
         }.groupBy(keySelector = { it.first }, valueTransform = { it.second })
+    }
+
+    private fun MonsterFolderCompleteEntityView.toMonsterEntity(): MonsterEntity {
+        return MonsterEntity(
+            index = index,
+            type = type,
+            subtype = subtype,
+            group = subtitle,
+            challengeRating = challengeRating.toFloat(),
+            name = name,
+            subtitle = subtitle,
+            imageUrl = imageUrl,
+            backgroundColorLight = backgroundColorLight,
+            backgroundColorDark = backgroundColorDark,
+            isHorizontalImage = isHorizontalImage == 1L,
+            size = size,
+            alignment = alignment,
+            armorClass = armorClass.toInt(),
+            hitPoints = hitPoints.toInt(),
+            hitDice = hitDice,
+            senses = senses,
+            languages = languages,
+            sourceName = sourceName,
+            status = MonsterEntityStatus.entries[isClone.toInt()],
+        )
     }
 }

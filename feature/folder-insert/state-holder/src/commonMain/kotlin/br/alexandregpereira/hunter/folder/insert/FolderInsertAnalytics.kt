@@ -55,4 +55,10 @@ internal class FolderInsertAnalytics(
             )
         )
     }
+
+    fun trackShared() {
+        analytics.track(
+            eventName = "Folder Insert - shared",
+        )
+    }
 }

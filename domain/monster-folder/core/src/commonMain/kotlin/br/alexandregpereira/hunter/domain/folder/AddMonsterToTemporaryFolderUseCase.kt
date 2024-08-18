@@ -23,10 +23,10 @@ class AddMonsterToTemporaryFolderUseCase(
     private val addMonstersToFolder: AddMonstersToFolderUseCase,
 ) {
 
-    operator fun invoke(index: String): Flow<Unit> {
+    operator fun invoke(indexes: List<String>): Flow<Unit> {
         return addMonstersToFolder(
             folderName = TEMPORARY_FOLDER_NAME,
-            indexes = listOf(index)
+            indexes = indexes
         )
     }
 }

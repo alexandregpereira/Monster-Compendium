@@ -28,4 +28,5 @@ internal interface MonsterFolderLocalDataSource {
     fun getMonstersFromFolder(folderName: String): Flow<MonsterFolderCompleteEntity?>
     fun getFolderMonsterPreviewsByIds(monsterIndexes: List<String>): Flow<List<MonsterEntity>>
     fun removeMonsterFolders(folderNames: List<String>): Flow<Unit>
+    fun getMonstersFromFolders(foldersName: List<String>): Flow<List<MonsterEntity>>
 }

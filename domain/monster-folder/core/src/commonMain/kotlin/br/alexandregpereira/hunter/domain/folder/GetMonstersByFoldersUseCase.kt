@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package br.alexandregpereira.hunter.folder.preview.event
+package br.alexandregpereira.hunter.domain.folder
 
-sealed class FolderPreviewEvent {
-    data class AddMonster(val indexes: List<String>) : FolderPreviewEvent()
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import kotlinx.coroutines.flow.Flow
 
-    companion object {
-        fun AddMonster(index: String): AddMonster {
-            return AddMonster(listOf(index))
-        }
+class GetMonstersByFolders(
+    private val monsterFolderRepository: MonsterFolderRepository
+) {
+
+    operator fun invoke(foldersName: List<String>): Flow<List<MonsterPreviewFolder>> {
+        return monsterFolderRepository.getMonstersFromFolders(
+            foldersName = foldersName
+        )
     }
 }

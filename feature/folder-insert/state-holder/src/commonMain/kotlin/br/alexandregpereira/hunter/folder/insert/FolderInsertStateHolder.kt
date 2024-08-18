@@ -16,6 +16,8 @@
 
 package br.alexandregpereira.hunter.folder.insert
 
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.domain.folder.AddMonstersToFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.GetFolderMonsterPreviewsByIdsUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
@@ -40,6 +42,7 @@ class FolderInsertStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderInsertAnalytics,
     private val appLocalization: AppLocalization,
+    private val shareContentEventDispatcher: ShareContentEventDispatcher,
 ) : UiModel<FolderInsertState>(FolderInsertState()) {
 
     private val strings: FolderInsertStrings
@@ -91,6 +94,14 @@ class FolderInsertStateHolder internal constructor(
     fun onClose() {
         analytics.trackClosed()
         setState { copy(isOpen = false) }
+    }
+
+    fun onShare() {
+        analytics.trackShared()
+        onClose()
+        shareContentEventDispatcher.dispatchEvent(
+            ShareContentEvent.Export.OnStart(state.value.monsterIndexes)
+        )
     }
 
     private fun load(monsterIndexes: List<String>, folderName: String = "") {

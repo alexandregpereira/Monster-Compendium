@@ -23,18 +23,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.math.ln
 
 @Composable
 fun AppButton(
@@ -42,23 +48,16 @@ fun AppButton(
     modifier: Modifier = Modifier,
     size: AppButtonSize = AppButtonSize.MEDIUM,
     enabled: Boolean = true,
+    isPrimary: Boolean = true,
+    elevation: Int = 1,
     onClick: () -> Unit = {}
 ) {
-    val backgroundColorAlpha by animateFloatAsState(
-        targetValue = if (enabled) 1f else 0.5f
-    )
-
-    Box(
-        modifier = modifier
-            .height(size.height.dp)
-            .fillMaxWidth()
-            .animatePressed(
-                enabled = enabled,
-                onClick = onClick
-            )
-            .clip(RoundedCornerShape(24.dp))
-            .background(color = MaterialTheme.colors.primary.copy(alpha = backgroundColorAlpha)),
-        contentAlignment = Alignment.Center
+    AppBasicButton(
+        modifier = modifier.height(size.height.dp).fillMaxWidth(),
+        enabled = enabled,
+        isPrimary = isPrimary,
+        elevation = elevation,
+        onClick = onClick
     ) {
         val fontSizes = when (size) {
             AppButtonSize.VERY_SMALL -> 12.sp
@@ -68,10 +67,75 @@ fun AppButton(
         Text(
             text = text,
             fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colors.onPrimary.copy(alpha = backgroundColorAlpha),
+            color = LocalContentColor.current,
             fontSize = fontSizes,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
+    }
+}
+
+@Composable
+fun AppCircleButton(
+    modifier: Modifier = Modifier,
+    size: AppButtonSize = AppButtonSize.MEDIUM,
+    enabled: Boolean = true,
+    isPrimary: Boolean = true,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    AppBasicButton(
+        modifier = modifier.size(size.height.dp),
+        enabled = enabled,
+        shape = CircleShape,
+        isPrimary = isPrimary,
+        onClick = onClick
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun AppBasicButton(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    shape: RoundedCornerShape = RoundedCornerShape(24.dp),
+    isPrimary: Boolean = true,
+    elevation: Int = 1,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val backgroundColorAlpha by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0.5f
+    )
+
+    val backgroundColor = if (isPrimary) {
+        MaterialTheme.colors.primary
+    } else {
+        val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
+        MaterialTheme.colors.onSurface.copy(alpha = alpha)
+            .compositeOver(MaterialTheme.colors.surface)
+    }
+    val contentColor = if (isPrimary) {
+        MaterialTheme.colors.onPrimary
+    } else {
+        MaterialTheme.colors.onSurface
+    }
+
+    Box(
+        modifier = modifier
+            .animatePressed(
+                enabled = enabled,
+                onClick = onClick
+            )
+            .clip(shape)
+            .background(color = backgroundColor.copy(alpha = backgroundColorAlpha)),
+        contentAlignment = Alignment.Center
+    ) {
+        CompositionLocalProvider(
+            LocalContentColor provides contentColor
+        ) {
+            content()
+        }
     }
 }
 

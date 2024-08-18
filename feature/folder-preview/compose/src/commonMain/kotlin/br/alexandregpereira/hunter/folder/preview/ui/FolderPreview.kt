@@ -17,24 +17,33 @@
 package br.alexandregpereira.hunter.folder.preview.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
-import br.alexandregpereira.hunter.ui.compose.AppButton
+import br.alexandregpereira.hunter.ui.compose.AppButtonSize
+import br.alexandregpereira.hunter.ui.compose.AppCircleButton
 import br.alexandregpereira.hunter.ui.compose.CircleImage
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -43,22 +52,22 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun FolderPreview(
     monsters: List<MonsterFolderPreview>,
-    saveButtonText: String,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(),
     onClick: (index: String) -> Unit = {},
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
+    onClear: () -> Unit = {},
 ) {
     Column(modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(8.dp))
-        Row {
+        Box(modifier = Modifier.fillMaxWidth()) {
             LazyRow(
-                modifier = Modifier.fillMaxWidth(0.7f),
+                modifier = Modifier.fillMaxWidth(),
                 state = lazyListState,
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
+                contentPadding = PaddingValues(start = 16.dp, end = 80.dp)
             ) {
                 items(monsters, key = { it.index }) { state ->
                     CircleImage(
@@ -74,12 +83,22 @@ fun FolderPreview(
                         onLongClick = { onLongClick(state.index) }
                     )
                 }
+                item(key = "clear") {
+                    AppCircleButton(
+                        onClick = onClear,
+                        isPrimary = false,
+                        modifier = Modifier.animateItemPlacement()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = null
+                        )
+                    }
+                }
             }
 
-            AppButton(
-                text = saveButtonText,
-                onClick = onSave,
-                modifier = Modifier.padding(end = 16.dp)
+            StickerButtonMoreOptions(
+                onClick = onSave
             )
         }
 
@@ -87,11 +106,33 @@ fun FolderPreview(
     }
 }
 
+@Composable
+private fun StickerButtonMoreOptions(
+    onClick: () -> Unit,
+) = Box(modifier = Modifier.fillMaxWidth()) {
+    Box(Modifier.align(Alignment.CenterEnd)) {
+        Spacer(
+            modifier = Modifier.height(AppButtonSize.MEDIUM.height.dp)
+                .width(48.dp)
+                .background(MaterialTheme.colors.background)
+                .align(Alignment.CenterEnd)
+        )
+        AppCircleButton(
+            onClick = onClick,
+            modifier = Modifier.padding(end = 16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = null
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
 private fun FolderPreviewPreview() = HunterTheme {
     FolderPreview(
-        saveButtonText = "Save",
         monsters = listOf(
             MonsterFolderPreview(
                 index = "index1",

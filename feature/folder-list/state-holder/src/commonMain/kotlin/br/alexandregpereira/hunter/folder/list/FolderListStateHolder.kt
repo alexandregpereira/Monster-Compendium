@@ -17,12 +17,15 @@
 package br.alexandregpereira.hunter.folder.list
 
 import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
+import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolders
 import br.alexandregpereira.hunter.domain.folder.RemoveMonsterFoldersUseCase
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent.Show
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
 import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -49,6 +52,8 @@ class FolderListStateHolder internal constructor(
     private val analytics: FolderListAnalytics,
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
+    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
+    private val getMonstersByFolders: GetMonstersByFolders,
 ) : UiModel<FolderListState>(stateRecovery.getState()) {
 
     private val strings: FolderListStrings
@@ -93,6 +98,21 @@ class FolderListStateHolder internal constructor(
             .onEach {
                 onItemSelectionClose()
                 loadMonsterFolders()
+            }
+            .launchIn(scope)
+    }
+
+    fun onItemSelectionAddToPreviewClick() {
+        analytics.trackItemSelectionAddToPreviewClick()
+        val folders = state.value.itemSelection
+        getMonstersByFolders(folders.toList())
+            .map { monster -> monster.map { it.index } }
+            .flowOn(dispatcher)
+            .onEach { monsterIndexes ->
+                onItemSelectionClose()
+                folderPreviewEventDispatcher.dispatchEvent(
+                    FolderPreviewEvent.AddMonster(monsterIndexes)
+                )
             }
             .launchIn(scope)
     }
