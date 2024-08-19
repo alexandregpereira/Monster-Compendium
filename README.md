@@ -39,7 +39,7 @@ You can run the app using [Android Studio](https://developer.android.com/studio?
 
 The following is an overview of the key technologies and libraries used in this Kotlin Multiplatform project, each with a brief description and a URL for further information:
 
-- [Jetpack Compose](https://developer.android.com/jetpack/compose): Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform): Declarative framework for sharing UIs across multiple platforms. Based on Kotlin and [Jetpack Compose](https://developer.android.com/jetpack/compose).
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html): A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
 - [Kotlin Flow](https://kotlinlang.org/docs/flow.html): Stream of data that can be computed asynchronously. Built in top of the Kotlin Coroutines.
 - [Koin](https://github.com/InsertKoinIO/koin): A pragmatic lightweight dependency injection framework for Kotlin & Kotlin Multiplatform.
@@ -47,21 +47,6 @@ The following is an overview of the key technologies and libraries used in this 
 - [Ktor-client](https://github.com/ktorio/ktor): A multiplatform asynchronous HTTP client for Kotlin, providing a clean and extensible API for making network requests.
 - [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings): A library that provides a simple and consistent API for persisting key-value data across iOS, Android, and JVM platforms.
 - [Coil Compose](https://coil-kt.github.io/coil/compose): An image loading library for Android backed by Kotlin Coroutines and Jetpack Compose.
-- [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html): A library for parsing and serializing JSON data, seamlessly converting API responses into Kotlin objects.
-
-## App Architecture
-
-The app's architecture is based on the Model-View-Intent (MVI) pattern with Clean Architecture principles, implemented in a multi-module project, as illustrated in the image below:
-
-![image](https://github.com/user-attachments/assets/f3aca4fb-5229-448d-985f-686b7490c333)
-
-### Components Responsibilities
-
-- **UI**: It is responsible for displaying data from the UI State to the user and handling user interactions.
-- **StateHolder**: It holds and send the UI State, manages the app's UI state and logic, and dispatches changes when receiving intents, enabling a reactive UI experience.
-- **UseCases**: It contains the business logic, retrieving data from the Repository interface or coordinating with other use cases to perform complex tasks.
-- **Repository**:  It acts as a mediator between different data sources (network or database) and converts the data models into domain models, ensuring a clean separation of concerns.
-- **DataSources**: It is responsible for fetching and transferring data from a single source, such as an API or a local database, and returning the data in a consistent format.
 
 ## API
 
