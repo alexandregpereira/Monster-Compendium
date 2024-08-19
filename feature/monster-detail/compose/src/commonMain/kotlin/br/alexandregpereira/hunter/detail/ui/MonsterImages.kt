@@ -24,11 +24,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 
-data class ImageState(val url: String, val contentDescription: String)
+data class ImageState(
+    val url: String,
+    val contentDescription: String,
+    val contentScale: AppImageContentScale,
+)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -47,6 +52,7 @@ internal fun MonsterImages(
         imageUrl = image.url,
         contentDescription = image.contentDescription,
         shape = shape,
+        contentScale = image.contentScale,
         modifier = Modifier.monsterAspectRatio().padding(contentPadding)
     )
 }

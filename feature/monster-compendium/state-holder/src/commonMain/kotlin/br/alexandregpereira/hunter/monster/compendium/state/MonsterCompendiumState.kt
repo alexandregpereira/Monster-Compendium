@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
@@ -56,7 +57,6 @@ sealed class MonsterCompendiumItemState {
     ) : MonsterCompendiumItemState()
 }
 
-@ObjCName(name = "MonsterPreviewState", exact = true)
 data class MonsterPreviewState(
     val index: String = "",
     val name: String = "",
@@ -66,6 +66,7 @@ data class MonsterPreviewState(
     val backgroundColorLight: String = "",
     val backgroundColorDark: String = "",
     val isImageHorizontal: Boolean = false,
+    val imageContentScale: MonsterImageContentScale = MonsterImageContentScale.Fit,
 )
 
 fun MonsterCompendiumState.loading(isLoading: Boolean): MonsterCompendiumState {

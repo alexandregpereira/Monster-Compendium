@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.ui.compendium.monster
 
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.resources.Res
 import br.alexandregpereira.hunter.ui.resources.ic_aberration
 import br.alexandregpereira.hunter.ui.resources.ic_beast
@@ -44,8 +45,9 @@ data class MonsterImageState(
     val type: MonsterTypeState,
     val backgroundColor: ColorState,
     val challengeRating: String,
+    val contentScale: AppImageContentScale,
     val isHorizontal: Boolean = false,
-    val contentDescription: String = ""
+    val contentDescription: String = "",
 )
 
 data class ColorState(

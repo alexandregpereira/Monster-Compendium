@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
 import br.alexandregpereira.hunter.ui.compendium.CompendiumColumns
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterCard
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType
@@ -78,6 +79,7 @@ fun MonsterCompendium(
                 ),
                 isHorizontal = enableHorizontalImage && monsterCardState.imageState.isHorizontal,
                 challengeRating = monsterCardState.imageState.challengeRating,
+                contentScale = monsterCardState.imageState.contentScale,
                 onCLick = { onItemCLick(monsterCardState.index) },
                 onLongCLick = { onItemLongCLick(monsterCardState.index) }
             )
@@ -97,7 +99,8 @@ private fun MonsterCompendiumPreview() = Window {
         backgroundColor = ColorState(
             light = "#ffe0e0",
             dark = "#ffe0e0"
-        )
+        ),
+        contentScale = AppImageContentScale.Fit,
     )
     MonsterCompendium(
         items = mutableListOf<CompendiumItemState>(

@@ -95,6 +95,7 @@ private fun MonsterImageData.asState(
         challengeRating = challengeRating,
         xp = xp,
         contentDescription = contentDescription,
+        contentScale = contentScale,
     )
 }
 

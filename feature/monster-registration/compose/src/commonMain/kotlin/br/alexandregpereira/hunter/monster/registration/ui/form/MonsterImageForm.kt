@@ -17,12 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.ColorTextField
@@ -66,8 +67,11 @@ internal fun LazyListScope.MonsterImageForm(
                         imageUrl = infoState.imageUrl,
                         contentDescription = infoState.name,
                         backgroundColor = color,
+                        contentScale = when (infoState.imageContentScale) {
+                            MonsterImageContentScale.Fit -> AppImageContentScale.Fit
+                            MonsterImageContentScale.Crop -> AppImageContentScale.Crop
+                        },
                         shape = RoundedCornerShape(16.dp),
-                        contentScale = ContentScale.Crop,
                         modifier = Modifier.widthIn(max = 500.dp).monsterAspectRatio(
                             isHorizontal = infoState.isImageHorizontal,
                             widthFraction = widthFraction,

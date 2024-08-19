@@ -20,20 +20,27 @@ import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolde
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderType
 
-internal fun List<MonsterFolderCompleteEntity>.asDomain(): List<MonsterFolder> {
-    return this.map { it.asDomain() }
+internal fun List<MonsterFolderCompleteEntity>.asDomain(
+    monsterImageContentScale: MonsterPreviewFolderImageContentScale
+): List<MonsterFolder> {
+    return this.map { it.asDomain(monsterImageContentScale) }
 }
 
-internal fun MonsterFolderCompleteEntity.asDomain(): MonsterFolder {
+internal fun MonsterFolderCompleteEntity.asDomain(
+    monsterImageContentScale: MonsterPreviewFolderImageContentScale
+): MonsterFolder {
     return MonsterFolder(
         name = monsterFolderEntity.folderName,
-        monsters = monsters.asDomainMonsterPreviewFolderEntity()
+        monsters = monsters.asDomainMonsterPreviewFolderEntity(monsterImageContentScale)
     )
 }
 
-internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(): List<MonsterPreviewFolder> {
+internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(
+    monsterImageContentScale: MonsterPreviewFolderImageContentScale
+): List<MonsterPreviewFolder> {
     return map {
         it.run {
             MonsterPreviewFolder(
@@ -45,6 +52,7 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(): List<Mons
                 backgroundColorLight = backgroundColorLight,
                 backgroundColorDark = backgroundColorDark,
                 isHorizontalImage = isHorizontalImage,
+                imageContentScale = monsterImageContentScale,
             )
         }
     }

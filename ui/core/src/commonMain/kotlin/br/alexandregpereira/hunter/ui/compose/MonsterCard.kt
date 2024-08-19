@@ -46,6 +46,7 @@ fun MonsterCard(
     icon: DrawableResource,
     backgroundColor: String,
     challengeRating: String,
+    contentScale: AppImageContentScale,
     isHorizontal: Boolean = false,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
@@ -62,6 +63,7 @@ fun MonsterCard(
         icon = icon,
         backgroundColor = backgroundColor,
         challengeRating = challengeRating,
+        contentScale = contentScale,
     )
 }
 
@@ -130,7 +132,8 @@ private fun MonsterCardPreview() {
             url = "asdasdas",
             backgroundColor = "#ffe3ee",
             challengeRating = "18",
-            icon = Res.drawable.ic_aberration
+            icon = Res.drawable.ic_aberration,
+            contentScale = AppImageContentScale.Crop,
         )
     }
 }

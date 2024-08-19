@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
@@ -45,6 +46,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
@@ -212,7 +214,11 @@ private fun Monster.asState(): MonsterCardState {
                 light = imageData.backgroundColor.light,
                 dark = imageData.backgroundColor.dark
             ),
-            isHorizontal = imageData.isHorizontal
+            isHorizontal = imageData.isHorizontal,
+            contentScale = when (imageData.contentScale) {
+                MonsterImageContentScale.Fit -> AppImageContentScale.Fit
+                MonsterImageContentScale.Crop -> AppImageContentScale.Crop
+            }
         )
     )
 }

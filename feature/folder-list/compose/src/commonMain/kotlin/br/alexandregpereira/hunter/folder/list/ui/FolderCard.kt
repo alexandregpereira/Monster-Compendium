@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.folder.list.FolderCardImageState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.ImageCard
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -81,7 +81,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
-            contentScale = ContentScale.Crop,
+            contentScale = AppImageContentScale.Crop,
             shape = RectangleShape,
         )
     }
@@ -95,7 +95,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
-            contentScale = ContentScale.Crop,
+            contentScale = AppImageContentScale.Crop,
             shape = RectangleShape,
         )
     }
@@ -109,7 +109,7 @@ private fun FolderCardImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
-            contentScale = ContentScale.Crop,
+            contentScale = AppImageContentScale.Crop,
             shape = RectangleShape,
         )
     }

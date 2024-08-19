@@ -17,6 +17,9 @@ interface SettingsStrings {
     val defaultLightBackground: String
     val defaultDarkBackground: String
     val importContent: String
+    val monsterImageContentScale: String
+    val imageContentScaleFit: String
+    val imageContentScaleCrop: String
 }
 
 internal data class SettingsEnStrings(
@@ -34,6 +37,9 @@ internal data class SettingsEnStrings(
     override val defaultLightBackground: String = "Default Image Light Background Color",
     override val defaultDarkBackground: String = "Default Image Dark Background Color",
     override val importContent: String = "Import Shared Content",
+    override val monsterImageContentScale: String = "Monster Image Content Scale",
+    override val imageContentScaleFit: String = "Show entire image",
+    override val imageContentScaleCrop: String = "Expand the image",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -51,6 +57,9 @@ internal data class SettingsPtStrings(
     override val defaultLightBackground: String = "Cor Padrão de Fundo das Imagens Light",
     override val defaultDarkBackground: String = "Cor Padrão de Fundo das Imagens Dark",
     override val importContent: String = "Importar Conteúdo Compartilhado",
+    override val monsterImageContentScale: String = "Escala de Conteúdo de Imagem de Monstro",
+    override val imageContentScaleFit: String = "Mostrar imagem inteira",
+    override val imageContentScaleCrop: String = "Expandir a imagem",
 ) : SettingsStrings
 
 internal data class SettingsEmptyStrings(
@@ -68,6 +77,9 @@ internal data class SettingsEmptyStrings(
     override val defaultLightBackground: String = "",
     override val defaultDarkBackground: String = "",
     override val importContent: String = "",
+    override val monsterImageContentScale: String = "",
+    override val imageContentScaleFit: String = "",
+    override val imageContentScaleCrop: String = "",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

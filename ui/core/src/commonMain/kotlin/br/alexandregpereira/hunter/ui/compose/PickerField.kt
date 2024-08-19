@@ -82,7 +82,7 @@ fun PickerField(
 
 @Preview
 @Composable
-fun PickerFieldPreview() = Window {
+private fun PickerFieldPreview() = Window {
     val text = remember { mutableStateOf("") }
     val options = remember { listOf("Option 1", "Option 2", "Option 3") }
     PickerField(

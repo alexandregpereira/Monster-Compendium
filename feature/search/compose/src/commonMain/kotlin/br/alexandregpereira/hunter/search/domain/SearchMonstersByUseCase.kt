@@ -89,6 +89,7 @@ internal class SearchMonstersByUseCase internal constructor(
                         backgroundColorLight = monster.imageData.backgroundColor.light,
                         backgroundColorDark = monster.imageData.backgroundColor.dark,
                         isHorizontalImage = monster.imageData.isHorizontal,
+                        imageContentScale = monster.imageData.contentScale,
                     )
                 }
             }

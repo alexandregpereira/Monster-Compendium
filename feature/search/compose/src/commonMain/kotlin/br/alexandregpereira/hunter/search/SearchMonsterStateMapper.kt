@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.search
 
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.search.domain.SearchKey
 import br.alexandregpereira.hunter.search.domain.SearchMonsterResult
 import br.alexandregpereira.hunter.search.domain.SearchValueType
@@ -24,6 +25,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 
 internal fun List<SearchMonsterResult>.asState(): List<MonsterCardState> {
     return this.asMonsterCardStates()
@@ -43,7 +45,11 @@ internal fun List<SearchMonsterResult>.asMonsterCardStates(): List<MonsterCardSt
                 ),
                 challengeRating = result.challengeRating,
                 isHorizontal = result.isHorizontalImage,
-                contentDescription = result.name
+                contentDescription = result.name,
+                contentScale = when (result.imageContentScale) {
+                    MonsterImageContentScale.Fit -> AppImageContentScale.Fit
+                    MonsterImageContentScale.Crop -> AppImageContentScale.Crop
+                },
             ),
         )
     }

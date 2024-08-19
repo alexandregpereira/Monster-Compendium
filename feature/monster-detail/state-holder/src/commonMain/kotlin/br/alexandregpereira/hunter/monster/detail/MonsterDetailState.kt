@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.detail
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
@@ -79,6 +80,9 @@ data class MonsterState(
 
     val imageUrl: String
         get() = imageState.url
+
+    val imageContentScale: MonsterImageContentScale
+        get() = imageState.contentScale
 
     fun getBackgroundColor(isDarkTheme: Boolean): String {
         return imageState.backgroundColor.getColor(isDarkTheme)
@@ -155,14 +159,14 @@ data class DamageDiceState(
     val damage: DamageState
 )
 
-@ObjCName(name = "MonsterImageState", exact = true)
 data class MonsterImageState(
     val url: String= "",
     val type: MonsterType = MonsterType.ABERRATION,
     val backgroundColor: ColorState = ColorState(),
     val challengeRating: String = "",
     val xp: String = "",
-    val contentDescription: String = ""
+    val contentDescription: String = "",
+    val contentScale: MonsterImageContentScale = MonsterImageContentScale.Fit,
 )
 
 @ObjCName(name = "ColorState", exact = true)

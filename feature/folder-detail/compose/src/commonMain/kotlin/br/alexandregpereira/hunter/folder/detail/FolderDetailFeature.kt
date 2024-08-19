@@ -22,12 +22,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
 import br.alexandregpereira.hunter.folder.detail.di.FolderDetailStateRecoveryQualifier
 import br.alexandregpereira.hunter.folder.detail.ui.FolderDetailScreen
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -71,7 +73,11 @@ private fun List<MonsterPreviewFolder>.asState(): List<MonsterCardState> = map {
                 ),
                 challengeRating = challengeRating,
                 isHorizontal = isHorizontalImage,
-                contentDescription = name
+                contentDescription = name,
+                contentScale = when (imageContentScale) {
+                    MonsterPreviewFolderImageContentScale.Fit -> AppImageContentScale.Fit
+                    MonsterPreviewFolderImageContentScale.Crop -> AppImageContentScale.Crop
+                }
             )
         )
     }

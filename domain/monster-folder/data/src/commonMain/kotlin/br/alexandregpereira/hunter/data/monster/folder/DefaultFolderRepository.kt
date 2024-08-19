@@ -21,11 +21,16 @@ import br.alexandregpereira.hunter.domain.folder.FolderMonsterPreviewRepository
 import br.alexandregpereira.hunter.domain.folder.MonsterFolderRepository
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
+import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
+import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 internal class DefaultFolderRepository(
-    private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource
+    private val monsterFolderLocalDataSource: MonsterFolderLocalDataSource,
+    private val getAppearanceSettings: GetAppearanceSettings,
 ) : MonsterFolderRepository, FolderMonsterPreviewRepository {
 
     override fun addMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
@@ -33,16 +38,20 @@ internal class DefaultFolderRepository(
     }
 
     override fun getMonsterFolders(): Flow<List<MonsterFolder>> {
-        return monsterFolderLocalDataSource.getMonsterFolders().map { it.asDomain() }
+        return monsterFolderLocalDataSource.getMonsterFolders().map {
+            it.asDomain(getImageContentScale())
+        }
     }
 
     override fun getMonstersFromFolder(folderName: String): Flow<MonsterFolder?> {
-        return monsterFolderLocalDataSource.getMonstersFromFolder(folderName).map { it?.asDomain() }
+        return monsterFolderLocalDataSource.getMonstersFromFolder(folderName).map {
+            it?.asDomain(getImageContentScale())
+        }
     }
 
     override fun getMonstersFromFolders(foldersName: List<String>): Flow<List<MonsterPreviewFolder>> {
         return monsterFolderLocalDataSource.getMonstersFromFolders(foldersName)
-            .map { it.asDomainMonsterPreviewFolderEntity() }
+            .map { it.asDomainMonsterPreviewFolderEntity(getImageContentScale()) }
     }
 
     override fun removeMonsters(folderName: String, indexes: List<String>): Flow<Unit> {
@@ -53,10 +62,19 @@ internal class DefaultFolderRepository(
         indexes: List<String>
     ): Flow<List<MonsterPreviewFolder>> {
         return monsterFolderLocalDataSource.getFolderMonsterPreviewsByIds(indexes)
-            .map { it.asDomainMonsterPreviewFolderEntity() }
+            .map { it.asDomainMonsterPreviewFolderEntity(getImageContentScale()) }
     }
 
     override fun removeMonsterFolders(folderNames: List<String>): Flow<Unit> {
         return monsterFolderLocalDataSource.removeMonsterFolders(folderNames)
+    }
+
+    private suspend fun getImageContentScale(): MonsterPreviewFolderImageContentScale {
+        return getAppearanceSettings().single().let { settings ->
+            when (settings.imageContentScale) {
+                AppSettingsImageContentScale.Fit -> MonsterPreviewFolderImageContentScale.Fit
+                AppSettingsImageContentScale.Crop -> MonsterPreviewFolderImageContentScale.Crop
+            }
+        }
     }
 }
