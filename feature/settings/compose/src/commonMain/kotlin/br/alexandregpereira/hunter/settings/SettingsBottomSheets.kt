@@ -50,7 +50,10 @@ fun SettingsBottomSheets() {
     DonateScreen(
         isOpen = state.donateIsOpen,
         state = state.donateState,
+        strings = state.strings.donateStrings,
         onClose = stateHolder::onDonateCloseClick,
-        onPixCodeCopy = stateHolder::onPixCodeCopyClick
+        onPixCodeCopy = stateHolder::onPixCodeCopyClick,
+        onPixKeyCopy = stateHolder::onPixKeyCopyClick,
+        onBuyMeCoffeeClick = stateHolder::onBuyMeCoffeeClick,
     )
 }
