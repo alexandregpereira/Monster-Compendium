@@ -21,6 +21,17 @@ interface SettingsStrings {
     val imageContentScaleFit: String
     val imageContentScaleCrop: String
     val openGitHubProject: String
+    val donateStrings: DonateStrings
+}
+
+interface DonateStrings {
+    val buyMeACoffee: String
+    val donateDescription: String
+    val fromBrazil: String
+    val pixCopyAndPaste: String
+    val copyPixCode: String
+    val fromOtherCountries: String
+    val fromOtherCountriesDescription: String
 }
 
 internal data class SettingsEnStrings(
@@ -42,6 +53,15 @@ internal data class SettingsEnStrings(
     override val imageContentScaleFit: String = "Show entire image",
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
+    override val donateStrings: DonateStrings = object : DonateStrings {
+        override val buyMeACoffee: String = "Buy me a Coffee"
+        override val donateDescription: String = "If you are enjoying this app and want to help me maintain it, please consider buying me a coffee."
+        override val fromBrazil: String = "From Brazil"
+        override val pixCopyAndPaste: String = "Pix Copia e Cola"
+        override val copyPixCode: String = "Copy Pix Code"
+        override val fromOtherCountries: String = "From Other Countries"
+        override val fromOtherCountriesDescription: String = "Soon"
+    }
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -63,27 +83,15 @@ internal data class SettingsPtStrings(
     override val imageContentScaleFit: String = "Mostrar imagem inteira",
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
-) : SettingsStrings
-
-internal data class SettingsEmptyStrings(
-    override val additionalContent: String = "",
-    override val monsterImagesJson: String = "",
-    override val alternativeSourcesJson: String = "",
-    override val manageMonsterContent: String = "",
-    override val sync: String = "",
-    override val manageAdvancedSettings: String = "",
-    override val settingsTitle: String = "",
-    override val languageLabel: String = "",
-    override val save: String = "",
-    override val appearanceSettingsTitle: String = "",
-    override val forceLightImageBackground: String = "",
-    override val defaultLightBackground: String = "",
-    override val defaultDarkBackground: String = "",
-    override val importContent: String = "",
-    override val monsterImageContentScale: String = "",
-    override val imageContentScaleFit: String = "",
-    override val imageContentScaleCrop: String = "",
-    override val openGitHubProject: String = "",
+    override val donateStrings: DonateStrings = object : DonateStrings {
+        override val buyMeACoffee: String = "Compre-me um Café"
+        override val donateDescription: String = "Se você está gostando deste aplicativo e quer me ajudar a mantê-lo, considere me comprar um café."
+        override val fromBrazil: String = "Do Brasil"
+        override val pixCopyAndPaste: String = "Pix Copia e Cola"
+        override val copyPixCode: String = "Copiar código Pix"
+        override val fromOtherCountries: String = "De Outros Países"
+        override val fromOtherCountriesDescription: String = "Em breve"
+    }
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

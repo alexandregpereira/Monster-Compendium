@@ -32,4 +32,6 @@ internal interface SettingsViewIntent {
     fun onImport()
 
     fun onOpenGitHubProjectClick()
+
+    fun onDonateClick()
 }

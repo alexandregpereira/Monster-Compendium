@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.ui.strings
+import br.alexandregpereira.hunter.strings.format
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
@@ -80,7 +81,7 @@ internal fun LazyListScope.MonsterImageForm(
                     Spacer(modifier = Modifier.padding(4.dp))
                     val aspectRatio = getMonsterImageAspectRatio(infoState.isImageHorizontal)
                     Text(
-                        text = strings.imageProportion(aspectRatio.toString()),
+                        text = strings.imageProportion.format(aspectRatio),
                         fontWeight = FontWeight.Light,
                         fontSize = 14.sp,
                     )

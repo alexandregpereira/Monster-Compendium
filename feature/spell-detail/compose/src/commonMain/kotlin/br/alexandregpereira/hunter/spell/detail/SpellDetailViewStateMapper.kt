@@ -29,7 +29,7 @@ internal fun Spell.asState(strings: SpellDetailStrings): SpellState {
     return SpellState(
         index = index,
         name = name,
-        subtitle = strings.subtitle(level, school.name(strings)),
+        subtitle = strings.formatSubTitle(level, school.name(strings)),
         castingTime = castingTime,
         components = components,
         duration = durationText,

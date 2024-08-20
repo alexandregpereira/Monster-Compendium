@@ -30,6 +30,7 @@ import br.alexandregpereira.hunter.search.domain.SearchKeySymbolAnd
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.strings.formatWithPlural
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -87,7 +88,12 @@ internal class SearchStateHolder(
                     copy(
                         monsterRows = monsterRows,
                         totalResults = totalResults,
-                        searchResults = appLocalization.getStrings().searchResults(totalResults)
+                        searchResults = appLocalization.getStrings().run {
+                            searchResultsSingular.formatWithPlural(
+                                totalResults,
+                                searchResultsPlural
+                            )
+                        }
                     )
                 }
             }
@@ -111,7 +117,10 @@ internal class SearchStateHolder(
             setState {
                 copy(
                     searchLabel = strings.search,
-                    searchResults = strings.searchResults(state.value.totalResults)
+                    searchResults = strings.searchResultsSingular.formatWithPlural(
+                        state.value.totalResults,
+                        strings.searchResultsPlural
+                    )
                 )
             }
         }.launchIn(scope)

@@ -192,6 +192,19 @@ internal class SettingsStateHolder(
         ).also { sendAction(it) }
     }
 
+    override fun onDonateClick() {
+        analytics.trackDonateClick()
+        setState { copy(donateIsOpen = true) }
+    }
+
+    fun onDonateCloseClick() {
+        setState { copy(donateIsOpen = false) }
+    }
+
+    fun onPixCodeCopyClick() {
+        analytics.trackPixCodeCopyClick()
+    }
+
     private fun load() {
         getMonsterImageJsonUrl()
             .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->

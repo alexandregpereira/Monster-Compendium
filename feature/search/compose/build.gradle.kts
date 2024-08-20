@@ -11,6 +11,7 @@ multiplatform {
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:search"))
+        implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))

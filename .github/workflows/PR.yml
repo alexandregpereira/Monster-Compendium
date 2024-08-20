@@ -5,6 +5,7 @@ on:
     paths-ignore:
       - '**.md'
       - 'media/**'
+      - 'content/**'
 
 jobs:
   multiplatform-build:
