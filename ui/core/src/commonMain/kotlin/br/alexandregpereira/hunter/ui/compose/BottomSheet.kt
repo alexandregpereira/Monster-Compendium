@@ -100,6 +100,7 @@ fun BottomSheet(
                     ).fillMaxWidth(
                         fraction = widthFraction.takeIf { screenSize.isLandscape } ?: 1f
                     ).noIndicationClick(),
+                    level = 0,
                 ) {
                     Column(
                         modifier = modifier.padding(

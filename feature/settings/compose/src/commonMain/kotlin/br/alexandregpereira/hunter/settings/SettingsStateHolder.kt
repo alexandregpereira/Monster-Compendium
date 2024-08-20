@@ -205,6 +205,17 @@ internal class SettingsStateHolder(
         analytics.trackPixCodeCopyClick()
     }
 
+    fun onPixKeyCopyClick() {
+        analytics.trackPixKeyCopyClick()
+    }
+
+    fun onBuyMeCoffeeClick() {
+        analytics.trackBuyMeCoffeeClick()
+        SettingsViewAction.GoToExternalUrl(
+            url = "https://ko-fi.com/monstercompendium"
+        ).also { sendAction(it) }
+    }
+
     private fun load() {
         getMonsterImageJsonUrl()
             .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->

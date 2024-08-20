@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -32,4 +33,10 @@ androidLibrary {
 
 composeCompiler {
     enableStrongSkippingMode = true
+}
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "br.alexandregpereira.hunter.settings.ui.resources"
+    generateResClass = always
 }
