@@ -8,6 +8,7 @@ multiplatform {
     androidMain()
     commonMain {
         implementation(project(":core:state-holder"))
+        implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))

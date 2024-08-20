@@ -27,7 +27,15 @@ internal data class SettingsViewState(
     val appearanceSettingsOpened: Boolean = false,
     val settingsState: SettingsState = SettingsState(),
     val appearanceState: AppearanceSettingsState = AppearanceSettingsState(),
-    val strings: SettingsStrings = SettingsEmptyStrings(),
+    val strings: SettingsStrings = SettingsEnStrings(),
+    val donateIsOpen: Boolean = false,
+    val donateState: DonateState = DonateState(strings = strings.donateStrings),
+)
+
+internal data class DonateState(
+    val coverImageUrl: String = "https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium/main/content/media/buy-me-coffee-cover.png",
+    val pixCode: String = "00020126580014BR.GOV.BCB.PIX01365bc29fc7-557c-4935-bdad-1d1f53dd29e65204000053039865802BR5923Alexandre Gomes Pereira6009SAO PAULO62140510FdKlqycExz6304BCEF",
+    val strings: DonateStrings,
 )
 
 internal data class SettingsState(

@@ -89,4 +89,16 @@ internal class SettingsAnalytics(
             eventName = "Settings - appearance settings click",
         )
     }
+
+    fun trackDonateClick() {
+        analytics.track(
+            eventName = "Settings - donate click",
+        )
+    }
+
+    fun trackPixCodeCopyClick() {
+        analytics.track(
+            eventName = "Donate - pix code copy click",
+        )
+    }
 }

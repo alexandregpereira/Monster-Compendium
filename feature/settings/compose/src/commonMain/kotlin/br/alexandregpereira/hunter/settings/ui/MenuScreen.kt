@@ -43,48 +43,56 @@ internal fun MenuScreen(
     contentPadding: PaddingValues = PaddingValues(),
     viewIntent: SettingsViewIntent,
 ) {
+    val strings = state.strings
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(Modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
             MenuItem(
-                text = state.strings.settingsTitle,
+                text = strings.settingsTitle,
                 onClick = viewIntent::onSettingsClick
             )
 
             Divider()
 
             MenuItem(
-                text = state.strings.manageAdvancedSettings,
+                text = strings.manageAdvancedSettings,
                 onClick = viewIntent::onAdvancedSettingsClick
             )
 
             Divider()
 
             MenuItem(
-                text = state.strings.appearanceSettingsTitle,
+                text = strings.appearanceSettingsTitle,
                 onClick = viewIntent::onAppearanceSettingsClick
             )
 
             Divider()
 
             MenuItem(
-                text = state.strings.importContent,
+                text = strings.importContent,
                 onClick = viewIntent::onImport
             )
 
             Divider()
 
             MenuItem(
-                text = state.strings.manageMonsterContent,
+                text = strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
             )
 
             Divider()
 
             MenuItem(
-                text = state.strings.openGitHubProject,
+                text = strings.openGitHubProject,
                 onClick = viewIntent::onOpenGitHubProjectClick
+            )
+
+            Divider()
+
+            MenuItem(
+                text = strings.donateStrings.buyMeACoffee,
+                onClick = viewIntent::onDonateClick
             )
         }
 

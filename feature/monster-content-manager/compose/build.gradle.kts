@@ -8,6 +8,7 @@ multiplatform {
     androidMain()
     commonMain {
         implementation(project(":core:ui:state-recovery"))
+        implementation(project(":core:uuid"))
         implementation(project(":feature:monster-content-manager:state-holder"))
         implementation(project(":ui:core"))
         implementation(project(":ui:monster-compendium"))

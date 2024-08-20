@@ -2,9 +2,11 @@ package br.alexandregpereira.hunter.spell.detail
 
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
+import br.alexandregpereira.hunter.strings.format
 
 internal interface SpellDetailStrings {
-    val subtitle: (Int, String) -> String
+    val subtitleCantrip: String
+    val subtitleLevel: String
     val castingTime: String
     val range: String
     val components: String
@@ -30,9 +32,8 @@ internal interface SpellDetailStrings {
 }
 
 internal data class SpellDetailEnStrings(
-    override val subtitle: (Int, String) -> String = { level, school ->
-        if (level == 0) "Cantrip, $school" else "Level $level, $school"
-    },
+    override val subtitleCantrip: String = "Cantrip, {0}",
+    override val subtitleLevel: String = "Level {0}, {1}",
     override val castingTime: String = "Casting Time:",
     override val range: String = "Range:",
     override val components: String = "Components:",
@@ -58,9 +59,8 @@ internal data class SpellDetailEnStrings(
 ) : SpellDetailStrings
 
 internal data class SpellDetailPtStrings(
-    override val subtitle: (Int, String) -> String = { level, school ->
-        if (level == 0) "Truque, $school" else "$level° círculo, $school"
-    },
+    override val subtitleCantrip: String = "Truque, {0}",
+    override val subtitleLevel: String = "Nível {0}, {1}",
     override val castingTime: String = "Tempo de Conjuração:",
     override val range: String = "Alcance:",
     override val components: String = "Componentes:",
@@ -84,6 +84,10 @@ internal data class SpellDetailPtStrings(
     override val schoolTransmutation: String = "transmutação",
     override val cantrip: String = "Truque",
 ) : SpellDetailStrings
+
+internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String): String {
+    return if (level == 0) subtitleCantrip.format(school) else subtitleLevel.format(level, school)
+}
 
 internal fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
 

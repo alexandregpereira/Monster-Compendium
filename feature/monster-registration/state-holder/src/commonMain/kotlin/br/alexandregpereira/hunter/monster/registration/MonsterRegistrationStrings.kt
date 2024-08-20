@@ -113,7 +113,7 @@ interface MonsterRegistrationStrings {
     val imageFormTitle: String
     val imageHorizontalSwitchLabel: String
     val darkThemeSwitchLabel: String
-    val imageProportion: (String) -> String
+    val imageProportion: String
     val challengeRating: String
 }
 
@@ -227,7 +227,7 @@ internal data class MonsterRegistrationEnStrings(
     override val imageFormTitle: String = "Image",
     override val imageHorizontalSwitchLabel: String = "Landscape Image",
     override val darkThemeSwitchLabel: String = "Preview Dark Theme",
-    override val imageProportion: (String) -> String = { "Proportion - $it" },
+    override val imageProportion: String = "Proportion - {0}",
     override val challengeRating: String = "Challenge Rating",
 ) : MonsterRegistrationStrings
 
@@ -341,7 +341,7 @@ internal data class MonsterRegistrationPtStrings(
     override val imageFormTitle: String = "Imagem",
     override val imageHorizontalSwitchLabel: String = "Imagem Landscape",
     override val darkThemeSwitchLabel: String = "Pré visualizar em Tema Escuro",
-    override val imageProportion: (String) -> String = { "Proporção - $it" },
+    override val imageProportion: String = "Proporção - {0}",
     override val challengeRating: String = "Nível de Desafio",
 ) : MonsterRegistrationStrings
 

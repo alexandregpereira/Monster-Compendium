@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEmptyStrings
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
+import br.alexandregpereira.hunter.strings.format
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.AppCard
@@ -55,7 +56,7 @@ internal fun MonsterContentCard(
         Cover(
             coverImageUrl = coverImageUrl,
             name = name,
-            totalMonsters = strings.totalMonsters(totalMonsters),
+            totalMonsters = strings.totalMonsters.format(totalMonsters),
             modifier = Modifier.fillMaxWidth()
         )
 
