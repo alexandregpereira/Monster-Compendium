@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
@@ -60,7 +61,8 @@ internal class SettingsStateHolder(
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
-) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent {
+) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
+    MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
     private val strings: SettingsStrings
         get() = getSettingsStrings(appLocalization.getLanguage())
@@ -140,6 +142,7 @@ internal class SettingsStateHolder(
     }
 
     override fun onAppearanceSettingsClick() {
+        analytics.trackAppearanceSettingsClick()
         fillAppearanceSettingsState()
         setState { copy(appearanceSettingsOpened = true) }
     }
@@ -149,6 +152,7 @@ internal class SettingsStateHolder(
     }
 
     override fun onAppearanceSettingsSaveClick() {
+        analytics.trackAppearanceSettingsSaveClick()
         onAppearanceSettingsCloseClick()
         val appearanceState = state.value.appearanceState
         flow {
@@ -177,7 +181,15 @@ internal class SettingsStateHolder(
     }
 
     override fun onImport() {
+        analytics.trackImportContentClick()
         shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
+    }
+
+    override fun onOpenGitHubProjectClick() {
+        analytics.trackOpenGitHubProjectClick()
+        SettingsViewAction.GoToExternalUrl(
+            url = "https://github.com/alexandregpereira/Monster-Compendium"
+        ).also { sendAction(it) }
     }
 
     private fun load() {

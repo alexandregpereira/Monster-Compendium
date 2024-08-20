@@ -65,4 +65,28 @@ internal class SettingsAnalytics(
             )
         )
     }
+
+    fun trackOpenGitHubProjectClick() {
+        analytics.track(
+            eventName = "Settings - open GitHub project click",
+        )
+    }
+
+    fun trackImportContentClick() {
+        analytics.track(
+            eventName = "Settings - import content click",
+        )
+    }
+
+    fun trackAppearanceSettingsSaveClick() {
+        analytics.track(
+            eventName = "Settings - appearance settings save click",
+        )
+    }
+
+    fun trackAppearanceSettingsClick() {
+        analytics.track(
+            eventName = "Settings - appearance settings click",
+        )
+    }
 }

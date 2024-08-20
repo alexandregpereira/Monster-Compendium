@@ -79,6 +79,13 @@ internal fun MenuScreen(
                 text = state.strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
             )
+
+            Divider()
+
+            MenuItem(
+                text = state.strings.openGitHubProject,
+                onClick = viewIntent::onOpenGitHubProjectClick
+            )
         }
 
         if (versionName.isNotBlank()) {
