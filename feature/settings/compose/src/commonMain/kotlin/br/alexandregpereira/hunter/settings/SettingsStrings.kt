@@ -20,6 +20,7 @@ interface SettingsStrings {
     val monsterImageContentScale: String
     val imageContentScaleFit: String
     val imageContentScaleCrop: String
+    val openGitHubProject: String
 }
 
 internal data class SettingsEnStrings(
@@ -29,7 +30,7 @@ internal data class SettingsEnStrings(
     override val manageMonsterContent: String = "Manage Monsters Content",
     override val sync: String = "Sync",
     override val manageAdvancedSettings: String = "Advanced Settings",
-    override val settingsTitle: String = "Settings",
+    override val settingsTitle: String = "Language",
     override val languageLabel: String = "Language",
     override val save: String = "Save",
     override val appearanceSettingsTitle: String = "Appearance",
@@ -40,6 +41,7 @@ internal data class SettingsEnStrings(
     override val monsterImageContentScale: String = "Monster Image Content Scale",
     override val imageContentScaleFit: String = "Show entire image",
     override val imageContentScaleCrop: String = "Expand the image",
+    override val openGitHubProject: String = "Open GitHub Project",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -49,7 +51,7 @@ internal data class SettingsPtStrings(
     override val manageMonsterContent: String = "Gerenciar Conteúdo de Monstros",
     override val sync: String = "Sincronizar",
     override val manageAdvancedSettings: String = "Configurações Avançadas",
-    override val settingsTitle: String = "Configurações",
+    override val settingsTitle: String = "Idioma",
     override val languageLabel: String = "Idioma",
     override val save: String = "Salvar",
     override val appearanceSettingsTitle: String = "Aparência",
@@ -60,6 +62,7 @@ internal data class SettingsPtStrings(
     override val monsterImageContentScale: String = "Escala de Conteúdo de Imagem de Monstro",
     override val imageContentScaleFit: String = "Mostrar imagem inteira",
     override val imageContentScaleCrop: String = "Expandir a imagem",
+    override val openGitHubProject: String = "Abrir Projeto no GitHub",
 ) : SettingsStrings
 
 internal data class SettingsEmptyStrings(
@@ -80,6 +83,7 @@ internal data class SettingsEmptyStrings(
     override val monsterImageContentScale: String = "",
     override val imageContentScaleFit: String = "",
     override val imageContentScaleCrop: String = "",
+    override val openGitHubProject: String = "",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

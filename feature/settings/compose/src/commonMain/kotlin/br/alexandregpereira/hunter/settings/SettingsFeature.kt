@@ -18,8 +18,11 @@ package br.alexandregpereira.hunter.settings
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalUriHandler
 import br.alexandregpereira.hunter.settings.ui.MenuScreen
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.koinInject
 
 @Composable
@@ -28,6 +31,16 @@ fun SettingsFeature(
     contentPadding: PaddingValues,
 ) {
     val viewModel: SettingsStateHolder = koinInject()
+
+    val uriHandler = LocalUriHandler.current
+    LaunchedEffect(viewModel, uriHandler) {
+        viewModel.action.collectLatest { action ->
+            when (action) {
+                is SettingsViewAction.GoToExternalUrl -> uriHandler.openUri(action.url)
+            }
+        }
+    }
+
     MenuScreen(
         state = viewModel.state.collectAsState().value,
         versionName = versionName,
