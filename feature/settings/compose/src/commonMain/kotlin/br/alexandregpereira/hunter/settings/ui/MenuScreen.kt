@@ -49,6 +49,13 @@ internal fun MenuScreen(
     ) {
         Column(Modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
             MenuItem(
+                text = strings.openGitHubProject,
+                onClick = viewIntent::onOpenGitHubProjectClick
+            )
+
+            Divider()
+
+            MenuItem(
                 text = strings.settingsTitle,
                 onClick = viewIntent::onSettingsClick
             )
@@ -79,13 +86,6 @@ internal fun MenuScreen(
             MenuItem(
                 text = strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
-            )
-
-            Divider()
-
-            MenuItem(
-                text = strings.openGitHubProject,
-                onClick = viewIntent::onOpenGitHubProjectClick
             )
 
             Divider()
