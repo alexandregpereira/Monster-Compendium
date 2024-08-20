@@ -22,7 +22,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -41,7 +40,7 @@ fun CircleImage(
         contentDescription = contentDescription,
         shape = CircleShape,
         backgroundColor = backgroundColor,
-        contentScale = ContentScale.Crop,
+        contentScale = AppImageContentScale.Crop,
         modifier = modifier
             .size(size)
             .animatePressed(

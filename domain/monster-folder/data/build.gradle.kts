@@ -7,6 +7,7 @@ multiplatform {
     commonMain {
         implementation(project(":domain:monster:data"))
         implementation(project(":domain:monster-folder:core"))
+        implementation(project(":domain:settings:core"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.kotlin.datetime)
         implementation(libs.koin.core)

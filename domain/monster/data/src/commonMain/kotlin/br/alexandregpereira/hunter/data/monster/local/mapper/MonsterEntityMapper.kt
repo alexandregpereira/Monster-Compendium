@@ -24,27 +24,34 @@ import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 
-fun List<MonsterCompleteEntity>.toDomain(): List<Monster> {
+fun List<MonsterCompleteEntity>.toDomain(
+    monsterImageContentScale: MonsterImageContentScale,
+): List<Monster> {
     return this.map {
-        it.toDomain()
+        it.toDomain(monsterImageContentScale)
     }
 }
 
-fun List<MonsterEntity>.toDomainMonsterEntity(): List<Monster> {
+fun List<MonsterEntity>.toDomainMonsterEntity(
+    monsterImageContentScale: MonsterImageContentScale,
+): List<Monster> {
     return this.map {
-        it.toDomain()
+        it.toDomain(monsterImageContentScale)
     }
 }
 
-internal fun MonsterCompleteEntity.toDomain(): Monster {
+internal fun MonsterCompleteEntity.toDomain(
+    monsterImageContentScale: MonsterImageContentScale,
+): Monster {
     val monster = this.monster
-    return monster.toDomain().copy(
+    return monster.toDomain(monsterImageContentScale).copy(
         speed = this.speed?.toDomain() ?: Speed(hover = false, values = emptyList()),
         abilityScores = this.abilityScores.toDomain(),
         savingThrows = this.savingThrows.toDomain(),
@@ -114,7 +121,9 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
     return this.map { it.toEntity() }
 }
 
-private fun MonsterEntity.toDomain(): Monster {
+private fun MonsterEntity.toDomain(
+    monsterImageContentScale: MonsterImageContentScale,
+): Monster {
     val monster = this
     return Monster(
         index = monster.index,
@@ -127,7 +136,8 @@ private fun MonsterEntity.toDomain(): Monster {
                 light = monster.backgroundColorLight,
                 dark = monster.backgroundColorDark
             ),
-            isHorizontal = monster.isHorizontalImage
+            isHorizontal = monster.isHorizontalImage,
+            contentScale = monsterImageContentScale
         ),
         subtype = monster.subtype,
         group = monster.group,

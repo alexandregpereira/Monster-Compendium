@@ -62,6 +62,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType.CELESTIAL
 import br.alexandregpereira.hunter.monster.detail.ColorState
 import br.alexandregpereira.hunter.monster.detail.MonsterImageState
@@ -69,6 +70,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterState
 import br.alexandregpereira.hunter.monster.detail.SpeedState
 import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.AppBarIcon
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.BoxCloseButton
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
@@ -261,7 +263,18 @@ private fun MonsterImageCompose(
             )
     ) {
         MonsterImages(
-            images = monsters.map { ImageState(it.imageUrl, it.name) },
+            images = remember(monsters) {
+                monsters.map {
+                    ImageState(
+                        url = it.imageUrl,
+                        contentDescription = it.name,
+                        contentScale = when (it.imageContentScale) {
+                            MonsterImageContentScale.Fit -> AppImageContentScale.Fit
+                            MonsterImageContentScale.Crop -> AppImageContentScale.Crop
+                        },
+                    )
+                }
+            },
             pagerState = pagerState,
             shape = cardShape,
         )

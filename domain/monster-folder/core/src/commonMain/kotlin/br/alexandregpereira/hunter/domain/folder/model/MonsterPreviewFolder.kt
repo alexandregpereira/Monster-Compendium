@@ -24,5 +24,11 @@ data class MonsterPreviewFolder(
     val imageUrl: String = "",
     val backgroundColorLight: String,
     val backgroundColorDark: String,
+    val imageContentScale: MonsterPreviewFolderImageContentScale,
     val isHorizontalImage: Boolean = false,
 )
+
+enum class MonsterPreviewFolderImageContentScale {
+    Fit,
+    Crop
+}

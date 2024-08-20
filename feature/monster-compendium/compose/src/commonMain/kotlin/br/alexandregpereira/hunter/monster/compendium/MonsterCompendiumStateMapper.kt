@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium
 
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
@@ -24,6 +25,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 
@@ -54,7 +56,11 @@ private fun MonsterPreviewState.asState(): MonsterCardState {
                 light = backgroundColorLight,
                 dark = backgroundColorDark
             ),
-            isHorizontal = isImageHorizontal
+            isHorizontal = isImageHorizontal,
+            contentScale = when (imageContentScale) {
+                MonsterImageContentScale.Fit -> AppImageContentScale.Fit
+                MonsterImageContentScale.Crop -> AppImageContentScale.Crop
+            },
         )
     )
 }

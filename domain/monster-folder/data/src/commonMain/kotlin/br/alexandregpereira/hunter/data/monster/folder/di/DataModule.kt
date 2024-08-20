@@ -28,10 +28,10 @@ import org.koin.dsl.module
 val monsterFolderDataModule = module {
     factory<MonsterFolderLocalDataSource> { DefaultMonsterFolderLocalDataSource(get(), get()) }
     factory {
-        createMonsterFolderRepository() ?: DefaultFolderRepository(get())
+        createMonsterFolderRepository() ?: DefaultFolderRepository(get(), get())
     }
     factory {
-        createFolderMonsterPreviewRepository() ?: DefaultFolderRepository(get())
+        createFolderMonsterPreviewRepository() ?: DefaultFolderRepository(get(), get())
     }
 }.apply { includes(getAdditionalModule()) }
 

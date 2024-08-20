@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.uuid.generateUUID
 
 data class MonsterRegistrationState(
@@ -64,6 +65,7 @@ data class MonsterInfoState(
     val typeIndex: Int = 0,
     val typeOptions: List<String> = emptyList(),
     val challengeRating: String = "",
+    val imageContentScale: MonsterImageContentScale = MonsterImageContentScale.Fit,
 ) {
     val type: String = typeOptions.getOrNull(typeIndex).orEmpty()
 }

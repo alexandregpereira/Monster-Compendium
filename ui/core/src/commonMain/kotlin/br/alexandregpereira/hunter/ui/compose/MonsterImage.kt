@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +42,7 @@ fun MonsterImage(
     icon: DrawableResource,
     backgroundColor: String,
     challengeRating: String,
+    contentScale: AppImageContentScale,
     modifier: Modifier = Modifier,
     borderColor: Color = MaterialTheme.colors.surface,
     contentDescription: String = "",
@@ -55,7 +55,7 @@ fun MonsterImage(
             imageUrl = url,
             contentDescription = contentDescription,
             backgroundColor = backgroundColor,
-            contentScale = ContentScale.Crop,
+            contentScale = contentScale,
         )
 
         ChallengeRatingCircle(
@@ -113,7 +113,8 @@ fun MonsterImagePreview() = HunterTheme {
         backgroundColor = "#ffe3ee",
         contentDescription = "Anything",
         challengeRating = "18",
-        icon = Res.drawable.ic_aberration
+        icon = Res.drawable.ic_aberration,
+        contentScale = AppImageContentScale.Fit,
     )
 }
 
@@ -125,6 +126,7 @@ fun MonsterImageBlackBackgroundPreview() = HunterTheme {
         backgroundColor = "#000000",
         contentDescription = "Anything",
         challengeRating = "18",
-        icon = Res.drawable.ic_aberration
+        icon = Res.drawable.ic_aberration,
+        contentScale = AppImageContentScale.Fit,
     )
 }

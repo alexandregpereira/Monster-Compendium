@@ -16,6 +16,7 @@
 
 package br.alexandregpereira.hunter.search.domain
 
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType
 
 internal data class SearchMonsterResult(
@@ -26,5 +27,6 @@ internal data class SearchMonsterResult(
     val imageUrl: String,
     val backgroundColorLight: String,
     val backgroundColorDark: String,
-    val isHorizontalImage: Boolean = false
+    val imageContentScale: MonsterImageContentScale,
+    val isHorizontalImage: Boolean = false,
 )

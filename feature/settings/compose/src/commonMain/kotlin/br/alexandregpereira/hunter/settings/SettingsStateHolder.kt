@@ -18,6 +18,7 @@ package br.alexandregpereira.hunter.settings
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
@@ -33,6 +34,7 @@ import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -154,6 +156,10 @@ internal class SettingsStateHolder(
                 forceLightImageBackground = appearanceState.forceLightImageBackground,
                 defaultLightBackground = appearanceState.defaultLightBackground,
                 defaultDarkBackground = appearanceState.defaultDarkBackground,
+                imageContentScale = when (appearanceState.monsterImageContentSelected) {
+                    AppImageContentScale.Fit -> AppSettingsImageContentScale.Fit
+                    AppImageContentScale.Crop -> AppSettingsImageContentScale.Crop
+                }
             ).let { appearance ->
                 emit(appearance)
             }
@@ -207,7 +213,8 @@ internal class SettingsStateHolder(
                     appearanceState = AppearanceSettingsState(
                         forceLightImageBackground = appearanceSettings.forceLightImageBackground,
                         defaultLightBackground = appearanceSettings.defaultLightBackground,
-                        defaultDarkBackground = appearanceSettings.defaultDarkBackground
+                        defaultDarkBackground = appearanceSettings.defaultDarkBackground,
+                        monsterImageContentSelectedOptionIndex = appearanceSettings.imageContentScale.ordinal
                     )
                 )
             }

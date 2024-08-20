@@ -13,7 +13,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,6 +22,7 @@ import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.AppCard
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.CoilImage
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
@@ -93,7 +93,7 @@ private fun Cover(
             imageUrl = coverImageUrl,
             contentDescription = name,
             shape = Shapes.large,
-            contentScale = ContentScale.Crop,
+            contentScale = AppImageContentScale.Crop,
             modifier = Modifier
                 .background(color = MaterialTheme.colors.surface, shape = Shapes.large)
                 .height(IMAGE_HEIGHT.dp)

@@ -85,8 +85,13 @@ fun Float.getChallengeRatingFormatted(): String {
 data class MonsterImageData(
     val url: String = "",
     val backgroundColor: Color = Color(),
-    val isHorizontal: Boolean = false
+    val isHorizontal: Boolean = false,
+    val contentScale: MonsterImageContentScale = MonsterImageContentScale.Fit,
 )
+
+enum class MonsterImageContentScale {
+    Fit, Crop
+}
 
 data class Color(
     val light: String = "",

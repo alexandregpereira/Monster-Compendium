@@ -38,14 +38,17 @@ fun CoilImage(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
     backgroundColor: Color? = null,
-    contentScale: ContentScale = ContentScale.Fit,
+    contentScale: AppImageContentScale,
     graphicsLayerBlock: GraphicsLayerScope.() -> Unit = {},
 ) = AsyncImage(
     model = ImageRequest.Builder(LocalPlatformContext.current)
         .data(data = imageUrl)
         .crossfade(durationMillis = 300)
         .build(),
-    contentScale = contentScale,
+    contentScale = when (contentScale) {
+        AppImageContentScale.Fit -> ContentScale.Fit
+        AppImageContentScale.Crop -> ContentScale.Crop
+    },
     contentDescription = contentDescription,
     modifier = modifier
         .run {
@@ -59,3 +62,8 @@ fun CoilImage(
         .clip(shape = shape)
         .graphicsLayer(graphicsLayerBlock)
 )
+
+enum class AppImageContentScale {
+    Fit,
+    Crop,
+}

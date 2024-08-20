@@ -19,15 +19,18 @@ package br.alexandregpereira.hunter.settings.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.settings.AppearanceSettingsState
 import br.alexandregpereira.hunter.settings.SettingsStrings
 import br.alexandregpereira.hunter.ui.compose.AppButton
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
+import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Composable
 internal fun AppearanceSettingsBottomSheet(
@@ -72,10 +75,27 @@ internal fun AppearanceSettingsBottomSheet(
             },
         )
 
+        val monsterImageContentScaleOptions = state.monsterImageContentScaleOptions
+        PickerField(
+            label = strings.monsterImageContentScale,
+            options = remember(monsterImageContentScaleOptions, strings) {
+                monsterImageContentScaleOptions.map { it.asString(strings) }
+            },
+            value = state.monsterImageContentSelected.asString(strings),
+            onValueChange = {
+                onStateChange(state.copy(monsterImageContentSelectedOptionIndex = it))
+            },
+        )
+
         AppButton(
             text = strings.save,
             onClick = onSaveButtonClick,
             modifier = Modifier.padding(top = 40.dp)
         )
     }
+}
+
+private fun AppImageContentScale.asString(strings: SettingsStrings): String = when (this) {
+    AppImageContentScale.Fit -> strings.imageContentScaleFit
+    AppImageContentScale.Crop -> strings.imageContentScaleCrop
 }
