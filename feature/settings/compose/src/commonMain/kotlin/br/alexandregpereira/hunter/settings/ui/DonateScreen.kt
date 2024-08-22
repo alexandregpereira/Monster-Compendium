@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -183,7 +184,6 @@ private fun BuyMeCoffeeButton(
     modifier: Modifier = Modifier
 ) = Row(
     modifier = modifier
-        .height(54.dp)
         .animatePressed(
             onClick = onClick,
         )
@@ -198,7 +198,7 @@ private fun BuyMeCoffeeButton(
     Image(
         painter = painterResource(Res.drawable.ic_ko_fi_logo),
         contentDescription = null,
-        modifier = Modifier.padding(vertical = contentVerticalPadding)
+        modifier = Modifier.size(48.dp).padding(vertical = contentVerticalPadding)
     )
     Spacer(modifier = Modifier.width(8.dp))
     Column(
