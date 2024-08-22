@@ -6,9 +6,15 @@
 
 [![CI/CD](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml) <a href="https://devlibrary.withgoogle.com/products/android/repos/alexandregpereira-monster-compendium" target="_blank"><img alt="Android Dev Library" src="https://img.shields.io/badge/Google%20Dev%20Library-alexandregpereira-blue?style=flat&logo=android"/></a>
 
-Monsters Compendium is an open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
+Monsters Compendium is an free and open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
 
+## Download
+
+### Android
 <a href='https://play.google.com/store/apps/details?id=br.alexandregpereira.hunter.app&hl=en_US&gl=US&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
+### Desktop
+You can download [here](https://github.com/alexandregpereira/Monster-Compendium/releases) the desktop version for Window, Mac or Linux.
 
 ## Preview
 
@@ -17,14 +23,6 @@ Monsters Compendium is an open-source Kotlin Multiplatform application for Andro
     <img src="media/monster-detail-pager.gif" width ="32%" />
     <img src="media/monster-detail.gif" width ="32%" />
 </p>
-
-## Key features:
-
-- A well-organized monster compendium, divided into intuitive sections for easy navigation, complete with visually appealing images for an engaging user experience.
-- Comprehensive monster details, featuring stat blocks, monster lore, captivating high-resolution images, and links to related spell details. Users can navigate through the compendium pages seamlessly, simulating the feel of paging through a physical book.
-- Quick access to spell details of the monsters, providing essential information at your fingertips.
-- A powerful search functionality that allows users to quickly find specific monsters.
-- A user-friendly interface to organize monsters into customizable folders for better campaign management.
 
 ## Runnning
 ### Desktop
