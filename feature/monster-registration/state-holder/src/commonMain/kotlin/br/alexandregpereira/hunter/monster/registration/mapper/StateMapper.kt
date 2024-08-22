@@ -69,6 +69,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
             typeIndex = MonsterType.entries.indexOf(monster.type),
             typeOptions = MonsterType.entries.map { it.name(strings) },
             challengeRating = monster.challengeRatingData.valueInString,
+            imageContentScale = monster.imageData.contentScale,
         ),
         stats = StatsState(
             armorClass = monster.stats.armorClass,
