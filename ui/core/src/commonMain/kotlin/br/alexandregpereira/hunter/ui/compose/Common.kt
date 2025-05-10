@@ -85,7 +85,7 @@ fun Modifier.noIndicationClick(onClick: () -> Unit = {}): Modifier = composed {
     )
 }
 
-inline operator fun PaddingValues.plus(other: PaddingValues): PaddingValues {
+operator fun PaddingValues.plus(other: PaddingValues): PaddingValues {
     val layoutDirection = LayoutDirection.Rtl
     return PaddingValues(
         start = this.calculateStartPadding(layoutDirection) +

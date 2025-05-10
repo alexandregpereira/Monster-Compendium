@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.ui.compendium
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -158,10 +157,9 @@ private fun CompendiumColumns.toGridCells(): GridCells = when (this) {
     is CompendiumColumns.FixedSize -> GridCells.FixedSize(size)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 private fun Modifier.animateItems(
     scope: LazyGridItemScope,
     animateItems: Boolean
 ): Modifier = scope.run {
-    if (animateItems) this@animateItems.animateItemPlacement() else this@animateItems
+    if (animateItems) this@animateItems.animateItem() else this@animateItems
 }

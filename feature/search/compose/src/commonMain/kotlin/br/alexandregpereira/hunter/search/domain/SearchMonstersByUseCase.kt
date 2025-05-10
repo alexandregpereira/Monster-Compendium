@@ -101,7 +101,7 @@ internal class SearchMonstersByUseCase internal constructor(
     ): List<Monster> {
         if (searchKeyValues.isEmpty()) return this
         val (key, value) = searchKeyValues.first()
-        searchKeyValues.removeFirst()
+        searchKeyValues.removeAt(0)
         return filter { monster ->
             monster.containsByKey(key, value)
         }.search(searchKeyValues.toMutableList())

@@ -15,11 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)
-
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -73,7 +70,7 @@ internal fun LazyListScope.spellBlock(
                 dataList = monsters,
                 pagerState = pagerState,
                 getItemsKeys = getItemsKeys,
-                modifier = Modifier.animateItemPlacement()
+                modifier = Modifier.animateItem()
             ) {
                 SpellBlock(spellcasting = spellcasting, index = i)
             }
@@ -85,7 +82,7 @@ internal fun LazyListScope.spellBlock(
                     dataList = monsters,
                     pagerState = pagerState,
                     getItemsKeys = getItemsKeys,
-                    modifier = Modifier.animateItemPlacement()
+                    modifier = Modifier.animateItem()
                 ) {
                     Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
                     Spacer(modifier = Modifier.height(24.dp))

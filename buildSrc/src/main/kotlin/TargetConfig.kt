@@ -20,7 +20,6 @@ import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 
@@ -65,12 +64,8 @@ fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
             }
         }
 
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
-            freeCompilerArgs.add("-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi")
-            freeCompilerArgs.add("-opt-in=androidx.compose.animation.ExperimentalAnimationApi")
-            freeCompilerArgs.add("-opt-in=androidx.compose.foundation.ExperimentalFoundationApi")
         }
     }
 

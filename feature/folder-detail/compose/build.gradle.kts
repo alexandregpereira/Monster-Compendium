@@ -39,7 +39,3 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.folder.detail"
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

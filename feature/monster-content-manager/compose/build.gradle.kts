@@ -40,7 +40,3 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.monster.content"
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

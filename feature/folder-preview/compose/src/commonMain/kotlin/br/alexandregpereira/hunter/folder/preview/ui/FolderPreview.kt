@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.folder.preview.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -49,7 +48,6 @@ import br.alexandregpereira.hunter.ui.compose.CircleImage
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FolderPreview(
     monsters: List<MonsterFolderPreview>,
@@ -79,7 +77,7 @@ fun FolderPreview(
                             state.backgroundColorLight
                         },
                         contentDescription = state.name,
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         onClick = { onClick(state.index) },
                         onLongClick = { onLongClick(state.index) }
                     )
@@ -88,7 +86,7 @@ fun FolderPreview(
                     AppCircleButton(
                         onClick = onClear,
                         isPrimary = false,
-                        modifier = Modifier.animateItemPlacement()
+                        modifier = Modifier.animateItem()
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Clear,

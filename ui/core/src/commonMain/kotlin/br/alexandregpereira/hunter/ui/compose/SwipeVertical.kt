@@ -149,7 +149,7 @@ private class SwipeVerticalNestedScrollConnection(
         // If swiping isn't enabled, return zero
         !enabled -> Offset.Zero
         // If the user is swiping up, handle it
-        source == NestedScrollSource.Drag && available.y < 0 -> onScroll(available)
+        source == NestedScrollSource.UserInput && available.y < 0 -> onScroll(available)
         else -> Offset.Zero
     }
 
@@ -161,7 +161,7 @@ private class SwipeVerticalNestedScrollConnection(
         // If swiping isn't enabled, return zero
         !enabled -> Offset.Zero
         // If the user is swiping down and there's y remaining, handle it
-        source == NestedScrollSource.Drag && available.y > 0 -> onScroll(available)
+        source == NestedScrollSource.UserInput && available.y > 0 -> onScroll(available)
         else -> Offset.Zero
     }
 

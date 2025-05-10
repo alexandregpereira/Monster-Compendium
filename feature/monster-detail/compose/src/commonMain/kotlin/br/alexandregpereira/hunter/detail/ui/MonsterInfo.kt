@@ -89,7 +89,7 @@ internal fun LazyListScope.monsterInfo(
             modifier = Modifier
                 .height(contentPadding.calculateBottomPadding())
                 .fillMaxWidth()
-                .animateItemPlacement()
+                .animateItem()
         )
     }
 }
@@ -347,7 +347,7 @@ internal fun LazyItemScope.MonsterRequireSectionAlphaTransition(
     showDivider: Boolean = true,
     content: @Composable ColumnScope.(MonsterState) -> Unit
 ) = MonsterSectionAlphaTransition(
-    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+    dataList, pagerState, modifier.animateItem(), getItemsKeys
 ) { monster ->
     BlockSection(showDivider = showDivider) {
         content(monster)
@@ -364,7 +364,7 @@ internal fun LazyItemScope.MonsterOptionalSectionAlphaTransition(
     showDivider: Boolean = true,
     content: @Composable ColumnScope.(MonsterState) -> Unit
 ) = MonsterSectionAlphaTransition(
-    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+    dataList, pagerState, modifier.animateItem(), getItemsKeys
 ) { monster ->
     OptionalBlockSection(isValid = { valueToValidate(monster) }, showDivider = showDivider) {
         content(monster)
@@ -381,7 +381,7 @@ internal fun <T> LazyItemScope.ListOptionalSectionAlphaTransition(
     showDivider: Boolean = true,
     content: @Composable ColumnScope.(List<T>) -> Unit
 ) = MonsterSectionAlphaTransition(
-    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+    dataList, pagerState, modifier.animateItem(), getItemsKeys
 ) { monster ->
     val list = valueToValidate(monster)
     OptionalBlockSection(isValid = { list.isNotEmpty() }, showDivider = showDivider) {
@@ -399,7 +399,7 @@ internal fun LazyItemScope.StringOptionalSectionAlphaTransition(
     showDivider: Boolean = true,
     content: @Composable ColumnScope.(String) -> Unit
 ) = MonsterSectionAlphaTransition(
-    dataList, pagerState, modifier.animateItemPlacement(), getItemsKeys
+    dataList, pagerState, modifier.animateItem(), getItemsKeys
 ) { monster ->
     val string = valueToValidate(monster)
     OptionalBlockSection(isValid = { string.isNotBlank() }, showDivider = showDivider) {

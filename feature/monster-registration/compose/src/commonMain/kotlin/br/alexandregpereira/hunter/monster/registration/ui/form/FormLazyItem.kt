@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -49,7 +48,6 @@ internal fun LazyListScope.FormLazy(
     content()
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 internal fun LazyListScope.formItem(
     key: String,
     modifier: Modifier = Modifier,
@@ -58,7 +56,7 @@ internal fun LazyListScope.formItem(
     Box(
         modifier = modifier
             .padding(vertical = 8.dp)
-            .animateItemPlacement()
+            .animateItem()
     ) {
         content()
     }

@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -142,7 +141,7 @@ internal fun MonsterDetailScreen(
                 modifier = Modifier
                     .monsterAspectRatio(maxHeight = getImageHeightInDp())
                     .transitionHorizontalScrollable(pagerState)
-                    .animateItemPlacement()
+                    .animateItem()
             )
         }
 
@@ -156,7 +155,7 @@ internal fun MonsterDetailScreen(
                 },
                 pagerState = pagerState,
                 onOptionsClicked = onOptionsClicked,
-                modifier = Modifier.animateItemPlacement()
+                modifier = Modifier.animateItem()
             )
         }
 
@@ -464,7 +463,6 @@ private fun MonsterDetailPreview() = Window {
     )
 }
 
-@ExperimentalAnimationApi
 @Preview
 @Composable
 private fun MonsterTopBarPreview() = Window {

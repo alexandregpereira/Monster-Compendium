@@ -32,6 +32,7 @@ multiplatform {
     commonMain {
         api(compose.ui)
         api(compose.material)
+        api(compose.materialIconsExtended)
         api(compose.uiUtil)
         api(compose.components.resources)
         api(compose.components.uiToolingPreview)
@@ -47,10 +48,6 @@ multiplatform {
 
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui"
-}
-
-composeCompiler {
-    enableStrongSkippingMode = true
 }
 
 compose.resources {

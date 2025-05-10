@@ -52,10 +52,6 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.shareContent"
 }
 
-composeCompiler {
-    enableStrongSkippingMode = true
-}
-
 compose.resources {
     publicResClass = false
     packageOfResClass = "br.alexandregpereira.hunter.shareContent.ui.resources"
