@@ -21,7 +21,7 @@ plugins {
 
 multiplatform {
     commonMain {
-        api(project(":core:flow:core"))
+        implementation(libs.kotlin.coroutines.core)
     }
     jvmMain()
     iosMain()

@@ -17,13 +17,13 @@
 
 package br.alexandregpereira.hunter.state
 
-import br.alexandregpereira.flow.StateFlowWrapper
-import br.alexandregpereira.flow.wrap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 abstract class UiModel<State : Any>(
     initialState: State,
@@ -34,7 +34,7 @@ abstract class UiModel<State : Any>(
     )
 
     private val _state = MutableStateFlow(initialState)
-    override val state: StateFlowWrapper<State> = _state.wrap(scope)
+    override val state: StateFlow<State> = _state.asStateFlow()
 
     protected fun setState(block: State.() -> State) {
         _state.value = _state.value.block()
@@ -47,5 +47,5 @@ abstract class UiModel<State : Any>(
 
 interface StateHolder<State : Any> {
 
-    val state: StateFlowWrapper<State>
+    val state: StateFlow<State>
 }

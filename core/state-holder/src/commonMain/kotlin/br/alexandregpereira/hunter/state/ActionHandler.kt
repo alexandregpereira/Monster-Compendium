@@ -17,16 +17,16 @@
 
 package br.alexandregpereira.hunter.state
 
-import br.alexandregpereira.flow.SharedFlowWrapper
-import br.alexandregpereira.flow.wrap
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 interface ActionHandler<Action : Any> {
 
-    val action: SharedFlowWrapper<Action>
+    val action: SharedFlow<Action>
 }
 
 interface MutableActionHandler<Action : Any> : ActionHandler<Action> {
@@ -48,7 +48,7 @@ private class MutableActionHandlerImpl<Action : Any> : MutableActionHandler<Acti
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    override val action: SharedFlowWrapper<Action> = _action.wrap(coroutineScope)
+    override val action: SharedFlow<Action> = _action.asSharedFlow()
 
     override fun sendAction(action: Action) {
         _action.tryEmit(action)
