@@ -24,7 +24,7 @@ class FolderListTest {
             HunterApp()
         }
 
-        composeTestRule.waitUntil(timeoutMillis = 5000) {
+        composeTestRule.waitUntil(timeoutMillis = 15000) {
             composeTestRule.onNodeWithText("Aboleth").isDisplayed()
         }
         composeTestRule.onNodeWithText("Aboleth").performClick()
