@@ -28,6 +28,7 @@ multiplatform {
         implementation(libs.compose.activity)
         implementation(libs.compose.tooling.preview)
         implementation(libs.kotlin.reflect)
+        implementation(libs.ktor.android)
     }
     commonMain {
         api(compose.ui)
@@ -37,13 +38,16 @@ multiplatform {
         api(compose.components.resources)
         api(compose.components.uiToolingPreview)
         implementation(libs.ktor.core)
-        implementation(libs.coil.compose.core)
         implementation(libs.coil.compose)
         implementation(libs.coil.mp)
         implementation(libs.coil.network.ktor)
     }
-    jvmMain()
-    iosMain()
+    jvmMain {
+        implementation(libs.ktor.jvm)
+    }
+    iosMain {
+        implementation(libs.ktor.darwin)
+    }
 }
 
 androidLibrary {

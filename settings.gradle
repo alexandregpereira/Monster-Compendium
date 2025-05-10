@@ -27,7 +27,6 @@ include ':app'
 
 include ':core:analytics'
 include ':core:event'
-include ':core:flow:core'
 include ':core:flow:test'
 include ':core:localization'
 include ':core:state-holder'
