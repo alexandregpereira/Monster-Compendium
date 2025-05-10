@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.folder.insert.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.insert.MonsterPreviewState
 import br.alexandregpereira.hunter.ui.compose.CircleImage
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun MonsterPreviewRow(
     monsters: List<MonsterPreviewState>,
@@ -52,7 +50,7 @@ internal fun MonsterPreviewRow(
                     state.backgroundColorLight
                 },
                 contentDescription = state.name,
-                modifier = Modifier.animateItemPlacement(),
+                modifier = Modifier.animateItem(),
                 onLongClick = { onLongClick(state.index) }
             )
         }

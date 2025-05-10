@@ -15,11 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package br.alexandregpereira.hunter.ui.transition
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -33,7 +30,6 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> AlphaTransition(
     dataList: List<Data>,
@@ -55,7 +51,6 @@ fun <Data> AlphaTransition(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> HorizontalSlideTransition(
     dataList: List<Data>,
@@ -90,7 +85,6 @@ fun <Data> HorizontalSlideTransition(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <Data> Transition(
     dataList: List<Data>,
@@ -120,7 +114,6 @@ fun <Data> Transition(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.transitionHorizontalScrollable(
     pagerState: PagerState
 ): Modifier = composed {
@@ -147,7 +140,6 @@ fun <Data> getTransitionData(
     return TransitionData(dataList[currentIndex], dataList[nextIndex], fraction)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 fun PagerState.getPageOffset(): Float {
     return (this.currentPage + this.currentPageOffsetFraction).coerceAtLeast(0f)
 }

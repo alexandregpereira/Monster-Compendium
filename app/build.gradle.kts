@@ -232,7 +232,3 @@ compose {
         generateResClass = always
     }
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

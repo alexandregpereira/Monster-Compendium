@@ -40,7 +40,3 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.spell.compendium"
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

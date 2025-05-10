@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
@@ -36,7 +35,6 @@ data class ImageState(
     val contentScale: AppImageContentScale,
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun MonsterImages(
     images: List<ImageState>,

@@ -97,7 +97,7 @@ fun getMonsterImageAspectRatio(isHorizontal: Boolean): MonsterImageAspectRatio {
     }
 }
 
-data class MonsterImageAspectRatio internal constructor(
+data class MonsterImageAspectRatio(
     val width: Float,
     val height: Float,
 ) {

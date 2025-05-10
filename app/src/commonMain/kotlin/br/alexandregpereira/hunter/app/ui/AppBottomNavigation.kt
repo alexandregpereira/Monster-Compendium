@@ -36,7 +36,7 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -147,7 +147,7 @@ private fun RowScope.AppBottomNavigationItem(
             ProvideTextStyle(style, content = label)
         }
     }
-    val ripple = rememberRipple(bounded = false, color = selectedContentColor)
+    val ripple = ripple(bounded = false, color = selectedContentColor)
 
     BottomNavigationTransition(
         selectedContentColor,

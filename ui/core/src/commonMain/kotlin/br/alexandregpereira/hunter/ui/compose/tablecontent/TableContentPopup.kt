@@ -43,7 +43,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -306,6 +306,6 @@ private fun Modifier.clickableWithRippleEffect(
     onClick: () -> Unit
 ) = composed {
     val interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
-    val indication: Indication = rememberRipple(color = MaterialTheme.colors.primary)
+    val indication: Indication = ripple(color = MaterialTheme.colors.primary)
     this.clickable(interactionSource, indication, enabled = enabled, onClick = onClick)
 }

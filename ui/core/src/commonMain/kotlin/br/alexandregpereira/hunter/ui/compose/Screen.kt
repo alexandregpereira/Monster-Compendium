@@ -31,7 +31,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -127,7 +127,7 @@ fun BoxCloseButton(
     modifier = modifier.size(48.dp)
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(bounded = false),
+            indication = ripple(bounded = false),
             onClick = onClick
         )
         .clip(CircleShape)

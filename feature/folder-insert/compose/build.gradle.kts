@@ -37,7 +37,3 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.folder.insert"
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

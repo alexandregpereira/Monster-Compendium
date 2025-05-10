@@ -52,10 +52,6 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.detail"
 }
 
-composeCompiler {
-    enableStrongSkippingMode = true
-}
-
 compose.resources {
     publicResClass = false
     packageOfResClass = "br.alexandregpereira.hunter.detail.ui.resources"

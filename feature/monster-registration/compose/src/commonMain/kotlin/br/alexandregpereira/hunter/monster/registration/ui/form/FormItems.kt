@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import br.alexandregpereira.hunter.monster.registration.ui.alsoRemoveAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 
 @Suppress("FunctionName")
-@OptIn(ExperimentalFoundationApi::class)
 internal fun <T> LazyListScope.FormItems(
     items: MutableList<T>,
     addText: @Composable () -> String = { strings.add },
@@ -62,7 +60,7 @@ internal fun <T> LazyListScope.FormItems(
                 onRemove = {
                     onChanged(items.alsoRemoveAt(index + 1))
                 },
-                modifier = Modifier.animateItemPlacement(),
+                modifier = Modifier.animateItem(),
             )
         }
     }

@@ -33,7 +33,3 @@ multiplatform {
     jvmMain()
     iosMain()
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}

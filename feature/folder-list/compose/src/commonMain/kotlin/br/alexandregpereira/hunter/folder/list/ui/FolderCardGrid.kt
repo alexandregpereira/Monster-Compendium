@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.folder.list.ui
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -37,7 +36,6 @@ import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun FolderCardGrid(
     folders: List<FolderCardState>,
@@ -87,7 +85,7 @@ internal fun FolderCardGrid(
                 image2 = folder.image2,
                 image3 = folder.image3,
                 modifier = Modifier
-                    .animateItemPlacement()
+                    .animateItem()
                     .graphicsLayer {
                         scaleX = scale
                         scaleY = scale

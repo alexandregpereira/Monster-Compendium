@@ -38,7 +38,3 @@ multiplatform {
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.monster.lore.detail"
 }
-
-composeCompiler {
-    enableStrongSkippingMode = true
-}
