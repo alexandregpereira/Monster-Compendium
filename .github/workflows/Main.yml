@@ -38,7 +38,7 @@ jobs:
 
       - name: Upload the test report
         if: failure()
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: TestReport
           path: |
@@ -47,25 +47,25 @@ jobs:
             domain/build/reports/tests
 
       - name: Upload Dmg
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: MonsterCompendium-dmg
           path: app/build/compose/binaries/main/dmg/*.dmg
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: app/build/outputs/apk/release/app-release.apk
 
       - name: Upload AAB
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-aab
           path: app/build/outputs/bundle/release/app-release.aab
 
       - name: Upload APK metadata JSON
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: app-output-metadata-json
           path: app/build/outputs/apk/release/output-metadata.json
@@ -94,7 +94,7 @@ jobs:
         run: ./gradlew assembleRelease -Pdev
 
       - name: Upload Dev APK
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: app-dev-release-apk
           path: app/build/outputs/apk/release/app-dev-release.apk
@@ -121,7 +121,7 @@ jobs:
         run: ./gradlew :app:packageDeb
 
       - name: Upload Deb
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: MonsterCompendium-deb
           path: app/build/compose/binaries/main/deb/*.deb
@@ -148,7 +148,7 @@ jobs:
         run: ./gradlew :app:packageMsi
 
       - name: Upload Msi
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: MonsterCompendium-msi
           path: app/build/compose/binaries/main/msi/*.msi
