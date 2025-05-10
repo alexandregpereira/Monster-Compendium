@@ -42,7 +42,7 @@ jobs:
 
     - name: Upload the test report
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: TestReport
         path: |
@@ -51,19 +51,19 @@ jobs:
           domain/build/reports/tests
 
     - name: Upload Dmg
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: MonsterCompendium-dmg
         path: app/build/compose/binaries/main/dmg/*.dmg
           
     - name: Upload an APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: app-debug-apk
         path: app/build/outputs/apk/debug/app-debug.apk
         
     - name: Upload an APK metadata JSON
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: app-output-metadata-json
         path: app/build/outputs/apk/debug/output-metadata.json
@@ -90,7 +90,7 @@ jobs:
         run: ./gradlew :app:packageDeb
 
       - name: Upload Deb
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-deb
           path: app/build/compose/binaries/main/deb/*.deb
@@ -117,7 +117,7 @@ jobs:
         run: ./gradlew :app:packageMsi
 
       - name: Upload Msi
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-msi
           path: app/build/compose/binaries/main/msi/*.msi
