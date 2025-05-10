@@ -90,7 +90,7 @@ fun <Value> MutableList<Value>.assertNextValue(value: Value) {
         throw AssertionError("Expected the value $value but was empty")
     }
     assertEquals(expected = value, actual = this.first())
-    this.removeFirst()
+    this.removeAt(0)
 }
 
 fun <Value> MutableList<Value>.assertFinalValue(value: Value) {
