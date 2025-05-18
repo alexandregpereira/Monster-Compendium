@@ -18,6 +18,9 @@
 package br.alexandregpereira.hunter.monster.detail.domain
 
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import kotlinx.coroutines.flow.Flow
@@ -31,10 +34,16 @@ internal fun interface ResetMonsterToOriginal {
 internal fun ResetMonsterToOriginal(
     getMonster: GetMonsterUseCase,
     saveMonstersUseCase: SaveMonstersUseCase,
+    getMonsterLore: GetMonsterLoreUseCase,
+    saveMonstersLoreUseCase: SaveMonstersLoreUseCase
 ) = ResetMonsterToOriginal { monsterIndex ->
     getMonster(monsterIndex).map { monster ->
         monster.copy(status = MonsterStatus.Original)
     }.map { newMonster ->
         saveMonstersUseCase(listOf(newMonster)).single()
+        getMonsterLore(newMonster.index).single()
+            ?.copy(status = MonsterLoreStatus.Original)?.let { newMonsterLore ->
+                saveMonstersLoreUseCase(listOf(newMonsterLore), isSync = false).single()
+            }
     }
 }

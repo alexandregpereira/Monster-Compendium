@@ -23,7 +23,7 @@ interface MonsterLoreDao {
 
     suspend fun getMonstersLore(indexes: List<String>): List<MonsterLoreCompleteEntity>
 
-    suspend fun getMonsterLore(monsterIndex: String): MonsterLoreCompleteEntity
+    suspend fun getMonsterLore(monsterIndex: String): MonsterLoreCompleteEntity?
 
     suspend fun getMonstersLoreEdited(): List<MonsterLoreCompleteEntity>
 

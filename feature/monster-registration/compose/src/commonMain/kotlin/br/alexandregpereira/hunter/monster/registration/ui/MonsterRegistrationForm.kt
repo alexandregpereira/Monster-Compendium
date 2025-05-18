@@ -38,6 +38,7 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterCondition
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterDamagesForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterHeaderForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterImageForm
+import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterLoreForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterProficiencyForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSavingThrowsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterSpeedValuesForm
@@ -237,6 +238,12 @@ private fun MonsterRegistrationForm(
         spellcastings = monster.spellcastings,
         onChanged = { intent.onMonsterChanged(monster.copy(spellcastings = it)) },
         onSpellClick = intent::onSpellClick,
+    )
+    MonsterLoreForm(
+        keys = monster.keys,
+        title = { strings.monsterLoreFormTitle },
+        entries = monster.loreEntries,
+        onChanged = { intent.onMonsterChanged(monster.copy(loreEntries = it)) },
     )
 }
 

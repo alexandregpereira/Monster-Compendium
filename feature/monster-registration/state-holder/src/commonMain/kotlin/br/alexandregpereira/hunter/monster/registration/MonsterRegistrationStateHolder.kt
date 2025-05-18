@@ -22,6 +22,11 @@ import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
@@ -32,6 +37,7 @@ import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCas
 import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.monster.registration.mapper.asDomain
 import br.alexandregpereira.hunter.monster.registration.mapper.asState
 import br.alexandregpereira.hunter.monster.registration.mapper.editBy
 import br.alexandregpereira.hunter.monster.registration.mapper.name
@@ -50,7 +56,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,7 +68,9 @@ class MonsterRegistrationStateHolder internal constructor(
     private val eventManager: EventManager<MonsterRegistrationEvent>,
     private val eventResultManager: EventManager<MonsterRegistrationResult>,
     private val getMonster: GetMonsterUseCase,
+    private val getMonsterLore: GetMonsterLoreUseCase,
     private val saveMonster: SaveMonsterUseCase,
+    private val saveMonsterLoreUseCase: SaveMonstersLoreUseCase,
     private val normalizeMonster: NormalizeMonsterUseCase,
     private val analytics: Analytics,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
@@ -72,6 +82,7 @@ class MonsterRegistrationStateHolder internal constructor(
     MonsterRegistrationIntent {
 
     private var originalMonster: Monster? = null
+    private var originalMonsterLore: MonsterLore? = null
     private var metadata: Metadata = Metadata()
 
     init {
@@ -87,15 +98,32 @@ class MonsterRegistrationStateHolder internal constructor(
 
     override fun onMonsterChanged(monster: MonsterState) {
         val newMonster = metadata.monster.editBy(monster, appLocalization.getStrings())
-        setMetadata(newMonster)
+        val newMonsterLoreEntries = monster.loreEntries.map { it.asDomain() }
+        setMetadata(newMonster, newMonsterLoreEntries)
         updateMonster()
     }
 
     override fun onSaved() {
+        val monsterLoreEntries = metadata.monsterLoreEntries
         normalizeMonster(metadata.monster)
-            .flatMapConcat { monster ->
+            .map { monster ->
                 analytics.trackMonsterRegistrationSaved(monster)
-                saveMonster(monster)
+                saveMonster(monster).single()
+                monster
+            }
+            .flatMapConcat { monster ->
+                val monsterLoreList = listOf(
+                    MonsterLore(
+                        index = monster.index,
+                        name = monster.name,
+                        entries = monsterLoreEntries,
+                        status = MonsterLoreStatus.Imported
+                    )
+                )
+                saveMonsterLoreUseCase(
+                    monsterLore = monsterLoreList,
+                    isSync = false
+                )
             }
             .flowOn(dispatcher)
             .onEach {
@@ -189,7 +217,8 @@ class MonsterRegistrationStateHolder internal constructor(
             val monsterState = metadata.asState(strings)
             copy(
                 monster = monsterState,
-                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster,
+                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster
+                        || metadata.monsterLoreEntries != originalMonsterLore?.entries.orEmpty(),
                 isLoading = false,
                 tableContent = SectionTitle.entries.associate { it.name to it.name(strings) },
             )
@@ -205,10 +234,14 @@ class MonsterRegistrationStateHolder internal constructor(
 
         setState { copy(isLoading = true) }
         getMonster(monsterIndex)
+            .map { monster ->
+                monster to getMonsterLore(monster.index).single()
+            }
             .flowOn(dispatcher)
-            .onEach { monster ->
+            .onEach { (monster, monsterLore) ->
                 originalMonster = monster
-                setMetadata(monster)
+                originalMonsterLore = monsterLore
+                setMetadata(monster, monsterLore?.entries.orEmpty())
                 updateMonster()
             }
             .launchIn(scope)
@@ -241,7 +274,7 @@ class MonsterRegistrationStateHolder internal constructor(
             .launchIn(scope)
     }
 
-    private fun setMetadata(monster: Monster) {
+    private fun setMetadata(monster: Monster, monsterLoreEntries: List<MonsterLoreEntry>) {
         val filteredSavingThrowTypes = AbilityScoreType.entries.filterNot { type ->
             monster.savingThrows.any { it.type == type }
         }
@@ -265,6 +298,7 @@ class MonsterRegistrationStateHolder internal constructor(
             filteredDamageResistanceTypes = filteredDamageResistanceTypes,
             filteredDamageImmunityTypes = filteredDamageImmunityTypes,
             filteredConditionTypes = filteredConditionTypes,
+            monsterLoreEntries = monsterLoreEntries,
         )
     }
 }
@@ -276,4 +310,5 @@ internal data class Metadata(
     val filteredDamageResistanceTypes: List<DamageType> = emptyList(),
     val filteredDamageImmunityTypes: List<DamageType> = emptyList(),
     val filteredConditionTypes: List<ConditionType> = emptyList(),
+    val monsterLoreEntries: List<MonsterLoreEntry> = emptyList(),
 )

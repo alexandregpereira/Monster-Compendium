@@ -24,10 +24,11 @@ import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLoreEnt
 internal fun MonsterLore.toShareMonsterLore(): ShareMonsterLore {
     return ShareMonsterLore(
         index = index,
-        entries = entries.map {
+        entries = entries.map { entry ->
             ShareMonsterLoreEntry(
-                title = it.title,
-                description = it.description,
+                index = entry.index,
+                title = entry.title,
+                description = entry.description,
             )
         }
     )

@@ -35,7 +35,7 @@ internal class MonsterLoreLocalDataSource(
         }
     }
 
-    fun getMonsterLore(monsterIndex: String): Flow<MonsterLoreCompleteEntity> {
+    fun getMonsterLore(monsterIndex: String): Flow<MonsterLoreCompleteEntity?> {
         return flow {
             emit(monsterLoreDao.getMonsterLore(monsterIndex))
         }

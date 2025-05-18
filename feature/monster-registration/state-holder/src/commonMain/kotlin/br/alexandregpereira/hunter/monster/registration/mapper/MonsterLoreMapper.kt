@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.monster.lore
+package br.alexandregpereira.hunter.monster.registration.mapper
 
-import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.monster.registration.MonsterLoreEntryState
 
-class GetMonsterLoreUseCase(
-    private val repository: MonsterLoreLocalRepository
-) {
-
-    operator fun invoke(index: String): Flow<MonsterLore?> {
-        return repository.getMonsterLore(index)
-    }
+internal fun MonsterLoreEntryState.asDomain(): MonsterLoreEntry {
+    val state = this
+    return MonsterLoreEntry(
+        index = key,
+        title = state.title,
+        description = state.description,
+    )
 }

@@ -29,7 +29,7 @@ internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
     return MonsterLore(
         index = monsterLore.monsterLoreIndex,
         name = "",
-        entries = entries.map { it.toDomain() },
+        entries = entries.mapIndexed { i, entry -> entry.toDomain(index = i) },
         status = when (monsterLore.status) {
             MonsterLoreEntityStatus.Original -> MonsterLoreStatus.Original
             MonsterLoreEntityStatus.Imported -> MonsterLoreStatus.Imported
@@ -37,8 +37,9 @@ internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
     )
 }
 
-internal fun MonsterLoreEntryEntity.toDomain(): MonsterLoreEntry {
+internal fun MonsterLoreEntryEntity.toDomain(index: Int): MonsterLoreEntry {
     return MonsterLoreEntry(
+        index = "$monsterIndex-$index",
         title = title,
         description = description
     )
@@ -59,7 +60,7 @@ internal fun MonsterLore.toEntity(): MonsterLoreCompleteEntity {
 
 internal fun MonsterLoreEntry.toEntity(monsterLoreIndex: String): MonsterLoreEntryEntity {
     return MonsterLoreEntryEntity(
-        id = monsterLoreIndex + "-" + (title ?: "lore"),
+        id = index,
         title = title,
         description = description,
         monsterIndex = monsterLoreIndex
