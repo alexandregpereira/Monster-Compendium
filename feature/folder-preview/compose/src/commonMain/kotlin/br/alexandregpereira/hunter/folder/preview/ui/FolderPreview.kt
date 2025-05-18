@@ -68,6 +68,18 @@ fun FolderPreview(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(start = 16.dp, end = 80.dp)
             ) {
+                item(key = "clear") {
+                    AppCircleButton(
+                        onClick = onClear,
+                        isPrimary = false,
+                        modifier = Modifier.animateItem()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = null
+                        )
+                    }
+                }
                 items(monsters, key = { it.index }) { state ->
                     CircleImage(
                         imageUrl = state.imageUrl,
@@ -81,18 +93,6 @@ fun FolderPreview(
                         onClick = { onClick(state.index) },
                         onLongClick = { onLongClick(state.index) }
                     )
-                }
-                item(key = "clear") {
-                    AppCircleButton(
-                        onClick = onClear,
-                        isPrimary = false,
-                        modifier = Modifier.animateItem()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Clear,
-                            contentDescription = null
-                        )
-                    }
                 }
             }
 
