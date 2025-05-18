@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.detail
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +32,9 @@ import br.alexandregpereira.hunter.ui.compose.FormField
 import org.koin.compose.koinInject
 
 @Composable
-fun MonsterDetailBottomSheets() {
+fun MonsterDetailBottomSheets(
+    contentPadding: PaddingValues = PaddingValues(),
+) {
     val stateHolder: MonsterDetailStateHolder = koinInject()
     val state by stateHolder.state.collectAsState()
 
@@ -43,6 +46,7 @@ fun MonsterDetailBottomSheets() {
         showOptions = state.showOptions,
         maxWidth = maxWidth,
         widthFraction = widthFraction,
+        contentPadding = contentPadding,
         onOptionSelected = stateHolder::onOptionClicked,
         onClosed = stateHolder::onShowOptionsClosed,
     )
@@ -61,6 +65,7 @@ fun MonsterDetailBottomSheets() {
         buttonEnabled = state.monsterCloneName.isNotBlank(),
         maxWidth = maxWidth,
         widthFraction = widthFraction,
+        contentPadding = contentPadding,
         onFormChanged = remember(stateHolder) {
             { stateHolder.onCloneFormChanged(it.stringValue) }
         },
@@ -74,6 +79,7 @@ fun MonsterDetailBottomSheets() {
         buttonText = strings.deleteConfirmation,
         maxWidth = maxWidth,
         widthFraction = widthFraction,
+        contentPadding = contentPadding,
         onConfirmed = stateHolder::onDeleteConfirmed,
         onClosed = stateHolder::onDeleteClosed
     )
@@ -84,6 +90,7 @@ fun MonsterDetailBottomSheets() {
         buttonText = strings.resetConfirmation,
         maxWidth = maxWidth,
         widthFraction = widthFraction,
+        contentPadding = contentPadding,
         onConfirmed = stateHolder::onResetConfirmed,
         onClosed = stateHolder::onResetClosed
     )

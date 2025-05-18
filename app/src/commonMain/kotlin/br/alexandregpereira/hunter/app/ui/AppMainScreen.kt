@@ -45,6 +45,6 @@ internal fun AppMainScreen(
     FolderInsertFeature(contentPadding = contentPadding)
     ShareContentExportMonsterFeature(contentPadding = contentPadding)
     ShareContentImportFeature(contentPadding = contentPadding)
-    SettingsBottomSheets()
-    SyncFeature()
+    SettingsBottomSheets(contentPadding = contentPadding)
+    SyncFeature(contentPadding = contentPadding)
 }

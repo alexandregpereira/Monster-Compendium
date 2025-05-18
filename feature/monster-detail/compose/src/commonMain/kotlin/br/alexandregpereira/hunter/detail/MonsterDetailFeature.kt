@@ -80,7 +80,6 @@ fun MonsterDetailFeature(
                 }
                 MonsterDetailScreen(
                     monsters = monsters,
-                    contentPadding = contentPadding,
                     pagerState = pagerState,
                     onOptionsClicked = viewModel::onShowOptionsClicked,
                     onSpellClicked = viewModel::onSpellClicked,

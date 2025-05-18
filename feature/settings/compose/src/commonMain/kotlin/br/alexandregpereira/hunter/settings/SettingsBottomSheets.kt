@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.settings
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,11 +29,14 @@ import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import org.koin.compose.koinInject
 
 @Composable
-fun SettingsBottomSheets() {
+fun SettingsBottomSheets(
+    contentPadding: PaddingValues = PaddingValues(),
+) {
     val stateHolder: SettingsStateHolder = koinInject()
     val state by stateHolder.state.collectAsState()
     BottomSheet(
         opened = state.advancedSettingsOpened,
+        contentPadding = contentPadding,
         onClose = stateHolder::onAdvancedSettingsCloseClick,
     ) {
         AdvancedSettings(
@@ -50,6 +54,7 @@ fun SettingsBottomSheets() {
         settingsOpened = state.settingsOpened,
         state = state.settingsState,
         strings = state.strings,
+        contentPadding = contentPadding,
         onLanguageChange = stateHolder::onLanguageChange,
         onSaveButtonClick = stateHolder::onSettingsSaveClick,
         onClose = stateHolder::onSettingsCloseClick
@@ -59,6 +64,7 @@ fun SettingsBottomSheets() {
         opened = state.appearanceSettingsOpened,
         state = state.appearanceState,
         strings = state.strings,
+        contentPadding = contentPadding,
         onStateChange = stateHolder::onAppearanceChange,
         onSaveButtonClick = stateHolder::onAppearanceSettingsSaveClick,
         onClose = stateHolder::onAppearanceSettingsCloseClick
@@ -68,6 +74,7 @@ fun SettingsBottomSheets() {
         isOpen = state.donateIsOpen,
         state = state.donateState,
         strings = state.strings.donateStrings,
+        contentPadding = contentPadding,
         onClose = stateHolder::onDonateCloseClick,
         onPixCodeCopy = stateHolder::onPixCodeCopyClick,
         onPixKeyCopy = stateHolder::onPixKeyCopyClick,

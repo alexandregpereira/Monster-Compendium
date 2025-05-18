@@ -67,13 +67,13 @@ fun AppScreen(
     SwipeVerticalToDismiss(
         visible = isOpen,
         swipeVerticalState = swipeVerticalState,
+        modifier = Modifier.padding(contentPaddingValues),
         onAnimationStateChange = { enterExitState = it },
         onClose = onClose
     ) {
         Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
             if (showCloseButton) {
                 BoxClosable(
-                    contentPaddingValues = contentPaddingValues,
                     onClick = onClose,
                     content = content,
                 )

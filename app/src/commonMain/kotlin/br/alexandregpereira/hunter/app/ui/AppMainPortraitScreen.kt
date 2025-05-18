@@ -42,7 +42,7 @@ internal fun AppMainPortraitScreen(
     )
     Box {
         MonsterDetailFeature(contentPadding = contentPadding)
-        MonsterDetailBottomSheets()
+        MonsterDetailBottomSheets(contentPadding = contentPadding)
     }
     MonsterLoreDetailFeature(contentPadding = contentPadding)
 }

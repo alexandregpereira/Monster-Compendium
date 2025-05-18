@@ -17,17 +17,19 @@
 
 package br.alexandregpereira.hunter.sync
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import br.alexandregpereira.hunter.sync.ui.SyncScreen
 import org.koin.compose.koinInject
 
 @Composable
-fun SyncFeature() {
+fun SyncFeature(contentPadding: PaddingValues = PaddingValues()) {
     val viewModel: SyncStateHolder = koinInject()
 
     SyncScreen(
         state = viewModel.state.collectAsState().value,
+        contentPadding = contentPadding,
         onTryAgain = viewModel::onTryAgain
     )
 }

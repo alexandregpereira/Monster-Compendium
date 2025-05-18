@@ -54,5 +54,5 @@ internal fun AppMainLandscapeScreen(
             MonsterLoreDetailFeature(contentPadding = contentPadding)
         }
     }
-    MonsterDetailBottomSheets()
+    MonsterDetailBottomSheets(contentPadding = contentPadding)
 }
