@@ -133,7 +133,7 @@ private fun MonsterEntity.toDomain(
     val imageContentScale = when (monster.imageContentScale) {
         0 -> MonsterImageContentScale.Fit
         1 -> MonsterImageContentScale.Crop
-        else -> null
+        else -> monsterImageContentScale
     }
     return Monster(
         index = monster.index,
@@ -147,7 +147,7 @@ private fun MonsterEntity.toDomain(
                 dark = monster.backgroundColorDark
             ),
             isHorizontal = monster.isHorizontalImage,
-            contentScale = imageContentScale ?: monsterImageContentScale
+            contentScale = imageContentScale
         ),
         subtype = monster.subtype,
         group = monster.group,
