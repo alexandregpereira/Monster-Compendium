@@ -40,7 +40,7 @@ class GetMonsterImagesUseCase(
 
     companion object {
         private const val DEFAULT_MONSTER_IMAGES_JSON_URL =
-            "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/json/" +
+            "https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium-Content/main/json/" +
                     "monster-images.json"
     }
 }
