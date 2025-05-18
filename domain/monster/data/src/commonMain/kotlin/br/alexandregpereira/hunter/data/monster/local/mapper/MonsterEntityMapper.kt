@@ -132,7 +132,7 @@ private fun MonsterEntity.toDomain(
         challengeRatingData = ChallengeRating(monster.challengeRating),
         name = monster.name,
         imageData = MonsterImageData(
-            url = monster.imageUrl,
+            url = monster.imageUrl.replaceOldImageUrl(),
             backgroundColor = Color(
                 light = monster.backgroundColorLight,
                 dark = monster.backgroundColorDark
@@ -161,3 +161,11 @@ private fun MonsterEntity.toDomain(
         }
     )
 }
+
+fun String.replaceOldImageUrl(): String {
+    val oldImageUrl = "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images/"
+    val newImageUrl = "$NEW_IMAGE_URL/main/images/"
+    return this.replace(oldImageUrl, newImageUrl)
+}
+
+private const val NEW_IMAGE_URL = "https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium-Content"

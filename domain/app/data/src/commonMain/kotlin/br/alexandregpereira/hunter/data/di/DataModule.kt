@@ -40,7 +40,7 @@ val dataModules = listOf(
         single {
             HttpClient {
                 defaultRequest {
-                    url("https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/json/")
+                    url("https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium-Content/main/json/")
                 }
                 install(Logging) {
                     logger = Logger.SIMPLE

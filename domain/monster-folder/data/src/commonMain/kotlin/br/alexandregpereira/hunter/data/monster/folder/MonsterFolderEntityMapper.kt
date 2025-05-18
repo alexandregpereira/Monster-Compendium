@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.data.monster.folder
 
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.mapper.replaceOldImageUrl
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
@@ -49,7 +50,7 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(
                 name = name,
                 type = MonsterPreviewFolderType.valueOf(type),
                 challengeRating = challengeRating.getChallengeRatingFormatted(),
-                imageUrl = imageUrl,
+                imageUrl = imageUrl.replaceOldImageUrl(),
                 backgroundColorLight = backgroundColorLight,
                 backgroundColorDark = backgroundColorDark,
                 isHorizontalImage = isHorizontalImage,

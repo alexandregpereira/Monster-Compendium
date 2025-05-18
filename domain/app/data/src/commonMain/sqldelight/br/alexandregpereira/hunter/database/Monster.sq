@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS MonsterEntity (`index` TEXT NOT NULL, `type` TEXT NOT
 insert:
 INSERT OR REPLACE INTO MonsterEntity VALUES ?;
 
-deleteAll:
+deleteAllVanilla:
 DELETE FROM MonsterEntity WHERE isClone == 0;
 
 deleteByIndex:

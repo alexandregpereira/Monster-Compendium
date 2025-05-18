@@ -113,7 +113,7 @@ internal class MonsterDaoImpl(
         monsterQueries.transaction {
             if (deleteAll) {
                 deleteAllEntries(getMonstersByIsNotClone())
-                monsterQueries.deleteAll()
+                monsterQueries.deleteAllVanilla()
             } else {
                 deleteAllEntries(monsters)
             }
