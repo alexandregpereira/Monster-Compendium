@@ -104,8 +104,10 @@ class GetMonsterDetailUseCase internal constructor(
                         ?.firstOrNull()
                         ?.takeIf { it.isNotBlank() } ?: return@let null
 
-                    val ellipse = if (lore.entries.size > 1) "..." else ""
                     val loreSize = 180
+                    val ellipse = if (
+                        lore.entries.size > 1 || firstEntryDescription.length >= loreSize
+                    ) "..." else ""
                     val loreSummary = firstEntryDescription.substring(
                         startIndex = 0,
                         endIndex = loreSize.coerceAtMost(firstEntryDescription.length)
