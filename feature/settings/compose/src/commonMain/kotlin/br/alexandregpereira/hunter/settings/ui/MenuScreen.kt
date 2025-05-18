@@ -46,9 +46,9 @@ internal fun MenuScreen(
 ) {
     val strings = state.strings
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(contentPadding)
     ) {
-        Column(Modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
+        Column(Modifier.verticalScroll(rememberScrollState())) {
             MenuItem(
                 text = strings.openGitHubProject,
                 onClick = viewIntent::onOpenGitHubProjectClick
@@ -104,7 +104,6 @@ internal fun MenuScreen(
                 fontSize = 12.sp,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(contentPadding)
                     .padding(8.dp)
             )
         }

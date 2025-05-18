@@ -29,7 +29,7 @@ import org.koin.compose.koinInject
 @Composable
 fun SettingsFeature(
     versionName: String,
-    contentPadding: PaddingValues,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     val viewModel: SettingsStateHolder = koinInject()
 
