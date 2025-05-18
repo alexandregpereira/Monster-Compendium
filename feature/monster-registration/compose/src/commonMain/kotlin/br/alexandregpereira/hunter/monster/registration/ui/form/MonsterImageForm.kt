@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
+import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.strings.format
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
@@ -47,6 +48,7 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.PickerField
 import br.alexandregpereira.hunter.ui.compose.getMonsterImageAspectRatio
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -154,5 +156,30 @@ internal fun LazyListScope.MonsterImageForm(
                 }
             )
         }
+        formItem(key = keys.next()) {
+            val monsterImageContentScaleOptions = MonsterImageContentScale.entries
+            val strings = strings
+            PickerField(
+                label = strings.monsterImageContentScale,
+                options = remember(monsterImageContentScaleOptions, strings) {
+                    monsterImageContentScaleOptions.map {
+                       it.asString(strings)
+                    }
+                },
+                value = infoState.imageContentScale.asString(strings),
+                onValueChange = {
+                    onMonsterChanged(
+                        infoState.copy(
+                            imageContentScale = monsterImageContentScaleOptions[it]
+                        )
+                    )
+                },
+            )
+        }
     }
+}
+
+private fun MonsterImageContentScale.asString(strings: MonsterRegistrationStrings): String = when (this) {
+    MonsterImageContentScale.Fit -> strings.imageContentScaleFit
+    MonsterImageContentScale.Crop -> strings.imageContentScaleCrop
 }

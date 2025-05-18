@@ -92,6 +92,10 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             languages = languages,
             sourceName = sourceName,
             status = status.toEntityStatus(),
+            imageContentScale = when (imageData.contentScale) {
+                MonsterImageContentScale.Fit -> 0
+                MonsterImageContentScale.Crop -> 1
+            },
         ),
         speed = speed.toEntity(index),
         abilityScores = toAbilityScoreEntity(),
@@ -126,6 +130,11 @@ private fun MonsterEntity.toDomain(
     monsterImageContentScale: MonsterImageContentScale,
 ): Monster {
     val monster = this
+    val imageContentScale = when (monster.imageContentScale) {
+        0 -> MonsterImageContentScale.Fit
+        1 -> MonsterImageContentScale.Crop
+        else -> null
+    }
     return Monster(
         index = monster.index,
         type = MonsterType.valueOf(monster.type),
@@ -138,7 +147,7 @@ private fun MonsterEntity.toDomain(
                 dark = monster.backgroundColorDark
             ),
             isHorizontal = monster.isHorizontalImage,
-            contentScale = monsterImageContentScale
+            contentScale = imageContentScale ?: monsterImageContentScale
         ),
         subtype = monster.subtype,
         group = monster.group,

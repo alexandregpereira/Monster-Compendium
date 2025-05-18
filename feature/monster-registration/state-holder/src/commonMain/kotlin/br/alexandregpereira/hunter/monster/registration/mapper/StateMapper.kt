@@ -367,6 +367,7 @@ private fun MonsterState.createKeys(): List<String> {
         add("monsterHeader-image-url")
         add("monsterHeader-image-color-light")
         add("monsterHeader-image-color-dark")
+        add("monsterHeader-image-content-scale")
         add(SectionTitle.Header.name)
         add("monsterHeader-name")
         add("monsterHeader-subtitle")

@@ -80,6 +80,7 @@ internal fun Monster.editBy(
                 dark = state.info.backgroundColorDark
             ),
             isHorizontal = state.info.isImageHorizontal,
+            contentScale = state.info.imageContentScale,
         ),
         type = MonsterType.entries[state.info.typeIndex],
         stats = monster.stats.copy(
