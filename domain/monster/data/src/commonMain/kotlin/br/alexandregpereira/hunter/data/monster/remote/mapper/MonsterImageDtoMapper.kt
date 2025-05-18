@@ -17,15 +17,22 @@
 
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
+import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageContentScaleDto
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import br.alexandregpereira.hunter.domain.model.MonsterImage
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 
 internal fun List<MonsterImageDto>.toDomain(): List<MonsterImage> {
     return this.map {
         MonsterImage(
             monsterIndex = it.monsterIndex,
             backgroundColor = it.backgroundColor.toDomain(),
-            imageUrl = it.imageUrl
+            imageUrl = it.imageUrl,
+            contentScale = when (it.contentScale) {
+                MonsterImageContentScaleDto.Fit -> MonsterImageContentScale.Fit
+                MonsterImageContentScaleDto.Crop -> MonsterImageContentScale.Crop
+                null -> null
+            },
         )
     }
 }

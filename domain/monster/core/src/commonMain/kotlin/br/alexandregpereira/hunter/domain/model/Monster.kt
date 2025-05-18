@@ -87,8 +87,12 @@ data class MonsterImageData(
     val url: String = "",
     val backgroundColor: Color = Color(),
     val isHorizontal: Boolean = false,
-    val contentScale: MonsterImageContentScale = MonsterImageContentScale.Fit,
-)
+    val contentScale: MonsterImageContentScale? = null,
+) {
+    fun contentScaleOrDefault(): MonsterImageContentScale {
+        return contentScale ?: MonsterImageContentScale.Fit
+    }
+}
 
 enum class MonsterImageContentScale {
     Fit, Crop

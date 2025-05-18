@@ -28,4 +28,13 @@ data class MonsterImageDto(
     val backgroundColor: ColorDto = ColorDto(),
     @SerialName("image_url")
     val imageUrl: String,
+    @SerialName("content_scale")
+    val contentScale: MonsterImageContentScaleDto? = null,
 )
+
+enum class MonsterImageContentScaleDto {
+    @SerialName("Fit")
+    Fit,
+    @SerialName("Crop")
+    Crop,
+}
