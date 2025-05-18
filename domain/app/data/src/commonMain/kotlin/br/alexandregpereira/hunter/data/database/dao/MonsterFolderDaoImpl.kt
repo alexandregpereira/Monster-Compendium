@@ -113,6 +113,7 @@ internal class MonsterFolderDaoImpl(
             languages = languages,
             sourceName = sourceName,
             status = MonsterEntityStatus.entries[isClone.toInt()],
+            imageContentScale = imageContentScale?.toInt(),
         )
     }
 }

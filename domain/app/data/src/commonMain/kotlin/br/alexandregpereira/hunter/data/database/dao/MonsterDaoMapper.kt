@@ -116,7 +116,8 @@ internal fun MonsterEntity.toDatabaseEntity(): MonsterDatabaseEntity {
         senses = this.senses,
         languages = this.languages,
         sourceName = this.sourceName,
-        isClone = this.status.toStatusInt()
+        isClone = this.status.toStatusInt(),
+        imageContentScale = this.imageContentScale?.toLong(),
     )
 }
 
@@ -329,6 +330,7 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         languages = this.languages,
         sourceName = this.sourceName,
         status = MonsterEntityStatus.entries[this.isClone.toInt()],
+        imageContentScale = this.imageContentScale?.toInt(),
     )
 }
 

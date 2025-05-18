@@ -38,6 +38,7 @@ data class MonsterEntity(
     val languages: String,
     val sourceName: String,
     val status: MonsterEntityStatus,
+    val imageContentScale: Int?,
 )
 
 enum class MonsterEntityStatus {
