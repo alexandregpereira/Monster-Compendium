@@ -215,7 +215,7 @@ private fun Monster.asState(): MonsterCardState {
                 dark = imageData.backgroundColor.dark
             ),
             isHorizontal = imageData.isHorizontal,
-            contentScale = when (imageData.contentScale) {
+            contentScale = when (imageData.contentScaleOrDefault()) {
                 MonsterImageContentScale.Fit -> AppImageContentScale.Fit
                 MonsterImageContentScale.Crop -> AppImageContentScale.Crop
             }

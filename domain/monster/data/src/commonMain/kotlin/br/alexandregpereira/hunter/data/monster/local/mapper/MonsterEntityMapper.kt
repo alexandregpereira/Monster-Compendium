@@ -95,6 +95,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             imageContentScale = when (imageData.contentScale) {
                 MonsterImageContentScale.Fit -> 0
                 MonsterImageContentScale.Crop -> 1
+                else -> null
             },
         ),
         speed = speed.toEntity(index),
