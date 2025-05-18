@@ -44,6 +44,11 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(
     monsterImageContentScale: MonsterPreviewFolderImageContentScale
 ): List<MonsterPreviewFolder> {
     return map {
+        val imageContentScale = when (it.imageContentScale) {
+            0 -> MonsterPreviewFolderImageContentScale.Fit
+            1 -> MonsterPreviewFolderImageContentScale.Crop
+            else -> monsterImageContentScale
+        }
         it.run {
             MonsterPreviewFolder(
                 index = index,
@@ -54,7 +59,7 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(
                 backgroundColorLight = backgroundColorLight,
                 backgroundColorDark = backgroundColorDark,
                 isHorizontalImage = isHorizontalImage,
-                imageContentScale = monsterImageContentScale,
+                imageContentScale = imageContentScale,
             )
         }
     }
