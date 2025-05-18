@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterLoreLocalRepository {
 
-    fun getMonsterLore(index: String): Flow<MonsterLore>
+    fun getMonsterLore(index: String): Flow<MonsterLore?>
 
     fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>>
 

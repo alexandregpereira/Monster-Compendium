@@ -50,6 +50,7 @@ data class MonsterState(
     val legendaryActions: List<ActionState> = emptyList(),
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
+    val loreEntries: List<MonsterLoreEntryState> = emptyList(),
     internal val keysList: List<String> = emptyList(),
 ) {
     val keys: Iterator<String> = KeyIterator(keysList)
@@ -210,6 +211,12 @@ data class SpellPreviewState(
     val name: String = "",
 )
 
+data class MonsterLoreEntryState(
+    val key: String = generateUUID(),
+    val title: String = "",
+    val description: String = "",
+)
+
 internal enum class SectionTitle {
     Image,
     Header,
@@ -229,4 +236,5 @@ internal enum class SectionTitle {
     Reactions,
     LegendaryActions,
     Spellcastings,
+    MonsterLore,
 }

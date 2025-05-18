@@ -29,8 +29,8 @@ internal class DefaultMonsterLoreLocalRepository(
     private val monsterLoreLocalDataSource: MonsterLoreLocalDataSource,
 ) : MonsterLoreLocalRepository {
 
-    override fun getMonsterLore(index: String): Flow<MonsterLore> {
-        return monsterLoreLocalDataSource.getMonsterLore(index).map { it.toDomain() }
+    override fun getMonsterLore(index: String): Flow<MonsterLore?> {
+        return monsterLoreLocalDataSource.getMonsterLore(index).map { it?.toDomain() }
     }
 
     override fun getLocalMonstersLore(indexes: List<String>): Flow<List<MonsterLore>> {

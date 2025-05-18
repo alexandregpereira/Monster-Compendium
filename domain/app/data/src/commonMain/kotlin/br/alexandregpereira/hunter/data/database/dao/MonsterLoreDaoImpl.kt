@@ -44,8 +44,8 @@ internal class MonsterLoreDaoImpl(
 
     override suspend fun getMonsterLore(
         monsterIndex: String
-    ): MonsterLoreCompleteEntity = withContext(dispatcher) {
-        queries.getMonsterLore(monsterIndex).executeAsList().asEntities().first()
+    ): MonsterLoreCompleteEntity? = withContext(dispatcher) {
+        queries.getMonsterLore(monsterIndex).executeAsList().asEntities().firstOrNull()
     }
 
     override suspend fun getMonstersLoreEdited(): List<MonsterLoreCompleteEntity> {

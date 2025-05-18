@@ -55,7 +55,16 @@ internal fun CloneMonsterUseCase(
         .map { monster ->
             val newMonsterLore = runCatching {
                 getMonsterLore(monsterIndex).single()
-            }.getOrNull()?.copy(index = monster.index)
+            }.getOrNull()?.run {
+                copy(
+                    index = monster.index,
+                    entries = entries.mapIndexed { i, entry ->
+                        entry.copy(
+                            index = "${monster.index}-$i",
+                        )
+                    },
+                )
+            }
 
             monster to newMonsterLore
         }

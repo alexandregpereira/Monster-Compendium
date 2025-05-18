@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.domain.model.SavingThrow
 import br.alexandregpereira.hunter.domain.model.Skill
 import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
@@ -43,6 +44,7 @@ import br.alexandregpereira.hunter.monster.registration.DamageDiceState
 import br.alexandregpereira.hunter.monster.registration.DamageState
 import br.alexandregpereira.hunter.monster.registration.Metadata
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
+import br.alexandregpereira.hunter.monster.registration.MonsterLoreEntryState
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
 import br.alexandregpereira.hunter.monster.registration.MonsterState
 import br.alexandregpereira.hunter.monster.registration.SavingThrowState
@@ -101,7 +103,16 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
         legendaryActions = monster.legendaryActions.map { it.asState(strings) },
         reactions = monster.reactions.map { it.asState() },
         spellcastings = monster.spellcastings.map { it.asState(strings) },
+        loreEntries = monsterLoreEntries.map { it.asState() },
     ).run { copy(keysList = createKeys()) }
+}
+
+private fun MonsterLoreEntry.asState(): MonsterLoreEntryState {
+    return MonsterLoreEntryState(
+        key = index,
+        title = title.orEmpty(),
+        description = description,
+    )
 }
 
 private fun SpeedValue.asState(strings: MonsterRegistrationStrings): SpeedValueState {
@@ -356,6 +367,7 @@ internal fun SectionTitle.name(strings: MonsterRegistrationStrings): String {
         SectionTitle.Reactions -> strings.reactions
         SectionTitle.LegendaryActions -> strings.legendaryActions
         SectionTitle.Spellcastings -> strings.spells
+        SectionTitle.MonsterLore -> strings.monsterLoreFormTitle
     }
 }
 
@@ -513,6 +525,14 @@ private fun MonsterState.createKeys(): List<String> {
                         ).also { addAll(it) }
                     }
                 ).also { addAll(it) }
+            }
+        ).also { addAll(it) }
+        monster.loreEntries.createDynamicFormKeys(
+            key = SectionTitle.MonsterLore,
+            getItemKey = { it.key },
+            addKeys = {
+                add("title")
+                add("description")
             }
         ).also { addAll(it) }
     }

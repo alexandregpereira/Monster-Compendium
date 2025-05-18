@@ -37,19 +37,21 @@ internal fun MonsterLoreEntryBlock(
         modifier
             .fillMaxWidth()
     ) {
-        title?.let {
+        title?.takeIf { it.isNotBlank() }?.let {
             Text(
-                text = title,
+                text = it,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
             )
         }
 
-        Text(
-            text = description,
-            fontWeight = FontWeight.Light,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+        description.takeIf { it.isNotBlank() }?.let {
+            Text(
+                text = it,
+                fontWeight = FontWeight.Light,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
     }
 }

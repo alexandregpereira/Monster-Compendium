@@ -30,7 +30,7 @@ class GetMonsterLoreDetailUseCase(
 
     operator fun invoke(index: String): Flow<MonsterLore> {
         return getMonsterLoreUseCase(index).zip(getMonsterUseCase(index)) { monsterLore, monster ->
-            monsterLore.copy(name = monster.name)
+            monsterLore?.copy(name = monster.name) ?: throw IllegalStateException("MonsterLore not found")
         }
     }
 }
