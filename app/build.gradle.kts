@@ -209,7 +209,7 @@ compose {
             mainClass = "MainKt"
 
             nativeDistributions {
-                modules("java.sql")
+                modules("java.sql", "java.net.http")
                 targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
                 packageName = "DnD Monster Compendium"
                 packageVersion = "1.0.0"
