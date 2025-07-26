@@ -210,7 +210,7 @@ compose {
 
             nativeDistributions {
                 modules("java.sql", "java.net.http")
-                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
                 packageName = "DnD Monster Compendium"
                 packageVersion = "1.0.0"
 
