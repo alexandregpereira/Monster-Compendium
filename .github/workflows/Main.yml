@@ -99,8 +99,8 @@ jobs:
           name: app-dev-release-apk
           path: app/build/outputs/apk/release/app-dev-release.apk
 
-  ubuntu-desktop-distribution:
-    name: Ubuntu Desktop Distribution
+  linux-desktop-distribution:
+    name: Linux Desktop Distribution
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -118,13 +118,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :app:packageDeb
+        run: ./gradlew :app:packageDeb :app:packageRpm
 
       - name: Upload Deb
         uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-deb
           path: app/build/compose/binaries/main/deb/*.deb
+
+      - name: Upload Rpm
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: MonsterCompendium-rpm
+          path: app/build/compose/binaries/main/rpm/*.rpm
 
   windows-desktop-distribution:
     name: Windows Desktop Distribution
