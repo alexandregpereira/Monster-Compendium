@@ -72,11 +72,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         legendaryActions = legendaryActions.map { it.asState() },
         reactions = reactions.map { it.asState() },
         spellcastings = spellcastings.map { it.asState(strings) },
-        lore = lore?.run {
-            val loreSize = 180
-            val ellipse = if (length > loreSize) "..." else ""
-            substring(0, loreSize.coerceAtMost(length)) + ellipse
-        }.orEmpty()
+        lore = lore.orEmpty()
     )
 }
 
@@ -96,7 +92,7 @@ private fun MonsterImageData.asState(
         challengeRating = challengeRating,
         xp = xp,
         contentDescription = contentDescription,
-        contentScale = contentScale,
+        contentScale = contentScaleOrDefault(),
     )
 }
 

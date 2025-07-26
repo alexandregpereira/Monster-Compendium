@@ -45,6 +45,6 @@ private fun Monster.asState(): MonsterPreviewState {
         backgroundColorLight = imageData.backgroundColor.light,
         backgroundColorDark = imageData.backgroundColor.dark,
         isImageHorizontal = imageData.isHorizontal,
-        imageContentScale = imageData.contentScale,
+        imageContentScale = imageData.contentScaleOrDefault(),
     )
 }

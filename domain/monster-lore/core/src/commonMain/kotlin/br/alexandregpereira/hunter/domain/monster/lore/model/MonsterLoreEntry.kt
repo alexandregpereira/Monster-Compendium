@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.domain.monster.lore.model
 
 data class MonsterLoreEntry(
+    val index: String,
     val title: String? = null,
     val description: String,
 )

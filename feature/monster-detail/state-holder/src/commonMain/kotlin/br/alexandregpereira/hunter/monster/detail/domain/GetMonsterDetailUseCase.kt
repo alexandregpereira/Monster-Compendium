@@ -18,8 +18,10 @@
 package br.alexandregpereira.hunter.monster.detail.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.model.Spell
@@ -90,10 +92,38 @@ class GetMonsterDetailUseCase internal constructor(
 
     private fun List<Monster>.appendLore(loreList: List<MonsterLore>): List<Monster> {
         return map { monsterWithLore ->
+            val loreNullable = loreList.find {
+                it.index == monsterWithLore.index
+            }
             monsterWithLore.copy(
-                lore = loreList.find {
-                    it.index == monsterWithLore.index
-                }?.entries?.firstOrNull()?.description
+                lore = loreNullable?.let { lore ->
+                    val firstEntryDescription = lore.entries.firstOrNull {
+                        it.description.isNotBlank()
+                    }?.description
+                        ?.split("\n")
+                        ?.firstOrNull()
+                        ?.takeIf { it.isNotBlank() } ?: return@let null
+
+                    val loreSize = 180
+                    val ellipse = if (
+                        lore.entries.size > 1 || firstEntryDescription.length >= loreSize
+                    ) "..." else ""
+                    val loreSummary = firstEntryDescription.substring(
+                        startIndex = 0,
+                        endIndex = loreSize.coerceAtMost(firstEntryDescription.length)
+                    )
+                    loreSummary + ellipse
+                },
+                status = when (loreNullable?.status) {
+                    MonsterLoreStatus.Imported -> when (monsterWithLore.status) {
+                        MonsterStatus.Original -> MonsterStatus.Edited
+                        MonsterStatus.Edited,
+                        MonsterStatus.Clone,
+                        MonsterStatus.Imported -> monsterWithLore.status
+                    }
+                    MonsterLoreStatus.Original,
+                    null -> monsterWithLore.status
+                }
             )
         }
     }

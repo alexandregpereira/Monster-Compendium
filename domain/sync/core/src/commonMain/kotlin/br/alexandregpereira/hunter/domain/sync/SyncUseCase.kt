@@ -50,7 +50,7 @@ class SyncUseCase internal constructor(
     private val resetFirstTime: ResetFirstTime,
 ) {
 
-    private val contentVersion = 4
+    private val contentVersion = 5
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {

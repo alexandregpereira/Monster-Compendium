@@ -27,6 +27,7 @@ internal data class ShareMonsterLore(
 
 @Serializable
 internal data class ShareMonsterLoreEntry(
+    val index: String,
     val title: String? = null,
     val description: String,
 )

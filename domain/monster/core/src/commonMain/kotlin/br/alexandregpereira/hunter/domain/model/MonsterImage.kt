@@ -22,4 +22,5 @@ data class MonsterImage(
     val backgroundColor: Color,
     val isHorizontalImage: Boolean = false,
     val imageUrl: String,
+    val contentScale: MonsterImageContentScale?,
 )

@@ -59,9 +59,11 @@ private fun MonsterLoreDetailPreview() = Window {
             name = "Lich",
             entries = listOf(
                 MonsterLoreEntry(
+                    index = "1",
                     description = "asdas asdasd asd asd \nas dasasdas as x as asd d as"
                 ),
                 MonsterLoreEntry(
+                    index = "2",
                     title = "Title",
                     description = "asdas asdasd asd asd \nas dasasdas as x as asd d as"
                 )

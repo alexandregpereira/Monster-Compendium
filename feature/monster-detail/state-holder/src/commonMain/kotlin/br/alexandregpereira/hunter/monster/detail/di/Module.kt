@@ -56,7 +56,7 @@ val monsterDetailModule = module {
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }
     factory { DeleteMonsterUseCase(repository = get()) }
-    factory { ResetMonsterToOriginal(get(), get()) }
+    factory { ResetMonsterToOriginal(get(), get(), get(), get()) }
 }
 
 const val MonsterDetailStateRecoveryQualifier = "MonsterDetailStateRecovery"

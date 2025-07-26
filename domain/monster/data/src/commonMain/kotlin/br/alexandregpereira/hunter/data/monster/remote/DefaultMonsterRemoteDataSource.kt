@@ -24,7 +24,6 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 internal class DefaultMonsterRemoteDataSource(

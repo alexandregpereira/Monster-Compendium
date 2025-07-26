@@ -26,10 +26,11 @@ internal fun ShareMonsterLore.toMonsterLore(): MonsterLore {
     return MonsterLore(
         index = index,
         name = "",
-        entries = entries.map {
+        entries = entries.map { entry ->
             MonsterLoreEntry(
-                title = it.title,
-                description = it.description,
+                index = entry.index,
+                title = entry.title,
+                description = entry.description,
             )
         },
         status = MonsterLoreStatus.Imported,

@@ -41,35 +41,31 @@ internal fun AppBottomNavigationTransition(
     bottomBarItems: List<BottomBarItem>,
     onClick: (BottomBarItem) -> Unit,
 ) {
-    Column {
-        Window(Modifier.weight(1f).padding(bottom = contentPadding.calculateBottomPadding())) {
+    Column(modifier = Modifier.padding(contentPadding)) {
+        Window(Modifier.weight(1f)) {
             if (bottomBarItemSelected == null) return@Window
             Crossfade(
                 targetState = bottomBarItemSelected,
                 label = "BottomNavigationTransition"
             ) { item ->
                 when (item.icon) {
-                    BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature(
-                        contentPadding = contentPadding,
-                    )
+                    BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature()
 
                     BottomBarItemIcon.FOLDERS -> {
-                        FolderListFeature(contentPadding = contentPadding)
-                        FolderDetailFeature(contentPadding = contentPadding)
+                        FolderListFeature()
+                        FolderDetailFeature()
                     }
 
-                    BottomBarItemIcon.SEARCH -> SearchScreenFeature(contentPadding = contentPadding)
+                    BottomBarItemIcon.SEARCH -> SearchScreenFeature()
 
                     BottomBarItemIcon.SETTINGS -> SettingsFeature(
                         versionName = getVersionName(),
-                        contentPadding = contentPadding,
                     )
                 }
             }
         }
 
         FolderPreviewFeature(
-            contentPadding = contentPadding,
             modifier = Modifier,
         )
 
@@ -77,7 +73,6 @@ internal fun AppBottomNavigationTransition(
             showBottomBar = true,
             bottomBarItemSelectedIndex = bottomBarItemSelectedIndex,
             bottomBarItems = bottomBarItems,
-            contentPadding = contentPadding,
             onClick = onClick,
         )
     }

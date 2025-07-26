@@ -27,13 +27,16 @@ internal fun MonsterLoreDto.toDomain(): MonsterLore {
     return MonsterLore(
         index = index,
         name = "",
-        entries = entries.map { it.toDomain() },
+        entries = entries.mapIndexed { i, entry ->
+            entry.toDomain(monsterLoreIndex = index, index = i)
+        },
         status = MonsterLoreStatus.Original,
     )
 }
 
-internal fun MonsterLoreEntryDto.toDomain(): MonsterLoreEntry {
+internal fun MonsterLoreEntryDto.toDomain(monsterLoreIndex: String, index: Int): MonsterLoreEntry {
     return MonsterLoreEntry(
+        index = "$monsterLoreIndex-$index",
         title = title,
         description = description
     )

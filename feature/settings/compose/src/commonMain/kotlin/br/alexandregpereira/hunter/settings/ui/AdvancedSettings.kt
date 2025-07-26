@@ -54,7 +54,7 @@ internal fun AdvancedSettings(
     )
 
     Text(
-        text = strings.alternativeSourcesJson,
+        text = strings.monsterImagesJson,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         modifier = Modifier

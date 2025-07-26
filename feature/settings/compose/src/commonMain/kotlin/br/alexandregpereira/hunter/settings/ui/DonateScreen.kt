@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -59,6 +60,7 @@ internal fun DonateScreen(
     isOpen: Boolean,
     state: DonateState,
     strings: DonateStrings,
+    contentPadding: PaddingValues = PaddingValues(),
     onClose: () -> Unit,
     onPixCodeCopy: () -> Unit,
     onPixKeyCopy: () -> Unit,
@@ -66,6 +68,7 @@ internal fun DonateScreen(
 ) = BottomSheet(
     opened = isOpen,
     topSpaceHeight = 0.dp,
+    contentPadding = contentPadding,
     onClose = onClose,
 ) {
     Column {

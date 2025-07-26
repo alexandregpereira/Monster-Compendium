@@ -15,26 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.remote.model
+package br.alexandregpereira.hunter.monster.registration.mapper
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.monster.registration.MonsterLoreEntryState
 
-@Serializable
-data class MonsterImageDto(
-    @SerialName("monster_index")
-    val monsterIndex: String,
-    @SerialName("background_color")
-    val backgroundColor: ColorDto = ColorDto(),
-    @SerialName("image_url")
-    val imageUrl: String,
-    @SerialName("content_scale")
-    val contentScale: MonsterImageContentScaleDto? = null,
-)
-
-enum class MonsterImageContentScaleDto {
-    @SerialName("Fit")
-    Fit,
-    @SerialName("Crop")
-    Crop,
+internal fun MonsterLoreEntryState.asDomain(): MonsterLoreEntry {
+    val state = this
+    return MonsterLoreEntry(
+        index = key,
+        title = state.title,
+        description = state.description,
+    )
 }

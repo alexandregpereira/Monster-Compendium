@@ -1,0 +1,1 @@
+ALTER TABLE MonsterEntity ADD COLUMN imageContentScale INTEGER;

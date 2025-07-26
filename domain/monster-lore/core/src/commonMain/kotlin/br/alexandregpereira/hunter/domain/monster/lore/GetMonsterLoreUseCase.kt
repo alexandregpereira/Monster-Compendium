@@ -24,7 +24,7 @@ class GetMonsterLoreUseCase(
     private val repository: MonsterLoreLocalRepository
 ) {
 
-    operator fun invoke(index: String): Flow<MonsterLore> {
+    operator fun invoke(index: String): Flow<MonsterLore?> {
         return repository.getMonsterLore(index)
     }
 }

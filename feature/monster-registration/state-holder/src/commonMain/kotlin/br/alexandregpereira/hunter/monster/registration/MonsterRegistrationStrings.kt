@@ -132,6 +132,11 @@ interface MonsterRegistrationStrings {
     val darkThemeSwitchLabel: String
     val imageProportion: String
     val challengeRating: String
+    val monsterImageContentScale: String
+    val imageContentScaleFit: String
+    val imageContentScaleCrop: String
+    val monsterLoreFormTitle: String
+    val monsterLoreFormTitleFieldLabel: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -246,6 +251,11 @@ internal data class MonsterRegistrationEnStrings(
     override val darkThemeSwitchLabel: String = "Preview Dark Theme",
     override val imageProportion: String = "Proportion - {0}",
     override val challengeRating: String = "Challenge Rating",
+    override val monsterImageContentScale: String = "Monster Image Content Scale",
+    override val imageContentScaleFit: String = "Show entire image",
+    override val imageContentScaleCrop: String = "Expand the image",
+    override val monsterLoreFormTitle: String = "Lore",
+    override val monsterLoreFormTitleFieldLabel: String = "Title (Optional)",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -360,6 +370,11 @@ internal data class MonsterRegistrationPtStrings(
     override val darkThemeSwitchLabel: String = "Pré visualizar em Tema Escuro",
     override val imageProportion: String = "Proporção - {0}",
     override val challengeRating: String = "Nível de Desafio",
+    override val monsterImageContentScale: String = "Escala de Conteúdo de Imagem de Monstro",
+    override val imageContentScaleFit: String = "Mostrar imagem inteira",
+    override val imageContentScaleCrop: String = "Expandir a imagem",
+    override val monsterLoreFormTitle: String = "Mitologia",
+    override val monsterLoreFormTitleFieldLabel: String = "Título (Opcional)",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()

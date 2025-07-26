@@ -51,7 +51,6 @@ import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
-import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
@@ -81,7 +80,7 @@ internal fun MonsterContentPreviewScreen(
         }
         MonsterContentPreviewScreenContent(
             state = state,
-            contentPadding = contentPadding + PaddingValues(top = 24.dp),
+            contentPadding = PaddingValues(top = 24.dp),
             compendiumIndex = compendiumIndex,
             onTableContentOpenButtonClick = onTableContentOpenButtonClick,
             onTableContentClose = onTableContentClose,
@@ -216,7 +215,7 @@ private fun Monster.asState(): MonsterCardState {
                 dark = imageData.backgroundColor.dark
             ),
             isHorizontal = imageData.isHorizontal,
-            contentScale = when (imageData.contentScale) {
+            contentScale = when (imageData.contentScaleOrDefault()) {
                 MonsterImageContentScale.Fit -> AppImageContentScale.Fit
                 MonsterImageContentScale.Crop -> AppImageContentScale.Crop
             }
