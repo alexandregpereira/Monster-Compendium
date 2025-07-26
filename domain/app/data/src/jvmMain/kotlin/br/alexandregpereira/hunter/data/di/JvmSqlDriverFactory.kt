@@ -46,7 +46,8 @@ internal actual fun Scope.createSqlDriver(): SqlDriver {
 }
 
 private fun getDatabaseFile(): File {
-    val userFolder = System.getProperty("user.home")
+    val userFolder = System.getenv("XDG_DATA_HOME")
+        ?: "${System.getProperty("user.home")}/.local/share"
     val appDataFolder = File(userFolder, ".monster-compendium")
     if (appDataFolder.exists().not()) {
         appDataFolder.mkdirs()
