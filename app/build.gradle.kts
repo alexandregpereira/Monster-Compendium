@@ -100,7 +100,17 @@ multiplatform {
 val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
 
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
-    taskVersionName.set(appVersionName)
+    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
+    val versionNameSuffix = when {
+        hasProperty("dev") -> {
+            "-dev"
+        }
+        isDebug -> {
+            "-debug"
+        }
+        else -> ""
+    }
+    taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
 }
 
@@ -147,7 +157,6 @@ android {
         }
     }
 
-    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Debug") }
     defaultConfig {
         applicationId = "br.alexandregpereira.hunter.app"
         minSdk = findProperty("minSdk")?.toString()?.toInt()
@@ -162,15 +171,6 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        versionNameSuffix = when {
-            hasProperty("dev") -> {
-                "-dev"
-            }
-            isDebug -> {
-                "-debug"
-            }
-            else -> ""
-        }
         if (hasProperty("dev")) {
             setProperty("archivesBaseName", "app-dev")
         }
