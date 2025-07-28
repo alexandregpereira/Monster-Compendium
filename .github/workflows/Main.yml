@@ -31,7 +31,7 @@ jobs:
       - name: Build with Gradle
         env:
           MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-        run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease :app:packageDmg
+        run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease :app:packageReleaseDmg
 
       - name: Verify database migration
         run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -118,7 +118,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :app:packageDeb :app:packageRpm
+        run: ./gradlew :app:packageReleaseDeb :app:packageReleaseRpm
 
       - name: Upload Deb
         uses: actions/upload-artifact@v4.6.2
@@ -151,7 +151,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :app:packageMsi
+        run: ./gradlew :app:packageReleaseMsi
 
       - name: Upload Msi
         uses: actions/upload-artifact@v4.6.2
