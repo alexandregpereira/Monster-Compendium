@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-dmg
-          path: app/build/compose/binaries/main/dmg/*.dmg
+          path: app/build/compose/binaries/main-release/dmg/*.dmg
 
       - name: Upload APK
         uses: actions/upload-artifact@v4.6.2
@@ -124,13 +124,13 @@ jobs:
         uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-deb
-          path: app/build/compose/binaries/main/deb/*.deb
+          path: app/build/compose/binaries/main-release/deb/*.deb
 
       - name: Upload Rpm
         uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-rpm
-          path: app/build/compose/binaries/main/rpm/*.rpm
+          path: app/build/compose/binaries/main-release/rpm/*.rpm
 
   windows-desktop-distribution:
     name: Windows Desktop Distribution
@@ -157,4 +157,4 @@ jobs:
         uses: actions/upload-artifact@v4.6.2
         with:
           name: MonsterCompendium-msi
-          path: app/build/compose/binaries/main/msi/*.msi
+          path: app/build/compose/binaries/main-release/msi/*.msi
