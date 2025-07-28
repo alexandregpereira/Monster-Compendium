@@ -28,8 +28,11 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import br.alexandregpereira.hunter.app.HunterApp
 import br.alexandregpereira.hunter.app.di.initKoinModules
+import br.alexandregpereira.hunter.app.ui.resources.Res
+import br.alexandregpereira.hunter.app.ui.resources.ic_launcher_foreground
 import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
+import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
 
 fun main() = application {
@@ -40,6 +43,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title =  "Monster Compendium",
+        icon = painterResource(Res.drawable.ic_launcher_foreground),
         state = rememberWindowState(
             size = DpSize(1600.dp, 900.dp)
         ),

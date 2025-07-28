@@ -18,9 +18,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 plugins {
     id("com.android.application")
@@ -100,6 +97,23 @@ multiplatform {
     }
 }
 
+val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
+
+tasks.register<GenerateAppConfigTask>("generateAppConfig") {
+    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
+    val versionNameSuffix = when {
+        hasProperty("dev") -> {
+            "-dev"
+        }
+        isDebug -> {
+            "-debug"
+        }
+        else -> ""
+    }
+    taskVersionName.set(appVersionName + versionNameSuffix)
+    taskVersionCode.set(appVersionCode)
+}
+
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -114,6 +128,14 @@ kotlin {
                 implementation(libs.multiplatform.settings.test)
                 debugImplementation(libs.compose.ui.test.manifest)
             }
+        }
+    }
+    sourceSets {
+        val commonMain by getting {
+            val srcPath = tasks.named<GenerateAppConfigTask>(name = "generateAppConfig").flatMap {
+                it.outputDir
+            }
+            kotlin.srcDir(srcPath)
         }
     }
 }
@@ -135,7 +157,6 @@ android {
         }
     }
 
-    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Debug") }
     defaultConfig {
         applicationId = "br.alexandregpereira.hunter.app"
         minSdk = findProperty("minSdk")?.toString()?.toInt()
@@ -147,28 +168,9 @@ android {
             else -> ""
         }
 
-        val localDateTime = Instant.now().atOffset(ZoneOffset.UTC).toLocalDateTime()
-        val baseTimestampInSeconds = 1467504000L // Base value for the timestamp of 2013-07-03 00:00:00
-        val currentTimestampInSeconds = localDateTime.toEpochSecond(ZoneOffset.UTC)
-        val timestampDiff = currentTimestampInSeconds - baseTimestampInSeconds
-        if (timestampDiff <= 0) {
-            throw RuntimeException("Adjust your machine datetime! timestampDiff")
-        }
-        val versionCodePerSeconds = 60 * 20 // Seconds to increment the version code
-        versionCode = (timestampDiff / versionCodePerSeconds).toInt().also { versionCode ->
-            val dateFormat = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd."))
-            versionName = dateFormat + (versionCode - 186000)
-        }
+        versionCode = appVersionCode
+        versionName = appVersionName
 
-        versionNameSuffix = when {
-            hasProperty("dev") -> {
-                "-dev"
-            }
-            isDebug -> {
-                "-debug"
-            }
-            else -> ""
-        }
         if (hasProperty("dev")) {
             setProperty("archivesBaseName", "app-dev")
         }
@@ -211,8 +213,12 @@ compose {
             nativeDistributions {
                 modules("java.sql", "java.net.http")
                 targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
-                packageName = "DnD Monster Compendium"
-                packageVersion = "1.0.0"
+                packageName = "D&D Monster Compendium"
+                packageVersion = appVersionName
+                description = "A Dungeons & Dragons 5th edition monster compendium"
+                copyright = "Copyright (C) 2025 Alexandre Gomes Pereira"
+                vendor = "Alexandre Gomes Pereira"
+                licenseFile.set(project.file("../LICENSE"))
 
                 macOS {
                     iconFile.set(project.file("icon-mac.icns"))
@@ -222,7 +228,12 @@ compose {
                 }
                 linux {
                     iconFile.set(project.file("icon-linux.png"))
+                    packageName = "dnd-monster-compendium"
                 }
+            }
+
+            buildTypes.release.proguard {
+                configurationFiles.from(project.file("compose-desktop.pro"))
             }
         }
     }
@@ -231,4 +242,9 @@ compose {
         packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
         generateResClass = always
     }
+}
+
+// Ensure the task runs before compilation
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    dependsOn("generateAppConfig")
 }

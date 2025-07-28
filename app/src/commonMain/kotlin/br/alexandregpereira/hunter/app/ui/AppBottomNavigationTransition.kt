@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.app.BottomBarItem
 import br.alexandregpereira.hunter.app.BottomBarItemIcon
 import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
@@ -59,7 +60,7 @@ internal fun AppBottomNavigationTransition(
                     BottomBarItemIcon.SEARCH -> SearchScreenFeature()
 
                     BottomBarItemIcon.SETTINGS -> SettingsFeature(
-                        versionName = getVersionName(),
+                        versionName = AppConfig.VERSION_NAME,
                     )
                 }
             }
@@ -77,5 +78,3 @@ internal fun AppBottomNavigationTransition(
         )
     }
 }
-
-internal expect fun getVersionName(): String

@@ -61,7 +61,7 @@ The icons used in this app have a free license. They are designed by [macrovecto
 ## License
 
     DnD 5th edition monster compendium app
-    Copyright (C) 2024 Alexandre Gomes Pereira
+    Copyright (C) 2025 Alexandre Gomes Pereira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
