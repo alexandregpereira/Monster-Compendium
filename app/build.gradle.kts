@@ -227,6 +227,7 @@ compose {
                     iconFile.set(project.file("icon-windows.ico"))
                 }
                 linux {
+                    targetFormats(TargetFormat.AppImage)
                     iconFile.set(project.file("icon-linux.png"))
                     packageName = "dnd-monster-compendium"
                 }
