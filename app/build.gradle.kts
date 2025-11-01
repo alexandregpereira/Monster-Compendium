@@ -229,7 +229,6 @@ compose {
                 linux {
                     iconFile.set(project.file("icon-linux.png"))
                     packageName = "dnd-monster-compendium"
-                    installationPath = "~/.local/share"
                 }
             }
 
