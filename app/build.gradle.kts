@@ -212,7 +212,7 @@ compose {
 
             nativeDistributions {
                 modules("java.sql", "java.net.http")
-                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
+                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm, TargetFormat.AppImage)
                 packageName = "D&D Monster Compendium"
                 packageVersion = appVersionName
                 description = "A Dungeons & Dragons 5th edition monster compendium"
@@ -229,6 +229,7 @@ compose {
                 linux {
                     iconFile.set(project.file("icon-linux.png"))
                     packageName = "dnd-monster-compendium"
+                    installationPath = "~/.local/share"
                 }
             }
 
