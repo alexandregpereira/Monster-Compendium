@@ -115,7 +115,15 @@ private fun AbilityDescription.isEmpty(): Boolean {
     return name.isBlank() && description.isBlank()
 }
 
-private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean = { true }): List<Action> {
+private fun List<Action>.filterDamageDices(): List<Action> {
+    return map { action ->
+        action.copy(
+            damageDices = action.damageDices.filter { it.dice.isNotBlank() }
+        )
+    }
+}
+
+private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean): List<Action> {
     return mapNotNull { action ->
         val filteredAction = action.copy(
             damageDices = action.damageDices.filter { it.dice.isNotBlank() }
@@ -124,7 +132,15 @@ private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean = { tr
     }
 }
 
-private fun List<Spellcasting>.filterSpellUsages(predicate: (Spellcasting) -> Boolean = { true }): List<Spellcasting> {
+private fun List<Spellcasting>.filterSpellUsages(): List<Spellcasting> {
+    return map { spellcasting ->
+        spellcasting.copy(
+            usages = spellcasting.usages.filterSpells { it.spells.isNotEmpty() }
+        )
+    }
+}
+
+private fun List<Spellcasting>.filterSpellUsages(predicate: (Spellcasting) -> Boolean): List<Spellcasting> {
     return mapNotNull { spellcasting ->
         val filteredSpellcasting = spellcasting.copy(
             usages = spellcasting.usages.filterSpells { it.spells.isNotEmpty() }
@@ -133,7 +149,15 @@ private fun List<Spellcasting>.filterSpellUsages(predicate: (Spellcasting) -> Bo
     }
 }
 
-private fun List<SpellUsage>.filterSpells(predicate: (SpellUsage) -> Boolean = { true }): List<SpellUsage> {
+private fun List<SpellUsage>.filterSpells(): List<SpellUsage> {
+    return map { spellUsage ->
+        spellUsage.copy(
+            spells = spellUsage.spells.filter { it.name.isNotBlank() }
+        )
+    }
+}
+
+private fun List<SpellUsage>.filterSpells(predicate: (SpellUsage) -> Boolean): List<SpellUsage> {
     return mapNotNull { spellUsage ->
         val filteredSpellUsage = spellUsage.copy(
             spells = spellUsage.spells.filter { it.name.isNotBlank() }
