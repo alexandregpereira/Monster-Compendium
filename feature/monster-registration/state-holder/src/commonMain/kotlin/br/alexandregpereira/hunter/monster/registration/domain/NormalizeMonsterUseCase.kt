@@ -104,16 +104,10 @@ internal fun Monster.filterEmpties(): Monster {
         savingThrows = savingThrows.filter { it.modifier != 0 },
         skills = skills.filter { it.name.isNotBlank() },
         specialAbilities = specialAbilities.filter { it.isEmpty().not() },
-        actions = actions.filterDamageDices().filter {
-            it.abilityDescription.isEmpty().not()
-        },
+        actions = actions.filterDamageDices { it.abilityDescription.isEmpty().not() },
         reactions = reactions.filter { it.isEmpty().not() },
-        legendaryActions = legendaryActions.filterDamageDices().filter {
-            it.abilityDescription.isEmpty().not()
-        },
-        spellcastings = spellcastings.filterSpellUsages().filter { spellcasting ->
-            spellcasting.usages.isNotEmpty()
-        }
+        legendaryActions = legendaryActions.filterDamageDices { it.abilityDescription.isEmpty().not() },
+        spellcastings = spellcastings.filterSpellUsages { it.usages.isNotEmpty() }
     )
 }
 
@@ -121,27 +115,30 @@ private fun AbilityDescription.isEmpty(): Boolean {
     return name.isBlank() && description.isBlank()
 }
 
-private fun List<Action>.filterDamageDices(): List<Action> {
-    return map { action ->
-        action.copy(
+private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean = { true }): List<Action> {
+    return mapNotNull { action ->
+        val filteredAction = action.copy(
             damageDices = action.damageDices.filter { it.dice.isNotBlank() }
         )
+        if (predicate(filteredAction)) filteredAction else null
     }
 }
 
-private fun List<Spellcasting>.filterSpellUsages(): List<Spellcasting> {
-    return map { spellcasting ->
-        spellcasting.copy(
-            usages = spellcasting.usages.filterSpells().filter { it.spells.isNotEmpty() }
+private fun List<Spellcasting>.filterSpellUsages(predicate: (Spellcasting) -> Boolean = { true }): List<Spellcasting> {
+    return mapNotNull { spellcasting ->
+        val filteredSpellcasting = spellcasting.copy(
+            usages = spellcasting.usages.filterSpells { it.spells.isNotEmpty() }
         )
+        if (predicate(filteredSpellcasting)) filteredSpellcasting else null
     }
 }
 
-private fun List<SpellUsage>.filterSpells(): List<SpellUsage> {
-    return map { spellUsage ->
-        spellUsage.copy(
+private fun List<SpellUsage>.filterSpells(predicate: (SpellUsage) -> Boolean = { true }): List<SpellUsage> {
+    return mapNotNull { spellUsage ->
+        val filteredSpellUsage = spellUsage.copy(
             spells = spellUsage.spells.filter { it.name.isNotBlank() }
         )
+        if (predicate(filteredSpellUsage)) filteredSpellUsage else null
     }
 }
 

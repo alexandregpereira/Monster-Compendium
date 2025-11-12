@@ -69,24 +69,23 @@ internal fun AbilityScoreQueries.insert(entities: List<AbilityScoreEntity>) {
     }
 }
 
-internal fun ActionQueries.insert(entities: List<ActionEntity>) = entities.run {
-    forEach {
+internal fun ActionQueries.insert(entities: List<ActionEntity>) {
+    entities.forEach {
         insert(it.toDatabaseEntity())
     }
 }
 
-internal fun ConditionQueries.insert(entities: List<ConditionEntity>) = entities.run {
-    forEach {
+internal fun ConditionQueries.insert(entities: List<ConditionEntity>) {
+    entities.forEach {
         insert(it.toDatabaseEntity())
     }
 }
 
-internal fun DamageVulnerabilityQueries.insert(entities: List<DamageVulnerabilityEntity>) =
-    entities.run {
-        forEach {
-            insert(it.toDatabaseEntity())
-        }
+internal fun DamageVulnerabilityQueries.insert(entities: List<DamageVulnerabilityEntity>) {
+    entities.forEach {
+        insert(it.toDatabaseEntity())
     }
+}
 
 internal fun DamageResistanceQueries.insert(entities: List<DamageResistanceEntity>) {
     entities.forEach {

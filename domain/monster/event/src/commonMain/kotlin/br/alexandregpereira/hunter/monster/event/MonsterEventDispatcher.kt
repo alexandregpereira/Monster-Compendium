@@ -93,7 +93,7 @@ fun MonsterEventDispatcher.collectOnVisibilityChanges(
 fun MonsterEventDispatcher.collectOnMonsterPageChanges(
     action: (MonsterEvent.OnMonsterPageChanges) -> Unit
 ): Flow<Unit> {
-    return events.map { it as? MonsterEvent.OnMonsterPageChanges }.filterNotNull().map(action)
+    return events.mapNotNull { it as? MonsterEvent.OnMonsterPageChanges }.map(action)
 }
 
 fun MonsterEventDispatcher.collectOnMonsterCompendiumChanges(

@@ -66,7 +66,9 @@ internal suspend fun List<Monster>.getContentToExport(
 }
 
 private fun Monster.getSpellIndexes(): List<String> {
-    return spellcastings.asSequence().map {
-        it.usages
-    }.flatten().map { it.spells }.flatten().map { it.index }.toList()
+    return spellcastings.flatMap { spellcasting ->
+        spellcasting.usages.flatMap { usage ->
+            usage.spells.map { it.index }
+        }
+    }
 }
