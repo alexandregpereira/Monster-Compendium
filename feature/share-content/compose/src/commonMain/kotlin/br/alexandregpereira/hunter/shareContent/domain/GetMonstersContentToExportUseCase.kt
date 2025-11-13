@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.singleOrNull
-import kotlinx.serialization.encodeToString
 
 internal fun interface GetMonstersContentEditedToExport {
 
@@ -66,9 +65,7 @@ internal suspend fun List<Monster>.getContentToExport(
 }
 
 private fun Monster.getSpellIndexes(): List<String> {
-    return spellcastings.flatMap { spellcasting ->
-        spellcasting.usages.flatMap { usage ->
-            usage.spells.map { it.index }
-        }
-    }
+    return spellcastings.asSequence().map {
+        it.usages
+    }.flatten().map { it.spells }.flatten().map { it.index }.toList()
 }
