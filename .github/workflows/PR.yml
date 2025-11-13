@@ -38,7 +38,7 @@ jobs:
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
 
     - name: Build iOS
-      run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium -destination "platform=iOS Simulator,name=iPhone 14" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Upload the test report
       if: failure()
