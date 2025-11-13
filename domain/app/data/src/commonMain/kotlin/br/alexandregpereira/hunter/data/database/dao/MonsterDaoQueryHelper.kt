@@ -221,15 +221,14 @@ internal fun getSpellcastings(
 ): Map<String, List<SpellcastingCompleteEntity>> {
     val spellcastings = spellcastingQueries.getByMonsterIndexes(monsterIndexes).executeAsList()
         .map { it.toLocalEntity() }
-    val spellcastingsIds = spellcastings.map { it.spellcastingId }
+    val spellcastingIds = spellcastings.map { it.spellcastingId }
 
-    val spellUsages = spellUsageQueries.getBySpellcastingIds(spellcastingsIds)
+    val spellUsages = spellUsageQueries.getBySpellcastingIds(spellcastingIds)
         .executeAsList().map { it.toLocalEntity() }
-    val spellUsagesIds = spellUsages.map { it.spellUsageId }
-    val spellUsagesMap = spellUsages.associateBy { it.spellUsageId }
+    val spellUsageIds = spellUsages.map { it.spellUsageId }
 
-    val spellsMap = spellUsageCrossRefQueries.getBySpellusageIdsAndSpellIndex(
-        spellUsagesIds,
+    val spellsMap = spellUsageCrossRefQueries.getBySpellUsageIdsAndSpellIndex(
+        spellUsageIds,
         mapper = { spellIndex: String, level: Long, name: String, school: String, spellUsageId: String ->
             spellUsageId to SpellPreviewEntity(
                 spellIndex = spellIndex,
@@ -238,14 +237,16 @@ internal fun getSpellcastings(
                 school = school
             )
         }
-    ).executeAsList().groupBy { it.first }.mapValues { (_, values) ->
-        values.map { it.second }
+    ).executeAsList().groupBy { (spellUsageId, _) ->
+        spellUsageId
+    }.mapValues { (_, spellsGroupedByUsageId) ->
+        spellsGroupedByUsageId.map { (_, spells) -> spells }
     }
 
-    val usagesMap = spellsMap.map { (spellUsageId, spells) ->
+    val usagesMap = spellUsages.map { spellUsage ->
         SpellUsageCompleteEntity(
-            spellUsage = spellUsagesMap[spellUsageId] ?: throw IllegalStateException("Spell usage not found"),
-            spells = spells
+            spellUsage = spellUsage,
+            spells = spellsMap[spellUsage.spellUsageId].orEmpty()
         )
     }.groupBy { it.spellUsage.spellcastingId }
 

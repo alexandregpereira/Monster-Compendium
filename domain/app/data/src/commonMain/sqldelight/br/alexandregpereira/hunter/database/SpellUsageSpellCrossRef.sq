@@ -8,7 +8,7 @@ INSERT OR REPLACE INTO SpellUsageSpellCrossRefEntity VALUES ?;
 deleteWithSpellUsageId:
 DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId IN ?;
 
-getBySpellusageIdsAndSpellIndex:
+getBySpellUsageIdsAndSpellIndex:
 SELECT
     SpellPreviewEntity.spellIndex AS spellIndex,
     SpellPreviewEntity.level AS level,
