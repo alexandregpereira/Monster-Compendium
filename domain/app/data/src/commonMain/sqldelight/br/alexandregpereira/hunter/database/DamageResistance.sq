@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO DamageResistanceEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM DamageResistanceEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM DamageResistanceEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM DamageResistanceEntity WHERE monsterIndex IN ?;

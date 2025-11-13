@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO ConditionEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM ConditionEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM ConditionEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM ConditionEntity WHERE monsterIndex IN ?;

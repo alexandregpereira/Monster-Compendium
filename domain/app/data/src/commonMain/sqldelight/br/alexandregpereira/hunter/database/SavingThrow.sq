@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SavingThrowEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM SavingThrowEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM SavingThrowEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM SavingThrowEntity WHERE monsterIndex IN ?;

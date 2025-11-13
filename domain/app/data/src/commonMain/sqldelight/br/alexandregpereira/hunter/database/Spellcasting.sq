@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SpellcastingEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM SpellcastingEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM SpellcastingEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM SpellcastingEntity WHERE monsterIndex IN ?;

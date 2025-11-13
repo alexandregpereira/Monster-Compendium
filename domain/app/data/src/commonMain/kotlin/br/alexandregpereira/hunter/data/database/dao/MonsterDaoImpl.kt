@@ -219,31 +219,36 @@ internal class MonsterDaoImpl(
             .queryMonsterCompleteEntities()
     }
 
-    private fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> =
-        map { monster ->
-            val speed = getSpeed(monster, speedQueries, speedValueQueries)
-            val abilityScores = getAbilityScores(monster, abilityScoreQueries)
-            val actions = getActions(monster, actionQueries, damageDiceQueries)
-            val reactions = getReactions(monster, reactionQueries)
-            val specialAbilities = getSpecialAbilities(monster, specialAbilityQueries)
-            val legendaryActions = getLegendaryActions(
-                monster, legendaryActionQueries, damageDiceQueries
-            )
-            val spellcastings = getSpellcastings(
-                monster,
-                spellcastingQueries,
-                spellUsageQueries,
-                spellUsageCrossRefQueries
-            )
-            val savingThrows = getSavingThrows(monster, savingThrowQueries)
-            val skills = getSkills(monster, skillQueries)
-            val damageVulnerabilities = getDamageVulnerabilities(
-                monster, damageVulnerabilityQueries
-            )
-            val damageResistances =
-                getDamageResistances(monster, damageResistanceQueries)
-            val damageImmunities = getDamageImmunities(monster, damageImmunityQueries)
-            val conditionImmunities = getConditionImmunities(monster, conditionQueries)
+    private fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> {
+        val monsterIndexes = map { it.index }
+        val allSpeedMap = getSpeeds(monsterIndexes, speedQueries, speedValueQueries)
+        val allAbilityScoresMap = getAbilityScores(monsterIndexes, abilityScoreQueries)
+        val allActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries)
+        val allReactionsMap = getReactions(monsterIndexes, reactionQueries)
+        val allSpecialAbilitiesMap = getSpecialAbilities(monsterIndexes, specialAbilityQueries)
+        val allLegendaryActionsMap = getLegendaryActions(monsterIndexes, legendaryActionQueries, damageDiceQueries)
+        val allSpellcastingsMap = getSpellcastings(monsterIndexes, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries)
+        val allSavingThrowsMap = getSavingThrows(monsterIndexes, savingThrowQueries)
+        val allSkillsMap = getSkills(monsterIndexes, skillQueries)
+        val allDamageVulnerabilitiesMap = getDamageVulnerabilities(monsterIndexes, damageVulnerabilityQueries)
+        val allDamageResistancesMap = getDamageResistances(monsterIndexes, damageResistanceQueries)
+        val allDamageImmunitiesMap = getDamageImmunities(monsterIndexes, damageImmunityQueries)
+        val allConditionImmunitiesMap = getConditionImmunities(monsterIndexes, conditionQueries)
+
+        return map { monster ->
+            val speed = allSpeedMap[monster.index]
+            val abilityScores = allAbilityScoresMap[monster.index].orEmpty()
+            val actions = allActionsMap[monster.index].orEmpty()
+            val reactions = allReactionsMap[monster.index].orEmpty()
+            val specialAbilities = allSpecialAbilitiesMap[monster.index].orEmpty()
+            val legendaryActions = allLegendaryActionsMap[monster.index].orEmpty()
+            val spellcastings = allSpellcastingsMap[monster.index].orEmpty()
+            val savingThrows = allSavingThrowsMap[monster.index].orEmpty()
+            val skills = allSkillsMap[monster.index].orEmpty()
+            val damageVulnerabilities = allDamageVulnerabilitiesMap[monster.index].orEmpty()
+            val damageResistances = allDamageResistancesMap[monster.index].orEmpty()
+            val damageImmunities = allDamageImmunitiesMap[monster.index].orEmpty()
+            val conditionImmunities = allConditionImmunitiesMap[monster.index].orEmpty()
 
             MonsterCompleteEntity(
                 monster = monster.toLocalEntity(),
@@ -262,4 +267,5 @@ internal class MonsterDaoImpl(
                 conditionImmunities = conditionImmunities
             )
         }
+    }
 }

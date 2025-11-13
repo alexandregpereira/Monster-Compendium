@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO ActionEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM ActionEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM ActionEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM ActionEntity WHERE monsterIndex IN ?;

@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SpeedEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM SpeedEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM SpeedEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM SpeedEntity WHERE monsterIndex IN ?;

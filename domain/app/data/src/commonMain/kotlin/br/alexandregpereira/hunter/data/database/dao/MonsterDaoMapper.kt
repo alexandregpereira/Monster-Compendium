@@ -23,7 +23,6 @@ import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEnti
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
-import br.alexandregpereira.hunter.database.GetBySpellusageIdAndSpellIndex
 import br.alexandregpereira.hunter.database.AbilityScoreEntity as AbilityScoreDatabaseEntity
 import br.alexandregpereira.hunter.database.ActionEntity as ActionDatabaseEntity
 import br.alexandregpereira.hunter.database.ConditionEntity as ConditionDatabaseEntity
@@ -403,15 +402,6 @@ internal fun SpellcastingEntity.toDatabaseEntity(): SpellcastingDatabaseEntity {
         type = this.type,
         description = this.description,
         monsterIndex = monsterIndex
-    )
-}
-
-internal fun GetBySpellusageIdAndSpellIndex.toLocalEntity(): SpellPreviewEntity {
-    return SpellPreviewEntity(
-        spellIndex = this.spellIndex,
-        name = this.name,
-        level = this.level.toInt(),
-        school = this.school,
     )
 }
 

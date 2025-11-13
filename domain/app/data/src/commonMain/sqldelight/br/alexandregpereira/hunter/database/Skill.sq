@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SkillEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM SkillEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM SkillEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM SkillEntity WHERE monsterIndex IN ?;
