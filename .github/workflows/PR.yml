@@ -31,11 +31,6 @@ jobs:
       with:
         xcode-version: latest-stable
 
-    - name: Install iOS 17.0 Simulator
-      run: |
-        xcrun simctl runtime add "iOS 17.0"
-        xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-17-0
-
     - name: Build with Gradle
       run: ./gradlew testDebugUnitTest jvmTest assembleDebug :app:packageDmg linkDebugFrameworkIosSimulatorArm64
 
@@ -43,7 +38,7 @@ jobs:
       run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
 
     - name: Build iOS
-      run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium -destination "platform=iOS Simulator,name=iPhone 14,OS=17.0" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Upload the test report
       if: failure()
