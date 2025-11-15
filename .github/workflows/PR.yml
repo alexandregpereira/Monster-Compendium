@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-        
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
@@ -30,6 +30,11 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1.6.0
       with:
         xcode-version: latest-stable
+
+    - name: Install iOS 17.0 Simulator
+      run: |
+        xcrun simctl runtime add "iOS 17.0"
+        xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-17-0
 
     - name: Build with Gradle
       run: ./gradlew testDebugUnitTest jvmTest assembleDebug :app:packageDmg linkDebugFrameworkIosSimulatorArm64
