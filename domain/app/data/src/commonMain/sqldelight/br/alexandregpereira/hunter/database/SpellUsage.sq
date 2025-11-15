@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SpellUsageEntity VALUES ?;
 deleteWithSpellcastingId:
 DELETE FROM SpellUsageEntity WHERE spellcastingId IN ?;
 
-getBySpellcastingId:
-SELECT * FROM SpellUsageEntity WHERE spellcastingId = ?;
+getBySpellcastingIds:
+SELECT * FROM SpellUsageEntity WHERE spellcastingId IN ?;

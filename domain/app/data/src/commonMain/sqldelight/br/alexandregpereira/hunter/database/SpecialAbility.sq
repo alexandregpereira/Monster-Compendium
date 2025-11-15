@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SpecialAbilityEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM SpecialAbilityEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM SpecialAbilityEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM SpecialAbilityEntity WHERE monsterIndex IN ?;

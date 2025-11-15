@@ -8,14 +8,15 @@ INSERT OR REPLACE INTO SpellUsageSpellCrossRefEntity VALUES ?;
 deleteWithSpellUsageId:
 DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId IN ?;
 
-getBySpellusageIdAndSpellIndex:
+getBySpellUsageIdsAndSpellIndex:
 SELECT
     SpellPreviewEntity.spellIndex AS spellIndex,
     SpellPreviewEntity.level AS level,
     SpellPreviewEntity.name AS name,
-    SpellPreviewEntity.school AS school
+    SpellPreviewEntity.school AS school,
+    SpellUsageSpellCrossRefEntity.spellUsageId AS spellUsageId
 FROM SpellUsageSpellCrossRefEntity
 INNER JOIN SpellUsageEntity ON SpellUsageEntity.spellUsageId = SpellUsageSpellCrossRefEntity.spellUsageId
 INNER JOIN SpellPreviewEntity ON SpellPreviewEntity.spellIndex = SpellUsageSpellCrossRefEntity.spellIndex
-WHERE SpellUsageSpellCrossRefEntity.spellUsageId = ?
+WHERE SpellUsageSpellCrossRefEntity.spellUsageId IN ?
 ;

@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO LegendaryActionEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM LegendaryActionEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM LegendaryActionEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM LegendaryActionEntity WHERE monsterIndex IN ?;

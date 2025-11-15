@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO SpeedValueEntity VALUES ?;
 deleteWithSpeedId:
 DELETE FROM SpeedValueEntity WHERE speedId IN ?;
 
-getBySpeedId:
-SELECT * FROM SpeedValueEntity WHERE speedId = ?;
+getBySpeedIds:
+SELECT * FROM SpeedValueEntity WHERE speedId IN ?;

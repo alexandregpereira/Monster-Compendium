@@ -29,9 +29,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 
 interface MonsterEventDispatcher {
@@ -87,19 +87,19 @@ internal fun MonsterEventDispatcher(
 fun MonsterEventDispatcher.collectOnVisibilityChanges(
     action: suspend (OnVisibilityChanges) -> Unit
 ): Flow<OnVisibilityChanges> {
-    return events.map { it as? OnVisibilityChanges }.filterNotNull().onEach(action)
+    return events.mapNotNull { it as? OnVisibilityChanges }.onEach(action)
 }
 
 fun MonsterEventDispatcher.collectOnMonsterPageChanges(
     action: (MonsterEvent.OnMonsterPageChanges) -> Unit
 ): Flow<Unit> {
-    return events.map { it as? MonsterEvent.OnMonsterPageChanges }.filterNotNull().map(action)
+    return events.mapNotNull { it as? MonsterEvent.OnMonsterPageChanges }.map(action)
 }
 
 fun MonsterEventDispatcher.collectOnMonsterCompendiumChanges(
     action: (MonsterEvent.OnCompendiumChanges) -> Unit
 ): Flow<MonsterEvent.OnCompendiumChanges> {
-    return events.map { it as? MonsterEvent.OnCompendiumChanges }.filterNotNull().onEach(action)
+    return events.mapNotNull { it as? MonsterEvent.OnCompendiumChanges }.onEach(action)
 }
 
 fun emptyMonsterEventDispatcher(): MonsterEventDispatcher {
