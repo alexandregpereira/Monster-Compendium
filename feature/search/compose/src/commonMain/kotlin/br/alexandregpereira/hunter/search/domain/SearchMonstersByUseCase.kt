@@ -172,23 +172,24 @@ internal class SearchMonstersByUseCase internal constructor(
     }
 
     private fun getSearchKeyValues(name: String): List<Pair<SearchKey, String>> {
-        return name.split(SearchKeySymbolAnd).map { it.trim() }.map { valueWithSymbols ->
+        return name.split(SearchKeySymbolAnd).map { valueWithSymbols ->
+            val trimmedValue = valueWithSymbols.trim()
             val searchKey = SearchKey.entries.find {
-                valueWithSymbols.startsWith(it.key, ignoreCase = true)
+                trimmedValue.startsWith(it.key, ignoreCase = true)
             } ?: SearchKey.Name
 
             when (searchKey.valueType) {
                 SearchValueType.String -> {
-                    searchKey.getSearchKeyValue(delimiter = "=", valueWithSymbols)
+                    searchKey.getSearchKeyValue(delimiter = "=", trimmedValue)
                 }
                 SearchValueType.Boolean -> searchKey to "true"
                 SearchValueType.Float -> {
                     val delimiter = when {
-                        valueWithSymbols.contains(">") -> ">"
-                        valueWithSymbols.contains("<") -> "<"
+                        trimmedValue.contains(">") -> ">"
+                        trimmedValue.contains("<") -> "<"
                         else -> "="
                     }
-                    searchKey.getSearchKeyValue(delimiter, valueWithSymbols)
+                    searchKey.getSearchKeyValue(delimiter, trimmedValue)
                 }
             }
         }

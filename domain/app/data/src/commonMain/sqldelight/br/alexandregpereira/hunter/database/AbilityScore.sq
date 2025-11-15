@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO AbilityScoreEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM AbilityScoreEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM AbilityScoreEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM AbilityScoreEntity WHERE monsterIndex IN ?;

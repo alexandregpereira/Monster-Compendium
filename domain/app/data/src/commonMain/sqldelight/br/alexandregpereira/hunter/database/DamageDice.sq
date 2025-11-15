@@ -16,5 +16,5 @@ INSERT OR REPLACE INTO DamageDiceEntity VALUES ?;
 deleteWithActionId:
 DELETE FROM DamageDiceEntity WHERE actionId IN ?;
 
-getByActionId:
-SELECT * FROM DamageDiceEntity WHERE actionId = ?;
+getByActionIds:
+SELECT * FROM DamageDiceEntity WHERE actionId IN ?;

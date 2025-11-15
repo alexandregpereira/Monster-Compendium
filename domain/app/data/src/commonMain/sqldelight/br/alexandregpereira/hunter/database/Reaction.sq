@@ -8,5 +8,5 @@ INSERT OR REPLACE INTO ReactionEntity VALUES ?;
 deleteWithMonsterIndex:
 DELETE FROM ReactionEntity WHERE monsterIndex IN ?;
 
-getByMonterIndex:
-SELECT * FROM ReactionEntity WHERE monsterIndex = ?;
+getByMonsterIndexes:
+SELECT * FROM ReactionEntity WHERE monsterIndex IN ?;
