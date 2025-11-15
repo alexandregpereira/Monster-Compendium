@@ -54,6 +54,59 @@ jobs:
         name: app-output-metadata-json
         path: app/build/outputs/apk/debug/output-metadata.json
 
+  ios-build:
+    name: IOS Build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2.5.0
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3.6.0
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: latest-stable
+
+      - name: Build iOS
+        run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+  macos-desktop-distribution:
+    name: MacOs Desktop Distribution
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2.5.0
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3.6.0
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew :app:packageDmg
+
+      - name: Upload Dmg
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: MonsterCompendium-dmg
+          path: app/build/compose/binaries/main/dmg/*.dmg
+
   linux-desktop-distribution:
     name: Linux Desktop Distribution
     runs-on: ubuntu-latest
