@@ -32,6 +32,7 @@ import br.alexandregpereira.hunter.database.DamageResistanceQueries
 import br.alexandregpereira.hunter.database.DamageVulnerabilityQueries
 import br.alexandregpereira.hunter.database.LegendaryActionQueries
 import br.alexandregpereira.hunter.database.MonsterQueries
+import br.alexandregpereira.hunter.database.MonsterWithImageEntityView
 import br.alexandregpereira.hunter.database.ReactionQueries
 import br.alexandregpereira.hunter.database.SavingThrowQueries
 import br.alexandregpereira.hunter.database.SkillQueries
@@ -45,7 +46,6 @@ import br.alexandregpereira.hunter.database.SpellcastingQueries
 import br.alexandregpereira.hunter.database.SpellcastingSpellUsageCrossRefQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import br.alexandregpereira.hunter.database.MonsterEntity as MonsterDatabaseEntity
 
 internal class MonsterDaoImpl(
     private val monsterQueries: MonsterQueries,
@@ -219,7 +219,7 @@ internal class MonsterDaoImpl(
             .queryMonsterCompleteEntities()
     }
 
-    private fun List<MonsterDatabaseEntity>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> {
+    private fun List<MonsterWithImageEntityView>.queryMonsterCompleteEntities(): List<MonsterCompleteEntity> {
         val monsterIndexes = map { it.index }
         val allSpeedMap = getSpeeds(monsterIndexes, speedQueries, speedValueQueries)
         val allAbilityScoresMap = getAbilityScores(monsterIndexes, abilityScoreQueries)

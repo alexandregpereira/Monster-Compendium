@@ -18,22 +18,93 @@
 package br.alexandregpereira.hunter.monster.registration.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
+import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 internal fun interface SaveMonsterUseCase {
-    operator fun invoke(monster: Monster): Flow<Unit>
+    suspend operator fun invoke(
+        monster: Monster,
+        originalMonster: Monster?,
+        monsterLoreEntries: List<MonsterLoreEntry>,
+        originalMonsterLore: MonsterLore?,
+    )
 }
 
-internal fun SaveMonsterUseCase(
-    saveMonsters: SaveMonstersUseCase,
-) = SaveMonsterUseCase { monster ->
-    val newMonster = when (monster.status) {
-        MonsterStatus.Original -> monster.copy(status = MonsterStatus.Edited)
-        MonsterStatus.Edited,
-        MonsterStatus.Imported,
-        MonsterStatus.Clone -> monster
+internal class SaveMonsterUseCaseImpl(
+    private val saveMonsters: SaveMonstersUseCase,
+    private val monsterImageRepository: MonsterImageRepository,
+    private val saveMonstersLoreUseCase: SaveMonstersLoreUseCase,
+) : SaveMonsterUseCase {
+
+    override suspend fun invoke(
+        monster: Monster,
+        originalMonster: Monster?,
+        monsterLoreEntries: List<MonsterLoreEntry>,
+        originalMonsterLore: MonsterLore?,
+    ) {
+        val monsterImage = monster.toMonsterImage()
+        val newMonster = monster.let {
+            val originalImageData = originalMonster?.imageData?.copy(url = monsterImage.imageUrl)
+            it.copy(imageData = originalImageData ?: it.imageData)
+        }.let { newMonster ->
+            when (newMonster.status) {
+                MonsterStatus.Original ->  {
+                    val status = if (newMonster != originalMonster) {
+                        MonsterStatus.Edited
+                    } else MonsterStatus.Original
+
+                    monster.copy(status = status)
+                }
+                MonsterStatus.Edited,
+                MonsterStatus.Imported,
+                MonsterStatus.Clone -> monster
+            }
+        }
+
+        saveMonsters(monsters = listOf(newMonster)).collect()
+        saveMonsterLore(newMonster, monsterLoreEntries, originalMonsterLore)
+        monsterImageRepository.saveMonsterImage(monsterImage)
     }
-    saveMonsters(listOf(newMonster))
+
+    private suspend fun saveMonsterLore(
+        monster: Monster,
+        monsterLoreEntries: List<MonsterLoreEntry>,
+        originalMonsterLore: MonsterLore?,
+    ) {
+        val hasChangeLore = monsterLoreEntries != originalMonsterLore?.entries
+
+        val monsterLoreList = listOf(
+            MonsterLore(
+                index = monster.index,
+                name = monster.name,
+                entries = monsterLoreEntries,
+                status = if (hasChangeLore) {
+                    MonsterLoreStatus.Edited
+                } else {
+                    originalMonsterLore.status
+                },
+            )
+        )
+        saveMonstersLoreUseCase(
+            monsterLore = monsterLoreList,
+            isSync = false
+        ).collect()
+    }
+
+    private fun Monster.toMonsterImage(): MonsterImage {
+        return MonsterImage(
+            monsterIndex = index,
+            backgroundColor = imageData.backgroundColor,
+            isHorizontalImage = imageData.isHorizontal,
+            imageUrl = imageData.url,
+            contentScale = imageData.contentScale,
+        )
+    }
 }

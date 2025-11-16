@@ -33,6 +33,7 @@ internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
         status = when (monsterLore.status) {
             MonsterLoreEntityStatus.Original -> MonsterLoreStatus.Original
             MonsterLoreEntityStatus.Imported -> MonsterLoreStatus.Imported
+            MonsterLoreEntityStatus.Edited -> MonsterLoreStatus.Edited
         }
     )
 }
@@ -52,6 +53,7 @@ internal fun MonsterLore.toEntity(): MonsterLoreCompleteEntity {
             status = when (status) {
                 MonsterLoreStatus.Original -> MonsterLoreEntityStatus.Original
                 MonsterLoreStatus.Imported -> MonsterLoreEntityStatus.Imported
+                MonsterLoreStatus.Edited -> MonsterLoreEntityStatus.Edited
             }
         ),
         entries = entries.map { it.toEntity(index) }

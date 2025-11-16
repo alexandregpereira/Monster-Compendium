@@ -112,6 +112,7 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     }
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
+    taskVersionNameSuffix.set(versionNameSuffix)
 }
 
 kotlin {

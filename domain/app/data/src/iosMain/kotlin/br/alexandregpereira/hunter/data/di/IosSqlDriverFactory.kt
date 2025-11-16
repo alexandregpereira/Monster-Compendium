@@ -22,6 +22,6 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import org.koin.core.scope.Scope
 
-internal actual fun Scope.createSqlDriver(): SqlDriver {
-    return NativeSqliteDriver(Database.Schema, "hunter-database")
+internal actual fun Scope.createSqlDriver(databaseName: String): SqlDriver {
+    return NativeSqliteDriver(Database.Schema, databaseName)
 }

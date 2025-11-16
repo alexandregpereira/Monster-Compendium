@@ -26,7 +26,6 @@ import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
-import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
@@ -53,7 +52,6 @@ import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -70,7 +68,6 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getMonster: GetMonsterUseCase,
     private val getMonsterLore: GetMonsterLoreUseCase,
     private val saveMonster: SaveMonsterUseCase,
-    private val saveMonsterLoreUseCase: SaveMonstersLoreUseCase,
     private val normalizeMonster: NormalizeMonsterUseCase,
     private val analytics: Analytics,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
@@ -105,25 +102,13 @@ class MonsterRegistrationStateHolder internal constructor(
 
     override fun onSaved() {
         val monsterLoreEntries = metadata.monsterLoreEntries
+        val originalMonster = originalMonster
+        val originalMonsterLore = originalMonsterLore
         normalizeMonster(metadata.monster)
             .map { monster ->
                 analytics.trackMonsterRegistrationSaved(monster)
-                saveMonster(monster).single()
+                saveMonster(monster, originalMonster, monsterLoreEntries, originalMonsterLore)
                 monster
-            }
-            .flatMapConcat { monster ->
-                val monsterLoreList = listOf(
-                    MonsterLore(
-                        index = monster.index,
-                        name = monster.name,
-                        entries = monsterLoreEntries,
-                        status = MonsterLoreStatus.Imported
-                    )
-                )
-                saveMonsterLoreUseCase(
-                    monsterLore = monsterLoreList,
-                    isSync = false
-                )
             }
             .flowOn(dispatcher)
             .onEach {

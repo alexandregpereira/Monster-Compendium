@@ -21,12 +21,18 @@ import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.zip
 
 interface SaveMonstersUseCase {
@@ -37,16 +43,19 @@ fun SaveMonstersUseCase(
     getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     monsterRepository: MonsterRepository,
     measurementUnitRepository: MeasurementUnitRepository,
+    monsterImageRepository: MonsterImageRepository,
 ): SaveMonstersUseCase = SaveMonstersUseCaseImpl(
     getMeasurementUnitUseCase,
     monsterRepository,
-    measurementUnitRepository
+    measurementUnitRepository,
+    monsterImageRepository,
 )
 
 private class SaveMonstersUseCaseImpl(
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase,
     private val monsterRepository: MonsterRepository,
     private val measurementUnitRepository: MeasurementUnitRepository,
+    private val monsterImageRepository: MonsterImageRepository,
 ) : SaveMonstersUseCase {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -56,8 +65,42 @@ private class SaveMonstersUseCaseImpl(
                 monsters.changeMonstersMeasurementUnit(previousUnit, unit)
             }
             .flatMapLatest {
-                monsterRepository.saveMonsters(monsters = it, isSync)
+                saveMonsters(monsters = it, isSync)
             }
+    }
+
+    private fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
+        return flow {
+            coroutineScope {
+                val saveMonstersDeferred = async {
+                    monsterRepository.saveMonsters(monsters = monsters, isSync).collect()
+                }
+                val saveMonsterImagesDeferred = async {
+                    if (isSync.not()) {
+                        monsterImageRepository.saveMonsterImages(
+                            monsterImages = monsters.toMonsterImages()
+                        )
+                    }
+                }
+
+                saveMonstersDeferred.await()
+                saveMonsterImagesDeferred.await()
+
+                emit(Unit)
+            }
+        }
+    }
+
+    private fun List<Monster>.toMonsterImages(): List<MonsterImage> {
+        return map {
+            MonsterImage(
+                monsterIndex = it.index,
+                backgroundColor = it.imageData.backgroundColor,
+                isHorizontalImage = it.imageData.isHorizontal,
+                imageUrl = it.imageData.url,
+                contentScale = it.imageData.contentScale,
+            )
+        }
     }
 
     private fun List<Monster>.changeMonstersMeasurementUnit(

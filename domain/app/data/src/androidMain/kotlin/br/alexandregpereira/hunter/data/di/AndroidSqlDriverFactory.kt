@@ -23,7 +23,7 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import org.koin.core.scope.Scope
 
-internal actual fun Scope.createSqlDriver(): SqlDriver {
+internal actual fun Scope.createSqlDriver(databaseName: String): SqlDriver {
     val context = get<Context>()
-    return AndroidSqliteDriver(Database.Schema, context, "hunter-database")
+    return AndroidSqliteDriver(Database.Schema, context, databaseName)
 }

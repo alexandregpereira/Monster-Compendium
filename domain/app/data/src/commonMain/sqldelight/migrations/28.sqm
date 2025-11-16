@@ -1,0 +1,20 @@
+CREATE TABLE MonsterImageEntity (
+    `monsterIndex` TEXT NOT NULL,
+    `backgroundColorLight` TEXT,
+    `backgroundColorDark` TEXT,
+    `isHorizontalImage` INTEGER,
+    `imageContentScale` INTEGER,
+    PRIMARY KEY(`monsterIndex`)
+);
+
+CREATE VIEW MonsterWithImageEntityView AS
+SELECT
+    MonsterEntity.*,
+    MonsterImageEntity.backgroundColorLight AS customBackgroundColorLight,
+    MonsterImageEntity.backgroundColorDark AS customBackgroundColorDark,
+    MonsterImageEntity.isHorizontalImage AS customIsHorizontalImage,
+    MonsterImageEntity.imageContentScale AS customImageContentScale
+FROM MonsterEntity
+LEFT JOIN MonsterImageEntity
+ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex
+;

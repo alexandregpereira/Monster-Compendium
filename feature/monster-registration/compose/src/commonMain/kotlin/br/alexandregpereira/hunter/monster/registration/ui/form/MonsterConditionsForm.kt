@@ -17,11 +17,16 @@
 
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.ConditionState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
@@ -44,7 +49,7 @@ internal fun LazyListScope.MonsterConditionsForm(
         ) { i, condition ->
             formItem(key = keys.next()) {
                 PickerField(
-                    value = condition.name,
+                    value = condition.typeName,
                     label = strings.conditionType,
                     options = condition.filteredOptions,
                     onValueChange = { optionIndex ->
@@ -55,6 +60,16 @@ internal fun LazyListScope.MonsterConditionsForm(
                         )
                     }
                 )
+            }
+            formItem(key = keys.next()) {
+                AppTextField(
+                    text = condition.name,
+                    label = condition.typeName,
+                    onValueChange = { newValue ->
+                        onChanged(newConditions.changeAt(i) { copy(name = newValue) })
+                    }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }

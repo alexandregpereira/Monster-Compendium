@@ -35,7 +35,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val dataModules = listOf(
+fun dataModules(databaseName: String) = listOf(
     module {
         single {
             HttpClient {
@@ -54,7 +54,7 @@ val dataModules = listOf(
         }
         single { Json { ignoreUnknownKeys = true } }
     },
-    databaseModule,
+    databaseModule(databaseName),
     alternativeSourceDataModule,
     monsterDataModule,
     monsterFolderDataModule,

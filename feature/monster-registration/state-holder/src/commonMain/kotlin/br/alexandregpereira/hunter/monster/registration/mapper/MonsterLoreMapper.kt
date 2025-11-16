@@ -24,7 +24,7 @@ internal fun MonsterLoreEntryState.asDomain(): MonsterLoreEntry {
     val state = this
     return MonsterLoreEntry(
         index = key,
-        title = state.title,
+        title = state.title.takeUnless { it.isBlank() },
         description = state.description,
     )
 }
