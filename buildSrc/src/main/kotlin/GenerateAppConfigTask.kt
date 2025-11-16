@@ -67,6 +67,7 @@ fun getVersionCodeAndVersionName(): Pair<Int, String> {
     val versionCodePerSeconds = 60 * 20 // Seconds to increment the version code
     val versionCode = (timestampDiff / versionCodePerSeconds).toInt()
     val dateFormat = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
-    val versionName = (dateFormat + versionCode).take(11)
+    val versionCodeSuffix = versionCode.toString().takeLast(3)
+    val versionName = (dateFormat + versionCodeSuffix).take(11)
     return versionCode to versionName
 }
