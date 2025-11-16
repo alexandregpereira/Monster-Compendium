@@ -136,10 +136,11 @@ data class ConditionState(
     val key: String = generateUUID(),
     val typeOptions: List<TypeState> = emptyList(),
     val selectedIndex: Int = 0,
+    val name: String = typeOptions.getOrNull(selectedIndex)?.name.orEmpty(),
 ) {
     private val filteredTypeOptions: List<TypeState> = typeOptions.filter { it.enabled }
     val filteredOptions: List<String> = filteredTypeOptions.map { it.name }
-    val name: String = typeOptions.getOrNull(selectedIndex)?.name.orEmpty()
+    val typeName: String = typeOptions.getOrNull(selectedIndex)?.name.orEmpty()
 
     fun selectedIndex(filteredIndex: Int): Int {
         return filteredTypeOptions[filteredIndex].index

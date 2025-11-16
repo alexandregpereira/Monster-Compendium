@@ -148,20 +148,18 @@ private fun Monster.createIndexes(): Monster {
             savingThrow.copy(index = "saving-throw-${savingThrow.type.name.take(3)}"
                 .normalizeIndex())
         },
-        skills = skills.map { skill ->
-            skill.copy(index = "skill-${skill.name}".normalizeIndex())
-        },
+        skills = skills,
         conditionImmunities = conditionImmunities.map { conditionImmunity ->
             conditionImmunity.copy(index = conditionImmunity.type.name.normalizeIndex())
         },
         damageVulnerabilities = damageVulnerabilities.map { damageVulnerability ->
-            damageVulnerability.copy(index = damageVulnerability.name.lowercase())
+            damageVulnerability.copy(index = damageVulnerability.type.name.normalizeIndex())
         },
         damageResistances = damageResistances.map { damageResistance ->
-            damageResistance.copy(index = damageResistance.name.lowercase())
+            damageResistance.copy(index = damageResistance.type.name.normalizeIndex())
         },
         damageImmunities = damageImmunities.map { damageImmunity ->
-            damageImmunity.copy(index = damageImmunity.name.lowercase())
+            damageImmunity.copy(index = damageImmunity.type.name.normalizeIndex())
         },
     )
 }

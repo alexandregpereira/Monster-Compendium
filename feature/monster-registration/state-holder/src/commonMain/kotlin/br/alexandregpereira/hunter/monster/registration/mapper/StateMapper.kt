@@ -172,7 +172,7 @@ private fun Damage.asState(
     return DamageState(
         key = index,
         selectedIndex = type.ordinal,
-        otherName = name.takeIf { type == DamageType.OTHER || name.endsWith("*") },
+        otherName = name,
         typeOptions = DamageType.entries.map {
             it.asState(strings, filteredDamageTypes)
         },
@@ -200,6 +200,7 @@ private fun Condition.asState(
         typeOptions = ConditionType.entries.map {
             it.asState(strings, filteredConditionTypes)
         },
+        name = name,
     )
 }
 
@@ -445,7 +446,10 @@ private fun MonsterState.createKeys(): List<String> {
         monster.conditionImmunities.createDynamicFormKeys(
             key = SectionTitle.ConditionImmunities,
             getItemKey = { it.key },
-            addKeys = { add("type") }
+            addKeys = {
+                add("type")
+                add("name")
+            }
         ).also { addAll(it) }
         add(SectionTitle.Senses.name)
         add("senses-value")

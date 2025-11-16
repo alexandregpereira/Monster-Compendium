@@ -298,7 +298,7 @@ internal data class MonsterRegistrationPtStrings(
     override val conditionTypeCharmed: String = "Encantado",
     override val conditionTypeDeafened: String = "Surdo",
     override val conditionTypeExhaustion: String = "Exausto",
-    override val conditionTypeFrightened: String = "Amendrotado",
+    override val conditionTypeFrightened: String = "Amedrotado",
     override val conditionTypeGrappled: String = "Agarrado",
     override val conditionTypeParalyzed: String = "Paralisado",
     override val conditionTypePetrified: String = "Petrificado",
