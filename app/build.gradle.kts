@@ -102,7 +102,7 @@ val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
     val versionNameSuffix = when {
-        hasProperty("dev") -> {
+        project.hasProperty("dev") -> {
             "-dev"
         }
         isDebug -> {
