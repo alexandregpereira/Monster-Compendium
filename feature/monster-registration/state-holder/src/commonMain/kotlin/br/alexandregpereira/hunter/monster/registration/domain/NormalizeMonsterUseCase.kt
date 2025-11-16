@@ -43,7 +43,7 @@ private fun Monster.changeAbilityScoresModifier(): Monster {
     val monster = this
     return monster.copy(
         abilityScores = monster.abilityScores.map { abilityScore ->
-            val newValue = abilityScore.value.coerceAtLeast(2).coerceAtMost(99)
+            val newValue = abilityScore.value.coerceAtLeast(1).coerceAtMost(99)
             abilityScore.copy(
                 value = newValue,
                 modifier = when {
@@ -115,14 +115,6 @@ private fun AbilityDescription.isEmpty(): Boolean {
     return name.isBlank() && description.isBlank()
 }
 
-private fun List<Action>.filterDamageDices(): List<Action> {
-    return map { action ->
-        action.copy(
-            damageDices = action.damageDices.filter { it.dice.isNotBlank() }
-        )
-    }
-}
-
 private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean): List<Action> {
     return mapNotNull { action ->
         val filteredAction = action.copy(
@@ -132,28 +124,12 @@ private fun List<Action>.filterDamageDices(predicate: (Action) -> Boolean): List
     }
 }
 
-private fun List<Spellcasting>.filterSpellUsages(): List<Spellcasting> {
-    return map { spellcasting ->
-        spellcasting.copy(
-            usages = spellcasting.usages.filterSpells { it.spells.isNotEmpty() }
-        )
-    }
-}
-
 private fun List<Spellcasting>.filterSpellUsages(predicate: (Spellcasting) -> Boolean): List<Spellcasting> {
     return mapNotNull { spellcasting ->
         val filteredSpellcasting = spellcasting.copy(
             usages = spellcasting.usages.filterSpells { it.spells.isNotEmpty() }
         )
         if (predicate(filteredSpellcasting)) filteredSpellcasting else null
-    }
-}
-
-private fun List<SpellUsage>.filterSpells(): List<SpellUsage> {
-    return map { spellUsage ->
-        spellUsage.copy(
-            spells = spellUsage.spells.filter { it.name.isNotBlank() }
-        )
     }
 }
 
@@ -169,7 +145,8 @@ private fun List<SpellUsage>.filterSpells(predicate: (SpellUsage) -> Boolean): L
 private fun Monster.createIndexes(): Monster {
     return copy(
         savingThrows = savingThrows.map { savingThrow ->
-            savingThrow.copy(index = "saving-throw-${savingThrow.type.name}".normalizeIndex())
+            savingThrow.copy(index = "saving-throw-${savingThrow.type.name.take(3)}"
+                .normalizeIndex())
         },
         skills = skills.map { skill ->
             skill.copy(index = "skill-${skill.name}".normalizeIndex())
@@ -178,13 +155,13 @@ private fun Monster.createIndexes(): Monster {
             conditionImmunity.copy(index = conditionImmunity.type.name.normalizeIndex())
         },
         damageVulnerabilities = damageVulnerabilities.map { damageVulnerability ->
-            damageVulnerability.copy(index = damageVulnerability.type.name.normalizeIndex())
+            damageVulnerability.copy(index = damageVulnerability.name.lowercase())
         },
         damageResistances = damageResistances.map { damageResistance ->
-            damageResistance.copy(index = damageResistance.type.name.normalizeIndex())
+            damageResistance.copy(index = damageResistance.name.lowercase())
         },
         damageImmunities = damageImmunities.map { damageImmunity ->
-            damageImmunity.copy(index = damageImmunity.type.name.normalizeIndex())
+            damageImmunity.copy(index = damageImmunity.name.lowercase())
         },
     )
 }

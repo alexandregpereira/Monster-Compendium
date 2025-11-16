@@ -172,7 +172,7 @@ private fun Damage.asState(
     return DamageState(
         key = index,
         selectedIndex = type.ordinal,
-        otherName = name.takeIf { type == DamageType.OTHER },
+        otherName = name.takeIf { type == DamageType.OTHER || name.endsWith("*") },
         typeOptions = DamageType.entries.map {
             it.asState(strings, filteredDamageTypes)
         },

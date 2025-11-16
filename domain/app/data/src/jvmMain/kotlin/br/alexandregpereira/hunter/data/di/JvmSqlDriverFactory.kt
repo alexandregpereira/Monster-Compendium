@@ -23,8 +23,8 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.koin.core.scope.Scope
 import java.io.File
 
-internal actual fun Scope.createSqlDriver(): SqlDriver {
-    val databaseFile = getDatabaseFile()
+internal actual fun Scope.createSqlDriver(databaseName: String): SqlDriver {
+    val databaseFile = getDatabaseFile(databaseName)
     val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:${databaseFile.absolutePath}")
 
     if (databaseFile.exists()) {
@@ -45,13 +45,13 @@ internal actual fun Scope.createSqlDriver(): SqlDriver {
     return driver
 }
 
-private fun getDatabaseFile(): File {
+private fun getDatabaseFile(databaseName: String): File {
     val userFolder = System.getProperty("user.home")
     val appDataFolder = File(userFolder, ".monster-compendium")
     if (appDataFolder.exists().not()) {
         appDataFolder.mkdirs()
     }
-    return File(appDataFolder, "hunter-database.db")
+    return File(appDataFolder, "$databaseName.db")
 }
 
 private fun SqlDriver.getDatabaseVersion(): Int {

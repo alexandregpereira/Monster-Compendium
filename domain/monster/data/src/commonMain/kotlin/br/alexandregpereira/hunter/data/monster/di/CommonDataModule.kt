@@ -65,7 +65,7 @@ val monsterDataModule = module {
     single { MonsterPreferencesRepository(get()) }
     single<CompendiumRepository> { get<MonsterPreferencesRepository>() }
     single<MeasurementUnitRepository> { get<MonsterPreferencesRepository>() }
-    factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get()) }
+    factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get(), get()) }
     factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
     single<MonsterLocalDataSource> {
         DefaultMonsterLocalDataSource(get())

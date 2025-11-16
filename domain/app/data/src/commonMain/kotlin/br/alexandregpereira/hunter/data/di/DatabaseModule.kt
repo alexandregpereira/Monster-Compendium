@@ -21,10 +21,12 @@ import br.alexandregpereira.hunter.data.Database
 import br.alexandregpereira.hunter.data.database.dao.AlternativeSourceDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterFolderDaoImpl
+import br.alexandregpereira.hunter.data.database.dao.MonsterImageDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterLoreDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.SpellDaoImpl
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
+import br.alexandregpereira.hunter.data.monster.local.dao.MonsterImageDao
 import br.alexandregpereira.hunter.data.monster.lore.local.dao.MonsterLoreDao
 import br.alexandregpereira.hunter.data.source.local.dao.AlternativeSourceDao
 import br.alexandregpereira.hunter.data.spell.local.dao.SpellDao
@@ -32,9 +34,9 @@ import com.squareup.sqldelight.db.SqlDriver
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.dsl.module
 
-val databaseModule = module {
+fun databaseModule(databaseName: String) = module {
     factory<SqlDriver> {
-        createSqlDriver()
+        createSqlDriver(databaseName)
     }
     single {
         Database(get())
@@ -69,6 +71,13 @@ val databaseModule = module {
             spellPreviewQueries = database.spellPreviewQueries,
             legendaryActionQueries = database.legendaryActionQueries,
             dispatcher = getDispatcherIO()
+        )
+    }
+    factory<MonsterImageDao> {
+        val database = get<Database>()
+        MonsterImageDaoImpl(
+            monsterImageQueries = database.monsterImageQueries,
+            dispatcher = getDispatcherIO(),
         )
     }
     factory<MonsterFolderDao> {

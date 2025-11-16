@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEnti
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
+import br.alexandregpereira.hunter.database.MonsterWithImageEntityView
 import br.alexandregpereira.hunter.database.AbilityScoreEntity as AbilityScoreDatabaseEntity
 import br.alexandregpereira.hunter.database.ActionEntity as ActionDatabaseEntity
 import br.alexandregpereira.hunter.database.ConditionEntity as ConditionDatabaseEntity
@@ -307,7 +308,7 @@ internal fun LegendaryActionDatabaseEntity.toLocalEntity(): ActionEntity {
     )
 }
 
-internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
+internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
     return MonsterEntity(
         index = this.index,
         type = this.type,
@@ -317,9 +318,9 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         name = this.name,
         subtitle = this.subtitle,
         imageUrl = this.imageUrl,
-        backgroundColorLight = this.backgroundColorLight,
-        backgroundColorDark = this.backgroundColorDark,
-        isHorizontalImage = this.isHorizontalImage == 1L,
+        backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
+        isHorizontalImage = (customIsHorizontalImage ?: this.isHorizontalImage) == 1L,
         size = this.size,
         alignment = this.alignment,
         armorClass = this.armorClass.toInt(),
@@ -329,7 +330,7 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         languages = this.languages,
         sourceName = this.sourceName,
         status = MonsterEntityStatus.entries[this.isClone.toInt()],
-        imageContentScale = this.imageContentScale?.toInt(),
+        imageContentScale = (customImageContentScale ?: this.imageContentScale)?.toInt(),
     )
 }
 

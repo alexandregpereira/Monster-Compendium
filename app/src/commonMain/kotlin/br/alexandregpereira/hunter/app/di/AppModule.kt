@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.app.di
 
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
+import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.app.MainViewModel
 import br.alexandregpereira.hunter.app.event.appEventModule
 import br.alexandregpereira.hunter.data.di.dataModules
@@ -47,9 +48,10 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal fun KoinApplication.initKoinModules() {
+    val databaseName = "hunter-database" + AppConfig.VERSION_NAME_SUFFIX
     allowOverride(false)
     modules(domainModules)
-    modules(dataModules)
+    modules(dataModules(databaseName))
     modules(
         appModule,
         featureFolderDetailModule,

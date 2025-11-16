@@ -17,9 +17,12 @@
 
 package br.alexandregpereira.hunter.data.monster
 
+import br.alexandregpereira.hunter.data.monster.local.dao.MonsterImageDao
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.MonsterImage
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +30,8 @@ import kotlinx.coroutines.flow.map
 
 internal class MonsterImageRepositoryImpl(
     private val remoteDataSource: MonsterRemoteDataSource,
-    private val getMonsterImageJsonUrlUseCase: GetMonsterImageJsonUrlUseCase
+    private val getMonsterImageJsonUrlUseCase: GetMonsterImageJsonUrlUseCase,
+    private val monsterImageDao: MonsterImageDao,
 ) : MonsterImageRepository {
 
     override fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImage>> {
@@ -37,5 +41,28 @@ internal class MonsterImageRepositoryImpl(
 
     override fun getMonsterImageJsonUrl(): Flow<String> {
         return getMonsterImageJsonUrlUseCase()
+    }
+
+    override suspend fun saveMonsterImages(monsterImages: List<MonsterImage>) {
+        monsterImageDao.insert(monsterImages = monsterImages.map { it.toEntity() })
+    }
+
+    override suspend fun saveMonsterImage(monsterImage: MonsterImage) {
+        saveMonsterImages(monsterImages = listOf(monsterImage))
+    }
+
+    private fun MonsterImage.toEntity(): MonsterImageEntity {
+        return MonsterImageEntity(
+            monsterIndex = monsterIndex,
+            imageUrl = imageUrl,
+            backgroundColorLight = backgroundColor.light,
+            backgroundColorDark = backgroundColor.dark,
+            isHorizontalImage = isHorizontalImage,
+            imageContentScale = when (contentScale) {
+                MonsterImageContentScale.Fit -> 0
+                MonsterImageContentScale.Crop -> 1
+                else -> null
+            },
+        )
     }
 }

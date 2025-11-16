@@ -116,6 +116,12 @@ class GetMonsterDetailUseCase internal constructor(
                 },
                 status = when (loreNullable?.status) {
                     MonsterLoreStatus.Imported -> when (monsterWithLore.status) {
+                        MonsterStatus.Original -> MonsterStatus.Imported
+                        MonsterStatus.Edited,
+                        MonsterStatus.Clone,
+                        MonsterStatus.Imported -> monsterWithLore.status
+                    }
+                    MonsterLoreStatus.Edited -> when (monsterWithLore.status) {
                         MonsterStatus.Original -> MonsterStatus.Edited
                         MonsterStatus.Edited,
                         MonsterStatus.Clone,
