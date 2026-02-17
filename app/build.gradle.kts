@@ -16,8 +16,6 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     id("com.android.application")
@@ -116,21 +114,6 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        instrumentedTestVariant {
-            sourceSetTree.set(KotlinSourceSetTree.test)
-
-            dependencies {
-                implementation(libs.bundles.instrumentedtest)
-                implementation(libs.compose.ui.test)
-                implementation(libs.sqldelight.android)
-                implementation(libs.multiplatform.settings)
-                implementation(libs.multiplatform.settings.test)
-                debugImplementation(libs.compose.ui.test.manifest)
-            }
-        }
-    }
     sourceSets {
         val commonMain by getting {
             val srcPath = tasks.named<GenerateAppConfigTask>(name = "generateAppConfig").flatMap {
@@ -203,6 +186,12 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+        androidTestImplementation(libs.bundles.instrumentedtest)
+        androidTestImplementation(libs.compose.ui.test)
+        androidTestImplementation(libs.sqldelight.android)
+        androidTestImplementation(libs.multiplatform.settings)
+        androidTestImplementation(libs.multiplatform.settings.test)
+        debugImplementation(libs.compose.ui.test.manifest)
     }
 }
 
