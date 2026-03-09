@@ -20,7 +20,7 @@ package br.alexandregpereira.hunter.data.source.local.mapper
 import br.alexandregpereira.hunter.data.source.local.entity.AlternativeSourceEntity
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.source.model.Source
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
     return this.map {
