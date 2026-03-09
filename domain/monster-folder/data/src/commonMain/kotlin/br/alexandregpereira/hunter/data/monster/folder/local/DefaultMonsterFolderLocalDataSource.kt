@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.MonsterDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 internal class DefaultMonsterFolderLocalDataSource(
     private val monsterFolderDao: MonsterFolderDao,
