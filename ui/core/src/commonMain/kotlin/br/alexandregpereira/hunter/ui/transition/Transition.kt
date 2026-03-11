@@ -28,6 +28,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.util.lerp
+import br.alexandregpereira.hunter.ui.compose.LocalIsSwipeVerticalInProgress
 import kotlin.math.absoluteValue
 
 @Composable
@@ -95,10 +96,12 @@ fun <Data> Transition(
 ) {
     val transitionData = getTransitionData(dataList, getPageOffset = { pagerState.getPageOffset() })
 
-    val boxModifier = if (enableGesture()) {
-        modifier.transitionHorizontalScrollable(pagerState)
-    } else modifier
-    Box(boxModifier) {
+    Box(
+        modifier.transitionHorizontalScrollable(
+            pagerState = pagerState,
+            enabled = enableGesture()
+        )
+    ) {
         content(
             transitionData.data,
             { transitionData.fraction },
@@ -115,11 +118,14 @@ fun <Data> Transition(
 }
 
 fun Modifier.transitionHorizontalScrollable(
-    pagerState: PagerState
+    pagerState: PagerState,
+    enabled: Boolean = true,
 ): Modifier = composed {
+    val isSwipeVerticalInProgress = LocalIsSwipeVerticalInProgress.current
     scrollable(
         orientation = Orientation.Horizontal,
         reverseDirection = true,
+        enabled = enabled && !isSwipeVerticalInProgress,
         flingBehavior = PagerDefaults.flingBehavior(pagerState),
         state = pagerState
     )
