@@ -40,11 +40,6 @@ import org.koin.dsl.module
 fun main() = application {
     startKoin {
         initKoinModules()
-        val jvmAnalyticsModule = module {
-            factory<JvmAnalyticsProvider> {
-                JvmAnalyticsProviderImpl()
-            }
-        }
         modules(jvmAnalyticsModule)
     }
     val backDispatcher = JvmBackDispatcher()
