@@ -69,15 +69,15 @@ internal class SettingsStateHolder(
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
 
-    init {
-        observeLanguageChanges()
-        load()
-    }
-
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach {
             load()
         }.launchIn(scope)
+    }
+
+    fun onStart() {
+        observeLanguageChanges()
+        load()
     }
 
     override fun onImageBaseUrlChange(value: String) {

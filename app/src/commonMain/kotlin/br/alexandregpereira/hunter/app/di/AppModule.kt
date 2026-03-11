@@ -72,7 +72,7 @@ internal fun KoinApplication.initKoinModules() {
         featureShareContentModule,
     )
     modules(
-        analyticsModule,
+        analyticsModule(amplitudeApiKey = AppConfig.AMPLITUDE_API_KEY),
         localizationModule,
         monsterEventModule,
         appEventModule,
@@ -91,6 +91,7 @@ private val appModule = module {
             appLocalization = get(),
             stateRecovery = get(named(AppStateRecoveryQualifier)),
             appEventDispatcher = get(),
+            analytics = get(),
         )
     }
 }

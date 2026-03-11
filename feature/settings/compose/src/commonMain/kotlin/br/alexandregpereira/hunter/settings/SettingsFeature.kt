@@ -35,6 +35,7 @@ fun SettingsFeature(
 
     val uriHandler = LocalUriHandler.current
     LaunchedEffect(viewModel, uriHandler) {
+        viewModel.onStart()
         viewModel.action.collectLatest { action ->
             when (action) {
                 is SettingsViewAction.GoToExternalUrl -> uriHandler.openUri(action.url)

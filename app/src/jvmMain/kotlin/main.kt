@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import br.alexandregpereira.hunter.analytics.JvmAnalyticsProvider
 import br.alexandregpereira.hunter.app.HunterApp
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.app.ui.resources.Res
@@ -34,10 +35,17 @@ import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 fun main() = application {
     startKoin {
         initKoinModules()
+        val jvmAnalyticsModule = module {
+            factory<JvmAnalyticsProvider> {
+                JvmAnalyticsProviderImpl()
+            }
+        }
+        modules(jvmAnalyticsModule)
     }
     val backDispatcher = JvmBackDispatcher()
     Window(

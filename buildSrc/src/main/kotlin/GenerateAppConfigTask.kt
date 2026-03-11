@@ -20,6 +20,9 @@ abstract class GenerateAppConfigTask : DefaultTask() {
     @get:Input
     abstract val taskVersionNameSuffix: Property<String>
 
+    @get:Input
+    abstract val taskAmplitudeApiKey: Property<String>
+
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
 
@@ -36,6 +39,7 @@ abstract class GenerateAppConfigTask : DefaultTask() {
         val versionName = taskVersionName.get()
         val versionCode = taskVersionCode.get()
         val versionNameSuffix = taskVersionNameSuffix.get()
+        val amplitudeApiKey = taskAmplitudeApiKey.get()
 
         val targetDir = outputDir.get().asFile
         val packagePath = "br/alexandregpereira/hunter/app"
@@ -50,6 +54,7 @@ abstract class GenerateAppConfigTask : DefaultTask() {
                 const val VERSION_NAME: String = "$versionName"
                 const val VERSION_CODE: Int = $versionCode
                 const val VERSION_NAME_SUFFIX = "$versionNameSuffix"
+                const val AMPLITUDE_API_KEY = "$amplitudeApiKey"
             }
         """.trimIndent())
     }

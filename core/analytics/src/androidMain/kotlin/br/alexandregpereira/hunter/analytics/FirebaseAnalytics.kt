@@ -44,7 +44,7 @@ internal class FirebaseAnalytics(
         }
 
         if (BuildConfig.DEBUG) {
-            Log.d("FirebaseAnalytics", "event name: $eventNameNormalized. params: $params")
+            Log.d("FirebaseAnalytics", "event name: $eventName. params: $params")
         } else {
             analytics.logEvent(eventNameNormalized, bundle)
         }

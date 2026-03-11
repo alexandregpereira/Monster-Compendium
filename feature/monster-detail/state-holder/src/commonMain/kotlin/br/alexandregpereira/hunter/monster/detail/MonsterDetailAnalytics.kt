@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.monster.detail
 
 import br.alexandregpereira.hunter.analytics.Analytics
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 
 class MonsterDetailAnalytics(
@@ -92,7 +91,7 @@ class MonsterDetailAnalytics(
         analytics.track(
             eventName = "MonsterDetail - option clicked",
             params = mapOf(
-                "option" to option.name,
+                "option" to option.id,
             )
         )
     }
