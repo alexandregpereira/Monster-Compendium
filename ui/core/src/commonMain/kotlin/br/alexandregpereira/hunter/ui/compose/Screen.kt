@@ -33,6 +33,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +46,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+
+val LocalIsSwipeVerticalInProgress = compositionLocalOf { false }
 
 @Composable
 fun AppScreen(
@@ -71,14 +75,19 @@ fun AppScreen(
         onAnimationStateChange = { enterExitState = it },
         onClose = onClose
     ) {
-        Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
-            if (showCloseButton) {
-                BoxClosable(
-                    onClick = onClose,
-                    content = content,
-                )
-            } else {
-                content()
+        val isSwipeVerticalInProgress = swipeVerticalState.isSwipeInProgress || swipeVerticalState.offset > 0f
+        CompositionLocalProvider(
+            LocalIsSwipeVerticalInProgress provides isSwipeVerticalInProgress
+        ) {
+            Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
+                if (showCloseButton) {
+                    BoxClosable(
+                        onClick = onClose,
+                        content = content,
+                    )
+                } else {
+                    content()
+                }
             }
         }
     }

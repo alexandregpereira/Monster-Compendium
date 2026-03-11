@@ -74,6 +74,7 @@ import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.BoxCloseButton
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
+import br.alexandregpereira.hunter.ui.compose.LocalIsSwipeVerticalInProgress
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.Window
@@ -189,10 +190,16 @@ internal fun MonsterDetailScreen(
 }
 
 @Composable
-private fun HorizontalPagerTransitionController(pagerState: PagerState) = HorizontalPager(
-    state = pagerState,
+private fun HorizontalPagerTransitionController(
+    pagerState: PagerState,
 ) {
-    Box(Modifier.fillMaxWidth())
+    val isSwipeVerticalInProgress = LocalIsSwipeVerticalInProgress.current
+    HorizontalPager(
+        state = pagerState,
+        userScrollEnabled = !isSwipeVerticalInProgress,
+    ) {
+        Box(Modifier.fillMaxWidth())
+    }
 }
 
 @Composable
