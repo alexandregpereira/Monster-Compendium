@@ -27,6 +27,8 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
+      env:
+        AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
       run: ./gradlew testDebugUnitTest jvmTest assembleDebug
 
     - name: Verify database migration
@@ -78,6 +80,8 @@ jobs:
           xcode-version: '16.4'
 
       - name: Build iOS
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
   macos-desktop-distribution:
@@ -99,6 +103,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageDmg
 
       - name: Upload Dmg
@@ -126,6 +132,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageDeb :app:packageRpm
 
       - name: Upload Deb
@@ -159,6 +167,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageMsi
 
       - name: Upload Msi
