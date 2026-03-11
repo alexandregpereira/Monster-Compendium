@@ -30,8 +30,12 @@ multiplatform {
         implementation(project.dependencies.platform(libs.firebase.bom))
         implementation(libs.firebase.analytics)
         implementation(libs.firebase.crashlytics)
+        implementation(libs.amplitude.android)
     }
-    jvmMain()
+    jvmMain {
+        implementation(libs.amplitude.jvm)
+        implementation(libs.json.jvm)
+    }
     iosMain()
 }
 

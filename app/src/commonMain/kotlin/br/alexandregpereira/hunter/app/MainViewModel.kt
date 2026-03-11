@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app
 
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.COMPENDIUM
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
@@ -33,6 +34,7 @@ internal class MainViewModel(
     private val appLocalization: AppReactiveLocalization,
     private val stateRecovery: StateRecovery,
     appEventDispatcher: AppEventDispatcher,
+    private val analytics: Analytics,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
@@ -74,6 +76,12 @@ internal class MainViewModel(
     fun onEvent(event: MainViewEvent) {
         when (event) {
             is BottomNavigationItemClick -> {
+                analytics.track(
+                    eventName = "BottomBar - item click",
+                    params = mapOf(
+                        "item" to event.item.icon,
+                    )
+                )
                 setStateAndSave { copy(bottomBarItemSelectedIndex = bottomBarItems.indexOf(event.item)) }
             }
         }

@@ -16,6 +16,8 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -97,6 +99,13 @@ multiplatform {
 
 val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
 
+// Load local.properties manually to ensure AMPLITUDE_API_KEY is available
+val localProps = Properties()
+val localPropsFile: File? = rootProject.file("local.properties")
+if (localPropsFile?.exists() == true) {
+    localProps.load(localPropsFile.inputStream())
+}
+
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
     val versionNameSuffix = when {
@@ -108,9 +117,19 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         }
         else -> ""
     }
+
+    // Read AMPLITUDE_API_KEY from environment, local.properties, or use empty string
+    val amplitudeApiKeyEnvVarName = "AMPLITUDE_API_KEY"
+    val envVar = System.getenv(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val amplitudeApiKey = envVar ?: propVar ?: ""
+
+    logger.quiet("Using Amplitude API Key: ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
+
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
     taskVersionNameSuffix.set(versionNameSuffix)
+    taskAmplitudeApiKey.set(amplitudeApiKey)
 }
 
 kotlin {
@@ -235,6 +254,6 @@ compose {
 }
 
 // Ensure the task runs before compilation
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+tasks.withType<KotlinCompile>().configureEach {
     dependsOn("generateAppConfig")
 }
