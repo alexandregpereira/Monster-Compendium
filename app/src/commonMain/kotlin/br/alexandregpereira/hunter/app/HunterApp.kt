@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.app
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
@@ -49,6 +50,14 @@ internal fun HunterApp(
 
         val viewModel: MainViewModel = koinInject()
         val state by viewModel.state.collectAsState()
+
+        DisposableEffect(viewModel) {
+            viewModel.start()
+            onDispose {
+                viewModel.stop()
+            }
+        }
+
         CompositionLocalProvider(
             LocalScreenSize provides getPlatformScreenSizeInfo()
         ) {

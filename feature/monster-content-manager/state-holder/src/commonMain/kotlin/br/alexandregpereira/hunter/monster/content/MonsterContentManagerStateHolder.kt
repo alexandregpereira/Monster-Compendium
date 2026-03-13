@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEv
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventListener
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewEventManager
+import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -32,6 +33,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class MonsterContentManagerStateHolder internal constructor(
@@ -46,6 +48,7 @@ class MonsterContentManagerStateHolder internal constructor(
     private val analytics: MonsterContentManagerAnalytics,
     private val monsterContentPreviewEventManager: MonsterContentPreviewEventManager,
     private val appLocalization: AppLocalization,
+    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
 ) : UiModel<MonsterContentManagerState>(stateRecovery.getState()) {
 
     private var hasChanges: Boolean = false
@@ -60,8 +63,11 @@ class MonsterContentManagerStateHolder internal constructor(
     private fun load() {
         setState { copy(isLoading = true) }
         getAlternativeSourcesUseCase(onlyContentEnabled = false)
+            .map { alternativeSources ->
+                alternativeSources to isSessionUsageLimitReached()
+            }
             .flowOn(dispatcher)
-            .onEach { alternativeSources ->
+            .onEach { (alternativeSources, isSessionUsageLimitReached) ->
                 analytics.trackMonsterContentLoaded(alternativeSources)
                 setState {
                     copy(
@@ -69,6 +75,9 @@ class MonsterContentManagerStateHolder internal constructor(
                         strings = appLocalization.getStrings(),
                         isLoading = false,
                     )
+                }
+                if (isSessionUsageLimitReached) {
+                    println("Session usage limit reached. Some content may not be available.")
                 }
             }
             .catch {

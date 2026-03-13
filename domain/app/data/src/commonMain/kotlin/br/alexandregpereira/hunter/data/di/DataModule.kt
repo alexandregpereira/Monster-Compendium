@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.data.settings.di.settingsDataModule
 import br.alexandregpereira.hunter.data.settings.network.AlternativeSourceUrlBuilder
 import br.alexandregpereira.hunter.data.source.di.alternativeSourceDataModule
 import br.alexandregpereira.hunter.data.spell.di.spellDataModule
+import br.alexandregpereira.hunter.revenue.di.revenueDataModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.defaultRequest
@@ -60,7 +61,8 @@ fun dataModules(databaseName: String) = listOf(
     monsterFolderDataModule,
     monsterLoreDataModule,
     settingsDataModule,
-    spellDataModule
+    spellDataModule,
+    revenueDataModule,
 ).run { this + getAdditionalModule() }
 
 internal expect fun getAdditionalModule(): List<Module>

@@ -31,6 +31,7 @@ multiplatform {
         api(project(":domain:alternative-source:core"))
         api(project(":domain:monster:core"))
         api(project(":domain:monster-compendium:core"))
+        implementation(project(":domain:revenue:core"))
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))
         implementation(libs.kotlin.coroutines.core)

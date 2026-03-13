@@ -92,6 +92,7 @@ private val appModule = module {
             stateRecovery = get(named(AppStateRecoveryQualifier)),
             appEventDispatcher = get(),
             analytics = get(),
+            revenueSession = get(),
         )
     }
 }

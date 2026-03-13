@@ -48,6 +48,7 @@ val monsterContentManagerModule = module {
             analytics = MonsterContentManagerAnalytics(get()),
             monsterContentPreviewEventManager = get(),
             appLocalization = get(),
+            isSessionUsageLimitReached = get(),
         )
     }
 }

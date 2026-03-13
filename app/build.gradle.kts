@@ -51,6 +51,8 @@ multiplatform {
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
+        implementation(project(":domain:revenue:core"))
+        implementation(project(":domain:revenue:data"))
         implementation(project(":domain:sync:core"))
 
         implementation(project(":feature:share-content:event"))

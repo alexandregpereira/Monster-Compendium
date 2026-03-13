@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.flow.launchIn
@@ -35,12 +36,23 @@ internal class MainViewModel(
     private val stateRecovery: StateRecovery,
     appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
+    private val revenueSession: RevenueSession,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
         setState { updateState(stateRecovery) }
         observeLanguageChanges()
         appEventDispatcher.observeEvents()
+    }
+
+    fun start() {
+        analytics.track("App - started")
+        revenueSession.start()
+    }
+
+    fun stop() {
+        analytics.track("App - stopped")
+        revenueSession.stop()
     }
 
     private fun observeLanguageChanges() {
