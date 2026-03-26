@@ -51,6 +51,7 @@ internal class FirebaseAnalytics(
     }
 
     override fun logException(throwable: Throwable) {
+        throwable.printStackTrace()
         crashlytics.recordException(RuntimeException(throwable))
     }
 }

@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -36,10 +37,8 @@ fun SwipeVerticalToDismiss(
     onAnimationStateChange: (EnterExitState) -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    AnimatedVisibility(
+    VerticalDismiss(
         visible = visible,
-        enter = slideInVertically { fullHeight -> fullHeight },
-        exit = slideOutVertically { fullHeight -> fullHeight },
         modifier = modifier
     ) {
         val animationState = this.transition.currentState
@@ -64,3 +63,16 @@ fun SwipeVerticalToDismiss(
         }
     }
 }
+
+@Composable
+fun VerticalDismiss(
+    visible: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable AnimatedVisibilityScope.() -> Unit
+) = AnimatedVisibility(
+    visible = visible,
+    enter = slideInVertically { fullHeight -> fullHeight },
+    exit = slideOutVertically { fullHeight -> fullHeight },
+    modifier = modifier,
+    content = content,
+)

@@ -28,6 +28,7 @@ multiplatform {
         implementation(project(":domain:monster:data"))
         implementation(project(":domain:monster-folder:data"))
         implementation(project(":domain:monster-lore:data"))
+        implementation(project(":domain:revenue:data"))
         implementation(project(":domain:settings:data"))
         implementation(project(":domain:spell:data"))
         implementation(libs.kotlin.coroutines.core)

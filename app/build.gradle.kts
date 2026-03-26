@@ -51,6 +51,8 @@ multiplatform {
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
+        implementation(project(":domain:revenue:core"))
+        implementation(project(":domain:revenue:data"))
         implementation(project(":domain:sync:core"))
 
         implementation(project(":feature:share-content:event"))
@@ -65,6 +67,7 @@ multiplatform {
         implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
+        implementation(project(":feature:revenue:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:share-content:compose"))
@@ -124,12 +127,19 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val amplitudeApiKey = envVar ?: propVar ?: ""
 
+    // Read REVENUE_CAT_API_KEY from environment or use empty string
+    val revenueCatApiKeyEnvVarName = "REVENUE_CAT_API_KEY"
+    val revenueCatEnvVarApiKey = System.getenv(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val revenueCatPropVarApiKey = localProps.getProperty(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val revenueCatApiKeyFinal = revenueCatEnvVarApiKey ?: revenueCatPropVarApiKey ?: ""
+
     logger.quiet("Using Amplitude API Key: ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
     taskVersionNameSuffix.set(versionNameSuffix)
     taskAmplitudeApiKey.set(amplitudeApiKey)
+    taskRevenueCatApiKey.set(revenueCatApiKeyFinal)
 }
 
 kotlin {

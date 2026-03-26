@@ -27,6 +27,8 @@ import br.alexandregpereira.hunter.app.di.AppStateRecoveryQualifier
 import br.alexandregpereira.hunter.app.ui.AppMainLandscapeScreen
 import br.alexandregpereira.hunter.app.ui.AppMainPortraitScreen
 import br.alexandregpereira.hunter.ui.compose.AppWindow
+import br.alexandregpereira.hunter.ui.compose.LifecycleEventObserver
+import br.alexandregpereira.hunter.ui.compose.LocalAppContentPadding
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.LandscapeCompact
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.LandscapeExpanded
@@ -49,8 +51,17 @@ internal fun HunterApp(
 
         val viewModel: MainViewModel = koinInject()
         val state by viewModel.state.collectAsState()
+
+        LifecycleEventObserver(
+            onStart = viewModel::onStart,
+            onStop = viewModel::onStop,
+            onPause = viewModel::onPause,
+            onResume = viewModel::onResume,
+        )
+
         CompositionLocalProvider(
-            LocalScreenSize provides getPlatformScreenSizeInfo()
+            LocalScreenSize provides getPlatformScreenSizeInfo(),
+            LocalAppContentPadding provides contentPadding,
         ) {
             val screenSize = LocalScreenSize.current
 

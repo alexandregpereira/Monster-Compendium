@@ -35,6 +35,7 @@ import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterCont
 import br.alexandregpereira.hunter.monster.event.monsterEventModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDetailModule
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
+import br.alexandregpereira.hunter.revenue.di.revenueFeatureModule
 import br.alexandregpereira.hunter.search.di.featureSearchModule
 import br.alexandregpereira.hunter.settings.di.featureSettingsModule
 import br.alexandregpereira.hunter.shareContent.featureShareContentModule
@@ -70,6 +71,7 @@ internal fun KoinApplication.initKoinModules() {
         featureSpellCompendiumModule,
         featureSpellDetailModule,
         featureShareContentModule,
+        revenueFeatureModule,
     )
     modules(
         analyticsModule(amplitudeApiKey = AppConfig.AMPLITUDE_API_KEY),
@@ -92,6 +94,7 @@ private val appModule = module {
             stateRecovery = get(named(AppStateRecoveryQualifier)),
             appEventDispatcher = get(),
             analytics = get(),
+            revenueSession = get(),
         )
     }
 }
