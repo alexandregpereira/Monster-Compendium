@@ -24,6 +24,7 @@ plugins {
 multiplatform {
     androidMain {
         implementation(libs.revenuecat.kmp.core)
+        implementation(libs.revenuecat.kmp.ui)
     }
     commonMain {
         implementation(project(":core:analytics"))
@@ -40,7 +41,10 @@ multiplatform {
         implementation(libs.koin.compose)
     }
     jvmMain()
-    iosMain()
+    iosMain {
+        implementation(libs.revenuecat.kmp.core)
+        implementation(libs.revenuecat.kmp.ui)
+    }
 }
 
 androidLibrary {

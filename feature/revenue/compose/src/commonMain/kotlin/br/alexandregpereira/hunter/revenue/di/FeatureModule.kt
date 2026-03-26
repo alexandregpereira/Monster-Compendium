@@ -9,7 +9,6 @@ val revenueFeatureModule = module {
         PaywallStateHolder(
             revenueEventListener = get<RevenueEventDispatcher>(),
             isSessionUsageLimitReached = get(),
-            subscribe = get(),
         )
     }
     single {

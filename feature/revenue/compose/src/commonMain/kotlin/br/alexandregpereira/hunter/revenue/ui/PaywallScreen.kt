@@ -11,7 +11,9 @@ import br.alexandregpereira.hunter.ui.compose.Window
 @Composable
 internal fun PaywallScreen(
     isOpen: Boolean,
-    subscribe: () -> Unit,
+    onDismiss: () -> Unit,
+    onPurchaseCompleted: () -> Unit,
+    onPurchaseError: (message: String) -> Unit,
 ) = VerticalDismiss(
     visible = isOpen,
     modifier = Modifier.padding(LocalAppContentPadding.current),
@@ -19,8 +21,12 @@ internal fun PaywallScreen(
     Window(
         modifier = Modifier.fillMaxSize(),
     ) {
-        PaywallScreenContent(
-            subscribe = subscribe,
+        RevenueCatPaywall(
+            shouldDisplayDismissButton = true,
+            onDismiss = onDismiss,
+            onPurchaseCompleted = onPurchaseCompleted,
+            onPurchaseError = onPurchaseError,
+            modifier = Modifier.fillMaxSize(),
         )
     }
 }
