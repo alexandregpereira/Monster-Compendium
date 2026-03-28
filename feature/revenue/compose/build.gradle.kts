@@ -40,6 +40,7 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
+        implementation(libs.multiplatform.settings)
     }
     jvmMain()
     iosMain {

@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.revenue
 
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.revenue.domain.PaywallSettings
 import br.alexandregpereira.hunter.revenue.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.revenue.event.RevenueEvent
 import br.alexandregpereira.hunter.revenue.event.RevenueResult
@@ -14,6 +15,7 @@ internal class PaywallStateHolder(
     private val revenueEventListener: EventListener<RevenueEvent>,
     private val shouldShowPaywall: ShouldShowPaywall,
     private val revenueResultDispatcher: EventDispatcher<RevenueResult>,
+    private val settings: PaywallSettings,
 ) : UiModel<PaywallState>(initialState = PaywallState()) {
 
     init {
@@ -22,7 +24,7 @@ internal class PaywallStateHolder(
 
     fun onStart() {
         scope.launch {
-            if (shouldShowPaywall()) {
+            if (settings.getPaywallWasClosedFlag().not() && shouldShowPaywall()) {
                 setState { copy(isOpen = true) }
             }
         }
@@ -30,6 +32,9 @@ internal class PaywallStateHolder(
 
     fun onClose() {
         setState { copy(isOpen = false) }
+        scope.launch {
+            settings.savePaywallWasClosedFlag(paywallWasClosed = true)
+        }
     }
 
     fun onPurchaseCompleted() {

@@ -19,15 +19,10 @@ internal fun PaywallScreen(
     swipeTriggerPercentage = 0.4f,
     onClose = onClose,
 ) {
-    Window(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        RevenueCatPaywall(
-            shouldDisplayDismissButton = true,
-            onDismiss = onClose,
-            onPurchaseCompleted = onPurchaseCompleted,
-            onPurchaseError = onPurchaseError,
-            modifier = Modifier.fillMaxSize(),
-        )
-    }
+    RevenueCatPaywall(
+        shouldDisplayDismissButton = true,
+        onDismiss = onClose,
+        onPurchaseCompleted = onPurchaseCompleted,
+        onPurchaseError = onPurchaseError,
+    )
 }

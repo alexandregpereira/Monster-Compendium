@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.revenue.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.revenuecat.purchases.kmp.models.CustomerInfo
 import com.revenuecat.purchases.kmp.models.PurchasesError
@@ -34,35 +35,37 @@ internal actual fun RevenueCatPaywall(
     onPurchaseError: (message: String) -> Unit,
     modifier: Modifier,
 ) {
-    val listener = object : PaywallListener {
-        override fun onPurchaseCompleted(
-            customerInfo: CustomerInfo,
-            storeTransaction: StoreTransaction
-        ) {
-            onPurchaseCompleted()
-        }
-
-        override fun onPurchaseError(error: PurchasesError) {
-            onPurchaseError(error.message)
-        }
-
-        override fun onRestoreCompleted(customerInfo: CustomerInfo) {
-            // Check if the user now has premium entitlements after restore
-            val isPremium = customerInfo.entitlements["D&D 5e Monster Compendium Pro"]?.isActive == true
-            if (isPremium) {
+    val paywallOptions = remember(shouldDisplayDismissButton) {
+        val listener = object : PaywallListener {
+            override fun onPurchaseCompleted(
+                customerInfo: CustomerInfo,
+                storeTransaction: StoreTransaction
+            ) {
                 onPurchaseCompleted()
+            }
+
+            override fun onPurchaseError(error: PurchasesError) {
+                onPurchaseError(error.message)
+            }
+
+            override fun onRestoreCompleted(customerInfo: CustomerInfo) {
+                // Check if the user now has premium entitlements after restore
+                val isPremium = customerInfo.entitlements["D&D 5e Monster Compendium Pro"]?.isActive == true
+                if (isPremium) {
+                    onPurchaseCompleted()
+                }
+            }
+
+            override fun onRestoreError(error: PurchasesError) {
+                onPurchaseError(error.message)
             }
         }
 
-        override fun onRestoreError(error: PurchasesError) {
-            onPurchaseError(error.message)
-        }
+        PaywallOptions.Builder(dismissRequest = onDismiss).apply {
+            this.listener = listener
+            this.shouldDisplayDismissButton = shouldDisplayDismissButton
+        }.build()
     }
-
-    val paywallOptions = PaywallOptions.Builder(dismissRequest = onDismiss).apply {
-        this.listener = listener
-        this.shouldDisplayDismissButton = shouldDisplayDismissButton
-    }.build()
 
     Paywall(options = paywallOptions)
 }
