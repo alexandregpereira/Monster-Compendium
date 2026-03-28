@@ -54,6 +54,10 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui"
 }
 
+dependencies {
+    debugImplementation(libs.compose.mp.ui.tooling)
+}
+
 compose.resources {
     publicResClass = true
     packageOfResClass = "br.alexandregpereira.hunter.ui.resources"

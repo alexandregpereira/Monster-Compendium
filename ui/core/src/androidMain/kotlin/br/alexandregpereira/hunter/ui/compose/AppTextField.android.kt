@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun AppTextFieldDarkPreview() = Window {
+private fun AppTextFieldDarkPreview() = PreviewWindow {
     var value by remember { mutableStateOf("Text") }
     AppTextField(text = "Text", label = "Label", onValueChange = { value = it })
 }
