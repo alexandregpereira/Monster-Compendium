@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState.BODY
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
-@Preview(widthDp = 320, heightDp = 480)
+@Preview
 @Composable
 private fun TableContentPopupNotOpenedPreview() = HunterTheme {
     var opened by remember { mutableStateOf(false) }
@@ -57,7 +57,7 @@ private fun TableContentPopupNotOpenedPreview() = HunterTheme {
     }
 }
 
-@Preview(widthDp = 400, heightDp = 640)
+@Preview
 @Composable
 private fun TableContentPopupOpenedPreview() = HunterTheme {
     var opened by remember { mutableStateOf(false) }
@@ -82,7 +82,7 @@ private fun TableContentPopupOpenedPreview() = HunterTheme {
     }
 }
 
-@Preview(widthDp = 400, heightDp = 640)
+@Preview
 @Composable
 private fun PopupOpenedContentClosedPreview() = HunterTheme {
     Box(Modifier.fillMaxSize()) {
@@ -104,3 +104,4 @@ private fun PopupOpenedContentClosedPreview() = HunterTheme {
         )
     }
 }
+

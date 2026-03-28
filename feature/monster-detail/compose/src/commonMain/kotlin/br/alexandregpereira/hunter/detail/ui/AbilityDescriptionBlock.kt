@@ -26,12 +26,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 import br.alexandregpereira.hunter.ui.compose.Window
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun AbilityDescriptionBlock(

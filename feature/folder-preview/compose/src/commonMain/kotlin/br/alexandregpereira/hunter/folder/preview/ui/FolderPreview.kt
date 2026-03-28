@@ -40,13 +40,13 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.preview.domain.model.MonsterFolderPreview
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.AppCircleButton
 import br.alexandregpereira.hunter.ui.compose.CircleImage
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FolderPreview(

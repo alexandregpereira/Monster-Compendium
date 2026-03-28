@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
 import br.alexandregpereira.hunter.ui.compendium.CompendiumColumns
@@ -33,7 +34,6 @@ import br.alexandregpereira.hunter.ui.compose.MonsterCard
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.isHeightExpanded
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MonsterCompendium(

@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.resources.Res
 import br.alexandregpereira.hunter.detail.ui.resources.ic_hit_point
@@ -27,7 +28,6 @@ import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
 import br.alexandregpereira.hunter.monster.detail.StatsState
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun StatsBlock(

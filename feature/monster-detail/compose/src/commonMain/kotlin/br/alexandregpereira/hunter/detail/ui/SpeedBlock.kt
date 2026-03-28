@@ -19,8 +19,7 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.SpeedType
@@ -28,6 +27,7 @@ import br.alexandregpereira.hunter.monster.detail.SpeedState
 import br.alexandregpereira.hunter.monster.detail.SpeedValueState
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun SpeedBlock(

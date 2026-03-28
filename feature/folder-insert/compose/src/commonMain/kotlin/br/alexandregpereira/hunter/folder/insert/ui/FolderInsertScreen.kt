@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.insert.FolderInsertState
 import br.alexandregpereira.hunter.folder.insert.MonsterPreviewState
@@ -28,7 +29,6 @@ import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun FolderInsertScreen(

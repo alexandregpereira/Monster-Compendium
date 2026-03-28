@@ -23,7 +23,7 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(compose.runtimeSaveable)
+        implementation(libs.compose.mp.runtime.saveable)
         implementation(libs.kotlin.coroutines.core)
     }
     jvmMain()
