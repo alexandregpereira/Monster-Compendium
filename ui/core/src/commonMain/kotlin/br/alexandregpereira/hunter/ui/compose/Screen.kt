@@ -57,11 +57,15 @@ fun AppScreen(
     showCloseButton: Boolean = true,
     backgroundColor: Color = MaterialTheme.colors.surface,
     level: Int = 1,
+    swipeTriggerPercentage: Float = 0.1f,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
     var enterExitState: EnterExitState? by remember { mutableStateOf(null) }
-    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
+    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(
+        key = enterExitState,
+        swipeTriggerPercentage = swipeTriggerPercentage,
+    )
     Closeable(
         isOpen = isOpen,
         onClosed = onClose,

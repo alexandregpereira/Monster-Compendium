@@ -16,6 +16,7 @@ internal fun PaywallScreen(
 ) = AppScreen(
     isOpen = isOpen,
     contentPaddingValues = LocalAppContentPadding.current,
+    swipeTriggerPercentage = 0.4f,
     onClose = onClose,
 ) {
     Window(
