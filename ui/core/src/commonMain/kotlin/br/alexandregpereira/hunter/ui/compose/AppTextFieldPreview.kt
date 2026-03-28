@@ -17,17 +17,17 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
-private fun AppTextFieldDarkPreview() = PreviewWindow {
+private fun AppTextFieldDarkPreview() = PreviewWindow(darkTheme = true) {
     var value by remember { mutableStateOf("Text") }
     AppTextField(text = "Text", label = "Label", onValueChange = { value = it })
 }
+

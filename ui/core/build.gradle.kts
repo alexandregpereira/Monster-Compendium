@@ -26,7 +26,6 @@ multiplatform {
     androidMain {
         implementation(libs.core.ktx)
         implementation(libs.compose.activity)
-        implementation(libs.compose.tooling.preview)
         implementation(libs.kotlin.reflect)
         implementation(libs.ktor.android)
     }
