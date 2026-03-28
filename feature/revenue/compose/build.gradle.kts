@@ -30,6 +30,7 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
+        implementation(project(":core:network"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:revenue:core"))

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,14 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    kotlin("multiplatform")
-}
+package br.alexandregpereira.hunter.network
 
-multiplatform {
-    commonMain {
-        implementation(libs.kotlin.coroutines.core)
+import io.ktor.client.HttpClient
+import io.ktor.client.request.head
+
+internal class NetworkManagerImpl(
+    private val client: HttpClient,
+) : NetworkManager {
+
+    override suspend fun isNetworkAvailable(): Boolean {
+        return try {
+            client.head(urlString = "https://clients3.google.com/generate_204")
+            true
+        } catch (_: Throwable) {
+            false
+        }
     }
-    jvmMain()
-    iosMain()
 }

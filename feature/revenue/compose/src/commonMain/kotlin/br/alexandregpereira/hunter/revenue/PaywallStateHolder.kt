@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.revenue
 
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.revenue.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.revenue.event.RevenueEvent
 import br.alexandregpereira.hunter.revenue.event.RevenueResult
 import br.alexandregpereira.hunter.state.UiModel
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 
 internal class PaywallStateHolder(
     private val revenueEventListener: EventListener<RevenueEvent>,
-    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val shouldShowPaywall: ShouldShowPaywall,
     private val revenueResultDispatcher: EventDispatcher<RevenueResult>,
 ) : UiModel<PaywallState>(initialState = PaywallState()) {
 
@@ -21,7 +22,7 @@ internal class PaywallStateHolder(
 
     fun onStart() {
         scope.launch {
-            if (isSessionUsageLimitReached()) {
+            if (shouldShowPaywall()) {
                 setState { copy(isOpen = true) }
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,7 @@ plugins {
 }
 
 multiplatform {
-    commonMain {
-        implementation(libs.kotlin.coroutines.core)
-    }
+    commonMain()
     jvmMain()
     iosMain()
 }

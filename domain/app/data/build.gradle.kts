@@ -24,6 +24,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:network"))
         implementation(project(":domain:alternative-source:data"))
         implementation(project(":domain:monster:data"))
         implementation(project(":domain:monster-folder:data"))
