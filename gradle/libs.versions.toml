@@ -9,6 +9,7 @@ coil3 = "3.4.0"
 compose_activity = '1.12.4'
 compose = '1.10.4'
 compose_plugin = '1.10.2'
+compose_material_icons_extended = "1.7.3"
 core_ktx = '1.17.0'
 firebase_bom = "33.6.0"
 googleplay_services = "4.4.4"
@@ -38,6 +39,16 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3"
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose_activity" }
+compose-mp-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose_plugin" }
+compose-mp-runtime-saveable = { module = "org.jetbrains.compose.runtime:runtime-saveable", version.ref = "compose_plugin" }
+compose-mp-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose_plugin" }
+compose-mp-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose_plugin" }
+compose-mp-ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "compose_plugin" }
+compose-mp-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose_plugin" }
+compose-mp-material = { module = "org.jetbrains.compose.material:material", version.ref = "compose_plugin" }
+compose-mp-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose_material_icons_extended" }
+compose-mp-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose_plugin" }
+compose-mp-components-ui-tooling-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "compose_plugin" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }

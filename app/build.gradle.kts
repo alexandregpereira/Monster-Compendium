@@ -76,12 +76,12 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
-        implementation(compose.runtime)
-        implementation(compose.foundation)
-        implementation(compose.material)
-        implementation(compose.ui)
-        implementation(compose.components.resources)
-        implementation(compose.components.uiToolingPreview)
+        implementation(libs.compose.mp.runtime)
+        implementation(libs.compose.mp.foundation)
+        implementation(libs.compose.mp.material)
+        implementation(libs.compose.mp.ui)
+        implementation(libs.compose.mp.components.resources)
+        implementation(libs.compose.mp.components.ui.tooling.preview)
     }
 
     jvmMain {
@@ -204,7 +204,7 @@ android {
         buildConfig = true
     }
     dependencies {
-        debugImplementation(compose.uiTooling)
+        debugImplementation(libs.compose.mp.ui.tooling)
         androidTestImplementation(libs.bundles.instrumentedtest)
         androidTestImplementation(libs.compose.ui.test)
         androidTestImplementation(libs.sqldelight.android)

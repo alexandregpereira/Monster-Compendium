@@ -31,12 +31,12 @@ multiplatform {
         implementation(libs.ktor.android)
     }
     commonMain {
-        api(compose.ui)
-        api(compose.material)
-        api(compose.materialIconsExtended)
-        api(compose.uiUtil)
-        api(compose.components.resources)
-        api(compose.components.uiToolingPreview)
+        api(libs.compose.mp.ui)
+        api(libs.compose.mp.material)
+        api(libs.compose.mp.material.icons.extended)
+        api(libs.compose.mp.ui.util)
+        api(libs.compose.mp.components.resources)
+        api(libs.compose.mp.components.ui.tooling.preview)
         implementation(libs.ktor.core)
         implementation(libs.coil.compose)
         implementation(libs.coil.mp)
