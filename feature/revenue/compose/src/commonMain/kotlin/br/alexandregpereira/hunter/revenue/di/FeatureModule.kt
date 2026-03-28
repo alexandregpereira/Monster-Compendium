@@ -26,6 +26,7 @@ val revenueFeatureModule = module {
             shouldShowPaywall = get(),
             revenueResultDispatcher = get<RevenueResultDispatcher>(),
             settings = get(),
+            subscribe = get(),
         )
     }
     single {

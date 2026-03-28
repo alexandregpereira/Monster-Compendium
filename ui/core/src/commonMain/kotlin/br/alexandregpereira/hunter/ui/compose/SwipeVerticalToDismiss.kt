@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 
 @Composable
 fun SwipeVerticalToDismiss(
@@ -69,10 +70,15 @@ fun VerticalDismiss(
     visible: Boolean,
     modifier: Modifier = Modifier,
     content: @Composable AnimatedVisibilityScope.() -> Unit
-) = AnimatedVisibility(
-    visible = visible,
-    enter = slideInVertically { fullHeight -> fullHeight },
-    exit = slideOutVertically { fullHeight -> fullHeight },
-    modifier = modifier,
-    content = content,
-)
+) {
+    val contentPaddingBottom = LocalAppContentPadding.current.calculateBottomPadding()
+    val density = LocalDensity.current
+    val contentPaddingBottomPx = with(density) { contentPaddingBottom.roundToPx() }
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically { fullHeight -> fullHeight + contentPaddingBottomPx },
+        exit = slideOutVertically { fullHeight -> fullHeight + contentPaddingBottomPx },
+        modifier = modifier,
+        content = content,
+    )
+}

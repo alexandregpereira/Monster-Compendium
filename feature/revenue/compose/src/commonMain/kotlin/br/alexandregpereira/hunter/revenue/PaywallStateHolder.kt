@@ -7,15 +7,18 @@ import br.alexandregpereira.hunter.revenue.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.revenue.event.RevenueEvent
 import br.alexandregpereira.hunter.revenue.event.RevenueResult
 import br.alexandregpereira.hunter.state.UiModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 internal class PaywallStateHolder(
     private val revenueEventListener: EventListener<RevenueEvent>,
-    private val shouldShowPaywall: ShouldShowPaywall,
     private val revenueResultDispatcher: EventDispatcher<RevenueResult>,
+    private val shouldShowPaywall: ShouldShowPaywall,
     private val settings: PaywallSettings,
+    private val subscribe: Subscribe,
 ) : UiModel<PaywallState>(initialState = PaywallState()) {
 
     init {
@@ -37,14 +40,19 @@ internal class PaywallStateHolder(
         }
     }
 
-    fun onPurchaseCompleted() {
-        setState { copy(isOpen = false) }
-        revenueResultDispatcher.dispatchEvent(RevenueResult.OnSubscribe)
+    fun onSubscribe() {
+        flow {
+            emit(subscribe())
+        }.catch { cause ->
+            cause.printStackTrace()
+        }.onEach {
+            setState { copy(isOpen = false) }
+            revenueResultDispatcher.dispatchEvent(RevenueResult.OnSubscribe)
+        }.launchIn(scope)
     }
 
-    fun onPurchaseError(message: String) {
-        // Optionally log or show error message
-        // For now, we just keep the paywall open so the user can try again
+    fun onRestoreSubscription() {
+
     }
 
     private fun observeEvents() {
