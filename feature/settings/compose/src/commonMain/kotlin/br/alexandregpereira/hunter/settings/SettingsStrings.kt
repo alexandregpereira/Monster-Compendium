@@ -38,19 +38,7 @@ interface SettingsStrings {
     val imageContentScaleFit: String
     val imageContentScaleCrop: String
     val openGitHubProject: String
-    val donateStrings: DonateStrings
-}
-
-interface DonateStrings {
-    val buyMeACoffee: String
-    val donateDescription: String
-    val fromBrazil: String
-    val fromBrazilDescription: String
-    val pixCopyAndPaste: String
-    val pixKey: String
-    val supportMe: String
-    val donateAppName: String
-    val copy: String
+    val subscribePremium: String
 }
 
 internal data class SettingsEnStrings(
@@ -72,17 +60,7 @@ internal data class SettingsEnStrings(
     override val imageContentScaleFit: String = "Show entire image",
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
-    override val donateStrings: DonateStrings = object : DonateStrings {
-        override val buyMeACoffee: String = "Buy me a Coffee"
-        override val donateDescription: String = "If you are enjoying this app and want to help me maintain it, please consider buying me a coffee."
-        override val fromBrazil: String = "Hey Brazil"
-        override val fromBrazilDescription: String = "If you are from Brazil, you can also buy me a coffee using Pix."
-        override val pixCopyAndPaste: String = "Pix Copy and Paste"
-        override val pixKey: String = "Pix Key"
-        override val supportMe: String = "Support me"
-        override val donateAppName: String = "on Ko-fi"
-        override val copy: String = "Copy"
-    }
+    override val subscribePremium: String = "Subscribe to Premium",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -104,17 +82,7 @@ internal data class SettingsPtStrings(
     override val imageContentScaleFit: String = "Mostrar imagem inteira",
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
-    override val donateStrings: DonateStrings = object : DonateStrings {
-        override val buyMeACoffee: String = "Pague um café"
-        override val donateDescription: String = "Se você está gostando deste aplicativo e quer me ajudar a mantê-lo, considere me pagar um café."
-        override val fromBrazil: String = "E aí Brasil"
-        override val fromBrazilDescription: String = "Se você é do Brasil, também pode me pagar um café usando Pix."
-        override val pixCopyAndPaste: String = "Pix Copia e Cola"
-        override val pixKey: String = "Chave Pix"
-        override val supportMe: String = "Me apoie"
-        override val donateAppName: String = "no Ko-fi"
-        override val copy: String = "Copiar"
-    }
+    override val subscribePremium: String = "Assinar Premium",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

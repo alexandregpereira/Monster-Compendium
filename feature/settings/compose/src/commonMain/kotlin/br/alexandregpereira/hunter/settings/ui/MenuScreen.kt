@@ -89,12 +89,14 @@ internal fun MenuScreen(
                 onClick = viewIntent::onManageMonsterContentClick
             )
 
-            Divider()
+            if (state.shouldShowIsPremiumMenuItem) {
+                Divider()
 
-            MenuItem(
-                text = strings.donateStrings.buyMeACoffee,
-                onClick = viewIntent::onDonateClick
-            )
+                MenuItem(
+                    text = strings.subscribePremium,
+                    onClick = viewIntent::onSubscribePremiumClick
+                )
+            }
         }
 
         if (versionName.isNotBlank()) {

@@ -32,9 +32,11 @@ multiplatform {
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster:event"))
         implementation(project(":domain:settings:core"))
+        implementation(project(":domain:revenue:core"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))
+        implementation(project(":feature:revenue:event"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)

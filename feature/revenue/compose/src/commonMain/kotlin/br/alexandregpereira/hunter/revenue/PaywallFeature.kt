@@ -18,7 +18,7 @@ fun PaywallFeature() {
 
     PaywallScreen(
         isOpen = state.isOpen,
-        onDismiss = stateHolder::onDismiss,
+        onClose = stateHolder::onClose,
         onPurchaseCompleted = stateHolder::onPurchaseCompleted,
         onPurchaseError = stateHolder::onPurchaseError,
     )

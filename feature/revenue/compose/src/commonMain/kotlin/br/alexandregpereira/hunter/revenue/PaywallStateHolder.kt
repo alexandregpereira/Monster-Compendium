@@ -1,7 +1,9 @@
 package br.alexandregpereira.hunter.revenue
 
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.revenue.event.RevenueEvent
+import br.alexandregpereira.hunter.revenue.event.RevenueResult
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -10,6 +12,7 @@ import kotlinx.coroutines.launch
 internal class PaywallStateHolder(
     private val revenueEventListener: EventListener<RevenueEvent>,
     private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val revenueResultDispatcher: EventDispatcher<RevenueResult>,
 ) : UiModel<PaywallState>(initialState = PaywallState()) {
 
     init {
@@ -24,12 +27,13 @@ internal class PaywallStateHolder(
         }
     }
 
-    fun onDismiss() {
+    fun onClose() {
         setState { copy(isOpen = false) }
     }
 
     fun onPurchaseCompleted() {
         setState { copy(isOpen = false) }
+        revenueResultDispatcher.dispatchEvent(RevenueResult.OnSubscribe)
     }
 
     fun onPurchaseError(message: String) {

@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.settings.di
 
+import br.alexandregpereira.hunter.revenue.event.RevenueEventDispatcher
+import br.alexandregpereira.hunter.revenue.event.RevenueResultDispatcher
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
@@ -41,6 +43,9 @@ val featureSettingsModule = module {
             getAppearanceSettings = get(),
             monsterEventDispatcher = get(),
             shareContentEventDispatcher = get(),
+            revenueEventDispatcher = get<RevenueEventDispatcher>(),
+            isPremium = get(),
+            revenueResultListener = get<RevenueResultDispatcher>(),
         )
     }
 }

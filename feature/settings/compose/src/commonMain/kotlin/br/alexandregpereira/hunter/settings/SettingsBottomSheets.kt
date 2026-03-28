@@ -23,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import br.alexandregpereira.hunter.settings.ui.AdvancedSettings
 import br.alexandregpereira.hunter.settings.ui.AppearanceSettingsBottomSheet
-import br.alexandregpereira.hunter.settings.ui.DonateScreen
 import br.alexandregpereira.hunter.settings.ui.SettingsBottomSheet
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import org.koin.compose.koinInject
@@ -68,16 +67,5 @@ fun SettingsBottomSheets(
         onStateChange = stateHolder::onAppearanceChange,
         onSaveButtonClick = stateHolder::onAppearanceSettingsSaveClick,
         onClose = stateHolder::onAppearanceSettingsCloseClick
-    )
-
-    DonateScreen(
-        isOpen = state.donateIsOpen,
-        state = state.donateState,
-        strings = state.strings.donateStrings,
-        contentPadding = contentPadding,
-        onClose = stateHolder::onDonateCloseClick,
-        onPixCodeCopy = stateHolder::onPixCodeCopyClick,
-        onPixKeyCopy = stateHolder::onPixKeyCopyClick,
-        onBuyMeCoffeeClick = stateHolder::onBuyMeCoffeeClick,
     )
 }

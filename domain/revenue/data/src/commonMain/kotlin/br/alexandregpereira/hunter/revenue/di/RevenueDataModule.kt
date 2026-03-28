@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.revenue.IsPremium
+import br.alexandregpereira.hunter.revenue.IsPremiumImpl
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReachedImpl
 import br.alexandregpereira.hunter.revenue.RevenueSdk
@@ -58,8 +59,8 @@ val revenueDataModule get() = module {
             json = get(),
         )
     }
-    factory {
-        IsPremium(
+    factory<IsPremium> {
+        IsPremiumImpl(
             revenueSdk = get(),
             settings = get<Settings>(qualifier(preferenceName)),
             analytics = get(),

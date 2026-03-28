@@ -25,15 +25,15 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlin.time.Clock
 
-internal class IsPremium(
+internal class IsPremiumImpl(
     private val revenueSdk: RevenueSdk,
     private val settings: Settings,
     private val analytics: Analytics,
     private val revenueSessionTimeDataSource: RevenueSessionTimeDataSource,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
-) {
+) : IsPremium {
 
-    suspend operator fun invoke(): Boolean {
+    override suspend operator fun invoke(): Boolean {
         val isPremiumFallbackCacheKey = "isPremiumFallbackCache"
         return try {
             revenueSdk.isPremiumEnabled().also { isPremium ->
