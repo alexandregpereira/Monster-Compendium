@@ -48,10 +48,9 @@ compose-mp-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", versio
 compose-mp-material = { module = "org.jetbrains.compose.material:material", version.ref = "compose_plugin" }
 compose-mp-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose_material_icons_extended" }
 compose-mp-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose_plugin" }
-compose-mp-components-ui-tooling-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "compose_plugin" }
+compose-mp-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose_plugin" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
-compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }

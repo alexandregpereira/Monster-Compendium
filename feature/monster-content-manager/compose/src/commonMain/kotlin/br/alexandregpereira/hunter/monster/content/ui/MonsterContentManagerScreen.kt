@@ -26,13 +26,13 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerState
 import br.alexandregpereira.hunter.monster.content.MonsterContentState
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun MonsterContentManagerScreen(

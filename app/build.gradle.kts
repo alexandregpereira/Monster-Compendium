@@ -81,7 +81,7 @@ multiplatform {
         implementation(libs.compose.mp.material)
         implementation(libs.compose.mp.ui)
         implementation(libs.compose.mp.components.resources)
-        implementation(libs.compose.mp.components.ui.tooling.preview)
+        implementation(libs.compose.mp.ui.tooling.preview)
     }
 
     jvmMain {

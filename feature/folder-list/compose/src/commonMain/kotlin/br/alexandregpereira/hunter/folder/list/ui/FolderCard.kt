@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,7 +38,6 @@ import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.ImageCard
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.Window
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun FolderCard(

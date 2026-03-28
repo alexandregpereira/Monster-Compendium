@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.settings.SettingsEnStrings
 import br.alexandregpereira.hunter.settings.SettingsLanguageState
@@ -31,7 +32,6 @@ import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 import br.alexandregpereira.hunter.ui.compose.Window
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun SettingsBottomSheet(

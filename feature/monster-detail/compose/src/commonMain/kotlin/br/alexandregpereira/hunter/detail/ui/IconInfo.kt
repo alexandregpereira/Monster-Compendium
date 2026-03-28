@@ -34,7 +34,7 @@ import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
 import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.ui.compose.IconInfo as IconInfoUi
 
 @Composable
