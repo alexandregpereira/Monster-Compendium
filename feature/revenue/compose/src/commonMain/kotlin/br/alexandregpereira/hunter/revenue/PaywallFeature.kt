@@ -1,9 +1,11 @@
 package br.alexandregpereira.hunter.revenue
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import br.alexandregpereira.hunter.revenue.ui.LocalStrings
 import br.alexandregpereira.hunter.revenue.ui.PaywallScreen
 import org.koin.compose.koinInject
 
@@ -16,10 +18,13 @@ fun PaywallFeature() {
         stateHolder.onStart()
     }
 
-    PaywallScreen(
-        isOpen = state.isOpen,
-        onClose = stateHolder::onClose,
-        subscribe = stateHolder::onSubscribe,
-        restore = stateHolder::onRestoreSubscription,
-    )
+    CompositionLocalProvider(LocalStrings provides state.strings) {
+        PaywallScreen(
+            state = state,
+            onClose = stateHolder::onClose,
+            subscribe = stateHolder::onSubscribe,
+            restore = stateHolder::onRestoreSubscription,
+            onTryAgainLoadOffer = stateHolder::onTryAgainLoadOffer,
+        )
+    }
 }

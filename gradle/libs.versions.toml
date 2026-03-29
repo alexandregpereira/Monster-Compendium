@@ -21,6 +21,7 @@ json-jvm = "20251224"
 koin = '4.1.1'
 koin_compose = "4.1.1"
 kotlin = '2.3.0'
+kotlin_collections_immutable = "0.4.0"
 kotlin_coroutines_test = '1.10.2'
 kotlin_coroutines = '1.10.2'
 kotlin_datetime = "0.7.1"
@@ -70,6 +71,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+kotlin-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin_collections_immutable" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-desktop = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin_coroutines" }

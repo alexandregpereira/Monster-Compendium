@@ -36,6 +36,7 @@ multiplatform {
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
         implementation(libs.multiplatform.settings)
     }

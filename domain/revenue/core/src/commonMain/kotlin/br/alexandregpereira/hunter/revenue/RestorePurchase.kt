@@ -1,5 +1,5 @@
 package br.alexandregpereira.hunter.revenue
 
-interface Subscribe {
+fun interface RestorePurchase {
     suspend operator fun invoke()
 }

@@ -24,13 +24,19 @@ internal interface RevenueSdk {
     @Throws(RevenueSdkException::class)
     suspend fun isPremiumEnabled(): Boolean
 
-    suspend fun purchase()
+    suspend fun purchase(offerId: String)
+
+    suspend fun restorePurchase()
+
+    suspend fun getOffers(): List<Offer>
 }
 
 internal class PremiumRevenueSdk : RevenueSdk {
     override fun initialize(apiKey: String) {}
     override suspend fun isPremiumEnabled(): Boolean = true
-    override suspend fun purchase() {}
+    override suspend fun purchase(offerId: String) {}
+    override suspend fun restorePurchase() {}
+    override suspend fun getOffers(): List<Offer> = emptyList()
 }
 
 internal sealed class RevenueSdkException(
@@ -45,5 +51,13 @@ internal sealed class RevenueSdkException(
     class FailToInitializeRevenueSdk(cause: Throwable) : RevenueSdkException(
         message = "Error initializing Revenue SDK",
         cause = cause,
+    )
+
+    class FailToPurchase(code: String, message: String) : RevenueSdkException(
+        message = "Error during purchase. Code: $code, Message: $message",
+    )
+
+    class FailToRestorePurchase(code: String, message: String) : RevenueSdkException(
+        message = "Error during restore purchase. Code: $code, Message: $message",
     )
 }

@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.revenue
 
 import br.alexandregpereira.hunter.analytics.Analytics
-import kotlin.time.Clock
 
 internal class IsSessionUsageLimitReachedImpl internal constructor(
     private val isPremium: IsPremium,
@@ -39,9 +38,8 @@ internal class IsSessionUsageLimitReachedImpl internal constructor(
             return false
         }
 
-        val currentTime = Clock.System.now().toEpochMilliseconds()
-        val totalSessionTime = currentTime - revenueSessionTimeDataSource.getSessionTime()
-        val isSessionUsageLimitReached = totalSessionTime >= sessionTimeLimitInMillis
+        val sessionTime = revenueSessionTimeDataSource.getSessionTime()
+        val isSessionUsageLimitReached = sessionTime >= sessionTimeLimitInMillis
         return isSessionUsageLimitReached
     }
 }

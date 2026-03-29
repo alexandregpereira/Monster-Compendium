@@ -1,10 +1,10 @@
 package br.alexandregpereira.hunter.revenue
 
-internal class SubscribeImpl(
+internal class RestorePurchaseImpl(
     private val revenueSdk: RevenueSdk,
-) : Subscribe {
+) : RestorePurchase {
 
     override suspend fun invoke() {
-        revenueSdk.purchase()
+        revenueSdk.restorePurchase()
     }
 }

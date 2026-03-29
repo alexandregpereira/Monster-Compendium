@@ -18,6 +18,8 @@
 package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.analytics.BuildConfig
+import br.alexandregpereira.hunter.revenue.Offer
+import br.alexandregpereira.hunter.revenue.OfferPeriod
 import br.alexandregpereira.hunter.revenue.RevenueSdk
 import br.alexandregpereira.hunter.revenue.RevenueSdkException
 import com.revenuecat.purchases.kmp.LogLevel
@@ -25,6 +27,7 @@ import com.revenuecat.purchases.kmp.Purchases
 import com.revenuecat.purchases.kmp.configure
 import com.revenuecat.purchases.kmp.models.CustomerInfo
 import com.revenuecat.purchases.kmp.models.Package
+import com.revenuecat.purchases.kmp.models.PackageType
 import com.revenuecat.purchases.kmp.models.PurchasesError
 import com.revenuecat.purchases.kmp.models.StoreTransaction
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -57,23 +60,63 @@ internal class AndroidRevenueSdk : RevenueSdk {
                     continuation.resumeWith(Result.failure(exception))
                 },
                 onSuccess = { customerInfo ->
-                    val isPremium = customerInfo.entitlements["D&D 5e Monster Compendium Pro"]?.isActive == true
+                    val isPremium = customerInfo.hasPremiumPurchase()
                     continuation.resumeWith(Result.success(isPremium))
                 }
             )
         }
     }
 
-    override suspend fun purchase() {
-        val packageToPurchase = getOfferings()
-        suspendCancellableCoroutine<Unit> { continuation ->
+    override suspend fun purchase(offerId: String) {
+        val packageToPurchase = getOfferings().firstOrNull {
+            it.identifier == offerId
+        } ?: throw RevenueSdkException.FailToPurchase(
+            code = "OfferNotFound",
+            message = "Offer with id $offerId not found",
+        )
+        suspendCancellableCoroutine { continuation ->
             Purchases.sharedInstance.purchase(
                 packageToPurchase = packageToPurchase,
                 onError = { error: PurchasesError, userCancelled: Boolean ->
-                    // Handle error
+                    if (userCancelled) {
+                        continuation.cancel()
+                    } else {
+                        continuation.resumeWith(
+                            Result.failure(
+                                RevenueSdkException.FailToPurchase(
+                                    code = error.code.toString(),
+                                    message = "${error.message} " +
+                                            "underlyingErrorMessage=${error.underlyingErrorMessage}",
+                                )
+                            )
+                        )
+                    }
+                },
+                onSuccess = { _: StoreTransaction, customerInfo: CustomerInfo ->
+                    if (customerInfo.hasPremiumPurchase()) {
+                        continuation.resumeWith(Result.success(Unit))
+                    } else {
+                        continuation.resumeWith(
+                            Result.failure(
+                                RevenueSdkException.FailToPurchase(
+                                    code = "PurchaseNotActive",
+                                    message = "Purchase completed but no active subscription found",
+                                )
+                            )
+                        )
+                    }
+                }
+            )
+        }
+    }
+
+    override suspend fun restorePurchase() {
+        suspendCancellableCoroutine { continuation ->
+            Purchases.sharedInstance.restorePurchases(
+                onError = { error ->
                     continuation.resumeWith(
                         Result.failure(
-                            RevenueSdkException.FailToVerifyPremium(
+                            RevenueSdkException.FailToRestorePurchase(
                                 code = error.code.toString(),
                                 message = "${error.message} " +
                                         "underlyingErrorMessage=${error.underlyingErrorMessage}",
@@ -81,16 +124,43 @@ internal class AndroidRevenueSdk : RevenueSdk {
                         )
                     )
                 },
-                onSuccess = { storeTransaction: StoreTransaction, customerInfo: CustomerInfo ->
-                    if (customerInfo.entitlements["D&D 5e Monster Compendium Pro"]?.isActive == true) {
+                onSuccess = { customerInfo ->
+                    if (customerInfo.hasPremiumPurchase()) {
                         continuation.resumeWith(Result.success(Unit))
+                    } else {
+                        continuation.resumeWith(
+                            Result.failure(
+                                RevenueSdkException.FailToRestorePurchase(
+                                    code = "NoActiveSubscription",
+                                    message = "No active subscription found during restore purchase",
+                                )
+                            )
+                        )
                     }
                 }
             )
         }
     }
 
-    private suspend fun getOfferings(): Package {
+    override suspend fun getOffers(): List<Offer> {
+        return getOfferings().mapNotNull { pkg ->
+            val period = when (pkg.packageType) {
+                PackageType.ANNUAL -> OfferPeriod.YEARLY
+                PackageType.MONTHLY -> OfferPeriod.MONTHLY
+                PackageType.WEEKLY -> OfferPeriod.WEEKLY
+                else -> null
+            }
+            period?.let {
+                Offer(
+                    id = pkg.identifier,
+                    value = pkg.storeProduct.price.formatted,
+                    period = it,
+                )
+            }
+        }
+    }
+
+    private suspend fun getOfferings(): List<Package> {
         return suspendCancellableCoroutine { continuation ->
             Purchases.sharedInstance.getOfferings(
                 onError = { error ->
@@ -106,13 +176,15 @@ internal class AndroidRevenueSdk : RevenueSdk {
                     )
                 },
                 onSuccess = { offerings ->
-                    val offering = offerings.current ?: return@getOfferings
-                    val packageToPurchase =
-                        offering.availablePackages.firstOrNull() ?: return@getOfferings
-                    // Purchase the package
-                    continuation.resumeWith(Result.success(packageToPurchase))
+                    val offering = offerings.current
+                    val packages = offering?.availablePackages.orEmpty()
+                    continuation.resumeWith(Result.success(packages))
                 }
             )
         }
+    }
+
+    private fun CustomerInfo.hasPremiumPurchase(): Boolean {
+        return entitlements["D&D 5e Monster Compendium Pro"]?.isActive == true
     }
 }

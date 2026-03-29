@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.revenue.di
 
+import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import br.alexandregpereira.hunter.revenue.PaywallStateHolder
 import br.alexandregpereira.hunter.revenue.domain.PaywallSettings
 import br.alexandregpereira.hunter.revenue.domain.ShouldShowPaywall
@@ -26,7 +27,10 @@ val revenueFeatureModule = module {
             shouldShowPaywall = get(),
             revenueResultDispatcher = get<RevenueResultDispatcher>(),
             settings = get(),
-            subscribe = get(),
+            purchase = get(),
+            getCurrentOffer = get<GetCurrentOffer>(),
+            restorePurchase = get(),
+            appLocalization = get(),
         )
     }
     single {

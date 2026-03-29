@@ -41,36 +41,51 @@ fun EmptyScreenMessage(
     onButtonClick: () -> Unit = {}
 ) = Window {
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier
-                .align(Alignment.Center)
-                .padding(16.dp)
-        ) {
+        EmptyScreenMessageContent(
+            title = title,
+            description = description,
+            buttonText = buttonText,
+            onButtonClick = onButtonClick,
+            modifier = modifier.align(Alignment.Center),
+        )
+    }
+}
+
+@Composable
+fun EmptyScreenMessageContent(
+    title: String,
+    modifier: Modifier = Modifier,
+    description: String = "",
+    buttonText: String = "",
+    onButtonClick: () -> Unit = {}
+) {
+    Column(
+        modifier.padding(16.dp)
+    ) {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 26.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        description.takeIf { it.isNotBlank() }?.let {
             Text(
-                text = title,
-                fontWeight = FontWeight.Bold,
-                fontSize = 26.sp,
+                text = it,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
             )
+        }
 
-            description.takeIf { it.isNotBlank() }?.let {
-                Text(
-                    text = it,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-                )
-            }
-
-            buttonText.takeIf { it.isNotBlank() }?.let {
-                AppButton(
-                    text = it,
-                    onClick = onButtonClick,
-                    modifier = Modifier.padding(top = 24.dp)
-                )
-            }
+        buttonText.takeIf { it.isNotBlank() }?.let {
+            AppButton(
+                text = it,
+                onClick = onButtonClick,
+                modifier = Modifier.padding(top = 24.dp)
+            )
         }
     }
 }

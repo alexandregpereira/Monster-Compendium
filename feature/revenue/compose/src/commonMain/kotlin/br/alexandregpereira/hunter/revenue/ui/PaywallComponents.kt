@@ -1,6 +1,5 @@
 package br.alexandregpereira.hunter.revenue.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,11 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -24,18 +21,26 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.revenue.PaywallFeatureState
+import br.alexandregpereira.hunter.revenue.PaywallOfferState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.AppButtonType
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun PaywallScrollableContent(
+    features: ImmutableList<PaywallFeatureState>,
     modifier: Modifier = Modifier,
 ) = Column(
     modifier = modifier.verticalScroll(rememberScrollState()),
@@ -45,12 +50,13 @@ internal fun PaywallScrollableContent(
     PaywallTitle()
     Spacer(modifier = Modifier.height(16.dp))
     PaywallDescription()
-    Spacer(modifier = Modifier.height(48.dp))
-    PaywallFeaturesComparisonTable()
+    Spacer(modifier = Modifier.height(16.dp))
+    PaywallFeaturesComparisonTable(features)
     Spacer(modifier = Modifier.height(48.dp))
 }
 @Composable
 internal fun PaywallFooter(
+    offer: PaywallOfferState.Success,
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit,
@@ -59,7 +65,7 @@ internal fun PaywallFooter(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(16.dp),
 ) {
-    PaywallOffer(offer = "$4.99 / month")
+    PaywallOffer(offer = offer.subscriptionOfferFormatted)
     PaywallButtons(
         subscribe = subscribe,
         restore = restore,
@@ -74,12 +80,12 @@ internal fun PaywallButtons(
     verticalArrangement = Arrangement.spacedBy(8.dp),
 ) {
     AppButton(
-        text = "Subscribe",
+        text = strings.subscribeButton,
         modifier = Modifier,
         onClick = subscribe,
     )
     AppButton(
-        text = "Restore subscription",
+        text = strings.restoreButton,
         type = AppButtonType.TERTIARY,
         size = AppButtonSize.SMALL,
         onClick = restore,
@@ -89,7 +95,7 @@ internal fun PaywallButtons(
 @Composable
 internal fun PaywallTitle() {
     Text(
-        text = "Subscribe to support\nthe project",
+        text = strings.title,
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = 36.sp,
@@ -101,7 +107,7 @@ internal fun PaywallTitle() {
 @Composable
 internal fun PaywallDescription() {
     Text(
-        text = "With your support we will continue to\nmaintaining the project",
+        text = strings.description,
         fontSize = 14.sp,
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
         textAlign = TextAlign.Center,
@@ -124,99 +130,81 @@ internal fun PaywallOffer(
     )
 
     Text(
-        text = "Cancel anytime",
+        text = strings.cancelAnytime,
         fontSize = 12.sp,
+        fontStyle = FontStyle.Italic,
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
         modifier = Modifier.align(Alignment.CenterHorizontally),
     )
 }
 
 @Composable
-internal fun PaywallFeaturesComparisonTable() {
-    val freeColumnWidth = 80.dp
-    val proColumnWidth = 80.dp
+internal fun PaywallFeaturesComparisonTable(
+    features: ImmutableList<PaywallFeatureState>,
+) {
+    val columnWidth = 80.dp
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        // Header row
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Features",
+                text = strings.featuresColumnHeader,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f),
             )
 
-            // FREE column header
-            Box(
-                modifier = Modifier.width(freeColumnWidth),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = "FREE",
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-                )
-            }
+            FeatureColumnHeader(
+                text = strings.freeColumnHeader,
+                columnWidth = columnWidth,
+                textColor = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+            )
 
-            // PRO column header — white pill badge with a check icon
-            Box(
-                modifier = Modifier.width(proColumnWidth),
-                contentAlignment = Alignment.Center,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(50))
-                        .background(MaterialTheme.colors.onSurface)
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = "Premium",
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.onPrimary,
-                    )
-                }
-            }
+            FeatureColumnHeader(
+                text = strings.premiumColumnHeader,
+                columnWidth = columnWidth,
+            )
         }
 
         Spacer(Modifier.height(8.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
-        Spacer(Modifier.height(12.dp))
 
-        // Row: Access to all features
-        FeatureRow(
-            feature = "Access to all features",
-            freeIncluded = true,
-            proIncluded = true,
-            freeColumnWidth = freeColumnWidth,
-            proColumnWidth = proColumnWidth,
-        )
+        features.forEach { feature ->
+            Spacer(Modifier.height(12.dp))
 
-        Spacer(Modifier.height(12.dp))
-
-        // Row: No Ads
-        FeatureRow(
-            feature = "No Ads",
-            freeIncluded = false,
-            proIncluded = true,
-            freeColumnWidth = freeColumnWidth,
-            proColumnWidth = proColumnWidth,
-        )
+            FeatureRow(
+                feature = feature.name,
+                isPremium = feature.isPremium,
+                columnWidth = columnWidth,
+            )
+        }
     }
+}
+
+@Composable
+private fun FeatureColumnHeader(
+    text: String,
+    columnWidth: Dp,
+    textColor: Color = MaterialTheme.colors.onSurface,
+) = Box(
+    modifier = Modifier.width(columnWidth),
+    contentAlignment = Alignment.Center,
+) {
+    Text(
+        text = text,
+        fontSize = 13.sp,
+        fontWeight = FontWeight.Bold,
+        color = textColor,
+    )
 }
 
 @Composable
 private fun FeatureRow(
     feature: String,
-    freeIncluded: Boolean,
-    proIncluded: Boolean,
-    freeColumnWidth: Dp,
-    proColumnWidth: Dp,
+    isPremium: Boolean,
+    columnWidth: Dp,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -225,53 +213,83 @@ private fun FeatureRow(
         Text(
             text = feature,
             fontSize = 14.sp,
-            color = MaterialTheme.colors.onSurface,
             modifier = Modifier.weight(1f),
         )
 
-        // FREE indicator
-        Box(
-            modifier = Modifier.width(freeColumnWidth),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (freeIncluded) {
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = null,
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
-                    modifier = Modifier.size(20.dp),
-                )
-            } else {
-                // Dash — "not included"
-                Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = null,
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
-                    modifier = Modifier.size(20.dp),
-                )
-            }
-        }
+        FeatureCell(
+            included = !isPremium,
+            columnWidth = columnWidth,
+        )
 
-        // PRO indicator
-        Box(
-            modifier = Modifier.width(proColumnWidth),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (proIncluded) {
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = null,
-                    tint = MaterialTheme.colors.onSurface,
-                    modifier = Modifier.size(20.dp),
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = null,
-                    tint = MaterialTheme.colors.onSurface,
-                    modifier = Modifier.size(20.dp),
-                )
-            }
-        }
+        FeatureCell(
+            included = true,
+            columnWidth = columnWidth,
+            highlightIcon = true,
+        )
     }
+}
+
+@Composable
+private fun FeatureCell(
+    included: Boolean,
+    columnWidth: Dp,
+    highlightIcon: Boolean = false,
+) = Box(
+    modifier = Modifier.width(columnWidth),
+    contentAlignment = Alignment.Center,
+) {
+    val tintColor = if (highlightIcon) {
+        MaterialTheme.colors.onSurface
+    } else {
+        MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+    }
+    if (included) {
+        Icon(
+            imageVector = Icons.Filled.Check,
+            contentDescription = null,
+            tint = tintColor,
+            modifier = Modifier.size(20.dp),
+        )
+    } else {
+        Icon(
+            imageVector = Icons.Filled.Close,
+            contentDescription = null,
+            tint = tintColor,
+            modifier = Modifier.size(20.dp),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaywallScrollableContentPreview() = HunterTheme {
+    PaywallScrollableContent(
+        features = persistentListOf(
+            PaywallFeatureState(
+                name = "Access to all features",
+                isPremium = true,
+            ),
+            PaywallFeatureState(
+                name = "No Ads",
+                isPremium = false,
+            ),
+        )
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaywallFeaturesComparisonTablePreview() = HunterTheme {
+    PaywallFeaturesComparisonTable(
+        features = persistentListOf(
+            PaywallFeatureState(
+                name = "Access to all features",
+                isPremium = true,
+            ),
+            PaywallFeatureState(
+                name = "No Ads",
+                isPremium = false,
+            ),
+        )
+    )
 }

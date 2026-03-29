@@ -17,16 +17,20 @@
 
 package br.alexandregpereira.hunter.revenue.di
 
+import br.alexandregpereira.hunter.revenue.GetCurrentOffer
+import br.alexandregpereira.hunter.revenue.GetCurrentOfferImpl
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.IsPremiumImpl
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReachedImpl
+import br.alexandregpereira.hunter.revenue.Purchase
+import br.alexandregpereira.hunter.revenue.PurchaseImpl
+import br.alexandregpereira.hunter.revenue.RestorePurchase
+import br.alexandregpereira.hunter.revenue.RestorePurchaseImpl
 import br.alexandregpereira.hunter.revenue.RevenueSdk
 import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.revenue.RevenueSessionRemoteConfig
 import br.alexandregpereira.hunter.revenue.RevenueSessionTimeDataSource
-import br.alexandregpereira.hunter.revenue.Subscribe
-import br.alexandregpereira.hunter.revenue.SubscribeImpl
 import com.russhwolf.settings.Settings
 import org.koin.core.qualifier.qualifier
 import org.koin.core.scope.Scope
@@ -75,8 +79,18 @@ val revenueDataModule get() = module {
             revenueSdk = get(),
         )
     }
-    factory<Subscribe> {
-        SubscribeImpl(
+    factory<Purchase> {
+        PurchaseImpl(
+            revenueSdk = get(),
+        )
+    }
+    factory<RestorePurchase> {
+        RestorePurchaseImpl(
+            revenueSdk = get(),
+        )
+    }
+    factory<GetCurrentOffer> {
+        GetCurrentOfferImpl(
             revenueSdk = get(),
         )
     }
