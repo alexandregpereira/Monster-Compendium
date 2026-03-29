@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Error
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Success
 
@@ -60,11 +59,16 @@ inline fun <reified ErrorState> LoadingScreen(
     crossinline errorContent: @Composable (ErrorState) -> Unit = {},
     crossinline content: @Composable () -> Unit
 ) {
-    Crossfade(targetState = state, modifier = modifier) {
-        when (it) {
+    AnimatedContent(
+        targetState = state,
+        modifier = modifier,
+        contentAlignment = Alignment.BottomStart,
+        label = "LoadingScreen",
+    ) { animationState: LoadingScreenState ->
+        when (animationState) {
             LoadingScreen -> LoadingIndicator(showCircularLoading, fillMaxSize = fillMaxSize)
             Success -> content()
-            is Error<*> -> if (it.errorState is ErrorState) errorContent(it.errorState)
+            is LoadingScreenState.Error<*> -> if (animationState.errorState is ErrorState) errorContent(animationState.errorState)
         }
     }
 }

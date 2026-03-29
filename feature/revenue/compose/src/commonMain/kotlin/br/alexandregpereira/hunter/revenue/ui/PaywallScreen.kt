@@ -40,7 +40,9 @@ internal fun PaywallScreen(
     isOpen = state.isOpen,
     contentPaddingValues = LocalAppContentPadding.current,
     swipeTriggerPercentage = 0.4f,
-    modifier = Modifier.animateContentSize(),
+    modifier = Modifier.animateContentSize(
+        alignment = Alignment.BottomStart,
+    ),
     onClose = onClose,
 ) {
     LoadingScreen(isLoading = state.isLoading, fillMaxSize = false) {
