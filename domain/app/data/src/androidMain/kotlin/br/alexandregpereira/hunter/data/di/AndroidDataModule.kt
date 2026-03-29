@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.data.di
 
 import android.content.Context
+import br.alexandregpereira.hunter.revenue.di.revenueMobileDataModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
@@ -27,7 +28,8 @@ internal actual fun getAdditionalModule(): List<Module> {
     return listOf(
         module {
             factory { get<Context>().getSharedPreferences("preferences", Context.MODE_PRIVATE) }
-        }
+        },
+        revenueMobileDataModule,
     )
 }
 

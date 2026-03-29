@@ -1,5 +1,5 @@
 package br.alexandregpereira.hunter.revenue
 
-interface Purchase {
+fun interface Purchase {
     suspend operator fun invoke(offerId: String)
 }

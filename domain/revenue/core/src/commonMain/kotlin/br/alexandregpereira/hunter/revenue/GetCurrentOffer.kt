@@ -1,6 +1,6 @@
 package br.alexandregpereira.hunter.revenue
 
-interface GetCurrentOffer {
+fun interface GetCurrentOffer {
     @Throws(GetCurrentOfferException::class)
     suspend operator fun invoke(): Offer
 }

@@ -31,14 +31,6 @@ internal interface RevenueSdk {
     suspend fun getOffers(): List<Offer>
 }
 
-internal class PremiumRevenueSdk : RevenueSdk {
-    override fun initialize(apiKey: String) {}
-    override suspend fun isPremiumEnabled(): Boolean = true
-    override suspend fun purchase(offerId: String) {}
-    override suspend fun restorePurchase() {}
-    override suspend fun getOffers(): List<Offer> = emptyList()
-}
-
 internal sealed class RevenueSdkException(
     message: String,
     cause: Throwable? = null

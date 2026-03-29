@@ -23,7 +23,6 @@ import br.alexandregpereira.hunter.data.monster.lore.di.monsterLoreDataModule
 import br.alexandregpereira.hunter.data.settings.di.settingsDataModule
 import br.alexandregpereira.hunter.data.source.di.alternativeSourceDataModule
 import br.alexandregpereira.hunter.data.spell.di.spellDataModule
-import br.alexandregpereira.hunter.revenue.di.revenueDataModule
 import org.koin.core.module.Module
 
 fun dataModules(databaseName: String) = listOf(
@@ -35,7 +34,6 @@ fun dataModules(databaseName: String) = listOf(
     monsterLoreDataModule,
     settingsDataModule,
     spellDataModule,
-    revenueDataModule,
 ).run { this + getAdditionalModule() }
 
 internal expect fun getAdditionalModule(): List<Module>

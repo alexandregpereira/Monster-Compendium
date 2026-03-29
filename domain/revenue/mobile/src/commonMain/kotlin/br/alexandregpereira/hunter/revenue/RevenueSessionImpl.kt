@@ -24,20 +24,20 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
 
-class RevenueSession internal constructor(
+internal class RevenueSessionImpl(
     private val revenueSessionTimeDataSource: RevenueSessionTimeDataSource,
     private val analytics: Analytics,
     private val isPremium: IsPremium,
     private val revenueSdk: RevenueSdk,
-) {
+) : RevenueSession {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var startTime: Long? = null
 
-    fun initialize(apiKey: String) {
+    override fun initialize(apiKey: String) {
         revenueSdk.initialize(apiKey)
     }
 
-    fun start() {
+    override fun start() {
         coroutineScope.launch {
             if (isPremium()) return@launch
 
@@ -50,7 +50,7 @@ class RevenueSession internal constructor(
         }
     }
 
-    fun stop() {
+    override fun stop() {
         val startTime = startTime ?: return
         val currentTime = Clock.System.now().toEpochMilliseconds()
         this.startTime = null

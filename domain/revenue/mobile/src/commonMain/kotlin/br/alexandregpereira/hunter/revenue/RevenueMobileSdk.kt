@@ -15,14 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.revenue.di
+package br.alexandregpereira.hunter.revenue
 
-import br.alexandregpereira.hunter.analytics.BuildConfig
-import br.alexandregpereira.hunter.revenue.Offer
-import br.alexandregpereira.hunter.revenue.OfferPeriod
-import br.alexandregpereira.hunter.revenue.RevenueSdk
-import br.alexandregpereira.hunter.revenue.RevenueSdkException
-import com.revenuecat.purchases.kmp.LogLevel
 import com.revenuecat.purchases.kmp.Purchases
 import com.revenuecat.purchases.kmp.configure
 import com.revenuecat.purchases.kmp.models.CustomerInfo
@@ -32,12 +26,9 @@ import com.revenuecat.purchases.kmp.models.PurchasesError
 import com.revenuecat.purchases.kmp.models.StoreTransaction
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-internal class AndroidRevenueSdk : RevenueSdk {
+internal class RevenueMobileSdk : RevenueSdk {
 
     override fun initialize(apiKey: String) {
-        if (BuildConfig.DEBUG) {
-            Purchases.logLevel = LogLevel.DEBUG
-        }
         Purchases.configure(apiKey = apiKey)
     }
 

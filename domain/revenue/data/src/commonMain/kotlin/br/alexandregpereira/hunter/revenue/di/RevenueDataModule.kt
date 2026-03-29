@@ -17,83 +17,32 @@
 
 package br.alexandregpereira.hunter.revenue.di
 
+import br.alexandregpereira.hunter.revenue.EmptyRevenueSession
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
-import br.alexandregpereira.hunter.revenue.GetCurrentOfferImpl
 import br.alexandregpereira.hunter.revenue.IsPremium
-import br.alexandregpereira.hunter.revenue.IsPremiumImpl
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
-import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReachedImpl
 import br.alexandregpereira.hunter.revenue.Purchase
-import br.alexandregpereira.hunter.revenue.PurchaseImpl
 import br.alexandregpereira.hunter.revenue.RestorePurchase
-import br.alexandregpereira.hunter.revenue.RestorePurchaseImpl
-import br.alexandregpereira.hunter.revenue.RevenueSdk
 import br.alexandregpereira.hunter.revenue.RevenueSession
-import br.alexandregpereira.hunter.revenue.RevenueSessionRemoteConfig
-import br.alexandregpereira.hunter.revenue.RevenueSessionTimeDataSource
-import com.russhwolf.settings.Settings
-import org.koin.core.qualifier.qualifier
-import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val revenueDataModule get() = module {
-    val preferenceName = "monster-compendium-feature-usage"
-    single<Settings>(qualifier = qualifier(preferenceName)) {
-        get<Settings.Factory>().create(preferenceName)
-    }
     factory<IsSessionUsageLimitReached> {
-        IsSessionUsageLimitReachedImpl(
-            isPremium = get(),
-            revenueSessionRemoteConfig = get(),
-            revenueSessionTimeDataSource = get(),
-            analytics = get(),
-        )
-    }
-    factory<RevenueSdk> {
-        createRevenueSdk()
-    }
-    factory {
-        RevenueSessionTimeDataSource(
-            settings = get<Settings>(qualifier(preferenceName)),
-        )
-    }
-    factory {
-        RevenueSessionRemoteConfig(
-            client = get(),
-            json = get(),
-        )
+        IsSessionUsageLimitReached { false }
     }
     factory<IsPremium> {
-        IsPremiumImpl(
-            revenueSdk = get(),
-            settings = get<Settings>(qualifier(preferenceName)),
-            analytics = get(),
-            revenueSessionTimeDataSource = get(),
-        )
+        IsPremium { true }
     }
-    single {
-        RevenueSession(
-            revenueSessionTimeDataSource = get(),
-            analytics = get(),
-            isPremium = get(),
-            revenueSdk = get(),
-        )
+    single<RevenueSession> {
+        EmptyRevenueSession()
     }
     factory<Purchase> {
-        PurchaseImpl(
-            revenueSdk = get(),
-        )
+        Purchase { throw NotImplementedError("Purchase is not implemented yet") }
     }
     factory<RestorePurchase> {
-        RestorePurchaseImpl(
-            revenueSdk = get(),
-        )
+        RestorePurchase { throw NotImplementedError("RestorePurchase is not implemented yet") }
     }
     factory<GetCurrentOffer> {
-        GetCurrentOfferImpl(
-            revenueSdk = get(),
-        )
+        GetCurrentOffer { throw NotImplementedError("GetCurrentOffer is not implemented yet") }
     }
 }
-
-internal expect fun Scope.createRevenueSdk(): RevenueSdk
