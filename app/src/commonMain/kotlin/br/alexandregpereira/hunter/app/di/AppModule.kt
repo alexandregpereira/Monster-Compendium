@@ -35,7 +35,7 @@ import br.alexandregpereira.hunter.monster.content.preview.di.featureMonsterCont
 import br.alexandregpereira.hunter.monster.event.monsterEventModule
 import br.alexandregpereira.hunter.monster.lore.detail.di.featureMonsterLoreDetailModule
 import br.alexandregpereira.hunter.monster.registration.di.featureMonsterRegistrationModule
-import br.alexandregpereira.hunter.revenue.di.revenueFeatureModule
+import br.alexandregpereira.hunter.paywall.di.revenueFeatureModule
 import br.alexandregpereira.hunter.search.di.featureSearchModule
 import br.alexandregpereira.hunter.settings.di.featureSettingsModule
 import br.alexandregpereira.hunter.shareContent.featureShareContentModule

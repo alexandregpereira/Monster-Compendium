@@ -33,9 +33,9 @@ import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEv
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.paywall.event.PaywallEvent
+import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsPremium
-import br.alexandregpereira.hunter.revenue.event.RevenueEvent
-import br.alexandregpereira.hunter.revenue.event.RevenueResult
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.state.MutableActionHandler
@@ -68,9 +68,9 @@ internal class SettingsStateHolder(
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
-    private val revenueEventDispatcher: EventDispatcher<RevenueEvent>,
+    private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
     private val isPremium: IsPremium,
-    private val revenueResultListener: EventListener<RevenueResult>,
+    private val paywallResultListener: EventListener<PaywallResult>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -83,8 +83,8 @@ internal class SettingsStateHolder(
             load()
         }.launchIn(scope)
 
-        revenueResultListener.events.onEach { result ->
-            if (result is RevenueResult.OnSubscribe) {
+        paywallResultListener.events.onEach { result ->
+            if (result is PaywallResult.OnSubscribe) {
                 load()
             }
         }.launchIn(scope)
@@ -209,7 +209,7 @@ internal class SettingsStateHolder(
     }
 
     override fun onSubscribePremiumClick() {
-        revenueEventDispatcher.dispatchEvent(RevenueEvent.ShowPaywall)
+        paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
     private fun load() {

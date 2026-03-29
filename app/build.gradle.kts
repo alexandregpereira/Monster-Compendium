@@ -67,7 +67,7 @@ multiplatform {
         implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
-        implementation(project(":feature:revenue:compose"))
+        implementation(project(":feature:paywall:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:share-content:compose"))

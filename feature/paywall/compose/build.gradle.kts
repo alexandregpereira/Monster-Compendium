@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -28,30 +27,23 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
+        implementation(project(":core:network"))
         implementation(project(":core:state-holder"))
-        implementation(project(":domain:monster:core"))
-        implementation(project(":domain:monster:event"))
-        implementation(project(":domain:settings:core"))
+        implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:revenue:core"))
-        implementation(project(":feature:share-content:event"))
-        implementation(project(":feature:monster-content-manager:event"))
-        implementation(project(":feature:sync:event"))
+        implementation(project(":feature:folder-detail:state-holder"))
         implementation(project(":feature:paywall:event"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
+        implementation(libs.multiplatform.settings)
     }
     jvmMain()
     iosMain()
 }
 
 androidLibrary {
-    namespace = "br.alexandregpereira.hunter.settings"
-}
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.settings.ui.resources"
-    generateResClass = always
+    namespace = "br.alexandregpereira.hunter.revenue"
 }

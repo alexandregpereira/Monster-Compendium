@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.folder.insert.FolderInsertFeature
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerFeature
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationFeature
-import br.alexandregpereira.hunter.revenue.PaywallFeature
+import br.alexandregpereira.hunter.paywall.PaywallFeature
 import br.alexandregpereira.hunter.settings.SettingsBottomSheets
 import br.alexandregpereira.hunter.shareContent.ShareContentExportMonsterFeature
 import br.alexandregpereira.hunter.shareContent.ShareContentImportFeature
