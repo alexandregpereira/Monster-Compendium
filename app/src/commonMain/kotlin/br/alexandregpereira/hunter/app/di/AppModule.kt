@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app.di
 
+import br.alexandregpereira.hunter.ads.di.adsFeatureModule
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.app.MainViewModel
@@ -55,6 +56,7 @@ internal fun KoinApplication.initKoinModules() {
     modules(dataModules(databaseName))
     modules(
         appModule,
+        adsFeatureModule,
         featureFolderDetailModule,
         featureFolderInsertModule,
         featureFolderListModule,

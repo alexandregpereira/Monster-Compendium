@@ -62,6 +62,7 @@ include ':domain:monster-lore:data'
 include ':domain:settings:data'
 include ':domain:spell:data'
 
+include ':feature:ads:compose'
 include ':feature:folder-detail:compose'
 include ':feature:folder-detail:event'
 include ':feature:folder-detail:state-holder'

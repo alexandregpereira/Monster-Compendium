@@ -59,6 +59,7 @@ multiplatform {
         implementation(project(":domain:monster:event"))
 
         implementation(project(":feature:folder-detail:compose"))
+        implementation(project(":feature:ads:compose"))
         implementation(project(":feature:folder-insert:compose"))
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
@@ -183,6 +184,12 @@ android {
 
         versionCode = appVersionCode
         versionName = appVersionName
+
+        val admobAppIdEnvVarName = "ADMOB_APP_ID"
+        val admobAppIdEnvVar = System.getenv(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
+        val admobAppIdPropVar = localProps.getProperty(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
+        val admobAppId = admobAppIdEnvVar ?: admobAppIdPropVar ?: "ca-app-pub-3940256099942544~3347511713"
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         if (hasProperty("dev")) {
             setProperty("archivesBaseName", "app-dev")

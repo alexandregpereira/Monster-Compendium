@@ -18,18 +18,15 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
-        implementation(project(":core:localization"))
-        implementation(project(":core:network"))
         implementation(project(":core:state-holder"))
-        implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:revenue:core"))
         implementation(project(":feature:paywall:event"))
         implementation(project(":ui:core"))
@@ -37,12 +34,14 @@ multiplatform {
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
-        implementation(libs.multiplatform.settings)
+    }
+    androidMain {
+        implementation(libs.play.services.ads)
     }
     jvmMain()
     iosMain()
 }
 
 androidLibrary {
-    namespace = "br.alexandregpereira.hunter.paywall"
+    namespace = "br.alexandregpereira.hunter.ads"
 }

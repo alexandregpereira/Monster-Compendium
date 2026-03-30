@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.app.MainViewEvent
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
@@ -30,19 +29,17 @@ import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 @Composable
 internal fun AppMainPortraitScreen(
     state: MainViewState,
-    contentPadding: PaddingValues,
-    onEvent: (MainViewEvent) -> Unit
-) = AppMainScreen(contentPadding) {
+    onEvent: (MainViewEvent) -> Unit,
+) = AppMainScreen {
     AppBottomNavigationTransition(
         bottomBarItemSelected = state.bottomBarItemSelected,
-        contentPadding = contentPadding,
         bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
         bottomBarItems = state.bottomBarItems,
         onClick = { onEvent(BottomNavigationItemClick(item = it)) },
     )
     Box {
-        MonsterDetailFeature(contentPadding = contentPadding)
-        MonsterDetailBottomSheets(contentPadding = contentPadding)
+        MonsterDetailFeature()
+        MonsterDetailBottomSheets()
     }
-    MonsterLoreDetailFeature(contentPadding = contentPadding)
+    MonsterLoreDetailFeature()
 }

@@ -105,7 +105,7 @@ fun AppScreen(
 @Composable
 fun AppFullScreen(
     isOpen: Boolean,
-    contentPaddingValues: PaddingValues = LocalAppContentPadding.current,
+    contentPaddingValues: PaddingValues = PaddingValues(),
     backgroundColor: Color = MaterialTheme.colors.surface,
     level: Int = 1,
     showCloseButton: Boolean = true,

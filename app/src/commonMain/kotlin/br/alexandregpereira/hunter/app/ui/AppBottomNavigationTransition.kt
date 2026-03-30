@@ -19,8 +19,6 @@ package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.app.AppConfig
@@ -37,12 +35,11 @@ import br.alexandregpereira.hunter.ui.compose.Window
 @Composable
 internal fun AppBottomNavigationTransition(
     bottomBarItemSelected: BottomBarItem?,
-    contentPadding: PaddingValues,
     bottomBarItemSelectedIndex: Int,
     bottomBarItems: List<BottomBarItem>,
     onClick: (BottomBarItem) -> Unit,
 ) {
-    Column(modifier = Modifier.padding(contentPadding)) {
+    Column {
         Window(Modifier.weight(1f)) {
             if (bottomBarItemSelected == null) return@Window
             Crossfade(

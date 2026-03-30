@@ -35,7 +35,7 @@ import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallEvent
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
-import br.alexandregpereira.hunter.revenue.IsPremium
+import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.state.MutableActionHandler
@@ -69,7 +69,7 @@ internal class SettingsStateHolder(
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
     private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
-    private val isPremium: IsPremium,
+    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
     private val paywallResultListener: EventListener<PaywallResult>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
@@ -217,7 +217,7 @@ internal class SettingsStateHolder(
             coroutineScope {
                 val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
                 val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
-                val isPremiumDeferred = async { isPremium() }
+                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
                 val newState = state.value.copy(
                     imageBaseUrl = imageBaseUrlDeferred.await(),
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
@@ -226,7 +226,7 @@ internal class SettingsStateHolder(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
                     ),
-                    shouldShowIsPremiumMenuItem = !isPremiumDeferred.await(),
+                    shouldShowIsPremiumMenuItem = isSessionUsageLimitReachedDeferred.await(),
                 )
                 emit(newState)
             }

@@ -44,7 +44,7 @@ val featureSettingsModule = module {
             monsterEventDispatcher = get(),
             shareContentEventDispatcher = get(),
             paywallEventDispatcher = get<PaywallEventDispatcher>(),
-            isPremium = get(),
+            isSessionUsageLimitReached = get(),
             paywallResultListener = get<PaywallResultDispatcher>(),
         )
     }

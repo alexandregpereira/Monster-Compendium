@@ -40,7 +40,6 @@ internal fun PaywallScreen(
     onComeBackToOffer: () -> Unit = {},
 ) = AppScreen(
     isOpen = state.isOpen,
-    contentPaddingValues = LocalAppContentPadding.current,
     swipeTriggerPercentage = 0.4f,
     showCloseButton = false,
     onClose = onClose,
