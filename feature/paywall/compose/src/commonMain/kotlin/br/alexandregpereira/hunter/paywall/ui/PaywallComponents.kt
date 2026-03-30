@@ -47,9 +47,9 @@ internal fun PaywallScrollableContent(
 ) {
     Spacer(modifier = Modifier.height(24.dp))
     PaywallTitle()
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(8.dp))
     PaywallDescription()
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(24.dp))
     PaywallFeaturesComparisonTable(features)
     Spacer(modifier = Modifier.height(24.dp))
 }
@@ -108,8 +108,9 @@ internal fun PaywallTitle() {
 internal fun PaywallDescription() {
     Text(
         text = strings.description,
-        fontSize = 14.sp,
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Light,
+        color = MaterialTheme.colors.onSurface,
         textAlign = TextAlign.Center,
         lineHeight = 20.sp,
     )

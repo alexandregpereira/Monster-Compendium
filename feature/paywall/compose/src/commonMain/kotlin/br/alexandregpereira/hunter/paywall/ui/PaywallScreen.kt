@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +22,6 @@ import br.alexandregpereira.hunter.paywall.PaywallState
 import br.alexandregpereira.hunter.ui.compose.AppScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
-import br.alexandregpereira.hunter.ui.compose.LocalAppContentPadding
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType
@@ -105,7 +105,7 @@ internal fun PaywallScreenContent(
             features = features,
         )
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         PaywallFooter(
             subscriptionOfferFormatted = subscriptionOfferFormatted,

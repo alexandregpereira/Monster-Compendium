@@ -31,6 +31,7 @@ val revenueFeatureModule = module {
             getCurrentOffer = get<GetCurrentOffer>(),
             restorePurchase = get(),
             appLocalization = get(),
+            analytics = get(),
         )
     }
     single {

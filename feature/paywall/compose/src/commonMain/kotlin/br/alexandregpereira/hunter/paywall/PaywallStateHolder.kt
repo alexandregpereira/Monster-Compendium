@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.paywall
 
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
@@ -32,6 +33,7 @@ internal class PaywallStateHolder(
     private val getCurrentOffer: GetCurrentOffer,
     private val restorePurchase: RestorePurchase,
     private val appLocalization: AppLocalization,
+    private val analytics: Analytics,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : UiModel<PaywallState>(initialState = PaywallState()) {
 
@@ -61,10 +63,12 @@ internal class PaywallStateHolder(
     }
 
     fun onSubscribe() {
+        analytics.track(eventName = "Paywall - subscribe clicked")
         setState { copy(isLoading = true, actionResultState = null) }
         scope.launch {
             try {
                 purchase(offerId = selectedOfferId)
+                analytics.track(eventName = "Paywall - subscribed")
                 changeToSuccessState(actionResultState = PaywallActionResultState.Success)
             } catch (cause: Throwable) {
                 if (cause is CancellationException){
@@ -72,16 +76,20 @@ internal class PaywallStateHolder(
                     throw cause
                 }
                 cause.printStackTrace()
+                analytics.logException(cause)
+                analytics.track(eventName = "Paywall - subscribe error")
                 setState { copy(isLoading = false, actionResultState = PaywallActionResultState.PurchaseError) }
             }
         }
     }
 
     fun onRestoreSubscription() {
+        analytics.track(eventName = "Paywall - restore purchase clicked")
         setState { copy(isLoading = true, actionResultState = null) }
         scope.launch {
             try {
                 restorePurchase()
+                analytics.track(eventName = "Paywall - subscription restored")
                 changeToSuccessState(actionResultState = PaywallActionResultState.Success)
             } catch (cause: Throwable) {
                 if (cause is CancellationException) {
@@ -89,20 +97,25 @@ internal class PaywallStateHolder(
                     throw cause
                 }
                 cause.printStackTrace()
+                analytics.logException(cause)
+                analytics.track(eventName = "Paywall - restore purchase error")
                 setState { copy(isLoading = false, actionResultState = PaywallActionResultState.RestorePurchaseError) }
             }
         }
     }
 
     fun onTryAgainLoadOffer() {
+        analytics.track(eventName = "Paywall - try again load offer clicked")
         loadOffer()
     }
 
     fun onTryAgainPurchase() {
+        analytics.track(eventName = "Paywall - try again purchase clicked")
         onSubscribe()
     }
 
     fun onComeBackToOffer() {
+        analytics.track(eventName = "Paywall - come back to offer clicked")
         setState { copy(actionResultState = null) }
     }
 
@@ -127,6 +140,7 @@ internal class PaywallStateHolder(
                         subscriptionOfferFormatted = subscriptionOfferFormatted,
                     )
                 }
+                analytics.track(eventName = "Paywall - offer loaded")
             } catch (cause: Throwable) {
                 if (cause is CancellationException) {
                     setState { copy(isLoading = false) }
@@ -150,6 +164,7 @@ internal class PaywallStateHolder(
     }
 
     private fun openPaywall() {
+        analytics.track(eventName = "Paywall - opened")
         val features = defaultFeatures(strings = state.value.strings)
         setState {
             copy(
@@ -163,6 +178,7 @@ internal class PaywallStateHolder(
     }
 
     private fun closePaywall() {
+        analytics.track(eventName = "Paywall - closed")
         setState { copy(isOpen = false) }
     }
 
@@ -171,6 +187,9 @@ internal class PaywallStateHolder(
     ) {
         paywallResultDispatcher.dispatchEvent(PaywallResult.OnSubscribe)
         setState { copy(isLoading = false, actionResultState = actionResultState) }
+        scope.launch {
+            settings.savePaywallWasClosedFlag(paywallWasClosed = true)
+        }
     }
 
     private fun defaultFeatures(

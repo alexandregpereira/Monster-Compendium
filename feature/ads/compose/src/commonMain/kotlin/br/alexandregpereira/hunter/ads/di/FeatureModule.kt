@@ -9,6 +9,7 @@ val adsFeatureModule = module {
         AdsStateHolder(
             isSessionUsageLimitReached = get(),
             paywallResultListener = get<PaywallResultDispatcher>(),
+            analytics = get(),
         )
     }
 }

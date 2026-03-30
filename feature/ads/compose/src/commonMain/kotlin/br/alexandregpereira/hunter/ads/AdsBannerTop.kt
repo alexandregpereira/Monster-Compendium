@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.LifecycleEventObserver
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import org.koin.compose.koinInject
 
@@ -28,9 +28,10 @@ fun AdsBannerTop(
     val stateHolder = koinInject<AdsStateHolder>()
     val state by stateHolder.state.collectAsState()
 
-    LaunchedEffect(stateHolder) {
-        stateHolder.onStart()
-    }
+    LifecycleEventObserver(
+        onStart = stateHolder::onStart,
+        onResume = stateHolder::checkUsageLimit,
+    )
 
     Column(
         modifier = modifier,
