@@ -17,11 +17,13 @@
 
 package br.alexandregpereira.hunter.revenue
 
+import kotlin.coroutines.cancellation.CancellationException
+
 internal interface RevenueSdk {
 
     fun initialize(apiKey: String)
 
-    @Throws(RevenueSdkException::class)
+    @Throws(RevenueSdkException::class, CancellationException::class)
     suspend fun isPremiumEnabled(): Boolean
 
     suspend fun purchase(offerId: String)

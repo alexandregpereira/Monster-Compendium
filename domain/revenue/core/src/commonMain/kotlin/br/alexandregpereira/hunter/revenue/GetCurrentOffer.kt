@@ -1,7 +1,9 @@
 package br.alexandregpereira.hunter.revenue
 
+import kotlin.coroutines.cancellation.CancellationException
+
 fun interface GetCurrentOffer {
-    @Throws(GetCurrentOfferException::class)
+    @Throws(GetCurrentOfferException::class, CancellationException::class)
     suspend operator fun invoke(): Offer
 }
 
