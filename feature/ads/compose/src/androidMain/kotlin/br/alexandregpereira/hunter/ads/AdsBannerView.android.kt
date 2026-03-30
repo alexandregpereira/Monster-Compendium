@@ -19,7 +19,7 @@ internal actual fun AdsBannerView() {
             val adWidthDp = (adWidthPixels / density).toInt()
 
             AdView(context).apply {
-                setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidthDp))
+                setAdSize(AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, adWidthDp))
                 adUnitId = "ca-app-pub-3940256099942544/9214589741" // Test ad unit ID
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
