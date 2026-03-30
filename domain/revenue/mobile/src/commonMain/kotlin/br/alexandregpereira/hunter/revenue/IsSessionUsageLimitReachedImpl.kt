@@ -18,16 +18,22 @@
 package br.alexandregpereira.hunter.revenue
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 
 internal class IsSessionUsageLimitReachedImpl internal constructor(
     private val isPremium: IsPremium,
     private val revenueSessionRemoteConfig: RevenueSessionRemoteConfig,
     private val revenueSessionTimeDataSource: RevenueSessionTimeDataSource,
     private val analytics: Analytics,
+    private val featureFlagProvider: FeatureFlagProvider,
 ) : IsSessionUsageLimitReached {
 
     override suspend operator fun invoke(): Boolean {
         if (isPremium()) {
+            return false
+        }
+
+        if (!featureFlagProvider.isFeatureEnabled(feature = "revenue")) {
             return false
         }
 

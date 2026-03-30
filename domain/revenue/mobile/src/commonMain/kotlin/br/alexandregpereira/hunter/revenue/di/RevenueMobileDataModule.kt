@@ -48,6 +48,7 @@ val revenueMobileDataModule get() = module {
             revenueSessionRemoteConfig = get(),
             revenueSessionTimeDataSource = get(),
             analytics = get(),
+            featureFlagProvider = get(),
         )
     }
     factory<RevenueSdk> {

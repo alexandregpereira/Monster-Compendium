@@ -1,5 +1,6 @@
 [versions]
 amplitude-android = "1.26.0"
+amplitude-experiment-android = "1.15.0"
 amplitude-jvm = "1.13.0"
 android_gradle_plugin = "8.10.0"
 android_lifecycle_compose = "2.10.0"
@@ -36,6 +37,7 @@ sqldelight = "1.5.5"
 
 [libraries]
 amplitude-android = { module = "com.amplitude:analytics-android", version.ref = "amplitude-android" }
+amplitude-experiment-android = { module = "com.amplitude:experiment-android-client", version.ref = "amplitude-experiment-android" }
 amplitude-jvm = { module = "com.amplitude:java-sdk", version.ref = "amplitude-jvm" }
 android-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "android_lifecycle_compose" }
 android-test-runner = { module = "androidx.test:runner", version.ref = "android_test_version" }

@@ -46,6 +46,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
@@ -122,8 +123,13 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         else -> ""
     }
 
+    val isSandboxBuild = project.hasProperty("dev") || isDebug
     // Read AMPLITUDE_API_KEY from environment, local.properties, or use empty string
-    val amplitudeApiKeyEnvVarName = "AMPLITUDE_API_KEY"
+    val amplitudeApiKeyEnvVarName = if (isSandboxBuild) {
+        "AMPLITUDE_SANDBOX_API_KEY"
+    } else {
+        "AMPLITUDE_API_KEY"
+    }
     val envVar = System.getenv(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val amplitudeApiKey = envVar ?: propVar ?: ""
@@ -134,7 +140,8 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     val revenueCatPropVarApiKey = localProps.getProperty(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val revenueCatApiKeyFinal = revenueCatEnvVarApiKey ?: revenueCatPropVarApiKey ?: ""
 
-    logger.quiet("Using Amplitude API Key: ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
+    val amplitudeKeyType = if (isSandboxBuild) "sandbox" else "production"
+    logger.quiet("Using Amplitude API Key ($amplitudeKeyType): ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)

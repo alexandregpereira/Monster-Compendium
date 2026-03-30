@@ -19,29 +19,20 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
-
 multiplatform {
     commonMain {
-        implementation(project(":core:analytics"))
-        implementation(project(":core:feature-flag"))
-        implementation(project(":domain:revenue:core"))
-        implementation(libs.multiplatform.settings)
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
-        implementation(libs.kotlin.serialization)
-        implementation(libs.ktor.core)
-        implementation(libs.revenuecat.kmp.core)
     }
     androidMain {
-        implementation(libs.ktor.jvm)
+        implementation(libs.amplitude.experiment.android)
     }
-    iosMain {
-        implementation(libs.ktor.darwin)
-    }
+    jvmMain()
+    iosMain()
 }
 
 android {
-    namespace = "br.alexandregpereira.hunter.revenue.mobile"
+    namespace = "br.alexandregpereira.hunter.featureFlag"
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()

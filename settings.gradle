@@ -31,6 +31,7 @@ include ':app'
 
 include ':core:analytics'
 include ':core:event'
+include ':core:feature-flag'
 include ':core:flow:test'
 include ':core:localization'
 include ':core:network'

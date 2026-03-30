@@ -22,24 +22,12 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(project(":core:analytics"))
         implementation(project(":domain:revenue:core"))
-        implementation(libs.multiplatform.settings)
         implementation(libs.koin.core)
-        implementation(libs.kotlin.coroutines.core)
-        implementation(libs.kotlin.serialization)
-        implementation(libs.ktor.core)
     }
-    androidMain {
-        implementation(libs.revenuecat.kmp.core)
-        implementation(libs.ktor.jvm)
-    }
-    jvmMain {
-        implementation(libs.ktor.jvm)
-    }
-    iosMain {
-        implementation(libs.ktor.darwin)
-    }
+    androidMain()
+    jvmMain()
+    iosMain()
 }
 
 android {
