@@ -15,18 +15,22 @@ internal interface PaywallStrings {
     val offerFormattedPrice: String
     val offerLoadErrorTitle: String
     val offerLoadErrorDescription: String
-    val offerLoadErrorTryAgain: String
+    val tryAgain: String
     val offerPeriodMonthly: String
     val offerPeriodYearly: String
     val offerPeriodWeekly: String
     val featureAccessToAllFeatures: String
     val featureNoAds: String
-    val featureFutureExclusiveContent: String
+    val purchaseErrorTitle: String
+    val purchaseErrorDescription: String
+    val comeBackToOffer: String
+    val restorePurchaseErrorTitle: String
+    val restorePurchaseErrorDescription: String
 }
 
 internal data class PaywallEnUsStrings(
-    override val title: String = "Subscribe to support the project",
-    override val description: String = "With your support we will continue to maintaining the project",
+    override val title: String = "Remove ads with Premium",
+    override val description: String = "By subscribing to the premium plan, you remove ads and help maintain the project",
     override val subscribeButton: String = "Subscribe",
     override val restoreButton: String = "Restore subscription",
     override val cancelAnytime: String = "Cancel anytime",
@@ -36,18 +40,22 @@ internal data class PaywallEnUsStrings(
     override val offerFormattedPrice: String = "Only {value}/{period}",
     override val offerLoadErrorTitle: String = "Offer unavailable",
     override val offerLoadErrorDescription: String = "An error occurred while loading the offer.",
-    override val offerLoadErrorTryAgain: String = "Try again",
+    override val tryAgain: String = "Try again",
     override val offerPeriodMonthly: String = "month",
     override val offerPeriodYearly: String = "year",
     override val offerPeriodWeekly: String = "week",
     override val featureAccessToAllFeatures: String = "Access to all features",
     override val featureNoAds: String = "No Ads",
-    override val featureFutureExclusiveContent: String = "Future exclusive content",
+    override val purchaseErrorTitle: String = "Subscription error",
+    override val purchaseErrorDescription: String = "An error occurred during the subscription process. Please try again.",
+    override val comeBackToOffer: String = "Come back to offer",
+    override val restorePurchaseErrorTitle: String = "Do you have an active subscription?",
+    override val restorePurchaseErrorDescription: String = "The restore subscription failed. Currently the subscription is only per device because we don't have a login yet (coming soon). Maybe you trying to restore in a different device?",
 ) : PaywallStrings
 
 internal data class PaywallPtBrStrings(
-    override val title: String = "Assine para apoiar o projeto",
-    override val description: String = "Com o seu apoio continuaremos mantendo o projeto",
+    override val title: String = "Remover anúncios com Premium",
+    override val description: String = "Ao assinar o plano premium, você remove os anúncios e ajuda a manter o projeto",
     override val subscribeButton: String = "Assinar",
     override val restoreButton: String = "Restaurar assinatura",
     override val cancelAnytime: String = "Cancele quando quiser",
@@ -57,13 +65,17 @@ internal data class PaywallPtBrStrings(
     override val offerFormattedPrice: String = "Apenas {value}/{period}",
     override val offerLoadErrorTitle: String = "Oferta indisponível",
     override val offerLoadErrorDescription: String = "Ocorreu um erro ao carregar a oferta.",
-    override val offerLoadErrorTryAgain: String = "Tentar novamente",
+    override val tryAgain: String = "Tentar novamente",
     override val offerPeriodMonthly: String = "mês",
     override val offerPeriodYearly: String = "ano",
     override val offerPeriodWeekly: String = "semana",
     override val featureAccessToAllFeatures: String = "Acesso a todos os recursos",
     override val featureNoAds: String = "Sem anúncios",
-    override val featureFutureExclusiveContent: String = "Futuro conteúdo exclusivo",
+    override val purchaseErrorTitle: String = "Erro na compra",
+    override val purchaseErrorDescription: String = "Ocorreu um erro durante o processo de compra. Por favor, tente novamente.",
+    override val comeBackToOffer: String = "Voltar para a oferta",
+    override val restorePurchaseErrorTitle: String = "Você tem uma assinatura ativa?",
+    override val restorePurchaseErrorDescription: String = "A restauração da assinatura falhou. Atualmente a assinatura é apenas por dispositivo porque ainda não temos um login (em breve). Talvez você esteja tentando restaurar em um dispositivo diferente?",
 ) : PaywallStrings
 
 internal fun PaywallStrings(): PaywallStrings = PaywallEnUsStrings()

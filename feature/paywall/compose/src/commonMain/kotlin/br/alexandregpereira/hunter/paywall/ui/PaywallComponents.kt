@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.paywall.PaywallFeatureState
-import br.alexandregpereira.hunter.paywall.PaywallOfferState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
 import br.alexandregpereira.hunter.ui.compose.AppButtonType
@@ -46,17 +45,18 @@ internal fun PaywallScrollableContent(
     modifier = modifier.verticalScroll(rememberScrollState()),
     horizontalAlignment = Alignment.CenterHorizontally,
 ) {
-    Spacer(modifier = Modifier.height(48.dp))
+    Spacer(modifier = Modifier.height(24.dp))
     PaywallTitle()
     Spacer(modifier = Modifier.height(16.dp))
     PaywallDescription()
     Spacer(modifier = Modifier.height(16.dp))
     PaywallFeaturesComparisonTable(features)
-    Spacer(modifier = Modifier.height(48.dp))
+    Spacer(modifier = Modifier.height(24.dp))
 }
+
 @Composable
 internal fun PaywallFooter(
-    offer: PaywallOfferState.Success,
+    subscriptionOfferFormatted: String,
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit,
@@ -65,7 +65,7 @@ internal fun PaywallFooter(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(16.dp),
 ) {
-    PaywallOffer(offer = offer.subscriptionOfferFormatted)
+    PaywallOffer(offer = subscriptionOfferFormatted)
     PaywallButtons(
         subscribe = subscribe,
         restore = restore,

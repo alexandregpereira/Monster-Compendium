@@ -3,6 +3,7 @@ package br.alexandregpereira.hunter.paywall.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -14,12 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.paywall.PaywallErrorState
 import br.alexandregpereira.hunter.paywall.PaywallFeatureState
-import br.alexandregpereira.hunter.paywall.PaywallOfferState
 import br.alexandregpereira.hunter.paywall.PaywallState
 import br.alexandregpereira.hunter.ui.compose.AppScreen
-import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.LocalAppContentPadding
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
@@ -35,40 +36,51 @@ internal fun PaywallScreen(
     subscribe: () -> Unit,
     restore: () -> Unit,
     onTryAgainLoadOffer: () -> Unit = {},
+    onTryAgainPurchase: () -> Unit = {},
+    onComeBackToOffer: () -> Unit = {},
 ) = AppScreen(
     isOpen = state.isOpen,
     contentPaddingValues = LocalAppContentPadding.current,
     swipeTriggerPercentage = 0.4f,
+    showCloseButton = false,
     onClose = onClose,
 ) {
-    LoadingScreen(isLoading = state.isLoading, fillMaxSize = false) {
-        when (state.offer) {
-            is PaywallOfferState.Success -> {
-                when (screenSizeType) {
-                    ScreenSizeType.Portrait -> PaywallScreenContent(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        features = state.features,
-                        offer = state.offer,
-                        subscribe = subscribe,
-                        restore = restore,
-                    )
-                    ScreenSizeType.LandscapeCompact,
-                    ScreenSizeType.LandscapeExpanded -> PaywallLandscapeScreenContent(
-                        modifier = Modifier,
-                        features = state.features,
-                        offer = state.offer,
-                        subscribe = subscribe,
-                        restore = restore,
-                    )
-                }
-            }
-            is PaywallOfferState.UnknownError -> {
-                EmptyScreenMessageContent(
-                    title = strings.offerLoadErrorTitle,
-                    description = strings.offerLoadErrorDescription,
-                    buttonText = strings.offerLoadErrorTryAgain,
-                    onButtonClick = onTryAgainLoadOffer,
-                    modifier = Modifier.padding(horizontal = 32.dp),
+    val isLoading = state.isLoading
+    val errorState = state.errorState
+    val loadingScreenState = remember(isLoading, errorState) {
+        when {
+            isLoading -> LoadingScreenState.LoadingScreen
+            errorState != null -> LoadingScreenState.Error(errorState)
+            else -> LoadingScreenState.Success
+        }
+    }
+    LoadingScreen<PaywallErrorState>(
+        state = loadingScreenState,
+        fillMaxSize = false,
+        errorContent = { errorState ->
+            PaywallErrorStateScreen(
+                errorState = errorState,
+                onTryAgainLoadOffer = onTryAgainLoadOffer,
+                onTryAgainPurchase = onTryAgainPurchase,
+                onComeBackToOffer = onComeBackToOffer,
+            )
+        }
+    ) {
+        if (state.errorState == null) {
+            when (screenSizeType) {
+                ScreenSizeType.Portrait -> PaywallScreenContent(
+                    features = state.features,
+                    subscriptionOfferFormatted = state.subscriptionOfferFormatted,
+                    subscribe = subscribe,
+                    restore = restore,
+                )
+
+                ScreenSizeType.LandscapeCompact,
+                ScreenSizeType.LandscapeExpanded -> PaywallLandscapeScreenContent(
+                    features = state.features,
+                    subscriptionOfferFormatted = state.subscriptionOfferFormatted,
+                    subscribe = subscribe,
+                    restore = restore,
                 )
             }
         }
@@ -78,7 +90,7 @@ internal fun PaywallScreen(
 @Composable
 internal fun PaywallScreenContent(
     features: ImmutableList<PaywallFeatureState>,
-    offer: PaywallOfferState.Success,
+    subscriptionOfferFormatted: String = "",
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit = {},
@@ -93,10 +105,13 @@ internal fun PaywallScreenContent(
             features = features,
         )
 
+        Spacer(modifier = Modifier.padding(8.dp))
+
         PaywallFooter(
-            offer = offer,
+            subscriptionOfferFormatted = subscriptionOfferFormatted,
             subscribe = subscribe,
             restore = restore,
+            modifier = Modifier.padding(bottom = 16.dp),
         )
     }
 }
@@ -104,7 +119,7 @@ internal fun PaywallScreenContent(
 @Composable
 internal fun PaywallLandscapeScreenContent(
     features: ImmutableList<PaywallFeatureState>,
-    offer: PaywallOfferState.Success,
+    subscriptionOfferFormatted: String,
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit = {},
@@ -121,7 +136,7 @@ internal fun PaywallLandscapeScreenContent(
         )
         PaywallFooter(
             modifier = Modifier.weight(.4f),
-            offer = offer,
+            subscriptionOfferFormatted = subscriptionOfferFormatted,
             subscribe = subscribe,
             restore = restore,
         )
@@ -152,31 +167,11 @@ private fun PaywallScreenPreview() = PreviewWindow {
                     isPremium = false,
                 ),
             ),
-            offer = PaywallOfferState.Success(
-                subscriptionOfferFormatted = "$9.99 / month",
-            ),
+            subscriptionOfferFormatted = "$9.99 / month",
         ),
         screenSizeType = ScreenSizeType.Portrait,
         onClose = { isLoading = false },
         subscribe = { isLoading = true},
-        restore = {},
-    )
-}
-
-@Preview(
-    showBackground = true,
-)
-@Composable
-private fun PaywallScreenErrorPreview() = PreviewWindow {
-    PaywallScreen(
-        state = PaywallState(
-            isOpen = true,
-            features = persistentListOf(),
-            offer = PaywallOfferState.UnknownError,
-        ),
-        screenSizeType = ScreenSizeType.Portrait,
-        onClose = {},
-        subscribe = {},
         restore = {},
     )
 }
@@ -205,9 +200,7 @@ private fun PaywallLandscapeScreenPreview() = PreviewWindow {
                     isPremium = false,
                 ),
             ),
-            offer = PaywallOfferState.Success(
-                subscriptionOfferFormatted = "$9.99 / month",
-            ),
+            subscriptionOfferFormatted = "$9.99 / month",
         ),
         screenSizeType = ScreenSizeType.LandscapeExpanded,
         onClose = {},

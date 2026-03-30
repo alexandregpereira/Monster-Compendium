@@ -7,19 +7,18 @@ internal data class PaywallState(
     val isOpen: Boolean = false,
     val isLoading: Boolean = false,
     val features: ImmutableList<PaywallFeatureState> = persistentListOf(),
-    val offer: PaywallOfferState = PaywallOfferState.Success(),
+    val subscriptionOfferFormatted: String = "",
     val strings: PaywallStrings = PaywallStrings(),
+    val errorState: PaywallErrorState? = null,
 )
-
-internal sealed class PaywallOfferState {
-    data class Success(
-        val subscriptionOfferFormatted: String = "",
-    ) : PaywallOfferState()
-
-    data object UnknownError : PaywallOfferState()
-}
 
 internal data class PaywallFeatureState(
     val name: String = "",
     val isPremium: Boolean = false,
 )
+
+internal sealed class PaywallErrorState {
+    data object GetCurrentOfferError : PaywallErrorState()
+    data object PurchaseError : PaywallErrorState()
+    data object RestorePurchaseError : PaywallErrorState()
+}

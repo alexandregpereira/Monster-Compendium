@@ -53,45 +53,59 @@ internal class PaywallStateHolder(
     }
 
     fun onClose() {
-        setState { copy(isOpen = false) }
+        closePaywall()
         loadOfferJob?.cancel()
         scope.launch {
             settings.savePaywallWasClosedFlag(
-                paywallWasClosed = state.value.offer is PaywallOfferState.Success
+                paywallWasClosed = state.value.errorState == null,
             )
         }
     }
 
     fun onSubscribe() {
-        setState { copy(isLoading = true) }
+        setState { copy(isLoading = true, errorState = null) }
         scope.launch {
             try {
                 purchase(offerId = selectedOfferId)
                 closeAndDispatchSubscribeResult()
             } catch (cause: Throwable) {
-                setState { copy(isLoading = false) }
-                if (cause is CancellationException) throw cause
+                if (cause is CancellationException){
+                    setState { copy(isLoading = false) }
+                    throw cause
+                }
                 cause.printStackTrace()
+                setState { copy(isLoading = false, errorState = PaywallErrorState.PurchaseError) }
             }
         }
     }
 
     fun onRestoreSubscription() {
-        setState { copy(isLoading = true) }
+        setState { copy(isLoading = true, errorState = null) }
         scope.launch {
             try {
                 restorePurchase()
                 closeAndDispatchSubscribeResult()
             } catch (cause: Throwable) {
-                setState { copy(isLoading = false) }
-                if (cause is CancellationException) throw cause
+                if (cause is CancellationException) {
+                    setState { copy(isLoading = false) }
+                    throw cause
+                }
                 cause.printStackTrace()
+                setState { copy(isLoading = false, errorState = PaywallErrorState.RestorePurchaseError) }
             }
         }
     }
 
     fun onTryAgainLoadOffer() {
         loadOffer()
+    }
+
+    fun onTryAgainPurchase() {
+        onSubscribe()
+    }
+
+    fun onComeBackToOffer() {
+        setState { copy(errorState = null) }
     }
 
     private fun loadOffer() {
@@ -112,18 +126,19 @@ internal class PaywallStateHolder(
                         .replace("{period}", subscriptionPeriod)
                     copy(
                         isLoading = false,
-                        offer = PaywallOfferState.Success(
-                            subscriptionOfferFormatted = subscriptionOfferFormatted,
-                        ),
+                        subscriptionOfferFormatted = subscriptionOfferFormatted,
                     )
                 }
             } catch (cause: Throwable) {
-                if (cause is CancellationException) throw cause
+                if (cause is CancellationException) {
+                    setState { copy(isLoading = false) }
+                    throw cause
+                }
                 cause.printStackTrace()
                 setState {
                     copy(
                         isLoading = false,
-                        offer = PaywallOfferState.UnknownError,
+                        errorState = PaywallErrorState.GetCurrentOfferError,
                     )
                 }
             }
@@ -138,12 +153,16 @@ internal class PaywallStateHolder(
 
     private fun openPaywall() {
         val features = defaultFeatures(strings = state.value.strings)
-        setState { copy(isOpen = true, features = features) }
+        setState { copy(isOpen = true, features = features, errorState = null) }
         loadOffer()
     }
 
-    private fun closeAndDispatchSubscribeResult() {
+    private fun closePaywall() {
         setState { copy(isOpen = false) }
+    }
+
+    private fun closeAndDispatchSubscribeResult() {
+        closePaywall()
         paywallResultDispatcher.dispatchEvent(PaywallResult.OnSubscribe)
     }
 
@@ -156,10 +175,6 @@ internal class PaywallStateHolder(
         ),
         PaywallFeatureState(
             name = strings.featureNoAds,
-            isPremium = true,
-        ),
-        PaywallFeatureState(
-            name = strings.featureFutureExclusiveContent,
             isPremium = true,
         ),
     )

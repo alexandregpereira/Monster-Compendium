@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 fun EmptyScreenMessage(
@@ -38,15 +39,19 @@ fun EmptyScreenMessage(
     modifier: Modifier = Modifier,
     description: String = "",
     buttonText: String = "",
-    onButtonClick: () -> Unit = {}
+    secondaryButtonText: String = "",
+    onButtonClick: () -> Unit = {},
+    onSecondaryButtonClick: () -> Unit = {},
 ) = Window {
     Box(modifier = Modifier.fillMaxSize()) {
         EmptyScreenMessageContent(
             title = title,
             description = description,
             buttonText = buttonText,
+            secondaryButtonText = secondaryButtonText,
             onButtonClick = onButtonClick,
-            modifier = modifier.align(Alignment.Center),
+            onSecondaryButtonClick = onSecondaryButtonClick,
+            modifier = modifier.align(Alignment.Center).padding(16.dp)
         )
     }
 }
@@ -57,11 +62,11 @@ fun EmptyScreenMessageContent(
     modifier: Modifier = Modifier,
     description: String = "",
     buttonText: String = "",
-    onButtonClick: () -> Unit = {}
+    secondaryButtonText: String = "",
+    onButtonClick: () -> Unit = {},
+    onSecondaryButtonClick: () -> Unit = {},
 ) {
-    Column(
-        modifier.padding(16.dp)
-    ) {
+    Column(modifier) {
         Text(
             text = title,
             fontWeight = FontWeight.Bold,
@@ -87,12 +92,21 @@ fun EmptyScreenMessageContent(
                 modifier = Modifier.padding(top = 24.dp)
             )
         }
+
+        secondaryButtonText.takeIf { it.isNotBlank() }?.let {
+            AppButton(
+                text = it,
+                isPrimary = false,
+                onClick = onSecondaryButtonClick,
+                modifier = Modifier.padding(top = 12.dp)
+            )
+        }
     }
 }
 
 @Preview
 @Composable
-private fun EmptyScreenPreview() {
+private fun EmptyScreenPreview() = HunterTheme {
     EmptyScreenMessage(
         title = "No Internet Connection",
         description = "Try something before trying again",
@@ -102,7 +116,18 @@ private fun EmptyScreenPreview() {
 
 @Preview
 @Composable
-private fun EmptyScreenPreview2() {
+private fun EmptyScreenPreview5() = HunterTheme {
+    EmptyScreenMessage(
+        title = "No Internet Connection",
+        description = "Try something before trying again",
+        buttonText = "Try Again",
+        secondaryButtonText = "Contact Support"
+    )
+}
+
+@Preview
+@Composable
+private fun EmptyScreenPreview2() = HunterTheme {
     EmptyScreenMessage(
         title = "No Internet Connection",
         description = "Try something before trying again",
@@ -111,7 +136,7 @@ private fun EmptyScreenPreview2() {
 
 @Preview
 @Composable
-private fun EmptyScreenPreview3() {
+private fun EmptyScreenPreview3() = HunterTheme {
     EmptyScreenMessage(
         title = "No Internet Connection",
         buttonText = "Try Again"
@@ -120,7 +145,7 @@ private fun EmptyScreenPreview3() {
 
 @Preview
 @Composable
-private fun EmptyScreenPreview4() {
+private fun EmptyScreenPreview4() = HunterTheme {
     EmptyScreenMessage(
         title = "No Internet Connection",
     )

@@ -25,6 +25,8 @@ fun PaywallFeature() {
             subscribe = stateHolder::onSubscribe,
             restore = stateHolder::onRestoreSubscription,
             onTryAgainLoadOffer = stateHolder::onTryAgainLoadOffer,
+            onTryAgainPurchase = stateHolder::onTryAgainPurchase,
+            onComeBackToOffer = stateHolder::onComeBackToOffer,
         )
     }
 }

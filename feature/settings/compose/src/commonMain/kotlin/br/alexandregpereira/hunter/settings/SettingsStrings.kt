@@ -60,7 +60,7 @@ internal data class SettingsEnStrings(
     override val imageContentScaleFit: String = "Show entire image",
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
-    override val subscribePremium: String = "Subscribe to Premium",
+    override val subscribePremium: String = "Remove ads with Premium",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -82,7 +82,7 @@ internal data class SettingsPtStrings(
     override val imageContentScaleFit: String = "Mostrar imagem inteira",
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
-    override val subscribePremium: String = "Assinar Premium",
+    override val subscribePremium: String = "Remover anúncios com Premium",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {
