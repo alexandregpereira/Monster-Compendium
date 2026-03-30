@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.paywall.PaywallErrorState
+import br.alexandregpereira.hunter.paywall.PaywallActionResultState
 import br.alexandregpereira.hunter.paywall.PaywallFeatureState
 import br.alexandregpereira.hunter.paywall.PaywallState
 import br.alexandregpereira.hunter.ui.compose.AppScreen
@@ -46,7 +46,7 @@ internal fun PaywallScreen(
     onClose = onClose,
 ) {
     val isLoading = state.isLoading
-    val errorState = state.errorState
+    val errorState = state.actionResultState
     val loadingScreenState = remember(isLoading, errorState) {
         when {
             isLoading -> LoadingScreenState.LoadingScreen
@@ -54,19 +54,20 @@ internal fun PaywallScreen(
             else -> LoadingScreenState.Success
         }
     }
-    LoadingScreen<PaywallErrorState>(
+    LoadingScreen<PaywallActionResultState>(
         state = loadingScreenState,
         fillMaxSize = false,
         errorContent = { errorState ->
-            PaywallErrorStateScreen(
+            PaywallActionResultScreen(
                 errorState = errorState,
                 onTryAgainLoadOffer = onTryAgainLoadOffer,
                 onTryAgainPurchase = onTryAgainPurchase,
                 onComeBackToOffer = onComeBackToOffer,
+                onCloseClick = onClose,
             )
         }
     ) {
-        if (state.errorState == null) {
+        if (state.actionResultState == null) {
             when (screenSizeType) {
                 ScreenSizeType.Portrait -> PaywallScreenContent(
                     features = state.features,

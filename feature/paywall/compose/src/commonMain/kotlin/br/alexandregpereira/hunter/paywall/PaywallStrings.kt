@@ -26,6 +26,9 @@ internal interface PaywallStrings {
     val comeBackToOffer: String
     val restorePurchaseErrorTitle: String
     val restorePurchaseErrorDescription: String
+    val subscriptionSuccessTitle: String
+    val subscriptionSuccessDescription: String
+    val buttonContinue: String
 }
 
 internal data class PaywallEnUsStrings(
@@ -51,6 +54,9 @@ internal data class PaywallEnUsStrings(
     override val comeBackToOffer: String = "Come back to offer",
     override val restorePurchaseErrorTitle: String = "Do you have an active subscription?",
     override val restorePurchaseErrorDescription: String = "The restore subscription failed. Currently the subscription is only per device because we don't have a login yet (coming soon). Maybe you trying to restore in a different device?",
+    override val subscriptionSuccessTitle: String = "You are a Premium member now!",
+    override val subscriptionSuccessDescription: String = "Thank you for subscribe! You can now enjoy all the features of the app with no ads.",
+    override val buttonContinue: String = "Continue",
 ) : PaywallStrings
 
 internal data class PaywallPtBrStrings(
@@ -76,6 +82,9 @@ internal data class PaywallPtBrStrings(
     override val comeBackToOffer: String = "Voltar para a oferta",
     override val restorePurchaseErrorTitle: String = "Você tem uma assinatura ativa?",
     override val restorePurchaseErrorDescription: String = "A restauração da assinatura falhou. Atualmente a assinatura é apenas por dispositivo porque ainda não temos um login (em breve). Talvez você esteja tentando restaurar em um dispositivo diferente?",
+    override val subscriptionSuccessTitle: String = "Você é um membro Premium agora!",
+    override val subscriptionSuccessDescription: String = "Obrigado por assinar! Agora você pode aproveitar todos os recursos do aplicativo sem anúncios.",
+    override val buttonContinue: String = "Continuar",
 ) : PaywallStrings
 
 internal fun PaywallStrings(): PaywallStrings = PaywallEnUsStrings()

@@ -19,13 +19,20 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,11 +47,13 @@ fun EmptyScreenMessage(
     description: String = "",
     buttonText: String = "",
     secondaryButtonText: String = "",
+    icon: ImageVector? = null,
     onButtonClick: () -> Unit = {},
     onSecondaryButtonClick: () -> Unit = {},
 ) = Window {
     Box(modifier = Modifier.fillMaxSize()) {
         EmptyScreenMessageContent(
+            icon = icon,
             title = title,
             description = description,
             buttonText = buttonText,
@@ -63,10 +72,23 @@ fun EmptyScreenMessageContent(
     description: String = "",
     buttonText: String = "",
     secondaryButtonText: String = "",
+    icon: ImageVector? = null,
     onButtonClick: () -> Unit = {},
     onSecondaryButtonClick: () -> Unit = {},
 ) {
-    Column(modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        icon?.let {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(92.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
         Text(
             text = title,
             fontWeight = FontWeight.Bold,
@@ -108,6 +130,17 @@ fun EmptyScreenMessageContent(
 @Composable
 private fun EmptyScreenPreview() = HunterTheme {
     EmptyScreenMessage(
+        title = "No Internet Connection",
+        description = "Try something before trying again",
+        buttonText = "Try Again"
+    )
+}
+
+@Preview
+@Composable
+private fun EmptyScreenPreview6() = HunterTheme {
+    EmptyScreenMessage(
+        icon = Icons.Filled.CheckCircle,
         title = "No Internet Connection",
         description = "Try something before trying again",
         buttonText = "Try Again"

@@ -9,7 +9,7 @@ internal data class PaywallState(
     val features: ImmutableList<PaywallFeatureState> = persistentListOf(),
     val subscriptionOfferFormatted: String = "",
     val strings: PaywallStrings = PaywallStrings(),
-    val errorState: PaywallErrorState? = null,
+    val actionResultState: PaywallActionResultState? = null,
 )
 
 internal data class PaywallFeatureState(
@@ -17,8 +17,9 @@ internal data class PaywallFeatureState(
     val isPremium: Boolean = false,
 )
 
-internal sealed class PaywallErrorState {
-    data object GetCurrentOfferError : PaywallErrorState()
-    data object PurchaseError : PaywallErrorState()
-    data object RestorePurchaseError : PaywallErrorState()
+internal sealed class PaywallActionResultState {
+    data object Success : PaywallActionResultState()
+    data object GetCurrentOfferError : PaywallActionResultState()
+    data object PurchaseError : PaywallActionResultState()
+    data object RestorePurchaseError : PaywallActionResultState()
 }

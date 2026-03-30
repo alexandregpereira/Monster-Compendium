@@ -31,11 +31,9 @@ internal class PaywallStateHolder(
     private val purchase: Purchase,
     private val getCurrentOffer: GetCurrentOffer,
     private val restorePurchase: RestorePurchase,
-    appLocalization: AppLocalization,
+    private val appLocalization: AppLocalization,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
-) : UiModel<PaywallState>(initialState = PaywallState(
-    strings = appLocalization.getPaywallStrings())
-) {
+) : UiModel<PaywallState>(initialState = PaywallState()) {
 
     private var loadOfferJob: Job? = null
     private var selectedOfferId: String = ""
@@ -57,41 +55,41 @@ internal class PaywallStateHolder(
         loadOfferJob?.cancel()
         scope.launch {
             settings.savePaywallWasClosedFlag(
-                paywallWasClosed = state.value.errorState == null,
+                paywallWasClosed = state.value.actionResultState == null,
             )
         }
     }
 
     fun onSubscribe() {
-        setState { copy(isLoading = true, errorState = null) }
+        setState { copy(isLoading = true, actionResultState = null) }
         scope.launch {
             try {
                 purchase(offerId = selectedOfferId)
-                closeAndDispatchSubscribeResult()
+                changeToSuccessState(actionResultState = PaywallActionResultState.Success)
             } catch (cause: Throwable) {
                 if (cause is CancellationException){
                     setState { copy(isLoading = false) }
                     throw cause
                 }
                 cause.printStackTrace()
-                setState { copy(isLoading = false, errorState = PaywallErrorState.PurchaseError) }
+                setState { copy(isLoading = false, actionResultState = PaywallActionResultState.PurchaseError) }
             }
         }
     }
 
     fun onRestoreSubscription() {
-        setState { copy(isLoading = true, errorState = null) }
+        setState { copy(isLoading = true, actionResultState = null) }
         scope.launch {
             try {
                 restorePurchase()
-                closeAndDispatchSubscribeResult()
+                changeToSuccessState(actionResultState = PaywallActionResultState.Success)
             } catch (cause: Throwable) {
                 if (cause is CancellationException) {
                     setState { copy(isLoading = false) }
                     throw cause
                 }
                 cause.printStackTrace()
-                setState { copy(isLoading = false, errorState = PaywallErrorState.RestorePurchaseError) }
+                setState { copy(isLoading = false, actionResultState = PaywallActionResultState.RestorePurchaseError) }
             }
         }
     }
@@ -105,7 +103,7 @@ internal class PaywallStateHolder(
     }
 
     fun onComeBackToOffer() {
-        setState { copy(errorState = null) }
+        setState { copy(actionResultState = null) }
     }
 
     private fun loadOffer() {
@@ -138,7 +136,7 @@ internal class PaywallStateHolder(
                 setState {
                     copy(
                         isLoading = false,
-                        errorState = PaywallErrorState.GetCurrentOfferError,
+                        actionResultState = PaywallActionResultState.GetCurrentOfferError,
                     )
                 }
             }
@@ -153,7 +151,14 @@ internal class PaywallStateHolder(
 
     private fun openPaywall() {
         val features = defaultFeatures(strings = state.value.strings)
-        setState { copy(isOpen = true, features = features, errorState = null) }
+        setState {
+            copy(
+                isOpen = true,
+                features = features,
+                actionResultState = null,
+                strings = appLocalization.getPaywallStrings(),
+            )
+        }
         loadOffer()
     }
 
@@ -161,9 +166,11 @@ internal class PaywallStateHolder(
         setState { copy(isOpen = false) }
     }
 
-    private fun closeAndDispatchSubscribeResult() {
-        closePaywall()
+    private fun changeToSuccessState(
+        actionResultState: PaywallActionResultState,
+    ) {
         paywallResultDispatcher.dispatchEvent(PaywallResult.OnSubscribe)
+        setState { copy(isLoading = false, actionResultState = actionResultState) }
     }
 
     private fun defaultFeatures(
