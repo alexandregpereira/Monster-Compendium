@@ -53,9 +53,9 @@ internal data class PaywallEnUsStrings(
     override val purchaseErrorDescription: String = "An error occurred during the subscription process. Please try again.",
     override val comeBackToOffer: String = "Come back to offer",
     override val restorePurchaseErrorTitle: String = "Do you have an active subscription?",
-    override val restorePurchaseErrorDescription: String = "The restore subscription failed. Currently the subscription is only per device because we don't have a login yet (coming soon). Maybe you trying to restore in a different device?",
+    override val restorePurchaseErrorDescription: String = "The restore subscription failed. Currently the subscription is only per device because we don't have a login yet (coming soon). Maybe you're trying to restore on a different device?",
     override val subscriptionSuccessTitle: String = "You are a Premium member now!",
-    override val subscriptionSuccessDescription: String = "Thank you for subscribe! You can now enjoy all the features of the app with no ads.",
+    override val subscriptionSuccessDescription: String = "Thank you for subscribing! You can now enjoy all the features of the app with no ads.",
     override val buttonContinue: String = "Continue",
 ) : PaywallStrings
 
