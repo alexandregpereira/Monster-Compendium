@@ -8,7 +8,7 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import org.koin.dsl.module
 
-val revenueFeatureModule = module {
+val paywallFeatureModule = module {
     factory {
         ShouldShowPaywall(
             isSessionUsageLimitReached = get(),
