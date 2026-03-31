@@ -46,17 +46,21 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
+        implementation(project(":domain:revenue:core"))
+        implementation(project(":domain:revenue:data"))
         implementation(project(":domain:sync:core"))
 
         implementation(project(":feature:share-content:event"))
         implementation(project(":domain:monster:event"))
 
         implementation(project(":feature:folder-detail:compose"))
+        implementation(project(":feature:ads:compose"))
         implementation(project(":feature:folder-insert:compose"))
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
@@ -65,6 +69,7 @@ multiplatform {
         implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
+        implementation(project(":feature:paywall:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:share-content:compose"))
@@ -118,18 +123,31 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         else -> ""
     }
 
+    val isSandboxBuild = project.hasProperty("dev") || isDebug
     // Read AMPLITUDE_API_KEY from environment, local.properties, or use empty string
-    val amplitudeApiKeyEnvVarName = "AMPLITUDE_API_KEY"
+    val amplitudeApiKeyEnvVarName = if (isSandboxBuild) {
+        "AMPLITUDE_SANDBOX_API_KEY"
+    } else {
+        "AMPLITUDE_API_KEY"
+    }
     val envVar = System.getenv(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
     val amplitudeApiKey = envVar ?: propVar ?: ""
 
-    logger.quiet("Using Amplitude API Key: ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
+    // Read REVENUE_CAT_API_KEY from environment or use empty string
+    val revenueCatApiKeyEnvVarName = "REVENUE_CAT_API_KEY"
+    val revenueCatEnvVarApiKey = System.getenv(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val revenueCatPropVarApiKey = localProps.getProperty(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
+    val revenueCatApiKeyFinal = revenueCatEnvVarApiKey ?: revenueCatPropVarApiKey ?: ""
+
+    val amplitudeKeyType = if (isSandboxBuild) "sandbox" else "production"
+    logger.quiet("Using Amplitude API Key ($amplitudeKeyType): ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
     taskVersionNameSuffix.set(versionNameSuffix)
     taskAmplitudeApiKey.set(amplitudeApiKey)
+    taskRevenueCatApiKey.set(revenueCatApiKeyFinal)
 }
 
 kotlin {
@@ -173,6 +191,12 @@ android {
 
         versionCode = appVersionCode
         versionName = appVersionName
+
+        val admobAppIdEnvVarName = "ADMOB_APP_ID"
+        val admobAppIdEnvVar = System.getenv(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
+        val admobAppIdPropVar = localProps.getProperty(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
+        val admobAppId = admobAppIdEnvVar ?: admobAppIdPropVar ?: "ca-app-pub-3940256099942544~3347511713"
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         if (hasProperty("dev")) {
             setProperty("archivesBaseName", "app-dev")

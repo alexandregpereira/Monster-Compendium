@@ -17,9 +17,11 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -28,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Error
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState.Success
 
@@ -37,12 +38,14 @@ fun LoadingScreen(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
     showCircularLoading: Boolean = true,
+    fillMaxSize: Boolean = true,
     content: @Composable () -> Unit
 ) {
     LoadingScreen<Unit>(
         state = if (isLoading) LoadingScreen else Success,
         modifier = modifier,
         showCircularLoading = showCircularLoading,
+        fillMaxSize = fillMaxSize,
         content = content
     )
 }
@@ -52,14 +55,20 @@ inline fun <reified ErrorState> LoadingScreen(
     state: LoadingScreenState,
     modifier: Modifier = Modifier,
     showCircularLoading: Boolean = true,
+    fillMaxSize: Boolean = true,
     crossinline errorContent: @Composable (ErrorState) -> Unit = {},
     crossinline content: @Composable () -> Unit
 ) {
-    Crossfade(targetState = state, modifier = modifier) {
-        when (it) {
-            LoadingScreen -> LoadingIndicator(showCircularLoading)
+    AnimatedContent(
+        targetState = state,
+        modifier = modifier,
+        contentAlignment = Alignment.BottomStart,
+        label = "LoadingScreen",
+    ) { animationState: LoadingScreenState ->
+        when (animationState) {
+            LoadingScreen -> LoadingIndicator(showCircularLoading, fillMaxSize = fillMaxSize)
             Success -> content()
-            is Error<*> -> if (it.errorState is ErrorState) errorContent(it.errorState)
+            is LoadingScreenState.Error<*> -> if (animationState.errorState is ErrorState) errorContent(animationState.errorState)
         }
     }
 }
@@ -73,10 +82,17 @@ sealed class LoadingScreenState {
 @Composable
 fun LoadingIndicator(
     showCircularLoading: Boolean = true,
+    fillMaxSize: Boolean = true,
     size: Dp = 40.dp
 ) = Box(
     contentAlignment = Alignment.Center,
-    modifier = Modifier.fillMaxSize()
+    modifier = Modifier.then(
+        if (fillMaxSize) {
+            Modifier.fillMaxSize()
+        } else {
+            Modifier.fillMaxWidth().defaultMinSize(minHeight = size * 5)
+        }
+    )
 ) {
     if (showCircularLoading) {
         CircularProgressIndicator(

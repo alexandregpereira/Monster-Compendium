@@ -18,7 +18,6 @@
 package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,15 +33,13 @@ import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
 @Composable
 internal fun AppMainLandscapeScreen(
     state: MainViewState,
-    contentPadding: PaddingValues,
     leftPanelFraction: Float = 0.7f,
     onEvent: (MainViewEvent) -> Unit
-) = AppMainScreen(contentPadding) {
+) = AppMainScreen {
     Row(Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxHeight().weight(leftPanelFraction)) {
             AppBottomNavigationTransition(
                 bottomBarItemSelected = state.bottomBarItemSelected,
-                contentPadding = contentPadding,
                 bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
                 bottomBarItems = state.bottomBarItems,
                 onClick = { onEvent(BottomNavigationItemClick(item = it)) },
@@ -50,9 +47,9 @@ internal fun AppMainLandscapeScreen(
         }
 
         Box(Modifier.fillMaxHeight().weight(1 - leftPanelFraction)) {
-            MonsterDetailFeature(contentPadding = contentPadding)
-            MonsterLoreDetailFeature(contentPadding = contentPadding)
+            MonsterDetailFeature()
+            MonsterLoreDetailFeature()
         }
     }
-    MonsterDetailBottomSheets(contentPadding = contentPadding)
+    MonsterDetailBottomSheets()
 }

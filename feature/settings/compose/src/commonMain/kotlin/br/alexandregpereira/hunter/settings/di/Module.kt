@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.settings.di
 
+import br.alexandregpereira.hunter.paywall.event.PaywallEventDispatcher
+import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
@@ -41,6 +43,9 @@ val featureSettingsModule = module {
             getAppearanceSettings = get(),
             monsterEventDispatcher = get(),
             shareContentEventDispatcher = get(),
+            paywallEventDispatcher = get<PaywallEventDispatcher>(),
+            isSessionUsageLimitReached = get(),
+            paywallResultListener = get<PaywallResultDispatcher>(),
         )
     }
 }

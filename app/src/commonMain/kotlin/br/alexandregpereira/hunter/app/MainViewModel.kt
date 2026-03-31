@@ -24,7 +24,9 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
+import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.flow.launchIn
@@ -35,12 +37,36 @@ internal class MainViewModel(
     private val stateRecovery: StateRecovery,
     appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
+    private val revenueSession: RevenueSession,
+    private val featureFlagProvider: FeatureFlagProvider,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
         setState { updateState(stateRecovery) }
         observeLanguageChanges()
         appEventDispatcher.observeEvents()
+    }
+
+    fun onStart() {
+        analytics.track("App - started")
+        featureFlagProvider.initialize()
+        revenueSession.initialize(apiKey = AppConfig.REVENUE_CAT_API_KEY)
+        revenueSession.start()
+    }
+
+    fun onStop() {
+        analytics.track("App - stopped")
+        revenueSession.stop()
+    }
+
+    fun onPause() {
+        analytics.track("App - paused")
+        revenueSession.stop()
+    }
+
+    fun onResume() {
+        analytics.track("App - resumed")
+        revenueSession.start()
     }
 
     private fun observeLanguageChanges() {

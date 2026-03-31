@@ -39,7 +39,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ShareContentExportMonsterFeature(
-    contentPadding: PaddingValues,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     val eventDispatcher = koinInject<ShareContentEventDispatcher>()
     var isOpen by rememberSaveable {

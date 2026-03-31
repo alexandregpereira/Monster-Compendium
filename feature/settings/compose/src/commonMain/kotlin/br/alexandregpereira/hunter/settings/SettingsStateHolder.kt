@@ -25,12 +25,17 @@ import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUs
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.paywall.event.PaywallEvent
+import br.alexandregpereira.hunter.paywall.event.PaywallResult
+import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.state.MutableActionHandler
@@ -38,6 +43,8 @@ import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -46,7 +53,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.zip
 
 internal class SettingsStateHolder(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
@@ -62,6 +68,9 @@ internal class SettingsStateHolder(
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
+    private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
+    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val paywallResultListener: EventListener<PaywallResult>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -72,6 +81,12 @@ internal class SettingsStateHolder(
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach {
             load()
+        }.launchIn(scope)
+
+        paywallResultListener.events.onEach { result ->
+            if (result is PaywallResult.OnSubscribe) {
+                load()
+            }
         }.launchIn(scope)
     }
 
@@ -193,44 +208,29 @@ internal class SettingsStateHolder(
         ).also { sendAction(it) }
     }
 
-    override fun onDonateClick() {
-        analytics.trackDonateClick()
-        setState { copy(donateIsOpen = true) }
-    }
-
-    fun onDonateCloseClick() {
-        setState { copy(donateIsOpen = false) }
-    }
-
-    fun onPixCodeCopyClick() {
-        analytics.trackPixCodeCopyClick()
-    }
-
-    fun onPixKeyCopyClick() {
-        analytics.trackPixKeyCopyClick()
-    }
-
-    fun onBuyMeCoffeeClick() {
-        analytics.trackBuyMeCoffeeClick()
-        SettingsViewAction.GoToExternalUrl(
-            url = "https://ko-fi.com/monstercompendium"
-        ).also { sendAction(it) }
+    override fun onSubscribePremiumClick() {
+        paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
     private fun load() {
-        getMonsterImageJsonUrl()
-            .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->
-                state.value.copy(
-                    imageBaseUrl = imageBaseUrl,
-                    alternativeSourceBaseUrl = alternativeSourceBaseUrl,
+        flow {
+            coroutineScope {
+                val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
+                val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
+                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
+                val newState = state.value.copy(
+                    imageBaseUrl = imageBaseUrlDeferred.await(),
+                    alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
                     strings = this@SettingsStateHolder.strings,
                     settingsState = SettingsState(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
-                    )
+                    ),
+                    shouldShowIsPremiumMenuItem = isSessionUsageLimitReachedDeferred.await(),
                 )
+                emit(newState)
             }
-            .flowOn(dispatcher)
+        }.flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
             }

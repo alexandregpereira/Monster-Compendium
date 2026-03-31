@@ -24,6 +24,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:network"))
         implementation(project(":domain:alternative-source:data"))
         implementation(project(":domain:monster:data"))
         implementation(project(":domain:monster-folder:data"))
@@ -38,16 +39,19 @@ multiplatform {
     }
 
     androidMain {
+        implementation(project(":domain:revenue:mobile"))
         implementation(libs.ktor.okhttp)
         implementation(libs.sqldelight.android)
     }
 
     jvmMain {
+        implementation(project(":domain:revenue:data"))
         implementation(libs.ktor.okhttp)
         implementation(libs.sqldelight.jvm)
     }
 
     iosMain {
+        implementation(project(":domain:revenue:mobile"))
         implementation(libs.ktor.darwin)
         implementation(libs.sqldelight.ios)
     }

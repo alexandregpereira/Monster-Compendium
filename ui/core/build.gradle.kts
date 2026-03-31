@@ -24,6 +24,7 @@ plugins {
 
 multiplatform {
     androidMain {
+        implementation(libs.android.lifecycle.compose)
         implementation(libs.core.ktx)
         implementation(libs.compose.activity)
         implementation(libs.kotlin.reflect)

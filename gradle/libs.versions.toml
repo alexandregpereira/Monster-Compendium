@@ -1,7 +1,9 @@
 [versions]
 amplitude-android = "1.26.0"
+amplitude-experiment-android = "1.15.0"
 amplitude-jvm = "1.13.0"
 android_gradle_plugin = "8.10.0"
+android_lifecycle_compose = "2.10.0"
 android_test_version = "1.7.0"
 appcompat = "1.7.1"
 arch_core_testing = "2.2.0"
@@ -20,6 +22,7 @@ json-jvm = "20251224"
 koin = '4.1.1'
 koin_compose = "4.1.1"
 kotlin = '2.3.0'
+kotlin_collections_immutable = "0.4.0"
 kotlin_coroutines_test = '1.10.2'
 kotlin_coroutines = '1.10.2'
 kotlin_datetime = "0.7.1"
@@ -28,11 +31,15 @@ ktor = "3.4.1"
 material = "1.13.0"
 mockk = "1.14.9"
 multiplatform-settings = "1.3.0"
+play-services-ads = "25.1.0"
+revenuecat_kmp = "2.8.0+17.46.0"
 sqldelight = "1.5.5"
 
 [libraries]
 amplitude-android = { module = "com.amplitude:analytics-android", version.ref = "amplitude-android" }
+amplitude-experiment-android = { module = "com.amplitude:experiment-android-client", version.ref = "amplitude-experiment-android" }
 amplitude-jvm = { module = "com.amplitude:java-sdk", version.ref = "amplitude-jvm" }
+android-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "android_lifecycle_compose" }
 android-test-runner = { module = "androidx.test:runner", version.ref = "android_test_version" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
@@ -67,6 +74,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+kotlin-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin_collections_immutable" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-desktop = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin_coroutines" }
@@ -84,9 +92,12 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatform-settings" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+revenuecat-kmp-core = { module = "com.revenuecat.purchases:purchases-kmp-core", version.ref = "revenuecat_kmp" }
+revenuecat-kmp-ui = { module = "com.revenuecat.purchases:purchases-kmp-ui", version.ref = "revenuecat_kmp" }
 
 [bundles]
 instrumentedtest = ["android-test-runner", "junit-ext"]
