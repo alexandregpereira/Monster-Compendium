@@ -19,9 +19,8 @@ package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import kotlinx.coroutines.MainScope
+import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 enum class LifecycleEvent {
     ON_PAUSE,
@@ -46,20 +45,19 @@ fun LifecycleEventObserver(
 ) {
     val lifecycleEvents = rememberLifecycleEvents()
 
-    DisposableEffect(lifecycleEvents) {
+    DisposableEffect(Unit) {
         onStart()
-        val job = MainScope().launch {
-            lifecycleEvents.collect { event ->
-                when (event) {
-                    LifecycleEvent.ON_PAUSE -> onPause()
-                    LifecycleEvent.ON_RESUME -> onResume()
-                }
-            }
-        }
-
         onDispose {
             onStop()
-            job.cancel()
+        }
+    }
+
+    LaunchedEffect(lifecycleEvents) {
+        lifecycleEvents.collect { event ->
+            when (event) {
+                LifecycleEvent.ON_PAUSE -> onPause()
+                LifecycleEvent.ON_RESUME -> onResume()
+            }
         }
     }
 }
