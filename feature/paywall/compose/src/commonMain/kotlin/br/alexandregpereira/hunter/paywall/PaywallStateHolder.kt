@@ -165,13 +165,14 @@ internal class PaywallStateHolder(
 
     private fun openPaywall() {
         analytics.track(eventName = "Paywall - opened")
-        val features = defaultFeatures(strings = state.value.strings)
+        val localizedStrings = appLocalization.getPaywallStrings()
+        val features = defaultFeatures(strings = localizedStrings)
         setState {
             copy(
                 isOpen = true,
                 features = features,
                 actionResultState = null,
-                strings = appLocalization.getPaywallStrings(),
+                strings = localizedStrings,
             )
         }
         loadOffer()
