@@ -32,7 +32,7 @@ multiplatform {
         implementation(libs.ktor.core)
     }
     androidMain {
-        implementation(libs.ktor.jvm)
+        implementation(libs.ktor.okhttp)
         implementation(libs.revenuecat.kmp.core)
     }
     iosMain {
