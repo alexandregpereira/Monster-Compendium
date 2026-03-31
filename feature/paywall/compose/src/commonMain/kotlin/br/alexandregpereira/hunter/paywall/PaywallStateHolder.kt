@@ -55,6 +55,7 @@ internal class PaywallStateHolder(
     fun onClose() {
         closePaywall()
         loadOfferJob?.cancel()
+        loadOfferJob = null
         scope.launch {
             settings.savePaywallWasClosedFlag(
                 paywallWasClosed = state.value.actionResultState == null,
@@ -121,6 +122,7 @@ internal class PaywallStateHolder(
 
     private fun loadOffer() {
         setState { copy(isLoading = true) }
+        loadOfferJob?.cancel()
         loadOfferJob = scope.launch {
             try {
                 val offer = withContext(dispatcher) { getCurrentOffer() }
@@ -137,6 +139,7 @@ internal class PaywallStateHolder(
                         .replace("{period}", subscriptionPeriod)
                     copy(
                         isLoading = false,
+                        actionResultState = null,
                         subscriptionOfferFormatted = subscriptionOfferFormatted,
                     )
                 }
