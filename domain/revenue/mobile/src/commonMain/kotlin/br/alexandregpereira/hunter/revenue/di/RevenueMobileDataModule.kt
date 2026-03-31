@@ -27,7 +27,6 @@ import br.alexandregpereira.hunter.revenue.Purchase
 import br.alexandregpereira.hunter.revenue.PurchaseImpl
 import br.alexandregpereira.hunter.revenue.RestorePurchase
 import br.alexandregpereira.hunter.revenue.RestorePurchaseImpl
-import br.alexandregpereira.hunter.revenue.RevenueMobileSdk
 import br.alexandregpereira.hunter.revenue.RevenueSdk
 import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.revenue.RevenueSessionImpl
@@ -52,7 +51,7 @@ val revenueMobileDataModule get() = module {
         )
     }
     factory<RevenueSdk> {
-        RevenueMobileSdk()
+        createRevenueSdk()
     }
     factory {
         RevenueSessionTimeDataSource(
@@ -97,3 +96,5 @@ val revenueMobileDataModule get() = module {
         )
     }
 }
+
+internal expect fun createRevenueSdk(): RevenueSdk

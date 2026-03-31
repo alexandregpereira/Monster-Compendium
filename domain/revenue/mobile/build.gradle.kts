@@ -30,10 +30,10 @@ multiplatform {
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.kotlin.serialization)
         implementation(libs.ktor.core)
-        implementation(libs.revenuecat.kmp.core)
     }
     androidMain {
         implementation(libs.ktor.jvm)
+        implementation(libs.revenuecat.kmp.core)
     }
     iosMain {
         implementation(libs.ktor.darwin)
