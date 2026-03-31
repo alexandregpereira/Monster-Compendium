@@ -38,11 +38,11 @@ internal class RevenueSessionImpl(
     }
 
     override fun start() {
+        val time = Clock.System.now().toEpochMilliseconds()
+        startTime = time
         coroutineScope.launch {
             if (isPremium()) return@launch
 
-            val time = Clock.System.now().toEpochMilliseconds()
-            startTime = time
             analytics.track(
                 eventName = "RevenueSession - started",
                 params = mapOf("sessionStartTime" to time),
