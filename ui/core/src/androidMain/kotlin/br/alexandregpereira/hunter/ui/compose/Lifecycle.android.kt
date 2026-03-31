@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -30,13 +31,15 @@ import kotlinx.coroutines.flow.asSharedFlow
 @Composable
 internal actual fun rememberLifecycleEvents(): Flow<LifecycleEvent> {
     val lifecycleOwner = LocalLifecycleOwner.current
-    
-    return remember(lifecycleOwner) {
-        val eventsFlow = MutableSharedFlow<LifecycleEvent>(
+
+    val eventsFlow = remember(lifecycleOwner) {
+        MutableSharedFlow<LifecycleEvent>(
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_LATEST,
         )
-        
+    }
+
+    DisposableEffect(lifecycleOwner) {
         val lifecycleObserver = object : DefaultLifecycleObserver {
             override fun onPause(owner: LifecycleOwner) {
                 eventsFlow.tryEmit(LifecycleEvent.ON_PAUSE)
@@ -46,9 +49,13 @@ internal actual fun rememberLifecycleEvents(): Flow<LifecycleEvent> {
                 eventsFlow.tryEmit(LifecycleEvent.ON_RESUME)
             }
         }
-        
+
         lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
-        
-        eventsFlow.asSharedFlow()
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
+        }
     }
+
+    return eventsFlow.asSharedFlow()
 }
