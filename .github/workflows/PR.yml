@@ -17,7 +17,6 @@ env:
 jobs:
   android-distribution:
     name: Android Distribution
-    if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.5.0
@@ -64,7 +63,6 @@ jobs:
 
   ios-build:
     name: IOS Build
-    if: github.event.action != 'labeled'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -91,7 +89,6 @@ jobs:
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
-    if: github.event.action != 'labeled'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -119,7 +116,6 @@ jobs:
 
   linux-desktop-distribution:
     name: Linux Desktop Distribution
-    if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -153,7 +149,6 @@ jobs:
 
   windows-desktop-distribution:
     name: Windows Desktop Distribution
-    if: github.event.action != 'labeled'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -181,7 +176,7 @@ jobs:
 
   firebase-distribution:
     name: Firebase App Distribution
-    if: github.event.action == 'labeled' && github.event.label.name == 'cd'
+    if: (github.event.action == 'labeled' && github.event.label.name == 'cd') || (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'cd'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -207,3 +202,4 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           file: app/build/outputs/apk/release/app-dev-release.apk
+          groups: Testers

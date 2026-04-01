@@ -95,6 +95,7 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           file: app/build/outputs/apk/release/app-dev-release.apk
+          groups: Testers
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
