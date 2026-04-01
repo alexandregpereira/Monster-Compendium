@@ -9,6 +9,12 @@ on:
       - 'media/**'
       - 'content/**'
 
+env:
+  MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+  AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+  AMPLITUDE_SANDBOX_API_KEY: ${{ secrets.AMPLITUDE_SANDBOX_API_KEY }}
+  REVENUE_CAT_API_KEY: ${{ secrets.REVENUE_CAT_API_KEY }}
+
 jobs:
   multiplatform-build:
     name: Android Distribution
@@ -29,9 +35,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease
 
       - name: Verify database migration
@@ -84,9 +87,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate Dev Apk
-        env:
-          MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew assembleRelease -Pdev
 
       - name: Upload Dev APK to Firebase App Distribution
@@ -115,8 +115,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageReleaseDmg
 
       - name: Upload Dmg
@@ -144,8 +142,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageReleaseDeb :app:packageReleaseRpm
 
       - name: Upload Deb
@@ -179,8 +175,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageReleaseMsi
 
       - name: Upload Msi
