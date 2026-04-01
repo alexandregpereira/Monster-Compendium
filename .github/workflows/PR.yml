@@ -53,7 +53,7 @@ jobs:
       uses: actions/upload-artifact@v4.6.2
       with:
         name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug-*.apk
 
     - name: Upload an APK metadata JSON
       uses: actions/upload-artifact@v4.6.2
@@ -196,10 +196,14 @@ jobs:
       - name: Generate Dev APK
         run: ./gradlew assembleRelease -Pdev
 
+      - name: Get Dev APK path
+        id: dev-apk-path
+        run: echo "path=$(find app/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
+
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          file: app/build/outputs/apk/release/app-dev-release.apk
+          file: ${{ steps.dev-apk-path.outputs.path }}
           groups: Testers
