@@ -198,11 +198,17 @@ android {
         val admobAppId = admobAppIdEnvVar ?: admobAppIdPropVar ?: "ca-app-pub-3940256099942544~3347511713"
         manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
-        if (hasProperty("dev")) {
-            setProperty("archivesBaseName", "app-dev")
-        }
-
         testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
+    }
+
+    applicationVariants.all {
+        val buildTypeName = buildType.name
+        val version = versionName
+        val prefix = if (hasProperty("dev")) "app-dev" else "app"
+        outputs.all {
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl)
+                .outputFileName = "$prefix-$buildTypeName-$version.apk"
+        }
     }
 
     signingConfigs {
