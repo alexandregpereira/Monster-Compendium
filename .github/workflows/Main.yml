@@ -89,11 +89,12 @@ jobs:
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew assembleRelease -Pdev
 
-      - name: Upload Dev APK
-        uses: actions/upload-artifact@v4.6.2
+      - name: Upload Dev APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          name: app-dev-release-apk
-          path: app/build/outputs/apk/release/app-dev-release.apk
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          file: app/build/outputs/apk/release/app-dev-release.apk
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
