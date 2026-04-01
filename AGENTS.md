@@ -6,10 +6,11 @@ AI coding agent guide for Monster Compendium - a Kotlin Multiplatform D&D 5th ed
 
 **Modular Clean Architecture** with three main layers:
 - **`domain/`** - Business logic, use cases, and repository interfaces (no framework dependencies)
-- **`feature/`** - UI features split into `compose/`, `state-holder/`, and `event/` submodules
+- **`feature/`** - UI features with up to two submodules: `compose/` (UI + state holder) and `event/` (cross-feature events, only if needed)
 - **`core/`** - Shared utilities (analytics, events, localization, state-holder base)
+- **`ui/`** - Shared UI components (compendium layouts, monster cards, etc.)
 
-Each feature follows the pattern: `feature/{name}/compose` → `feature/{name}/state-holder` → `domain/{name}/core` → `domain/{name}/data`
+Each feature follows the pattern: `feature/{name}/compose` → `domain/{name}/core` → `domain/{name}/data`
 
 ## Key Patterns
 
@@ -17,6 +18,7 @@ Each feature follows the pattern: `feature/{name}/compose` → `feature/{name}/s
 - Use `UiModel<State>` base class from `core/state-holder` (see `StateHolder.kt`)
 - State holders use `setState { copy(...) }` pattern with immutable data classes
 - StateFlow for reactive state, collected in Compose via `stateHolder.state.collectAsState()`
+- `FooStateHolder.kt` and `FooState.kt` live inside `feature/{name}/compose/` — there is no separate `state-holder/` submodule
 
 ### Inter-Feature Communication
 - Event-driven via `EventDispatcher<Event>` / `EventListener<Event>` pattern in `core/event`
@@ -61,13 +63,32 @@ Each feature follows the pattern: `feature/{name}/compose` → `feature/{name}/s
 - Use `testFlow()` helper from `core/flow/test` for Flow testing
 - StateHolder tests use `testFlows()` for observing multiple flows
 
+## Module Coupling Rules
+
+These rules must be strictly followed. Check existing `build.gradle.kts` files when in doubt.
+
+## Module Coupling Rules
+
+These rules must be followed strictly. When in doubt, check the existing `build.gradle.kts` files.
+
+| Module | Can only depend on                                            |
+|--------|---------------------------------------------------------------|
+| `:app` | Everyone                                                      | 
+| `:core/*` | Other `:core/*` modules only                                  |
+| `:domain:{name}:core` | Nothing (stdlib/coroutines only)                              |
+| `:domain:{name}:data` | `:domain/*:core`, `:core/*`                                   |
+| `:feature:{name}:compose` | `:domain/*:core`, `:feature:{name}:event`, `:core/*`, `:ui/*` |
+| `:feature:{name}:event` | `:core/event` (only)                                          |
+| `:ui/*` | `:ui/*`                                                       |
+
 ## File Organization
 
 When creating a new feature `foo`:
 1. `feature/foo/event/` - Events if cross-feature communication needed
-2. `feature/foo/state-holder/` - `FooStateHolder.kt`, `FooState.kt`, DI module
-3. `feature/foo/compose/` - `FooFeature.kt` composable entry point, UI components
-4. Register module in `AppModule.kt`
+2. `feature/foo/compose/` - `FooState.kt`, `FooStateHolder.kt`, `FooFeature.kt` composable entry point, UI components, and Koin DI module
+3. Register module in `AppModule.kt`
+
+Do **not** create a separate `state-holder/` submodule.
 
 ## API Keys
 

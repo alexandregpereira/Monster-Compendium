@@ -35,20 +35,33 @@ Kotlin Multiplatform D&D 5th edition monster compendium app for Android, iOS, Wi
 **Modular Clean Architecture** with three primary layers:
 
 - **`domain/`** — Business logic, use cases, repository interfaces. No framework dependencies. Each domain area is split into `domain/{name}/core` (interfaces/models/use cases) and `domain/{name}/data` (repository implementations, DTO mappings).
-- **`feature/`** — UI features split into three submodules each:
-  - `compose/` — Composable UI, entry point is `FooFeature.kt`
-  - `state-holder/` — `FooStateHolder.kt` + `FooState.kt`, state management
+- **`feature/`** — UI features with up to two submodules:
+  - `compose/` — Composable UI, entry point is `FooFeature.kt`. State holder (`FooStateHolder.kt` + `FooState.kt`) lives here too.
   - `event/` — `FooEvent.kt` for cross-feature communication (only if needed)
 - **`core/`** — Cross-cutting concerns: analytics, event bus, localization, state-holder base, flow test utilities
 - **`ui/`** — Shared UI components (compendium layouts, monster cards, etc.)
 
-Data flow: `compose/` → `state-holder/` → `domain/{name}/core` → `domain/{name}/data`
+Data flow: `feature:compose/` → `domain/{name}/core` → `domain/{name}/data`
+
+## Module Coupling Rules
+
+These rules must be followed strictly. When in doubt, check the existing `build.gradle.kts` files.
+
+| Module | Can only depend on                                            |
+|--------|---------------------------------------------------------------|
+| `:app` | Everyone                                                      | 
+| `:core/*` | Other `:core/*` modules only                                  |
+| `:domain:{name}:core` | Nothing (stdlib/coroutines only)                              |
+| `:domain:{name}:data` | `:domain/*:core`, `:core/*`                                   |
+| `:feature:{name}:compose` | `:domain/*:core`, `:feature:{name}:event`, `:core/*`, `:ui/*` |
+| `:feature:{name}:event` | `:core/event` (only)                                          |
+| `:ui/*` | `:ui/*`                                                       |
 
 ## Key Patterns
 
 ### State Management
 
-State holders extend `UiModel<State>` from `core/state-holder`. State is an immutable data class updated via `setState { copy(...) }`. Compose collects state with `stateHolder.state.collectAsState()`.
+State holders extend `UiModel<State>` from `core/state-holder`. State is an immutable data class updated via `setState { copy(...) }`. Compose collects state with `stateHolder.state.collectAsState()`. The state holder (`FooStateHolder.kt` + `FooState.kt`) lives inside the `feature/{name}/compose/` module — there is no separate `state-holder/` module.
 
 ### Inter-Feature Communication
 
@@ -75,9 +88,10 @@ Strings are typed per-feature: create a `*Strings.kt` file with a sealed class p
 ## Adding a New Feature
 
 1. `feature/foo/event/` — Define `FooEvent.kt` sealed class (only if cross-feature communication needed)
-2. `feature/foo/state-holder/` — `FooState.kt` (data class), `FooStateHolder.kt` (extends `UiModel<FooState>`), Koin DI module
-3. `feature/foo/compose/` — `FooFeature.kt` composable entry point and UI components
-4. Register the Koin module in `AppModule.kt`
+2. `feature/foo/compose/` — `FooState.kt`, `FooStateHolder.kt` (extends `UiModel<FooState>`), `FooFeature.kt` composable entry point, UI components, and Koin DI module
+3. Register the Koin module in `AppModule.kt`
+
+Do **not** create a separate `state-holder/` submodule.
 
 ## Database (SQLDelight)
 
