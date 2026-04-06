@@ -13,6 +13,9 @@ val paywallFeatureModule = module {
         ShouldShowPaywall(
             isSessionUsageLimitReached = get(),
             networkManager = get(),
+            getCurrentOffer = get(),
+            settings = get(),
+            analytics = get(),
         )
     }
     factory {

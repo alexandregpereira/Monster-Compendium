@@ -46,7 +46,7 @@ internal class PaywallStateHolder(
 
     fun onStart() {
         scope.launch {
-            if (settings.getPaywallWasClosedFlag().not() && shouldShowPaywall()) {
+            if (shouldShowPaywall()) {
                 openPaywall()
             }
         }
@@ -150,6 +150,8 @@ internal class PaywallStateHolder(
                     throw cause
                 }
                 cause.printStackTrace()
+                analytics.logException(cause)
+                analytics.track(eventName = "Paywall - load offer error")
                 setState {
                     copy(
                         isLoading = false,
