@@ -20,7 +20,11 @@ internal actual fun AdsBannerView() {
 
             AdView(context).apply {
                 setAdSize(AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, adWidthDp))
-                adUnitId = "ca-app-pub-3940256099942544/9214589741" // Test ad unit ID
+                adUnitId = if (BuildConfig.DEBUG) {
+                    "ca-app-pub-3940256099942544/9214589741" // Test ad unit ID
+                } else {
+                    "ca-app-pub-9186388258407371/4662481578"
+                }
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT,

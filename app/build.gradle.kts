@@ -111,8 +111,25 @@ if (localPropsFile.exists()) {
     localProps.load(localPropsFile.inputStream())
 }
 
+val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
+
+fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String = sandboxKey, fallback: String = ""): String {
+    val isDevBuild = project.hasProperty("dev")
+    val key = when {
+        isDebug -> sandboxKey
+        isDevBuild -> homologKey
+        else -> prodKey
+    }
+    val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
+    val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
+    val keyValue = envVar ?: propVar ?: fallback
+    if (keyValue.isBlank()) {
+        logger.warn("Warning: Missing environment variable $key")
+    }
+    return keyValue
+}
+
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
-    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
     val versionNameSuffix = when {
         project.hasProperty("dev") -> {
             "-dev"
@@ -121,22 +138,6 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
             "-debug"
         }
         else -> ""
-    }
-
-    fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String = sandboxKey): String {
-        val isDevBuild = project.hasProperty("dev")
-        val key = when {
-            isDebug -> sandboxKey
-            isDevBuild -> homologKey
-            else -> prodKey
-        }
-        val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
-        val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
-        val keyValue = envVar ?: propVar ?: ""
-        if (keyValue.isBlank()) {
-            logger.warn("Warning: Missing environment variable $key")
-        }
-        return keyValue
     }
 
     val amplitudeApiKey = getEnvVar(
@@ -198,10 +199,11 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        val admobAppIdEnvVarName = "ADMOB_APP_ID"
-        val admobAppIdEnvVar = System.getenv(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
-        val admobAppIdPropVar = localProps.getProperty(admobAppIdEnvVarName)?.takeIf { it.isNotEmpty() }
-        val admobAppId = admobAppIdEnvVar ?: admobAppIdPropVar ?: "ca-app-pub-3940256099942544~3347511713"
+        val admobAppId = getEnvVar(
+            prodKey = "ADMOB_APP_ID",
+            sandboxKey = "ADMOB_SANDBOX_APP_ID",
+            fallback = "ca-app-pub-3940256099942544~3347511713",
+        )
         manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
@@ -218,11 +220,12 @@ android {
     }
 
     signingConfigs {
+        val appKeyPassword = getEnvVar(prodKey = "MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
         create("release") {
             storeFile = file("monster-keystore.jks")
-            storePassword = System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+            storePassword = appKeyPassword
             keyAlias = "monster"
-            keyPassword = System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+            keyPassword = appKeyPassword
         }
     }
 
