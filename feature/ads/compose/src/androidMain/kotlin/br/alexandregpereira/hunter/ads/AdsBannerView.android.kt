@@ -3,14 +3,22 @@ package br.alexandregpereira.hunter.ads
 import android.annotation.SuppressLint
 import android.widget.LinearLayout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import org.koin.compose.koinInject
 
 @SuppressLint("MissingPermission")
 @Composable
 internal actual fun AdsBannerView() {
+    val consentManager: AdsConsentManager = koinInject()
+    val canRequestAds by consentManager.canRequestAds.collectAsState()
+
+    if (!canRequestAds) return
+
     AndroidView(
         factory = { context ->
             val displayMetrics = context.resources.displayMetrics

@@ -37,6 +37,7 @@ multiplatform {
     }
     androidMain {
         implementation(libs.play.services.ads)
+        implementation(libs.user.messaging.platform.android)
     }
     jvmMain()
     iosMain()

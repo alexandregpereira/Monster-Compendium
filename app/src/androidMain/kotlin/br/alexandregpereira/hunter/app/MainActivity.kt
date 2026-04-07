@@ -19,9 +19,13 @@ package br.alexandregpereira.hunter.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import br.alexandregpereira.hunter.ads.AdsConsentManager
 import br.alexandregpereira.hunter.ui.util.createComposeView
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+
+    private val consentManager: AdsConsentManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,5 +33,7 @@ class MainActivity : AppCompatActivity() {
             HunterApp(contentPadding = contentPadding)
         }
         setContentView(view)
+        val debugHashedId = AppConfig.ADS_CONSENT_DEVICE_HASH_TEST_ID.takeIf { it.isNotEmpty() }
+        consentManager.requestConsent(this, debugHashedId)
     }
 }
