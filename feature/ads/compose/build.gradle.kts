@@ -44,4 +44,7 @@ multiplatform {
 
 androidLibrary {
     namespace = "br.alexandregpereira.hunter.ads"
+    buildFeatures {
+        buildConfig = true
+    }
 }
