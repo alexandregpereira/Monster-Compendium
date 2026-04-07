@@ -199,7 +199,11 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        val admobAppId = getEnvVar(prodKey = "ADMOB_APP_ID", fallback = "ca-app-pub-3940256099942544~3347511713")
+        val admobAppId = getEnvVar(
+            prodKey = "ADMOB_APP_ID",
+            sandboxKey = "ADMOB_SANDBOX_APP_ID",
+            fallback = "ca-app-pub-3940256099942544~3347511713",
+        )
         manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
