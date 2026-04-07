@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ads
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import com.google.android.gms.ads.MobileAds
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+@SuppressLint("MissingPermission")
 class AdsConsentManager(context: Context) {
 
     private val consentInformation: ConsentInformation =
