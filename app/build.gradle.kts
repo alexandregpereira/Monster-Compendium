@@ -123,9 +123,13 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         else -> ""
     }
 
-    fun getEnvVar(prodKey: String, sandboxKey: String = prodKey): String {
-        val isSandboxBuild = project.hasProperty("dev") || isDebug
-        val key = if (isSandboxBuild) sandboxKey else prodKey
+    fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String = sandboxKey): String {
+        val isDevBuild = project.hasProperty("dev")
+        val key = when {
+            isDebug -> sandboxKey
+            isDevBuild -> homologKey
+            else -> prodKey
+        }
         val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
         val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
         val keyValue = envVar ?: propVar ?: ""
@@ -135,8 +139,15 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         return keyValue
     }
 
-    val amplitudeApiKey = getEnvVar(prodKey = "AMPLITUDE_API_KEY", sandboxKey = "AMPLITUDE_SANDBOX_API_KEY")
-    val revenueCatApiKeyFinal = getEnvVar(prodKey = "REVENUE_CAT_API_KEY", sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY")
+    val amplitudeApiKey = getEnvVar(
+        prodKey = "AMPLITUDE_API_KEY",
+        sandboxKey = "AMPLITUDE_SANDBOX_API_KEY",
+    )
+    val revenueCatApiKeyFinal = getEnvVar(
+        prodKey = "REVENUE_CAT_API_KEY",
+        homologKey = "REVENUE_CAT_API_KEY",
+        sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
+    )
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
