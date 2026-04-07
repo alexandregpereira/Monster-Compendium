@@ -69,7 +69,6 @@ val revenueMobileDataModule get() = module {
             revenueSdk = get(),
             settings = get<Settings>(qualifier(preferenceName)),
             analytics = get(),
-            revenueSessionTimeDataSource = get(),
         )
     }
     single<RevenueSession> {
@@ -88,6 +87,7 @@ val revenueMobileDataModule get() = module {
     factory<RestorePurchase> {
         RestorePurchaseImpl(
             revenueSdk = get(),
+            isPremium = get(),
         )
     }
     factory<GetCurrentOffer> {

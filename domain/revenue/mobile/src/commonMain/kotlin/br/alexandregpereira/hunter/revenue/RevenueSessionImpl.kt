@@ -22,6 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlin.time.Clock
 
 internal class RevenueSessionImpl(
@@ -32,17 +34,18 @@ internal class RevenueSessionImpl(
 ) : RevenueSession {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var startTime: Long? = null
+    private val mutex = Mutex()
 
     override fun initialize(apiKey: String) {
         revenueSdk.initialize(apiKey)
     }
 
     override fun start() {
-        val time = Clock.System.now().toEpochMilliseconds()
-        startTime = time
         coroutineScope.launch {
             if (isPremium()) return@launch
 
+            val time = Clock.System.now().toEpochMilliseconds()
+            mutex.withLock { startTime = time }
             analytics.track(
                 eventName = "RevenueSession - started",
                 params = mapOf("sessionStartTime" to time),

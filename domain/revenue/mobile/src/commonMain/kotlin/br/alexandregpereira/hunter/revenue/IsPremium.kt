@@ -29,29 +29,23 @@ internal class IsPremiumImpl(
     private val revenueSdk: RevenueSdk,
     private val settings: Settings,
     private val analytics: Analytics,
-    private val revenueSessionTimeDataSource: RevenueSessionTimeDataSource,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : IsPremium {
 
-    override suspend operator fun invoke(): Boolean {
+    override suspend operator fun invoke(ignoreCache: Boolean): Boolean {
         val isPremiumFallbackCacheKey = "isPremiumFallbackCache"
         return try {
-            revenueSdk.isPremiumEnabled().also { isPremium ->
+            revenueSdk.isPremiumEnabled(ignoreCache).also { isPremium ->
                 val hasPremiumFallbackCache = withContext(dispatcher) {
                     settings.hasKey(isPremiumFallbackCacheKey)
                 }
-                if (isPremium) {
-                    revenueSessionTimeDataSource.clearSessionTime()
-                }
                 if (isPremium && !hasPremiumFallbackCache) {
-                    withContext(dispatcher) {
-                        settings.putBoolean(key = isPremiumFallbackCacheKey, value = true)
-                    }
                     analytics.track(
                         eventName = "Revenue Session Ended - Premium User",
                         params = mapOf("sessionEndTime" to Clock.System.now().toEpochMilliseconds()),
                     )
                 }
+                settings.putBoolean(key = isPremiumFallbackCacheKey, value = isPremium)
             }
         } catch (cause: Throwable) {
             analytics.logException(cause)

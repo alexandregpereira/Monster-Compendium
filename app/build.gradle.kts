@@ -106,8 +106,8 @@ val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
 
 // Load local.properties manually to ensure AMPLITUDE_API_KEY is available
 val localProps = Properties()
-val localPropsFile: File? = rootProject.file("local.properties")
-if (localPropsFile?.exists() == true) {
+val localPropsFile: File = rootProject.file("local.properties")
+if (localPropsFile.exists()) {
     localProps.load(localPropsFile.inputStream())
 }
 
@@ -123,25 +123,20 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         else -> ""
     }
 
-    val isSandboxBuild = project.hasProperty("dev") || isDebug
-    // Read AMPLITUDE_API_KEY from environment, local.properties, or use empty string
-    val amplitudeApiKeyEnvVarName = if (isSandboxBuild) {
-        "AMPLITUDE_SANDBOX_API_KEY"
-    } else {
-        "AMPLITUDE_API_KEY"
+    fun getEnvVar(prodKey: String, sandboxKey: String = prodKey): String {
+        val isSandboxBuild = project.hasProperty("dev") || isDebug
+        val key = if (isSandboxBuild) sandboxKey else prodKey
+        val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
+        val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
+        val keyValue = envVar ?: propVar ?: ""
+        if (keyValue.isBlank()) {
+            logger.warn("Warning: Missing environment variable $key")
+        }
+        return keyValue
     }
-    val envVar = System.getenv(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val amplitudeApiKey = envVar ?: propVar ?: ""
 
-    // Read REVENUE_CAT_API_KEY from environment or use empty string
-    val revenueCatApiKeyEnvVarName = "REVENUE_CAT_API_KEY"
-    val revenueCatEnvVarApiKey = System.getenv(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val revenueCatPropVarApiKey = localProps.getProperty(revenueCatApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val revenueCatApiKeyFinal = revenueCatEnvVarApiKey ?: revenueCatPropVarApiKey ?: ""
-
-    val amplitudeKeyType = if (isSandboxBuild) "sandbox" else "production"
-    logger.quiet("Using Amplitude API Key ($amplitudeKeyType): ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
+    val amplitudeApiKey = getEnvVar(prodKey = "AMPLITUDE_API_KEY", sandboxKey = "AMPLITUDE_SANDBOX_API_KEY")
+    val revenueCatApiKeyFinal = getEnvVar(prodKey = "REVENUE_CAT_API_KEY", sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY")
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)

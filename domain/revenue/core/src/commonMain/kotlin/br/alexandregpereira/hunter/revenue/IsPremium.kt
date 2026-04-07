@@ -1,5 +1,9 @@
 package br.alexandregpereira.hunter.revenue
 
-fun interface IsPremium {
-    suspend operator fun invoke(): Boolean
+interface IsPremium {
+    suspend operator fun invoke(ignoreCache: Boolean = false): Boolean
+}
+
+fun IsPremium(isPremium: () -> Boolean): IsPremium = object : IsPremium {
+    override suspend fun invoke(ignoreCache: Boolean): Boolean = isPremium()
 }

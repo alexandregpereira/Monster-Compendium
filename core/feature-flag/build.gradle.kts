@@ -21,6 +21,8 @@ plugins {
 }
 multiplatform {
     commonMain {
+        implementation(project(":core:analytics"))
+        implementation(project(":core:network"))
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
