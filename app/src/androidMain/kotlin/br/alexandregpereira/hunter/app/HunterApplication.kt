@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.app
 
 import android.app.Application
+import br.alexandregpereira.hunter.ads.di.androidAdsModule
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
@@ -47,7 +48,8 @@ internal fun KoinApplication.initAndroidModules(app: Application) {
         module {
             factory { Firebase.analytics }
             factory { Firebase.crashlytics }
-        }
+        },
+        androidAdsModule,
     )
     initKoinModules()
 }

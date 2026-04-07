@@ -155,6 +155,7 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     taskVersionNameSuffix.set(versionNameSuffix)
     taskAmplitudeApiKey.set(amplitudeApiKey)
     taskRevenueCatApiKey.set(revenueCatApiKeyFinal)
+    taskAdsConsentDeviceHashTestId.set(findProperty("eeaDeviceId")?.toString() ?: "")
 }
 
 kotlin {
