@@ -10,7 +10,7 @@ internal actual fun createRevenueSdk(): RevenueSdk {
 private class EmptyRevenueSdk(): RevenueSdk {
     override fun initialize(apiKey: String) {}
 
-    override suspend fun isPremiumEnabled(): Boolean = true
+    override suspend fun isPremiumEnabled(ignoreCache: Boolean): Boolean = true
 
     override suspend fun purchase(offerId: String) {
         throw NotImplementedError("Purchase is not implemented in iOS yet")

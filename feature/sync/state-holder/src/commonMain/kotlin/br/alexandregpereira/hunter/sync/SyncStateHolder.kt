@@ -61,7 +61,6 @@ class SyncStateHolder internal constructor(
         syncUseCase(forceSync)
             .flowOn(dispatcher)
             .catch { error ->
-                error.printStackTrace()
                 analytics.logException(error)
                 setState { copy(hasError = true) }
             }

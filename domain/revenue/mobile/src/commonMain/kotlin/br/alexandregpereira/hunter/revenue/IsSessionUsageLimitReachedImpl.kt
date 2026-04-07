@@ -39,10 +39,15 @@ internal class IsSessionUsageLimitReachedImpl internal constructor(
 
         val sessionTimeLimitInMillis = try {
             revenueSessionRemoteConfig.getSessionTimeLimitInMillis()
-        } catch (cause: Throwable) {
-            analytics.logException(cause)
-            return false
-        }
+        } catch (cause: RevenueSessionRemoteConfigException) {
+            val defaultSessionTimeLimitInMillis = 600000L
+            if (cause is RevenueSessionRemoteConfigException.FailToFetchConfig) {
+                defaultSessionTimeLimitInMillis
+            } else {
+                analytics.logException(cause)
+                null
+            }
+        } ?: return false
 
         val sessionTime = revenueSessionTimeDataSource.getSessionTime()
         val isSessionUsageLimitReached = sessionTime >= sessionTimeLimitInMillis

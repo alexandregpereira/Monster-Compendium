@@ -9,6 +9,7 @@ import br.alexandregpereira.hunter.paywall.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.paywall.event.PaywallEvent
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
+import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.OfferPeriod
 import br.alexandregpereira.hunter.revenue.Purchase
 import br.alexandregpereira.hunter.revenue.RestorePurchase
@@ -28,6 +29,7 @@ internal class PaywallStateHolder(
     private val paywallEventListener: EventListener<PaywallEvent>,
     private val paywallResultDispatcher: EventDispatcher<PaywallResult>,
     private val shouldShowPaywall: ShouldShowPaywall,
+    private val isPremium: IsPremium,
     private val settings: PaywallSettings,
     private val purchase: Purchase,
     private val getCurrentOffer: GetCurrentOffer,
@@ -57,8 +59,10 @@ internal class PaywallStateHolder(
         loadOfferJob?.cancel()
         loadOfferJob = null
         scope.launch {
+            val actionResultState = state.value.actionResultState
             settings.savePaywallWasClosedFlag(
-                paywallWasClosed = state.value.actionResultState == null,
+                paywallWasClosed = actionResultState == null ||
+                        actionResultState is PaywallActionResultState.Success,
             )
         }
     }
@@ -70,13 +74,12 @@ internal class PaywallStateHolder(
             try {
                 purchase(offerId = selectedOfferId)
                 analytics.track(eventName = "Paywall - subscribed")
-                changeToSuccessState(actionResultState = PaywallActionResultState.Success)
+                changeToSuccessState()
             } catch (cause: Throwable) {
                 if (cause is CancellationException){
                     setState { copy(isLoading = false) }
                     throw cause
                 }
-                cause.printStackTrace()
                 analytics.logException(cause)
                 analytics.track(eventName = "Paywall - subscribe error")
                 setState { copy(isLoading = false, actionResultState = PaywallActionResultState.PurchaseError) }
@@ -91,13 +94,12 @@ internal class PaywallStateHolder(
             try {
                 restorePurchase()
                 analytics.track(eventName = "Paywall - subscription restored")
-                changeToSuccessState(actionResultState = PaywallActionResultState.Success)
+                changeToSuccessState()
             } catch (cause: Throwable) {
                 if (cause is CancellationException) {
                     setState { copy(isLoading = false) }
                     throw cause
                 }
-                cause.printStackTrace()
                 analytics.logException(cause)
                 analytics.track(eventName = "Paywall - restore purchase error")
                 setState { copy(isLoading = false, actionResultState = PaywallActionResultState.RestorePurchaseError) }
@@ -125,6 +127,11 @@ internal class PaywallStateHolder(
         loadOfferJob?.cancel()
         loadOfferJob = scope.launch {
             try {
+                val isPremium = withContext(dispatcher) { isPremium(ignoreCache = true) }
+                if (isPremium) {
+                    changeToSuccessState()
+                    return@launch
+                }
                 val offer = withContext(dispatcher) { getCurrentOffer() }
                 selectedOfferId = offer.id
                 setState {
@@ -149,7 +156,6 @@ internal class PaywallStateHolder(
                     setState { copy(isLoading = false) }
                     throw cause
                 }
-                cause.printStackTrace()
                 analytics.logException(cause)
                 analytics.track(eventName = "Paywall - load offer error")
                 setState {
@@ -178,6 +184,7 @@ internal class PaywallStateHolder(
                 features = features,
                 actionResultState = null,
                 strings = localizedStrings,
+                isLoading = true,
             )
         }
         loadOffer()
@@ -188,11 +195,9 @@ internal class PaywallStateHolder(
         setState { copy(isOpen = false) }
     }
 
-    private fun changeToSuccessState(
-        actionResultState: PaywallActionResultState,
-    ) {
+    private fun changeToSuccessState() {
         paywallResultDispatcher.dispatchEvent(PaywallResult.OnSubscribe)
-        setState { copy(isLoading = false, actionResultState = actionResultState) }
+        setState { copy(isLoading = false, actionResultState = PaywallActionResultState.Success) }
         scope.launch {
             settings.savePaywallWasClosedFlag(paywallWasClosed = true)
         }

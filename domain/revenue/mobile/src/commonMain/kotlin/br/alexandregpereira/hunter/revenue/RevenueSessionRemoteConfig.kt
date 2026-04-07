@@ -30,10 +30,14 @@ internal class RevenueSessionRemoteConfig(
 ) {
 
     suspend fun getSessionTimeLimitInMillis(): Long {
-        return try {
-            val body: String = client.get(
+        val body: String = try {
+            client.get(
                 urlString = "remote-config.json"
             ).bodyAsText()
+        } catch (cause: Throwable) {
+            throw RevenueSessionRemoteConfigException.FailToFetchConfig(cause)
+        }
+        return try {
             val json = json.decodeFromString<JsonObject>(body)
             val key = "sessionTimeLimitInMillis"
             json[key]
@@ -43,7 +47,7 @@ internal class RevenueSessionRemoteConfig(
                     key = key,
                 )
         } catch (cause: Throwable) {
-            throw RevenueSessionRemoteConfigException.FailToFetchConfig(cause)
+            throw RevenueSessionRemoteConfigException.FailToParseConfig(cause)
         }
     }
 }
@@ -55,6 +59,11 @@ internal sealed class RevenueSessionRemoteConfigException(
 
     class FailToFetchConfig(cause: Throwable) : RevenueSessionRemoteConfigException(
         message = "Failed to fetch revenue session remote config. cause: ${cause.message}",
+        cause = cause,
+    )
+
+    class FailToParseConfig(cause: Throwable) : RevenueSessionRemoteConfigException(
+        message = "Failed to parse revenue session remote config json. cause: ${cause.message}",
         cause = cause,
     )
 

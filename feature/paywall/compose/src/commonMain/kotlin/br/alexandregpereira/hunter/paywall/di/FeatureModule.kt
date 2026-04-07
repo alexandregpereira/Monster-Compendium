@@ -35,6 +35,7 @@ val paywallFeatureModule = module {
             restorePurchase = get(),
             appLocalization = get(),
             analytics = get(),
+            isPremium = get(),
         )
     }
     single {

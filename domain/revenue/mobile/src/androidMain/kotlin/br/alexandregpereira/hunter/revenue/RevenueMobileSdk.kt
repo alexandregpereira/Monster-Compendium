@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.revenue
 
 import com.revenuecat.purchases.kmp.Purchases
 import com.revenuecat.purchases.kmp.configure
+import com.revenuecat.purchases.kmp.models.CacheFetchPolicy
 import com.revenuecat.purchases.kmp.models.CustomerInfo
 import com.revenuecat.purchases.kmp.models.Package
 import com.revenuecat.purchases.kmp.models.PackageType
@@ -32,7 +33,7 @@ internal class RevenueMobileSdk : RevenueSdk {
         Purchases.configure(apiKey = apiKey)
     }
 
-    override suspend fun isPremiumEnabled(): Boolean {
+    override suspend fun isPremiumEnabled(ignoreCache: Boolean): Boolean {
         return suspendCancellableCoroutine { continuation ->
             val purchases = try {
                 Purchases.sharedInstance
@@ -41,7 +42,9 @@ internal class RevenueMobileSdk : RevenueSdk {
                 continuation.resumeWith(Result.failure(exception))
                 return@suspendCancellableCoroutine
             }
+            val fetchPolicy = if (ignoreCache) CacheFetchPolicy.FETCH_CURRENT else CacheFetchPolicy.CACHED_OR_FETCHED
             purchases.getCustomerInfo(
+                fetchPolicy = fetchPolicy,
                 onError = { error ->
                     val exception = RevenueSdkException.FailToVerifyPremium(
                         code = error.code.toString(),

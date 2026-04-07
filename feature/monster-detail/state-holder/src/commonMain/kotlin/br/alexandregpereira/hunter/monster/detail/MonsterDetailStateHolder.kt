@@ -162,7 +162,6 @@ class MonsterDetailStateHolder internal constructor(
             }
             .catch {
                 setState { copy(isLoading = false) }
-                it.printStackTrace()
                 analytics.logException(it)
             }
             .emitState()
