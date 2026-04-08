@@ -44,6 +44,7 @@ multiplatform {
     }
 
     commonMain {
+        implementation(project(":core:ads-consent"))
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:feature-flag"))
