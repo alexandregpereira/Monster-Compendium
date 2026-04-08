@@ -15,19 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.app
+plugins {
+    kotlin("multiplatform")
+    id("com.android.library")
+}
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import br.alexandregpereira.hunter.ui.util.createComposeView
+multiplatform {
+    commonMain {
+        implementation(project(":core:analytics"))
+        implementation(libs.koin.core)
+        implementation(libs.kotlin.coroutines.core)
+    }
+    androidMain {
+        implementation(libs.play.services.ads)
+        implementation(libs.user.messaging.platform.android)
+    }
+    jvmMain()
+    iosMain()
+}
 
-class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val view = createComposeView { contentPadding ->
-            HunterApp(contentPadding = contentPadding)
-        }
-        setContentView(view)
+android {
+    namespace = "br.alexandregpereira.hunter.ads.consent"
+    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    defaultConfig {
+        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

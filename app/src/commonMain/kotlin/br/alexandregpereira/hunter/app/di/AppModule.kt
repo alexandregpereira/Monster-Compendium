@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app.di
 
+import br.alexandregpereira.hunter.ads.consent.di.adsConsentCoreModule
 import br.alexandregpereira.hunter.ads.di.adsFeatureModule
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.AppConfig
@@ -82,6 +83,9 @@ internal fun KoinApplication.initKoinModules() {
         localizationModule,
         monsterEventModule,
         appEventModule,
+        adsConsentCoreModule(
+            deviceDebugHashTestId = AppConfig.ADS_CONSENT_DEVICE_HASH_TEST_ID.takeIf { it.isNotBlank() }
+        ),
     )
 }
 
@@ -100,6 +104,8 @@ private val appModule = module {
             analytics = get(),
             revenueSession = get(),
             featureFlagProvider = get(),
+            adsConsentManager = get(),
+            isSessionUsageLimitReached = get(),
         )
     }
 }

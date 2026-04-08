@@ -29,7 +29,11 @@ internal class AmplitudeFeatureFlagProvider(
     }
 
     override suspend fun isFeatureEnabled(feature: String): Boolean {
-        val client = client ?: return false
+        val client = client
+        if (client == null) {
+            analytics.logException(IllegalStateException("Failed to check feature flag $feature: client is null"))
+            return false
+        }
         return withContext(Dispatchers.IO) {
             try {
                 if (!fetched && networkManager.isNetworkAvailable()) {

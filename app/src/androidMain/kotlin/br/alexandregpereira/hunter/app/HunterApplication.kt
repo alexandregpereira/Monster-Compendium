@@ -18,11 +18,12 @@
 package br.alexandregpereira.hunter.app
 
 import android.app.Application
-import br.alexandregpereira.hunter.ads.di.androidAdsModule
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -30,9 +31,12 @@ import org.koin.dsl.module
 
 class HunterApplication : Application() {
 
+    private val adsConsentManager: AdsConsentManager by inject()
+
     override fun onCreate() {
         super.onCreate()
         initKoin()
+        adsConsentManager.initialize()
     }
 
     private fun initKoin() {
@@ -49,7 +53,6 @@ internal fun KoinApplication.initAndroidModules(app: Application) {
             factory { Firebase.analytics }
             factory { Firebase.crashlytics }
         },
-        androidAdsModule,
     )
     initKoinModules()
 }

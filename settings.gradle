@@ -29,6 +29,7 @@ dependencyResolutionManagement {
 rootProject.name = 'hunter'
 include ':app'
 
+include ':core:ads-consent'
 include ':core:analytics'
 include ':core:event'
 include ':core:feature-flag'

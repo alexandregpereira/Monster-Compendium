@@ -24,6 +24,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:ads-consent"))
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:state-holder"))
@@ -37,7 +38,6 @@ multiplatform {
     }
     androidMain {
         implementation(libs.play.services.ads)
-        implementation(libs.user.messaging.platform.android)
     }
     jvmMain()
     iosMain()
