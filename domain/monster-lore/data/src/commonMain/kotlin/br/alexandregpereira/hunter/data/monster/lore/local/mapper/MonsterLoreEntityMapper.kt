@@ -25,11 +25,11 @@ import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 
-internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
+internal fun MonsterLoreCompleteEntity.toDomain(strings: Map<String, String> = emptyMap()): MonsterLore {
     return MonsterLore(
         index = monsterLore.monsterLoreIndex,
         name = "",
-        entries = entries.mapIndexed { i, entry -> entry.toDomain(index = i) },
+        entries = entries.mapIndexed { i, entry -> entry.toDomain(index = i, strings = strings) },
         status = when (monsterLore.status) {
             MonsterLoreEntityStatus.Original -> MonsterLoreStatus.Original
             MonsterLoreEntityStatus.Imported -> MonsterLoreStatus.Imported
@@ -38,11 +38,11 @@ internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
     )
 }
 
-internal fun MonsterLoreEntryEntity.toDomain(index: Int): MonsterLoreEntry {
+internal fun MonsterLoreEntryEntity.toDomain(index: Int, strings: Map<String, String> = emptyMap()): MonsterLoreEntry {
     return MonsterLoreEntry(
         index = "$monsterIndex-$index",
-        title = title,
-        description = description
+        title = strings[title] ?: title,
+        description = strings[description] ?: description
     )
 }
 

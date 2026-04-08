@@ -25,7 +25,9 @@ import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.uuid.generateUUID
 
-internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
+internal fun List<ActionWithDamageDicesEntity>.toDomain(
+    strings: Map<String, String> = emptyMap(),
+): List<Action> {
     return this.map {
         Action(
             id = it.action.id,
@@ -33,8 +35,8 @@ internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
             attackBonus = it.action.attackBonus,
             abilityDescription = AbilityDescription(
                 index = it.action.id,
-                name = it.action.name,
-                description = it.action.description
+                name = strings[it.action.name] ?: it.action.name,
+                description = strings[it.action.description] ?: it.action.description
             )
         )
     }

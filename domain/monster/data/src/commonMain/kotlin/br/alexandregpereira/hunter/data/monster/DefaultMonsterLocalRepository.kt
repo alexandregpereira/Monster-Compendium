@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
+import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
+import br.alexandregpereira.hunter.domain.strings.StringsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
@@ -35,6 +37,8 @@ import kotlinx.coroutines.flow.single
 internal class DefaultMonsterLocalRepository(
     private val localDataSource: MonsterLocalDataSource,
     private val getAppearanceSettings: GetAppearanceSettings,
+    private val getLanguageUseCase: GetLanguageUseCase,
+    private val stringsRepository: StringsRepository,
 ) : MonsterLocalRepository {
 
     override fun saveMonsters(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {
@@ -43,31 +47,31 @@ internal class DefaultMonsterLocalRepository(
 
     override fun getMonsterPreviews(): Flow<List<Monster>> {
         return localDataSource.getMonsterPreviews().map {
-            it.toDomainMonsterEntity(getImageContentScale())
+            it.toDomainMonsterEntity(getImageContentScale(), getStrings())
         }
     }
 
     override fun getMonsterPreviewsEdited(): Flow<List<Monster>> {
         return localDataSource.getMonsterPreviewsEdited().map {
-            it.toDomainMonsterEntity(getImageContentScale())
+            it.toDomainMonsterEntity(getImageContentScale(), getStrings())
         }
     }
 
     override fun getMonsters(): Flow<List<Monster>> {
-        return localDataSource.getMonsters().map { it.toDomain(getImageContentScale()) }
+        return localDataSource.getMonsters().map { it.toDomain(getImageContentScale(), getStrings()) }
     }
 
     override fun getMonsters(indexes: List<String>): Flow<List<Monster>> {
-        return localDataSource.getMonsters(indexes).map { it.toDomain(getImageContentScale()) }
+        return localDataSource.getMonsters(indexes).map { it.toDomain(getImageContentScale(), getStrings()) }
     }
 
     override fun getMonster(index: String): Flow<Monster> {
-        return localDataSource.getMonster(index).map { it.toDomain(getImageContentScale()) }
+        return localDataSource.getMonster(index).map { it.toDomain(getImageContentScale(), getStrings()) }
     }
 
     override fun getMonstersByQuery(query: String): Flow<List<Monster>> {
         return localDataSource.getMonstersByQuery(query).map {
-            it.toDomainMonsterEntity(getImageContentScale())
+            it.toDomainMonsterEntity(getImageContentScale(), getStrings())
         }
     }
 
@@ -77,7 +81,7 @@ internal class DefaultMonsterLocalRepository(
 
     override fun getMonstersByStatus(status: Set<MonsterStatus>): Flow<List<Monster>> {
         return localDataSource.getMonstersByStatus(status.map { it.toEntityStatus() }.toSet())
-            .map { it.toDomain(getImageContentScale()) }
+            .map { it.toDomain(getImageContentScale(), getStrings()) }
     }
 
     private suspend fun getImageContentScale(): MonsterImageContentScale {
@@ -87,5 +91,10 @@ internal class DefaultMonsterLocalRepository(
                 AppSettingsImageContentScale.Crop -> MonsterImageContentScale.Crop
             }
         }
+    }
+
+    private suspend fun getStrings(): Map<String, String> {
+        val lang = getLanguageUseCase().single()
+        return stringsRepository.getStrings(lang)
     }
 }

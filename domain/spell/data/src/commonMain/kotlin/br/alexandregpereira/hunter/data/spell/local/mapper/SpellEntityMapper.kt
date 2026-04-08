@@ -23,22 +23,22 @@ import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 
-internal fun SpellEntity.toDomain(): Spell {
+internal fun SpellEntity.toDomain(strings: Map<String, String> = emptyMap()): Spell {
     return Spell(
         index = spellIndex,
-        name = name,
+        name = strings[name] ?: name,
         level = level,
-        castingTime = castingTime,
-        components = components,
-        duration = duration,
-        range = range,
+        castingTime = strings[castingTime] ?: castingTime,
+        components = strings[components] ?: components,
+        duration = strings[duration] ?: duration,
+        range = strings[range] ?: range,
         ritual = ritual,
         concentration = concentration,
         savingThrowType = savingThrowType ?.let { type -> SavingThrowType.valueOf(type) },
         damageType = damageType,
         school = SchoolOfMagic.valueOf(school),
-        description = description,
-        higherLevel = higherLevel,
+        description = strings[description] ?: description,
+        higherLevel = higherLevel?.let { strings[it] ?: it },
         status = when (status) {
             0 -> SpellStatus.Original
             else -> SpellStatus.Imported

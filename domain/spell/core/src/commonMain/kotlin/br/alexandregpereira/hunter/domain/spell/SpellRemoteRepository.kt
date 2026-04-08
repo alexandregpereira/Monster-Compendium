@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SpellRemoteRepository {
 
-    fun getRemoteSpells(lang: String): Flow<List<Spell>>
+    fun getRemoteSpells(): Flow<List<Spell>>
 }

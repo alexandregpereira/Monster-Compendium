@@ -31,6 +31,7 @@ multiplatform {
         implementation(project(":domain:monster-lore:data"))
         implementation(project(":domain:settings:data"))
         implementation(project(":domain:spell:data"))
+        implementation(project(":domain:strings:core"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.kotlin.serialization)
         implementation(libs.koin.core)

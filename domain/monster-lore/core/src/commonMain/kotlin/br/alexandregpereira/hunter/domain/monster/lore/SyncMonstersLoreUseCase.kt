@@ -33,7 +33,6 @@ class SyncMonstersLoreUseCase(
     private val repository: MonsterLoreRepository,
     private val saveMonstersLore: SaveMonstersLoreUseCase,
     private val alternativeSourceRepository: MonsterLoreSourceRepository,
-    private val settingsRepository: MonsterLoreSettingsRepository,
     private val getMonstersLoreEdited: GetMonstersLoreEdited,
 ) {
 
@@ -44,8 +43,7 @@ class SyncMonstersLoreUseCase(
                 sources.takeIf { it.isNotEmpty() }
                     ?.asFlow()
                     ?.flatMapMerge { source ->
-                        val lang = settingsRepository.getLanguage().single()
-                        repository.getRemoteMonstersLore(source.acronym, lang = lang)
+                        repository.getRemoteMonstersLore(source.acronym)
                             .catch { emit(emptyList()) }
                     }?.reduce { accumulator, value -> accumulator + value } ?: emptyList()
             }

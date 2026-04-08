@@ -27,7 +27,7 @@ import org.koin.dsl.module
 val monsterLoreDomainModule = module {
     factory { GetMonsterLoreUseCase(get()) }
     factory { GetMonstersLoreByIdsUseCase(get()) }
-    factory { SyncMonstersLoreUseCase(get(), get(), get(), get(), get()) }
+    factory { SyncMonstersLoreUseCase(get(), get(), get(), get()) }
     factory { SaveMonstersLoreUseCase(get()) }
     factory { GetMonstersLoreEdited(get()) }
 }

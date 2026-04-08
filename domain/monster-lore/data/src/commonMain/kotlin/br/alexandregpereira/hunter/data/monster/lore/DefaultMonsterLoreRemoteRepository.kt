@@ -20,7 +20,6 @@ package br.alexandregpereira.hunter.data.monster.lore
 import br.alexandregpereira.hunter.data.monster.lore.remote.MonsterLoreRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.lore.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRemoteRepository
-import br.alexandregpereira.hunter.domain.monster.lore.MonsterLoreRepository
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -29,11 +28,8 @@ internal class DefaultMonsterLoreRemoteRepository(
     private val monsterLoreRemoteDataSource: MonsterLoreRemoteDataSource
 ) : MonsterLoreRemoteRepository {
 
-    override fun getRemoteMonstersLore(
-        sourceAcronym: String,
-        lang: String
-    ): Flow<List<MonsterLore>> {
-        return monsterLoreRemoteDataSource.getMonstersLore(sourceAcronym, lang).map { monsters ->
+    override fun getRemoteMonstersLore(sourceAcronym: String): Flow<List<MonsterLore>> {
+        return monsterLoreRemoteDataSource.getMonstersLore(sourceAcronym).map { monsters ->
             monsters.map { it.toDomain() }
         }
     }

@@ -40,11 +40,8 @@ internal class DefaultMonsterLoreRepository(
         return localRepository.save(monstersLore, isSync)
     }
 
-    override fun getRemoteMonstersLore(
-        sourceAcronym: String,
-        lang: String
-    ): Flow<List<MonsterLore>> {
-        return remoteRepository.getRemoteMonstersLore(sourceAcronym, lang)
+    override fun getRemoteMonstersLore(sourceAcronym: String): Flow<List<MonsterLore>> {
+        return remoteRepository.getRemoteMonstersLore(sourceAcronym)
     }
 
     override fun getMonstersLoreEdited(): Flow<List<MonsterLore>> {

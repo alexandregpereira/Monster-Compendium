@@ -1,0 +1,15 @@
+CREATE TABLE StringEntity (
+    `key` TEXT NOT NULL,
+    lang TEXT NOT NULL,
+    value TEXT NOT NULL,
+    PRIMARY KEY(`key`, lang)
+);
+
+getStrings:
+SELECT `key`, value FROM StringEntity WHERE lang = ?;
+
+insertString:
+INSERT OR REPLACE INTO StringEntity(`key`, lang, value) VALUES (?, ?, ?);
+
+deleteStrings:
+DELETE FROM StringEntity WHERE lang = ?;

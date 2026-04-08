@@ -28,6 +28,7 @@ multiplatform {
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:settings:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:strings:core"))
         implementation(project(":domain:sync:core"))
         implementation(libs.koin.core)
     }

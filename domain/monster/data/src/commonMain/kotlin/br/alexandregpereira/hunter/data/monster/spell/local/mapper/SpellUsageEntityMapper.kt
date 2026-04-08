@@ -21,10 +21,12 @@ import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageComp
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 
-internal fun List<SpellUsageCompleteEntity>.toDomain(): List<SpellUsage> {
+internal fun List<SpellUsageCompleteEntity>.toDomain(
+    strings: Map<String, String> = emptyMap(),
+): List<SpellUsage> {
     return map { entity ->
         SpellUsage(
-            group = entity.spellUsage.group,
+            group = strings[entity.spellUsage.group] ?: entity.spellUsage.group,
             spells = entity.spells.toDomain()
         )
     }

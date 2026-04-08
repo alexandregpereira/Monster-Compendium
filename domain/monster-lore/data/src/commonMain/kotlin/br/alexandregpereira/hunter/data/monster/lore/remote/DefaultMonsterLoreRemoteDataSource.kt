@@ -30,10 +30,10 @@ internal class DefaultMonsterLoreRemoteDataSource(
     private val json: Json
 ) : MonsterLoreRemoteDataSource {
 
-    override fun getMonstersLore(sourceAcronym: String, lang: String): Flow<List<MonsterLoreDto>> {
+    override fun getMonstersLore(sourceAcronym: String): Flow<List<MonsterLoreDto>> {
         return flow {
             emit(
-                client.get("$lang/lore/${sourceAcronym.lowercase()}/monster-lore.json")
+                client.get("lore/${sourceAcronym.lowercase()}/monster-lore.json")
                     .bodyAsText()
                     .let { json.decodeFromString(it) }
             )

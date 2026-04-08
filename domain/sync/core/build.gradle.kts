@@ -26,6 +26,8 @@ multiplatform {
         implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":domain:settings:core"))
+        implementation(project(":domain:strings:core"))
+        implementation(project(":core:localization"))
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }

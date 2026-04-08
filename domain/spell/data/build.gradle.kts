@@ -25,6 +25,7 @@ multiplatform {
     commonMain {
         implementation(project(":domain:settings:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:strings:core"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.kotlin.serialization)
         implementation(libs.koin.core)

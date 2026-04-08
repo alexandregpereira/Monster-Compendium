@@ -57,7 +57,7 @@ val monsterDataModule = module {
     single { MonsterCacheDataSource() }
     factory<MonsterRepository> { MonsterRepositoryImpl(get(), get()) }
     factory {
-        createMonsterLocalRepository() ?: DefaultMonsterLocalRepository(get(), get())
+        createMonsterLocalRepository() ?: DefaultMonsterLocalRepository(get(), get(), get(), get())
     }
     factory<MonsterRemoteRepository> { MonsterRemoteRepositoryImpl(get(), get()) }
     factory<MonsterCacheRepository> { MonsterCacheRepositoryImpl(get()) }

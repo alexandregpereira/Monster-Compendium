@@ -27,7 +27,7 @@ import org.koin.dsl.module
 val spellDomainModule = module {
     factory { GetSpellsByIdsUseCase(get()) }
     factory { GetSpellUseCase(get()) }
-    factory { SyncSpellsUseCase(get(), get(), get()) }
+    factory { SyncSpellsUseCase(get(), get()) }
     factory { SaveSpells(get()) }
     factory { GetSpellsEdited(get()) }
 }

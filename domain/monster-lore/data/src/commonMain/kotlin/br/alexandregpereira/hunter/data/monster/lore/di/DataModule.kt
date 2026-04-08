@@ -40,7 +40,7 @@ val monsterLoreDataModule = module {
     factory<MonsterLoreRepository> { DefaultMonsterLoreRepository(get(), get()) }
     single { MonsterLoreLocalDataSource(get()) }
     factory { createRemoteDataSource() ?: DefaultMonsterLoreRemoteDataSource(get(), get()) }
-    factory { createLocalRepository() ?: DefaultMonsterLoreLocalRepository(get()) }
+    factory { createLocalRepository() ?: DefaultMonsterLoreLocalRepository(get(), get(), get()) }
     factory<MonsterLoreRemoteRepository> { DefaultMonsterLoreRemoteRepository(get()) }
     factory<MonsterLoreSettingsRepository> { MonsterLoreSettingsRepositoryImpl(get()) }
     factory<MonsterLoreSourceRepository> { MonsterLoreSourceRepositoryImpl(get()) }

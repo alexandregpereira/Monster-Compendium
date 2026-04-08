@@ -20,13 +20,18 @@ package br.alexandregpereira.hunter.data.spell
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.spell.local.mapper.toEntity
+import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import br.alexandregpereira.hunter.domain.spell.model.Spell
+import br.alexandregpereira.hunter.domain.strings.StringsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 internal class DefaultSpellLocalRepository(
-    private val localDataSource: SpellLocalDataSource
+    private val localDataSource: SpellLocalDataSource,
+    private val getLanguageUseCase: GetLanguageUseCase,
+    private val stringsRepository: StringsRepository,
 ) : SpellLocalRepository {
 
     override fun saveSpells(spells: List<Spell>): Flow<Unit> {
@@ -34,28 +39,36 @@ internal class DefaultSpellLocalRepository(
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {
-        return localDataSource.getSpell(index).map { it.toDomain() }
+        return localDataSource.getSpell(index).map { it.toDomain(getStrings()) }
     }
 
     override fun getLocalSpells(indexes: List<String>): Flow<List<Spell>> {
         return localDataSource.getSpells(indexes).map { spells ->
-            spells.map { it.toDomain() }
+            val strings = getStrings()
+            spells.map { it.toDomain(strings) }
         }
     }
 
     override fun getLocalSpells(): Flow<List<Spell>> {
         return localDataSource.getSpells().map { spells ->
-            spells.map { it.toDomain() }
+            val strings = getStrings()
+            spells.map { it.toDomain(strings) }
         }
     }
 
     override fun getLocalSpellsEdited(): Flow<List<Spell>> {
         return localDataSource.getSpellsEdited().map { spells ->
-            spells.map { it.toDomain() }
+            val strings = getStrings()
+            spells.map { it.toDomain(strings) }
         }
     }
 
     override fun deleteLocalSpells(): Flow<Unit> {
         return localDataSource.deleteSpells()
+    }
+
+    private suspend fun getStrings(): Map<String, String> {
+        val lang = getLanguageUseCase().single()
+        return stringsRepository.getStrings(lang)
     }
 }

@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 
 internal interface MonsterLoreRemoteDataSource {
 
-    fun getMonstersLore(sourceAcronym: String, lang: String): Flow<List<MonsterLoreDto>>
+    fun getMonstersLore(sourceAcronym: String): Flow<List<MonsterLoreDto>>
 }

@@ -34,25 +34,28 @@ import br.alexandregpereira.hunter.domain.model.Stats
 
 fun List<MonsterCompleteEntity>.toDomain(
     monsterImageContentScale: MonsterImageContentScale,
+    strings: Map<String, String> = emptyMap(),
 ): List<Monster> {
     return this.map {
-        it.toDomain(monsterImageContentScale)
+        it.toDomain(monsterImageContentScale, strings)
     }
 }
 
 fun List<MonsterEntity>.toDomainMonsterEntity(
     monsterImageContentScale: MonsterImageContentScale,
+    strings: Map<String, String> = emptyMap(),
 ): List<Monster> {
     return this.map {
-        it.toDomain(monsterImageContentScale)
+        it.toDomain(monsterImageContentScale, strings)
     }
 }
 
 internal fun MonsterCompleteEntity.toDomain(
     monsterImageContentScale: MonsterImageContentScale,
+    strings: Map<String, String> = emptyMap(),
 ): Monster {
     val monster = this.monster
-    return monster.toDomain(monsterImageContentScale).copy(
+    return monster.toDomain(monsterImageContentScale, strings).copy(
         speed = this.speed?.toDomain() ?: Speed(hover = false, values = emptyList()),
         abilityScores = this.abilityScores.toDomain(),
         savingThrows = this.savingThrows.toDomain(),
@@ -61,11 +64,11 @@ internal fun MonsterCompleteEntity.toDomain(
         damageResistances = this.damageResistances.toDamageDomain(),
         damageImmunities = this.damageImmunities.toDamageDomain(),
         conditionImmunities = this.conditionImmunities.toConditionDomain(),
-        specialAbilities = this.specialAbilities.toDomain(),
-        actions = this.actions.toDomain(),
-        reactions = this.reactions.toDomainReactionEntity(),
-        spellcastings = this.spellcastings.toDomain(),
-        legendaryActions = this.legendaryActions.toDomain()
+        specialAbilities = this.specialAbilities.toDomain(strings),
+        actions = this.actions.toDomain(strings),
+        reactions = this.reactions.toDomainReactionEntity(strings),
+        spellcastings = this.spellcastings.toDomain(strings),
+        legendaryActions = this.legendaryActions.toDomain(strings)
     )
 }
 
@@ -129,6 +132,7 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
 
 private fun MonsterEntity.toDomain(
     monsterImageContentScale: MonsterImageContentScale,
+    strings: Map<String, String> = emptyMap(),
 ): Monster {
     val monster = this
     val imageContentScale = when (monster.imageContentScale) {
@@ -140,7 +144,7 @@ private fun MonsterEntity.toDomain(
         index = monster.index,
         type = MonsterType.valueOf(monster.type),
         challengeRatingData = ChallengeRating(monster.challengeRating),
-        name = monster.name,
+        name = strings[monster.name] ?: monster.name,
         imageData = MonsterImageData(
             url = monster.imageUrl.replaceOldImageUrl(),
             backgroundColor = Color(
@@ -151,18 +155,18 @@ private fun MonsterEntity.toDomain(
             contentScale = imageContentScale
         ),
         subtype = monster.subtype,
-        group = monster.group,
-        subtitle = monster.subtitle,
+        group = monster.group?.let { strings[it] ?: it },
+        subtitle = strings[monster.subtitle] ?: monster.subtitle,
         size = monster.size,
-        alignment = monster.alignment,
+        alignment = strings[monster.alignment] ?: monster.alignment,
         stats = Stats(
             armorClass = monster.armorClass,
             hitPoints = monster.hitPoints,
             hitDice = monster.hitDice
         ),
         sourceName = monster.sourceName,
-        senses = monster.senses.split(", "),
-        languages = monster.languages,
+        senses = (strings[monster.senses] ?: monster.senses).split(", "),
+        languages = strings[monster.languages] ?: monster.languages,
         status = when (monster.status) {
             MonsterEntityStatus.Original -> MonsterStatus.Original
             MonsterEntityStatus.Clone -> MonsterStatus.Clone

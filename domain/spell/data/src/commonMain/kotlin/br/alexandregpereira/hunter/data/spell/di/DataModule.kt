@@ -34,7 +34,7 @@ import org.koin.dsl.module
 val spellDataModule = module {
     factory<SpellLocalDataSource> { DefaultSpellLocalDataSource(get()) }
     factory<SpellRepository> { DefaultSpellRepository(get(), get()) }
-    factory<SpellLocalRepository> { DefaultSpellLocalRepository(get()) }
+    factory<SpellLocalRepository> { DefaultSpellLocalRepository(get(), get(), get()) }
     factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
     factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }

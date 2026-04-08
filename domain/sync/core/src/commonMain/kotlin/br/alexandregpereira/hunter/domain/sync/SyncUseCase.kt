@@ -23,8 +23,10 @@ import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
+import br.alexandregpereira.hunter.domain.strings.SyncStringsUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.localization.Language
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -42,6 +44,7 @@ class SyncUseCase internal constructor(
     private val syncMonsters: SyncMonstersUseCase,
     private val syncSpells: SyncSpellsUseCase,
     private val syncMonstersLoreUseCase: SyncMonstersLoreUseCase,
+    private val syncStringsUseCase: SyncStringsUseCase,
     private val getLanguageUseCase: GetLanguageUseCase,
     private val saveLanguageUseCase: SaveLanguageUseCase,
     private val getContentVersionUseCase: GetContentVersionUseCase,
@@ -50,7 +53,7 @@ class SyncUseCase internal constructor(
     private val resetFirstTime: ResetFirstTime,
 ) {
 
-    private val contentVersion = 5
+    private val contentVersion = 6
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {
@@ -63,6 +66,9 @@ class SyncUseCase internal constructor(
                             async { syncMonsters().single() },
                             async { syncSpells().single() },
                             async { syncMonstersLoreUseCase().single() },
+                            *Language.entries.map { lang ->
+                                async { syncStringsUseCase(lang.code).single() }
+                            }.toTypedArray(),
                         )
                     }.onFailure {
                         runCatching { saveLanguageUseCase(lastLanguageRollback).single() }

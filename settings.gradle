@@ -51,6 +51,7 @@ include ':domain:revenue:data'
 include ':domain:revenue:mobile'
 include ':domain:settings:core'
 include ':domain:spell:core'
+include ':domain:strings:core'
 include ':domain:sync:core'
 
 include ':domain:monster:event'

@@ -21,21 +21,25 @@ import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
-internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
+internal fun List<SpecialAbilityEntity>.toDomain(
+    strings: Map<String, String> = emptyMap(),
+): List<AbilityDescription> {
     return this.map {
         AbilityDescription(
-            name = it.name,
-            description = it.description,
+            name = strings[it.name] ?: it.name,
+            description = strings[it.description] ?: it.description,
             index = "${it.monsterIndex}-${it.name}",
         )
     }
 }
 
-internal fun List<ReactionEntity>.toDomainReactionEntity(): List<AbilityDescription> {
+internal fun List<ReactionEntity>.toDomainReactionEntity(
+    strings: Map<String, String> = emptyMap(),
+): List<AbilityDescription> {
     return this.map {
         AbilityDescription(
-            name = it.name,
-            description = it.description,
+            name = strings[it.name] ?: it.name,
+            description = strings[it.description] ?: it.description,
             index = "${it.monsterIndex}-${it.name}",
         )
     }

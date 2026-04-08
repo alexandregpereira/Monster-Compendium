@@ -27,14 +27,12 @@ import kotlinx.coroutines.flow.single
 @OptIn(ExperimentalCoroutinesApi::class)
 class SyncSpellsUseCase(
     private val repository: SpellRepository,
-    private val spellSettingsRepository: SpellSettingsRepository,
     private val getSpellsEdited: GetSpellsEdited,
 ) {
 
     operator fun invoke(): Flow<Unit> {
-        return spellSettingsRepository.getLanguage().flatMapLatest { lang ->
-            repository.getRemoteSpells(lang)
-        }.removeSpellsEdited().flatMapLatest { spells ->
+        return repository.getRemoteSpells()
+            .removeSpellsEdited().flatMapLatest { spells ->
             repository.deleteLocalSpells().flatMapLatest {
                 repository.saveSpells(spells)
             }

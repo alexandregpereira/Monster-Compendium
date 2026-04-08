@@ -22,12 +22,14 @@ import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEn
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
 
-fun List<SpellcastingCompleteEntity>.toDomain(): List<Spellcasting> {
+fun List<SpellcastingCompleteEntity>.toDomain(
+    strings: Map<String, String> = emptyMap(),
+): List<Spellcasting> {
     return map { entity ->
         Spellcasting(
-            description = entity.spellcasting.description,
+            description = strings[entity.spellcasting.description] ?: entity.spellcasting.description,
             type = SpellcastingType.valueOf(entity.spellcasting.type),
-            usages = entity.usages.toDomain()
+            usages = entity.usages.toDomain(strings)
         )
     }
 }

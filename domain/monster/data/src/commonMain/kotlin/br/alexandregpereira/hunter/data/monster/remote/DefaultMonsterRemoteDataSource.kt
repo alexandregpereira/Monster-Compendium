@@ -33,14 +33,14 @@ internal class DefaultMonsterRemoteDataSource(
 
     override fun getMonsters(lang: String): Flow<List<MonsterDto>> {
         return flow {
-            emit(json.decodeFromString(client.get("$lang/monsters.json").bodyAsText()))
+            emit(json.decodeFromString(client.get("monsters.json").bodyAsText()))
         }
     }
 
     override fun getMonsters(sourceAcronym: String, lang: String): Flow<List<MonsterDto>> {
         return flow {
             val response = client.get(
-                urlString = "$lang/sources/${sourceAcronym.lowercase()}/monsters.json"
+                urlString = "sources/${sourceAcronym.lowercase()}/monsters.json"
             )
 
             if (response.status.value != 200) {
