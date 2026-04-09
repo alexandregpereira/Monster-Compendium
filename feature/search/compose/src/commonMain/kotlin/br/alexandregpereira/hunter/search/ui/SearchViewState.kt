@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.search.ui
 
 import androidx.compose.ui.text.input.TextFieldValue
+import br.alexandregpereira.hunter.search.SearchTip
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 
 internal data class SearchViewState(
@@ -31,7 +32,14 @@ internal data class SearchViewState(
     val firstVisibleItemIndex: Int = 0,
     val firstVisibleItemScrollOffset: Int = 0,
     val searchKeysScrollOffset: Int = 0,
+    val searchTipsTitle: String = "",
+    val searchTips: List<SearchTip> = emptyList(),
+    val searchNoResultsTitle: String = "",
+    val searchNoResultsDescription: String = "",
+    val contentState: SearchContentState = SearchContentState.Tips,
 )
+
+internal enum class SearchContentState { Tips, Empty, Results }
 
 internal data class SearchKeyState(
     private val key: String,
