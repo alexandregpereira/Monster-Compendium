@@ -29,14 +29,17 @@ import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChang
 import br.alexandregpereira.hunter.search.domain.SearchKey
 import br.alexandregpereira.hunter.search.domain.SearchKeySymbolAnd
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
+import br.alexandregpereira.hunter.search.domain.SearchValueType
+import br.alexandregpereira.hunter.search.ui.SearchContentState
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.strings.formatWithPlural
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -55,7 +58,10 @@ internal class SearchStateHolder(
     private val appLocalization: AppReactiveLocalization,
 ) : UiModel<SearchViewState>(SearchViewState(searchLabel = appLocalization.getStrings().search)) {
 
-    private val searchQuery = MutableStateFlow(state.value.searchValue.text)
+    private val searchQuery = MutableSharedFlow<String>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
     private var job: Job? = null
 
     init {
@@ -72,20 +78,57 @@ internal class SearchStateHolder(
         }.launchIn(scope)
 
         setState {
-            copy(searchKeys = SearchKey.entries.filter { it != SearchKey.Name }.toState())
+            val strings = appLocalization.getStrings()
+            copy(
+                searchKeys = SearchKey.entries.filter { it != SearchKey.Name }.toState(),
+                searchTipsTitle = strings.searchTipsTitle,
+                searchTips = strings.searchTips,
+                searchNoResultsTitle = strings.searchNoResultsTitle,
+                searchNoResultsDescription = strings.searchNoResultsDescription,
+            )
         }
     }
 
     private fun search(clearCache: Boolean = false) {
+        val searchValueText = state.value.searchValue.text
+        if (searchValueText.isBlank()) {
+            setState {
+                copy(
+                    searchValue = state.value.searchValue,
+                    contentState = SearchContentState.Tips,
+                    monsterRows = emptyList(),
+                    totalResults = 0,
+                )
+            }
+            return
+        }
+        val isQueryIncomplete = isQueryIncomplete(searchValueText)
+        setState {
+            val contentState = if (isQueryIncomplete && (contentState == SearchContentState.Empty || monsterRows.isEmpty())) {
+                SearchContentState.Tips
+            } else contentState
+            copy(contentState = contentState)
+        }
+        if (isQueryIncomplete) {
+            return
+        }
         setState { copy(isSearching = true) }
         job?.cancel()
-        job = searchMonstersByNameUseCase(state.value.searchValue.text, clearCache)
+        job = searchMonstersByNameUseCase(searchValueText, clearCache)
             .cancellable()
             .map { result ->
                 result.size to result.asState()
             }
             .onEach { (totalResults, monsterRows) ->
                 setState {
+                    val isQueryIncomplete = isQueryIncomplete(searchValue.text)
+                    val contentState = when {
+                        searchValue.text.isBlank() -> SearchContentState.Tips
+                        monsterRows.isEmpty() && isQueryIncomplete -> SearchContentState.Tips
+                        isQueryIncomplete(searchValue.text) -> state.value.contentState
+                        monsterRows.isEmpty() -> SearchContentState.Empty
+                        else -> SearchContentState.Results
+                    }
                     copy(
                         monsterRows = monsterRows,
                         totalResults = totalResults,
@@ -94,7 +137,8 @@ internal class SearchStateHolder(
                                 totalResults,
                                 searchResultsPlural
                             )
-                        }
+                        },
+                        contentState = contentState,
                     )
                 }
             }
@@ -105,7 +149,7 @@ internal class SearchStateHolder(
                 setState { copy(isSearching = false) }
             }
             .map { (totalResults, _) ->
-                analytics.trackSearch(totalResults, searchQuery.value)
+                analytics.trackSearch(totalResults, searchQuery = searchValueText)
                 delay(300)
                 setState { copy(isSearching = false) }
             }
@@ -121,7 +165,11 @@ internal class SearchStateHolder(
                     searchResults = strings.searchResultsSingular.formatWithPlural(
                         state.value.totalResults,
                         strings.searchResultsPlural
-                    )
+                    ),
+                    searchTipsTitle = strings.searchTipsTitle,
+                    searchTips = strings.searchTips,
+                    searchNoResultsTitle = strings.searchNoResultsTitle,
+                    searchNoResultsDescription = strings.searchNoResultsDescription,
                 )
             }
         }.launchIn(scope)
@@ -129,18 +177,37 @@ internal class SearchStateHolder(
 
     fun onSearchValueChange(value: TextFieldValue) {
         setState { copy(searchValue = value) }
-        searchQuery.value = value.text
+        searchQuery.tryEmit(value.text)
+    }
+
+    private fun isQueryIncomplete(text: String): Boolean {
+        if (text.isBlank()) return true
+        return text.split(SearchKeySymbolAnd).any { segment ->
+            val trimmed = segment.trim()
+            val searchKey = SearchKey.entries.find {
+                trimmed.startsWith(it.key, ignoreCase = true)
+            } ?: return@any false
+            val remainder = trimmed.removePrefix(searchKey.key)
+            when (searchKey.valueType) {
+                SearchValueType.Boolean -> false
+                SearchValueType.String -> remainder.trimStart().let { it.isBlank() || it == "=" }
+                SearchValueType.Float -> {
+                    val valueStr = remainder.trimStart().removePrefix(">").removePrefix("<").removePrefix("=")
+                    valueStr.isBlank() || valueStr.trim().toFloatOrNull() == null
+                }
+            }
+        }
     }
 
     fun onItemClick(index: String) {
-        analytics.trackItemClick(index, searchQuery.value)
+        analytics.trackItemClick(index, searchQuery = state.value.searchValue.text)
         monsterEventDispatcher.dispatchEvent(
             Show(index = index, indexes = listOf(index))
         )
     }
 
     fun onItemLongClick(index: String) {
-        analytics.trackItemLongClick(index, searchQuery.value)
+        analytics.trackItemLongClick(index, searchQuery = state.value.searchValue.text)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
     }
 

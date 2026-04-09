@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.search.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -35,10 +36,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -47,9 +50,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.search.SearchTip
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.AppCircleButton
 import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
+import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import kotlin.math.absoluteValue
 
 @Composable
@@ -60,6 +65,11 @@ internal fun SearchScreen(
     searchResults: String,
     isSearching: Boolean,
     searchKeys: List<SearchKeyState>,
+    searchTipsTitle: String,
+    searchTips: List<SearchTip>,
+    searchNoResultsTitle: String,
+    searchNoResultsDescription: String,
+    contentState: SearchContentState,
     initialFirstVisibleItemIndex: Int = 0,
     initialFirstVisibleItemScrollOffset: Int = 0,
     initialSearchKeysScrollOffset: Int = 0,
@@ -79,31 +89,56 @@ internal fun SearchScreen(
     val focusManager = LocalFocusManager.current
 
     ClearFocusWhenScrolling(listState)
-    
-    OnScrollChanges(
-        getFirstVisibleItemValues = {
-            listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
-        },
-        onScrollChanges = onScrollChanges
-    )
 
-    SearchGrid(
-        monsterRows = monsterRows,
-        totalResults = searchResults,
-        listState = listState,
-        contentPadding = PaddingValues(
-            top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
-            bottom = contentPaddingValues.calculateBottomPadding()
-        ),
-        onCardClick = {
-            focusManager.clearFocus()
-            onCardClick(it)
-        },
-        onCardLongClick = {
-            focusManager.clearFocus()
-            onCardLongClick(it)
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
+            .collect { (index, offset) -> onScrollChanges(index, offset) }
+    }
+
+    Crossfade(
+        targetState = contentState,
+        animationSpec = spring(),
+    ) { state ->
+        when (state) {
+            SearchContentState.Tips -> SearchTips(
+                title = searchTipsTitle,
+                tips = searchTips,
+                contentPaddingValues = contentPaddingValues,
+            )
+            SearchContentState.Empty -> Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
+                        bottom = contentPaddingValues.calculateBottomPadding(),
+                    )
+            ) {
+                EmptyScreenMessageContent(
+                    title = searchNoResultsTitle,
+                    description = searchNoResultsDescription,
+                    modifier = Modifier.padding(16.dp),
+                )
+            }
+            SearchContentState.Results -> SearchGrid(
+                monsterRows = monsterRows,
+                totalResults = searchResults,
+                listState = listState,
+                contentPadding = PaddingValues(
+                    top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
+                    bottom = contentPaddingValues.calculateBottomPadding()
+                ),
+                onCardClick = {
+                    focusManager.clearFocus()
+                    onCardClick(it)
+                },
+                onCardLongClick = {
+                    focusManager.clearFocus()
+                    onCardLongClick(it)
+                }
+            )
         }
-    )
+    }
 
     Column {
         var isProgrammaticChange by remember { mutableStateOf(false) }
@@ -162,16 +197,4 @@ internal fun SearchScreen(
             )
         }
     }
-}
-
-@Composable
-private fun OnScrollChanges(
-    getFirstVisibleItemValues: () -> Pair<Int, Int>,
-    onScrollChanges: (Int, Int) -> Unit
-) {
-    val (firstVisibleItemIndex, firstVisibleItemScrollOffset) = getFirstVisibleItemValues()
-    onScrollChanges(
-        firstVisibleItemIndex,
-        firstVisibleItemScrollOffset
-    )
 }

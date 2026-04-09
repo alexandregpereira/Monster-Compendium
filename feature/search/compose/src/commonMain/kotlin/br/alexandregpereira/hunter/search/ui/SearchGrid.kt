@@ -17,10 +17,6 @@
 
 package br.alexandregpereira.hunter.search.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
@@ -37,10 +33,6 @@ internal fun SearchGrid(
     contentPadding: PaddingValues = PaddingValues(),
     onCardClick: (String) -> Unit = {},
     onCardLongClick: (String) -> Unit = {},
-) = AnimatedVisibility(
-    visible = monsterRows.isNotEmpty(),
-    enter = fadeIn(animationSpec = spring()),
-    exit = fadeOut(animationSpec = spring()),
 ) {
     val monstersBySection = listOf(
         Title(
