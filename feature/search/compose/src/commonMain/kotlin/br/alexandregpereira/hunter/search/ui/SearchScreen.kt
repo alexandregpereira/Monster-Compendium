@@ -37,10 +37,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -141,13 +138,12 @@ internal fun SearchScreen(
     }
 
     Column {
-        var isProgrammaticChange by remember { mutableStateOf(false) }
         val focusRequester = remember { FocusRequester() }
         SearchBar(
             text = searchValue,
             searchLabel = searchLabel,
             onValueChange = { newValue ->
-                if (!isProgrammaticChange) {
+                if (newValue.text != searchValue.text) {
                     onSearchValueChange(newValue)
                 }
             },
@@ -173,10 +169,8 @@ internal fun SearchScreen(
             searchKeys = searchKeys,
             onScrollChanges = onSearchKeysScrollChanges,
             onClick = {
-                isProgrammaticChange = true
                 onSearchKeyClick(it)
                 focusRequester.requestFocus()
-                isProgrammaticChange = false
             },
         )
     }

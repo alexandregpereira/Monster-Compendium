@@ -73,7 +73,7 @@ internal fun SearchTips(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = tip.searchQueryExplanation,
-                style = MaterialTheme.typography.body2.copy(fontFamily = FontFamily.Monospace),
+                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.8f),
             )
             Spacer(modifier = Modifier.height(20.dp))
