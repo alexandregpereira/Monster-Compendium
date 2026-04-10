@@ -52,7 +52,7 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 val changedMap: Map<String, Int> = remoteSources
                     .filter { remote ->
                         val local = localMap[remote.acronym]
-                        local != null && remote.contentVersion != local.contentVersion
+                        remote.contentVersion != (local?.contentVersion ?: 0)
                     }
                     .associate { it.acronym to it.contentVersion }
 
@@ -71,7 +71,7 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 val changedDefaultMap: Map<String, Int> = remoteDefaultSources
                     .filter { remote ->
                         val local = localDefaultMap[remote.acronym]
-                        local != null && remote.contentVersion != local.contentVersion
+                        remote.contentVersion != (local?.contentVersion ?: 0)
                     }
                     .associate { it.acronym to it.contentVersion }
 

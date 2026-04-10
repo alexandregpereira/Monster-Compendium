@@ -12,7 +12,7 @@ deleteByAcronym:
 DELETE FROM AlternativeSourceEntity WHERE acronym = ?;
 
 getAll:
-SELECT * FROM AlternativeSourceEntity;
+SELECT * FROM AlternativeSourceEntity WHERE isDefault = 0;
 
 getByIsDefault:
 SELECT * FROM AlternativeSourceEntity WHERE isDefault = :isDefault;
