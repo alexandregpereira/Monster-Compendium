@@ -30,4 +30,10 @@ internal class AlternativeSourceRemoteRepositoryImpl(
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> {
        return remoteDataSource.getAlternativeSources(lang).map { it.toDomain() }
     }
+
+    override fun getDefaultSources(lang: String): Flow<List<AlternativeSource>> {
+        return remoteDataSource.getDefaultSources(lang).map { dtos ->
+            dtos.toDomain().map { it.copy(isDefault = true) }
+        }
+    }
 }

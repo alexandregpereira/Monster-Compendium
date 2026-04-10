@@ -25,6 +25,7 @@ internal fun AlternativeSourceEntity.toDatabaseEntity(): AlternativeSourceDataba
         acronym = acronym,
         createdAt = createdAt,
         contentVersion = contentVersion.toLong(),
+        isDefault = if (isDefault) 1L else 0L,
     )
 }
 
@@ -33,5 +34,6 @@ internal fun AlternativeSourceDatabaseEntity.toLocalEntity(): AlternativeSourceE
         acronym = acronym,
         createdAt = createdAt,
         contentVersion = contentVersion.toInt(),
+        isDefault = isDefault != 0L,
     )
 }

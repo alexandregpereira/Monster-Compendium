@@ -36,6 +36,7 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             isEnabled = true,
             isLoreEnabled = true,
             contentVersion = it.contentVersion,
+            isDefault = it.isDefault,
         )
     }
 }
@@ -45,5 +46,15 @@ internal fun String.toEntity(contentVersion: Int = 0): AlternativeSourceEntity {
         acronym = this,
         createdAt = Clock.System.now().toEpochMilliseconds(),
         contentVersion = contentVersion,
+    )
+
+}
+
+internal fun AlternativeSource.toEntity(): AlternativeSourceEntity {
+    return AlternativeSourceEntity(
+        acronym = acronym,
+        createdAt = Clock.System.now().toEpochMilliseconds(),
+        contentVersion = contentVersion,
+        isDefault = isDefault,
     )
 }

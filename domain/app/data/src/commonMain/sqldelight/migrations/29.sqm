@@ -1,1 +1,3 @@
 ALTER TABLE AlternativeSourceEntity ADD COLUMN contentVersion INTEGER NOT NULL DEFAULT 0;
+
+ALTER TABLE AlternativeSourceEntity ADD COLUMN `isDefault` INTEGER NOT NULL DEFAULT 0;

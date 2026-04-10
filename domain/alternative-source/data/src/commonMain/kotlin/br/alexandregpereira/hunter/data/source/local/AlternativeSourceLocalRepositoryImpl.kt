@@ -37,6 +37,10 @@ internal class AlternativeSourceLocalRepositoryImpl(
         return localDataSource.getAlternativeSources().map { it.toDomain() }
     }
 
+    override fun getDefaultSources(): Flow<List<AlternativeSource>> {
+        return localDataSource.getDefaultSources().map { it.toDomain() }
+    }
+
     override fun addAlternativeSource(acronym: String): Flow<Unit> {
         return flowOf(acronym).map { it.toEntity() }.flatMapLatest { entity ->
             localDataSource.addAlternativeSource(entity)
@@ -50,6 +54,13 @@ internal class AlternativeSourceLocalRepositoryImpl(
     override fun saveContentVersions(acronymToContentVersion: Map<String, Int>): Flow<Unit> = flow {
         acronymToContentVersion.forEach { (acronym, contentVersion) ->
             localDataSource.saveContentVersion(acronym, contentVersion).collect {}
+        }
+        emit(Unit)
+    }
+
+    override fun saveDefaultSources(sources: List<AlternativeSource>): Flow<Unit> = flow {
+        sources.forEach { source ->
+            localDataSource.addAlternativeSource(source.toEntity()).collect {}
         }
         emit(Unit)
     }

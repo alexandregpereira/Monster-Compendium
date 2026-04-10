@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.domain.source
 
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -31,13 +32,18 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
     private val settingsRepository: AlternativeSourceSettingsRepository,
 ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Pair<Boolean, Map<String, Int>>> {
         return settingsRepository.getLanguage().flatMapLatest { lang ->
             flow {
-                val (remoteSources, localSources) = coroutineScope {
+                val (remoteSources, localSources, remoteDefaultSources, localDefaultSources) = coroutineScope {
                     val remoteDeferred = async { remoteRepository.getAlternativeSources(lang).single() }
                     val localDeferred = async { localRepository.getAlternativeSources().single() }
-                    remoteDeferred.await() to localDeferred.await()
+                    val remoteDefaultDeferred = async { remoteRepository.getDefaultSources(lang).single() }
+                    val localDefaultDeferred = async { localRepository.getDefaultSources().single() }
+                    val (remote, local) = remoteDeferred.await() to localDeferred.await()
+                    val (remoteDefault, localDefault) = remoteDefaultDeferred.await() to localDefaultDeferred.await()
+                    quadrupleOf(remote, local, remoteDefault, localDefault)
                 }
 
                 val localMap: Map<String, AlternativeSource> = localSources.associateBy { it.acronym }
@@ -46,17 +52,49 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 val changedMap: Map<String, Int> = remoteSources
                     .filter { remote ->
                         val local = localMap[remote.acronym]
-                        local != null && remote.contentVersion != local.contentVersion
+                        remote.contentVersion != (local?.contentVersion ?: 0)
                     }
                     .associate { it.acronym to it.contentVersion }
 
-                if (changedMap.isEmpty()) {
+                val localDefaultMap: Map<String, AlternativeSource> = localDefaultSources.associateBy { it.acronym }
+                val defaultRollbackMap: Map<String, Int> = localDefaultMap.mapValues { it.value.contentVersion }
+
+                val newDefaultSources = remoteDefaultSources.filter { remote ->
+                    localDefaultMap[remote.acronym] == null
+                }
+                if (newDefaultSources.isNotEmpty()) {
+                    localRepository.saveDefaultSources(
+                        newDefaultSources.map { it.copy(isDefault = true) }
+                    ).single()
+                }
+
+                val changedDefaultMap: Map<String, Int> = remoteDefaultSources
+                    .filter { remote ->
+                        val local = localDefaultMap[remote.acronym]
+                        remote.contentVersion != (local?.contentVersion ?: 0)
+                    }
+                    .associate { it.acronym to it.contentVersion }
+
+                val allChangedMap = changedMap + changedDefaultMap
+                val allRollbackMap = rollbackMap + defaultRollbackMap
+
+                if (allChangedMap.isEmpty() && newDefaultSources.isEmpty()) {
                     emit(false to emptyMap())
                 } else {
-                    localRepository.saveContentVersions(changedMap).single()
-                    emit(true to rollbackMap)
+                    if (allChangedMap.isNotEmpty()) {
+                        localRepository.saveContentVersions(allChangedMap).single()
+                    }
+                    emit(true to allRollbackMap)
                 }
             }
         }
+    }
+
+    @Suppress("unused")
+    private fun <A, B, C, D> quadrupleOf(a: A, b: B, c: C, d: D) = object {
+        operator fun component1() = a
+        operator fun component2() = b
+        operator fun component3() = c
+        operator fun component4() = d
     }
 }
