@@ -39,4 +39,8 @@ internal class AlternativeSourceDaoImpl(
     override suspend fun removeAlternativeSource(acronym: String) = withContext(dispatcher) {
         queries.deleteByAcronym(acronym)
     }
+
+    override suspend fun updateContentVersion(acronym: String, contentVersion: Int) = withContext(dispatcher) {
+        queries.updateContentVersion(contentVersion = contentVersion.toLong(), acronym = acronym)
+    }
 }

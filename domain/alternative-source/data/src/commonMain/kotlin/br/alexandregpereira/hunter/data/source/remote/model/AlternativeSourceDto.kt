@@ -34,4 +34,6 @@ data class AlternativeSourceDto(
     val isEnabled: Boolean = true,
     @SerialName("isLoreEnabled")
     val isLoreEnabled: Boolean = true,
+    @SerialName("contentVersion")
+    val contentVersion: Int = 0,
 )

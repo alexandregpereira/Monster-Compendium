@@ -37,4 +37,8 @@ internal class AlternativeSourceLocalDataSource(
     fun removeAlternativeSource(acronym: String): Flow<Unit> = flow {
         emit(dao.removeAlternativeSource(acronym))
     }
+
+    fun saveContentVersion(acronym: String, contentVersion: Int): Flow<Unit> = flow {
+        emit(dao.updateContentVersion(acronym, contentVersion))
+    }
 }
