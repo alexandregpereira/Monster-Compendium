@@ -21,4 +21,5 @@ data class AlternativeSourceEntity(
     val acronym: String,
     val createdAt: Long,
     val contentVersion: Int = 0,
+    val isDefault: Boolean = false,
 )

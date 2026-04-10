@@ -18,8 +18,8 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterAlternativeSource
 import br.alexandregpereira.hunter.domain.model.MonsterImage
-import br.alexandregpereira.hunter.domain.model.MonsterSource
 import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
@@ -45,15 +45,12 @@ class SyncMonstersUseCase internal constructor(
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase
 ) {
 
-    private val srdSource = MonsterSource("SRD", "SRD")
-
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Unit> {
         return alternativeSourceRepository.getAlternativeSources()
             .catch { emit(emptyList()) }
             .zip(getMonsterImages()) { alternativeSources, monsterImages ->
-                alternativeSources.map { it.source }
-                    .run { this + srdSource }
+                alternativeSources
                     .asFlow()
                     .flatMapMerge { source ->
                         source.getRemoteMonsters(monsterImages)
@@ -69,15 +66,15 @@ class SyncMonstersUseCase internal constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private fun MonsterSource.getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
-        return if (this == srdSource) {
+    private fun MonsterAlternativeSource.getRemoteMonsters(monsterImages: List<MonsterImage>): Flow<List<Monster>> {
+        return if (useMonstersJsonEndpoint) {
             monsterSettingsRepository.getLanguage().flatMapLatest {
                 remoteRepository.getMonsters(lang = it)
             }
         } else {
             monsterSettingsRepository.getLanguage().flatMapLatest {
                 remoteRepository.getMonsters(
-                    sourceAcronym = this.acronym,
+                    sourceAcronym = this.source.acronym,
                     lang = it
                 ).catch { error ->
                     error.printStackTrace()

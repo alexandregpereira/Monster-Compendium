@@ -25,6 +25,7 @@ data class AlternativeSource(
     val isEnabled: Boolean,
     val isLoreEnabled: Boolean,
     val contentVersion: Int = 0,
+    val isDefault: Boolean = false,
 ) {
     val acronym: String
         get() = source.acronym

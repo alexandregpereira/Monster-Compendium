@@ -55,10 +55,11 @@ internal fun MonsterContentCard(
     originalName: String?,
     totalMonsters: Int,
     summary: String,
-    coverImageUrl: String,
+    coverImageUrl: String?,
     isEnabled: Boolean,
     strings: MonsterContentManagerStrings,
     modifier: Modifier = Modifier,
+    isDefault: Boolean = false,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
@@ -70,14 +71,15 @@ internal fun MonsterContentCard(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Cover(
-            coverImageUrl = coverImageUrl,
-            name = name,
-            totalMonsters = strings.totalMonsters.format(totalMonsters),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(Modifier.height(8.dp))
+        coverImageUrl?.let {
+            Cover(
+                coverImageUrl = coverImageUrl,
+                name = name,
+                totalMonsters = strings.totalMonsters.format(totalMonsters),
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(8.dp))
+        }
 
         Summary(summary = summary)
 
@@ -85,6 +87,7 @@ internal fun MonsterContentCard(
 
         Buttons(
             isEnabled = isEnabled,
+            isDefault = isDefault,
             removeText = strings.remove,
             addText = strings.add,
             previewLabel = strings.preview,
@@ -173,6 +176,7 @@ private fun Buttons(
     addText: String,
     previewLabel: String,
     modifier: Modifier = Modifier,
+    isDefault: Boolean = false,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
@@ -187,6 +191,7 @@ private fun Buttons(
         AppButton(
             text = text,
             onClick = click,
+            enabled = !isDefault,
             size = AppButtonSize.SMALL,
             modifier = Modifier
                 .padding(end = 8.dp)
