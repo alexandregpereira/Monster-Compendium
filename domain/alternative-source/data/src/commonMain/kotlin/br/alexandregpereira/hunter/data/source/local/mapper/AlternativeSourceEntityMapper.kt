@@ -35,13 +35,15 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             coverImageUrl = "",
             isEnabled = true,
             isLoreEnabled = true,
+            contentVersion = it.contentVersion,
         )
     }
 }
 
-internal fun String.toEntity(): AlternativeSourceEntity {
+internal fun String.toEntity(contentVersion: Int = 0): AlternativeSourceEntity {
     return AlternativeSourceEntity(
         acronym = this,
-        createdAt = Clock.System.now().toEpochMilliseconds()
+        createdAt = Clock.System.now().toEpochMilliseconds(),
+        contentVersion = contentVersion,
     )
 }

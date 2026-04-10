@@ -26,4 +26,6 @@ interface AlternativeSourceDao {
     suspend fun addAlternativeSource(alternativeSource: AlternativeSourceEntity)
 
     suspend fun removeAlternativeSource(acronym: String)
+
+    suspend fun updateContentVersion(acronym: String, contentVersion: Int)
 }
