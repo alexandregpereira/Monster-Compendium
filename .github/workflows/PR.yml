@@ -89,7 +89,7 @@ jobs:
         run: cd iosApp && pod install
 
       - name: Build iOS
-        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
