@@ -91,9 +91,10 @@ jobs:
       - name: Build Kotlin iOS Framework
         run: |
           ./gradlew :app:linkDebugFrameworkIosSimulatorArm64
-          mkdir -p app/build/xcode-frameworks/Debug/iphonesimulator
+          SDK_NAME=iphonesimulator$(xcrun --sdk iphonesimulator --show-sdk-version)
+          mkdir -p "app/build/xcode-frameworks/Debug/${SDK_NAME}"
           cp -R app/build/bin/iosSimulatorArm64/debugFramework/KotlinApp.framework \
-                app/build/xcode-frameworks/Debug/iphonesimulator/
+                "app/build/xcode-frameworks/Debug/${SDK_NAME}/"
 
       - name: Build iOS
         run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ARCHS=arm64
