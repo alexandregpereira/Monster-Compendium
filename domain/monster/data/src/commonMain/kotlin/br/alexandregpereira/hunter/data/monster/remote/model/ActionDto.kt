@@ -25,7 +25,7 @@ data class ActionDto(
     @SerialName("damage_dices")
     val damageDices: List<DamageDiceDto>,
     @SerialName("attack_bonus")
-    val attackBonus: Int?,
+    val attackBonus: Int? = null,
     @SerialName("description")
     val description: String,
     @SerialName("name")

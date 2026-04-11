@@ -24,25 +24,26 @@ import br.alexandregpereira.hunter.domain.model.MonsterImageData
 
 fun List<Monster>.appendMonsterImages(
     monsterImages: List<MonsterImage>
-): List<Monster> = map { monster ->
-    val monsterImage = monsterImages.firstOrNull { monsterImage ->
-        monsterImage.monsterIndex == monster.index
-    } ?: MonsterImage(
-        monsterIndex = monster.index,
-        backgroundColor = Color(light = "#e0dfd1", dark = "#e0dfd1"),
-        isHorizontalImage = false,
-        imageUrl = DEFAULT_IMAGE_BASE_URL + "default-${monster.type.name.lowercase()}.png",
-        contentScale = null,
-    )
-
-    monster.copy(
-        imageData = MonsterImageData(
-            url = monsterImage.imageUrl,
-            backgroundColor = monsterImage.backgroundColor,
-            isHorizontal = monsterImage.isHorizontalImage,
-            contentScale = monsterImage.contentScale,
+): List<Monster> {
+    val monsterImagesMap = monsterImages.associateBy { it.monsterIndex }
+    return map { monster ->
+        val monsterImage = monsterImagesMap[monster.index] ?: MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = Color(light = "#FAF9F8", dark = "#262626"),
+            isHorizontalImage = false,
+            imageUrl = DEFAULT_IMAGE_BASE_URL + "default-${monster.type.name.lowercase()}.png",
+            contentScale = null,
         )
-    )
+
+        monster.copy(
+            imageData = MonsterImageData(
+                url = monsterImage.imageUrl,
+                backgroundColor = monsterImage.backgroundColor,
+                isHorizontal = monsterImage.isHorizontalImage,
+                contentScale = monsterImage.contentScale,
+            )
+        )
+    }
 }
 
 private const val DEFAULT_IMAGE_BASE_URL =
