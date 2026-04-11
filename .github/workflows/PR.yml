@@ -88,8 +88,15 @@ jobs:
       - name: Install CocoaPods dependencies
         run: cd iosApp && pod install
 
+      - name: Build Kotlin iOS Framework
+        run: |
+          ./gradlew :app:linkDebugFrameworkIosSimulatorArm64
+          mkdir -p app/build/xcode-frameworks/Debug/iphonesimulator
+          cp -R app/build/bin/iosSimulatorArm64/debugFramework/KotlinApp.framework \
+                app/build/xcode-frameworks/Debug/iphonesimulator/
+
       - name: Build iOS
-        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
