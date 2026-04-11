@@ -1,4 +1,0 @@
-framework module AmplitudeCore {
-  header "AmplitudeCore-Swift.h"
-  requires objc
-}
