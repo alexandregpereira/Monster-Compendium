@@ -21,6 +21,8 @@ import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
+import br.alexandregpereira.hunter.domain.source.SaveAlternativeSourceContentVersionsUseCase
+import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVersionUseCase
 import org.koin.dsl.module
 
 val alternativeSourceDomainModule = module {
@@ -28,4 +30,6 @@ val alternativeSourceDomainModule = module {
     factory { GetMonsterLoreSourcesUseCase(get()) }
     factory { AddAlternativeSourceUseCase(get()) }
     factory { RemoveAlternativeSourceUseCase(get()) }
+    factory { SyncAlternativeSourceContentVersionUseCase(get(), get(), get()) }
+    factory { SaveAlternativeSourceContentVersionsUseCase(get()) }
 }

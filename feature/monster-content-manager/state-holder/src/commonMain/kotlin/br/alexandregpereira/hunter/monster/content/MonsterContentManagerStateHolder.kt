@@ -106,6 +106,8 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     fun onRemoveContentClick(acronym: String) {
+        val isDefault = state.value.monsterContents.find { it.acronym == acronym }?.isDefault ?: false
+        if (isDefault) return
         analytics.trackRemoveContentClick(acronym)
         hasChanges = true
         removeAlternativeSourceUseCase(acronym)

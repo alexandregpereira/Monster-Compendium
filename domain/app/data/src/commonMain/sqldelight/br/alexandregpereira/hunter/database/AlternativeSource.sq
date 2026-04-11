@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS AlternativeSourceEntity (
     `acronym` TEXT PRIMARY KEY NOT NULL,
-    `createdAt` INTEGER NOT NULL
+    `createdAt` INTEGER NOT NULL,
+    `contentVersion` INTEGER NOT NULL DEFAULT 0,
+    `isDefault` INTEGER NOT NULL DEFAULT 0
 );
 
 insert:
@@ -10,4 +12,10 @@ deleteByAcronym:
 DELETE FROM AlternativeSourceEntity WHERE acronym = ?;
 
 getAll:
-SELECT * FROM AlternativeSourceEntity;
+SELECT * FROM AlternativeSourceEntity WHERE isDefault = 0;
+
+getByIsDefault:
+SELECT * FROM AlternativeSourceEntity WHERE isDefault = :isDefault;
+
+updateContentVersion:
+UPDATE AlternativeSourceEntity SET contentVersion = :contentVersion WHERE acronym = :acronym;

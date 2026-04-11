@@ -33,7 +33,8 @@ internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
             summary = it.summary,
             coverImageUrl = it.coverImageUrl,
             isEnabled = it.isEnabled,
-            isLoreEnabled = it.isLoreEnabled
+            isLoreEnabled = it.isLoreEnabled,
+            contentVersion = it.contentVersion,
         )
     }
 }
