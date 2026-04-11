@@ -1,0 +1,3 @@
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmplitudeSwift.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnalyticsConnector.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmplitudeCore.framework

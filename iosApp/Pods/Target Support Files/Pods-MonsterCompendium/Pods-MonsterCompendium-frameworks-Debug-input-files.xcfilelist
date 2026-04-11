@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AmplitudeSwift/AmplitudeSwift.framework
+${BUILT_PRODUCTS_DIR}/AnalyticsConnector/AnalyticsConnector.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/AmplitudeCore/AmplitudeCore.framework/AmplitudeCore

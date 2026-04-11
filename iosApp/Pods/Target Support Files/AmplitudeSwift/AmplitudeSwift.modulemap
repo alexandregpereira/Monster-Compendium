@@ -1,0 +1,6 @@
+framework module AmplitudeSwift {
+  umbrella header "AmplitudeSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
