@@ -23,4 +23,5 @@ import kotlin.native.ObjCName
 data class MonsterAlternativeSource(
     val source: MonsterSource,
     val totalMonsters: Int,
+    val useMonstersJsonEndpoint: Boolean = false,
 )

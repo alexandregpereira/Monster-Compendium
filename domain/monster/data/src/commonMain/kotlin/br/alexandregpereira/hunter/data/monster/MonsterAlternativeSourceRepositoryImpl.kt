@@ -36,7 +36,9 @@ internal class MonsterAlternativeSourceRepositoryImpl(
                         name = alternativeSource.source.name,
                         acronym = alternativeSource.source.acronym
                     ),
-                    totalMonsters = alternativeSource.totalMonsters
+                    totalMonsters = alternativeSource.totalMonsters,
+                    useMonstersJsonEndpoint = alternativeSource.isDefault &&
+                        alternativeSource.acronym.equals("srd", ignoreCase = true),
                 )
             }
         }

@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
@@ -36,6 +37,10 @@ internal class AlternativeSourceLocalRepositoryImpl(
         return localDataSource.getAlternativeSources().map { it.toDomain() }
     }
 
+    override fun getDefaultSources(): Flow<List<AlternativeSource>> {
+        return localDataSource.getDefaultSources().map { it.toDomain() }
+    }
+
     override fun addAlternativeSource(acronym: String): Flow<Unit> {
         return flowOf(acronym).map { it.toEntity() }.flatMapLatest { entity ->
             localDataSource.addAlternativeSource(entity)
@@ -44,5 +49,19 @@ internal class AlternativeSourceLocalRepositoryImpl(
 
     override fun removeAlternativeSource(acronym: String): Flow<Unit> {
         return localDataSource.removeAlternativeSource(acronym)
+    }
+
+    override fun saveContentVersions(acronymToContentVersion: Map<String, Int>): Flow<Unit> = flow {
+        acronymToContentVersion.forEach { (acronym, contentVersion) ->
+            localDataSource.saveContentVersion(acronym, contentVersion).collect {}
+        }
+        emit(Unit)
+    }
+
+    override fun saveDefaultSources(sources: List<AlternativeSource>): Flow<Unit> = flow {
+        sources.forEach { source ->
+            localDataSource.addAlternativeSource(source.toEntity()).collect {}
+        }
+        emit(Unit)
     }
 }

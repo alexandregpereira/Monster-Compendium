@@ -78,6 +78,7 @@ internal fun MonsterContentManagerScreen(
                     summary = monsterContent.summary,
                     coverImageUrl = monsterContent.coverImageUrl,
                     isEnabled = monsterContent.isEnabled,
+                    isDefault = monsterContent.isDefault,
                     strings = state.strings,
                     onAddClick = { onAddClick(monsterContent.acronym) },
                     onRemoveClick = { onRemoveClick(monsterContent.acronym) },

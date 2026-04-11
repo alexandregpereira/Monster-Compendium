@@ -30,8 +30,9 @@ data class MonsterContentState(
     val originalName: String?,
     val totalMonsters: Int,
     val summary: String,
-    val coverImageUrl: String,
+    val coverImageUrl: String?,
     val isEnabled: Boolean,
+    val isDefault: Boolean = false,
 )
 
 internal fun MonsterContentManagerState.hide(): MonsterContentManagerState {
