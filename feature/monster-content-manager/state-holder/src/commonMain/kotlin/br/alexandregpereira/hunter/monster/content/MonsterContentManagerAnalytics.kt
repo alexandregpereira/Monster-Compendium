@@ -28,7 +28,7 @@ internal class MonsterContentManagerAnalytics(
         analytics.track(
             eventName = "MonsterContentManager - monster contents loaded",
             params = mapOf(
-                "monsterContents" to monsterContents.map { it.originalName }.toString(),
+                "monsterContents" to monsterContents.map { it.name }.toString(),
             )
         )
     }

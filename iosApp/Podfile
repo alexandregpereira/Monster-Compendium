@@ -1,0 +1,6 @@
+platform :ios, '14.0'
+use_frameworks!
+
+target 'MonsterCompendium' do
+  pod 'AmplitudeSwift', '~> 1.10'
+end

@@ -1,0 +1,24 @@
+PODS:
+  - AmplitudeCore (1.4.5)
+  - AmplitudeSwift (1.18.0):
+    - AmplitudeCore (< 2.0.0, >= 1.4.1)
+    - AnalyticsConnector (~> 1.3.0)
+  - AnalyticsConnector (1.3.1)
+
+DEPENDENCIES:
+  - AmplitudeSwift (~> 1.10)
+
+SPEC REPOS:
+  trunk:
+    - AmplitudeCore
+    - AmplitudeSwift
+    - AnalyticsConnector
+
+SPEC CHECKSUMS:
+  AmplitudeCore: 2da469fb74c71c8f46ae29a4586c4bf63ad02f58
+  AmplitudeSwift: d4a219e49fa65397dadd19c9cedb6f26f7751ac0
+  AnalyticsConnector: 3def11199b4ddcad7202c778bde982ec5da0ebb3
+
+PODFILE CHECKSUM: ed4f897af0631b43759564e22e03f57a5b28c83b
+
+COCOAPODS: 1.16.2

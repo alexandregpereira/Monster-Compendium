@@ -18,6 +18,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
 }
 
 multiplatform {
@@ -37,6 +38,19 @@ multiplatform {
         implementation(libs.json.jvm)
     }
     iosMain()
+}
+
+kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Analytics module"
+        homepage = "https://github.com/alexandregpereira/monster-compendium"
+        ios.deploymentTarget = "14.0"
+
+        pod("AmplitudeSwift") {
+            version = "~> 1.10"
+        }
+    }
 }
 
 android {
