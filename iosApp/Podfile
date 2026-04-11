@@ -3,4 +3,6 @@ use_frameworks!
 
 target 'MonsterCompendium' do
   pod 'AmplitudeSwift', '~> 1.10'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseCrashlytics'
 end

@@ -1,0 +1,7 @@
+framework module GoogleAdsOnDeviceConversion {
+  umbrella header "GoogleAdsOnDeviceConversion.h"
+  export *
+  module * { export * }
+  link framework "Foundation"
+  link "c++"
+}

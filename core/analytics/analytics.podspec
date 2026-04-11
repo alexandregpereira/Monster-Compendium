@@ -10,6 +10,8 @@ Pod::Spec.new do |spec|
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '14.0'
     spec.dependency 'AmplitudeSwift', '~> 1.10'
+    spec.dependency 'FirebaseAnalytics'
+    spec.dependency 'FirebaseCrashlytics'
     if !Dir.exist?('build/cocoapods/framework/analytics.framework') || Dir.empty?('build/cocoapods/framework/analytics.framework')
         raise "
         Kotlin framework 'analytics' doesn't exist yet, so a proper Xcode project can't be generated.
