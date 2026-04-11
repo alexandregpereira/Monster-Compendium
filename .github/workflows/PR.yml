@@ -96,7 +96,7 @@ jobs:
                 app/build/xcode-frameworks/Debug/iphonesimulator/
 
       - name: Build iOS
-        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ARCHS=arm64
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
