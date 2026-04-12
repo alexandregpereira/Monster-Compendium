@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		82CB83D0D7B909A1A552AC22 /* Pods_MonsterCompendium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */; };
+		C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */; };
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
 		C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8629847A85002F517C /* Assets.xcassets */; };
 		C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8929847A85002F517C /* Preview Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonsterCompendium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A4FE53266E7B419904B697F /* Pods-MonsterCompendium.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonsterCompendium.debug.xcconfig"; path = "Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium.debug.xcconfig"; sourceTree = "<group>"; };
 		A1CA874E548FC31A34B143DF /* Pods-MonsterCompendium.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonsterCompendium.release.xcconfig"; path = "Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium.release.xcconfig"; sourceTree = "<group>"; };
+		C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1BC0E7F29847A84002F517C /* MonsterCompendium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonsterCompendium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumApp.swift; sourceTree = "<group>"; };
 		C1BC0E8629847A85002F517C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				C1BC0E8629847A85002F517C /* Assets.xcassets */,
 				C1BC0E8829847A85002F517C /* Preview Content */,
 				C1F8CDFA2F84340800B4A20A /* Info.plist */,
+				C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */,
 			);
 			path = MonsterCompendium;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				C1BC0E7C29847A84002F517C /* Frameworks */,
 				C1BC0E7D29847A84002F517C /* Resources */,
 				681AC63E04636CC93F0717FB /* [CP] Embed Pods Frameworks */,
+				C193C3C12F8B08EE00E9D21E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -235,6 +239,7 @@
 			files = (
 				C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */,
 				C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */,
+				C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +302,28 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C193C3C12F8B08EE00E9D21E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n";
 		};
 		C1BC0EAD29848147002F517C /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -481,6 +508,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MonsterCompendium/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (

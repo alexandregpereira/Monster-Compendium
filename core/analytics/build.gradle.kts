@@ -50,6 +50,8 @@ kotlin {
         pod("AmplitudeSwift") {
             version = "~> 1.10"
         }
+        pod("FirebaseAnalytics")
+        pod("FirebaseCrashlytics")
     }
 }
 
