@@ -68,6 +68,7 @@ data class MonsterState(
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
     val lore: String = "",
+    val sourceName: String = "",
 ) {
 
     val type: MonsterType

@@ -72,7 +72,8 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         legendaryActions = legendaryActions.map { it.asState() },
         reactions = reactions.map { it.asState() },
         spellcastings = spellcastings.map { it.asState(strings) },
-        lore = lore.orEmpty()
+        lore = lore.orEmpty(),
+        sourceName = sourceName,
     )
 }
 
