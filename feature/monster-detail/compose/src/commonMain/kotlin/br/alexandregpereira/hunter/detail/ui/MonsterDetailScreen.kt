@@ -414,8 +414,8 @@ private fun MonsterTypeIcon(
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
             icon = data.type.toIcon(),
-            iconSize = 24.dp,
-            size = 80.dp,
+            iconSize = 32.dp,
+            size = 100.dp,
         )
     }
 }
