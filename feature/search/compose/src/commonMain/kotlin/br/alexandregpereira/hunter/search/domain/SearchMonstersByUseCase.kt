@@ -183,6 +183,7 @@ internal class SearchMonstersByUseCase internal constructor(
                     searchKey.getSearchKeyValue(delimiter = "=", trimmedValue)
                 }
                 SearchValueType.Boolean -> searchKey to "true"
+                SearchValueType.Int,
                 SearchValueType.Float -> {
                     val delimiter = when {
                         trimmedValue.contains(">") -> ">"
@@ -216,6 +217,8 @@ internal class SearchMonstersByUseCase internal constructor(
             SearchKey.Name -> containsByName(valueWithNoAccents)
             SearchKey.Type -> containsByType(valueWithNoAccents)
             SearchKey.Cr -> containsByChallengeRating(valueWithNoAccents, delimiter)
+            SearchKey.HitPoints -> containsByHitPoints(valueWithNoAccents, delimiter)
+            SearchKey.ArmorClass -> containsByArmorClass(valueWithNoAccents, delimiter)
             SearchKey.Spell -> containsBySpell(valueWithNoAccents)
             SearchKey.Legendary -> containsByLegendary()
             SearchKey.Source -> containsBySource(valueWithNoAccents)
@@ -241,12 +244,17 @@ internal class SearchMonstersByUseCase internal constructor(
             SearchKey.Action -> actions.containsByAction(valueWithNoAccents)
             SearchKey.LegendaryAction -> legendaryActions.containsByAction(valueWithNoAccents)
             SearchKey.Senses -> containsBySense(valueWithNoAccents)
+            SearchKey.Subtitle -> containsBySubtitle(valueWithNoAccents)
         }
     }
 
     private fun Monster.containsByName(value: String): Boolean {
         return name.removeAccents().contains(value, ignoreCase = true) ||
                 index.replace("-", " ").contains(value, ignoreCase = true)
+    }
+
+    private fun Monster.containsBySubtitle(value: String): Boolean {
+        return subtitle.removeAccents().contains(value, ignoreCase = true)
     }
 
     private fun Monster.containsByType(value: String): Boolean {
@@ -256,9 +264,26 @@ internal class SearchMonstersByUseCase internal constructor(
     private fun Monster.containsByChallengeRating(value: String, delimiter: String): Boolean {
         val crValue = value.toFloatOrNull() ?: return false
         return when (delimiter) {
-            ">" -> return challengeRating > crValue
-            "<" -> return challengeRating < crValue
-            else -> return challengeRating == crValue
+            ">" -> challengeRating > crValue
+            "<" -> challengeRating < crValue
+            else -> challengeRating == crValue
+        }
+    }
+
+    private fun Monster.containsByHitPoints(value: String, delimiter: String): Boolean {
+        return containsByInt(value = stats.hitPoints, compareValue = value.toIntOrNull(), delimiter)
+    }
+
+    private fun Monster.containsByArmorClass(value: String, delimiter: String): Boolean {
+        return containsByInt(value = stats.armorClass, compareValue = value.toIntOrNull(), delimiter)
+    }
+
+    private fun containsByInt(value: Int, compareValue: Int?, delimiter: String): Boolean {
+        if (compareValue == null) return false
+        return when (delimiter) {
+            ">" -> value > compareValue
+            "<" -> value < compareValue
+            else -> value == compareValue
         }
     }
 

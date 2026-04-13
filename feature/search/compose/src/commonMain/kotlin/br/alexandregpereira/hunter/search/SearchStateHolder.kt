@@ -191,6 +191,7 @@ internal class SearchStateHolder(
             when (searchKey.valueType) {
                 SearchValueType.Boolean -> false
                 SearchValueType.String -> remainder.trimStart().let { it.isBlank() || it == "=" }
+                SearchValueType.Int,
                 SearchValueType.Float -> {
                     val valueStr = remainder.trimStart().removePrefix(">").removePrefix("<").removePrefix("=")
                     valueStr.isBlank() || valueStr.trim().toFloatOrNull() == null

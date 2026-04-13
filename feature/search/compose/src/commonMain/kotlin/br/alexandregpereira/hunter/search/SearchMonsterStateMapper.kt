@@ -61,6 +61,7 @@ internal fun List<SearchKey>.toState(): List<SearchKeyState> {
         val symbols = when (searchKey.valueType) {
             SearchValueType.String -> listOf("=")
             SearchValueType.Boolean -> listOf("!")
+            SearchValueType.Int,
             SearchValueType.Float -> listOf(">", "<", "=")
         }
         symbols

@@ -24,11 +24,14 @@ internal enum class SearchKey(
 ) {
     Name("-name", hasOnPreview = true),
     Cr("-challenge", hasOnPreview = true, valueType = SearchValueType.Float),
+    HitPoints("-hitPoints", hasOnPreview = true, valueType = SearchValueType.Int),
+    ArmorClass("-armorClass", hasOnPreview = true, valueType = SearchValueType.Int),
     Legendary("-legendaryMonster", valueType = SearchValueType.Boolean),
     Spellcaster("-spellcaster", valueType = SearchValueType.Boolean),
     Spell("-spellName"),
     Lore("-lore"),
     Type("-type", hasOnPreview = true),
+    Subtitle("-subtitle", hasOnPreview = true),
     Edited("-edited", valueType = SearchValueType.Boolean, hasOnPreview = true),
     Cloned("-cloned", valueType = SearchValueType.Boolean, hasOnPreview = true),
     Imported("-imported", valueType = SearchValueType.Boolean, hasOnPreview = true),
@@ -55,5 +58,6 @@ internal enum class SearchKey(
 internal enum class SearchValueType {
     String,
     Boolean,
-    Float
+    Float,
+    Int,
 }
