@@ -50,11 +50,7 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 val rollbackMap: Map<String, Int> = localMap.mapValues { it.value.contentVersion }
 
                 val changedMap: Map<String, Int> = remoteSources
-                    .filter { remote ->
-                        val local = localMap[remote.acronym]
-                        remote.contentVersion != (local?.contentVersion ?: 0)
-                    }
-                    .associate { it.acronym to it.contentVersion }
+                    .getSourceAcronymToContentVersionMap(localSourcesMap = localMap)
 
                 val localDefaultMap: Map<String, AlternativeSource> = localDefaultSources.associateBy { it.acronym }
                 val defaultRollbackMap: Map<String, Int> = localDefaultMap.mapValues { it.value.contentVersion }
@@ -69,11 +65,7 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 }
 
                 val changedDefaultMap: Map<String, Int> = remoteDefaultSources
-                    .filter { remote ->
-                        val local = localDefaultMap[remote.acronym]
-                        remote.contentVersion != (local?.contentVersion ?: 0)
-                    }
-                    .associate { it.acronym to it.contentVersion }
+                    .getSourceAcronymToContentVersionMap(localSourcesMap = localDefaultMap)
 
                 val allChangedMap = changedMap + changedDefaultMap
                 val allRollbackMap = rollbackMap + defaultRollbackMap
@@ -89,6 +81,13 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
             }
         }
     }
+
+    private fun List<AlternativeSource>.getSourceAcronymToContentVersionMap(
+        localSourcesMap: Map<String, AlternativeSource>
+    ): Map<String, Int> = filter { remote ->
+        val local = localSourcesMap[remote.acronym]
+        local != null && remote.contentVersion != local.contentVersion
+    }.associate { it.acronym to it.contentVersion }
 
     @Suppress("unused")
     private fun <A, B, C, D> quadrupleOf(a: A, b: B, c: C, d: D) = object {
