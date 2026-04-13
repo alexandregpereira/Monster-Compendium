@@ -84,6 +84,19 @@ internal fun LazyListScope.monsterInfo(
         onSpellClicked = onSpellClicked
     )
 
+    item(key = "source") {
+        MonsterOptionalSectionAlphaTransition(
+            valueToValidate = { monster -> monster.sourceName.isNotBlank() },
+            dataList = monsters,
+            pagerState = pagerState,
+        ) {
+            TextBlock(
+                title = strings.source,
+                text = it.sourceName,
+            )
+        }
+    }
+
     item(key = "space") {
         Spacer(
             modifier = Modifier
