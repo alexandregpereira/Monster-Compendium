@@ -87,9 +87,32 @@ internal fun AppLocalization.getStrings(): SearchStrings {
     return getLanguage().getStrings()
 }
 
+internal data class SearchEsStrings(
+    override val search: String = "Buscar",
+    override val searchResultsPlural: String = "{0} resultados",
+    override val searchResultsSingular: String = "{0} resultado",
+    override val searchTipsTitle: String = "Ejemplos de Búsqueda",
+    override val searchNoResultsTitle: String = "No se encontró ninguna criatura",
+    override val searchNoResultsDescription: String = "Prueba con un término de búsqueda diferente",
+    override val searchTips: List<SearchTip> = listOf(
+        "-challenge>5" tip "Busca criaturas con nivel de desafío mayor que 5",
+        "-challenge<2" tip "Busca criaturas con nivel de desafío menor que 2",
+        "-challenge=1" tip "Busca criaturas con nivel de desafío igual a 1",
+        "-challenge=0.5" tip "Busca criaturas con nivel de desafío igual a 1/2",
+        "-type=humanoid" tip "Busca criaturas de tipo humanoide*",
+        "-type=undead" tip "Busca criaturas de tipo no muerto*",
+        "-spellName=bola de fuego" tip "Busca criaturas que contienen el nombre del conjuro 'bola de fuego'",
+        "-legendaryMonster" tip "Busca criaturas legendarias",
+        "-type=dragon & -challenge>8" tip "Busca criaturas de tipo dragón con nivel de desafío mayor que 8",
+        "-lore=tiamat & -challenge>5 & -challenge<10" tip "Busca criaturas con historia que menciona tiamat, con nivel de desafío mayor que 5 y menor que 10",
+        null tip "* La búsqueda por tipo de criatura (-type=), alineamiento (-alignment=) y tamaño (-size=) solo acepta valores en inglés por ahora.",
+    ),
+) : SearchStrings
+
 internal fun Language.getStrings(): SearchStrings {
     return when (this) {
         Language.ENGLISH -> SearchEnStrings()
         Language.PORTUGUESE -> SearchPtStrings()
+        Language.SPANISH -> SearchEsStrings()
     }
 }

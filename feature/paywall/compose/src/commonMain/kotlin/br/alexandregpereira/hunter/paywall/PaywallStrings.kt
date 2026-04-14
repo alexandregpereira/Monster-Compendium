@@ -89,9 +89,38 @@ internal data class PaywallPtBrStrings(
 
 internal fun PaywallStrings(): PaywallStrings = PaywallEnUsStrings()
 
+internal data class PaywallEsStrings(
+    override val title: String = "Eliminar anuncios con Premium",
+    override val description: String = "Al suscribirte al plan premium, eliminas los anuncios y ayudas a mantener el proyecto",
+    override val subscribeButton: String = "Suscribirse",
+    override val restoreButton: String = "Restaurar suscripción",
+    override val cancelAnytime: String = "Cancela cuando quieras",
+    override val featuresColumnHeader: String = "Características",
+    override val freeColumnHeader: String = "Gratis",
+    override val premiumColumnHeader: String = "Premium",
+    override val offerFormattedPrice: String = "Solo {value}/{period}",
+    override val offerLoadErrorTitle: String = "Oferta no disponible",
+    override val offerLoadErrorDescription: String = "Ocurrió un error al cargar la oferta.",
+    override val tryAgain: String = "Intentar de nuevo",
+    override val offerPeriodMonthly: String = "mes",
+    override val offerPeriodYearly: String = "año",
+    override val offerPeriodWeekly: String = "semana",
+    override val featureAccessToAllFeatures: String = "Acceso a todas las funciones",
+    override val featureNoAds: String = "Sin anuncios",
+    override val purchaseErrorTitle: String = "Error en la compra",
+    override val purchaseErrorDescription: String = "Ocurrió un error durante el proceso de compra. Por favor, intenta de nuevo.",
+    override val comeBackToOffer: String = "Volver a la oferta",
+    override val restorePurchaseErrorTitle: String = "¿Tienes una suscripción activa?",
+    override val restorePurchaseErrorDescription: String = "La restauración de la suscripción falló. Actualmente la suscripción es solo por dispositivo porque aún no tenemos un inicio de sesión (próximamente). ¿Quizás estás intentando restaurar en un dispositivo diferente?",
+    override val subscriptionSuccessTitle: String = "¡Ahora eres miembro Premium!",
+    override val subscriptionSuccessDescription: String = "¡Gracias por suscribirte! Ahora puedes disfrutar de todas las funciones de la aplicación sin anuncios.",
+    override val buttonContinue: String = "Continuar",
+) : PaywallStrings
+
 internal fun AppLocalization.getPaywallStrings(): PaywallStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> PaywallEnUsStrings()
         Language.PORTUGUESE -> PaywallPtBrStrings()
+        Language.SPANISH -> PaywallEsStrings()
     }
 }

@@ -22,7 +22,7 @@ import br.alexandregpereira.hunter.localization.AppLocalizationImpl
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.localization.MutableAppLocalization
-import br.alexandregpereira.hunter.localization.getDeviceLangCode
+import br.alexandregpereira.hunter.localization.getDeviceLang
 import org.koin.dsl.module
 
 val localizationModule = module {
@@ -35,6 +35,7 @@ val localizationModule = module {
 
 private fun getDefaultLanguage(): Language {
     return Language.entries.firstOrNull {
-        it.code == getDeviceLangCode()
+        val deviceLang = getDeviceLang()
+        it.code == deviceLang.code || it.code == deviceLang.language
     } ?: Language.ENGLISH
 }

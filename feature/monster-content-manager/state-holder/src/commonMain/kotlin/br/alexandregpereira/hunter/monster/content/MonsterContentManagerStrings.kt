@@ -52,9 +52,18 @@ data class MonsterContentManagerEmptyStrings(
     override val preview: String = "",
 ) : MonsterContentManagerStrings
 
+internal data class MonsterContentManagerEsStrings(
+    override val title: String = "Gestionar Contenido",
+    override val add: String = "Añadir",
+    override val remove: String = "Eliminar",
+    override val totalMonsters: String = "{0} monstruos",
+    override val preview: String = "Vista previa",
+) : MonsterContentManagerStrings
+
 internal fun AppLocalization.getStrings(): MonsterContentManagerStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> MonsterContentManagerEnStrings()
         Language.PORTUGUESE -> MonsterContentManagerPtStrings()
+        Language.SPANISH -> MonsterContentManagerEsStrings()
     }
 }

@@ -85,9 +85,32 @@ internal data class SettingsPtStrings(
     override val subscribePremium: String = "Remover anúncios com Premium",
 ) : SettingsStrings
 
+internal data class SettingsEsStrings(
+    override val additionalContent: String = "Contenido Adicional",
+    override val monsterImagesJson: String = "URL JSON de Imágenes de Monstruos",
+    override val alternativeSourcesJson: String = "URL JSON de Fuentes Alternativas",
+    override val manageMonsterContent: String = "Gestionar Contenido de Monstruos",
+    override val sync: String = "Sincronizar",
+    override val manageAdvancedSettings: String = "Ajustes Avanzados",
+    override val settingsTitle: String = "Idioma",
+    override val languageLabel: String = "Idioma",
+    override val save: String = "Guardar",
+    override val appearanceSettingsTitle: String = "Apariencia",
+    override val forceLightImageBackground: String = "Usar Color de Fondo Claro en Imágenes",
+    override val defaultLightBackground: String = "Color de Fondo Claro Predeterminado",
+    override val defaultDarkBackground: String = "Color de Fondo Oscuro Predeterminado",
+    override val importContent: String = "Importar Contenido Compartido",
+    override val monsterImageContentScale: String = "Escala de Contenido de Imagen",
+    override val imageContentScaleFit: String = "Mostrar imagen completa",
+    override val imageContentScaleCrop: String = "Expandir la imagen",
+    override val openGitHubProject: String = "Abrir Proyecto en GitHub",
+    override val subscribePremium: String = "Eliminar anuncios con Premium",
+) : SettingsStrings
+
 internal fun getSettingsStrings(lang: Language): SettingsStrings {
     return when (lang) {
         Language.ENGLISH -> SettingsEnStrings()
         Language.PORTUGUESE -> SettingsPtStrings()
+        Language.SPANISH -> SettingsEsStrings()
     }
 }

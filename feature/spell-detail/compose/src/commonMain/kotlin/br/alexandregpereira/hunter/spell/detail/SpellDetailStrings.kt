@@ -108,9 +108,37 @@ internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String): Stri
 
 internal fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
 
+internal data class SpellDetailEsStrings(
+    override val subtitleCantrip: String = "Truco de magia, {0}",
+    override val subtitleLevel: String = "Nivel {0}, {1}",
+    override val castingTime: String = "Tiempo de Lanzamiento:",
+    override val range: String = "Alcance:",
+    override val components: String = "Componentes:",
+    override val duration: String = "Duración:",
+    override val saveType: String = "Tirada de Salvación:",
+    override val concentration: String = "Concentración",
+    override val atHigherLevels: String = "En Niveles Superiores.",
+    override val savingThrowStrength: String = "Fuerza",
+    override val savingThrowDexterity: String = "Destreza",
+    override val savingThrowConstitution: String = "Constitución",
+    override val savingThrowIntelligence: String = "Inteligencia",
+    override val savingThrowWisdom: String = "Sabiduría",
+    override val savingThrowCharisma: String = "Carisma",
+    override val schoolAbjuration: String = "abjuración",
+    override val schoolConjuration: String = "conjuración",
+    override val schoolDivination: String = "adivinación",
+    override val schoolEnchantment: String = "encantamiento",
+    override val schoolEvocation: String = "evocación",
+    override val schoolIllusion: String = "ilusión",
+    override val schoolNecromancy: String = "nigromancia",
+    override val schoolTransmutation: String = "transmutación",
+    override val cantrip: String = "Truco de magia",
+) : SpellDetailStrings
+
 internal fun AppLocalization.getStrings(): SpellDetailStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> SpellDetailEnStrings()
         Language.PORTUGUESE -> SpellDetailPtStrings()
+        Language.SPANISH -> SpellDetailEsStrings()
     }
 }

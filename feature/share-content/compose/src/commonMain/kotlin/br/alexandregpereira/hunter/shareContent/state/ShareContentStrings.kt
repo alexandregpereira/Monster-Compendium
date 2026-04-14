@@ -54,9 +54,21 @@ internal data class ShareContentPtStrings(
 
 fun ShareContentStrings(): ShareContentStrings = ShareContentEnStrings()
 
+internal data class ShareContentEsStrings(
+    override val importButton: String = "Importar",
+    override val copyButton: String = "Copiar",
+    override val copiedButton: String = "Copiado",
+    override val contentToImportLabel: String = "Contenido",
+    override val importTitle: String = "Importar Contenido",
+    override val exportTitle: String = "Compartir Contenido",
+    override val importInvalidContentErrorMessage: String = "Contenido inválido",
+    override val pasteContent: String = "Pegar contenido",
+) : ShareContentStrings
+
 internal fun Language.getStrings(): ShareContentStrings {
     return when (this) {
         Language.ENGLISH -> ShareContentEnStrings()
         Language.PORTUGUESE -> ShareContentPtStrings()
+        Language.SPANISH -> ShareContentEsStrings()
     }
 }

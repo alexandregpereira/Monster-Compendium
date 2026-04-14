@@ -269,6 +269,7 @@ internal class SettingsStateHolder(
         val string = when (this) {
             Language.ENGLISH -> "English (United States)"
             Language.PORTUGUESE -> "Português (Brasil)"
+            Language.SPANISH -> "Español"
         }
 
         return SettingsLanguageState(

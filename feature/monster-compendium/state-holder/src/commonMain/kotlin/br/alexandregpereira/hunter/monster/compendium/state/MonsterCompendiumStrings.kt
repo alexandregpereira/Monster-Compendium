@@ -37,9 +37,15 @@ internal data class MonsterCompendiumPtrStrings(
 
 fun MonsterCompendiumStrings(): MonsterCompendiumStrings = MonsterCompendiumEnStrings()
 
+internal data class MonsterCompendiumEsStrings(
+    override val noInternetConnection: String = "Sin conexión a internet",
+    override val tryAgain: String = "Intentar de nuevo"
+) : MonsterCompendiumStrings
+
 internal fun AppLocalization.getStrings(): MonsterCompendiumStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> MonsterCompendiumEnStrings()
         Language.PORTUGUESE -> MonsterCompendiumPtrStrings()
+        Language.SPANISH -> MonsterCompendiumEsStrings()
     }
 }

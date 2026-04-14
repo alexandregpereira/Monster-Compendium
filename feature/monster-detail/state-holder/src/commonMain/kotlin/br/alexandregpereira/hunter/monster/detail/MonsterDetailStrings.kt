@@ -156,9 +156,54 @@ internal data class MonsterDetailPtStrings(
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
 
+internal data class MonsterDetailEsStrings(
+    override val armorClass: String = "Clase de Armadura",
+    override val speedTitle: String = "Velocidad",
+    override val speedHover: String = "Levitar",
+    override val vulnerabilities: String = "Vulnerabilidades",
+    override val resistances: String = "Resistencias",
+    override val immunities: String = "Inmunidades",
+    override val conditionImmunities: String = "Inmunidades a Condiciones",
+    override val savingThrows: String = "Tiradas de Salvación",
+    override val skills: String = "Habilidades",
+    override val senses: String = "Sentidos",
+    override val languages: String = "Idiomas",
+    override val specialAbilities: String = "Habilidades Especiales",
+    override val actions: String = "Acciones",
+    override val legendaryActions: String = "Acciones Legendarias",
+    override val attack: String = "Ataque",
+    override val options: String = "Opciones",
+    override val goToTop: String = "Ir arriba",
+    override val reactions: String = "Reacciones",
+    override val spells: String = "Conjuros",
+    override val spellcasting: String = "Lanzamiento de Conjuros",
+    override val innateSpellcasting: String = "Lanzamiento de Conjuros Innato",
+    override val abilityScores: String = "Puntuaciones de Habilidad",
+    override val optionsAddToFolder: String = "Añadir a Carpeta",
+    override val savingThrowStrength: String = "Fuerza",
+    override val savingThrowDexterity: String = "Destreza",
+    override val savingThrowConstitution: String = "Constitución",
+    override val savingThrowIntelligence: String = "Inteligencia",
+    override val savingThrowWisdom: String = "Sabiduría",
+    override val savingThrowCharisma: String = "Carisma",
+    override val clone: String = "Clonar",
+    override val cloneMonsterName: String = "Nombre",
+    override val edit: String = "Editar",
+    override val delete: String = "Eliminar",
+    override val deleteQuestion: String = "¿Estás seguro de que quieres eliminar este monstruo?",
+    override val deleteConfirmation: String = "Estoy seguro",
+    override val save: String = "Guardar",
+    override val resetToOriginal: String = "Restaurar al Original",
+    override val resetQuestion: String = "¿Estás seguro de que quieres restaurar este monstruo a su estado original?",
+    override val resetConfirmation: String = "Estoy seguro",
+    override val export: String = "Compartir",
+    override val source: String = "Fuente",
+) : MonsterDetailStrings
+
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> MonsterDetailEnStrings()
         Language.PORTUGUESE -> MonsterDetailPtStrings()
+        Language.SPANISH -> MonsterDetailEsStrings()
     }
 }
