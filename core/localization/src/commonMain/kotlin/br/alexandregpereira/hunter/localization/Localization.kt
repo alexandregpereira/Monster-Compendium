@@ -62,5 +62,6 @@ internal expect fun getDeviceLangCode(): String
 
 enum class Language(val code: String) {
     ENGLISH("en-us"),
-    PORTUGUESE("pt-br")
+    PORTUGUESE("pt-br"),
+    SPANISH("es")
 }

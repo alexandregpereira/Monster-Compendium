@@ -67,9 +67,25 @@ internal data class FolderListEmptyStrings(
     override val emptyScreenDescription: String = "",
 ) : FolderListStrings
 
+internal data class FolderListEsStrings(
+    override val title: String = "Carpetas",
+    override val delete: String = "Eliminar",
+    override val addToPreview: String = "Añadir a Vista Previa",
+    override val itemSelected: (Int) -> String = { count ->
+        if (count == 1) {
+            "$count elemento seleccionado"
+        } else {
+            "$count elementos seleccionados"
+        }
+    },
+    override val emptyScreenTitle: String = "No se encontraron carpetas",
+    override val emptyScreenDescription: String = "Crea una carpeta seleccionando una criatura y añadiéndola a una nueva carpeta. También puedes seleccionar varias criaturas manteniendo pulsada la tarjeta de una criatura y añadiéndolas a una nueva carpeta.",
+) : FolderListStrings
+
 internal fun getFolderListStrings(lang: Language): FolderListStrings {
     return when (lang) {
         Language.ENGLISH -> FolderListEnStrings()
         Language.PORTUGUESE -> FolderListPtStrings()
+        Language.SPANISH -> FolderListEsStrings()
     }
 }

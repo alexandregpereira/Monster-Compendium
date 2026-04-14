@@ -47,9 +47,17 @@ internal data class MainEmptyStrings(
     override val menu: String = "",
 ) : MainStrings
 
+internal data class MainEsStrings(
+    override val compendium: String = "Compendio",
+    override val search: String = "Buscar",
+    override val folders: String = "Carpetas",
+    override val menu: String = "Menú",
+) : MainStrings
+
 internal fun Language.getStrings(): MainStrings {
     return when (this) {
         Language.ENGLISH -> MainEnStrings()
         Language.PORTUGUESE -> MainPtStrings()
+        Language.SPANISH -> MainEsStrings()
     }
 }

@@ -47,9 +47,17 @@ internal data class FolderInsertEmptyStrings(
     override val share: String = "",
 ) : FolderInsertStrings
 
+internal data class FolderInsertEsStrings(
+    override val addToFolder: String = "Añadir a carpeta",
+    override val folderNameLabel: String = "Nombre de carpeta",
+    override val save: String = "Guardar",
+    override val share: String = "Compartir",
+) : FolderInsertStrings
+
 internal fun getFolderInsertStrings(lang: Language): FolderInsertStrings {
     return when (lang) {
         Language.ENGLISH -> FolderInsertEnStrings()
         Language.PORTUGUESE -> FolderInsertPtStrings()
+        Language.SPANISH -> FolderInsertEsStrings()
     }
 }
