@@ -18,9 +18,14 @@
 package br.alexandregpereira.hunter.localization
 
 import platform.Foundation.NSLocale
-import platform.Foundation.currentLocale
-import platform.Foundation.localeIdentifier
+import platform.Foundation.preferredLanguages
 
-internal actual fun getDeviceLangCode(): String {
-    return NSLocale.currentLocale.localeIdentifier.replace("_", "-").lowercase()
+internal actual fun getDeviceLang(): DeviceLang {
+    val preferred = NSLocale.preferredLanguages.firstOrNull() as? String ?: "en-US"
+    val code = preferred.replace("_", "-").lowercase()
+    val language = code.substringBefore("-")
+    return DeviceLang(
+        code = code,
+        language = language,
+    )
 }

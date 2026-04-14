@@ -58,7 +58,12 @@ internal class AppLocalizationImpl(
     }
 }
 
-internal expect fun getDeviceLangCode(): String
+internal expect fun getDeviceLang(): DeviceLang
+
+internal data class DeviceLang(
+    val code: String,
+    val language: String,
+)
 
 enum class Language(val code: String) {
     ENGLISH("en-us"),
