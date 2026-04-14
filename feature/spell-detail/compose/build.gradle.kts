@@ -32,6 +32,7 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
+        implementation(libs.multiplatform.markdown.renderer)
     }
     jvmMain()
     iosMain()
