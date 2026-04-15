@@ -17,3 +17,6 @@ SELECT * FROM SpellEntity ORDER BY level ASC, name ASC;
 
 getSpellsEdited:
 SELECT * FROM SpellEntity WHERE status > 0;
+
+deleteSpell:
+DELETE FROM SpellEntity WHERE spellIndex == ?;

@@ -38,6 +38,10 @@ internal class DefaultSpellLocalDataSource(
         emit(spellDao.deleteAll())
     }
 
+    override fun deleteSpell(index: String): Flow<Unit> = flow {
+        emit(spellDao.deleteSpell(index))
+    }
+
     override fun getSpells(indexes: List<String>): Flow<List<SpellEntity>> = flow {
         emit(spellDao.getSpells(indexes))
     }

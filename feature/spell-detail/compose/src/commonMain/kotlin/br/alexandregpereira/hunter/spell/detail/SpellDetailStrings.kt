@@ -46,6 +46,15 @@ internal interface SpellDetailStrings {
     val schoolNecromancy: String
     val schoolTransmutation: String
     val cantrip: String
+    val options: String
+    val clone: String
+    val edit: String
+    val delete: String
+    val resetToOriginal: String
+    val cloneSpellName: String
+    val save: String
+    val deleteConfirmation: String
+    val resetConfirmation: String
 }
 
 internal data class SpellDetailEnStrings(
@@ -73,6 +82,15 @@ internal data class SpellDetailEnStrings(
     override val schoolNecromancy: String = "necromancy",
     override val schoolTransmutation: String = "transmutation",
     override val cantrip: String = "Cantrip",
+    override val options: String = "Options",
+    override val clone: String = "Clone",
+    override val edit: String = "Edit",
+    override val delete: String = "Delete",
+    override val resetToOriginal: String = "Reset to original",
+    override val cloneSpellName: String = "Spell name",
+    override val save: String = "Save",
+    override val deleteConfirmation: String = "Are you sure you want to delete this spell?",
+    override val resetConfirmation: String = "Are you sure you want to reset this spell to its original version?",
 ) : SpellDetailStrings
 
 internal data class SpellDetailPtStrings(
@@ -100,6 +118,15 @@ internal data class SpellDetailPtStrings(
     override val schoolNecromancy: String = "necromancia",
     override val schoolTransmutation: String = "transmutação",
     override val cantrip: String = "Truque",
+    override val options: String = "Opções",
+    override val clone: String = "Clonar",
+    override val edit: String = "Editar",
+    override val delete: String = "Excluir",
+    override val resetToOriginal: String = "Redefinir para original",
+    override val cloneSpellName: String = "Nome da magia",
+    override val save: String = "Salvar",
+    override val deleteConfirmation: String = "Tem certeza que deseja excluir esta magia?",
+    override val resetConfirmation: String = "Tem certeza que deseja redefinir esta magia para sua versão original?",
 ) : SpellDetailStrings
 
 internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String): String {
@@ -133,6 +160,15 @@ internal data class SpellDetailEsStrings(
     override val schoolNecromancy: String = "nigromancia",
     override val schoolTransmutation: String = "transmutación",
     override val cantrip: String = "Truco de magia",
+    override val options: String = "Opciones",
+    override val clone: String = "Clonar",
+    override val edit: String = "Editar",
+    override val delete: String = "Eliminar",
+    override val resetToOriginal: String = "Restablecer al original",
+    override val cloneSpellName: String = "Nombre de la magia",
+    override val save: String = "Guardar",
+    override val deleteConfirmation: String = "¿Estás seguro de que quieres eliminar esta magia?",
+    override val resetConfirmation: String = "¿Estás seguro de que quieres restablecer esta magia a su versión original?",
 ) : SpellDetailStrings
 
 internal fun AppLocalization.getStrings(): SpellDetailStrings {

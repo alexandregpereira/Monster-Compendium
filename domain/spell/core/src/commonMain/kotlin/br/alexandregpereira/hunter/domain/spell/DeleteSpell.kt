@@ -15,24 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    kotlin("multiplatform")
+package br.alexandregpereira.hunter.domain.spell
+
+import kotlinx.coroutines.flow.Flow
+
+fun interface DeleteSpell {
+    operator fun invoke(index: String): Flow<Unit>
 }
 
-multiplatform {
-    commonMain {
-        implementation(project(":core:analytics"))
-        implementation(project(":core:state-holder"))
-        implementation(project(":core:event"))
-        implementation(project(":core:localization"))
-        implementation(project(":core:search"))
-        implementation(project(":domain:spell:core"))
-        implementation(project(":feature:spell-compendium:event"))
-        implementation(project(":feature:spell-detail:event"))
-        implementation(project(":feature:spell-registration:event"))
-        implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
-    }
-    jvmMain()
-    iosMain()
+internal fun DeleteSpell(
+    spellRepository: SpellLocalRepository,
+): DeleteSpell = DeleteSpell { index ->
+    spellRepository.deleteLocalSpell(index)
 }

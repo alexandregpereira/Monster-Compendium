@@ -26,7 +26,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +48,7 @@ internal fun SpellHeader(
     subtitle: String,
     schoolIcon: UiSchoolOfMagicState,
     modifier: Modifier = Modifier,
-    onEdit: () -> Unit = {},
+    onOptions: () -> Unit = {},
 ) = Layout(
     modifier = modifier,
     content = {
@@ -74,9 +74,9 @@ internal fun SpellHeader(
                 modifier = Modifier.weight(1f),
             )
             AppBarIcon(
-                imageVector = Icons.Filled.Edit,
+                imageVector = Icons.Filled.MoreVert,
                 contentDescription = "",
-                onClicked = onEdit,
+                onClicked = onOptions,
                 modifier = Modifier
                     .size(24.dp)
                     .align(alignment = Alignment.CenterVertically)

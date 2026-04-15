@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.spell.registration
 
 import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 
 data class SpellRegistrationState(
     val isOpen: Boolean = false,
@@ -32,7 +33,7 @@ data class SpellRegistrationState(
 data class SpellFormState(
     val index: String = "",
     val name: String = "",
-    val level: Int = 0,
+    val level: String = "",
     val castingTime: String = "",
     val components: String = "",
     val duration: String = "",
@@ -44,4 +45,5 @@ data class SpellFormState(
     val school: SchoolOfMagic = SchoolOfMagic.ABJURATION,
     val description: String = "",
     val higherLevel: String = "",
+    val originalStatus: SpellStatus = SpellStatus.Original,
 )

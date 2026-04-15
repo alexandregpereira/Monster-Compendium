@@ -22,8 +22,12 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
-import br.alexandregpereira.hunter.event.EventManager
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus.Edited
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus.Original
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
 import br.alexandregpereira.hunter.state.UiModel
@@ -39,10 +43,11 @@ internal class SpellRegistrationStateHolder(
     private val dispatcher: CoroutineDispatcher,
     private val getSpell: GetSpellUseCase,
     private val saveSpells: SaveSpells,
-    private val eventManager: EventManager<SpellRegistrationEvent>,
-    private val resultManager: EventManager<SpellRegistrationResult>,
+    private val eventManager: EventDispatcher<SpellRegistrationEvent>,
+    private val resultManager: EventDispatcher<SpellRegistrationResult>,
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
+    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
 ) : UiModel<SpellRegistrationState>(SpellRegistrationState()) {
 
     fun observeEvents() {
@@ -83,7 +88,7 @@ internal class SpellRegistrationStateHolder(
     private fun loadSpell(spellIndex: String, strings: SpellRegistrationStrings) {
         setState { copy(isOpen = true, isLoading = true, strings = strings) }
         getSpell(spellIndex)
-            .map { spell -> spell.asFormState() }
+            .map { spell -> spell.asFormState(originalStatus = spell.status) }
             .flowOn(dispatcher)
             .onEach { formState ->
                 analytics.track(
@@ -110,13 +115,19 @@ internal class SpellRegistrationStateHolder(
     fun onSave() {
         analytics.track(eventName = "Spell Registration - saved")
         val spellIndex = state.value.spell.index
-        saveSpells(listOf(state.value.spell.asDomain()))
+        val isEditing = state.value.isEditing
+        saveSpells(listOf(state.value.spell.asDomain(isEditing = isEditing)))
             .flowOn(dispatcher)
             .onEach {
                 onClose()
                 resultManager.dispatchEvent(SpellRegistrationResult.OnSaved(spellIndex))
+                if (!isEditing) {
+                    spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
+                }
             }
-            .catch { }
+            .catch {
+                analytics.logException(throwable = it)
+            }
             .launchIn(scope)
     }
 
@@ -125,10 +136,10 @@ internal class SpellRegistrationStateHolder(
     }
 }
 
-private fun Spell.asFormState(): SpellFormState = SpellFormState(
+private fun Spell.asFormState(originalStatus: SpellStatus = status): SpellFormState = SpellFormState(
     index = index,
     name = name,
-    level = level,
+    level = level.toString(),
     castingTime = castingTime,
     components = components,
     duration = duration,
@@ -140,12 +151,13 @@ private fun Spell.asFormState(): SpellFormState = SpellFormState(
     school = school,
     description = description,
     higherLevel = higherLevel.orEmpty(),
+    originalStatus = originalStatus,
 )
 
-private fun SpellFormState.asDomain(): Spell = Spell(
+private fun SpellFormState.asDomain(isEditing: Boolean): Spell = Spell(
     index = index,
     name = name,
-    level = level,
+    level = level.toIntOrNull() ?: 0,
     castingTime = castingTime,
     components = components,
     duration = duration,
@@ -157,5 +169,11 @@ private fun SpellFormState.asDomain(): Spell = Spell(
     school = school,
     description = description,
     higherLevel = higherLevel.takeIf { it.isNotBlank() },
-    status = SpellStatus.Imported,
+    status = if (!isEditing) {
+        SpellStatus.Created
+    } else if (originalStatus == Original) {
+        Edited
+    } else {
+        originalStatus
+    },
 )

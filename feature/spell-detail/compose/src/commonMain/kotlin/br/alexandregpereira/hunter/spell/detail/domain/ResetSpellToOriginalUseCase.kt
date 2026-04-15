@@ -15,21 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.spell.di
+package br.alexandregpereira.hunter.spell.detail.domain
 
-import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
-import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
-import br.alexandregpereira.hunter.domain.spell.GetSpellsEdited
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
-import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
-import org.koin.dsl.module
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
 
-val spellDomainModule = module {
-    factory { GetSpellsByIdsUseCase(get()) }
-    factory { GetSpellUseCase(get()) }
-    factory { SyncSpellsUseCase(get(), get(), get()) }
-    factory { SaveSpells(get()) }
-    factory { GetSpellsEdited(get()) }
-    factory { DeleteSpell(get()) }
+internal fun interface ResetSpellToOriginalUseCase {
+    operator fun invoke(spellIndex: String): Flow<Unit>
+}
+
+@ExperimentalCoroutinesApi
+internal class ResetSpellToOriginalUseCaseImpl(
+    private val getSpell: GetSpellUseCase,
+    private val saveSpells: SaveSpells,
+) : ResetSpellToOriginalUseCase {
+
+    override fun invoke(spellIndex: String): Flow<Unit> {
+        return getSpell(spellIndex).flatMapConcat { spell ->
+            saveSpells(listOf(spell.copy(status = SpellStatus.Original)))
+        }
+    }
 }

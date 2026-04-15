@@ -17,14 +17,26 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
+import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.spell.detail.domain.CloneSpellUseCase
+import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCase
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailResult
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
+import br.alexandregpereira.hunter.spell.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
+import br.alexandregpereira.hunter.sync.event.SyncEventListener
+import br.alexandregpereira.hunter.sync.event.collectSyncFinishedEvents
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -33,14 +45,22 @@ import kotlinx.coroutines.flow.onEach
 
 internal class SpellDetailViewModel(
     private val getSpell: GetSpellUseCase,
+    private val cloneSpell: CloneSpellUseCase,
+    private val deleteSpell: DeleteSpell,
+    private val resetSpellToOriginal: ResetSpellToOriginalUseCase,
     private val spellDetailEventListener: SpellDetailEventListener,
     private val spellRegistrationEventDispatcher: SpellRegistrationEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: SpellDetailAnalytics,
     private val appLocalization: AppLocalization,
+    private val spellRegistrationResultListener: EventListener<SpellRegistrationResult>,
+    private val spellDetailResultDispatcher: EventDispatcher<SpellDetailResult>,
+    private val syncEventDispatcher: SyncEventDispatcher,
+    private val syncEventListener: SyncEventListener,
 ) : UiModel<SpellDetailViewState>(SpellDetailViewState()) {
 
-    private var spellIndex: String = ""
+    private var spellRegistrationResultJob: Job? = null
+    private var syncFinishedJob: Job? = null
 
     init {
         observeEvents()
@@ -67,7 +87,7 @@ internal class SpellDetailViewModel(
                 when (event) {
                     is SpellDetailEvent.ShowSpell -> {
                         analytics.trackSpellShown(event.index)
-                        spellIndex = event.index
+                        observeSpellRegistrationEvents()
                         loadSpell(event.index)
                     }
                 }
@@ -77,13 +97,107 @@ internal class SpellDetailViewModel(
 
     fun onClose() {
         analytics.trackSpellClosed()
+        spellRegistrationResultJob?.cancel()
+        syncFinishedJob?.cancel()
         setState { hideDetail() }
     }
 
-    fun onEdit() {
-        analytics.trackSpellEditClicked()
-        spellRegistrationEventDispatcher.dispatchEvent(
-            SpellRegistrationEvent.Show(spellIndex)
-        )
+    fun onOptions() {
+        analytics.trackSpellOptionsShown()
+        setState {
+            copy(
+                showOptions = true,
+                options = spell.status.toOptions(strings),
+            )
+        }
+    }
+
+    fun onOptionsClosed() {
+        setState { copy(showOptions = false) }
+    }
+
+    fun onOptionClicked(option: SpellDetailOption) {
+        setState { copy(showOptions = false) }
+        analytics.trackSpellOptionClicked(option)
+        when (option) {
+            SpellDetailOption.CLONE -> setState { copy(showCloneForm = true, spellCloneName = spell.name) }
+            SpellDetailOption.EDIT -> spellRegistrationEventDispatcher.dispatchEvent(
+                SpellRegistrationEvent.Show(state.value.spell.index)
+            )
+            SpellDetailOption.DELETE -> setState { copy(showDeleteConfirmation = true) }
+            SpellDetailOption.RESET_TO_ORIGINAL -> setState { copy(showResetConfirmation = true) }
+        }
+    }
+
+    fun onCloneFormChanged(name: String) {
+        setState { copy(spellCloneName = name) }
+    }
+
+    fun onCloneFormClosed() {
+        setState { copy(showCloneForm = false) }
+    }
+
+    fun onCloneFormSaved() {
+        analytics.trackSpellCloneConfirmed()
+        val spellIndex = state.value.spell.index
+        val spellName = state.value.spellCloneName
+        setState { copy(showCloneForm = false) }
+        cloneSpell(spellIndex, spellName)
+            .flowOn(dispatcher)
+            .onEach { newIndex ->
+                loadSpell(newIndex)
+                spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = newIndex))
+            }
+            .catch { analytics.logException(it) }
+            .launchIn(scope)
+    }
+
+    fun onDeleteConfirmed() {
+        analytics.trackSpellDeleteConfirmed()
+        val spellIndex = state.value.spell.index
+        setState { copy(showDeleteConfirmation = false) }
+        deleteSpell(spellIndex)
+            .flowOn(dispatcher)
+            .onEach {
+                spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = spellIndex))
+                onClose()
+            }
+            .catch { analytics.logException(it) }
+            .launchIn(scope)
+    }
+
+    fun onDeleteClosed() {
+        setState { copy(showDeleteConfirmation = false) }
+    }
+
+    fun onResetConfirmed() {
+        analytics.trackSpellResetConfirmed()
+        val spellIndex = state.value.spell.index
+        setState { copy(showResetConfirmation = false) }
+
+        syncFinishedJob?.cancel()
+        syncFinishedJob = syncEventListener.collectSyncFinishedEvents {
+            loadSpell(spellIndex)
+            spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = spellIndex))
+        }.launchIn(scope)
+
+        resetSpellToOriginal(spellIndex)
+            .flowOn(dispatcher)
+            .onEach {
+                syncEventDispatcher.startSync()
+            }
+            .catch { analytics.logException(it) }
+            .launchIn(scope)
+    }
+
+    fun onResetClosed() {
+        setState { copy(showResetConfirmation = false) }
+    }
+
+    private fun observeSpellRegistrationEvents() {
+        spellRegistrationResultJob?.cancel()
+        spellRegistrationResultJob = spellRegistrationResultListener.collectOnSaved { result ->
+            loadSpell(spellIndex = result.spellIndex)
+        }.launchIn(scope)
     }
 }

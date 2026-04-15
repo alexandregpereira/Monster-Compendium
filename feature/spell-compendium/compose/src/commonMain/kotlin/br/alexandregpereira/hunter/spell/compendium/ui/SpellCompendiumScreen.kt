@@ -54,7 +54,7 @@ internal fun SpellCompendiumScreen(
                 text = state.searchText,
                 label = state.searchTextLabel,
                 capitalize = false,
-                modifier = Modifier.padding(start = 32.dp),
+                modifier = Modifier.padding(top = 40.dp),
                 onValueChange = intent::onSearchTextChange
             )
 

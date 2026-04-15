@@ -39,7 +39,8 @@ internal fun Spell.asState(strings: SpellDetailStrings): SpellState {
         savingThrowType = savingThrowType?.name(strings),
         school = school,
         description = description,
-        higherLevel = higherLevel
+        higherLevel = higherLevel,
+        status = status,
     )
 }
 

@@ -17,42 +17,19 @@
 
 package br.alexandregpereira.hunter.spell.registration.di
 
-import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationStateHolder
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventListener
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResultDispatcher
 import kotlinx.coroutines.Dispatchers
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val featureSpellRegistrationModule = module {
-    single(qualifier = SpellRegistrationQualifier.eventManager) {
-        EventManager<SpellRegistrationEvent>()
-    }
-    single(qualifier = SpellRegistrationQualifier.resultManager) {
-        EventManager<SpellRegistrationResult>()
-    }
-
     single<SpellRegistrationEventDispatcher> {
-        val eventManager = get<EventManager<SpellRegistrationEvent>>(
-            qualifier = SpellRegistrationQualifier.eventManager
-        )
-        object : SpellRegistrationEventDispatcher {
-            override fun dispatchEvent(event: SpellRegistrationEvent) {
-                eventManager.dispatchEvent(event)
-            }
-        }
+        SpellRegistrationEventDispatcher()
     }
 
-    single<SpellRegistrationEventListener> {
-        val resultManager = get<EventManager<SpellRegistrationResult>>(
-            qualifier = SpellRegistrationQualifier.resultManager
-        )
-        object : SpellRegistrationEventListener {
-            override val events = resultManager.events
-        }
+    single<SpellRegistrationResultDispatcher> {
+        SpellRegistrationResultDispatcher()
     }
 
     single {
@@ -60,15 +37,11 @@ val featureSpellRegistrationModule = module {
             dispatcher = Dispatchers.Default,
             getSpell = get(),
             saveSpells = get(),
-            eventManager = get(qualifier = SpellRegistrationQualifier.eventManager),
-            resultManager = get(qualifier = SpellRegistrationQualifier.resultManager),
+            eventManager = get<SpellRegistrationEventDispatcher>(),
+            resultManager = get<SpellRegistrationResultDispatcher>(),
             appLocalization = get(),
             analytics = get(),
+            spellDetailEventDispatcher = get(),
         )
     }
-}
-
-private object SpellRegistrationQualifier {
-    val eventManager = qualifier("SpellRegistrationEventManager")
-    val resultManager = qualifier("SpellRegistrationResultManager")
 }

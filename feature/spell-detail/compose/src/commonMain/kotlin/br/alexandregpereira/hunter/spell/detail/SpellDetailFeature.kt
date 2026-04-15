@@ -32,7 +32,16 @@ fun SpellDetailFeature(
     SpellDetailScreen(
         state = viewModel.state.collectAsState().value,
         contentPadding = contentPadding,
-        onEdit = viewModel::onEdit,
+        onOptions = viewModel::onOptions,
+        onOptionsClosed = viewModel::onOptionsClosed,
+        onOptionClicked = viewModel::onOptionClicked,
+        onCloneFormChanged = viewModel::onCloneFormChanged,
+        onCloneFormClosed = viewModel::onCloneFormClosed,
+        onCloneFormSaved = viewModel::onCloneFormSaved,
+        onDeleteConfirmed = viewModel::onDeleteConfirmed,
+        onDeleteClosed = viewModel::onDeleteClosed,
+        onResetConfirmed = viewModel::onResetConfirmed,
+        onResetClosed = viewModel::onResetClosed,
         onClose = {
             viewModel.onClose()
             onClose()

@@ -76,10 +76,10 @@ internal fun SpellRegistrationForm(
 
         item {
             AppTextField(
-                text = spell.level.toString(),
+                text = spell.level,
                 label = strings.level,
                 keyboardType = AppKeyboardType.NUMBER,
-                onValueChange = { onSpellChanged(spell.copy(level = it.toIntOrNull() ?: 0)) },
+                onValueChange = { onSpellChanged(spell.copy(level = it)) },
                 modifier = Modifier.padding(bottom = 8.dp),
             )
         }

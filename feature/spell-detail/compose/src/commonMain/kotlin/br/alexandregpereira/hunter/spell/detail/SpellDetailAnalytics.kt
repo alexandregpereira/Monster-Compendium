@@ -52,9 +52,26 @@ internal class SpellDetailAnalytics(
         )
     }
 
-    fun trackSpellEditClicked() {
+    fun trackSpellOptionsShown() {
+        analytics.track(eventName = "Spell Detail - options shown")
+    }
+
+    fun trackSpellOptionClicked(option: SpellDetailOption) {
         analytics.track(
-            eventName = "Spell Detail - edit clicked",
+            eventName = "Spell Detail - option clicked",
+            params = mapOf("option" to option.name)
         )
+    }
+
+    fun trackSpellCloneConfirmed() {
+        analytics.track(eventName = "Spell Detail - clone confirmed")
+    }
+
+    fun trackSpellDeleteConfirmed() {
+        analytics.track(eventName = "Spell Detail - delete confirmed")
+    }
+
+    fun trackSpellResetConfirmed() {
+        analytics.track(eventName = "Spell Detail - reset confirmed")
     }
 }

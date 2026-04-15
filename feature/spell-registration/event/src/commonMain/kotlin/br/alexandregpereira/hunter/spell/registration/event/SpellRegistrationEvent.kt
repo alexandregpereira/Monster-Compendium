@@ -17,11 +17,12 @@
 
 package br.alexandregpereira.hunter.spell.registration.event
 
-import br.alexandregpereira.hunter.event.EventDispatcher
-import br.alexandregpereira.hunter.event.EventListener
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 sealed class SpellRegistrationEvent {
 
@@ -39,23 +40,15 @@ sealed class SpellRegistrationResult {
     data class OnSaved(val spellIndex: String) : SpellRegistrationResult()
 }
 
-interface SpellRegistrationEventListener : EventListener<SpellRegistrationResult>
+class SpellRegistrationEventDispatcher : EventDispatcher<SpellRegistrationEvent> by EventDispatcher(
+    extraBufferCapacity = 1,
+)
 
-interface SpellRegistrationEventDispatcher : EventDispatcher<SpellRegistrationEvent>
+class SpellRegistrationResultDispatcher : EventDispatcher<SpellRegistrationResult> by EventDispatcher(
+    extraBufferCapacity = 1,
+)
 
 fun EventListener<SpellRegistrationResult>.collectOnSaved(
-    onAction: (String) -> Unit
-): Flow<Unit> = events.map { it as? SpellRegistrationResult.OnSaved }
-    .map { event -> event?.let { onAction(it.spellIndex) } }
-
-fun emptySpellRegistrationEventDispatcher(): SpellRegistrationEventDispatcher {
-    return object : SpellRegistrationEventDispatcher {
-        override fun dispatchEvent(event: SpellRegistrationEvent) {}
-    }
-}
-
-fun emptySpellRegistrationEventListener(): SpellRegistrationEventListener {
-    return object : SpellRegistrationEventListener {
-        override val events: Flow<SpellRegistrationResult> = emptyFlow()
-    }
-}
+    onAction: suspend (SpellRegistrationResult.OnSaved) -> Unit
+): Flow<SpellRegistrationResult.OnSaved> = events.map { it as? SpellRegistrationResult.OnSaved }
+    .filterNotNull().onEach(onAction)

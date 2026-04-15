@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.spell.detail.SpellDetailOption
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewState
 import br.alexandregpereira.hunter.spell.detail.SpellState
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
@@ -37,27 +38,49 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 internal fun SpellDetailScreen(
     state: SpellDetailViewState,
     contentPadding: PaddingValues = PaddingValues(),
-    onEdit: () -> Unit = {},
+    onOptions: () -> Unit = {},
+    onOptionsClosed: () -> Unit = {},
+    onOptionClicked: (SpellDetailOption) -> Unit = {},
+    onCloneFormChanged: (String) -> Unit = {},
+    onCloneFormClosed: () -> Unit = {},
+    onCloneFormSaved: () -> Unit = {},
+    onDeleteConfirmed: () -> Unit = {},
+    onDeleteClosed: () -> Unit = {},
+    onResetConfirmed: () -> Unit = {},
+    onResetClosed: () -> Unit = {},
     onClose: () -> Unit = {}
 ) = HunterTheme {
     BottomSheet(opened = state.showDetail, contentPadding = contentPadding, onClose = onClose) {
         CompositionLocalProvider(LocalStrings provides state.strings) {
-            SpellDetail(state.spell, onEdit = onEdit)
+            SpellDetail(state.spell, onOptions = onOptions)
         }
     }
+    SpellDetailBottomSheets(
+        state = state,
+        contentPadding = contentPadding,
+        onOptionsClosed = onOptionsClosed,
+        onOptionClicked = onOptionClicked,
+        onCloneFormChanged = onCloneFormChanged,
+        onCloneFormClosed = onCloneFormClosed,
+        onCloneFormSaved = onCloneFormSaved,
+        onDeleteConfirmed = onDeleteConfirmed,
+        onDeleteClosed = onDeleteClosed,
+        onResetConfirmed = onResetConfirmed,
+        onResetClosed = onResetClosed,
+    )
 }
 
 @Composable
 private fun SpellDetail(
     spell: SpellState,
-    onEdit: () -> Unit = {},
+    onOptions: () -> Unit = {},
 ) = SelectionContainer {
     Column {
         SpellHeader(
             title = spell.name,
             subtitle = spell.subtitle,
             schoolIcon = spell.school.toUiState(),
-            onEdit = onEdit,
+            onOptions = onOptions,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
