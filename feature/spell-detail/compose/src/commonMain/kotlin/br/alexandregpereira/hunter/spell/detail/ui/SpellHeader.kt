@@ -20,16 +20,22 @@ package br.alexandregpereira.hunter.spell.detail.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -41,7 +47,8 @@ internal fun SpellHeader(
     title: String,
     subtitle: String,
     schoolIcon: UiSchoolOfMagicState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onOptions: () -> Unit = {},
 ) = Layout(
     modifier = modifier,
     content = {
@@ -57,12 +64,24 @@ internal fun SpellHeader(
             modifier = Modifier.alpha(iconAlpha)
         )
 
-        ScreenHeader(
-            title = title,
-            subTitle = subtitle,
+        Row(
             modifier = Modifier
-                .padding(vertical = 16.dp)
-        )
+                .padding(vertical = 16.dp),
+        ) {
+            ScreenHeader(
+                title = title,
+                subTitle = subtitle,
+                modifier = Modifier.weight(1f),
+            )
+            AppBarIcon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = "",
+                onClicked = onOptions,
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(alignment = Alignment.CenterVertically)
+            )
+        }
 
         Box(
             modifier = Modifier.background(
@@ -108,7 +127,7 @@ internal fun SpellHeader(
 @Composable
 private fun SpellHeaderPreview() = Window {
     SpellHeader(
-        title = "Detect Good and Evil asda",
+        title = "Detect Good and Evil asda asdasd",
         subtitle = "Level 1",
         schoolIcon = UiSchoolOfMagicState.ABJURATION
     )

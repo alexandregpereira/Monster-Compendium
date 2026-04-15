@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.spell.di
 
+import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsEdited
@@ -30,4 +31,5 @@ val spellDomainModule = module {
     factory { SyncSpellsUseCase(get(), get(), get()) }
     factory { SaveSpells(get()) }
     factory { GetSpellsEdited(get()) }
+    factory { DeleteSpell(get()) }
 }

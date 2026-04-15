@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import org.koin.dsl.module
 
 val featureSettingsModule = module {
@@ -49,6 +50,7 @@ val featureSettingsModule = module {
             paywallResultListener = get<PaywallResultDispatcher>(),
             spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
             spellDetailEventDispatcher = get(),
+            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
         )
     }
 }

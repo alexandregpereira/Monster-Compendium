@@ -77,6 +77,10 @@ internal class SpellDaoImpl(
         spellQueries.getSpellsEdited().executeAsList().map { it.asSpellEntity() }
     }
 
+    override suspend fun deleteSpell(index: String) = withContext(dispatcher) {
+        spellQueries.deleteSpell(index)
+    }
+
     private fun SpellDatabaseEntity.asSpellEntity(): SpellEntity {
         return SpellEntity(
             spellIndex = spellIndex,

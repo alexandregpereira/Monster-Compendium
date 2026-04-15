@@ -43,6 +43,7 @@ import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventRe
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -78,6 +79,7 @@ internal class SettingsStateHolder(
     private val paywallResultListener: EventListener<PaywallResult>,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
+    private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -229,7 +231,11 @@ internal class SettingsStateHolder(
                             SpellDetailEvent.ShowSpell(spellCompendiumResult.spellIndex)
                         )
                     }
-                    is SpellCompendiumResult.OnSpellLongClick -> {}
+                    is SpellCompendiumResult.OnSpellLongClick -> {
+                        spellRegistrationEventDispatcher.dispatchEvent(
+                            SpellRegistrationEvent.Show(spellCompendiumResult.spellIndex)
+                        )
+                    }
                 }
             }
             .launchIn(scope)

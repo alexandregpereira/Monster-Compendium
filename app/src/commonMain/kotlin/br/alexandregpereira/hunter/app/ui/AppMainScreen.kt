@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.shareContent.ShareContentExportMonsterFeature
 import br.alexandregpereira.hunter.shareContent.ShareContentImportFeature
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
+import br.alexandregpereira.hunter.spell.registration.SpellRegistrationFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
 
 @Composable
@@ -43,6 +44,7 @@ internal fun AppMainScreen(
         MonsterRegistrationFeature()
         SpellCompendiumFeature()
         SpellDetailFeature()
+        SpellRegistrationFeature()
         FolderInsertFeature()
         ShareContentExportMonsterFeature()
         ShareContentImportFeature()

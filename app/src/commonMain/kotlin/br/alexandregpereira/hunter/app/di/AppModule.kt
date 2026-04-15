@@ -44,6 +44,7 @@ import br.alexandregpereira.hunter.settings.di.featureSettingsModule
 import br.alexandregpereira.hunter.shareContent.featureShareContentModule
 import br.alexandregpereira.hunter.spell.compendium.di.featureSpellCompendiumModule
 import br.alexandregpereira.hunter.spell.detail.di.featureSpellDetailModule
+import br.alexandregpereira.hunter.spell.registration.di.featureSpellRegistrationModule
 import br.alexandregpereira.hunter.sync.di.featureSyncModule
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +75,7 @@ internal fun KoinApplication.initKoinModules() {
         featureSettingsModule,
         featureSpellCompendiumModule,
         featureSpellDetailModule,
+        featureSpellRegistrationModule,
         featureShareContentModule,
         paywallFeatureModule,
     )

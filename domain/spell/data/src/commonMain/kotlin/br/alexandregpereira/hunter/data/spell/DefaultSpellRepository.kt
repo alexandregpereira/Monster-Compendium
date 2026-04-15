@@ -55,4 +55,8 @@ internal class DefaultSpellRepository(
     override fun getLocalSpellsEdited(): Flow<List<Spell>> {
         return localRepository.getLocalSpellsEdited()
     }
+
+    override fun deleteLocalSpell(index: String): Flow<Unit> {
+        return localRepository.deleteLocalSpell(index)
+    }
 }

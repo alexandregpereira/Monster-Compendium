@@ -23,7 +23,9 @@ import br.alexandregpereira.hunter.strings.format
 
 internal interface SpellDetailStrings {
     val subtitleCantrip: String
+    val subtitleCantripWithRitual: String
     val subtitleLevel: String
+    val subtitleLevelWithRitual: String
     val castingTime: String
     val range: String
     val components: String
@@ -46,11 +48,22 @@ internal interface SpellDetailStrings {
     val schoolNecromancy: String
     val schoolTransmutation: String
     val cantrip: String
+    val options: String
+    val clone: String
+    val edit: String
+    val delete: String
+    val resetToOriginal: String
+    val cloneSpellName: String
+    val save: String
+    val deleteConfirmation: String
+    val resetConfirmation: String
 }
 
 internal data class SpellDetailEnStrings(
     override val subtitleCantrip: String = "Cantrip, {0}",
+    override val subtitleCantripWithRitual: String = "Cantrip (Ritual), {0}",
     override val subtitleLevel: String = "Level {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Level {0} (Ritual), {1}",
     override val castingTime: String = "Casting Time:",
     override val range: String = "Range:",
     override val components: String = "Components:",
@@ -73,11 +86,22 @@ internal data class SpellDetailEnStrings(
     override val schoolNecromancy: String = "necromancy",
     override val schoolTransmutation: String = "transmutation",
     override val cantrip: String = "Cantrip",
+    override val options: String = "Options",
+    override val clone: String = "Clone",
+    override val edit: String = "Edit",
+    override val delete: String = "Delete",
+    override val resetToOriginal: String = "Reset to original",
+    override val cloneSpellName: String = "Spell name",
+    override val save: String = "Save",
+    override val deleteConfirmation: String = "Are you sure you want to delete this spell?",
+    override val resetConfirmation: String = "Are you sure you want to reset this spell to its original version?",
 ) : SpellDetailStrings
 
 internal data class SpellDetailPtStrings(
     override val subtitleCantrip: String = "Truque, {0}",
+    override val subtitleCantripWithRitual: String = "Truque (Ritual), {0}",
     override val subtitleLevel: String = "Nível {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Nível {0} (Ritual), {1}",
     override val castingTime: String = "Tempo de Conjuração:",
     override val range: String = "Alcance:",
     override val components: String = "Componentes:",
@@ -100,9 +124,20 @@ internal data class SpellDetailPtStrings(
     override val schoolNecromancy: String = "necromancia",
     override val schoolTransmutation: String = "transmutação",
     override val cantrip: String = "Truque",
+    override val options: String = "Opções",
+    override val clone: String = "Clonar",
+    override val edit: String = "Editar",
+    override val delete: String = "Excluir",
+    override val resetToOriginal: String = "Redefinir para original",
+    override val cloneSpellName: String = "Nome da magia",
+    override val save: String = "Salvar",
+    override val deleteConfirmation: String = "Tem certeza que deseja excluir esta magia?",
+    override val resetConfirmation: String = "Tem certeza que deseja redefinir esta magia para sua versão original?",
 ) : SpellDetailStrings
 
-internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String): String {
+internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String, ritual: Boolean): String {
+    val subtitleCantrip = if (ritual) subtitleCantripWithRitual else subtitleCantrip
+    val subtitleLevel = if (ritual) subtitleLevelWithRitual else subtitleLevel
     return if (level == 0) subtitleCantrip.format(school) else subtitleLevel.format(level, school)
 }
 
@@ -110,7 +145,9 @@ internal fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
 
 internal data class SpellDetailEsStrings(
     override val subtitleCantrip: String = "Truco de magia, {0}",
+    override val subtitleCantripWithRitual: String = "Truco de magia (Ritual), {0}",
     override val subtitleLevel: String = "Nivel {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Nivel {0} (Ritual), {1}",
     override val castingTime: String = "Tiempo de Lanzamiento:",
     override val range: String = "Alcance:",
     override val components: String = "Componentes:",
@@ -133,6 +170,15 @@ internal data class SpellDetailEsStrings(
     override val schoolNecromancy: String = "nigromancia",
     override val schoolTransmutation: String = "transmutación",
     override val cantrip: String = "Truco de magia",
+    override val options: String = "Opciones",
+    override val clone: String = "Clonar",
+    override val edit: String = "Editar",
+    override val delete: String = "Eliminar",
+    override val resetToOriginal: String = "Restablecer al original",
+    override val cloneSpellName: String = "Nombre de la magia",
+    override val save: String = "Guardar",
+    override val deleteConfirmation: String = "¿Estás seguro de que quieres eliminar esta magia?",
+    override val resetConfirmation: String = "¿Estás seguro de que quieres restablecer esta magia a su versión original?",
 ) : SpellDetailStrings
 
 internal fun AppLocalization.getStrings(): SpellDetailStrings {

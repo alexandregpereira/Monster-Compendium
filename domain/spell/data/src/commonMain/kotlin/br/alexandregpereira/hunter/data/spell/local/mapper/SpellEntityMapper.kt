@@ -41,6 +41,10 @@ internal fun SpellEntity.toDomain(): Spell {
         higherLevel = higherLevel,
         status = when (status) {
             0 -> SpellStatus.Original
+            1 -> SpellStatus.Imported
+            2 -> SpellStatus.Edited
+            3 -> SpellStatus.Cloned
+            4 -> SpellStatus.Created
             else -> SpellStatus.Imported
         },
     )
@@ -66,6 +70,9 @@ fun List<Spell>.toEntity(): List<SpellEntity> {
             status = when (it.status) {
                 SpellStatus.Original -> 0
                 SpellStatus.Imported -> 1
+                SpellStatus.Edited -> 2
+                SpellStatus.Cloned -> 3
+                SpellStatus.Created -> 4
             },
         )
     }

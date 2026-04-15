@@ -76,6 +76,7 @@ multiplatform {
         implementation(project(":feature:share-content:compose"))
         implementation(project(":feature:spell-compendium:compose"))
         implementation(project(":feature:spell-detail:compose"))
+        implementation(project(":feature:spell-registration:compose"))
         implementation(project(":feature:sync:compose"))
 
         implementation(project(":ui:core"))

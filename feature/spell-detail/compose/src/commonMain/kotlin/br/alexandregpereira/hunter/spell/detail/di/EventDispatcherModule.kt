@@ -20,22 +20,54 @@ package br.alexandregpereira.hunter.spell.detail.di
 import br.alexandregpereira.hunter.spell.detail.SpellDetailAnalytics
 import br.alexandregpereira.hunter.spell.detail.SpellDetailEventManager
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewModel
+import br.alexandregpereira.hunter.spell.detail.domain.CloneSpellUseCase
+import br.alexandregpereira.hunter.spell.detail.domain.CloneSpellUseCaseImpl
+import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCase
+import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCaseImpl
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailResultDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResultDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.dsl.module
 
+@OptIn(ExperimentalCoroutinesApi::class)
 val featureSpellDetailModule = module {
     single { SpellDetailEventManager() }
     single<SpellDetailEventDispatcher> { get<SpellDetailEventManager>() }
     single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
+    single<SpellDetailResultDispatcher> { SpellDetailResultDispatcher() }
+
+    factory<CloneSpellUseCase> {
+        CloneSpellUseCaseImpl(
+            getSpell = get(),
+            saveSpells = get(),
+        )
+    }
+
+    factory<ResetSpellToOriginalUseCase> {
+        ResetSpellToOriginalUseCaseImpl(
+            getSpell = get(),
+            saveSpells = get(),
+        )
+    }
 
     single {
         SpellDetailViewModel(
             getSpell = get(),
+            cloneSpell = get(),
+            deleteSpell = get(),
+            resetSpellToOriginal = get(),
             spellDetailEventListener = get(),
+            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             dispatcher = get(),
             analytics = SpellDetailAnalytics(get()),
             appLocalization = get(),
+            spellRegistrationResultListener = get<SpellRegistrationResultDispatcher>(),
+            spellDetailResultDispatcher = get<SpellDetailResultDispatcher>(),
+            syncEventDispatcher = get(),
+            syncEventListener = get(),
         )
     }
 }

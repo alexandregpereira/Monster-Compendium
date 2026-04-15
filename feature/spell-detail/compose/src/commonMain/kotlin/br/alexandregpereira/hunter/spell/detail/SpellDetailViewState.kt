@@ -18,11 +18,18 @@
 package br.alexandregpereira.hunter.spell.detail
 
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 
 internal data class SpellDetailViewState(
     val spell: SpellState = SpellState(),
     val showDetail: Boolean = false,
-    val strings: SpellDetailStrings = SpellDetailStrings()
+    val strings: SpellDetailStrings = SpellDetailStrings(),
+    val showOptions: Boolean = false,
+    val options: List<SpellDetailOptionState> = emptyList(),
+    val showCloneForm: Boolean = false,
+    val spellCloneName: String = "",
+    val showDeleteConfirmation: Boolean = false,
+    val showResetConfirmation: Boolean = false,
 )
 
 internal data class SpellState(
@@ -38,6 +45,7 @@ internal data class SpellState(
     val school: SchoolOfMagic = SchoolOfMagic.ABJURATION,
     val description: String = "",
     val higherLevel: String? = null,
+    val status: SpellStatus = SpellStatus.Original,
 )
 
 internal fun SpellDetailViewState.changeSpell(

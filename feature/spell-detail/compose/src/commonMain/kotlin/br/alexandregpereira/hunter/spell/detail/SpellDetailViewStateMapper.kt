@@ -30,7 +30,7 @@ internal fun Spell.asState(strings: SpellDetailStrings): SpellState {
     return SpellState(
         index = index,
         name = name,
-        subtitle = strings.formatSubTitle(level, school.name(strings)),
+        subtitle = strings.formatSubTitle(level, school.name(strings), ritual),
         castingTime = castingTime,
         components = components,
         duration = durationText,
@@ -39,7 +39,8 @@ internal fun Spell.asState(strings: SpellDetailStrings): SpellState {
         savingThrowType = savingThrowType?.name(strings),
         school = school,
         description = description,
-        higherLevel = higherLevel
+        higherLevel = higherLevel,
+        status = status,
     )
 }
 
