@@ -85,6 +85,13 @@ internal fun MenuScreen(
             Divider()
 
             MenuItem(
+                text = strings.spells,
+                onClick = viewIntent::onSpellsClick
+            )
+
+            Divider()
+
+            MenuItem(
                 text = strings.manageMonsterContent,
                 onClick = viewIntent::onManageMonsterContentClick
             )

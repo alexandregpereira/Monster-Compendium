@@ -51,4 +51,6 @@ internal interface SettingsViewIntent {
     fun onOpenGitHubProjectClick()
 
     fun onSubscribePremiumClick()
+
+    fun onSpellsClick()
 }

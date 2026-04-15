@@ -39,6 +39,7 @@ interface SettingsStrings {
     val imageContentScaleCrop: String
     val openGitHubProject: String
     val subscribePremium: String
+    val spells: String
 }
 
 internal data class SettingsEnStrings(
@@ -61,6 +62,7 @@ internal data class SettingsEnStrings(
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
     override val subscribePremium: String = "Remove ads with Premium",
+    override val spells: String = "Spells",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -83,6 +85,7 @@ internal data class SettingsPtStrings(
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
     override val subscribePremium: String = "Remover anúncios com Premium",
+    override val spells: String = "Magias",
 ) : SettingsStrings
 
 internal data class SettingsEsStrings(
@@ -105,6 +108,7 @@ internal data class SettingsEsStrings(
     override val imageContentScaleCrop: String = "Expandir la imagen",
     override val openGitHubProject: String = "Abrir Proyecto en GitHub",
     override val subscribePremium: String = "Eliminar anuncios con Premium",
+    override val spells: String = "Magias",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

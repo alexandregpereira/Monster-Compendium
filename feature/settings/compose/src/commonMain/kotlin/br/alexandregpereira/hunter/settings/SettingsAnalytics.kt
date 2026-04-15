@@ -106,4 +106,10 @@ internal class SettingsAnalytics(
             eventName = "Settings - appearance settings click",
         )
     }
+
+    fun trackSpellsClick() {
+        analytics.track(
+            eventName = "Settings - spells click",
+        )
+    }
 }

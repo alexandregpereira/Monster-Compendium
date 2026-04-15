@@ -37,6 +37,8 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))
         implementation(project(":feature:paywall:event"))
+        implementation(project(":feature:spell-compendium:event"))
+        implementation(project(":feature:spell-detail:event"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)
