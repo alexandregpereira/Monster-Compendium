@@ -15,27 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.spell.detail
+package br.alexandregpereira.hunter.spell.registration.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import br.alexandregpereira.hunter.spell.detail.ui.SpellDetailScreen
-import org.koin.compose.koinInject
+import br.alexandregpereira.hunter.spell.registration.SpellFormState
+import br.alexandregpereira.hunter.spell.registration.SpellRegistrationState
+import br.alexandregpereira.hunter.ui.compose.AppScreen
 
 @Composable
-fun SpellDetailFeature(
+internal fun SpellRegistrationScreen(
+    state: SpellRegistrationState,
     contentPadding: PaddingValues = PaddingValues(),
-    onClose: () -> Unit = {}
+    onSpellChanged: (SpellFormState) -> Unit = {},
+    onSave: () -> Unit = {},
+    onClose: () -> Unit = {},
 ) {
-    val viewModel: SpellDetailViewModel = koinInject()
-    SpellDetailScreen(
-        state = viewModel.state.collectAsState().value,
-        contentPadding = contentPadding,
-        onEdit = viewModel::onEdit,
-        onClose = {
-            viewModel.onClose()
-            onClose()
-        }
-    )
+    AppScreen(
+        isOpen = state.isOpen,
+        contentPaddingValues = contentPadding,
+        onClose = onClose,
+    ) {
+        SpellRegistrationForm(
+            spell = state.spell,
+            isEditing = state.isEditing,
+            isSaveEnabled = state.isSaveEnabled,
+            strings = state.strings,
+            onSpellChanged = onSpellChanged,
+            onSave = onSave,
+        )
+    }
 }

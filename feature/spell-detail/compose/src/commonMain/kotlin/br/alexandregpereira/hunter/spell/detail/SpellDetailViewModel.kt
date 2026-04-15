@@ -21,6 +21,8 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.onEach
 internal class SpellDetailViewModel(
     private val getSpell: GetSpellUseCase,
     private val spellDetailEventListener: SpellDetailEventListener,
+    private val spellRegistrationEventDispatcher: SpellRegistrationEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: SpellDetailAnalytics,
     private val appLocalization: AppLocalization,
@@ -75,5 +78,12 @@ internal class SpellDetailViewModel(
     fun onClose() {
         analytics.trackSpellClosed()
         setState { hideDetail() }
+    }
+
+    fun onEdit() {
+        analytics.trackSpellEditClicked()
+        spellRegistrationEventDispatcher.dispatchEvent(
+            SpellRegistrationEvent.Show(spellIndex)
+        )
     }
 }

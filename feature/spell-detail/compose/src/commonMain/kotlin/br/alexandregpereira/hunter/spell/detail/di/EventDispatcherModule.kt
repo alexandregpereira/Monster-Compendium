@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.spell.detail.SpellDetailEventManager
 import br.alexandregpereira.hunter.spell.detail.SpellDetailViewModel
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import org.koin.dsl.module
 
 val featureSpellDetailModule = module {
@@ -33,6 +34,7 @@ val featureSpellDetailModule = module {
         SpellDetailViewModel(
             getSpell = get(),
             spellDetailEventListener = get(),
+            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             dispatcher = get(),
             analytics = SpellDetailAnalytics(get()),
             appLocalization = get(),

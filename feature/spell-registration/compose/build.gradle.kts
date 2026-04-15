@@ -16,22 +16,30 @@
  */
 
 plugins {
+    id("com.android.library")
     kotlin("multiplatform")
+    alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
+    androidMain()
     commonMain {
         implementation(project(":core:analytics"))
-        implementation(project(":core:state-holder"))
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
-        implementation(project(":core:search"))
+        implementation(project(":core:state-holder"))
+        implementation(project(":core:uuid"))
         implementation(project(":domain:spell:core"))
-        implementation(project(":feature:spell-compendium:event"))
         implementation(project(":feature:spell-registration:event"))
+        implementation(project(":ui:core"))
+
         implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
+        implementation(libs.koin.compose)
     }
     jvmMain()
     iosMain()
+}
+
+androidLibrary {
+    namespace = "br.alexandregpereira.hunter.spell.registration"
 }

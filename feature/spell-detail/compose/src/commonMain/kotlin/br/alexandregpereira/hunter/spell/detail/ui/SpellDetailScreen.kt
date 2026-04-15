@@ -37,24 +37,27 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 internal fun SpellDetailScreen(
     state: SpellDetailViewState,
     contentPadding: PaddingValues = PaddingValues(),
+    onEdit: () -> Unit = {},
     onClose: () -> Unit = {}
 ) = HunterTheme {
     BottomSheet(opened = state.showDetail, contentPadding = contentPadding, onClose = onClose) {
         CompositionLocalProvider(LocalStrings provides state.strings) {
-            SpellDetail(state.spell)
+            SpellDetail(state.spell, onEdit = onEdit)
         }
     }
 }
 
 @Composable
 private fun SpellDetail(
-    spell: SpellState
+    spell: SpellState,
+    onEdit: () -> Unit = {},
 ) = SelectionContainer {
     Column {
         SpellHeader(
             title = spell.name,
             subtitle = spell.subtitle,
             schoolIcon = spell.school.toUiState(),
+            onEdit = onEdit,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 

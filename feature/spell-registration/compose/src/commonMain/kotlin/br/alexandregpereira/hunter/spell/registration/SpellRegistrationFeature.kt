@@ -15,27 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.spell.detail
+package br.alexandregpereira.hunter.spell.registration
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import br.alexandregpereira.hunter.spell.detail.ui.SpellDetailScreen
+import br.alexandregpereira.hunter.spell.registration.ui.SpellRegistrationScreen
 import org.koin.compose.koinInject
 
 @Composable
-fun SpellDetailFeature(
+fun SpellRegistrationFeature(
     contentPadding: PaddingValues = PaddingValues(),
-    onClose: () -> Unit = {}
 ) {
-    val viewModel: SpellDetailViewModel = koinInject()
-    SpellDetailScreen(
-        state = viewModel.state.collectAsState().value,
+    val stateHolder: SpellRegistrationStateHolder = koinInject()
+    LaunchedEffect(stateHolder) {
+        stateHolder.observeEvents()
+    }
+    SpellRegistrationScreen(
+        state = stateHolder.state.collectAsState().value,
         contentPadding = contentPadding,
-        onEdit = viewModel::onEdit,
-        onClose = {
-            viewModel.onClose()
-            onClose()
-        }
+        onSpellChanged = stateHolder::onSpellChanged,
+        onSave = stateHolder::onSave,
+        onClose = stateHolder::onClose,
     )
 }

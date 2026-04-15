@@ -29,6 +29,7 @@ multiplatform {
         implementation(project(":core:uuid"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:spell-detail:event"))
+        implementation(project(":feature:spell-registration:event"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)

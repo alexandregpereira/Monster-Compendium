@@ -21,16 +21,8 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(project(":core:analytics"))
-        implementation(project(":core:state-holder"))
-        implementation(project(":core:event"))
-        implementation(project(":core:localization"))
-        implementation(project(":core:search"))
-        implementation(project(":domain:spell:core"))
-        implementation(project(":feature:spell-compendium:event"))
-        implementation(project(":feature:spell-registration:event"))
         implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
+        api(project(":core:event"))
     }
     jvmMain()
     iosMain()

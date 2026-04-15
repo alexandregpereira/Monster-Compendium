@@ -51,4 +51,10 @@ internal class SpellDetailAnalytics(
             eventName = "Spell Detail - closed",
         )
     }
+
+    fun trackSpellEditClicked() {
+        analytics.track(
+            eventName = "Spell Detail - edit clicked",
+        )
+    }
 }

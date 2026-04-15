@@ -24,6 +24,8 @@ interface SpellCompendiumIntent {
 
     fun onSpellLongClick(spellIndex: String)
 
+    fun onAddSpell()
+
     fun onClose()
 }
 
@@ -34,6 +36,8 @@ class EmptySpellCompendiumIntent : SpellCompendiumIntent {
     override fun onSpellClick(spellIndex: String) {}
 
     override fun onSpellLongClick(spellIndex: String) {}
+
+    override fun onAddSpell() {}
 
     override fun onClose() {}
 }

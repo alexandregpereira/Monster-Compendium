@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.koin.dsl.module
@@ -42,7 +43,9 @@ val spellCompendiumModule = module {
             getSpellsUseCase = get(),
             eventListener = get<SpellCompendiumEventManager>(),
             resultDispatcher = get<SpellCompendiumEventManager>(),
+            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             appLocalization = get(),
+            analytics = get(),
         )
     }
 }
