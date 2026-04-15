@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -36,6 +35,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.AppBarIcon
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.util.toColor
@@ -73,18 +73,14 @@ internal fun SpellHeader(
                 subTitle = subtitle,
                 modifier = Modifier.weight(1f),
             )
-            IconButton(
-                onClick = onEdit,
+            AppBarIcon(
+                imageVector = Icons.Filled.Edit,
+                contentDescription = "",
+                onClicked = onEdit,
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(24.dp)
                     .align(alignment = Alignment.CenterVertically)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = "",
-                    modifier = Modifier.size(24.dp),
-                )
-            }
+            )
         }
 
         Box(

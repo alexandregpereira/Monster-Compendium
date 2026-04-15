@@ -56,7 +56,7 @@ internal fun SpellRegistrationForm(
         modifier = Modifier.padding(horizontal = 16.dp),
     ) {
         item {
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(48.dp))
             Text(
                 text = title,
                 style = MaterialTheme.typography.h6,
