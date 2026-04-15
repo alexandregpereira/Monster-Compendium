@@ -16,6 +16,7 @@
  */
 
 plugins {
+    id("com.android.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose.compiler)
 }
@@ -32,7 +33,13 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
+        implementation(libs.multiplatform.markdown.renderer)
     }
+    androidMain()
     jvmMain()
     iosMain()
+}
+
+androidLibrary {
+    namespace = "br.alexandregpereira.hunter.spell.detail"
 }
