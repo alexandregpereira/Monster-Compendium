@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.spell.registration.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,7 +32,6 @@ import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.spell.registration.SpellFormState
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationStrings
-import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppKeyboardType
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
@@ -43,17 +41,16 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 internal fun SpellRegistrationForm(
     spell: SpellFormState,
     isEditing: Boolean,
-    isSaveEnabled: Boolean,
     strings: SpellRegistrationStrings,
-    onSpellChanged: (SpellFormState) -> Unit,
-    onSave: () -> Unit,
+    modifier: Modifier = Modifier,
+    onSpellChanged: (SpellFormState) -> Unit = {},
 ) {
     val title = if (isEditing) strings.editSpell else strings.addSpell
     val schoolOptions = SchoolOfMagic.entries.map { it.toLabel(strings) }
     val savingThrowOptions = listOf(strings.none) + SavingThrowType.entries.map { it.toLabel(strings) }
 
     LazyColumn(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
     ) {
         item {
             Spacer(Modifier.height(48.dp))
@@ -80,6 +77,18 @@ internal fun SpellRegistrationForm(
                 label = strings.level,
                 keyboardType = AppKeyboardType.NUMBER,
                 onValueChange = { onSpellChanged(spell.copy(level = it)) },
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+        }
+
+        item {
+            PickerField(
+                label = strings.school,
+                options = schoolOptions,
+                value = spell.school.toLabel(strings),
+                onValueChange = { index ->
+                    onSpellChanged(spell.copy(school = SchoolOfMagic.entries[index]))
+                },
                 modifier = Modifier.padding(bottom = 8.dp),
             )
         }
@@ -138,18 +147,6 @@ internal fun SpellRegistrationForm(
 
         item {
             PickerField(
-                label = strings.school,
-                options = schoolOptions,
-                value = spell.school.toLabel(strings),
-                onValueChange = { index ->
-                    onSpellChanged(spell.copy(school = SchoolOfMagic.entries[index]))
-                },
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-        }
-
-        item {
-            PickerField(
                 label = strings.savingThrowType,
                 options = savingThrowOptions,
                 value = spell.savingThrowType?.toLabel(strings) ?: strings.none,
@@ -187,17 +184,6 @@ internal fun SpellRegistrationForm(
                 multiline = true,
                 onValueChange = { onSpellChanged(spell.copy(higherLevel = it)) },
                 modifier = Modifier.padding(bottom = 8.dp),
-            )
-        }
-
-        item {
-            AppButton(
-                text = strings.save,
-                enabled = isSaveEnabled,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                onClick = onSave,
             )
         }
     }

@@ -23,7 +23,9 @@ import br.alexandregpereira.hunter.strings.format
 
 internal interface SpellDetailStrings {
     val subtitleCantrip: String
+    val subtitleCantripWithRitual: String
     val subtitleLevel: String
+    val subtitleLevelWithRitual: String
     val castingTime: String
     val range: String
     val components: String
@@ -59,7 +61,9 @@ internal interface SpellDetailStrings {
 
 internal data class SpellDetailEnStrings(
     override val subtitleCantrip: String = "Cantrip, {0}",
+    override val subtitleCantripWithRitual: String = "Cantrip (Ritual), {0}",
     override val subtitleLevel: String = "Level {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Level {0} (Ritual), {1}",
     override val castingTime: String = "Casting Time:",
     override val range: String = "Range:",
     override val components: String = "Components:",
@@ -95,7 +99,9 @@ internal data class SpellDetailEnStrings(
 
 internal data class SpellDetailPtStrings(
     override val subtitleCantrip: String = "Truque, {0}",
+    override val subtitleCantripWithRitual: String = "Truque (Ritual), {0}",
     override val subtitleLevel: String = "Nível {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Nível {0} (Ritual), {1}",
     override val castingTime: String = "Tempo de Conjuração:",
     override val range: String = "Alcance:",
     override val components: String = "Componentes:",
@@ -129,7 +135,9 @@ internal data class SpellDetailPtStrings(
     override val resetConfirmation: String = "Tem certeza que deseja redefinir esta magia para sua versão original?",
 ) : SpellDetailStrings
 
-internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String): String {
+internal fun SpellDetailStrings.formatSubTitle(level: Int, school: String, ritual: Boolean): String {
+    val subtitleCantrip = if (ritual) subtitleCantripWithRitual else subtitleCantrip
+    val subtitleLevel = if (ritual) subtitleLevelWithRitual else subtitleLevel
     return if (level == 0) subtitleCantrip.format(school) else subtitleLevel.format(level, school)
 }
 
@@ -137,7 +145,9 @@ internal fun SpellDetailStrings(): SpellDetailStrings = SpellDetailEnStrings()
 
 internal data class SpellDetailEsStrings(
     override val subtitleCantrip: String = "Truco de magia, {0}",
+    override val subtitleCantripWithRitual: String = "Truco de magia (Ritual), {0}",
     override val subtitleLevel: String = "Nivel {0}, {1}",
+    override val subtitleLevelWithRitual: String = "Nivel {0} (Ritual), {1}",
     override val castingTime: String = "Tiempo de Lanzamiento:",
     override val range: String = "Alcance:",
     override val components: String = "Componentes:",

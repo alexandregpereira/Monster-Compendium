@@ -17,10 +17,16 @@
 
 package br.alexandregpereira.hunter.spell.registration.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.spell.registration.SpellFormState
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationState
+import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppScreen
 
 @Composable
@@ -30,19 +36,27 @@ internal fun SpellRegistrationScreen(
     onSpellChanged: (SpellFormState) -> Unit = {},
     onSave: () -> Unit = {},
     onClose: () -> Unit = {},
+) = AppScreen(
+    isOpen = state.isOpen,
+    contentPaddingValues = contentPadding,
+    onClose = onClose,
 ) {
-    AppScreen(
-        isOpen = state.isOpen,
-        contentPaddingValues = contentPadding,
-        onClose = onClose,
-    ) {
+    Column {
         SpellRegistrationForm(
             spell = state.spell,
             isEditing = state.isEditing,
-            isSaveEnabled = state.isSaveEnabled,
             strings = state.strings,
+            modifier = Modifier.weight(1f),
             onSpellChanged = onSpellChanged,
-            onSave = onSave,
+        )
+
+        AppButton(
+            text = state.strings.save,
+            enabled = state.isSaveEnabled,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            onClick = onSave,
         )
     }
 }
