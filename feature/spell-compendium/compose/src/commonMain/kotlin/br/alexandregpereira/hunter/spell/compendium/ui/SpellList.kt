@@ -24,12 +24,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumIntent
 import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumItemState
 import br.alexandregpereira.hunter.ui.compendium.Compendium
 import br.alexandregpereira.hunter.ui.compendium.CompendiumColumns
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState
+import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import br.alexandregpereira.hunter.ui.compose.SchoolOfMagicState
 import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.compose.SpellIconSize
@@ -42,6 +44,7 @@ internal fun SpellList(
 ) {
     val items = remember(spellsGroupByLevel) { spellsGroupByLevel.toCompendiumItems() }
     val listState = rememberLazyGridState(initialFirstVisibleItemIndex = initialItemIndex)
+    ClearFocusWhenScrolling(scrollableState = listState)
     Compendium(
         items = items,
         animateItems = true,
@@ -50,13 +53,20 @@ internal fun SpellList(
     ) { item ->
         val spell = item.value as SpellCompendiumItemState
         val alpha = if (spell.selected) 0.5f else 1f
+        val focusManager = LocalFocusManager.current
         SpellIconInfo(
             name = spell.name,
             school = SchoolOfMagicState.valueOf(spell.school.name),
             size = SpellIconSize.SMALL,
             modifier = Modifier.padding(bottom = 16.dp).alpha(alpha),
-            onClick = { intent.onSpellClick(spell.index) },
-            onLongClick = { intent.onSpellLongClick(spell.index) },
+            onClick = {
+                focusManager.clearFocus()
+                intent.onSpellClick(spell.index)
+            },
+            onLongClick = {
+                focusManager.clearFocus()
+                intent.onSpellLongClick(spell.index)
+            },
         )
     }
 
