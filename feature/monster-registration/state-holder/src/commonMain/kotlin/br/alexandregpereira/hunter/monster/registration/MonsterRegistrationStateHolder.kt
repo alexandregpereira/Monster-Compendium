@@ -23,13 +23,13 @@ import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
-import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
@@ -46,11 +46,14 @@ import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventRe
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -74,6 +77,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
+    private val spellResultListener: EventListener<SpellResult>,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -81,6 +85,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private var originalMonster: Monster? = null
     private var originalMonsterLore: MonsterLore? = null
     private var metadata: Metadata = Metadata()
+    private var spellResultJob: Job? = null
 
     init {
         observeEvents()
@@ -240,11 +245,13 @@ class MonsterRegistrationStateHolder internal constructor(
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
                         setState { copy(isOpen = false, isSaveButtonEnabled = false) }
+                        spellResultJob?.cancel()
                     }
 
                     is MonsterRegistrationEvent.ShowEdit -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
+                        observeSpellResultEvents()
                         setState {
                             copy(
                                 isOpen = true,
@@ -257,6 +264,13 @@ class MonsterRegistrationStateHolder internal constructor(
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.collectOnChanged {
+            fetchMonster()
+        }.launchIn(scope)
     }
 
     private fun setMetadata(monster: Monster, monsterLoreEntries: List<MonsterLoreEntry>) {

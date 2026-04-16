@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddToFolder
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
@@ -54,6 +55,8 @@ import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -90,6 +93,7 @@ class MonsterDetailStateHolder internal constructor(
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
+    private val spellResultListener: EventListener<SpellResult>,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -99,6 +103,7 @@ class MonsterDetailStateHolder internal constructor(
         get() = stateRecovery.monsterIndexes
 
     private var currentJob: Job? = null
+    private var spellResultJob: Job? = null
     private var enableMonsterPageChangesEventDispatch = false
     private var metadata: List<Monster> = emptyList()
     var initialMonsterListPositionIndex: Int = 0
@@ -109,6 +114,7 @@ class MonsterDetailStateHolder internal constructor(
         observeEvents()
         state.value.run {
             if (showDetail && monsters.isEmpty()) {
+                observeSpellResultEvents()
                 getMonstersByInitialIndex(monsterIndex, monsterIndexes)
             }
         }
@@ -119,6 +125,7 @@ class MonsterDetailStateHolder internal constructor(
             when (event) {
                 is Show -> {
                     analytics.trackMonsterDetailShown(event)
+                    observeSpellResultEvents()
                     enableMonsterPageChangesEventDispatch =
                         event.enableMonsterPageChangesEventDispatch
                     setState {
@@ -250,6 +257,7 @@ class MonsterDetailStateHolder internal constructor(
     fun onClose() {
         analytics.trackMonsterDetailClosed()
         monsterEventDispatcher.dispatchEvent(Hide)
+        spellResultJob?.cancel()
     }
 
     fun onCloneFormClosed() {
@@ -388,5 +396,13 @@ class MonsterDetailStateHolder internal constructor(
                 syncEventDispatcher.startSync()
             }
             .launchIn(scope)
+    }
+
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.collectOnChanged {
+            getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = false)
+
+        }.launchIn(scope)
     }
 }

@@ -10,13 +10,13 @@ DELETE FROM SpellUsageSpellCrossRefEntity WHERE spellUsageId IN ?;
 
 getBySpellUsageIdsAndSpellIndex:
 SELECT
-    SpellPreviewEntity.spellIndex AS spellIndex,
-    SpellPreviewEntity.level AS level,
-    SpellPreviewEntity.name AS name,
-    SpellPreviewEntity.school AS school,
+    SpellEntity.spellIndex AS spellIndex,
+    SpellEntity.level AS level,
+    SpellEntity.name AS name,
+    SpellEntity.school AS school,
     SpellUsageSpellCrossRefEntity.spellUsageId AS spellUsageId
 FROM SpellUsageSpellCrossRefEntity
 INNER JOIN SpellUsageEntity ON SpellUsageEntity.spellUsageId = SpellUsageSpellCrossRefEntity.spellUsageId
-INNER JOIN SpellPreviewEntity ON SpellPreviewEntity.spellIndex = SpellUsageSpellCrossRefEntity.spellIndex
+INNER JOIN SpellEntity ON SpellEntity.spellIndex = SpellUsageSpellCrossRefEntity.spellIndex
 WHERE SpellUsageSpellCrossRefEntity.spellUsageId IN ?
 ;

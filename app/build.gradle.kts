@@ -59,6 +59,7 @@ multiplatform {
 
         implementation(project(":feature:share-content:event"))
         implementation(project(":domain:monster:event"))
+        implementation(project(":domain:spell:event"))
 
         implementation(project(":feature:folder-detail:compose"))
         implementation(project(":feature:ads:compose"))

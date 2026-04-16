@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventListener
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
+import br.alexandregpereira.hunter.spell.event.SpellResultDispatcher
 import br.alexandregpereira.hunter.state.StateHolderParams
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.Qualifier
@@ -79,6 +80,7 @@ val monsterRegistrationModule = module {
             spellDetailEventDispatcher = get(),
             getSpell = get(),
             appLocalization = get(),
+            spellResultListener = get<SpellResultDispatcher>(),
         )
     }
 }

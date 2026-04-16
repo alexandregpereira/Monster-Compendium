@@ -17,9 +17,9 @@
 
 package br.alexandregpereira.hunter.spell.registration.di
 
+import br.alexandregpereira.hunter.spell.event.SpellResultDispatcher
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationStateHolder
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResultDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
@@ -28,17 +28,13 @@ val featureSpellRegistrationModule = module {
         SpellRegistrationEventDispatcher()
     }
 
-    single<SpellRegistrationResultDispatcher> {
-        SpellRegistrationResultDispatcher()
-    }
-
     single {
         SpellRegistrationStateHolder(
             dispatcher = Dispatchers.Default,
             getSpell = get(),
             saveSpells = get(),
             eventManager = get<SpellRegistrationEventDispatcher>(),
-            resultManager = get<SpellRegistrationResultDispatcher>(),
+            resultManager = get<SpellResultDispatcher>(),
             appLocalization = get(),
             analytics = get(),
             spellDetailEventDispatcher = get(),

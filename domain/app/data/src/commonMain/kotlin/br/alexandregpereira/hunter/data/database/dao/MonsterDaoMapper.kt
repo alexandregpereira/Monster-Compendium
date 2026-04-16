@@ -17,8 +17,23 @@
 
 package br.alexandregpereira.hunter.data.database.dao
 
-import br.alexandregpereira.hunter.data.monster.local.entity.*
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.AbilityScoreEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
+import br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
@@ -39,7 +54,6 @@ import br.alexandregpereira.hunter.database.SkillEntity as SkillDatabaseEntity
 import br.alexandregpereira.hunter.database.SpecialAbilityEntity as SpecialAbilityDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedEntity as SpeedDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedValueEntity as SpeedValueDatabaseEntity
-import br.alexandregpereira.hunter.database.SpellPreviewEntity as SpellPreviewDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageEntity as SpellUsageDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefEntity as SpellUsageSpellCrossRefDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellcastingEntity as SpellcastingDatabaseEntity
@@ -403,15 +417,6 @@ internal fun SpellcastingEntity.toDatabaseEntity(): SpellcastingDatabaseEntity {
         type = this.type,
         description = this.description,
         monsterIndex = monsterIndex
-    )
-}
-
-internal fun SpellPreviewEntity.toDatabaseEntity(): SpellPreviewDatabaseEntity {
-    return SpellPreviewDatabaseEntity(
-        spellIndex = this.spellIndex,
-        name = this.name,
-        level = this.level.toLong(),
-        school = this.school,
     )
 }
 

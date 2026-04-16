@@ -28,8 +28,8 @@ import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResult
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,7 +44,7 @@ internal class SpellRegistrationStateHolder(
     private val getSpell: GetSpellUseCase,
     private val saveSpells: SaveSpells,
     private val eventManager: EventDispatcher<SpellRegistrationEvent>,
-    private val resultManager: EventDispatcher<SpellRegistrationResult>,
+    private val resultManager: EventDispatcher<SpellResult>,
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
@@ -120,7 +120,12 @@ internal class SpellRegistrationStateHolder(
             .flowOn(dispatcher)
             .onEach {
                 onClose()
-                resultManager.dispatchEvent(SpellRegistrationResult.OnSaved(spellIndex))
+                val resultEvent = if (isEditing) {
+                    SpellResult.OnChanged(spellIndex)
+                } else {
+                    SpellResult.OnAdded(spellIndex)
+                }
+                resultManager.dispatchEvent(resultEvent)
                 if (!isEditing) {
                     spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
                 }

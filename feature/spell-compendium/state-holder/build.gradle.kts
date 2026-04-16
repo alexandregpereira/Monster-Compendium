@@ -27,6 +27,7 @@ multiplatform {
         implementation(project(":core:localization"))
         implementation(project(":core:search"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:spell:event"))
         implementation(project(":feature:spell-compendium:event"))
         implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:spell-registration:event"))

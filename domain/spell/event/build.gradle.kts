@@ -15,22 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.spell.registration.event
-
-import br.alexandregpereira.hunter.event.v2.EventDispatcher
-
-sealed class SpellRegistrationEvent {
-
-    /**
-     * Open the spell registration form.
-     * If [spellIndex] is empty, a new spell will be created.
-     * If [spellIndex] is non-empty, the existing spell will be edited.
-     */
-    data class Show(val spellIndex: String = "") : SpellRegistrationEvent()
-
-    data object Hide : SpellRegistrationEvent()
+plugins {
+    kotlin("multiplatform")
 }
 
-class SpellRegistrationEventDispatcher : EventDispatcher<SpellRegistrationEvent> by EventDispatcher(
-    extraBufferCapacity = 1,
-)
+multiplatform {
+    commonMain {
+        implementation(libs.koin.core)
+        implementation(libs.kotlin.coroutines.core)
+        api(project(":core:event"))
+    }
+    jvmMain()
+    iosMain()
+}
