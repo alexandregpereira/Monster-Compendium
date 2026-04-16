@@ -28,6 +28,7 @@ multiplatform {
         api(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:spell:event"))
         implementation(project(":feature:folder-insert:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))

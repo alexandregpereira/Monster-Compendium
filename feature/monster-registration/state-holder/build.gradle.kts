@@ -29,6 +29,7 @@ multiplatform {
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:spell:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:spell-compendium:event"))

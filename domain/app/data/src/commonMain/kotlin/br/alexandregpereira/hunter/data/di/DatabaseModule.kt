@@ -68,7 +68,6 @@ fun databaseModule(databaseName: String) = module {
             spellUsageQueries = database.spellUsageQueries,
             spellcastingSpellUsageCrossRefQueries = database.spellcastingSpellUsageCrossRefQueries,
             spellUsageCrossRefQueries = database.spellUsageSpellCrossRefQueries,
-            spellPreviewQueries = database.spellPreviewQueries,
             legendaryActionQueries = database.legendaryActionQueries,
             dispatcher = getDispatcherIO()
         )

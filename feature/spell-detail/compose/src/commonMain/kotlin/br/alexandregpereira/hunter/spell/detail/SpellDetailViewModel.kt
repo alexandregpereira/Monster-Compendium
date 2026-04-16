@@ -20,17 +20,15 @@ package br.alexandregpereira.hunter.spell.detail
 import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
-import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.domain.CloneSpellUseCase
 import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCase
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
-import br.alexandregpereira.hunter.spell.detail.event.SpellDetailResult
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
-import br.alexandregpereira.hunter.spell.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.SyncEventListener
@@ -53,13 +51,12 @@ internal class SpellDetailViewModel(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: SpellDetailAnalytics,
     private val appLocalization: AppLocalization,
-    private val spellRegistrationResultListener: EventListener<SpellRegistrationResult>,
-    private val spellDetailResultDispatcher: EventDispatcher<SpellDetailResult>,
+    private val spellResultDispatcher: EventDispatcher<SpellResult>,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val syncEventListener: SyncEventListener,
 ) : UiModel<SpellDetailViewState>(SpellDetailViewState()) {
 
-    private var spellRegistrationResultJob: Job? = null
+    private var spellResultJob: Job? = null
     private var syncFinishedJob: Job? = null
 
     init {
@@ -87,7 +84,7 @@ internal class SpellDetailViewModel(
                 when (event) {
                     is SpellDetailEvent.ShowSpell -> {
                         analytics.trackSpellShown(event.index)
-                        observeSpellRegistrationEvents()
+                        observeSpellResultEvents()
                         loadSpell(event.index)
                     }
                 }
@@ -97,7 +94,7 @@ internal class SpellDetailViewModel(
 
     fun onClose() {
         analytics.trackSpellClosed()
-        spellRegistrationResultJob?.cancel()
+        spellResultJob?.cancel()
         syncFinishedJob?.cancel()
         setState { hideDetail() }
     }
@@ -145,8 +142,7 @@ internal class SpellDetailViewModel(
         cloneSpell(spellIndex, spellName)
             .flowOn(dispatcher)
             .onEach { newIndex ->
-                loadSpell(newIndex)
-                spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = newIndex))
+                dispatchOnChangedResult(spellIndex = newIndex)
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)
@@ -159,8 +155,8 @@ internal class SpellDetailViewModel(
         deleteSpell(spellIndex)
             .flowOn(dispatcher)
             .onEach {
-                spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = spellIndex))
                 onClose()
+                dispatchOnChangedResult(spellIndex)
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)
@@ -177,8 +173,7 @@ internal class SpellDetailViewModel(
 
         syncFinishedJob?.cancel()
         syncFinishedJob = syncEventListener.collectSyncFinishedEvents {
-            loadSpell(spellIndex)
-            spellDetailResultDispatcher.dispatchEvent(SpellDetailResult.OnChanged(spellIndex = spellIndex))
+            dispatchOnChangedResult(spellIndex)
         }.launchIn(scope)
 
         resetSpellToOriginal(spellIndex)
@@ -194,10 +189,14 @@ internal class SpellDetailViewModel(
         setState { copy(showResetConfirmation = false) }
     }
 
-    private fun observeSpellRegistrationEvents() {
-        spellRegistrationResultJob?.cancel()
-        spellRegistrationResultJob = spellRegistrationResultListener.collectOnSaved { result ->
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultDispatcher.collectOnChanged { result ->
             loadSpell(spellIndex = result.spellIndex)
         }.launchIn(scope)
+    }
+
+    private fun dispatchOnChangedResult(spellIndex: String) {
+        spellResultDispatcher.dispatchEvent(SpellResult.OnChanged(spellIndex))
     }
 }

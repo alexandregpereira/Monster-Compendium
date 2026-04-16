@@ -44,6 +44,7 @@ import br.alexandregpereira.hunter.settings.di.featureSettingsModule
 import br.alexandregpereira.hunter.shareContent.featureShareContentModule
 import br.alexandregpereira.hunter.spell.compendium.di.featureSpellCompendiumModule
 import br.alexandregpereira.hunter.spell.detail.di.featureSpellDetailModule
+import br.alexandregpereira.hunter.spell.event.spellEventModule
 import br.alexandregpereira.hunter.spell.registration.di.featureSpellRegistrationModule
 import br.alexandregpereira.hunter.sync.di.featureSyncModule
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -85,6 +86,7 @@ internal fun KoinApplication.initKoinModules() {
         localizationModule,
         monsterEventModule,
         appEventModule,
+        spellEventModule,
         adsConsentCoreModule(
             deviceDebugHashTestId = AppConfig.ADS_CONSENT_DEVICE_HASH_TEST_ID.takeIf { it.isNotBlank() }
         ),

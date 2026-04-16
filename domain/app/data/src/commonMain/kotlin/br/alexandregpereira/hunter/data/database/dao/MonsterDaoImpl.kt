@@ -39,7 +39,6 @@ import br.alexandregpereira.hunter.database.SkillQueries
 import br.alexandregpereira.hunter.database.SpecialAbilityQueries
 import br.alexandregpereira.hunter.database.SpeedQueries
 import br.alexandregpereira.hunter.database.SpeedValueQueries
-import br.alexandregpereira.hunter.database.SpellPreviewQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
@@ -66,7 +65,6 @@ internal class MonsterDaoImpl(
     private val spellUsageQueries: SpellUsageQueries,
     private val spellcastingSpellUsageCrossRefQueries: SpellcastingSpellUsageCrossRefQueries,
     private val spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries,
-    private val spellPreviewQueries: SpellPreviewQueries,
     private val legendaryActionQueries: LegendaryActionQueries,
     private val dispatcher: CoroutineDispatcher
 ) : MonsterDao {
@@ -160,7 +158,6 @@ internal class MonsterDaoImpl(
                     )
                 }
             }
-            spellPreviewQueries.insert(spellsAndCrossRefs.map { it.first })
             spellUsageCrossRefQueries.insert(spellsAndCrossRefs.map { it.second })
         }
     }

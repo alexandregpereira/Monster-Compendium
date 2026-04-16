@@ -26,9 +26,8 @@ import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCa
 import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCaseImpl
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventListener
-import br.alexandregpereira.hunter.spell.detail.event.SpellDetailResultDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResultDispatcher
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResultDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.dsl.module
 
@@ -37,7 +36,6 @@ val featureSpellDetailModule = module {
     single { SpellDetailEventManager() }
     single<SpellDetailEventDispatcher> { get<SpellDetailEventManager>() }
     single<SpellDetailEventListener> { get<SpellDetailEventManager>() }
-    single<SpellDetailResultDispatcher> { SpellDetailResultDispatcher() }
 
     factory<CloneSpellUseCase> {
         CloneSpellUseCaseImpl(
@@ -64,8 +62,7 @@ val featureSpellDetailModule = module {
             dispatcher = get(),
             analytics = SpellDetailAnalytics(get()),
             appLocalization = get(),
-            spellRegistrationResultListener = get<SpellRegistrationResultDispatcher>(),
-            spellDetailResultDispatcher = get<SpellDetailResultDispatcher>(),
+            spellResultDispatcher = get<SpellResultDispatcher>(),
             syncEventDispatcher = get(),
             syncEventListener = get(),
         )

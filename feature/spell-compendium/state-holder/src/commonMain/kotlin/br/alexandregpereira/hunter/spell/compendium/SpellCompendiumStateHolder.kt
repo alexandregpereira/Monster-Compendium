@@ -26,11 +26,9 @@ import br.alexandregpereira.hunter.search.removeAccents
 import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
-import br.alexandregpereira.hunter.spell.detail.event.SpellDetailResult
+import br.alexandregpereira.hunter.spell.event.SpellResult
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationResult
-import br.alexandregpereira.hunter.spell.registration.event.collectOnSaved
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
@@ -52,16 +50,14 @@ class SpellCompendiumStateHolder internal constructor(
     private val spellRegistrationEventDispatcher: SpellRegistrationEventDispatcher,
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
-    private val spellRegistrationResultListener: EventListenerV2<SpellRegistrationResult>,
-    private val spellDetailResultListener: EventListenerV2<SpellDetailResult>,
+    private val spellResultListener: EventListenerV2<SpellResult>,
 ) : UiModel<SpellCompendiumState>(SpellCompendiumState()),
     SpellCompendiumIntent {
 
     private val searchQuery = MutableStateFlow(state.value.searchText)
     private val originalSpellsGroupByLevel = mutableMapOf<String, List<SpellCompendiumItemState>>()
     private var strings: SpellCompendiumStrings = getSpellCompendiumStrings(appLocalization.getLanguage())
-    private var spellRegistrationResultJob: Job? = null
-    private var spellDetailResultJob: Job? = null
+    private var spellResultJob: Job? = null
 
     init {
         debounceSearch()
@@ -131,8 +127,7 @@ class SpellCompendiumStateHolder internal constructor(
             when (event) {
                 is SpellCompendiumEvent.Show -> {
                     analytics.track(eventName = "Spell Compendium - opened")
-                    observeSpellRegistrationEvents()
-                    observeSpellDetailEvents()
+                    observeSpellResultEvents()
                     fetch(
                         spellIndex = event.spellIndex,
                         selectedSpellIndexes = event.selectedSpellIndexes,
@@ -172,23 +167,16 @@ class SpellCompendiumStateHolder internal constructor(
 
     override fun onClose() {
         analytics.track(eventName = "Spell Compendium - closed")
-        spellRegistrationResultJob?.cancel()
-        spellDetailResultJob?.cancel()
+        spellResultJob?.cancel()
         setState { copy(isShowing = false) }
     }
 
-    private fun observeSpellRegistrationEvents() {
-        spellRegistrationResultJob?.cancel()
-        spellRegistrationResultJob = spellRegistrationResultListener.collectOnSaved { result ->
-            fetch(spellIndex = result.spellIndex)
-        }.launchIn(scope)
-    }
-
-    private fun observeSpellDetailEvents() {
-        spellDetailResultJob?.cancel()
-        spellDetailResultJob = spellDetailResultListener.events.onEach { result ->
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.events.onEach { result ->
             when (result) {
-                is SpellDetailResult.OnChanged -> fetch(spellIndex = result.spellIndex)
+                is SpellResult.OnAdded -> fetch(spellIndex = result.spellIndex)
+                is SpellResult.OnChanged -> fetch(spellIndex = result.spellIndex)
             }
         }.launchIn(scope)
     }
