@@ -53,6 +53,7 @@ internal fun MonsterRegistrationScreen(
     AppScreen(
         isOpen = state.isOpen,
         contentPaddingValues = contentPadding,
+        swipeTriggerPercentage = .7f,
         modifier = Modifier.widthIn(
             max = maxBottomSheetWidth.takeIf { screenSize.isLandscape } ?: Dp.Unspecified
         ),
