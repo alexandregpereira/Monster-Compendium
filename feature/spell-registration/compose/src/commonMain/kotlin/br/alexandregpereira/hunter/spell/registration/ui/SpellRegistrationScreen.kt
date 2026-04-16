@@ -39,6 +39,7 @@ internal fun SpellRegistrationScreen(
 ) = AppScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
+    swipeTriggerPercentage = .7f,
     onClose = onClose,
 ) {
     Column {
