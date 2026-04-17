@@ -39,10 +39,10 @@ fun LoadingScreen(
     modifier: Modifier = Modifier,
     showCircularLoading: Boolean = true,
     fillMaxSize: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable (Unit) -> Unit
 ) {
-    LoadingScreen<Unit>(
-        state = if (isLoading) LoadingScreen else Success,
+    LoadingScreen<Unit, Unit>(
+        state = if (isLoading) LoadingScreen else Success(Unit),
         modifier = modifier,
         showCircularLoading = showCircularLoading,
         fillMaxSize = fillMaxSize,
@@ -50,14 +50,15 @@ fun LoadingScreen(
     )
 }
 
+@Suppress("UNCHECKED_CAST")
 @Composable
-inline fun <reified ErrorState> LoadingScreen(
+inline fun <SuccessState, reified ErrorState> LoadingScreen(
     state: LoadingScreenState,
     modifier: Modifier = Modifier,
     showCircularLoading: Boolean = true,
     fillMaxSize: Boolean = true,
     crossinline errorContent: @Composable (ErrorState) -> Unit = {},
-    crossinline content: @Composable () -> Unit
+    crossinline content: @Composable (SuccessState) -> Unit
 ) {
     AnimatedContent(
         targetState = state,
@@ -67,7 +68,7 @@ inline fun <reified ErrorState> LoadingScreen(
     ) { animationState: LoadingScreenState ->
         when (animationState) {
             LoadingScreen -> LoadingIndicator(showCircularLoading, fillMaxSize = fillMaxSize)
-            Success -> content()
+            is Success<*> -> content(animationState.state as SuccessState)
             is LoadingScreenState.Error<*> -> if (animationState.errorState is ErrorState) errorContent(animationState.errorState)
         }
     }
@@ -75,7 +76,7 @@ inline fun <reified ErrorState> LoadingScreen(
 
 sealed class LoadingScreenState {
     object LoadingScreen : LoadingScreenState()
-    object Success : LoadingScreenState()
+    data class Success<SuccessState>(val state: SuccessState) : LoadingScreenState()
     data class Error<ErrorState>(val errorState: ErrorState) : LoadingScreenState()
 }
 

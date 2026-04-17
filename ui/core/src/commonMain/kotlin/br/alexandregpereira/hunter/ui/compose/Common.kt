@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -74,7 +75,10 @@ fun PreviewWindow(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = HunterTheme(darkTheme = darkTheme) {
-    Window(modifier = modifier, content = content)
+    val screenSizeInfo = getPlatformScreenSizeInfo()
+    CompositionLocalProvider(LocalScreenSize provides screenSizeInfo) {
+        Window(modifier = modifier, content = content)
+    }
 }
 
 fun Modifier.noIndicationClick(onClick: () -> Unit = {}): Modifier = composed {

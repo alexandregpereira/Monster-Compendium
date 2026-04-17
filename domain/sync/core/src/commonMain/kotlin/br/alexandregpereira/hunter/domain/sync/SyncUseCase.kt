@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.sync
 
+import br.alexandregpereira.hunter.condition.SyncConditions
 import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
@@ -25,6 +26,7 @@ import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVer
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.ktx.runCatching
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -46,6 +48,7 @@ class SyncUseCase internal constructor(
     private val saveAlternativeSourceContentVersionsUseCase: SaveAlternativeSourceContentVersionsUseCase,
     private val isFirstTime: IsFirstTime,
     private val resetFirstTime: ResetFirstTime,
+    private val syncConditions: SyncConditions,
 ) {
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
@@ -59,6 +62,9 @@ class SyncUseCase internal constructor(
                             async { syncMonsters().single() },
                             async { syncSpells().single() },
                             async { syncMonstersLoreUseCase().single() },
+                            async {
+                                runCatching { syncConditions() }
+                            },
                         )
                     }.onFailure {
                         runCatching { saveLanguageUseCase(lastLanguageRollback).single() }

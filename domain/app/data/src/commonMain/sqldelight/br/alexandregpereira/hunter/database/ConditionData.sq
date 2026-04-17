@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS ConditionDataEntity (`index` TEXT NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`index`));
+
+insert:
+INSERT OR REPLACE INTO ConditionDataEntity VALUES ?;
+
+getCondition:
+SELECT * FROM ConditionDataEntity WHERE `index` == ?;
+
+deleteAll:
+DELETE FROM ConditionDataEntity;

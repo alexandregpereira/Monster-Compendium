@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.condition.GetCondition
+import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.event.EventDispatcher
@@ -69,6 +71,7 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -94,6 +97,7 @@ class MonsterDetailStateHolder internal constructor(
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
     private val spellResultListener: EventListener<SpellResult>,
+    private val getCondition: GetCondition,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -294,6 +298,47 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onResetClosed() {
         setState { copy(showResetConfirmation = false) }
+    }
+
+    fun onConditionClicked(conditionIndex: String) {
+        analytics.trackConditionClicked(conditionIndex)
+        loadCondition(conditionIndex)
+    }
+
+    fun onCloseConditionDetail() {
+        analytics.trackConditionDetailClosed()
+        setState { copy(isConditionDetailOpen = false) }
+    }
+
+    fun onConditionTryAgainClicked(conditionIndex: String) {
+        analytics.trackConditionClicked(conditionIndex)
+        loadCondition(conditionIndex)
+    }
+
+    private fun loadCondition(conditionIndex: String) {
+        setState {
+            copy(
+                isConditionDetailOpen = true,
+                selectedCondition = ConditionLoadingState.Loading,
+            )
+        }
+        flow {
+            emit(getCondition(conditionIndex))
+        }.flowOn(dispatcher)
+            .catch {
+                setState { copy(selectedCondition = ConditionLoadingState.Error(conditionIndex)) }
+            }
+            .onEach { condition ->
+                analytics.trackConditionDetailOpened()
+                val selectedCondition = ConditionState(
+                    index = condition.index,
+                    type = ConditionType.valueOf(condition.type.name),
+                    name = condition.name,
+                    description = condition.description,
+                )
+                setState { copy(selectedCondition = ConditionLoadingState.Loaded(selectedCondition)) }
+            }
+            .launchIn(scope)
     }
 
     private fun getMonsterDetail(

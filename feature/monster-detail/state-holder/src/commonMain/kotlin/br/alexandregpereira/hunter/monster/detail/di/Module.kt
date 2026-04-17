@@ -54,6 +54,7 @@ val monsterDetailModule = module {
             syncEventDispatcher = get(),
             shareContentEventDispatcher = get(),
             spellResultListener = get<SpellResultDispatcher>(),
+            getCondition = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

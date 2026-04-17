@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.data.di
 
+import br.alexandregpereira.hunter.condition.conditionDataDiModule
 import br.alexandregpereira.hunter.data.monster.di.monsterDataModule
 import br.alexandregpereira.hunter.data.monster.folder.di.monsterFolderDataModule
 import br.alexandregpereira.hunter.data.monster.lore.di.monsterLoreDataModule
@@ -34,6 +35,7 @@ fun dataModules(databaseName: String) = listOf(
     monsterLoreDataModule,
     settingsDataModule,
     spellDataModule,
+    conditionDataDiModule,
 ).run { this + getAdditionalModule() }
 
 internal expect fun getAdditionalModule(): List<Module>
