@@ -176,4 +176,25 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackConditionClicked(conditionIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - condition clicked",
+            params = mapOf(
+                "conditionIndex" to conditionIndex,
+            )
+        )
+    }
+
+    fun trackConditionDetailOpened() {
+        analytics.track(
+            eventName = "MonsterDetail - condition opened",
+        )
+    }
+
+    fun trackConditionDetailClosed() {
+        analytics.track(
+            eventName = "MonsterDetail - condition detail closed",
+        )
+    }
 }

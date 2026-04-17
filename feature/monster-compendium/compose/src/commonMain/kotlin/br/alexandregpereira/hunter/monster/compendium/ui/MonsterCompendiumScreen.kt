@@ -53,12 +53,12 @@ internal fun MonsterCompendiumScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     events: MonsterCompendiumIntent,
 ) {
-    LoadingScreen<MonsterCompendiumError>(
+    LoadingScreen<Unit, MonsterCompendiumError>(
         modifier = Modifier.fillMaxSize(),
         state = when {
             state.errorState != null -> LoadingScreenState.Error(state.errorState)
             state.isLoading -> LoadingScreenState.LoadingScreen
-            else -> LoadingScreenState.Success
+            else -> LoadingScreenState.Success(Unit)
         },
         errorContent = {
             EmptyScreenMessage(

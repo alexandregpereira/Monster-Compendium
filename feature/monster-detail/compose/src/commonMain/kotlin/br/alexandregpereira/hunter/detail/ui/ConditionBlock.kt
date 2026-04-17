@@ -20,24 +20,27 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
 import br.alexandregpereira.hunter.monster.detail.ConditionState
+import br.alexandregpereira.hunter.ui.compose.animatePressed
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun ConditionBlock(
     conditions: List<ConditionState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onConditionClicked: (String) -> Unit = {},
 ) = Block(
     title = strings.conditionImmunities,
     modifier = modifier
 ) {
 
-    ConditionGrid(conditions)
+    ConditionGrid(conditions, onConditionClicked)
 }
 
 @Composable
 private fun ConditionGrid(
-    conditions: List<ConditionState>
+    conditions: List<ConditionState>,
+    onConditionClicked: (String) -> Unit = {},
 ) = Grid {
 
     conditions.forEach { condition ->
@@ -45,7 +48,12 @@ private fun ConditionGrid(
         IconInfo(
             title = condition.name,
             painter = painterResource(iconRes),
-            modifier = Modifier.width(GridItemWidth)
+            modifier = Modifier.width(GridItemWidth).animatePressed(
+                pressedScale = .7f,
+                onClick = {
+                    onConditionClicked(condition.index)
+                }
+            )
         )
     }
 }

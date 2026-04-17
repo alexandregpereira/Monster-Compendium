@@ -50,10 +50,10 @@ internal fun PaywallScreen(
         when {
             isLoading -> LoadingScreenState.LoadingScreen
             errorState != null -> LoadingScreenState.Error(errorState)
-            else -> LoadingScreenState.Success
+            else -> LoadingScreenState.Success(Unit)
         }
     }
-    LoadingScreen<PaywallActionResultState>(
+    LoadingScreen<Unit, PaywallActionResultState>(
         state = loadingScreenState,
         fillMaxSize = false,
         errorContent = { errorState ->
