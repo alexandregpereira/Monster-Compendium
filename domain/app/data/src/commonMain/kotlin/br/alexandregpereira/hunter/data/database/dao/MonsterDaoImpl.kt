@@ -117,14 +117,21 @@ internal class MonsterDaoImpl(
             }
             monsterQueries.insert(monsters.map { it.monster })
             abilityScoreQueries.insert(monsters.mapAndReduce { abilityScores })
-            actionQueries.run {
-                val actions = monsters.mapAndReduce { actions }
-                insert(actions.map { it.action })
-                damageDiceQueries.insert(actions.mapAndReduce { damageDices })
-            }
+
+            val actions = monsters.mapAndReduce { actions }
+            actionQueries.insert(actions.map { it.action })
+            damageDiceQueries.insert(actions.mapAndReduce { damageDices })
+            savingThrowQueries.insert(actions.mapAndReduce { savingThrows })
+            conditionQueries.insert(actions.mapAndReduce { conditions })
+
             savingThrowQueries.insert(monsters.mapAndReduce { savingThrows })
             skillQueries.insert(monsters.mapAndReduce { skills })
-            specialAbilityQueries.insert(monsters.mapAndReduce { specialAbilities })
+
+            val specialAbilities = monsters.mapAndReduce { specialAbilities }
+            specialAbilityQueries.insert(specialAbilities.map { it.specialAbility })
+            savingThrowQueries.insert(specialAbilities.mapAndReduce { savingThrows })
+            conditionQueries.insert(specialAbilities.mapAndReduce { conditions })
+
             speedQueries.insert(monsters.mapNotNull { it.speed?.speed })
             speedValueQueries.insert(monsters.mapNotNull { it.speed?.values }.reduceList())
             damageImmunityQueries.insert(monsters.mapAndReduce { damageImmunities })
@@ -136,6 +143,8 @@ internal class MonsterDaoImpl(
             val legendaryActions = monsters.mapAndReduce { legendaryActions }
             legendaryActionQueries.insert(legendaryActions.map { it.action })
             damageDiceQueries.insert(legendaryActions.mapAndReduce { damageDices })
+            savingThrowQueries.insert(legendaryActions.mapAndReduce { savingThrows })
+            conditionQueries.insert(legendaryActions.mapAndReduce { conditions })
 
             val spellcastings = monsters.mapAndReduce { spellcastings }
             spellcastingQueries.insert(spellcastings.map { it.spellcasting })
@@ -184,6 +193,9 @@ internal class MonsterDaoImpl(
         val monsterIndexes = monsters.map { it.monster.index }
         val actionsIds = monsters.mapAndReduce { actions.map { it.action.id } }
         val legendaryActionsIds = monsters.mapAndReduce { legendaryActions.map { it.action.id } }
+        val abilityKeys = monsters.mapAndReduce {
+            specialAbilities.map { "${it.specialAbility.monsterIndex}-${it.specialAbility.name}" }
+        }
         val speedIds = monsters.mapNotNull { it.speed?.speed?.id }
         val spellcastings = monsters.mapAndReduce { spellcastings }
         val spellcastingIds = spellcastings.map { it.spellcasting.spellcastingId }
@@ -192,12 +204,18 @@ internal class MonsterDaoImpl(
         abilityScoreQueries.deleteWithMonsterIndex(monsterIndexes)
         actionQueries.deleteWithMonsterIndex(monsterIndexes)
         conditionQueries.deleteWithMonsterIndex(monsterIndexes)
+        conditionQueries.deleteWithMonsterIndex(actionsIds)
+        conditionQueries.deleteWithMonsterIndex(legendaryActionsIds)
+        conditionQueries.deleteWithMonsterIndex(abilityKeys)
         damageResistanceQueries.deleteWithMonsterIndex(monsterIndexes)
         damageImmunityQueries.deleteWithMonsterIndex(monsterIndexes)
         damageVulnerabilityQueries.deleteWithMonsterIndex(monsterIndexes)
         damageDiceQueries.deleteWithActionId(actionsIds)
         damageDiceQueries.deleteWithActionId(legendaryActionsIds)
         savingThrowQueries.deleteWithMonsterIndex(monsterIndexes)
+        savingThrowQueries.deleteWithMonsterIndex(actionsIds)
+        savingThrowQueries.deleteWithMonsterIndex(legendaryActionsIds)
+        savingThrowQueries.deleteWithMonsterIndex(abilityKeys)
         skillQueries.deleteWithMonsterIndex(monsterIndexes)
         specialAbilityQueries.deleteWithMonsterIndex(monsterIndexes)
         speedQueries.deleteWithMonsterIndex(monsterIndexes)
@@ -220,10 +238,10 @@ internal class MonsterDaoImpl(
         val monsterIndexes = map { it.index }
         val allSpeedMap = getSpeeds(monsterIndexes, speedQueries, speedValueQueries)
         val allAbilityScoresMap = getAbilityScores(monsterIndexes, abilityScoreQueries)
-        val allActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries)
+        val allActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries)
         val allReactionsMap = getReactions(monsterIndexes, reactionQueries)
-        val allSpecialAbilitiesMap = getSpecialAbilities(monsterIndexes, specialAbilityQueries)
-        val allLegendaryActionsMap = getLegendaryActions(monsterIndexes, legendaryActionQueries, damageDiceQueries)
+        val allSpecialAbilitiesMap = getSpecialAbilities(monsterIndexes, specialAbilityQueries, savingThrowQueries, conditionQueries)
+        val allLegendaryActionsMap = getLegendaryActions(monsterIndexes, legendaryActionQueries, damageDiceQueries, savingThrowQueries, conditionQueries)
         val allSpellcastingsMap = getSpellcastings(monsterIndexes, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries)
         val allSavingThrowsMap = getSavingThrows(monsterIndexes, savingThrowQueries)
         val allSkillsMap = getSkills(monsterIndexes, skillQueries)

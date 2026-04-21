@@ -21,4 +21,6 @@ data class AbilityDescription(
     val name: String,
     val description: String,
     val index: String = "",
+    val savingThrows: List<SavingThrow> = emptyList(),
+    val conditions: List<Condition> = emptyList(),
 )

@@ -289,7 +289,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            SpecialAbilityBlock(specialAbilities = it)
+            SpecialAbilityBlock(
+                specialAbilities = it,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 
@@ -300,7 +303,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) { actions ->
-            ActionBlock(actions = actions, onConditionClicked = onConditionClicked)
+            ActionBlock(
+                actions = actions,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 
@@ -324,7 +330,8 @@ private fun LazyListScope.monsterInfoPart5(
         ) { legendaryActions ->
             ActionBlock(
                 title = strings.legendaryActions,
-                actions = legendaryActions
+                actions = legendaryActions,
+                onConditionClicked = onConditionClicked,
             )
         }
     }

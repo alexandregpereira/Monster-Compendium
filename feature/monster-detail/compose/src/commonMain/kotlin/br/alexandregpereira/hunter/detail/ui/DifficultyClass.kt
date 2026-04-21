@@ -40,14 +40,14 @@ internal fun DifficultyClass(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "DC",
+                text = strings.dc,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
             )
             Text(
                 text = value.toString(),
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontSize = 32.sp,
             )
         }
     }
@@ -64,5 +64,5 @@ internal fun DifficultyClass(
 @Preview(showBackground = true)
 @Composable
 private fun DifficultyClassPreview() = HunterTheme {
-    DifficultyClass(value = 10, name = "Constitution")
+    DifficultyClass(value = 10, name = "Dexterity")
 }

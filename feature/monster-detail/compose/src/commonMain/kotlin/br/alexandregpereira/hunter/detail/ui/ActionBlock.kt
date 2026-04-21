@@ -47,7 +47,13 @@ internal fun ActionBlock(
 
     val attackBonus = actions[index].attackBonus
     val damageDices = actions[index].damageDices
-    if (attackBonus == null && damageDices.isEmpty()) return@AbilityDescriptionBlock
+    if (attackBonus == null
+        && damageDices.isEmpty()
+        && actions[index].abilityDescription.savingThrows.isEmpty()
+        && actions[index].abilityDescription.conditions.isEmpty()
+    ) {
+        return@AbilityDescriptionBlock
+    }
 
     ActionDamageGrid(
         attackBonus = actions[index].attackBonus,
@@ -60,7 +66,7 @@ internal fun ActionBlock(
 }
 
 @Composable
-private fun ActionDamageGrid(
+internal fun ActionDamageGrid(
     attackBonus: Int?,
     damageDices: List<DamageDiceState>,
     savingThrows: List<ProficiencyState>,

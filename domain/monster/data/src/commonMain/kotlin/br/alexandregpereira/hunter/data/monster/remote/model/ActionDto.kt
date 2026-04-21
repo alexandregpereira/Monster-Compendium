@@ -29,7 +29,11 @@ data class ActionDto(
     @SerialName("description")
     val description: String,
     @SerialName("name")
-    val name: String
+    val name: String,
+    @SerialName("saving_throws")
+    val savingThrows: List<SavingThrowDto> = emptyList(),
+    @SerialName("conditions")
+    val conditions: List<ConditionDto> = emptyList(),
 )
 
 @Serializable

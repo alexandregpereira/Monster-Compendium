@@ -17,16 +17,33 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 
 @Composable
 internal fun SpecialAbilityBlock(
     specialAbilities: List<AbilityDescriptionState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onConditionClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = strings.specialAbilities,
     abilityDescriptions = specialAbilities,
     modifier = modifier
-)
+) { index ->
+    if (specialAbilities[index].savingThrows.isEmpty()
+        && specialAbilities[index].conditions.isEmpty()
+    ) {
+        return@AbilityDescriptionBlock
+    }
+    ActionDamageGrid(
+        attackBonus = null,
+        damageDices = emptyList(),
+        savingThrows = specialAbilities[index].savingThrows,
+        conditions = specialAbilities[index].conditions,
+        modifier = Modifier.padding(top = 16.dp),
+        onConditionClicked = onConditionClicked,
+    )
+}

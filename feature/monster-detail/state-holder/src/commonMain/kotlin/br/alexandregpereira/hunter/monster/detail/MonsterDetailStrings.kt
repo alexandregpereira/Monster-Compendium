@@ -67,6 +67,8 @@ interface MonsterDetailStrings {
     val noInternetConnection: String
     val tryAgain: String
     val iGotIt: String
+    val dc: String
+
 }
 
 internal data class MonsterDetailEnStrings(
@@ -114,6 +116,7 @@ internal data class MonsterDetailEnStrings(
     override val noInternetConnection: String = "No Internet Connection",
     override val tryAgain: String = "Try Again",
     override val iGotIt: String = "I Got It!",
+    override val dc: String = "DC"
 ) : MonsterDetailStrings
 
 internal data class MonsterDetailPtStrings(
@@ -161,6 +164,7 @@ internal data class MonsterDetailPtStrings(
     override val noInternetConnection: String = "Sem conexão com a Internet",
     override val tryAgain: String = "Tentar novamente",
     override val iGotIt: String = "Entendi!",
+    override val dc: String = "CD"
 ) : MonsterDetailStrings
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
@@ -210,6 +214,7 @@ internal data class MonsterDetailEsStrings(
     override val noInternetConnection: String = "Sin Conexión a Internet",
     override val tryAgain: String = "Reintentar",
     override val iGotIt: String = "Entendido!",
+    override val dc: String = "CD"
 ) : MonsterDetailStrings
 
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {

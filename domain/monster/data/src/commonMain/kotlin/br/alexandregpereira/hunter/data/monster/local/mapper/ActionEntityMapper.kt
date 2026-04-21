@@ -34,7 +34,9 @@ internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
             abilityDescription = AbilityDescription(
                 index = it.action.id,
                 name = it.action.name,
-                description = it.action.description
+                description = it.action.description,
+                savingThrows = it.savingThrows.toDomain(),
+                conditions = it.conditions.toConditionDomain(),
             )
         )
     }
@@ -60,7 +62,9 @@ internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageD
                 description = action.abilityDescription.description,
                 name = action.abilityDescription.name,
                 monsterIndex = monsterIndex
-            )
+            ),
+            savingThrows = action.abilityDescription.savingThrows.toSavingThrowEntity(actionId),
+            conditions = action.abilityDescription.conditions.toEntity(actionId),
         )
     }
 }
