@@ -77,6 +77,7 @@ internal fun LazyListScope.monsterInfo(
         monsters = monsters,
         pagerState = pagerState,
         getItemsKeys = getItemsKeys,
+        onConditionClicked = onConditionClicked,
     )
 
     spellBlock(
@@ -279,6 +280,7 @@ private fun LazyListScope.monsterInfoPart5(
     monsters: List<MonsterState>,
     pagerState: PagerState,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    onConditionClicked: (String) -> Unit = {},
 ) {
     item(key = "specialAbilities") {
         ListOptionalSectionAlphaTransition(
@@ -298,7 +300,7 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) { actions ->
-            ActionBlock(actions = actions)
+            ActionBlock(actions = actions, onConditionClicked = onConditionClicked)
         }
     }
 

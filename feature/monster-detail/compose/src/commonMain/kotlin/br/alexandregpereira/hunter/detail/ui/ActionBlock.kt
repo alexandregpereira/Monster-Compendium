@@ -20,16 +20,25 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.domain.model.ConditionType
+import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 import br.alexandregpereira.hunter.monster.detail.ActionState
+import br.alexandregpereira.hunter.monster.detail.ConditionState
 import br.alexandregpereira.hunter.monster.detail.DamageDiceState
+import br.alexandregpereira.hunter.monster.detail.DamageState
+import br.alexandregpereira.hunter.monster.detail.ProficiencyState
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun ActionBlock(
     actions: List<ActionState>,
     modifier: Modifier = Modifier,
     title: String = strings.actions,
+    onConditionClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = title,
     abilityDescriptions = actions.map { it.abilityDescription },
@@ -43,7 +52,10 @@ internal fun ActionBlock(
     ActionDamageGrid(
         attackBonus = actions[index].attackBonus,
         damageDices = actions[index].damageDices,
-        modifier = Modifier.padding(top = 16.dp)
+        savingThrows = actions[index].abilityDescription.savingThrows,
+        conditions = actions[index].abilityDescription.conditions,
+        modifier = Modifier.padding(top = 16.dp),
+        onConditionClicked = onConditionClicked,
     )
 }
 
@@ -51,7 +63,10 @@ internal fun ActionBlock(
 private fun ActionDamageGrid(
     attackBonus: Int?,
     damageDices: List<DamageDiceState>,
-    modifier: Modifier = Modifier
+    savingThrows: List<ProficiencyState>,
+    conditions: List<ConditionState>,
+    modifier: Modifier = Modifier,
+    onConditionClicked: (String) -> Unit = {},
 ) = Grid(modifier = modifier) {
 
     val iconSize = 48.dp
@@ -71,4 +86,62 @@ private fun ActionDamageGrid(
             )
         }
     }
+
+    savingThrows.forEach { savingThrow ->
+        DifficultyClass(
+            value = savingThrow.modifier,
+            name = savingThrow.name,
+            iconSize = iconSize,
+        )
+    }
+
+    conditions.forEach { condition ->
+        Condition(
+            condition = condition,
+            iconSize = iconSize,
+            onConditionClicked = onConditionClicked,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ActionBlockPreview() = HunterTheme {
+    val actions = listOf(
+        ActionState(
+            damageDices = listOf(
+                DamageDiceState(
+                    dice = "1d6",
+                    damage = DamageState(
+                        index = "acid",
+                        type = DamageType.ACID,
+                        name = "Acid",
+                    )
+                )
+            ),
+            attackBonus = 10,
+            abilityDescription = AbilityDescriptionState(
+                name = "Melee Attack",
+                description = "Melee attack description",
+                savingThrows = listOf(
+                    ProficiencyState(
+                        index = "strength",
+                        modifier = 21,
+                        name = "Strength"
+                    )
+                ),
+                conditions = listOf(
+                    ConditionState(
+                        index = "blinded",
+                        type = ConditionType.RESTRAINED,
+                        name = "Blinded"
+                    )
+                )
+            )
+        )
+    )
+    ActionBlock(
+        title = "Actions",
+        actions = actions,
+    )
 }

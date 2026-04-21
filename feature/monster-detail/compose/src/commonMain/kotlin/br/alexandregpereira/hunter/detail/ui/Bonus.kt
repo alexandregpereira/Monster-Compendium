@@ -66,7 +66,7 @@ internal fun Bonus(
             text = name,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(top = 8.dp),
             textAlign = TextAlign.Center
         )
     }

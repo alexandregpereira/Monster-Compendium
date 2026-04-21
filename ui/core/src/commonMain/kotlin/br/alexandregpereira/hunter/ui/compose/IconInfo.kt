@@ -54,6 +54,7 @@ fun IconInfo(
     iconSize: Dp = 56.dp,
     iconColor: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
     iconAlpha: Float = 0.7f,
+    textAlpha: Float = 0.7f,
     title: String? = null,
     iconText: String? = null,
     iconPadding: PaddingValues = PaddingValues(0.dp)
@@ -85,12 +86,13 @@ fun IconInfo(
     title?.let {
         Text(
             text = it,
-            fontWeight = FontWeight.Light,
-            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .width(72.dp)
-                .padding(top = 8.dp)
+                .alpha(textAlpha)
+                .padding(top = 8.dp),
         )
     }
 }

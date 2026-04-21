@@ -20,6 +20,8 @@ package br.alexandregpereira.hunter.detail.ui
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.detail.ConditionState
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import org.jetbrains.compose.resources.painterResource
@@ -44,16 +46,28 @@ private fun ConditionGrid(
 ) = Grid {
 
     conditions.forEach { condition ->
-        val iconRes = condition.type.toIcon()
-        IconInfo(
-            title = condition.name,
-            painter = painterResource(iconRes),
-            modifier = Modifier.width(GridItemWidth).animatePressed(
-                pressedScale = .7f,
-                onClick = {
-                    onConditionClicked(condition.index)
-                }
-            )
+        Condition(
+            condition = condition,
+            modifier = Modifier.width(GridItemWidth),
+            onConditionClicked = onConditionClicked,
         )
     }
 }
+
+@Composable
+internal fun Condition(
+    condition: ConditionState,
+    modifier: Modifier = Modifier,
+    iconSize: Dp = 56.dp,
+    onConditionClicked: (String) -> Unit = {},
+) = IconInfo(
+    title = condition.name,
+    painter = painterResource(condition.type.toIcon()),
+    iconSize = iconSize,
+    modifier = modifier.animatePressed(
+        pressedScale = .7f,
+        onClick = {
+            onConditionClicked(condition.index)
+        }
+    )
+)
