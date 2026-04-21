@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.detail.ui.resources.ic_climbing
 import br.alexandregpereira.hunter.detail.ui.resources.ic_cold
 import br.alexandregpereira.hunter.detail.ui.resources.ic_deafened
 import br.alexandregpereira.hunter.detail.ui.resources.ic_exhausted
+import br.alexandregpereira.hunter.detail.ui.resources.ic_force
 import br.alexandregpereira.hunter.detail.ui.resources.ic_frightened
 import br.alexandregpereira.hunter.detail.ui.resources.ic_ghost
 import br.alexandregpereira.hunter.detail.ui.resources.ic_grappled
@@ -90,6 +91,7 @@ internal fun DamageType.toIcon(): DrawableResource? {
         DamageType.RADIANT -> Res.drawable.ic_radiant
         DamageType.SLASHING -> Res.drawable.ic_slashing
         DamageType.THUNDER -> Res.drawable.ic_thunder
+        DamageType.FORCE -> Res.drawable.ic_force
         DamageType.OTHER -> null
     }
 }

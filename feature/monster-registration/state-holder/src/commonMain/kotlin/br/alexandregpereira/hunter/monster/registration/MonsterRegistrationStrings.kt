@@ -55,6 +55,7 @@ interface MonsterRegistrationStrings {
     val damageTypeRadiant: String
     val damageTypeSlashing: String
     val damageTypeThunder: String
+    val damageTypeForce: String
     val damageTypeOther: String
     val conditionTypeBlinded: String
     val conditionTypeCharmed: String
@@ -174,6 +175,7 @@ internal data class MonsterRegistrationEnStrings(
     override val damageTypeRadiant: String = "Radiant",
     override val damageTypeSlashing: String = "Slashing",
     override val damageTypeThunder: String = "Thunder",
+    override val damageTypeForce: String = "Force",
     override val damageTypeOther: String = "Other",
     override val conditionTypeBlinded: String = "Blinded",
     override val conditionTypeCharmed: String = "Charmed",
@@ -293,6 +295,7 @@ internal data class MonsterRegistrationPtStrings(
     override val damageTypeRadiant: String = "Radiante",
     override val damageTypeSlashing: String = "Cortante",
     override val damageTypeThunder: String = "Trovão",
+    override val damageTypeForce: String = "Força",
     override val damageTypeOther: String = "Outro",
     override val conditionTypeBlinded: String = "Cego",
     override val conditionTypeCharmed: String = "Encantado",
@@ -414,6 +417,7 @@ internal data class MonsterRegistrationEsStrings(
     override val damageTypeRadiant: String = "Radiante",
     override val damageTypeSlashing: String = "Cortante",
     override val damageTypeThunder: String = "Trueno",
+    override val damageTypeForce: String = "Fuerza",
     override val damageTypeOther: String = "Otro",
     override val conditionTypeBlinded: String = "Cegado",
     override val conditionTypeCharmed: String = "Encantado",

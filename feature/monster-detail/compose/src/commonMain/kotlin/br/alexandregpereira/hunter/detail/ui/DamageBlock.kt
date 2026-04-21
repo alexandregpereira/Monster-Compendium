@@ -26,13 +26,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.monster.detail.DamageState
 import br.alexandregpereira.hunter.ui.util.toColor
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 private fun DamageBlock(
@@ -106,6 +106,7 @@ internal fun DamageType.getIconColor(): Color {
         DamageType.PSYCHIC -> colors.psychic
         DamageType.RADIANT -> colors.radiant
         DamageType.THUNDER -> colors.thunder
+        DamageType.FORCE -> colors.force
     }
 }
 
@@ -122,4 +123,5 @@ private class DamageIconColors(isDark: Boolean) {
     val bludgeoning = (if (isDark) "#E1A8A8" else "#613A3A").toColor()
     val piercing = (if (isDark) "#BAAFE2" else "#464058").toColor()
     val slashing = (if (isDark) "#9ECAEA" else "#364450").toColor()
+    val force = (if (isDark) "#5E6AD4" else "#001AFF").toColor()
 }
