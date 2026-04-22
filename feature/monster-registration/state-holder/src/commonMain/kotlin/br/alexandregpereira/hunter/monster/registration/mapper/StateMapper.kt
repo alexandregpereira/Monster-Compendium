@@ -337,6 +337,7 @@ internal fun DamageType.name(strings: MonsterRegistrationStrings): String {
         DamageType.RADIANT -> strings.damageTypeRadiant
         DamageType.SLASHING -> strings.damageTypeSlashing
         DamageType.THUNDER -> strings.damageTypeThunder
+        DamageType.FORCE -> strings.damageTypeForce
         DamageType.OTHER -> strings.damageTypeOther
     }
 }
