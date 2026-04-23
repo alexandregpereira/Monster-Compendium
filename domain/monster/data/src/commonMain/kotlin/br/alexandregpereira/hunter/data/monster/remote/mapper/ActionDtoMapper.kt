@@ -27,9 +27,11 @@ import br.alexandregpereira.hunter.uuid.generateUUID
 internal fun List<ActionDto>.toDomain(): List<Action> {
     return this.map { action ->
         val uuid = generateUUID()
+        val damageDices = action.damageDices.toDamageDiceDomain()
+        val damageDicesV2 = action.damageDicesV2.toDamageDiceDomain()
         Action(
             id = "action-$uuid",
-            damageDices = action.damageDices.toDamageDiceDomain(),
+            damageDices = damageDices + damageDicesV2,
             attackBonus = action.attackBonus,
             abilityDescription = AbilityDescription(
                 name = action.name,

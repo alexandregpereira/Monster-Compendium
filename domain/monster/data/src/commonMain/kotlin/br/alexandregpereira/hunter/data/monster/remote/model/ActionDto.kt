@@ -23,13 +23,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ActionDto(
     @SerialName("damage_dices")
-    val damageDices: List<DamageDiceDto>,
+    val damageDices: List<DamageDiceDto> = emptyList(),
     @SerialName("attack_bonus")
     val attackBonus: Int? = null,
     @SerialName("description")
     val description: String,
     @SerialName("name")
     val name: String,
+    @SerialName("damage_dices_v2")
+    val damageDicesV2: List<DamageDiceDto> = emptyList(),
     @SerialName("saving_throws")
     val savingThrows: List<SavingThrowDto> = emptyList(),
     @SerialName("conditions")
