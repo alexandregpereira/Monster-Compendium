@@ -17,16 +17,11 @@
 
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.ConditionState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
-import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
 @Suppress("FunctionName")
@@ -36,41 +31,48 @@ internal fun LazyListScope.MonsterConditionsForm(
     conditions: List<ConditionState>,
     onChanged: (List<ConditionState>) -> Unit = {}
 ) {
-    val newConditions = conditions.toMutableList()
     FormLazy(
         titleKey = keys.next(),
         title = title,
     ) {
-        FormItems(
+        MonsterConditionsFormItems(
             keys = keys,
-            items = newConditions,
-            createNew = { ConditionState() },
-            onChanged = onChanged
-        ) { i, condition ->
-            formItem(key = keys.next()) {
-                PickerField(
-                    value = condition.typeName,
-                    label = strings.conditionType,
-                    options = condition.filteredOptions,
-                    onValueChange = { optionIndex ->
-                        onChanged(
-                            newConditions.changeAt(i) {
-                                copy(selectedIndex = condition.selectedIndex(optionIndex))
-                            }
-                        )
-                    }
-                )
-            }
-            formItem(key = keys.next()) {
-                AppTextField(
-                    text = condition.name,
-                    label = condition.typeName,
-                    onValueChange = { newValue ->
-                        onChanged(newConditions.changeAt(i) { copy(name = newValue) })
-                    }
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+            conditions = conditions,
+            onChanged = onChanged,
+        )
+    }
+}
+
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterConditionsFormItems(
+    keys: Iterator<String>,
+    conditions: List<ConditionState>,
+    addText: @Composable () -> String = { strings.add },
+    removeText: @Composable () -> String = { strings.remove },
+    onChanged: (List<ConditionState>) -> Unit = {}
+) {
+    val newConditions = conditions.toMutableList()
+    FormItems(
+        keys = keys,
+        items = newConditions,
+        createNew = { ConditionState() },
+        addText = addText,
+        removeText = removeText,
+        onChanged = onChanged
+    ) { i, condition ->
+        formItem(key = keys.next()) {
+            PickerField(
+                value = condition.typeName,
+                label = strings.conditionType,
+                options = condition.filteredOptions,
+                onValueChange = { optionIndex ->
+                    onChanged(
+                        newConditions.changeAt(i) {
+                            copy(selectedIndex = condition.selectedIndex(optionIndex))
+                        }
+                    )
+                }
+            )
         }
     }
 }

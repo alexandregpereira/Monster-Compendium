@@ -16,7 +16,7 @@ internal class GetConditionImpl(
         }
         return runCatching {
             syncConditions()
-            getLocalCondition(index) ?: throw IllegalStateException("Condition not found")
+            getLocalCondition(index) ?: throw IllegalStateException("Condition $index not found")
         }.getOrElse { cause ->
             throw cause
         }

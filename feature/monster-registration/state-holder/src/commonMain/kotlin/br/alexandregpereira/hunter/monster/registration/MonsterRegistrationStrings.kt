@@ -138,6 +138,14 @@ interface MonsterRegistrationStrings {
     val imageContentScaleCrop: String
     val monsterLoreFormTitle: String
     val monsterLoreFormTitleFieldLabel: String
+    val addDifficultClass: String
+    val removeDifficultClass: String
+    val addCondition: String
+    val removeCondition: String
+    val difficultClassValue: String
+    val difficultClassType: String
+    val savingThrowType: String
+    val savingThrowModifier: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -258,6 +266,14 @@ internal data class MonsterRegistrationEnStrings(
     override val imageContentScaleCrop: String = "Expand the image",
     override val monsterLoreFormTitle: String = "Lore",
     override val monsterLoreFormTitleFieldLabel: String = "Title (Optional)",
+    override val addDifficultClass: String = "Add DC",
+    override val removeDifficultClass: String = "Remove DC",
+    override val addCondition: String = "Add condition",
+    override val removeCondition: String = "Remove condition",
+    override val difficultClassValue: String = "Difficult class (DC) value",
+    override val difficultClassType: String = "Difficult class (DC) type",
+    override val savingThrowType: String = "Saving throw type",
+    override val savingThrowModifier: String = "Saving throw modifier",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -300,14 +316,14 @@ internal data class MonsterRegistrationPtStrings(
     override val conditionTypeBlinded: String = "Cego",
     override val conditionTypeCharmed: String = "Encantado",
     override val conditionTypeDeafened: String = "Surdo",
-    override val conditionTypeExhaustion: String = "Exausto",
+    override val conditionTypeExhaustion: String = "Exaustão",
     override val conditionTypeFrightened: String = "Amedrontado",
     override val conditionTypeGrappled: String = "Agarrado",
     override val conditionTypeParalyzed: String = "Paralisado",
     override val conditionTypePetrified: String = "Petrificado",
     override val conditionTypePoisoned: String = "Envenenado",
     override val conditionTypeProne: String = "Caído",
-    override val conditionTypeRestrained: String = "Contido",
+    override val conditionTypeRestrained: String = "Imobilizado",
     override val conditionTypeStunned: String = "Atordoado",
     override val conditionTypeUnconscious: String = "Inconsciente",
     override val name: String = "Nome",
@@ -378,6 +394,14 @@ internal data class MonsterRegistrationPtStrings(
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val monsterLoreFormTitle: String = "Mitologia",
     override val monsterLoreFormTitleFieldLabel: String = "Título (Opcional)",
+    override val addDifficultClass: String = "Adicionar CD",
+    override val removeDifficultClass: String = "Remover CD",
+    override val addCondition: String = "Adicionar condição",
+    override val removeCondition: String = "Remover condição",
+    override val difficultClassValue: String = "Valor da classe de dificuldade (CD)",
+    override val difficultClassType: String = "Tipo da classe de dificuldade (CD)",
+    override val savingThrowType: String = "Tipo de salvaguarda",
+    override val savingThrowModifier: String = "Modificador da salvaguarda",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
@@ -419,17 +443,17 @@ internal data class MonsterRegistrationEsStrings(
     override val damageTypeThunder: String = "Trueno",
     override val damageTypeForce: String = "Fuerza",
     override val damageTypeOther: String = "Otro",
-    override val conditionTypeBlinded: String = "Cegado",
+    override val conditionTypeBlinded: String = "Ciego",
     override val conditionTypeCharmed: String = "Encantado",
-    override val conditionTypeDeafened: String = "Ensordecido",
+    override val conditionTypeDeafened: String = "Sordo",
     override val conditionTypeExhaustion: String = "Agotamiento",
-    override val conditionTypeFrightened: String = "Asustado",
+    override val conditionTypeFrightened: String = "Atemorizado",
     override val conditionTypeGrappled: String = "Aferrado",
     override val conditionTypeParalyzed: String = "Paralizado",
     override val conditionTypePetrified: String = "Petrificado",
     override val conditionTypePoisoned: String = "Envenenado",
-    override val conditionTypeProne: String = "Derribado",
-    override val conditionTypeRestrained: String = "Restringido",
+    override val conditionTypeProne: String = "Caído",
+    override val conditionTypeRestrained: String = "Inmovilizado",
     override val conditionTypeStunned: String = "Aturdido",
     override val conditionTypeUnconscious: String = "Inconsciente",
     override val name: String = "Nombre",
@@ -500,6 +524,14 @@ internal data class MonsterRegistrationEsStrings(
     override val imageContentScaleCrop: String = "Expandir la imagen",
     override val monsterLoreFormTitle: String = "Historia",
     override val monsterLoreFormTitleFieldLabel: String = "Título (Opcional)",
+    override val addDifficultClass: String = "Añadir CD",
+    override val removeDifficultClass: String = "Eliminar CD",
+    override val addCondition: String = "Añadir condición",
+    override val removeCondition: String = "Eliminar condición",
+    override val difficultClassValue: String = "Valor de la clase de dificultad (CD)",
+    override val difficultClassType: String = "Tipo de clase de dificultad (CD)",
+    override val savingThrowType: String = "Tipo de tirada de salvación",
+    override val savingThrowModifier: String = "Modificador de tirada de salvación",
 ) : MonsterRegistrationStrings
 
 internal fun AppLocalization.getStrings(): MonsterRegistrationStrings {

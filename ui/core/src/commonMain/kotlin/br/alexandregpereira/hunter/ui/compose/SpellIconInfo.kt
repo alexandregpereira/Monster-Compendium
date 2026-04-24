@@ -49,6 +49,7 @@ fun SpellIconInfo(
         painter = painterResource(school.icon),
         iconColor = iconColor.toColor(),
         iconAlpha = 1f,
+        textAlpha = 1f,
         iconSize = size.value.dp,
         modifier = modifier.animatePressed(
             pressedScale = 0.85f,

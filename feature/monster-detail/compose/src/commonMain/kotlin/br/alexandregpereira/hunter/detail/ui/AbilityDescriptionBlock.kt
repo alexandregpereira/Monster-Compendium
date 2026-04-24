@@ -38,7 +38,22 @@ internal fun AbilityDescriptionBlock(
     title: String,
     abilityDescriptions: List<AbilityDescriptionState>,
     modifier: Modifier = Modifier,
-    content: @Composable (index: Int) -> Unit = {}
+    onConditionClicked: (String) -> Unit = {},
+    content: @Composable (index: Int) -> Unit =  content@ { index ->
+        if (abilityDescriptions[index].savingThrows.isEmpty()
+            && abilityDescriptions[index].conditions.isEmpty()
+        ) {
+            return@content
+        }
+        ActionDamageGrid(
+            attackBonus = null,
+            damageDices = emptyList(),
+            savingThrows = abilityDescriptions[index].savingThrows,
+            conditions = abilityDescriptions[index].conditions,
+            modifier = Modifier.padding(top = 16.dp),
+            onConditionClicked = onConditionClicked,
+        )
+    }
 ) = Block(title = title, contentHorizontalPadding = 0.dp, modifier = modifier) {
 
     abilityDescriptions.forEachIndexed { index, abilityDescription ->

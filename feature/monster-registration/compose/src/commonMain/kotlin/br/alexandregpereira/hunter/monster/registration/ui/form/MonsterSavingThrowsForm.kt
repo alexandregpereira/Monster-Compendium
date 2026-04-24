@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.runtime.Composable
 import br.alexandregpereira.hunter.monster.registration.SavingThrowState
 import br.alexandregpereira.hunter.monster.registration.ui.changeAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
@@ -36,41 +37,60 @@ internal fun LazyListScope.MonsterSavingThrowsForm(
         titleKey = keys.next(),
         title = { strings.savingThrows },
     ) {
-
-        FormItems(
+        MonsterSavingThrowsFormItems(
             keys = keys,
-            items = mutableSavingThrows,
-            createNew = { SavingThrowState() },
+            savingThrows = mutableSavingThrows,
             onChanged = onChanged
-        ) { i, savingThrow ->
-            formItem(key = keys.next()) {
-                PickerField(
-                    value = savingThrow.name,
-                    label = strings.name,
-                    options = savingThrow.filteredOptions,
-                    onValueChange = { optionIndex ->
-                        onChanged(
-                            mutableSavingThrows.changeAt(i) {
-                                copy(selectedIndex = savingThrow.selectedIndex(optionIndex))
-                            }
-                        )
-                    }
-                )
-            }
+        )
+    }
+}
 
-            formItem(key = keys.next()) {
-                AppTextField(
-                    value = savingThrow.modifier,
-                    label = savingThrow.name,
-                    onValueChange = { newValue ->
-                        onChanged(
-                            mutableSavingThrows.changeAt(i) {
-                                copy(modifier = newValue)
-                            }
-                        )
-                    }
-                )
-            }
+@Suppress("FunctionName")
+internal fun LazyListScope.MonsterSavingThrowsFormItems(
+    keys: Iterator<String>,
+    savingThrows: List<SavingThrowState>,
+    addText: @Composable () -> String = { strings.add },
+    removeText: @Composable () -> String = { strings.remove },
+    typeLabel: @Composable () -> String = { strings.savingThrowType },
+    modifierLabel: @Composable () -> String = { strings.savingThrowModifier },
+    onChanged: (List<SavingThrowState>) -> Unit = {},
+) {
+    val mutableSavingThrows = savingThrows.toMutableList()
+    FormItems(
+        keys = keys,
+        items = mutableSavingThrows,
+        createNew = { SavingThrowState() },
+        addText = addText,
+        removeText = removeText,
+        onChanged = onChanged
+    ) { i, savingThrow ->
+        formItem(key = keys.next()) {
+            PickerField(
+                value = savingThrow.name,
+                label = typeLabel(),
+                options = savingThrow.filteredOptions,
+                onValueChange = { optionIndex ->
+                    onChanged(
+                        mutableSavingThrows.changeAt(i) {
+                            copy(selectedIndex = savingThrow.selectedIndex(optionIndex))
+                        }
+                    )
+                }
+            )
+        }
+
+        formItem(key = keys.next()) {
+            AppTextField(
+                value = savingThrow.modifier,
+                label = modifierLabel(),
+                onValueChange = { newValue ->
+                    onChanged(
+                        mutableSavingThrows.changeAt(i) {
+                            copy(modifier = newValue)
+                        }
+                    )
+                }
+            )
         }
     }
 }

@@ -161,6 +161,32 @@ private fun Monster.createIndexes(): Monster {
         damageImmunities = damageImmunities.map { damageImmunity ->
             damageImmunity.copy(index = damageImmunity.type.name.normalizeIndex())
         },
+        specialAbilities = specialAbilities.normalizeAbilityDescriptionsConditionsIndexes(),
+        actions = actions.normalizeConditionsIndexes(),
+        legendaryActions = legendaryActions.normalizeConditionsIndexes(),
+        reactions = reactions.normalizeAbilityDescriptionsConditionsIndexes(),
+    )
+}
+
+private fun List<AbilityDescription>.normalizeAbilityDescriptionsConditionsIndexes(): List<AbilityDescription> {
+    return map { ability ->
+        ability.normalizeConditionsIndexes()
+    }
+}
+
+private fun List<Action>.normalizeConditionsIndexes(): List<Action> {
+    return map { action ->
+        action.copy(
+            abilityDescription = action.abilityDescription.normalizeConditionsIndexes()
+        )
+    }
+}
+
+private fun AbilityDescription.normalizeConditionsIndexes(): AbilityDescription {
+    return copy(
+        conditions = conditions.map { condition ->
+            condition.copy(index = condition.type.name.normalizeIndex())
+        }
     )
 }
 

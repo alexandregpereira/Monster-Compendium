@@ -317,7 +317,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            ReactionBlock(reactions = it)
+            ReactionBlock(
+                reactions = it,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 

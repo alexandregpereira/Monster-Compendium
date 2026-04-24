@@ -78,15 +78,15 @@ fun MonsterDetailBottomSheets(
     )
 
     FormBottomSheet(
-        title = strings.clone,
+        title = state.strings.clone,
         formFields = listOf(
             FormField.Text(
                 key = "monsterName",
-                label = strings.cloneMonsterName,
+                label = state.strings.cloneMonsterName,
                 value = state.monsterCloneName,
             )
         ),
-        buttonText = strings.save,
+        buttonText = state.strings.save,
         opened = state.showCloneForm,
         buttonEnabled = state.monsterCloneName.isNotBlank(),
         maxWidth = maxWidth,
@@ -101,8 +101,8 @@ fun MonsterDetailBottomSheets(
 
     ConfirmationBottomSheet(
         show = state.showDeleteConfirmation,
-        description = strings.deleteQuestion,
-        buttonText = strings.deleteConfirmation,
+        description = state.strings.deleteQuestion,
+        buttonText = state.strings.deleteConfirmation,
         maxWidth = maxWidth,
         widthFraction = widthFraction,
         contentPadding = contentPadding,
@@ -112,8 +112,8 @@ fun MonsterDetailBottomSheets(
 
     ConfirmationBottomSheet(
         show = state.showResetConfirmation,
-        description = strings.resetQuestion,
-        buttonText = strings.resetConfirmation,
+        description = state.strings.resetQuestion,
+        buttonText = state.strings.resetConfirmation,
         maxWidth = maxWidth,
         widthFraction = widthFraction,
         contentPadding = contentPadding,
