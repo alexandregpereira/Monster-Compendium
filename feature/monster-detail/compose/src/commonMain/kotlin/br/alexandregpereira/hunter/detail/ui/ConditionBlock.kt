@@ -17,13 +17,17 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.monster.detail.ConditionState
 import br.alexandregpereira.hunter.ui.compose.animatePressed
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -33,7 +37,7 @@ internal fun ConditionBlock(
     onConditionClicked: (String) -> Unit = {},
 ) = Block(
     title = strings.conditionImmunities,
-    modifier = modifier
+    modifier = modifier,
 ) {
 
     ConditionGrid(conditions, onConditionClicked)
@@ -48,7 +52,8 @@ private fun ConditionGrid(
     conditions.forEach { condition ->
         Condition(
             condition = condition,
-            modifier = Modifier.width(GridItemWidth),
+            modifier = Modifier.width(GridItemWidth).padding(horizontal = 8.dp),
+            iconSize = 48.dp,
             onConditionClicked = onConditionClicked,
         )
     }
@@ -71,3 +76,46 @@ internal fun Condition(
         }
     )
 )
+
+@Preview(showBackground = true)
+@Composable
+private fun ConditionBlockPreview() = HunterTheme {
+    val conditions = listOf(
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.RESTRAINED,
+            name = "Blinded"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+        ConditionState(
+            index = "blinded",
+            type = ConditionType.FRIGHTENED,
+            name = "Frightened"
+        ),
+    )
+    ConditionBlock(conditions = conditions)
+}

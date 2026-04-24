@@ -18,10 +18,12 @@
 package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
@@ -77,7 +79,15 @@ internal fun ActionDamageGrid(
 
     val iconSize = 48.dp
     attackBonus.takeUnless { it == 0 }?.let {
-        Bonus(value = it, name = strings.attack, iconSize = iconSize)
+        Bonus(
+            value = it,
+            name = strings.attack,
+            iconSize = iconSize,
+            valueTextSize = 16.sp,
+            modifier = Modifier
+                .width(GridItemWidth)
+                .padding(horizontal = 8.dp),
+        )
     }
 
     damageDices.forEach { damageDice ->
@@ -89,6 +99,9 @@ internal fun ActionDamageGrid(
                 iconColor = damageDice.damage.type.getIconColor(),
                 iconAlpha = 1f,
                 iconSize = iconSize,
+                modifier = Modifier
+                    .width(GridItemWidth)
+                    .padding(horizontal = 8.dp),
             )
         }
     }
@@ -98,6 +111,9 @@ internal fun ActionDamageGrid(
             value = savingThrow.modifier,
             name = savingThrow.name,
             iconSize = iconSize,
+            modifier = Modifier
+                .width(GridItemWidth)
+                .padding(horizontal = 8.dp),
         )
     }
 
@@ -105,6 +121,9 @@ internal fun ActionDamageGrid(
         Condition(
             condition = condition,
             iconSize = iconSize,
+            modifier = Modifier
+                .width(GridItemWidth)
+                .padding(horizontal = 8.dp),
             onConditionClicked = onConditionClicked,
         )
     }
@@ -123,7 +142,15 @@ private fun ActionBlockPreview() = HunterTheme {
                         type = DamageType.ACID,
                         name = "Acid",
                     )
-                )
+                ),
+                DamageDiceState(
+                    dice = "100 (20d10+50)",
+                    damage = DamageState(
+                        index = "fire",
+                        type = DamageType.FIRE,
+                        name = "Fogo",
+                    )
+                ),
             ),
             attackBonus = 10,
             abilityDescription = AbilityDescriptionState(
@@ -134,7 +161,22 @@ private fun ActionBlockPreview() = HunterTheme {
                         index = "strength",
                         modifier = 21,
                         name = "Strength"
-                    )
+                    ),
+                    ProficiencyState(
+                        index = "strength",
+                        modifier = 21,
+                        name = "Constitution"
+                    ),
+                    ProficiencyState(
+                        index = "strength",
+                        modifier = 21,
+                        name = "Constitution"
+                    ),
+                    ProficiencyState(
+                        index = "strength",
+                        modifier = 21,
+                        name = "Constitution"
+                    ),
                 ),
                 conditions = listOf(
                     ConditionState(

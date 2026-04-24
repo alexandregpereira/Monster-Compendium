@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,8 +26,7 @@ internal fun DifficultyClass(
     alpha: Float = 0.7f,
 ) = Column(
     modifier
-        .alpha(alpha)
-        .widthIn(max = 120.dp),
+        .alpha(alpha),
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
 

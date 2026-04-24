@@ -55,7 +55,7 @@ internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageD
     return this.map { action ->
         val actionId = action.id.takeUnless { it.isBlank() } ?: "action-${generateUUID()}"
         ActionWithDamageDicesEntity(
-            damageDices = action.damageDices.toDamageDiceEntity(actionId, monsterIndex),
+            damageDices = action.damageDices.toDamageDiceEntity(actionId),
             action = ActionEntity(
                 id = actionId,
                 attackBonus = action.attackBonus,
@@ -71,11 +71,10 @@ internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageD
 
 internal fun List<DamageDice>.toDamageDiceEntity(
     actionId: String,
-    monsterIndex: String
 ): List<DamageDiceEntity> {
     return this.map {
         DamageDiceEntity(
-            id = it.dice + actionId + monsterIndex,
+            id = it.index,
             dice = it.dice,
             damage = it.damage.toEntity(actionId),
             actionId = actionId
