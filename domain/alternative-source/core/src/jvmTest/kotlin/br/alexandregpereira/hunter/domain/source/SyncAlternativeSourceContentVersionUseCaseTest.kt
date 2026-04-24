@@ -57,8 +57,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertFalse(result.first)
-        assertEquals(emptyMap(), result.second)
+        assertFalse(result.isToSync)
+        assertEquals(emptyMap(), result.acronymToContentVersionRollbackMap)
     }
 
     @Test
@@ -74,8 +74,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertTrue(result.first)
-        assertEquals(mapOf("MM" to 1), result.second)
+        assertTrue(result.isToSync)
+        assertEquals(mapOf("MM" to 1), result.acronymToContentVersionRollbackMap)
         verify { localRepository.saveContentVersions(mapOf("MM" to 2)) }
     }
 
@@ -90,8 +90,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertFalse(result.first)
-        assertEquals(emptyMap(), result.second)
+        assertFalse(result.isToSync)
+        assertEquals(emptyMap(), result.acronymToContentVersionRollbackMap)
         verify(exactly = 0) { localRepository.saveContentVersions(any()) }
     }
 
@@ -107,8 +107,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertTrue(result.first)
-        assertEquals(emptyMap(), result.second)
+        assertTrue(result.isToSync)
+        assertEquals(emptyMap(), result.acronymToContentVersionRollbackMap)
         verify { localRepository.saveDefaultSources(listOf(remoteDefault.copy(isDefault = true))) }
         verify(exactly = 0) { localRepository.saveContentVersions(any()) }
     }
@@ -126,8 +126,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertTrue(result.first)
-        assertEquals(mapOf("PHB" to 1), result.second)
+        assertTrue(result.isToSync)
+        assertEquals(mapOf("PHB" to 1), result.acronymToContentVersionRollbackMap)
         verify { localRepository.saveContentVersions(mapOf("PHB" to 2)) }
     }
 
@@ -148,8 +148,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
         val result = useCase().single()
 
-        assertTrue(result.first)
-        assertEquals(mapOf("MM" to 1, "PHB" to 3), result.second)
+        assertTrue(result.isToSync)
+        assertEquals(mapOf("MM" to 1, "PHB" to 3), result.acronymToContentVersionRollbackMap)
         verify { localRepository.saveContentVersions(mapOf("MM" to 2, "PHB" to 4)) }
     }
 
