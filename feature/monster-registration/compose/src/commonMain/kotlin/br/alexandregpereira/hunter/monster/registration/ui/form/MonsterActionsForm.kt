@@ -132,6 +132,36 @@ internal fun LazyListScope.MonsterActionsForm(
                 )
             }
         }
+
+        MonsterSavingThrowsFormItems(
+            keys = keys,
+            savingThrows = action.abilityDescription.savingThrows,
+            addText = { strings.addDifficultClass },
+            removeText = { strings.removeDifficultClass },
+            typeLabel = { strings.difficultClassType },
+            modifierLabel = { strings.difficultClassValue },
+            onChanged = {
+                onChanged(
+                    newActions.changeAt(actionIndex) {
+                        copy(abilityDescription = abilityDescription.copy(savingThrows = it))
+                    }
+                )
+            }
+        )
+
+        MonsterConditionsFormItems(
+            keys = keys,
+            conditions = abilityDescription.conditions,
+            addText = { strings.addCondition },
+            removeText = { strings.removeCondition },
+            onChanged = {
+                onChanged(
+                    newActions.changeAt(actionIndex) {
+                        copy(abilityDescription = abilityDescription.copy(conditions = it))
+                    }
+                )
+            }
+        )
     }
 }
 

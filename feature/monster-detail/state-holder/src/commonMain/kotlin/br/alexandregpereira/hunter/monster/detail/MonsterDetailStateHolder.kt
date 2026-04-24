@@ -325,7 +325,8 @@ class MonsterDetailStateHolder internal constructor(
         flow {
             emit(getCondition(conditionIndex))
         }.flowOn(dispatcher)
-            .catch {
+            .catch { cause ->
+                analytics.logException(cause)
                 setState { copy(selectedCondition = ConditionLoadingState.Error(conditionIndex)) }
             }
             .onEach { condition ->

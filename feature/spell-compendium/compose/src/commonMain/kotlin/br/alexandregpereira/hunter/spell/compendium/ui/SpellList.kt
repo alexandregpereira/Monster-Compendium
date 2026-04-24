@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.spell.compendium.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,7 +59,7 @@ internal fun SpellList(
             name = spell.name,
             school = SchoolOfMagicState.valueOf(spell.school.name),
             size = SpellIconSize.SMALL,
-            modifier = Modifier.padding(bottom = 16.dp).alpha(alpha),
+            modifier = Modifier.width(80.dp).padding(bottom = 16.dp).alpha(alpha),
             onClick = {
                 focusManager.clearFocus()
                 intent.onSpellClick(spell.index)
