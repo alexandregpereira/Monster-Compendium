@@ -22,10 +22,13 @@ import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.ConditionType
 
 fun List<ConditionDto>.toDomain(): List<Condition> {
-    return this.map {
+    return this.mapNotNull {
+        val type = runCatching {
+            ConditionType.valueOf(it.type)
+        }.getOrNull() ?: return@mapNotNull null
         Condition(
             index = it.index,
-            type = ConditionType.valueOf(it.type.name),
+            type = type,
             name = it.name
         )
     }

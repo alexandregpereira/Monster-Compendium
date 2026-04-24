@@ -29,5 +29,5 @@ data class Action(
 data class DamageDice(
     val dice: String,
     val damage: Damage,
-    val index: String = generateUUID(),
+    val index: String = "damageDice-${generateUUID()}",
 )

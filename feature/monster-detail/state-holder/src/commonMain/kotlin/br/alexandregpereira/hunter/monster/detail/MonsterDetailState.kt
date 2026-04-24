@@ -154,7 +154,9 @@ data class ConditionState(
 @ObjCName(name = "AbilityDescriptionState", exact = true)
 data class AbilityDescriptionState(
     val name: String,
-    val description: String
+    val description: String,
+    val savingThrows: List<ProficiencyState> = emptyList(),
+    val conditions: List<ConditionState> = emptyList(),
 )
 
 @ObjCName(name = "ActionState", exact = true)

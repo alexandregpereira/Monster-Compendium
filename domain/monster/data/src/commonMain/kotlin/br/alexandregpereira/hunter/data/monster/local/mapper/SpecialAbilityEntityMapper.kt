@@ -18,15 +18,18 @@
 package br.alexandregpereira.hunter.data.monster.local.mapper
 
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 
-internal fun List<SpecialAbilityEntity>.toDomain(): List<AbilityDescription> {
+internal fun List<SpecialAbilityCompleteEntity>.toDomain(): List<AbilityDescription> {
     return this.map {
         AbilityDescription(
-            name = it.name,
-            description = it.description,
-            index = "${it.monsterIndex}-${it.name}",
+            name = it.specialAbility.name,
+            description = it.specialAbility.description,
+            index = "${it.specialAbility.monsterIndex}-${it.specialAbility.name}",
+            savingThrows = it.savingThrows.toDomain(),
+            conditions = it.conditions.toConditionDomain(),
         )
     }
 }
@@ -41,12 +44,17 @@ internal fun List<ReactionEntity>.toDomainReactionEntity(): List<AbilityDescript
     }
 }
 
-internal fun List<AbilityDescription>.toEntity(monsterIndex: String): List<SpecialAbilityEntity> {
+internal fun List<AbilityDescription>.toEntity(monsterIndex: String): List<SpecialAbilityCompleteEntity> {
     return this.map {
-        SpecialAbilityEntity(
-            name = it.name,
-            description = it.description,
-            monsterIndex = monsterIndex,
+        val abilityKey = "$monsterIndex-${it.name}"
+        SpecialAbilityCompleteEntity(
+            specialAbility = SpecialAbilityEntity(
+                name = it.name,
+                description = it.description,
+                monsterIndex = monsterIndex,
+            ),
+            savingThrows = it.savingThrows.toSavingThrowEntity(abilityKey),
+            conditions = it.conditions.toEntity(abilityKey),
         )
     }
 }

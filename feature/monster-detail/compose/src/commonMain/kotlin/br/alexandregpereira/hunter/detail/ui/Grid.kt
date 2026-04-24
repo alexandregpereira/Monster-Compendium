@@ -37,4 +37,4 @@ internal fun Grid(
     content = content
 )
 
-internal val GridItemWidth = 88.dp
+internal val GridItemWidth = 112.dp

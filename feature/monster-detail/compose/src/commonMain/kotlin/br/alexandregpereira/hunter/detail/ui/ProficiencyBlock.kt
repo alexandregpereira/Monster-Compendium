@@ -17,9 +17,11 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.detail.ProficiencyState
 
 @Composable
@@ -40,7 +42,7 @@ private fun ProficiencyGrid(
         Bonus(
             value = proficiency.modifier,
             name = proficiency.name,
-            modifier = Modifier.width(GridItemWidth),
+            modifier = Modifier.width(GridItemWidth).padding(horizontal = 8.dp),
         )
     }
 }

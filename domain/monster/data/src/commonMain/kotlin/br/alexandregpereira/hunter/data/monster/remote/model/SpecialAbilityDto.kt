@@ -25,5 +25,9 @@ data class SpecialAbilityDto(
     @SerialName("name")
     val name: String,
     @SerialName("desc")
-    val desc: String
+    val desc: String,
+    @SerialName("saving_throws")
+    val savingThrows: List<SavingThrowDto> = emptyList(),
+    @SerialName("conditions")
+    val conditions: List<ConditionDto> = emptyList(),
 )

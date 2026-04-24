@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
@@ -36,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -45,12 +45,12 @@ internal fun Bonus(
     name: String,
     modifier: Modifier = Modifier,
     iconSize: Dp = 56.dp,
+    valueTextSize: TextUnit = 18.sp,
     alpha: Float = 0.7f
 ) {
     Column(
         modifier
-            .alpha(alpha)
-            .widthIn(max = 120.dp),
+            .alpha(alpha),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(contentAlignment = Alignment.Center) {
@@ -58,7 +58,7 @@ internal fun Bonus(
             Text(
                 text = "+$value",
                 fontWeight = FontWeight.Normal,
-                fontSize = 18.sp
+                fontSize = valueTextSize,
             )
         }
 
@@ -66,7 +66,7 @@ internal fun Bonus(
             text = name,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(top = 8.dp),
             textAlign = TextAlign.Center
         )
     }

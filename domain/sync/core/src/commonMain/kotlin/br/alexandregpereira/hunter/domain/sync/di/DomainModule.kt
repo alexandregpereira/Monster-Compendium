@@ -37,6 +37,8 @@ val syncDomainModule = module {
             isFirstTime = get(),
             resetFirstTime = get(),
             syncConditions = get(),
+            getContentVersionUseCase = get(),
+            saveContentVersionUseCase = get(),
         )
     }
 }

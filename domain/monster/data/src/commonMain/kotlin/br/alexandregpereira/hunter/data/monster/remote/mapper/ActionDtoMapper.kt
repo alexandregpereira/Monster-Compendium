@@ -36,7 +36,9 @@ internal fun List<ActionDto>.toDomain(): List<Action> {
             abilityDescription = AbilityDescription(
                 name = action.name,
                 description = action.description,
-                index = "action-$uuid"
+                index = "action-$uuid",
+                savingThrows = action.savingThrows.toDomain(),
+                conditions = action.conditions.toDomain(),
             )
         )
     }

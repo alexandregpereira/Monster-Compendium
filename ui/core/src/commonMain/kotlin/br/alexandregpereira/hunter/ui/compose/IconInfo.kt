@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
@@ -54,6 +53,7 @@ fun IconInfo(
     iconSize: Dp = 56.dp,
     iconColor: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
     iconAlpha: Float = 0.7f,
+    textAlpha: Float = 0.7f,
     title: String? = null,
     iconText: String? = null,
     iconPadding: PaddingValues = PaddingValues(0.dp)
@@ -85,12 +85,12 @@ fun IconInfo(
     title?.let {
         Text(
             text = it,
-            fontWeight = FontWeight.Light,
-            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .width(72.dp)
-                .padding(top = 8.dp)
+                .alpha(textAlpha)
+                .padding(top = 8.dp),
         )
     }
 }

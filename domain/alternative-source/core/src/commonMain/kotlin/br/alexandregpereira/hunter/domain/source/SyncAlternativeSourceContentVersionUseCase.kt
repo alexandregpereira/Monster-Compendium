@@ -33,7 +33,7 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(): Flow<Pair<Boolean, Map<String, Int>>> {
+    operator fun invoke(): Flow<IsToSyncData> {
         return settingsRepository.getLanguage().flatMapLatest { lang ->
             flow {
                 val (remoteSources, localSources, remoteDefaultSources, localDefaultSources) = coroutineScope {
@@ -70,14 +70,21 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
                 val allChangedMap = changedMap + changedDefaultMap
                 val allRollbackMap = rollbackMap + defaultRollbackMap
 
-                if (allChangedMap.isEmpty() && newDefaultSources.isEmpty()) {
-                    emit(false to emptyMap())
+                val isToSyncData = if (allChangedMap.isEmpty() && newDefaultSources.isEmpty()) {
+                    IsToSyncData(
+                        isToSync = false,
+                        acronymToContentVersionRollbackMap = emptyMap(),
+                    )
                 } else {
                     if (allChangedMap.isNotEmpty()) {
                         localRepository.saveContentVersions(allChangedMap).single()
                     }
-                    emit(true to allRollbackMap)
+                    IsToSyncData(
+                        isToSync = true,
+                        acronymToContentVersionRollbackMap = allRollbackMap,
+                    )
                 }
+                emit(isToSyncData)
             }
         }
     }
@@ -96,4 +103,9 @@ class SyncAlternativeSourceContentVersionUseCase internal constructor(
         operator fun component3() = c
         operator fun component4() = d
     }
+
+    data class IsToSyncData(
+        val isToSync: Boolean,
+        val acronymToContentVersionRollbackMap: Map<String, Int>,
+    )
 }
