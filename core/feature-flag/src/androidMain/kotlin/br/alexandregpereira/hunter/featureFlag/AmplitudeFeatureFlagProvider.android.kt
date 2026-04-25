@@ -28,11 +28,11 @@ internal class AmplitudeFeatureFlagProvider(
         )
     }
 
-    override suspend fun isFeatureEnabled(feature: String): Boolean {
+    override suspend fun isFeatureEnabled(feature: String, defaultValue: Boolean): Boolean {
         val client = client
         if (client == null) {
             analytics.logException(IllegalStateException("Failed to check feature flag $feature: client is null"))
-            return false
+            return defaultValue
         }
         return withContext(Dispatchers.IO) {
             try {
@@ -44,7 +44,7 @@ internal class AmplitudeFeatureFlagProvider(
                 variant.value == "on"
             } catch (cause: Exception) {
                 analytics.logException(cause)
-                false
+                defaultValue
             }
         }
     }

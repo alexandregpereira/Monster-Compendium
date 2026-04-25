@@ -6,7 +6,7 @@ class EmptyFeatureFlagProvider : FeatureFlagProvider {
         // no-op
     }
 
-    override suspend fun isFeatureEnabled(feature: String): Boolean {
+    override suspend fun isFeatureEnabled(feature: String, defaultValue: Boolean): Boolean {
         return false
     }
 }

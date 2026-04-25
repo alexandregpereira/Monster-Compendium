@@ -38,6 +38,7 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.settings.domain.IsManageContentFeatureEnabled
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
@@ -82,6 +83,7 @@ internal class SettingsStateHolder(
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
+    private val isManageContentFeatureEnabled: IsManageContentFeatureEnabled,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -244,33 +246,50 @@ internal class SettingsStateHolder(
     }
 
     private fun load() {
+        val currentState = state.value
         flow {
             coroutineScope {
-                val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
-                val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
-                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
-                val showPremium = isSessionUsageLimitReachedDeferred.await()
                 val currentStrings = this@SettingsStateHolder.strings
-                val newState = state.value.copy(
-                    imageBaseUrl = imageBaseUrlDeferred.await(),
-                    alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
+                val newState = currentState.copy(
                     strings = currentStrings,
                     settingsState = SettingsState(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
                     ),
-                    menuItems = buildMenuItems(currentStrings, showPremium),
+                    menuItems = buildMenuItems(
+                        strings = currentStrings,
+                        showPremium = false,
+                        isManageContentFeatureEnabled = false,
+                    ),
                 )
                 emit(newState)
+                val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
+                val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
+                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
+                val isManageContentFeatureEnabled = async { isManageContentFeatureEnabled() }
+                val newState2 = currentState.copy(
+                    imageBaseUrl = imageBaseUrlDeferred.await(),
+                    alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
+                    menuItems = buildMenuItems(
+                        strings = currentStrings,
+                        showPremium = isSessionUsageLimitReachedDeferred.await(),
+                        isManageContentFeatureEnabled = isManageContentFeatureEnabled.await(),
+                    ),
+                )
+                emit(newState2)
             }
         }.flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
             }
-            .onEach { state ->
-                analytics.trackLoadSettings(state)
-                originalSettingsState = state.settingsState
-                setState { state }
+            .onEach { newState ->
+                if (currentState.alternativeSourceBaseUrl != newState.alternativeSourceBaseUrl ||
+                    currentState.imageBaseUrl != newState.imageBaseUrl
+                ) {
+                    analytics.trackLoadSettings(newState)
+                }
+                originalSettingsState = newState.settingsState
+                setState { newState }
             }
             .launchIn(scope)
     }
@@ -307,7 +326,11 @@ internal class SettingsStateHolder(
         }
     }
 
-    private fun buildMenuItems(strings: SettingsStrings, showPremium: Boolean): ImmutableList<MenuItemState> =
+    private fun buildMenuItems(
+        strings: SettingsStrings,
+        showPremium: Boolean,
+        isManageContentFeatureEnabled: Boolean,
+    ): ImmutableList<MenuItemState> =
         buildList {
             add(MenuItemState(MenuItemIdState.OPEN_GITHUB_PROJECT, strings.openGitHubProject))
             add(MenuItemState(MenuItemIdState.SETTINGS, strings.settingsTitle))
@@ -315,8 +338,12 @@ internal class SettingsStateHolder(
             add(MenuItemState(MenuItemIdState.APPEARANCE_SETTINGS, strings.appearanceSettingsTitle))
             add(MenuItemState(MenuItemIdState.IMPORT_CONTENT, strings.importContent))
             add(MenuItemState(MenuItemIdState.SPELLS, strings.spells))
-            add(MenuItemState(MenuItemIdState.MANAGE_MONSTER_CONTENT, strings.manageMonsterContent))
-            if (showPremium) add(MenuItemState(MenuItemIdState.SUBSCRIBE_PREMIUM, strings.subscribePremium))
+            if (isManageContentFeatureEnabled) {
+                add(MenuItemState(MenuItemIdState.MANAGE_MONSTER_CONTENT, strings.manageMonsterContent))
+            }
+            if (showPremium) {
+                add(MenuItemState(MenuItemIdState.SUBSCRIBE_PREMIUM, strings.subscribePremium))
+            }
         }.toImmutableList()
 
     private fun closeAdvancedSettings() {

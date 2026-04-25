@@ -30,6 +30,7 @@ multiplatform {
         implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
+        implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster:event"))
         implementation(project(":domain:settings:core"))
