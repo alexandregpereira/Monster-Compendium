@@ -262,12 +262,12 @@ internal class SettingsStateHolder(
                         isManageContentFeatureEnabled = false,
                     ),
                 )
-                emit(newState)
+                emit(0 to newState)
                 val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
                 val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
                 val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
                 val isManageContentFeatureEnabled = async { isManageContentFeatureEnabled() }
-                val newState2 = currentState.copy(
+                val newState2 = newState.copy(
                     imageBaseUrl = imageBaseUrlDeferred.await(),
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
                     menuItems = buildMenuItems(
@@ -276,19 +276,21 @@ internal class SettingsStateHolder(
                         isManageContentFeatureEnabled = isManageContentFeatureEnabled.await(),
                     ),
                 )
-                emit(newState2)
+                emit(1 to newState2)
             }
         }.flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
             }
-            .onEach { newState ->
+            .onEach { (index, newState) ->
                 if (currentState.alternativeSourceBaseUrl != newState.alternativeSourceBaseUrl ||
                     currentState.imageBaseUrl != newState.imageBaseUrl
                 ) {
                     analytics.trackLoadSettings(newState)
                 }
-                originalSettingsState = newState.settingsState
+                if (index == 1) {
+                    originalSettingsState = newState.settingsState
+                }
                 setState { newState }
             }
             .launchIn(scope)

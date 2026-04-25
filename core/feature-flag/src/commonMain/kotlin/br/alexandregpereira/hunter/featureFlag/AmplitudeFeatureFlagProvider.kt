@@ -2,9 +2,10 @@ package br.alexandregpereira.hunter.featureFlag
 
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.ktx.runCatching
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -18,7 +19,7 @@ internal class AmplitudeFeatureFlagProvider(
 
     private var client: AmplitudeFeatureFlagClient? = null
     private var fetched = false
-    private val scope = MainScope()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val mutex = Mutex()
 
     override fun initialize() {

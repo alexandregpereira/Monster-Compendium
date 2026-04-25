@@ -158,7 +158,6 @@ internal class RevenueMobileSdk : RevenueSdk {
         return suspendCancellableCoroutine { continuation ->
             Purchases.sharedInstance.getOfferings(
                 onError = { error ->
-                    // Handle error
                     continuation.resumeWith(
                         Result.failure(
                             RevenueSdkException.FailToVerifyPremium(

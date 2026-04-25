@@ -6,4 +6,5 @@ target 'MonsterCompendium' do
   pod 'AmplitudeExperiment', '~> 1.6'
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
+  pod 'PurchasesHybridCommon', '17.46.0'
 end

@@ -11,6 +11,7 @@ internal actual fun Scope.createAmplitudeFeatureFlagClientFactory(): AmplitudeFe
                 override suspend fun fetch() {}
 
                 override fun variant(feature: String): AmplitudeVariant {
+                    // Every feature on Desktop is enabled for now
                     return AmplitudeVariant(value = "on")
                 }
             }
