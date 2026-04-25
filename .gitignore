@@ -96,3 +96,6 @@ iOSInjectionProject/
 
 # Hunter JVM database
 hunter-database.db
+
+# Claude
+.claude/agent-memory/
