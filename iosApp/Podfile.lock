@@ -121,12 +121,16 @@ PODS:
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
+  - PurchasesHybridCommon (17.46.0):
+    - RevenueCat (= 5.61.0)
+  - RevenueCat (5.61.0)
 
 DEPENDENCIES:
   - AmplitudeExperiment (~> 1.6)
   - AmplitudeSwift (~> 1.10)
   - FirebaseAnalytics
   - FirebaseCrashlytics
+  - PurchasesHybridCommon (= 17.46.0)
 
 SPEC REPOS:
   trunk:
@@ -149,6 +153,8 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
+    - PurchasesHybridCommon
+    - RevenueCat
 
 SPEC CHECKSUMS:
   AmplitudeCore: 2da469fb74c71c8f46ae29a4586c4bf63ad02f58
@@ -170,7 +176,9 @@ SPEC CHECKSUMS:
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
+  PurchasesHybridCommon: 295bdafc0970632aad3d2e33b4cfa9f3e69ef9c3
+  RevenueCat: 9acbd29a62000b57d59efa16166290c4a119847b
 
-PODFILE CHECKSUM: 6eaea1db534f8abc0e4880ede3a58d94df99b9ff
+PODFILE CHECKSUM: 31a500f199e4b54a6568e098dfd3fcdc6ec49913
 
 COCOAPODS: 1.16.2
