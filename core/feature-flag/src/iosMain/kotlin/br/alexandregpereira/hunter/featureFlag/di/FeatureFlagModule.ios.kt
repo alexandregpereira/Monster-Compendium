@@ -1,9 +1,9 @@
 package br.alexandregpereira.hunter.featureFlag.di
 
-import br.alexandregpereira.hunter.featureFlag.EmptyFeatureFlagProvider
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
+import br.alexandregpereira.hunter.featureFlag.AmplitudeFeatureFlagClient
+import br.alexandregpereira.hunter.featureFlag.AmplitudeFeatureFlagIosClient
 import org.koin.core.scope.Scope
 
-internal actual fun Scope.createFeatureFlagProvider(amplitudeApiKey: String): FeatureFlagProvider {
-    return EmptyFeatureFlagProvider()
+internal actual fun Scope.createAmplitudeFeatureFlagClientFactory(): AmplitudeFeatureFlagClient.Factory {
+    return AmplitudeFeatureFlagIosClient.Factory()
 }

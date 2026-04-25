@@ -4,5 +4,5 @@ interface FeatureFlagProvider {
 
     fun initialize()
 
-    suspend fun isFeatureEnabled(feature: String): Boolean
+    suspend fun isFeatureEnabled(feature: String, defaultValue: Boolean = false): Boolean
 }

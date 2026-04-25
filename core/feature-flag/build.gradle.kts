@@ -18,11 +18,12 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
 }
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
-        implementation(project(":core:network"))
+        implementation(project(":core:ktx"))
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
@@ -31,6 +32,18 @@ multiplatform {
     }
     jvmMain()
     iosMain()
+}
+
+kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Feature flag module"
+        homepage = "https://github.com/alexandregpereira/monster-compendium"
+        ios.deploymentTarget = "14.0"
+        pod("AmplitudeExperiment") {
+            version = "~> 1.6"
+        }
+    }
 }
 
 android {

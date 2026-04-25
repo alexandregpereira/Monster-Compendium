@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.settings.domain.IsManageContentFeatureEnabled
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import org.koin.dsl.module
@@ -30,6 +31,12 @@ import org.koin.dsl.module
 val featureSettingsModule = module {
     factory { GetAppearanceSettingsFromMonsters(get(), get()) }
     factory { ApplyAppearanceSettings(get(), get(), get(), get()) }
+    factory {
+        IsManageContentFeatureEnabled(
+            featureFlagProvider = get(),
+            alternativeSourceLocalRepository = get(),
+        )
+    }
     single {
         SettingsStateHolder(
             getMonsterImageJsonUrl = get(),
@@ -51,6 +58,7 @@ val featureSettingsModule = module {
             spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
             spellDetailEventDispatcher = get(),
             spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
+            isManageContentFeatureEnabled = get(),
         )
     }
 }

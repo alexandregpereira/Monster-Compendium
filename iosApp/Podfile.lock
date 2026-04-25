@@ -1,5 +1,8 @@
 PODS:
   - AmplitudeCore (1.4.5)
+  - AmplitudeExperiment (1.19.0):
+    - AmplitudeCore (< 2.0.0, >= 1.0.12)
+    - AnalyticsConnector (~> 1.3)
   - AmplitudeSwift (1.18.0):
     - AmplitudeCore (< 2.0.0, >= 1.4.1)
     - AnalyticsConnector (~> 1.3.0)
@@ -120,6 +123,7 @@ PODS:
     - PromisesObjC (= 2.4.0)
 
 DEPENDENCIES:
+  - AmplitudeExperiment (~> 1.6)
   - AmplitudeSwift (~> 1.10)
   - FirebaseAnalytics
   - FirebaseCrashlytics
@@ -127,6 +131,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AmplitudeCore
+    - AmplitudeExperiment
     - AmplitudeSwift
     - AnalyticsConnector
     - FirebaseAnalytics
@@ -147,6 +152,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AmplitudeCore: 2da469fb74c71c8f46ae29a4586c4bf63ad02f58
+  AmplitudeExperiment: 25356f3ac32a9bfb5f1fdeacb15363b0f8e01985
   AmplitudeSwift: d4a219e49fa65397dadd19c9cedb6f26f7751ac0
   AnalyticsConnector: 3def11199b4ddcad7202c778bde982ec5da0ebb3
   FirebaseAnalytics: 6433dfd311ba78084fc93bdfc145e8cb75740eae
@@ -165,6 +171,6 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
 
-PODFILE CHECKSUM: 432a3a414a823269689069a3ffeefaa6da74fb9d
+PODFILE CHECKSUM: 6eaea1db534f8abc0e4880ede3a58d94df99b9ff
 
 COCOAPODS: 1.16.2
