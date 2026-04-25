@@ -48,6 +48,8 @@ import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -125,19 +127,19 @@ internal class SettingsStateHolder(
             .launchIn(scope)
     }
 
-    override fun onManageMonsterContentClick() {
+    private fun onManageMonsterContentClick() {
         analytics.trackManageMonsterContentClick()
         monsterContentManagerEventDispatcher.dispatchEvent(Show)
     }
 
-    override fun onAdvancedSettingsClick() {
+    private fun onAdvancedSettingsClick() {
         analytics.trackAdvancedSettingsClick()
         setState { copy(advancedSettingsOpened = true) }
     }
 
     override fun onAdvancedSettingsCloseClick() = closeAdvancedSettings()
 
-    override fun onSettingsClick() {
+    private fun onSettingsClick() {
         analytics.trackSettingsClick()
         setState { copy(settingsOpened = true) }
     }
@@ -166,7 +168,7 @@ internal class SettingsStateHolder(
         setState { copy(settingsState = settingsState.copy(language = language)) }
     }
 
-    override fun onAppearanceSettingsClick() {
+    private fun onAppearanceSettingsClick() {
         analytics.trackAppearanceSettingsClick()
         fillAppearanceSettingsState()
         setState { copy(appearanceSettingsOpened = true) }
@@ -205,23 +207,23 @@ internal class SettingsStateHolder(
         setState { copy(appearanceState = appearance) }
     }
 
-    override fun onImport() {
+    private fun onImport() {
         analytics.trackImportContentClick()
         shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
     }
 
-    override fun onOpenGitHubProjectClick() {
+    private fun onOpenGitHubProjectClick() {
         analytics.trackOpenGitHubProjectClick()
         SettingsViewAction.GoToExternalUrl(
             url = "https://github.com/alexandregpereira/Monster-Compendium"
         ).also { sendAction(it) }
     }
 
-    override fun onSubscribePremiumClick() {
+    private fun onSubscribePremiumClick() {
         paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
-    override fun onSpellsClick() {
+    private fun onSpellsClick() {
         analytics.trackSpellsClick()
         spellCompendiumEventDispatcher.dispatchEventResult(event = SpellCompendiumEvent.Show())
             .onEach { spellCompendiumResult ->
@@ -247,15 +249,17 @@ internal class SettingsStateHolder(
                 val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
                 val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
                 val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
+                val showPremium = isSessionUsageLimitReachedDeferred.await()
+                val currentStrings = this@SettingsStateHolder.strings
                 val newState = state.value.copy(
                     imageBaseUrl = imageBaseUrlDeferred.await(),
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
-                    strings = this@SettingsStateHolder.strings,
+                    strings = currentStrings,
                     settingsState = SettingsState(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
                     ),
-                    shouldShowIsPremiumMenuItem = isSessionUsageLimitReachedDeferred.await(),
+                    menuItems = buildMenuItems(currentStrings, showPremium),
                 )
                 emit(newState)
             }
@@ -289,6 +293,31 @@ internal class SettingsStateHolder(
             }
             .launchIn(scope)
     }
+
+    override fun onMenuItemClick(id: MenuItemIdState) {
+        when (id) {
+            MenuItemIdState.OPEN_GITHUB_PROJECT -> onOpenGitHubProjectClick()
+            MenuItemIdState.SETTINGS -> onSettingsClick()
+            MenuItemIdState.ADVANCED_SETTINGS -> onAdvancedSettingsClick()
+            MenuItemIdState.APPEARANCE_SETTINGS -> onAppearanceSettingsClick()
+            MenuItemIdState.IMPORT_CONTENT -> onImport()
+            MenuItemIdState.SPELLS -> onSpellsClick()
+            MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
+            MenuItemIdState.SUBSCRIBE_PREMIUM -> onSubscribePremiumClick()
+        }
+    }
+
+    private fun buildMenuItems(strings: SettingsStrings, showPremium: Boolean): ImmutableList<MenuItemState> =
+        buildList {
+            add(MenuItemState(MenuItemIdState.OPEN_GITHUB_PROJECT, strings.openGitHubProject))
+            add(MenuItemState(MenuItemIdState.SETTINGS, strings.settingsTitle))
+            add(MenuItemState(MenuItemIdState.ADVANCED_SETTINGS, strings.manageAdvancedSettings))
+            add(MenuItemState(MenuItemIdState.APPEARANCE_SETTINGS, strings.appearanceSettingsTitle))
+            add(MenuItemState(MenuItemIdState.IMPORT_CONTENT, strings.importContent))
+            add(MenuItemState(MenuItemIdState.SPELLS, strings.spells))
+            add(MenuItemState(MenuItemIdState.MANAGE_MONSTER_CONTENT, strings.manageMonsterContent))
+            if (showPremium) add(MenuItemState(MenuItemIdState.SUBSCRIBE_PREMIUM, strings.subscribePremium))
+        }.toImmutableList()
 
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }

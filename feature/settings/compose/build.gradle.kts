@@ -27,6 +27,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":domain:monster:core"))
@@ -42,6 +43,7 @@ multiplatform {
         implementation(project(":feature:spell-registration:event"))
         implementation(project(":ui:core"))
 
+        implementation(libs.kotlin.collections.immutable)
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
     }
