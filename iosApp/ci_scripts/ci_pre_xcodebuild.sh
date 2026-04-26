@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-cd $CI_WORKSPACE/iosApp
+cd "$(dirname "$0")/.."
 brew install cocoapods
 pod install
