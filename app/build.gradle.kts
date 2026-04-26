@@ -122,14 +122,17 @@ if (localPropsFile.exists()) {
     localProps.load(localPropsFile.inputStream())
 }
 
-val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
+val isIos = System.getenv("PLATFORM_NAME") != null
+val isRelease = project.gradle.startParameter.taskNames.any { it.contains("Release") }
+    || System.getenv("CONFIGURATION") == "Release"
+val isDebug = !isRelease
 
 fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String = sandboxKey, fallback: String = ""): String {
     val isDevBuild = project.hasProperty("dev")
     val key = when {
-        isDebug -> sandboxKey
         isDevBuild -> homologKey
-        else -> prodKey
+        isRelease -> prodKey
+        else -> sandboxKey
     }
     val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
     val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
@@ -155,17 +158,24 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         prodKey = "AMPLITUDE_API_KEY",
         sandboxKey = "AMPLITUDE_SANDBOX_API_KEY",
     )
-    val revenueCatApiKeyFinal = getEnvVar(
-        prodKey = "REVENUE_CAT_API_KEY",
-        homologKey = "REVENUE_CAT_API_KEY",
-        sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
-    )
+    val revenueCatApiKey = when {
+        isIos -> getEnvVar(
+            prodKey = "REVENUE_CAT_IOS_API_KEY",
+            homologKey = "REVENUE_CAT_IOS_API_KEY",
+            sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
+        )
+        else -> getEnvVar(
+            prodKey = "REVENUE_CAT_ANDROID_API_KEY",
+            homologKey = "REVENUE_CAT_ANDROID_API_KEY",
+            sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
+        )
+    }
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
     taskVersionNameSuffix.set(versionNameSuffix)
     taskAmplitudeApiKey.set(amplitudeApiKey)
-    taskRevenueCatApiKey.set(revenueCatApiKeyFinal)
+    taskRevenueCatApiKey.set(revenueCatApiKey)
     taskAdsConsentDeviceHashTestId.set(findProperty("eeaDeviceId")?.toString() ?: "")
 }
 
