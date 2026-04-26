@@ -99,3 +99,7 @@ hunter-database.db
 
 # Claude
 .claude/agent-memory/
+
+#iOS
+iosApp/info.plist
+iosApp/Logs/
