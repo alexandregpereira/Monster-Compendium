@@ -191,8 +191,11 @@ enum class AppKeyboardType {
 
 @Composable
 fun ClearFocusWhenScrolling(scrollableState: ScrollableState) {
+    if (!shouldEnableClearFocusWhenScrolling()) return
     val focusManager = LocalFocusManager.current
     LaunchedEffect(scrollableState.isScrollInProgress) {
         if (scrollableState.isScrollInProgress) focusManager.clearFocus()
     }
 }
+
+internal expect fun shouldEnableClearFocusWhenScrolling(): Boolean
