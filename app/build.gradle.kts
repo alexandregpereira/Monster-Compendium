@@ -16,7 +16,6 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Properties
 
 plugins {
@@ -106,6 +105,15 @@ multiplatform {
 }
 
 val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
+
+tasks.register<UpdateIosVersionTask>("updateIosVersion") {
+    versionName.set(appVersionName)
+    versionCode.set(appVersionCode)
+    iosAppDir.set(rootProject.layout.projectDirectory.dir("iosApp"))
+}
+
+tasks.matching { it.name.contains("embedAndSignAppleFrameworkForXcode") }
+    .configureEach { dependsOn("updateIosVersion") }
 
 // Load local.properties manually to ensure AMPLITUDE_API_KEY is available
 val localProps = Properties()
@@ -296,7 +304,3 @@ compose {
     }
 }
 
-// Ensure the task runs before compilation
-tasks.withType<KotlinCompile>().configureEach {
-    dependsOn("generateAppConfig")
-}
