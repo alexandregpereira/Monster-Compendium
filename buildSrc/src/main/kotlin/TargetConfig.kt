@@ -113,16 +113,10 @@ fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Un
 fun KotlinMultiplatformExtension.iosMain(
     block: KotlinDependencyHandler.() -> Unit = {}
 ) {
-    if (Os.isArch("aarch64")) {
-        listOf(
-            iosArm64(),
-            iosSimulatorArm64()
-        )
-    } else {
-        listOf(
-            iosX64()
-        )
-    }.onEach {
+    listOf(
+        iosArm64(),
+        if (Os.isArch("aarch64")) iosSimulatorArm64() else iosX64()
+    ).onEach {
         it.binaries.framework {
             baseName = "KotlinApp"
             isStatic = true
