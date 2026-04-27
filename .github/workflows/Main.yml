@@ -58,7 +58,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: br.alexandregpereira.hunter.app
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
+          tracks: internal
 
   android-dev-distribution:
     name: Android APK Dev Distribution
@@ -164,9 +164,16 @@ jobs:
           <plist version="1.0">
           <dict>
             <key>method</key>
-            <string>app-store</string>
+            <string>app-store-connect</string>
             <key>teamID</key>
             <string>UF66T7J8P8</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>br.alexandregpereira.MonsterCompendium</key>
+              <string>${{ secrets.APPLE_BUILD_PROVISION_PROFILE_NAME }}</string>
+            </dict>
           </dict>
           </plist>
           EOF
