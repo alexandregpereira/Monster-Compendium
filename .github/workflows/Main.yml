@@ -6,8 +6,10 @@ on:
       - main
     paths-ignore:
       - '**.md'
+      - '**.html'
       - 'media/**'
       - 'content/**'
+      - 'docs/**'
 
 env:
   MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
@@ -188,11 +190,10 @@ jobs:
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
         run: |
-          API_KEY_PATH=$RUNNER_TEMP/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
-          echo -n "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode -o $API_KEY_PATH
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo -n "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode -o ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
           xcrun altool --upload-app \
             --type ios \
             --file ${{ github.workspace }}/export/MonsterCompendium.ipa \
             --apiKey $APP_STORE_CONNECT_API_KEY_ID \
-            --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID \
-            --apiKeyPath $API_KEY_PATH
+            --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID

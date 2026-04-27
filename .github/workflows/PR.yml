@@ -5,8 +5,10 @@ on:
     types: [opened, synchronize, reopened, labeled]
     paths-ignore:
       - '**.md'
+      - '**.html'
       - 'media/**'
       - 'content/**'
+      - 'docs/**'
 
 env:
   MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
