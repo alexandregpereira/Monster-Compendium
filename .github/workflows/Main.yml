@@ -120,6 +120,9 @@ jobs:
         working-directory: iosApp
         run: pod install
 
+      - name: Update iOS version in xcconfig
+        run: ./gradlew :app:updateIosVersion
+
       - name: Import signing certificate
         env:
           APPLE_BUILD_CERTIFICATE_BASE64: ${{ secrets.APPLE_BUILD_CERTIFICATE_BASE64 }}
