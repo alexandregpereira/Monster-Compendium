@@ -179,15 +179,14 @@ private class SwipeVerticalNestedScrollConnection(
             state.isSwipeInProgress = false
         }
 
-        val newOffset = (available.y * DragMultiplier + state.offset).coerceAtLeast(0f)
+        val newOffset = (available.y + state.offset).coerceAtLeast(0f)
         val dragConsumed = newOffset - state.offset
 
         return if (dragConsumed.absoluteValue >= 0.5f) {
             coroutineScope.launch {
                 state.dispatchScrollDelta(dragConsumed)
             }
-            // Return the consumed Y
-            Offset(x = 0f, y = dragConsumed / DragMultiplier)
+            Offset(x = 0f, y = dragConsumed)
         } else {
             Offset.Zero
         }
@@ -208,5 +207,3 @@ private class SwipeVerticalNestedScrollConnection(
         return if (triggered) available else Velocity.Zero
     }
 }
-
-private const val DragMultiplier = 1f

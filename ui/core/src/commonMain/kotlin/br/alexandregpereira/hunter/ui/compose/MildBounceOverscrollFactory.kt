@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 internal class MildBounceOverscrollFactory : OverscrollFactory {
     override fun createOverscrollEffect(): OverscrollEffect = MildBounceOverscrollEffect()
     override fun equals(other: Any?): Boolean = other is MildBounceOverscrollFactory
-    override fun hashCode(): Int = this::class.hashCode()
+    override fun hashCode(): Int = 0
 }
 
 private class MildBounceOverscrollEffect : OverscrollEffect {
@@ -61,6 +61,10 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
             source == NestedScrollSource.UserInput && overscrollY != 0f -> {
                 bounceJob?.cancel()
                 offsetY += overscrollY * Resistance
+                // Report what was actually consumed: the scroll's portion + the overscroll
+                // effect's portion. Returning delta would over-report on the x axis if a
+                // horizontal component wasn't consumed.
+                return consumed + Offset(0f, overscrollY)
             }
             // SideEffect is the source during a fling animation. When performScroll doesn't
             // consume all the delta the fling has hit an edge. Start the spring immediately
@@ -70,11 +74,7 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
                 val startOffset = offsetY + overscrollY * Resistance
                 offsetY = startOffset
                 bounceJob?.cancel()
-                bounceJob = nodeScope?.launch {
-                    Animatable(startOffset).animateTo(0f, SpringSpec) {
-                        offsetY = value
-                    }
-                }
+                bounceJob = nodeScope?.launch { springBackToZero(startOffset) }
             }
         }
         return delta
@@ -84,15 +84,21 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
         velocity: Velocity,
         performFling: suspend (Velocity) -> Velocity
     ) {
-        edgeHitHandled = false
+        // Cancel before resetting the flag to narrow the window where a second concurrent
+        // fling could reset edgeHitHandled while SideEffect callbacks from the first are live.
         bounceJob?.cancel()
+        edgeHitHandled = false
         performFling(velocity)
         // Edge spring is already handled in applyToScroll(SideEffect). Only spring back here
         // for drag-based overscroll (UserInput) that wasn't followed by an edge-hitting fling.
         if (!edgeHitHandled && offsetY != 0f) {
-            Animatable(offsetY).animateTo(0f, SpringSpec) {
-                offsetY = value
-            }
+            springBackToZero(offsetY)
+        }
+    }
+
+    private suspend fun springBackToZero(from: Float) {
+        Animatable(from).animateTo(0f, SpringSpec) {
+            offsetY = value
         }
     }
 
@@ -102,6 +108,9 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
         }
 
         override fun onDetach() {
+            bounceJob?.cancel()
+            bounceJob = null
+            offsetY = 0f
             nodeScope = null
         }
 
