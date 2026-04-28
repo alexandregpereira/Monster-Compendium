@@ -18,10 +18,12 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.MutatorMutex
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,6 +75,7 @@ fun SwipeVertical(
         this.enabled = swipeEnabled
     }
 
+    val overscrollFactory = remember { MildBounceOverscrollFactory() }
     Box(
         modifier
             .nestedScroll(connection = nestedScrollConnection)
@@ -80,7 +83,11 @@ fun SwipeVertical(
                 state.height = it.size.height.toFloat()
             }
     ) {
-        content()
+        // Replace the platform overscroll factory with a mild custom bounce so the iOS spring
+        // doesn't compete with the dismiss gesture, while still giving edge feedback.
+        CompositionLocalProvider(LocalOverscrollFactory provides overscrollFactory) {
+            content()
+        }
     }
 }
 
@@ -188,15 +195,17 @@ private class SwipeVerticalNestedScrollConnection(
 
     override suspend fun onPreFling(available: Velocity): Velocity {
         // If we're dragging and scrolled past the trigger point, trigger.
-        if (state.isSwipeTriggered()) {
+        val triggered = state.isSwipeTriggered()
+        if (triggered) {
             onSwipeTriggered()
         }
 
         // Reset the drag in progress state
         state.isSwipeInProgress = false
 
-        // Don't consume any velocity, to allow the scrolling layout to fling
-        return Velocity.Zero
+        // Consume velocity when triggering dismiss so the inner scroll doesn't start a competing
+        // fling animation during the dismiss slide-out.
+        return if (triggered) available else Velocity.Zero
     }
 }
 
