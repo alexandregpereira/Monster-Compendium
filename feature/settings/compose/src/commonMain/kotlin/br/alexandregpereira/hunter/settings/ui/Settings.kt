@@ -63,7 +63,7 @@ private fun Settings(
     onLanguageChange: (SettingsLanguageState) -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
 ) = Form(
-    title = strings.settingsTitle,
+    title = strings.languageLabel,
     modifier = modifier
         .padding(16.dp),
 ) {

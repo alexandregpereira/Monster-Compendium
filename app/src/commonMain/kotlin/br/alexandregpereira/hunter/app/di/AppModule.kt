@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.ads.di.adsFeatureModule
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.app.MainViewModel
+import br.alexandregpereira.hunter.app.config.Environment
 import br.alexandregpereira.hunter.app.event.appEventModule
 import br.alexandregpereira.hunter.data.di.dataModules
 import br.alexandregpereira.hunter.detail.di.featureMonsterDetailModule
@@ -111,6 +112,14 @@ private val appModule = module {
             adsConsentManager = get(),
             isSessionUsageLimitReached = get(),
         )
+    }
+
+    single<Environment> {
+        if (AppConfig.VERSION_NAME_SUFFIX.isBlank()) {
+            Environment.Production
+        } else {
+            Environment.Sandbox
+        }
     }
 }
 

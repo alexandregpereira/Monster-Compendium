@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
 import br.alexandregpereira.hunter.settings.ui.MenuScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -43,10 +44,13 @@ fun SettingsFeature(
         }
     }
 
+    val state by viewModel.state.collectAsState()
     MenuScreen(
-        state = viewModel.state.collectAsState().value,
+        menuItemsGroupBySection = state.menuItemsGroupBySection,
         versionName = versionName,
+        showPremium = state.showPremium,
         contentPadding = contentPadding,
-        viewIntent = viewModel,
+        onItemClicked = viewModel::onMenuItemClick,
+        onPremiumClick = viewModel::onSubscribePremiumClick,
     )
 }

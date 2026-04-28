@@ -19,7 +19,10 @@ package br.alexandregpereira.hunter.settings
 
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 
 internal data class SettingsViewState(
     val imageBaseUrl: String = "",
@@ -32,11 +35,18 @@ internal data class SettingsViewState(
     val appearanceState: AppearanceSettingsState = AppearanceSettingsState(),
     val strings: SettingsStrings = SettingsEnStrings(),
     val menuItems: ImmutableList<MenuItemState> = persistentListOf(),
-)
+    val showPremium: Boolean = false,
+) {
+    val menuItemsGroupBySection: ImmutableMap<String, ImmutableList<MenuItemState>> =
+        menuItems.groupBy { it.section }
+            .mapValues { it.value.toImmutableList() }
+            .toImmutableMap()
+}
 
 internal data class MenuItemState(
     val id: MenuItemIdState,
     val text: String = "",
+    val section: String = "",
 )
 
 internal enum class MenuItemIdState {
@@ -47,7 +57,6 @@ internal enum class MenuItemIdState {
     IMPORT_CONTENT,
     SPELLS,
     MANAGE_MONSTER_CONTENT,
-    SUBSCRIBE_PREMIUM,
 }
 
 internal data class SettingsState(

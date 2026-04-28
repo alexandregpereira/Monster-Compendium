@@ -31,6 +31,7 @@ include ':app'
 
 include ':core:ads-consent'
 include ':core:analytics'
+include ':core:app-config'
 include ':core:event'
 include ':core:feature-flag'
 include ':core:ktx'
