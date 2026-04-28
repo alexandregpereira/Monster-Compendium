@@ -26,6 +26,7 @@ multiplatform {
     androidMain()
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:app-config"))
         implementation(project(":core:event"))
         implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))

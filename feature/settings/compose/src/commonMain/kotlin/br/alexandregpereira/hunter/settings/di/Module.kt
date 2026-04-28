@@ -59,6 +59,7 @@ val featureSettingsModule = module {
             spellDetailEventDispatcher = get(),
             spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             isManageContentFeatureEnabled = get(),
+            environment = get(),
         )
     }
 }

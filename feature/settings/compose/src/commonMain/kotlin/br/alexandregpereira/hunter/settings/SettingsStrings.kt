@@ -40,16 +40,22 @@ interface SettingsStrings {
     val openGitHubProject: String
     val subscribePremium: String
     val spells: String
+    val about: String
+    val content: String
+    val screenTitle: String
+    val premiumCardTitle: String
+    val premiumCardDescription: String
+    val premiumCardButton: String
 }
 
 internal data class SettingsEnStrings(
     override val additionalContent: String = "Additional Content",
     override val monsterImagesJson: String = "Monster Images JSON URL",
     override val alternativeSourcesJson: String = "Alternative Sources JSON URL",
-    override val manageMonsterContent: String = "Manage Monsters Content",
+    override val manageMonsterContent: String = "Manage Content",
     override val sync: String = "Sync",
     override val manageAdvancedSettings: String = "Advanced Settings",
-    override val settingsTitle: String = "Language",
+    override val settingsTitle: String = "Settings",
     override val languageLabel: String = "Language",
     override val save: String = "Save",
     override val appearanceSettingsTitle: String = "Appearance",
@@ -63,16 +69,22 @@ internal data class SettingsEnStrings(
     override val openGitHubProject: String = "Open GitHub Project",
     override val subscribePremium: String = "Remove ads with Premium",
     override val spells: String = "Spells",
+    override val about: String = "About",
+    override val content: String = "Content",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendium Premium",
+    override val premiumCardDescription: String = "Remove ads",
+    override val premiumCardButton: String = "Check out",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
     override val additionalContent: String = "Conteúdo Adicional",
     override val monsterImagesJson: String = "URL do JSON de Imagens de Monstros",
     override val alternativeSourcesJson: String = "URL do JSON de Fontes Alternativas",
-    override val manageMonsterContent: String = "Gerenciar Conteúdo de Monstros",
+    override val manageMonsterContent: String = "Gerenciar Conteúdo",
     override val sync: String = "Sincronizar",
     override val manageAdvancedSettings: String = "Configurações Avançadas",
-    override val settingsTitle: String = "Idioma",
+    override val settingsTitle: String = "Configurações",
     override val languageLabel: String = "Idioma",
     override val save: String = "Salvar",
     override val appearanceSettingsTitle: String = "Aparência",
@@ -86,16 +98,22 @@ internal data class SettingsPtStrings(
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
     override val subscribePremium: String = "Remover anúncios com Premium",
     override val spells: String = "Magias",
+    override val about: String = "Sobre",
+    override val content: String = "Conteúdo",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compêndio Premium",
+    override val premiumCardDescription: String = "Remover anúncios",
+    override val premiumCardButton: String = "Saiba mais",
 ) : SettingsStrings
 
 internal data class SettingsEsStrings(
     override val additionalContent: String = "Contenido Adicional",
     override val monsterImagesJson: String = "URL JSON de Imágenes de Monstruos",
     override val alternativeSourcesJson: String = "URL JSON de Fuentes Alternativas",
-    override val manageMonsterContent: String = "Gestionar Contenido de Monstruos",
+    override val manageMonsterContent: String = "Gestionar Contenido",
     override val sync: String = "Sincronizar",
     override val manageAdvancedSettings: String = "Ajustes Avanzados",
-    override val settingsTitle: String = "Idioma",
+    override val settingsTitle: String = "Configuraciones",
     override val languageLabel: String = "Idioma",
     override val save: String = "Guardar",
     override val appearanceSettingsTitle: String = "Apariencia",
@@ -109,6 +127,12 @@ internal data class SettingsEsStrings(
     override val openGitHubProject: String = "Abrir Proyecto en GitHub",
     override val subscribePremium: String = "Eliminar anuncios con Premium",
     override val spells: String = "Magias",
+    override val about: String = "Acerca de",
+    override val content: String = "Contenido",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendio Premium",
+    override val premiumCardDescription: String = "Eliminar anuncios",
+    override val premiumCardButton: String = "Verificar",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

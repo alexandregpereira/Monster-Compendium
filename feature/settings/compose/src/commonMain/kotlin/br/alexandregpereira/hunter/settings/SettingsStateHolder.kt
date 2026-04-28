@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.settings
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.app.config.Environment
 import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
@@ -84,6 +85,7 @@ internal class SettingsStateHolder(
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
     private val isManageContentFeatureEnabled: IsManageContentFeatureEnabled,
+    private val environment: Environment,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -91,11 +93,7 @@ internal class SettingsStateHolder(
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
 
-    private fun observeLanguageChanges() {
-        appLocalization.languageFlow.onEach {
-            load()
-        }.launchIn(scope)
-
+    private fun observeEvents() {
         paywallResultListener.events.onEach { result ->
             if (result is PaywallResult.OnSubscribe) {
                 load()
@@ -104,7 +102,7 @@ internal class SettingsStateHolder(
     }
 
     fun onStart() {
-        observeLanguageChanges()
+        observeEvents()
         load()
     }
 
@@ -160,7 +158,13 @@ internal class SettingsStateHolder(
                     syncEventDispatcher.startSync()
                     originalSettingsState = state.value.settingsState
                 }
-                setState { copy(strings = this@SettingsStateHolder.strings) }
+                val strings = this@SettingsStateHolder.strings
+                setState {
+                    copy(
+                        strings = strings,
+                        menuItems = updateMenuItems(strings),
+                    )
+                }
             }
             .launchIn(scope)
     }
@@ -221,7 +225,7 @@ internal class SettingsStateHolder(
         ).also { sendAction(it) }
     }
 
-    private fun onSubscribePremiumClick() {
+    fun onSubscribePremiumClick() {
         paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
@@ -235,6 +239,7 @@ internal class SettingsStateHolder(
                             SpellDetailEvent.ShowSpell(spellCompendiumResult.spellIndex)
                         )
                     }
+
                     is SpellCompendiumResult.OnSpellLongClick -> {
                         spellRegistrationEventDispatcher.dispatchEvent(
                             SpellRegistrationEvent.Show(spellCompendiumResult.spellIndex)
@@ -258,13 +263,13 @@ internal class SettingsStateHolder(
                     ),
                     menuItems = buildMenuItems(
                         strings = currentStrings,
-                        showPremium = false,
                         isManageContentFeatureEnabled = false,
                     ),
                 )
                 emit(0 to newState)
                 val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
-                val alternativeSourceBaseUrlDeferred = async { getAlternativeSourceJsonUrl().single() }
+                val alternativeSourceBaseUrlDeferred =
+                    async { getAlternativeSourceJsonUrl().single() }
                 val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
                 val isManageContentFeatureEnabled = async { isManageContentFeatureEnabled() }
                 val newState2 = newState.copy(
@@ -272,9 +277,9 @@ internal class SettingsStateHolder(
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
                     menuItems = buildMenuItems(
                         strings = currentStrings,
-                        showPremium = isSessionUsageLimitReachedDeferred.await(),
                         isManageContentFeatureEnabled = isManageContentFeatureEnabled.await(),
                     ),
+                    showPremium = isSessionUsageLimitReachedDeferred.await(),
                 )
                 emit(1 to newState2)
             }
@@ -324,29 +329,76 @@ internal class SettingsStateHolder(
             MenuItemIdState.IMPORT_CONTENT -> onImport()
             MenuItemIdState.SPELLS -> onSpellsClick()
             MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
-            MenuItemIdState.SUBSCRIBE_PREMIUM -> onSubscribePremiumClick()
         }
     }
 
     private fun buildMenuItems(
         strings: SettingsStrings,
-        showPremium: Boolean,
         isManageContentFeatureEnabled: Boolean,
     ): ImmutableList<MenuItemState> =
         buildList {
-            add(MenuItemState(MenuItemIdState.OPEN_GITHUB_PROJECT, strings.openGitHubProject))
-            add(MenuItemState(MenuItemIdState.SETTINGS, strings.settingsTitle))
-            add(MenuItemState(MenuItemIdState.ADVANCED_SETTINGS, strings.manageAdvancedSettings))
-            add(MenuItemState(MenuItemIdState.APPEARANCE_SETTINGS, strings.appearanceSettingsTitle))
-            add(MenuItemState(MenuItemIdState.IMPORT_CONTENT, strings.importContent))
-            add(MenuItemState(MenuItemIdState.SPELLS, strings.spells))
+            add(MenuItemIdState.SPELLS.toMenuItem(strings))
             if (isManageContentFeatureEnabled) {
-                add(MenuItemState(MenuItemIdState.MANAGE_MONSTER_CONTENT, strings.manageMonsterContent))
+                add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
             }
-            if (showPremium) {
-                add(MenuItemState(MenuItemIdState.SUBSCRIBE_PREMIUM, strings.subscribePremium))
+            add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
+            add(MenuItemIdState.SETTINGS.toMenuItem(strings))
+            add(MenuItemIdState.APPEARANCE_SETTINGS.toMenuItem(strings))
+            if (environment == Environment.Sandbox) {
+                add(MenuItemIdState.ADVANCED_SETTINGS.toMenuItem(strings))
             }
+            add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
         }.toImmutableList()
+
+    private fun SettingsViewState.updateMenuItems(
+        strings: SettingsStrings,
+    ): ImmutableList<MenuItemState> {
+        return this.menuItems.map { menuItem ->
+            menuItem.id.toMenuItem(strings)
+        }.toImmutableList()
+    }
+
+    private fun MenuItemIdState.toMenuItem(
+        strings: SettingsStrings,
+    ): MenuItemState {
+        return when (this) {
+            MenuItemIdState.OPEN_GITHUB_PROJECT -> MenuItemState(
+                id = this,
+                text = strings.openGitHubProject,
+                section = strings.about,
+            )
+            MenuItemIdState.SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.languageLabel,
+                section = strings.settingsTitle,
+            )
+            MenuItemIdState.APPEARANCE_SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.appearanceSettingsTitle,
+                section = strings.settingsTitle,
+            )
+            MenuItemIdState.IMPORT_CONTENT -> MenuItemState(
+                id = this,
+                text = strings.importContent,
+                section = strings.content,
+            )
+            MenuItemIdState.SPELLS -> MenuItemState(
+                id = this,
+                text = strings.spells,
+                section = strings.content,
+            )
+            MenuItemIdState.MANAGE_MONSTER_CONTENT -> MenuItemState(
+                id = this,
+                text = strings.manageMonsterContent,
+                section = strings.content,
+            )
+            MenuItemIdState.ADVANCED_SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.manageAdvancedSettings,
+                section = strings.settingsTitle,
+            )
+        }
+    }
 
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }
