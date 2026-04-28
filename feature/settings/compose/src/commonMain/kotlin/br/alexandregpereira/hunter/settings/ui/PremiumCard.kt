@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.settings.ui
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,10 +47,11 @@ internal fun PremiumCard(
     buttonText: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-) = HunterTheme(darkTheme = isSystemInDarkTheme().not()){
+) {
     AppCard(
         modifier = modifier.animatePressed(onClick = onClick),
         shape = MaterialTheme.shapes.large,
+        elevation = 8.dp,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
