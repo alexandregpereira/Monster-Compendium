@@ -1,9 +1,7 @@
 package br.alexandregpereira.hunter.settings.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -12,12 +10,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +26,9 @@ import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
 internal fun PremiumCard(
+    title: String,
+    description: String,
+    buttonText: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) = HunterTheme(darkTheme = isSystemInDarkTheme().not()){
@@ -42,38 +41,33 @@ internal fun PremiumCard(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .alpha(.9f)
-                    .clip(shape = MaterialTheme.shapes.large)
-                    .background(color = MaterialTheme.colors.primary)
-                    .size(56.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    tint = MaterialTheme.colors.onPrimary,
-                    contentDescription = null,
-                )
-            }
+            Icon(
+                imageVector = Icons.Outlined.Star,
+                tint = MaterialTheme.colors.primary,
+                contentDescription = null,
+                modifier = Modifier.size(32.dp)
+            )
             Column(
-                modifier = Modifier.weight(.6f),
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = "Compendium Premium",
+                    text = title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                 )
                 Text(
-                    text = "Remove ads",
+                    text = description,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
                 )
             }
             AppButton(
-                text = "Upgrade",
+                text = buttonText,
                 size = AppButtonSize.VERY_SMALL,
-                modifier = Modifier.weight(.4f),
+                isPrimary = true,
+                modifier = Modifier.weight(.7f),
                 onClick = onClick,
             )
         }
@@ -83,5 +77,9 @@ internal fun PremiumCard(
 @Preview
 @Composable
 private fun PremiumCardPreview() = HunterTheme {
-    PremiumCard()
+    PremiumCard(
+        title = "Compendium Premium dadaasd",
+        description = "Remove ads",
+        buttonText = "Saiba mais",
+    )
 }

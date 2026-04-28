@@ -62,7 +62,6 @@ internal data class MenuSectionItemState(
     val id: String = "",
     val iconPainter: Painter? = null,
     val text: String = "",
-    val shortDescription: String = "",
 )
 
 @Composable
@@ -148,19 +147,16 @@ private fun MenuSectionPreview() = HunterTheme {
                 id = "1",
                 text = "Item 1",
                 iconPainter = rememberVectorPainter(image = Icons.Outlined.Podcasts),
-                shortDescription = "Short description 1",
             ),
             MenuSectionItemState(
                 id = "2",
                 iconPainter = rememberVectorPainter(image = Icons.Outlined.Propane),
                 text = "Item 2",
-                shortDescription = "Short description 2",
             ),
             MenuSectionItemState(
                 id = "3",
                 iconPainter = rememberVectorPainter(image = Icons.Outlined.AccessAlarm),
                 text = "Item 3",
-                shortDescription = "Short description 3",
             )
         ),
     )

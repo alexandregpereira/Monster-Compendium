@@ -91,7 +91,7 @@ internal fun MenuScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             SectionTitle(
-                title = "Menu",
+                title = strings.screenTitle,
                 isHeader = true,
                 modifier = Modifier.padding(
                     top = 16.dp
@@ -111,17 +111,18 @@ internal fun MenuScreen(
                 contentAlignment = Alignment.Center,
                 label = "ShowPremium",
                 modifier = Modifier.fillMaxWidth(),
-            ) {
-                if (showPremium) {
+            ) { targetShowPremium ->
+                if (targetShowPremium) {
                     PremiumCard(
+                        title = strings.premiumCardTitle,
+                        description = strings.premiumCardDescription,
+                        buttonText = strings.premiumCardButton,
                         onClick = onPremiumClick,
                     )
                 }
             }
             menuItemsGroupBySection.forEach { (section, items) ->
-                val iconsById = items.associateBy { it.id }.mapValues {
-                    it.value.id.toIcon()
-                }
+                val iconsById = items.associate { it.id to it.id.toIcon() }
                 MenuSection(
                     sectionTitle = section,
                     items = rememberMenuItems(items) {
@@ -184,7 +185,7 @@ private fun MenuScreenPreview() = HunterTheme {
         )
     }.toImmutableList()
     var showPremium by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
     MenuScreen(
         menuItemsGroupBySection = menuItems.groupBy { it.section }

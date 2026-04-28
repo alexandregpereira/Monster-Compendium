@@ -42,6 +42,10 @@ interface SettingsStrings {
     val spells: String
     val about: String
     val content: String
+    val screenTitle: String
+    val premiumCardTitle: String
+    val premiumCardDescription: String
+    val premiumCardButton: String
 }
 
 internal data class SettingsEnStrings(
@@ -67,6 +71,10 @@ internal data class SettingsEnStrings(
     override val spells: String = "Spells",
     override val about: String = "About",
     override val content: String = "Content",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendium Premium",
+    override val premiumCardDescription: String = "Remove ads",
+    override val premiumCardButton: String = "Check out",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -92,6 +100,10 @@ internal data class SettingsPtStrings(
     override val spells: String = "Magias",
     override val about: String = "Sobre",
     override val content: String = "Conteúdo",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compêndio Premium",
+    override val premiumCardDescription: String = "Remover anúncios",
+    override val premiumCardButton: String = "Saiba mais",
 ) : SettingsStrings
 
 internal data class SettingsEsStrings(
@@ -117,6 +129,10 @@ internal data class SettingsEsStrings(
     override val spells: String = "Magias",
     override val about: String = "Acerca de",
     override val content: String = "Contenido",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendio Premium",
+    override val premiumCardDescription: String = "Eliminar anuncios",
+    override val premiumCardButton: String = "Verificar",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

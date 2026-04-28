@@ -93,7 +93,7 @@ internal class SettingsStateHolder(
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
 
-    private fun observeLanguageChanges() {
+    private fun observeEvents() {
         paywallResultListener.events.onEach { result ->
             if (result is PaywallResult.OnSubscribe) {
                 load()
@@ -102,7 +102,7 @@ internal class SettingsStateHolder(
     }
 
     fun onStart() {
-        observeLanguageChanges()
+        observeEvents()
         load()
     }
 

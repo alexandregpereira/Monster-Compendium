@@ -19,10 +19,12 @@ package br.alexandregpereira.hunter.settings
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
+import br.alexandregpereira.hunter.settings.ui.LocalStrings
 import br.alexandregpereira.hunter.settings.ui.MenuScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.koinInject
@@ -45,12 +47,14 @@ fun SettingsFeature(
     }
 
     val state by viewModel.state.collectAsState()
-    MenuScreen(
-        menuItemsGroupBySection = state.menuItemsGroupBySection,
-        versionName = versionName,
-        showPremium = state.showPremium,
-        contentPadding = contentPadding,
-        onItemClicked = viewModel::onMenuItemClick,
-        onPremiumClick = viewModel::onSubscribePremiumClick,
-    )
+    CompositionLocalProvider(LocalStrings provides state.strings) {
+        MenuScreen(
+            menuItemsGroupBySection = state.menuItemsGroupBySection,
+            versionName = versionName,
+            showPremium = state.showPremium,
+            contentPadding = contentPadding,
+            onItemClicked = viewModel::onMenuItemClick,
+            onPremiumClick = viewModel::onSubscribePremiumClick,
+        )
+    }
 }
