@@ -60,7 +60,7 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     private fun load() {
-        setState { copy(isLoading = true) }
+        setState { copy(isLoading = true, showGenericError = false) }
         getAlternativeSourcesUseCase(onlyContentEnabled = true)
             .flowOn(dispatcher)
             .onEach { alternativeSources ->
@@ -75,6 +75,7 @@ class MonsterContentManagerStateHolder internal constructor(
             }
             .catch {
                 analytics.logException(it)
+                analytics.trackGenericErrorPageView()
                 setState { copy(showGenericError = true, isLoading = false) }
             }
             .launchIn(scope)
@@ -155,6 +156,11 @@ class MonsterContentManagerStateHolder internal constructor(
             syncEventDispatcher.startSync()
         }
         eventDispatcher.dispatchEvent(MonsterContentManagerEvent.Hide)
+    }
+
+    fun onTryAgain() {
+        analytics.trackOnTryAgain()
+        load()
     }
 
     private fun MonsterContentManagerState.changeEnabledContent(

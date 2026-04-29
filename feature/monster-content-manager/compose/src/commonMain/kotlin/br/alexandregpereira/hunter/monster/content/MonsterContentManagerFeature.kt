@@ -48,6 +48,7 @@ fun MonsterContentManagerFeature(
             onAddClick = viewModel::onAddContentClick,
             onRemoveClick = viewModel::onRemoveContentClick,
             onPreviewClick = viewModel::onPreviewClick,
+            onTryAgain = viewModel::onTryAgain,
         )
     }
 
