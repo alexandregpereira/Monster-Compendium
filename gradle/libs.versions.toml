@@ -34,6 +34,7 @@ multiplatform-markdown-renderer = "0.40.2"
 multiplatform-settings = "1.3.0"
 play-services-ads = "25.1.0"
 user-messaging-platform = "4.0.0"
+filekit = "0.13.0"
 revenuecat_kmp = "2.8.0+17.46.0"
 sqldelight = "1.5.5"
 
@@ -62,6 +63,8 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref =
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
 core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing" }
+filekit-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }

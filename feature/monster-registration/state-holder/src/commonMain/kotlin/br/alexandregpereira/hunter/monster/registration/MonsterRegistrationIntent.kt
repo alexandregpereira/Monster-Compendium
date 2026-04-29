@@ -17,11 +17,15 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
+import io.github.vinceglb.filekit.PlatformFile
+
 interface MonsterRegistrationIntent {
 
     fun onClose()
 
     fun onMonsterChanged(monster: MonsterState)
+
+    fun onMonsterImagePicked(file: PlatformFile?)
 
     fun onSaved()
 
@@ -39,6 +43,8 @@ class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
     override fun onClose() {}
 
     override fun onMonsterChanged(monster: MonsterState) {}
+
+    override fun onMonsterImagePicked(file: PlatformFile?) {}
 
     override fun onSaved() {}
 

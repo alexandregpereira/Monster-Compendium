@@ -23,6 +23,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:file:core"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:localization"))
         implementation(project(":core:uuid"))
@@ -35,6 +36,7 @@ multiplatform {
         implementation(project(":feature:spell-compendium:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)
+        implementation(libs.filekit.core)
     }
     jvmMain()
     iosMain()

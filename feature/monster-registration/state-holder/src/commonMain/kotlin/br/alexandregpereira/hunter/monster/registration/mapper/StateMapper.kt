@@ -380,6 +380,7 @@ private fun MonsterState.createKeys(): List<String> {
         add(SectionTitle.Image.name)
         add("monsterHeader-image")
         add("monsterHeader-image-url")
+        add("monsterHeader-image-pick")
         add("monsterHeader-image-color-light")
         add("monsterHeader-image-color-dark")
         add("monsterHeader-image-content-scale")

@@ -48,6 +48,7 @@ multiplatform {
         implementation(project(":core:app-config"))
         implementation(project(":core:event"))
         implementation(project(":core:feature-flag"))
+        implementation(project(":core:file:core"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))

@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.file.ImageFileManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -51,10 +52,14 @@ import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -78,6 +83,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
     private val spellResultListener: EventListener<SpellResult>,
+    private val imageFileManager: ImageFileManager,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -103,6 +109,31 @@ class MonsterRegistrationStateHolder internal constructor(
         val newMonsterLoreEntries = monster.loreEntries.map { it.asDomain() }
         setMetadata(newMonster, newMonsterLoreEntries)
         updateMonster()
+    }
+
+    override fun onMonsterImagePicked(file: PlatformFile?) {
+        if (file == null) {
+            analytics.logException(IllegalStateException("File is null on monster registration"))
+            return
+        }
+        flow {
+            val imageName = metadata.monster.index
+            val path = imageFileManager.saveImageToAppStorage(
+                bytes = file.readBytes(),
+                imageName,
+            )
+            emit(path)
+        }.flowOn(dispatcher)
+            .onEach { imagePath ->
+                val newMonster = metadata.monster.copy(
+                    imageData = metadata.monster.imageData.copy(url = imagePath)
+                )
+                setMetadata(newMonster, metadata.monsterLoreEntries)
+                updateMonster()
+            }
+            .catch { cause: Throwable ->
+                analytics.logException(cause)
+            }.launchIn(scope)
     }
 
     override fun onSaved() {
@@ -142,6 +173,7 @@ class MonsterRegistrationStateHolder internal constructor(
                     currentSpellIndex = spellIndex,
                     newSpellIndex = result.spellIndex
                 )
+
                 is SpellCompendiumResult.OnSpellLongClick -> openSpellDetail(result.spellIndex)
             }
         }.launchIn(scope)
@@ -160,12 +192,12 @@ class MonsterRegistrationStateHolder internal constructor(
 
     override fun onTableContentClose() {
         analytics.onTableContentClosed()
-        setState { copy(isTableContentOpen = false)}
+        setState { copy(isTableContentOpen = false) }
     }
 
     override fun onTableContentOpen() {
         analytics.onTableContentOpened()
-        setState { copy(isTableContentOpen = true)}
+        setState { copy(isTableContentOpen = true) }
     }
 
     private fun updateSpells(currentSpellIndex: String, newSpellIndex: String) {

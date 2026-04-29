@@ -146,6 +146,7 @@ interface MonsterRegistrationStrings {
     val difficultClassType: String
     val savingThrowType: String
     val savingThrowModifier: String
+    val pickImageFromGallery: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -274,6 +275,7 @@ internal data class MonsterRegistrationEnStrings(
     override val difficultClassType: String = "Difficult class (DC) type",
     override val savingThrowType: String = "Saving throw type",
     override val savingThrowModifier: String = "Saving throw modifier",
+    override val pickImageFromGallery: String = "Pick from gallery",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -402,6 +404,7 @@ internal data class MonsterRegistrationPtStrings(
     override val difficultClassType: String = "Tipo da classe de dificuldade (CD)",
     override val savingThrowType: String = "Tipo de salvaguarda",
     override val savingThrowModifier: String = "Modificador da salvaguarda",
+    override val pickImageFromGallery: String = "Escolher da galeria",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
@@ -532,6 +535,7 @@ internal data class MonsterRegistrationEsStrings(
     override val difficultClassType: String = "Tipo de clase de dificultad (CD)",
     override val savingThrowType: String = "Tipo de tirada de salvación",
     override val savingThrowModifier: String = "Modificador de tirada de salvación",
+    override val pickImageFromGallery: String = "Elegir de la galería",
 ) : MonsterRegistrationStrings
 
 internal fun AppLocalization.getStrings(): MonsterRegistrationStrings {
