@@ -30,8 +30,16 @@ internal class DefaultAlternativeSourceRemoteDataSource(
     private val json: Json
 ) : AlternativeSourceRemoteDataSource {
 
-    override fun getAlternativeSources(lang: String): Flow<List<AlternativeSourceDto>> = flow {
-        emit(json.decodeFromString(client.get("$lang/alternative-sources.json").bodyAsText()))
+    override suspend fun getAlternativeSources(lang: String): List<AlternativeSourceDto> {
+        return json.decodeFromString(
+            client.get(urlString = "$lang/alternative-sources.json").bodyAsText()
+        )
+    }
+
+    override suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto> {
+        return json.decodeFromString(
+            client.get(urlString = "$lang/alternative-sources-basic.json").bodyAsText()
+        )
     }
 
     override fun getDefaultSources(lang: String): Flow<List<AlternativeSourceDto>> = flow {

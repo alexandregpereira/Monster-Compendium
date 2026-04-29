@@ -64,6 +64,7 @@ inline fun <SuccessState, reified ErrorState> LoadingScreen(
         targetState = state,
         modifier = modifier,
         contentAlignment = Alignment.BottomStart,
+        contentKey = { it::class },
         label = "LoadingScreen",
     ) { animationState: LoadingScreenState ->
         when (animationState) {

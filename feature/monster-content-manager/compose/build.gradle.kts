@@ -31,6 +31,7 @@ multiplatform {
         implementation(project(":ui:monster-compendium"))
 
         implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
     }
     jvmMain()

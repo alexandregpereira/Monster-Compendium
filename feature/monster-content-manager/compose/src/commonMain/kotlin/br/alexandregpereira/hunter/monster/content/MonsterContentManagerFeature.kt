@@ -19,9 +19,12 @@ package br.alexandregpereira.hunter.monster.content
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import br.alexandregpereira.hunter.monster.content.di.MonsterContentManagerStateRecoveryQualifier
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewFeature
+import br.alexandregpereira.hunter.monster.content.ui.LocalStrings
 import br.alexandregpereira.hunter.monster.content.ui.MonsterContentManagerScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
@@ -36,14 +39,17 @@ fun MonsterContentManagerFeature(
         stateRecovery = koinInject(named(MonsterContentManagerStateRecoveryQualifier)),
     )
     val viewModel: MonsterContentManagerStateHolder = koinInject()
-    MonsterContentManagerScreen(
-        state = viewModel.state.collectAsState().value,
-        contentPadding = contentPadding,
-        onClose = viewModel::onClose,
-        onAddClick = viewModel::onAddContentClick,
-        onRemoveClick = viewModel::onRemoveContentClick,
-        onPreviewClick = viewModel::onPreviewClick,
-    )
+    val state by viewModel.state.collectAsState()
+    CompositionLocalProvider(LocalStrings provides state.strings) {
+        MonsterContentManagerScreen(
+            state = state,
+            contentPadding = contentPadding,
+            onClose = viewModel::onClose,
+            onAddClick = viewModel::onAddContentClick,
+            onRemoveClick = viewModel::onRemoveContentClick,
+            onPreviewClick = viewModel::onPreviewClick,
+        )
+    }
 
     MonsterContentPreviewFeature(contentPadding)
 }

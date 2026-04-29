@@ -26,6 +26,8 @@ interface MonsterContentManagerStrings {
     val remove: String
     val totalMonsters: String
     val preview: String
+    val noInternetConnection: String
+    val tryAgain: String
 }
 
 internal data class MonsterContentManagerEnStrings(
@@ -34,6 +36,8 @@ internal data class MonsterContentManagerEnStrings(
     override val remove: String = "Remove",
     override val totalMonsters: String = "{0} monsters",
     override val preview: String = "Preview",
+    override val noInternetConnection: String = "No internet connection",
+    override val tryAgain: String = "Try again"
 ) : MonsterContentManagerStrings
 
 internal data class MonsterContentManagerPtStrings(
@@ -42,15 +46,13 @@ internal data class MonsterContentManagerPtStrings(
     override val remove: String = "Remover",
     override val totalMonsters: String = "{0} monstros",
     override val preview: String = "Prévia",
+    override val noInternetConnection: String = "Sem conexão com a internet",
+    override val tryAgain: String = "Tentar novamente",
 ) : MonsterContentManagerStrings
 
-data class MonsterContentManagerEmptyStrings(
-    override val title: String = "",
-    override val add: String = "",
-    override val remove: String = "",
-    override val totalMonsters: String = "",
-    override val preview: String = "",
-) : MonsterContentManagerStrings
+fun MonsterContentManagerStrings(): MonsterContentManagerStrings {
+    return MonsterContentManagerEnStrings()
+}
 
 internal data class MonsterContentManagerEsStrings(
     override val title: String = "Gestionar Contenido",
@@ -58,6 +60,8 @@ internal data class MonsterContentManagerEsStrings(
     override val remove: String = "Eliminar",
     override val totalMonsters: String = "{0} monstruos",
     override val preview: String = "Vista previa",
+    override val noInternetConnection: String = "Sin conexión a internet",
+    override val tryAgain: String = "Intentar de nuevo",
 ) : MonsterContentManagerStrings
 
 internal fun AppLocalization.getStrings(): MonsterContentManagerStrings {
