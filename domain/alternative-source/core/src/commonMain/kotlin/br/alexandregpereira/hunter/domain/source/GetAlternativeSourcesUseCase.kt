@@ -41,10 +41,10 @@ class GetAlternativeSourcesUseCase(
                 Triple(remoteDeferred.await(), localDeferred.await(), remoteDefaultDeferred.await())
             }
             val defaultSources = remoteDefaultSources.map {
-                it.copy(isEnabled = true, isDefault = true)
+                it.copy(isAdded = true)
             }
             val alternativeSources = remoteSources.map {
-                it.copy(isEnabled = localSourcesMap[it.acronym] != null)
+                it.copy(isAdded = localSourcesMap[it.acronym] != null)
             }
             alternativeSources + defaultSources
         }.map { sources ->

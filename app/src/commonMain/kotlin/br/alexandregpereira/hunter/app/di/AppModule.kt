@@ -108,7 +108,6 @@ private val appModule = module {
             appEventDispatcher = get(),
             analytics = get(),
             revenueSession = get(),
-            featureFlagProvider = get(),
             adsConsentManager = get(),
             isSessionUsageLimitReached = get(),
         )

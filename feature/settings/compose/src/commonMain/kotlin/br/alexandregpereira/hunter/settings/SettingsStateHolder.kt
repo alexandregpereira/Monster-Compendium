@@ -39,7 +39,6 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
-import br.alexandregpereira.hunter.settings.domain.IsManageContentFeatureEnabled
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
@@ -84,7 +83,6 @@ internal class SettingsStateHolder(
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
-    private val isManageContentFeatureEnabled: IsManageContentFeatureEnabled,
     private val environment: Environment,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
@@ -263,7 +261,6 @@ internal class SettingsStateHolder(
                     ),
                     menuItems = buildMenuItems(
                         strings = currentStrings,
-                        isManageContentFeatureEnabled = false,
                     ),
                 )
                 emit(0 to newState)
@@ -271,14 +268,9 @@ internal class SettingsStateHolder(
                 val alternativeSourceBaseUrlDeferred =
                     async { getAlternativeSourceJsonUrl().single() }
                 val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
-                val isManageContentFeatureEnabled = async { isManageContentFeatureEnabled() }
                 val newState2 = newState.copy(
                     imageBaseUrl = imageBaseUrlDeferred.await(),
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
-                    menuItems = buildMenuItems(
-                        strings = currentStrings,
-                        isManageContentFeatureEnabled = isManageContentFeatureEnabled.await(),
-                    ),
                     showPremium = isSessionUsageLimitReachedDeferred.await(),
                 )
                 emit(1 to newState2)
@@ -334,13 +326,10 @@ internal class SettingsStateHolder(
 
     private fun buildMenuItems(
         strings: SettingsStrings,
-        isManageContentFeatureEnabled: Boolean,
     ): ImmutableList<MenuItemState> =
         buildList {
             add(MenuItemIdState.SPELLS.toMenuItem(strings))
-            if (isManageContentFeatureEnabled) {
-                add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
-            }
+            add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
             add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
             add(MenuItemIdState.SETTINGS.toMenuItem(strings))
             add(MenuItemIdState.APPEARANCE_SETTINGS.toMenuItem(strings))

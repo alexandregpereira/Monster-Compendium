@@ -68,4 +68,12 @@ internal class MonsterContentManagerAnalytics(
     fun trackClose() {
         analytics.track(eventName = "MonsterContentManager - close")
     }
+
+    fun trackOnTryAgain() {
+        analytics.track(eventName = "MonsterContentManager - try again")
+    }
+
+    fun trackGenericErrorPageView() {
+        analytics.track(eventName = "MonsterContentManager - generic error page view")
+    }
 }

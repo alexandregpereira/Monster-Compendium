@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.revenue.RevenueSession
@@ -43,7 +42,6 @@ internal class MainViewModel(
     appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
     private val revenueSession: RevenueSession,
-    private val featureFlagProvider: FeatureFlagProvider,
     private val adsConsentManager: AdsConsentManager,
     private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
 ) : UiModel<MainViewState>(MainViewState()) {
@@ -56,7 +54,6 @@ internal class MainViewModel(
 
     fun onStart() {
         analytics.track("App - started")
-        featureFlagProvider.initialize()
         revenueSession.initialize(apiKey = AppConfig.REVENUE_CAT_API_KEY)
         revenueSession.start()
         checkAdsConsent()

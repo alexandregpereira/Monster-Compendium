@@ -34,6 +34,7 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))
         implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.core)
     }
     jvmMain()

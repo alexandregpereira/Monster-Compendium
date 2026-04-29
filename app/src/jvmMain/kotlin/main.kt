@@ -26,22 +26,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import br.alexandregpereira.hunter.analytics.JvmAnalyticsProvider
 import br.alexandregpereira.hunter.app.HunterApp
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.app.ui.resources.Res
 import br.alexandregpereira.hunter.app.ui.resources.ic_launcher_foreground
+import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 
 fun main() = application {
-    startKoin {
+    val koin = startKoin {
         initKoinModules()
         modules(jvmAnalyticsModule)
-    }
+    }.koin
+    koin.get<FeatureFlagProvider>().initialize()
     val backDispatcher = JvmBackDispatcher()
     Window(
         onCloseRequest = ::exitApplication,

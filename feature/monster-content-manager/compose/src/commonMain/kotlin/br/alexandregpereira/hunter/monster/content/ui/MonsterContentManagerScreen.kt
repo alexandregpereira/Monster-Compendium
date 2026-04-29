@@ -25,14 +25,19 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerState
 import br.alexandregpereira.hunter.monster.content.MonsterContentState
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
+import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
+import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun MonsterContentManagerScreen(
@@ -42,12 +47,37 @@ internal fun MonsterContentManagerScreen(
     onAddClick: (String) -> Unit = {},
     onRemoveClick: (String) -> Unit = {},
     onPreviewClick: (String, String) -> Unit = { _, _ -> },
+    onTryAgain: () -> Unit = {}
 ) = AppFullScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
     onClose = onClose
 ) {
-    LoadingScreen(isLoading = state.isLoading) {
+    val isLoading = state.isLoading
+    val showGenericError = state.showGenericError
+    val monsterContents = state.monsterContents
+
+    val loadingScreenState = remember(
+        isLoading,
+        showGenericError,
+        monsterContents,
+    ) {
+        when {
+            isLoading -> LoadingScreenState.LoadingScreen
+            showGenericError -> LoadingScreenState.Error(Unit)
+            else -> LoadingScreenState.Success(monsterContents)
+        }
+    }
+    LoadingScreen<ImmutableList<MonsterContentState>, Unit>(
+        state = loadingScreenState,
+        errorContent = {
+            EmptyScreenMessage(
+                title = strings.noInternetConnection,
+                buttonText = strings.tryAgain,
+                onButtonClick = onTryAgain,
+            )
+        }
+    ) { monsterContents ->
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(300.dp),
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -70,14 +100,14 @@ internal fun MonsterContentManagerScreen(
                 )
             }
 
-            items(state.monsterContents, key = { it.acronym }) { monsterContent ->
+            items(monsterContents, key = { it.acronym }) { monsterContent ->
                 MonsterContentCard(
                     name = monsterContent.name,
                     originalName = monsterContent.originalName,
                     totalMonsters = monsterContent.totalMonsters,
                     summary = monsterContent.summary,
                     coverImageUrl = monsterContent.coverImageUrl,
-                    isEnabled = monsterContent.isEnabled,
+                    isAdded = monsterContent.isAdded,
                     isDefault = monsterContent.isDefault,
                     strings = state.strings,
                     onAddClick = { onAddClick(monsterContent.acronym) },
@@ -107,9 +137,9 @@ private fun MonsterContentManagerScreenPreview() {
                     totalMonsters = 10,
                     summary = "Summary",
                     coverImageUrl = "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-                    isEnabled = true
+                    isAdded = true
                 )
-            },
+            }.toImmutableList(),
             isOpen = true
         ),
     )

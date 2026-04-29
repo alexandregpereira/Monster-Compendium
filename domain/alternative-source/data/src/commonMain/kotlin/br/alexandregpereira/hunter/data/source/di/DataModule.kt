@@ -19,11 +19,11 @@
 
 package br.alexandregpereira.hunter.data.source.di
 
-import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
-import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.source.AlternativeSourceSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalDataSource
 import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalRepositoryImpl
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.source.remote.DefaultAlternativeSourceRemoteDataSource
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
@@ -38,6 +38,11 @@ val alternativeSourceDataModule = module {
         DefaultAlternativeSourceRemoteDataSource(get(), get())
     }
     factory<AlternativeSourceLocalRepository> { AlternativeSourceLocalRepositoryImpl(get()) }
-    factory<AlternativeSourceRemoteRepository> { AlternativeSourceRemoteRepositoryImpl(get()) }
+    factory<AlternativeSourceRemoteRepository> {
+        AlternativeSourceRemoteRepositoryImpl(
+            remoteDataSource = get(),
+            featureFlagProvider = get(),
+        )
+    }
     factory<AlternativeSourceSettingsRepository> { AlternativeSourceSettingsRepositoryImpl(get()) }
 }

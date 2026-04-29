@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.monster.content.ui
 
-import br.alexandregpereira.hunter.app.di.initKoinModules
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
-import org.koin.core.context.startKoin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
 
-fun initKoin() {
-    val koin = startKoin {
-        initKoinModules()
-    }.koin
-    koin.get<FeatureFlagProvider>().initialize()
+internal val LocalStrings = staticCompositionLocalOf {
+    MonsterContentManagerStrings()
 }
+
+internal val strings: MonsterContentManagerStrings
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalStrings.current
