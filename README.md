@@ -10,8 +10,11 @@ Monsters Compendium is an free and open-source Kotlin Multiplatform application 
 
 ## Download
 
-### Android
-<a href='https://play.google.com/store/apps/details?id=br.alexandregpereira.hunter.app&hl=en_US&gl=US&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+### Mobile
+<p>
+<a href='https://apps.apple.com/app/apple-store/id6763808338?pt=128810939&ct=Github-readme-page&mt=8'><img width="160" style="vertical-align: middle" alt='Download on the App Store' src='https://alexandregpereira.github.io/Monster-Compendium/media/app_store_badge_us_white.svg'/></a>
+<a href='https://play.google.com/store/apps/details?id=br.alexandregpereira.hunter.app&hl=en_US&gl=US&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="175" style="vertical-align: middle" alt='Get it on Google Play' src='https://alexandregpereira.github.io/Monster-Compendium/media/google_play_badge_english.svg'/></a>
+</p>
 
 ### Desktop
 You can download [here](https://github.com/alexandregpereira/Monster-Compendium/releases) the desktop version for Window, Mac or Linux.
