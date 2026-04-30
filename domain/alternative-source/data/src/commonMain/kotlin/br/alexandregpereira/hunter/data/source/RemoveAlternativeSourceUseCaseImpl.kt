@@ -15,13 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.model
+package br.alexandregpereira.hunter.data.source
 
-import kotlin.native.ObjCName
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
+import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
+import kotlinx.coroutines.flow.Flow
 
-@ObjCName(name = "MonsterAlternativeSource", exact = true)
-data class MonsterAlternativeSource(
-    val source: MonsterSource,
-    val totalMonsters: Int,
-    val useMonstersJsonEndpoint: Boolean = false,
-)
+internal class RemoveAlternativeSourceUseCaseImpl(
+    private val repository: AlternativeSourceLocalRepository,
+) : RemoveAlternativeSourceUseCase {
+
+    override operator fun invoke(acronym: String): Flow<Unit> {
+        return repository.removeAlternativeSource(acronym)
+    }
+}

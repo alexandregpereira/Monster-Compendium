@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2026 Alexandre Gomes Pereira
+ * Copyright (C) 2024 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.source
+package br.alexandregpereira.hunter.data.source
 
+import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
 import kotlinx.coroutines.flow.Flow
 
-interface SyncAlternativeSourceContentVersionUseCase {
-    operator fun invoke(): Flow<IsToSyncData>
+internal class AddAlternativeSourceUseCaseImpl(
+    private val repository: AlternativeSourceLocalRepository,
+) : AddAlternativeSourceUseCase {
 
-    data class IsToSyncData(
-        val isToSync: Boolean,
-        val acronymToContentVersionRollbackMap: Map<String, Int>,
-    )
+    override operator fun invoke(acronym: String): Flow<Unit> {
+        return repository.addAlternativeSource(acronym)
+    }
 }

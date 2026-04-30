@@ -19,10 +19,6 @@ package br.alexandregpereira.hunter.domain.source
 
 import kotlinx.coroutines.flow.Flow
 
-class SaveAlternativeSourceContentVersionsUseCase internal constructor(
-    private val repository: AlternativeSourceLocalRepository,
-) {
-
-    operator fun invoke(acronymToContentVersion: Map<String, Int>): Flow<Unit> =
-        repository.saveContentVersions(acronymToContentVersion)
+interface SaveAlternativeSourceContentVersionsUseCase {
+    operator fun invoke(acronymToContentVersion: Map<String, Int>): Flow<Unit>
 }

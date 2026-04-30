@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.domain.model.MonsterAlternativeSource
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
+import br.alexandregpereira.hunter.domain.source.SaveAlternativeSourceContentVersionsUseCase
 import kotlinx.coroutines.flow.Flow
 
-interface MonsterAlternativeSourceRepository {
+internal class SaveAlternativeSourceContentVersionsUseCaseImpl(
+    private val repository: AlternativeSourceLocalRepository,
+) : SaveAlternativeSourceContentVersionsUseCase {
 
-    fun getAlternativeSources(): Flow<List<MonsterAlternativeSource>>
+    override operator fun invoke(acronymToContentVersion: Map<String, Int>): Flow<Unit> =
+        repository.saveContentVersions(acronymToContentVersion)
 }
