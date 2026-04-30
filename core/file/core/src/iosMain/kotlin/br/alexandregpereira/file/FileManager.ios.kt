@@ -12,19 +12,23 @@ import platform.Foundation.NSUserDomainMask
 import platform.Foundation.create
 import platform.Foundation.writeToFile
 
-internal class IosImageFileManager : ImageFileManager {
+internal class IosFileManager : FileManager {
 
     @OptIn(BetaInteropApi::class)
     @ExperimentalForeignApi
-    override suspend fun saveImageToAppStorage(bytes: ByteArray, imageName: String): String {
-        val imagesDir = imagesDirectory()
+    override suspend fun saveFileToAppStorage(
+        bytes: ByteArray,
+        fileName: String,
+        fileType: FileType,
+    ): String {
+        val imagesDir = imagesDirectory(fileType)
         NSFileManager.defaultManager.createDirectoryAtPath(
             imagesDir,
             withIntermediateDirectories = true,
             attributes = null,
             error = null,
         )
-        val filePath = "$imagesDir/$imageName"
+        val filePath = "$imagesDir/$fileName"
         @OptIn(ExperimentalForeignApi::class)
         bytes.usePinned { pinned ->
             NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
@@ -34,22 +38,22 @@ internal class IosImageFileManager : ImageFileManager {
 }
 
 @OptIn(ExperimentalForeignApi::class)
-internal actual fun ImageFileManager.getImageNamesFromAppStorage(): List<String> {
+internal actual fun FileManager.getImageNamesFromAppStorage(fileType: FileType): List<String> {
     return NSFileManager.defaultManager
-        .contentsOfDirectoryAtPath(imagesDirectory(), error = null)
+        .contentsOfDirectoryAtPath(imagesDirectory(fileType), error = null)
         ?.mapNotNull { it as? String }
         ?: emptyList()
 }
 
 @OptIn(ExperimentalForeignApi::class)
-internal actual fun ImageFileManager.deleteImageFromAppStorage(fileName: String) {
-    val filePath = "${imagesDirectory()}/$fileName"
+internal actual fun FileManager.deleteImageFromAppStorage(fileName: String, fileType: FileType) {
+    val filePath = "${imagesDirectory(fileType)}/$fileName"
     NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
 }
 
-private fun imagesDirectory(): String {
+private fun imagesDirectory(fileType: FileType): String {
     val documents = NSSearchPathForDirectoriesInDomains(
         NSDocumentDirectory, NSUserDomainMask, true
     ).first() as String
-    return "$documents/$IMAGES_FOLDER_NAME"
+    return "$documents/${getFileFolder(fileType)}"
 }

@@ -81,7 +81,7 @@ val monsterRegistrationModule = module {
             getSpell = get(),
             appLocalization = get(),
             spellResultListener = get<SpellResultDispatcher>(),
-            imageFileManager = get(),
+            fileManager = get(),
         )
     }
 }

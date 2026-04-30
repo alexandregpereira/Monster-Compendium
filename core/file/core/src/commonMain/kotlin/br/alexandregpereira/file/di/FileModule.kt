@@ -1,16 +1,16 @@
 package br.alexandregpereira.file.di
 
-import br.alexandregpereira.file.ImageFileManager
-import br.alexandregpereira.file.ImageFileManagerImpl
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileManagerImpl
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val fileModule = module {
-    factory<ImageFileManager> {
-        ImageFileManagerImpl(
-            platformImageFileManager = createFileManager()
+    factory<FileManager> {
+        FileManagerImpl(
+            platformFileManager = createFileManager()
         )
     }
 }
 
-internal expect fun Scope.createFileManager(): ImageFileManager
+internal expect fun Scope.createFileManager(): FileManager

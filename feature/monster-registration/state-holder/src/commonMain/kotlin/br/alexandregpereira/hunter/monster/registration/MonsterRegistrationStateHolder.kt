@@ -17,7 +17,8 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
-import br.alexandregpereira.file.ImageFileManager
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.saveImageToAppStorage
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -83,7 +84,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
     private val spellResultListener: EventListener<SpellResult>,
-    private val imageFileManager: ImageFileManager,
+    private val fileManager: FileManager,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -118,9 +119,9 @@ class MonsterRegistrationStateHolder internal constructor(
         }
         flow {
             val imageName = metadata.monster.index
-            val path = imageFileManager.saveImageToAppStorage(
+            val path = fileManager.saveImageToAppStorage(
                 bytes = file.readBytes(),
-                imageName,
+                imageName = imageName,
             )
             emit(path)
         }.flowOn(dispatcher)
