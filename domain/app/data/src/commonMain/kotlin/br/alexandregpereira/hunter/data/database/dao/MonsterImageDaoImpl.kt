@@ -30,13 +30,42 @@ internal class MonsterImageDaoImpl(
         }
     }
 
+    override suspend fun deleteMonsterImage(monsterIndex: String) {
+        withContext(dispatcher) {
+            monsterImageQueries.delete(monsterIndex)
+        }
+    }
+
+    override suspend fun getMonsterImage(monsterIndex: String): MonsterImageEntity? {
+        return withContext(dispatcher) {
+            monsterImageQueries.getMonsterImage(monsterIndex)
+                .executeAsOneOrNull()
+                ?.toEntity()
+        }
+    }
+
     private fun MonsterImageEntity.toDatabaseEntity(): MonsterImageDatabaseEntity {
         return MonsterImageDatabaseEntity(
             monsterIndex = monsterIndex,
             backgroundColorLight = backgroundColorLight,
             backgroundColorDark = backgroundColorDark,
-            isHorizontalImage = if (isHorizontalImage) 1 else 0,
+            isHorizontalImage = isHorizontalImage?.let {
+                if (it) 1 else 0
+            },
             imageContentScale = imageContentScale?.toLong(),
+            imageUrl = imageUrl.orEmpty(),
+        )
+    }
+
+    private fun MonsterImageDatabaseEntity.toEntity(): MonsterImageEntity {
+        return MonsterImageEntity(
+            monsterIndex = monsterIndex,
+            backgroundColorLight = backgroundColorLight,
+            backgroundColorDark = backgroundColorDark,
+            isHorizontalImage = isHorizontalImage?.let {
+                it == 1L
+            },
+            imageContentScale = imageContentScale?.toInt(),
             imageUrl = imageUrl,
         )
     }

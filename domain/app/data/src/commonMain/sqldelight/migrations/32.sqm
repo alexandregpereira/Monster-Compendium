@@ -1,6 +1,7 @@
 ALTER TABLE MonsterImageEntity ADD COLUMN `imageUrl` TEXT NOT NULL DEFAULT '';
 
 DROP VIEW IF EXISTS MonsterWithImageEntityView;
+DROP VIEW IF EXISTS MonsterFolderCompleteEntityView;
 
 CREATE VIEW IF NOT EXISTS MonsterWithImageEntityView AS
 SELECT
@@ -13,3 +14,9 @@ SELECT
 FROM MonsterEntity
 LEFT JOIN MonsterImageEntity
 ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex;
+
+CREATE VIEW IF NOT EXISTS MonsterFolderCompleteEntityView AS
+SELECT * FROM MonsterFolderEntity
+INNER JOIN MonsterWithImageEntityView
+ON MonsterWithImageEntityView.`index` == MonsterFolderEntity.`monsterIndex`
+;

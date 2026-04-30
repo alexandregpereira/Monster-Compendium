@@ -92,6 +92,12 @@ internal class MonsterFolderDaoImpl(
     }
 
     private fun MonsterFolderCompleteEntityView.toMonsterEntity(): MonsterEntity {
+        val isImageDataFromCustomDatabase = customImageUrl != null
+                || this.customBackgroundColorLight != null
+                || this.customBackgroundColorDark != null
+                || this.customIsHorizontalImage != null
+                || this.customImageContentScale != null
+
         return MonsterEntity(
             index = index,
             type = type,
@@ -100,10 +106,10 @@ internal class MonsterFolderDaoImpl(
             challengeRating = challengeRating.toFloat(),
             name = name,
             subtitle = subtitle,
-            imageUrl = imageUrl,
-            backgroundColorLight = backgroundColorLight,
-            backgroundColorDark = backgroundColorDark,
-            isHorizontalImage = isHorizontalImage == 1L,
+            imageUrl = customImageUrl ?: this.imageUrl,
+            backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
+            backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
+            isHorizontalImage = (customIsHorizontalImage ?: this.isHorizontalImage) == 1L,
             size = size,
             alignment = alignment,
             armorClass = armorClass.toInt(),
@@ -113,7 +119,8 @@ internal class MonsterFolderDaoImpl(
             languages = languages,
             sourceName = sourceName,
             status = MonsterEntityStatus.entries[isClone.toInt()],
-            imageContentScale = imageContentScale?.toInt(),
+            imageContentScale = (customImageContentScale ?: this.imageContentScale)?.toInt(),
+            isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
         )
     }
 }

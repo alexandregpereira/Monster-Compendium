@@ -29,7 +29,9 @@ import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -42,17 +44,20 @@ internal class SaveMonsterUseCaseImplTest {
     private val saveMonstersUseCase: SaveMonstersUseCase = mockk()
     private val monsterImageRepository: MonsterImageRepository = mockk(relaxUnitFun = true)
     private val saveMonstersLoreUseCase: SaveMonstersLoreUseCase = mockk()
+    private val monsterLocalRepository: MonsterLocalRepository = mockk()
 
     private val useCase = SaveMonsterUseCaseImpl(
         saveMonsters = saveMonstersUseCase,
         monsterImageRepository = monsterImageRepository,
         saveMonstersLoreUseCase = saveMonstersLoreUseCase,
+        monsterLocalRepository = monsterLocalRepository,
     )
 
     @Test
     fun `invoke When status is Original and monster changed Then saves with Edited status`() = runTest {
         val monster = createMonster(name = "Goblin Modified", status = MonsterStatus.Original)
         val originalMonster = createMonster(name = "Goblin", status = MonsterStatus.Original)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
@@ -67,6 +72,7 @@ internal class SaveMonsterUseCaseImplTest {
     fun `invoke When status is Original and monster unchanged Then saves with Original status`() = runTest {
         val monster = createMonster(status = MonsterStatus.Original)
         val originalMonster = createMonster(status = MonsterStatus.Original)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
@@ -82,6 +88,7 @@ internal class SaveMonsterUseCaseImplTest {
         val imageData = MonsterImageData(url = "old.png")
         val monster = createMonster(imageData = imageData.copy(url = "new.png"), status = MonsterStatus.Original)
         val originalMonster = createMonster(imageData = imageData, status = MonsterStatus.Original)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
@@ -95,10 +102,11 @@ internal class SaveMonsterUseCaseImplTest {
     @Test
     fun `invoke When status is Original and originalMonster is null Then saves with Edited status`() = runTest {
         val monster = createMonster(status = MonsterStatus.Original)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, emptyList(), null)
+        useCase(monster, previousMonster = null, emptyList(), null)
 
         coVerify {
             saveMonstersUseCase(listOf(monster.copy(status = MonsterStatus.Edited)))
@@ -108,10 +116,11 @@ internal class SaveMonsterUseCaseImplTest {
     @Test
     fun `invoke When status is Edited Then saves monster unchanged`() = runTest {
         val monster = createMonster(status = MonsterStatus.Edited)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, emptyList(), null)
+        useCase(monster, previousMonster = null, emptyList(), null)
 
         coVerify { saveMonstersUseCase(listOf(monster)) }
     }
@@ -119,10 +128,11 @@ internal class SaveMonsterUseCaseImplTest {
     @Test
     fun `invoke When status is Clone Then saves monster unchanged`() = runTest {
         val monster = createMonster(status = MonsterStatus.Clone)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, emptyList(), null)
+        useCase(monster, previousMonster = null, emptyList(), null)
 
         coVerify { saveMonstersUseCase(listOf(monster)) }
     }
@@ -130,10 +140,11 @@ internal class SaveMonsterUseCaseImplTest {
     @Test
     fun `invoke When status is Imported Then saves monster unchanged`() = runTest {
         val monster = createMonster(status = MonsterStatus.Imported)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, emptyList(), null)
+        useCase(monster, previousMonster = null, emptyList(), null)
 
         coVerify { saveMonstersUseCase(listOf(monster)) }
     }
@@ -146,10 +157,11 @@ internal class SaveMonsterUseCaseImplTest {
             isHorizontal = true,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, emptyList(), null)
+        useCase(monster, previousMonster = null, emptyList(), null)
 
         coVerify {
             monsterImageRepository.saveMonsterImage(
@@ -174,10 +186,11 @@ internal class SaveMonsterUseCaseImplTest {
             entries = listOf(MonsterLoreEntry(index = "entry-1", description = "Old lore")),
             status = MonsterLoreStatus.Original,
         )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, newEntries, originalLore)
+        useCase(monster, previousMonster = null, newEntries, originalLore)
 
         coVerify {
             saveMonstersLoreUseCase(
@@ -204,10 +217,11 @@ internal class SaveMonsterUseCaseImplTest {
             entries = entries,
             status = MonsterLoreStatus.Original,
         )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
-        useCase(monster, originalMonster = null, entries, originalLore)
+        useCase(monster, previousMonster = null, entries, originalLore)
 
         coVerify {
             saveMonstersLoreUseCase(

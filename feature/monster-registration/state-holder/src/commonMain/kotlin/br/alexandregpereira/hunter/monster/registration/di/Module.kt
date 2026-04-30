@@ -62,6 +62,7 @@ val monsterRegistrationModule = module {
             saveMonsters = get(),
             monsterImageRepository = get(),
             saveMonstersLoreUseCase = get(),
+            monsterLocalRepository = get(),
         )
     }
 

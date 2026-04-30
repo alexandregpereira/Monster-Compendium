@@ -63,6 +63,7 @@ interface MonsterDetailStrings {
     val resetQuestion: String
     val resetConfirmation: String
     val export: String
+    val resetImage: String
     val source: String
     val noInternetConnection: String
     val tryAgain: String
@@ -112,6 +113,7 @@ internal data class MonsterDetailEnStrings(
     override val resetQuestion: String = "Are you sure you want to reset this monster to its original state?",
     override val resetConfirmation: String = "I'm sure",
     override val export: String = "Share",
+    override val resetImage: String = "Reset to Original Image",
     override val source: String = "Source",
     override val noInternetConnection: String = "No Internet Connection",
     override val tryAgain: String = "Try Again",
@@ -160,6 +162,7 @@ internal data class MonsterDetailPtStrings(
     override val resetQuestion: String = "Tem certeza que deseja restaurar esse monstro para o estado original?",
     override val resetConfirmation: String = "Tenho certeza",
     override val export: String = "Compartilhar",
+    override val resetImage: String = "Restaurar Imagem Original",
     override val source: String = "Fonte",
     override val noInternetConnection: String = "Sem conexão com a Internet",
     override val tryAgain: String = "Tentar novamente",
@@ -210,6 +213,7 @@ internal data class MonsterDetailEsStrings(
     override val resetQuestion: String = "¿Estás seguro de que quieres restaurar este monstruo a su estado original?",
     override val resetConfirmation: String = "Estoy seguro",
     override val export: String = "Compartir",
+    override val resetImage: String = "Restaurar Imagen Original",
     override val source: String = "Fuente",
     override val noInternetConnection: String = "Sin Conexión a Internet",
     override val tryAgain: String = "Reintentar",

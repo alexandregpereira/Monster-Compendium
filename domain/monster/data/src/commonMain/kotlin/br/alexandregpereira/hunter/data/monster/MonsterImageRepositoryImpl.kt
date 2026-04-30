@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.data.monster.local.dao.MonsterImageDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
@@ -43,12 +44,20 @@ internal class MonsterImageRepositoryImpl(
         return getMonsterImageJsonUrlUseCase()
     }
 
-    override suspend fun saveMonsterImages(monsterImages: List<MonsterImage>) {
+    private suspend fun saveMonsterImages(monsterImages: List<MonsterImage>) {
         monsterImageDao.insert(monsterImages = monsterImages.map { it.toEntity() })
     }
 
     override suspend fun saveMonsterImage(monsterImage: MonsterImage) {
         saveMonsterImages(monsterImages = listOf(monsterImage))
+    }
+
+    override suspend fun deleteMonsterImage(monsterIndex: String) {
+        monsterImageDao.deleteMonsterImage(monsterIndex)
+    }
+
+    override suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage? {
+        return monsterImageDao.getMonsterImage(monsterIndex)?.toDomain()
     }
 
     private fun MonsterImage.toEntity(): MonsterImageEntity {
@@ -61,6 +70,23 @@ internal class MonsterImageRepositoryImpl(
             imageContentScale = when (contentScale) {
                 MonsterImageContentScale.Fit -> 0
                 MonsterImageContentScale.Crop -> 1
+                else -> null
+            },
+        )
+    }
+
+    private fun MonsterImageEntity.toDomain(): MonsterImage {
+        return MonsterImage(
+            monsterIndex = monsterIndex,
+            imageUrl = imageUrl.orEmpty(),
+            backgroundColor = Color(
+                light = backgroundColorLight.orEmpty(),
+                dark = backgroundColorDark.orEmpty(),
+            ),
+            isHorizontalImage = isHorizontalImage ?: false,
+            contentScale = when (imageContentScale) {
+                0 -> MonsterImageContentScale.Fit
+                1 -> MonsterImageContentScale.Crop
                 else -> null
             },
         )

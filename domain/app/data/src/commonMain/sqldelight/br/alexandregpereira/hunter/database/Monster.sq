@@ -21,6 +21,9 @@ SELECT * FROM MonsterWithImageEntityView WHERE `index` IN ?;
 getMonster:
 SELECT * FROM MonsterWithImageEntityView WHERE `index` == ?;
 
+getMonsterWithoutCustomImage:
+SELECT * FROM MonsterEntity WHERE `index` == ?;
+
 getMonsters:
 SELECT * FROM MonsterWithImageEntityView;
 

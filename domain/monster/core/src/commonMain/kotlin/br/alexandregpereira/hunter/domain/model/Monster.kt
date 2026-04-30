@@ -88,6 +88,7 @@ data class MonsterImageData(
     val backgroundColor: Color = Color(),
     val isHorizontal: Boolean = false,
     val contentScale: MonsterImageContentScale? = null,
+    val isImageDataFromCustomDatabase: Boolean = false,
 ) {
     fun contentScaleOrDefault(): MonsterImageContentScale {
         return contentScale ?: MonsterImageContentScale.Fit

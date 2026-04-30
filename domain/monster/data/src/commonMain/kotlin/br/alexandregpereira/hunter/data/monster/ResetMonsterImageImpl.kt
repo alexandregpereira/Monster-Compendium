@@ -15,16 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.data.monster
 
-import br.alexandregpereira.hunter.domain.model.MonsterImage
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
+import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 
-interface MonsterImageRepository {
-
-    fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImage>>
-    fun getMonsterImageJsonUrl(): Flow<String>
-    suspend fun saveMonsterImage(monsterImage: MonsterImage)
-    suspend fun deleteMonsterImage(monsterIndex: String)
-    suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage?
+internal fun ResetMonsterImage(
+    monsterImageRepository: MonsterImageRepository,
+): ResetMonsterImage = ResetMonsterImage { monsterIndex ->
+    monsterImageRepository.deleteMonsterImage(monsterIndex)
 }
