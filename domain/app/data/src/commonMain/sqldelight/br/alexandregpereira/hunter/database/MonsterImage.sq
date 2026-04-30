@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS MonsterImageEntity (
     `backgroundColorDark` TEXT,
     `isHorizontalImage` INTEGER,
     `imageContentScale` INTEGER,
-    `imageUrl` TEXT NOT NULL DEFAULT '',
+    `imageUrl` TEXT,
     PRIMARY KEY(`monsterIndex`)
 );
 

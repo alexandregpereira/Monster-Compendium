@@ -1,4 +1,4 @@
-ALTER TABLE MonsterImageEntity ADD COLUMN `imageUrl` TEXT NOT NULL DEFAULT '';
+ALTER TABLE MonsterImageEntity ADD COLUMN `imageUrl` TEXT;
 
 DROP VIEW IF EXISTS MonsterWithImageEntityView;
 DROP VIEW IF EXISTS MonsterFolderCompleteEntityView;
