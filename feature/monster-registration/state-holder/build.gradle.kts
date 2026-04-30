@@ -39,5 +39,8 @@ multiplatform {
         implementation(libs.filekit.core)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain()
 }

@@ -1,12 +1,6 @@
-CREATE TABLE IF NOT EXISTS MonsterImageEntity (
-    `monsterIndex` TEXT NOT NULL,
-    `backgroundColorLight` TEXT,
-    `backgroundColorDark` TEXT,
-    `isHorizontalImage` INTEGER,
-    `imageContentScale` INTEGER,
-    `imageUrl` TEXT NOT NULL DEFAULT '',
-    PRIMARY KEY(`monsterIndex`)
-);
+ALTER TABLE MonsterImageEntity ADD COLUMN `imageUrl` TEXT NOT NULL DEFAULT '';
+
+DROP VIEW IF EXISTS MonsterWithImageEntityView;
 
 CREATE VIEW IF NOT EXISTS MonsterWithImageEntityView AS
 SELECT
@@ -18,8 +12,4 @@ SELECT
     MonsterImageEntity.imageUrl AS customImageUrl
 FROM MonsterEntity
 LEFT JOIN MonsterImageEntity
-ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex
-;
-
-insert:
-INSERT OR REPLACE INTO MonsterImageEntity VALUES ?;
+ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex;

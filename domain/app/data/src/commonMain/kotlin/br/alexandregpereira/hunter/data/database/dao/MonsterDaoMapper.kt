@@ -331,7 +331,7 @@ internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
         challengeRating = this.challengeRating.toFloat(),
         name = this.name,
         subtitle = this.subtitle,
-        imageUrl = this.imageUrl,
+        imageUrl = customImageUrl ?: this.imageUrl,
         backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
         backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
         isHorizontalImage = (customIsHorizontalImage ?: this.isHorizontalImage) == 1L,

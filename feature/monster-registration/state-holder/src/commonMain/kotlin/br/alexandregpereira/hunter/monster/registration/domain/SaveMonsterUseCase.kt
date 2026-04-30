@@ -51,7 +51,7 @@ internal class SaveMonsterUseCaseImpl(
     ) {
         val monsterImage = monster.toMonsterImage()
         val newMonster = monster.let {
-            val originalImageData = originalMonster?.imageData?.copy(url = monsterImage.imageUrl)
+            val originalImageData = originalMonster?.imageData
             it.copy(imageData = originalImageData ?: it.imageData)
         }.let { newMonster ->
             when (newMonster.status) {

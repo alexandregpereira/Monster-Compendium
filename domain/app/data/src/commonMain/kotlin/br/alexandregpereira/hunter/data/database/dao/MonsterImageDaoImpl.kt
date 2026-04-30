@@ -37,6 +37,7 @@ internal class MonsterImageDaoImpl(
             backgroundColorDark = backgroundColorDark,
             isHorizontalImage = if (isHorizontalImage) 1 else 0,
             imageContentScale = imageContentScale?.toLong(),
+            imageUrl = imageUrl,
         )
     }
 }
