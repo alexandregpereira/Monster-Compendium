@@ -243,7 +243,7 @@ class MonsterDetailStateHolder internal constructor(
                 setState { copy(showResetConfirmation = true) }
             }
 
-            RESET_IMAGE -> resetMonsterImage()
+            RESET_IMAGE -> setState { copy(showResetImageConfirmation = true) }
 
             EXPORT -> {
                 analytics.trackMonsterDetailExportClicked(monsterIndex)
@@ -304,6 +304,15 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onResetClosed() {
         setState { copy(showResetConfirmation = false) }
+    }
+
+    fun onResetImageConfirmed() {
+        setState { copy(showResetImageConfirmation = false) }
+        resetMonsterImage()
+    }
+
+    fun onResetImageClosed() {
+        setState { copy(showResetImageConfirmation = false) }
     }
 
     fun onConditionClicked(conditionIndex: String) {
@@ -451,6 +460,9 @@ class MonsterDetailStateHolder internal constructor(
         }.flowOn(dispatcher)
             .onEach {
                 monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
+            }
+            .catch {
+                analytics.logException(it)
             }
             .launchIn(scope)
     }

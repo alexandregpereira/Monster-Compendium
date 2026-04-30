@@ -53,8 +53,6 @@ import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -112,15 +110,15 @@ class MonsterRegistrationStateHolder internal constructor(
         updateMonster()
     }
 
-    override fun onMonsterImagePicked(file: PlatformFile?) {
-        if (file == null) {
+    override fun onMonsterImagePicked(bytes: ByteArray?) {
+        if (bytes == null) {
             analytics.logException(IllegalStateException("File is null on monster registration"))
             return
         }
         flow {
             val imageName = metadata.monster.index
             val path = fileManager.saveImageToAppStorage(
-                bytes = file.readBytes(),
+                bytes = bytes,
                 imageName = imageName,
             )
             emit(path)

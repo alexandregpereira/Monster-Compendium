@@ -150,6 +150,20 @@ internal class SaveMonsterUseCaseImplTest {
     }
 
     @Test
+    fun `invoke When monster already exists and image is unchanged Then does not save monster image`() = runTest {
+        val imageData = MonsterImageData(url = "same.png")
+        val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        val previousMonster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster, emptyList(), null)
+
+        coVerify(exactly = 0) { monsterImageRepository.saveMonsterImage(any()) }
+    }
+
+    @Test
     fun `invoke Then saves monster image with correct data`() = runTest {
         val imageData = MonsterImageData(
             url = "https://example.com/goblin.png",

@@ -121,6 +121,17 @@ fun MonsterDetailBottomSheets(
         onClosed = stateHolder::onResetClosed
     )
 
+    ConfirmationBottomSheet(
+        show = state.showResetImageConfirmation,
+        description = state.strings.resetImageQuestion,
+        buttonText = state.strings.resetImageConfirmation,
+        maxWidth = maxWidth,
+        widthFraction = widthFraction,
+        contentPadding = contentPadding,
+        onConfirmed = stateHolder::onResetImageConfirmed,
+        onClosed = stateHolder::onResetImageClosed
+    )
+
     ConditionBottomSheet(
         isOpen = state.isConditionDetailOpen,
         state = state.selectedCondition,

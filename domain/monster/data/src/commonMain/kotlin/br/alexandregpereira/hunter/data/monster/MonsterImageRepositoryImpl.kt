@@ -21,7 +21,6 @@ import br.alexandregpereira.hunter.data.monster.local.dao.MonsterImageDao
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.mapper.toDomain
-import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
@@ -56,10 +55,6 @@ internal class MonsterImageRepositoryImpl(
         monsterImageDao.deleteMonsterImage(monsterIndex)
     }
 
-    override suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage? {
-        return monsterImageDao.getMonsterImage(monsterIndex)?.toDomain()
-    }
-
     private fun MonsterImage.toEntity(): MonsterImageEntity {
         return MonsterImageEntity(
             monsterIndex = monsterIndex,
@@ -70,23 +65,6 @@ internal class MonsterImageRepositoryImpl(
             imageContentScale = when (contentScale) {
                 MonsterImageContentScale.Fit -> 0
                 MonsterImageContentScale.Crop -> 1
-                else -> null
-            },
-        )
-    }
-
-    private fun MonsterImageEntity.toDomain(): MonsterImage {
-        return MonsterImage(
-            monsterIndex = monsterIndex,
-            imageUrl = imageUrl.orEmpty(),
-            backgroundColor = Color(
-                light = backgroundColorLight.orEmpty(),
-                dark = backgroundColorDark.orEmpty(),
-            ),
-            isHorizontalImage = isHorizontalImage ?: false,
-            contentScale = when (imageContentScale) {
-                0 -> MonsterImageContentScale.Fit
-                1 -> MonsterImageContentScale.Crop
                 else -> null
             },
         )

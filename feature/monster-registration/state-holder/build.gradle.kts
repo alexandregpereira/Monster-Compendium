@@ -36,7 +36,6 @@ multiplatform {
         implementation(project(":feature:spell-compendium:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)
-        implementation(libs.filekit.core)
     }
     jvmMain()
     jvmTest {

@@ -31,6 +31,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -53,17 +54,18 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 import br.alexandregpereira.hunter.ui.compose.getMonsterImageAspectRatio
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.util.toColor
-import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.dialogs.FileKitMode
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.readBytes
+import kotlinx.coroutines.launch
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterImageForm(
     keys: Iterator<String>,
     infoState: MonsterInfoState,
     onMonsterChanged: (MonsterInfoState) -> Unit = {},
-    onMonsterImagePicked: (file: PlatformFile?) -> Unit = {},
+    onMonsterImagePicked: (bytes: ByteArray?) -> Unit = {},
 ) {
     FormLazy(
         titleKey = keys.next(),
@@ -137,11 +139,14 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
+            val coroutineScope = rememberCoroutineScope()
             val launcher = rememberFilePickerLauncher(
                 type = FileKitType.Image,
                 mode = FileKitMode.Single,
             ) { file ->
-                onMonsterImagePicked(file)
+                coroutineScope.launch {
+                    onMonsterImagePicked(file?.readBytes())
+                }
             }
             AppButton(
                 text = strings.pickImageFromGallery,

@@ -64,6 +64,8 @@ interface MonsterDetailStrings {
     val resetConfirmation: String
     val export: String
     val resetImage: String
+    val resetImageQuestion: String
+    val resetImageConfirmation: String
     val source: String
     val noInternetConnection: String
     val tryAgain: String
@@ -109,11 +111,13 @@ internal data class MonsterDetailEnStrings(
     override val deleteQuestion: String = "Are you sure you want to delete this monster?",
     override val deleteConfirmation: String = "I'm sure",
     override val save: String = "Save",
-    override val resetToOriginal: String = "Reset to Original",
-    override val resetQuestion: String = "Are you sure you want to reset this monster to its original state?",
+    override val resetToOriginal: String = "Restore to original creature",
+    override val resetQuestion: String = "Are you sure you want to restore this creature to its original state?",
     override val resetConfirmation: String = "I'm sure",
     override val export: String = "Share",
-    override val resetImage: String = "Reset to Original Image",
+    override val resetImage: String = "Restore to default image",
+    override val resetImageQuestion: String = "Are you sure you want to restore to default image?",
+    override val resetImageConfirmation: String = "I'm sure",
     override val source: String = "Source",
     override val noInternetConnection: String = "No Internet Connection",
     override val tryAgain: String = "Try Again",
@@ -158,11 +162,13 @@ internal data class MonsterDetailPtStrings(
     override val deleteQuestion: String = "Tem certeza que deseja excluir esse monstro?",
     override val deleteConfirmation: String = "Tenho certeza",
     override val save: String = "Salvar",
-    override val resetToOriginal: String = "Restaurar para o Original",
-    override val resetQuestion: String = "Tem certeza que deseja restaurar esse monstro para o estado original?",
+    override val resetToOriginal: String = "Restaurar para a criatura original",
+    override val resetQuestion: String = "Tem certeza que deseja restaurar essa criatura para o estado original?",
     override val resetConfirmation: String = "Tenho certeza",
     override val export: String = "Compartilhar",
-    override val resetImage: String = "Restaurar Imagem Original",
+    override val resetImage: String = "Restaurar para a imagem padrão",
+    override val resetImageQuestion: String = "Tem certeza que deseja restaurar para a imagem padrão?",
+    override val resetImageConfirmation: String = "Tenho certeza",
     override val source: String = "Fonte",
     override val noInternetConnection: String = "Sem conexão com a Internet",
     override val tryAgain: String = "Tentar novamente",
@@ -206,14 +212,16 @@ internal data class MonsterDetailEsStrings(
     override val cloneMonsterName: String = "Nombre",
     override val edit: String = "Editar",
     override val delete: String = "Eliminar",
-    override val deleteQuestion: String = "¿Estás seguro de que quieres eliminar este monstruo?",
+    override val deleteQuestion: String = "¿Estás seguro de que quieres eliminar esta criatura?",
     override val deleteConfirmation: String = "Estoy seguro",
     override val save: String = "Guardar",
-    override val resetToOriginal: String = "Restaurar al Original",
-    override val resetQuestion: String = "¿Estás seguro de que quieres restaurar este monstruo a su estado original?",
+    override val resetToOriginal: String = "Restaurar a criatura original",
+    override val resetQuestion: String = "¿Estás seguro de que quieres restaurar esta criatura a su estado original?",
     override val resetConfirmation: String = "Estoy seguro",
     override val export: String = "Compartir",
-    override val resetImage: String = "Restaurar Imagen Original",
+    override val resetImage: String = "Restaurar a imagen por defecto",
+    override val resetImageQuestion: String = "¿Estás seguro de que quieres restaurar a la imagen por defecto?",
+    override val resetImageConfirmation: String = "Estoy seguro",
     override val source: String = "Fuente",
     override val noInternetConnection: String = "Sin Conexión a Internet",
     override val tryAgain: String = "Reintentar",

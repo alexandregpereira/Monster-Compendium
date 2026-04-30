@@ -17,11 +17,18 @@
 
 package br.alexandregpereira.hunter.data.monster
 
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 
-internal fun ResetMonsterImage(
-    monsterImageRepository: MonsterImageRepository,
-): ResetMonsterImage = ResetMonsterImage { monsterIndex ->
-    monsterImageRepository.deleteMonsterImage(monsterIndex)
+internal class ResetMonsterImageImpl(
+    private val monsterImageRepository: MonsterImageRepository,
+    private val fileManager: FileManager,
+): ResetMonsterImage {
+
+    override suspend fun invoke(monsterIndex: String) {
+        monsterImageRepository.deleteMonsterImage(monsterIndex)
+        fileManager.deleteFileFromAppStorage(fileName = monsterIndex, fileType = FileType.PNG)
+    }
 }

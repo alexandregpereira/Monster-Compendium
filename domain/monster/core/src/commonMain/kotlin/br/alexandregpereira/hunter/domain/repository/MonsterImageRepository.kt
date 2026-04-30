@@ -26,5 +26,4 @@ interface MonsterImageRepository {
     fun getMonsterImageJsonUrl(): Flow<String>
     suspend fun saveMonsterImage(monsterImage: MonsterImage)
     suspend fun deleteMonsterImage(monsterIndex: String)
-    suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage?
 }
