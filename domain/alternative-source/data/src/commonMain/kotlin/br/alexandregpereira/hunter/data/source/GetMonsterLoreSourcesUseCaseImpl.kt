@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.source.di
+package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
-import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
-import br.alexandregpereira.hunter.domain.source.SaveAlternativeSourceContentVersionsUseCase
-import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVersionUseCase
-import org.koin.dsl.module
+import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-val alternativeSourceDomainModule = module {
-    factory { GetAlternativeSourcesUseCase(get(), get(), get()) }
-    factory { GetMonsterLoreSourcesUseCase(get()) }
-    factory { AddAlternativeSourceUseCase(get()) }
-    factory { RemoveAlternativeSourceUseCase(get()) }
-    factory { SyncAlternativeSourceContentVersionUseCase(get(), get(), get()) }
-    factory { SaveAlternativeSourceContentVersionsUseCase(get()) }
+internal class GetMonsterLoreSourcesUseCaseImpl(
+    private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
+) : GetMonsterLoreSourcesUseCase {
+
+    override operator fun invoke(): Flow<List<AlternativeSource>> {
+        return getAlternativeSourcesUseCase(onlyContentEnabled = false).map { alternativeSources ->
+            alternativeSources.filter { it.isAdded || it.isLoreEnabled }
+        }
+    }
 }

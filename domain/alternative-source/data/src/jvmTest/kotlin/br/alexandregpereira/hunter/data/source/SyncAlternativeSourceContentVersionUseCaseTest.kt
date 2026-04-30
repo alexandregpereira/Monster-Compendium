@@ -15,8 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.source
+package br.alexandregpereira.hunter.data.source
 
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceSettingsRepository
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.source.model.Source
 import io.mockk.every
@@ -37,7 +40,7 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
     private val localRepository: AlternativeSourceLocalRepository = mockk()
     private val settingsRepository: AlternativeSourceSettingsRepository = mockk()
 
-    private val useCase = SyncAlternativeSourceContentVersionUseCase(
+    private val useCase = SyncAlternativeSourceContentVersionUseCaseImpl(
         remoteRepository = remoteRepository,
         localRepository = localRepository,
         settingsRepository = settingsRepository,

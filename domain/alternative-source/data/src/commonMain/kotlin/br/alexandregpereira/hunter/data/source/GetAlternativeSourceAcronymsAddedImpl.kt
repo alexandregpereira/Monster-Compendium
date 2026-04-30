@@ -15,15 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.source
+package br.alexandregpereira.hunter.data.source
 
-import kotlinx.coroutines.flow.Flow
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourceAcronymsAdded
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
+import kotlinx.coroutines.flow.firstOrNull
 
-interface SyncAlternativeSourceContentVersionUseCase {
-    operator fun invoke(): Flow<IsToSyncData>
+internal class GetAlternativeSourceAcronymsAddedImpl(
+    private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
+) : GetAlternativeSourceAcronymsAdded {
 
-    data class IsToSyncData(
-        val isToSync: Boolean,
-        val acronymToContentVersionRollbackMap: Map<String, Int>,
-    )
+    override suspend fun invoke(): List<String> {
+        return getAlternativeSourcesUseCase()
+            .firstOrNull()
+            ?.filter { it.isAdded }
+            ?.map {
+                it.acronym
+            }.orEmpty()
+    }
 }

@@ -20,12 +20,12 @@
 package br.alexandregpereira.hunter.data.monster.di
 
 import br.alexandregpereira.hunter.data.monster.DefaultMonsterLocalRepository
-import br.alexandregpereira.hunter.data.monster.MonsterAlternativeSourceRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterCacheRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.monster.SyncMonstersUseCaseImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.data.monster.local.DefaultMonsterLocalDataSource
 import br.alexandregpereira.hunter.data.monster.local.MonsterLocalDataSource
@@ -35,13 +35,13 @@ import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSource
 import br.alexandregpereira.hunter.data.monster.remote.MonsterRemoteDataSourceErrorHandler
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
-import br.alexandregpereira.hunter.domain.repository.MonsterAlternativeSourceRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
+import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
@@ -66,9 +66,19 @@ val monsterDataModule = module {
     single<CompendiumRepository> { get<MonsterPreferencesRepository>() }
     single<MeasurementUnitRepository> { get<MonsterPreferencesRepository>() }
     factory<MonsterImageRepository> { MonsterImageRepositoryImpl(get(), get(), get()) }
-    factory<MonsterAlternativeSourceRepository> { MonsterAlternativeSourceRepositoryImpl(get()) }
     single<MonsterLocalDataSource> {
         DefaultMonsterLocalDataSource(get())
+    }
+    factory<SyncMonstersUseCase> {
+        SyncMonstersUseCaseImpl(
+            remoteRepository = get(),
+            localRepository = get(),
+            getAlternativeSourceAcronymsAdded = get(),
+            monsterSettingsRepository = get(),
+            getMonsterImages = get(),
+            saveMonstersUseCase = get(),
+            saveCompendiumScrollItemPositionUseCase = get(),
+        )
     }
 }.apply { includes(getAdditionalModule()) }
 
