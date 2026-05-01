@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.util.toColor
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import kotlin.math.pow
@@ -54,8 +53,6 @@ fun MonsterTypeIcon(
     )
 }
 
-fun String.getTintColor(): Color = this.toColor().getTintColor()
-
 fun Color.getTintColor(): Color {
     val color = this
     val luminance = colorToLuminance(color.red, color.green, color.blue)
@@ -69,5 +66,5 @@ private fun colorToLuminance(red: Float, green: Float, blue: Float): Double {
     val bLum = if (blue <= 0.03928f) blue / 12.92f else ((blue + 0.055f) / 1.055f).pow(2.4f)
 
     // Apply the luminance formula
-    return (0.2126 * rLum + 0.7152 * gLum + 0.0722 * bLum).toDouble()
+    return (0.2126 * rLum + 0.7152 * gLum + 0.0722 * bLum)
 }

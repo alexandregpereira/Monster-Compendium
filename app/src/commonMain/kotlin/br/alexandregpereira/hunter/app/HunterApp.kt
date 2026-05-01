@@ -38,7 +38,6 @@ import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.LandscapeExpanded
 import br.alexandregpereira.hunter.ui.compose.ScreenSizeType.Portrait
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import br.alexandregpereira.hunter.ui.compose.getPlatformScreenSizeInfo
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -46,45 +45,44 @@ import org.koin.core.qualifier.named
 internal fun HunterApp(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = AppWindow {
-    KoinContext {
-        StateRecoveryLaunchedEffect(
-            key = AppStateRecoveryQualifier,
-            stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
-        )
+    StateRecoveryLaunchedEffect(
+        key = AppStateRecoveryQualifier,
+        stateRecovery = koinInject(named(AppStateRecoveryQualifier)),
+    )
 
-        val viewModel: MainViewModel = koinInject()
-        val state by viewModel.state.collectAsState()
+    val viewModel: MainViewModel = koinInject()
+    val state by viewModel.state.collectAsState()
 
-        LifecycleEventObserver(
-            onStart = viewModel::onStart,
-            onStop = viewModel::onStop,
-            onPause = viewModel::onPause,
-            onResume = viewModel::onResume,
-        )
+    LifecycleEventObserver(
+        onStart = viewModel::onStart,
+        onStop = viewModel::onStop,
+        onPause = viewModel::onPause,
+        onResume = viewModel::onResume,
+    )
 
-        CompositionLocalProvider(
-            LocalScreenSize provides getPlatformScreenSizeInfo(),
-            LocalAppContentPadding provides contentPadding,
-        ) {
-            val screenSize = LocalScreenSize.current
+    CompositionLocalProvider(
+        LocalScreenSize provides getPlatformScreenSizeInfo(),
+        LocalAppContentPadding provides contentPadding,
+    ) {
+        val screenSize = LocalScreenSize.current
 
-            AdsBannerTop(modifier = Modifier.padding(contentPadding)) {
-                when (screenSize.type) {
-                    Portrait -> AppMainPortraitScreen(
+        AdsBannerTop(modifier = Modifier.padding(contentPadding)) {
+            when (screenSize.type) {
+                Portrait -> AppMainPortraitScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+
+                LandscapeCompact,
+                LandscapeExpanded -> {
+                    val leftPanelFraction = if (screenSize.type == LandscapeExpanded) {
+                        0.7f
+                    } else 0.5f
+                    AppMainLandscapeScreen(
                         state = state,
+                        leftPanelFraction = leftPanelFraction,
                         onEvent = viewModel::onEvent
                     )
-                    LandscapeCompact,
-                    LandscapeExpanded -> {
-                        val leftPanelFraction = if (screenSize.type == LandscapeExpanded) {
-                            0.7f
-                        } else 0.5f
-                        AppMainLandscapeScreen(
-                            state = state,
-                            leftPanelFraction = leftPanelFraction,
-                            onEvent = viewModel::onEvent
-                        )
-                    }
                 }
             }
         }

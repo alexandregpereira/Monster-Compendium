@@ -71,7 +71,7 @@ fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
 
     java.apply {
         toolchain.apply {
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 }
