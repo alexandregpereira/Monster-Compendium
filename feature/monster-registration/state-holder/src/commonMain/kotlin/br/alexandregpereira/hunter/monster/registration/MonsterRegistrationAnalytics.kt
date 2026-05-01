@@ -77,3 +77,12 @@ internal fun Analytics.trackMonsterRegistrationSpellClicked(spellIndex: String) 
         ),
     )
 }
+
+internal fun Analytics.trackMonsterRegistrationImagePicked(monsterIndex: String) {
+    track(
+        eventName = "MonsterRegistration - image picked",
+        params = mapOf(
+            "monsterIndex" to monsterIndex,
+        ),
+    )
+}

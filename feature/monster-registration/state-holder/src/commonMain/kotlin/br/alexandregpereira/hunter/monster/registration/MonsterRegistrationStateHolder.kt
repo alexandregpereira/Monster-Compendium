@@ -115,6 +115,7 @@ class MonsterRegistrationStateHolder internal constructor(
             analytics.logException(IllegalStateException("File is null on monster registration"))
             return
         }
+        analytics.trackMonsterRegistrationImagePicked(metadata.monster.index)
         flow {
             val imageName = metadata.monster.index
             val path = fileManager.saveImageToAppStorage(
