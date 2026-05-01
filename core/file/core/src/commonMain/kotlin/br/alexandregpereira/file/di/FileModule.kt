@@ -18,15 +18,12 @@
 package br.alexandregpereira.file.di
 
 import br.alexandregpereira.file.FileManager
-import br.alexandregpereira.file.FileManagerImpl
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val fileModule = module {
     single<FileManager> {
-        FileManagerImpl(
-            platformFileManager = createFileManager()
-        )
+        createFileManager()
     }
 }
 

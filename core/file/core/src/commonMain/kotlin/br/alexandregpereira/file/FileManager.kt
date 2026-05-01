@@ -17,14 +17,6 @@
 
 package br.alexandregpereira.file
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
-import kotlin.time.Clock
-
 interface FileManager {
 
     suspend fun saveFileToAppStorage(
@@ -35,62 +27,15 @@ interface FileManager {
 
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
 
-    suspend fun getFileNamesFromAppStorage(): List<String>
+    suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
 }
 
 enum class FileType(val extension: String) {
     PNG(extension = "png"),
 }
 
-suspend fun FileManager.saveImageToAppStorage(bytes: ByteArray, imageName: String): String {
-    return saveFileToAppStorage(bytes, imageName, FileType.PNG)
-}
-
 internal fun getFileFolder(fileType: FileType): String {
     return when (fileType) {
         FileType.PNG -> "images"
-    }
-}
-
-internal fun getFileFolders(): List<String> {
-    return FileType.entries.map {
-        getFileFolder(it)
-    }
-}
-
-internal class FileManagerImpl internal constructor(
-    private val platformFileManager: FileManager,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
-) : FileManager {
-
-    private val mutex = Mutex()
-
-    override suspend fun saveFileToAppStorage(
-        bytes: ByteArray,
-        fileName: String,
-        fileType: FileType,
-    ): String = withContext(dispatcher) {
-        mutex.withLock {
-            deleteFileFromAppStorage(fileName, fileType)
-            val epochMilliSeconds = Clock.System.now().toEpochMilliseconds()
-            val fileNameWithTimestamp = "$fileName-$epochMilliSeconds.${fileType.extension}"
-            platformFileManager.saveFileToAppStorage(bytes, fileNameWithTimestamp, fileType)
-        }
-    }
-
-    override suspend fun deleteFileFromAppStorage(
-        fileName: String,
-        fileType: FileType,
-    ) {
-        withContext(dispatcher) {
-            val files = platformFileManager.getFileNamesFromAppStorage()
-            files.firstOrNull { it.startsWith(fileName) }?.let {
-                platformFileManager.deleteFileFromAppStorage(fileName = it, fileType)
-            }
-        }
-    }
-
-    override suspend fun getFileNamesFromAppStorage(): List<String> = withContext(dispatcher) {
-        platformFileManager.getFileNamesFromAppStorage()
     }
 }

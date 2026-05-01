@@ -17,8 +17,6 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
-import br.alexandregpereira.file.FileManager
-import br.alexandregpereira.file.saveImageToAppStorage
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -33,6 +31,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
@@ -65,6 +64,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MonsterRegistrationStateHolder internal constructor(
@@ -82,7 +82,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
     private val spellResultListener: EventListener<SpellResult>,
-    private val fileManager: FileManager,
+    private val fileManager: MonsterRegistrationFileManager,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -100,7 +100,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onClose() {
-        eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
+        deleteLastSavedImageIfExistsAndClose()
     }
 
     override fun onMonsterChanged(monster: MonsterState) {
@@ -118,7 +118,7 @@ class MonsterRegistrationStateHolder internal constructor(
         analytics.trackMonsterRegistrationImagePicked(metadata.monster.index)
         flow {
             val imageName = metadata.monster.index
-            val path = fileManager.saveImageToAppStorage(
+            val path = fileManager.saveImage(
                 bytes = bytes,
                 imageName = imageName,
             )
@@ -133,7 +133,8 @@ class MonsterRegistrationStateHolder internal constructor(
             }
             .catch { cause: Throwable ->
                 analytics.logException(cause)
-            }.launchIn(scope)
+            }
+            .launchIn(scope)
     }
 
     override fun onSaved() {
@@ -146,9 +147,15 @@ class MonsterRegistrationStateHolder internal constructor(
                 saveMonster(monster, originalMonster, monsterLoreEntries, originalMonsterLore)
                 monster
             }
-            .flowOn(dispatcher)
             .onEach {
-                onClose()
+                fileManager.deleteImageIfExists(imagePath = originalMonster?.imageData?.url)
+            }
+            .flowOn(dispatcher)
+            .catch { cause: Throwable ->
+                analytics.logException(cause)
+            }
+            .onEach {
+                close()
                 eventResultManager.dispatchEvent(
                     MonsterRegistrationResult.OnSaved(
                         monsterIndex = state.value.monster.index
@@ -298,6 +305,13 @@ class MonsterRegistrationStateHolder internal constructor(
             .launchIn(scope)
     }
 
+    private fun deleteLastSavedImageIfExistsAndClose() {
+        scope.launch {
+            withContext(dispatcher) { fileManager.deleteLastSavedImageIfExists() }
+            close()
+        }
+    }
+
     private fun observeSpellResultEvents() {
         spellResultJob?.cancel()
         spellResultJob = spellResultListener.collectOnChanged {
@@ -331,6 +345,10 @@ class MonsterRegistrationStateHolder internal constructor(
             filteredConditionTypes = filteredConditionTypes,
             monsterLoreEntries = monsterLoreEntries,
         )
+    }
+
+    private fun close() {
+        eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
     }
 }
 

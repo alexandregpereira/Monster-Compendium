@@ -24,7 +24,6 @@ multiplatform {
     commonMain {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
-        implementation(libs.kotlin.datetime)
     }
     androidMain()
     jvmMain()
