@@ -47,6 +47,10 @@ internal class DefaultMonsterLocalRepository(
         }
     }
 
+    override suspend fun getMonsterPreview(index: String): Monster? {
+        return localDataSource.getMonsterPreview(index)?.toDomain()
+    }
+
     override fun getMonsterPreviewsEdited(): Flow<List<Monster>> {
         return localDataSource.getMonsterPreviewsEdited().map {
             it.toDomainMonsterEntity(getImageContentScale())

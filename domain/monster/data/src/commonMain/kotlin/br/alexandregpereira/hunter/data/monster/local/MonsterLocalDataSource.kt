@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface MonsterLocalDataSource {
 
     fun getMonsterPreviews(): Flow<List<MonsterEntity>>
+    suspend fun getMonsterPreview(index: String): MonsterEntity?
     fun getMonsterPreviewsEdited(): Flow<List<MonsterEntity>>
     fun getMonsters(): Flow<List<MonsterCompleteEntity>>
     fun getMonsters(indexes: List<String>): Flow<List<MonsterCompleteEntity>>

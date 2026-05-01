@@ -31,6 +31,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -42,6 +43,7 @@ import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.strings.format
+import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
@@ -52,12 +54,18 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 import br.alexandregpereira.hunter.ui.compose.getMonsterImageAspectRatio
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 import br.alexandregpereira.hunter.ui.util.toColor
+import io.github.vinceglb.filekit.dialogs.FileKitMode
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.readBytes
+import kotlinx.coroutines.launch
 
 @Suppress("FunctionName")
 internal fun LazyListScope.MonsterImageForm(
     keys: Iterator<String>,
     infoState: MonsterInfoState,
-    onMonsterChanged: (MonsterInfoState) -> Unit = {}
+    onMonsterChanged: (MonsterInfoState) -> Unit = {},
+    onMonsterImagePicked: (bytes: ByteArray?) -> Unit = {},
 ) {
     FormLazy(
         titleKey = keys.next(),
@@ -128,6 +136,23 @@ internal fun LazyListScope.MonsterImageForm(
                 onValueChange = {
                     onMonsterChanged(infoState.copy(imageUrl = it))
                 }
+            )
+        }
+        formItem(key = keys.next()) {
+            val coroutineScope = rememberCoroutineScope()
+            val launcher = rememberFilePickerLauncher(
+                type = FileKitType.Image,
+                mode = FileKitMode.Single,
+            ) { file ->
+                coroutineScope.launch {
+                    onMonsterImagePicked(file?.readBytes())
+                }
+            }
+            AppButton(
+                text = strings.pickImageFromGallery,
+                isPrimary = false,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { launcher.launch() },
             )
         }
         formItem(key = keys.next()) {

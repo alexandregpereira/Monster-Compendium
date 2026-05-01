@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app.di
 
+import br.alexandregpereira.file.di.fileModule
 import br.alexandregpereira.hunter.ads.consent.di.adsConsentCoreModule
 import br.alexandregpereira.hunter.ads.di.adsFeatureModule
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
@@ -91,6 +92,7 @@ internal fun KoinApplication.initKoinModules() {
         adsConsentCoreModule(
             deviceDebugHashTestId = AppConfig.ADS_CONSENT_DEVICE_HASH_TEST_ID.takeIf { it.isNotBlank() }
         ),
+        fileModule,
     )
 }
 

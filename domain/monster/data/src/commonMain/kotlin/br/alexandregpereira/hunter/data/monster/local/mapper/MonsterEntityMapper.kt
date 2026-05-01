@@ -97,6 +97,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
                 MonsterImageContentScale.Crop -> 1
                 else -> null
             },
+            isImageDataFromCustomDatabase = imageData.isImageDataFromCustomDatabase,
         ),
         speed = speed.toEntity(index),
         abilityScores = toAbilityScoreEntity(),
@@ -127,8 +128,8 @@ internal fun List<Monster>.toEntity(): List<MonsterCompleteEntity> {
     return this.map { it.toEntity() }
 }
 
-private fun MonsterEntity.toDomain(
-    monsterImageContentScale: MonsterImageContentScale,
+internal fun MonsterEntity.toDomain(
+    monsterImageContentScale: MonsterImageContentScale? = null,
 ): Monster {
     val monster = this
     val imageContentScale = when (monster.imageContentScale) {
@@ -148,7 +149,8 @@ private fun MonsterEntity.toDomain(
                 dark = monster.backgroundColorDark
             ),
             isHorizontal = monster.isHorizontalImage,
-            contentScale = imageContentScale
+            contentScale = imageContentScale,
+            isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
         ),
         subtype = monster.subtype,
         group = monster.group,

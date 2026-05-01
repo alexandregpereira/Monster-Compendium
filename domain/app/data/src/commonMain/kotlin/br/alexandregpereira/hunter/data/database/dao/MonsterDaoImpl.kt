@@ -73,6 +73,10 @@ internal class MonsterDaoImpl(
         monsterQueries.getMonsterPreviews().executeAsList().map { it.toLocalEntity() }
     }
 
+    override suspend fun getMonsterPreview(index: String): MonsterEntity? = withContext(dispatcher) {
+        monsterQueries.getMonsterWithoutCustomImage(index).executeAsOneOrNull()?.toLocalEntity()
+    }
+
     override suspend fun getMonsterPreviews(indexes: List<String>): List<MonsterEntity> =
         withContext(dispatcher) {
             monsterQueries.getMonsterPreviewsByIndexes(indexes).executeAsList()

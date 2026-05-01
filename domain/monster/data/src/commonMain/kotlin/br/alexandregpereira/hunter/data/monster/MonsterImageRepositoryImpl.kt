@@ -43,12 +43,16 @@ internal class MonsterImageRepositoryImpl(
         return getMonsterImageJsonUrlUseCase()
     }
 
-    override suspend fun saveMonsterImages(monsterImages: List<MonsterImage>) {
+    private suspend fun saveMonsterImages(monsterImages: List<MonsterImage>) {
         monsterImageDao.insert(monsterImages = monsterImages.map { it.toEntity() })
     }
 
     override suspend fun saveMonsterImage(monsterImage: MonsterImage) {
         saveMonsterImages(monsterImages = listOf(monsterImage))
+    }
+
+    override suspend fun deleteMonsterImage(monsterIndex: String) {
+        monsterImageDao.deleteMonsterImage(monsterIndex)
     }
 
     private fun MonsterImage.toEntity(): MonsterImageEntity {

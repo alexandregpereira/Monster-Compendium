@@ -51,6 +51,7 @@ val monsterDetailModule = module {
             appLocalization = get(),
             stateRecovery = get(named(MonsterDetailStateRecoveryQualifier)),
             resetMonsterToOriginal = get(),
+            resetMonsterImage = get(),
             syncEventDispatcher = get(),
             shareContentEventDispatcher = get(),
             spellResultListener = get<SpellResultDispatcher>(),

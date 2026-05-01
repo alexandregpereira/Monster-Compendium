@@ -37,15 +37,11 @@ data class MonsterDetailState(
     val monsterCloneName: String = "",
     val showDeleteConfirmation: Boolean = false,
     val showResetConfirmation: Boolean = false,
+    val showResetImageConfirmation: Boolean = false,
     val isConditionDetailOpen: Boolean = false,
     val selectedCondition: ConditionLoadingState = ConditionLoadingState.Loading,
     val strings: MonsterDetailStrings = MonsterDetailStrings(),
-) {
-
-    companion object {
-        val Empty: MonsterDetailState = MonsterDetailState()
-    }
-}
+)
 
 sealed class ConditionLoadingState {
     object Loading : ConditionLoadingState()

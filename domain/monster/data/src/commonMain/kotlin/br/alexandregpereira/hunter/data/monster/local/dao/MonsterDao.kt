@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 interface MonsterDao {
 
     suspend fun getMonsterPreviews(): List<MonsterEntity>
+    suspend fun getMonsterPreview(index: String): MonsterEntity?
 
     suspend fun getMonsterPreviews(indexes: List<String>): List<MonsterEntity>
 

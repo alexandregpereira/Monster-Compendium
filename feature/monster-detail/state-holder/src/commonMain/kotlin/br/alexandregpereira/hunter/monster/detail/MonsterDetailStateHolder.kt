@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.condition.GetCondition
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
+import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
@@ -35,12 +36,14 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Compa
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Edit
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Export
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetImage
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetToOriginal
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_IMAGE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
@@ -85,6 +88,7 @@ class MonsterDetailStateHolder internal constructor(
     private val cloneMonster: CloneMonsterUseCase,
     private val deleteMonster: DeleteMonsterUseCase,
     private val resetMonsterToOriginal: ResetMonsterToOriginal,
+    private val resetMonsterImage: ResetMonsterImage,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
@@ -239,6 +243,11 @@ class MonsterDetailStateHolder internal constructor(
                 setState { copy(showResetConfirmation = true) }
             }
 
+            RESET_IMAGE -> {
+                analytics.trackResetImageClicked(monsterIndex)
+                setState { copy(showResetImageConfirmation = true) }
+            }
+
             EXPORT -> {
                 analytics.trackMonsterDetailExportClicked(monsterIndex)
                 shareContentEventDispatcher.dispatchEvent(
@@ -298,6 +307,17 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onResetClosed() {
         setState { copy(showResetConfirmation = false) }
+    }
+
+    fun onResetImageConfirmed() {
+        analytics.trackResetImageConfirmed(monsterIndex)
+        setState { copy(showResetImageConfirmation = false) }
+        resetMonsterImage()
+    }
+
+    fun onResetImageClosed() {
+        analytics.trackResetImageClosed(monsterIndex)
+        setState { copy(showResetImageConfirmation = false) }
     }
 
     fun onConditionClicked(conditionIndex: String) {
@@ -387,9 +407,12 @@ class MonsterDetailStateHolder internal constructor(
             MonsterStatus.Clone -> listOf(Edit(strings), Delete(strings))
             MonsterStatus.Edited -> listOf(Edit(strings), ResetToOriginal(strings))
         }
+        val resetImageOption = if (monster.imageData.isImageDataFromCustomDatabase) {
+            listOf(ResetImage(strings))
+        } else emptyList()
 
         return copy(
-            options = listOf(AddToFolder(strings), Export(strings), Clone(strings)) + editOption
+            options = listOf(AddToFolder(strings), Export(strings), Clone(strings)) + editOption + resetImageOption
         )
     }
 
@@ -432,6 +455,20 @@ class MonsterDetailStateHolder internal constructor(
                 monsterEventDispatcher.dispatchEvent(Hide)
             }
             .flowOn(dispatcher)
+            .launchIn(scope)
+    }
+
+    private fun resetMonsterImage() {
+        flow {
+            resetMonsterImage(monsterIndex)
+            emit(Unit)
+        }.flowOn(dispatcher)
+            .onEach {
+                monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
+            }
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(scope)
     }
 

@@ -23,6 +23,8 @@ interface MonsterRegistrationIntent {
 
     fun onMonsterChanged(monster: MonsterState)
 
+    fun onMonsterImagePicked(bytes: ByteArray?)
+
     fun onSaved()
 
     fun onSpellClick(spellIndex: String)
@@ -39,6 +41,8 @@ class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
     override fun onClose() {}
 
     override fun onMonsterChanged(monster: MonsterState) {}
+
+    override fun onMonsterImagePicked(bytes: ByteArray?) {}
 
     override fun onSaved() {}
 

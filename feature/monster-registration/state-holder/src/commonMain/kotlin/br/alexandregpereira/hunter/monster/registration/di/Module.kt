@@ -62,6 +62,7 @@ val monsterRegistrationModule = module {
             saveMonsters = get(),
             monsterImageRepository = get(),
             saveMonstersLoreUseCase = get(),
+            monsterLocalRepository = get(),
         )
     }
 
@@ -81,6 +82,7 @@ val monsterRegistrationModule = module {
             getSpell = get(),
             appLocalization = get(),
             spellResultListener = get<SpellResultDispatcher>(),
+            fileManager = get(),
         )
     }
 }
