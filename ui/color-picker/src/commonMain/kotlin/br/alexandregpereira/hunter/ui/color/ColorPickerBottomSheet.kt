@@ -69,7 +69,7 @@ private fun ColorPickerBottomSheet(
 ) {
     BottomSheet(
         opened = isOpen,
-        topSpaceHeight = 220.dp,
+        topSpaceHeight = 0.dp,
         onClose = onClose,
     ) {
         val initialColor = remember(initialColorHex) { initialColorHex.toColor() }
@@ -93,8 +93,8 @@ private fun ColorPickerBottomSheet(
             BrightnessSlider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .height(32.dp),
+                    .height(32.dp)
+                    .padding(horizontal = 40.dp),
                 initialColor = initialColor,
                 controller = controller,
             )

@@ -17,14 +17,15 @@
 
 package br.alexandregpereira.hunter.settings.domain
 
-import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
+import br.alexandregpereira.hunter.domain.model.MonsterImage
+import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.SaveAppearanceSettings
-import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
-import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.single
 
 internal fun interface ApplyAppearanceSettings {
     operator fun invoke(
@@ -34,15 +35,17 @@ internal fun interface ApplyAppearanceSettings {
 
 internal fun ApplyAppearanceSettings(
     saveAppearanceSettings: SaveAppearanceSettings,
-    saveMonstersUseCase: SaveMonstersUseCase,
-    monsterCacheRepository: MonsterCacheRepository,
-    getMonsters: GetMonstersUseCase,
+    monsterRepository: MonsterLocalRepository,
+    monsterImageRepository: MonsterImageRepository,
 ): ApplyAppearanceSettings = ApplyAppearanceSettings { appearance ->
     saveAppearanceSettings(appearance)
         .map {
-            val monsters = getMonsters().single()
+            val monsters = monsterRepository.getMonsterPreviews().firstOrNull().orEmpty()
+            val monsterImages = monsterImageRepository.getLocalMonsterImages().associateBy {
+                it.monsterIndex
+            }
             val (mostCommonLight, mostCommonDark) = monsters.getMostCommonColors()
-            monsters.map { monster ->
+            monsters.mapNotNull { monster ->
                 val light = getMonsterColorOrNewColor(
                     oldColor = mostCommonLight,
                     newColor = appearance.defaultLightBackground,
@@ -55,26 +58,46 @@ internal fun ApplyAppearanceSettings(
                     monsterColor = monster.imageData.backgroundColor.dark
                 )
 
-                monster.copy(
-                    imageData = monster.imageData.copy(
-                        backgroundColor = monster.imageData.backgroundColor.copy(
-                            light = light,
-                            dark = dark
-                        )
+                val newMonsterImageData = monster.imageData.copy(
+                    backgroundColor = monster.imageData.backgroundColor.copy(
+                        light = light,
+                        dark = dark
                     )
                 )
+
+                val imageColorsHasChanges = newMonsterImageData.backgroundColor != monster.imageData.backgroundColor
+                if (imageColorsHasChanges) {
+                    newMonsterImageData.toMonsterImage(
+                        monsterIndex = monster.index,
+                        monsterImage = monsterImages[monster.index],
+                    )
+                } else null
             }
         }
-        .map { newMonsters ->
-            saveMonstersUseCase(newMonsters).single()
-            monsterCacheRepository.saveMonsters(newMonsters).single()
+        .map { newMonsterImages ->
+            monsterImageRepository.saveMonsterImages(newMonsterImages)
         }
 }
 
-private fun getMonsterColorOrNewColor(
+private fun MonsterImageData.toMonsterImage(
+    monsterIndex: String,
+    monsterImage: MonsterImage?,
+): MonsterImage {
+    return MonsterImage(
+        monsterIndex = monsterIndex,
+        backgroundColor = backgroundColor,
+        isHorizontalImage = monsterImage?.isHorizontalImage,
+        imageUrl = monsterImage?.imageUrl,
+        contentScale = monsterImage?.contentScale,
+    )
+}
+
+internal fun getMonsterColorOrNewColor(
     oldColor: String,
     newColor: String,
     monsterColor: String,
 ): String {
-    return newColor.takeIf { monsterColor.lowercase() == oldColor.lowercase() } ?: monsterColor
+    return newColor.takeIf {
+        monsterColor.equals(oldColor, ignoreCase = true)
+    } ?: monsterColor
 }

@@ -44,7 +44,7 @@ internal fun AppearanceSettingsBottomSheet(
 ) = BottomSheet(
     opened = opened,
     onClose = onClose,
-    topSpaceHeight = 220.dp,
+    topSpaceHeight = 0.dp,
     contentPadding = contentPadding
 ) {
     Form(

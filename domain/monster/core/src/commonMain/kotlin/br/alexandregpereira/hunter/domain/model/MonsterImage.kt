@@ -19,8 +19,8 @@ package br.alexandregpereira.hunter.domain.model
 
 data class MonsterImage(
     val monsterIndex: String,
-    val backgroundColor: Color,
-    val isHorizontalImage: Boolean = false,
-    val imageUrl: String,
+    val backgroundColor: Color?,
+    val isHorizontalImage: Boolean? = false,
+    val imageUrl: String?,
     val contentScale: MonsterImageContentScale?,
 )

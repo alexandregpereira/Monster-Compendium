@@ -37,9 +37,9 @@ fun List<Monster>.appendMonsterImages(
 
         monster.copy(
             imageData = MonsterImageData(
-                url = monsterImage.imageUrl,
-                backgroundColor = monsterImage.backgroundColor,
-                isHorizontal = monsterImage.isHorizontalImage,
+                url = monsterImage.imageUrl.orEmpty(),
+                backgroundColor = monsterImage.backgroundColor ?: Color(),
+                isHorizontal = monsterImage.isHorizontalImage ?: false,
                 contentScale = monsterImage.contentScale,
             )
         )
