@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,25 +22,19 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
     commonMain {
-        implementation(project(":core:state-holder"))
-        implementation(project(":core:uuid"))
-        implementation(project(":domain:monster:core"))
-        implementation(project(":domain:monster-lore:core"))
-        implementation(project(":domain:spell:core"))
-        implementation(project(":feature:monster-registration:state-holder"))
-        implementation(project(":ui:color-picker"))
+        implementation(project(":core:localization"))
         implementation(project(":ui:core"))
 
+        implementation(libs.colorpicker.compose)
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
-        implementation(libs.filekit.compose)
     }
+    androidMain()
     jvmMain()
     iosMain()
 }
 
 androidLibrary {
-    namespace = "br.alexandregpereira.hunter.monster.registration"
+    namespace = "br.alexandregpereira.hunter.ui.color"
 }

@@ -115,6 +115,7 @@ include ':feature:sync:compose'
 include ':feature:sync:event'
 include ':feature:sync:state-holder'
 
+include ':ui:color-picker'
 include ':ui:compendium'
 include ':ui:core'
 include ':ui:monster-compendium'

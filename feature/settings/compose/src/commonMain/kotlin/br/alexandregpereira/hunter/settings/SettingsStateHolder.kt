@@ -188,7 +188,6 @@ internal class SettingsStateHolder(
         val appearanceState = state.value.appearanceState
         flow {
             AppearanceSettings(
-                forceLightImageBackground = appearanceState.forceLightImageBackground,
                 defaultLightBackground = appearanceState.defaultLightBackground,
                 defaultDarkBackground = appearanceState.defaultDarkBackground,
                 imageContentScale = when (appearanceState.monsterImageContentSelected) {
@@ -299,7 +298,6 @@ internal class SettingsStateHolder(
             .map { appearanceSettings ->
                 state.value.copy(
                     appearanceState = AppearanceSettingsState(
-                        forceLightImageBackground = appearanceSettings.forceLightImageBackground,
                         defaultLightBackground = appearanceSettings.defaultLightBackground,
                         defaultDarkBackground = appearanceSettings.defaultDarkBackground,
                         monsterImageContentSelectedOptionIndex = appearanceSettings.imageContentScale.ordinal

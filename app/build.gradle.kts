@@ -81,6 +81,7 @@ multiplatform {
         implementation(project(":feature:spell-registration:compose"))
         implementation(project(":feature:sync:compose"))
 
+        implementation(project(":ui:color-picker"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)

@@ -37,3 +37,12 @@ fun String.toColor(): Color {
         blue = (colorARGB.shr(0) and 0xFF).toInt(),
     )
 }
+
+fun Color.toHex(): String {
+    return String.format(
+        "#%02x%02x%02x",
+        (red * 255).toInt(),
+        (green * 255).toInt(),
+        (blue * 255).toInt(),
+    ).uppercase()
+}

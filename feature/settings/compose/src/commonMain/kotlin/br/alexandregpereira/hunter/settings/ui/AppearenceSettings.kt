@@ -25,11 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.settings.AppearanceSettingsState
 import br.alexandregpereira.hunter.settings.SettingsStrings
+import br.alexandregpereira.hunter.ui.color.ColorPicker
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
-import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
-import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.PickerField
 
@@ -45,33 +44,25 @@ internal fun AppearanceSettingsBottomSheet(
 ) = BottomSheet(
     opened = opened,
     onClose = onClose,
+    topSpaceHeight = 220.dp,
     contentPadding = contentPadding
 ) {
     Form(
         title = strings.appearanceSettingsTitle,
         modifier = Modifier.padding(16.dp),
     ) {
-        AppSwitch(
-            label = strings.forceLightImageBackground,
-            checked = state.forceLightImageBackground,
-            onCheckedChange = {
-                onStateChange(state.copy(forceLightImageBackground = it))
-            },
-        )
-
-        ColorTextField(
+        ColorPicker(
             label = strings.defaultLightBackground,
-            text = state.defaultLightBackground,
-            onValueChange = {
+            color = state.defaultLightBackground,
+            onColorPicked = {
                 onStateChange(state.copy(defaultLightBackground = it))
             },
         )
 
-        ColorTextField(
+        ColorPicker(
             label = strings.defaultDarkBackground,
-            text = state.defaultDarkBackground,
-            enabled = state.defaultDarkBackgroundEnabled,
-            onValueChange = {
+            color = state.defaultDarkBackground,
+            onColorPicked = {
                 onStateChange(state.copy(defaultDarkBackground = it))
             },
         )

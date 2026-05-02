@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.ui.compose
+package br.alexandregpereira.hunter.ui.color
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,20 +26,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.util.toColor
 
 @Composable
-fun ColorTextField(
+internal fun ColorTextField(
     text: String,
     modifier: Modifier = Modifier,
     label: String = "",
     enabled: Boolean = true,
+    showClearIcon: Boolean = true,
     onValueChange: (String) -> Unit = {},
 )  = AppTextField(
     text = text,
     modifier = modifier,
     label = label,
     enabled = enabled,
+    showClearIcon = showClearIcon,
     onValueChange = onValueChange,
     leadingIcon = {
         Box(

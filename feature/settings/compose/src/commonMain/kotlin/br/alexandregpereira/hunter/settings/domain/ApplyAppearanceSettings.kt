@@ -51,11 +51,7 @@ internal fun ApplyAppearanceSettings(
 
                 val dark = getMonsterColorOrNewColor(
                     oldColor = mostCommonDark,
-                    newColor = if (appearance.forceLightImageBackground) {
-                        appearance.defaultLightBackground
-                    } else {
-                        appearance.defaultDarkBackground
-                    },
+                    newColor = appearance.defaultDarkBackground,
                     monsterColor = monster.imageData.backgroundColor.dark
                 )
 
