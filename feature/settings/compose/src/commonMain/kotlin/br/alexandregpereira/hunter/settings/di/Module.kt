@@ -29,7 +29,7 @@ import org.koin.dsl.module
 
 val featureSettingsModule = module {
     factory { GetAppearanceSettingsFromMonsters(get(), get()) }
-    factory { ApplyAppearanceSettings(get(), get(), get(), get()) }
+    factory { ApplyAppearanceSettings(get(), get(), get()) }
     single {
         SettingsStateHolder(
             getMonsterImageJsonUrl = get(),

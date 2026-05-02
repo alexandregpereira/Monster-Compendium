@@ -33,6 +33,7 @@ import br.alexandregpereira.hunter.spell.compendium.SpellCompendiumFeature
 import br.alexandregpereira.hunter.spell.detail.SpellDetailFeature
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationFeature
 import br.alexandregpereira.hunter.sync.SyncFeature
+import br.alexandregpereira.hunter.ui.color.ColorPickerBottomSheet
 
 @Composable
 internal fun AppMainScreen(
@@ -49,6 +50,7 @@ internal fun AppMainScreen(
         ShareContentExportMonsterFeature()
         ShareContentImportFeature()
         SettingsBottomSheets()
+        ColorPickerBottomSheet()
         SyncFeature()
         PaywallFeature()
     }

@@ -30,6 +30,7 @@ multiplatform {
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:monster-registration:state-holder"))
+        implementation(project(":ui:color-picker"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)

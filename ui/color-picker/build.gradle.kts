@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+plugins {
+    id("com.android.library")
+    kotlin("multiplatform")
+    alias(libs.plugins.compose.compiler)
+}
 
-import br.alexandregpereira.hunter.domain.model.MonsterImage
-import kotlinx.coroutines.flow.Flow
+multiplatform {
+    commonMain {
+        implementation(project(":core:localization"))
+        implementation(project(":ui:core"))
 
-interface MonsterImageRepository {
+        implementation(libs.colorpicker.compose)
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.koin.compose)
+    }
+    androidMain()
+    jvmMain()
+    iosMain()
+}
 
-    fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImage>>
-    suspend fun getLocalMonsterImages(): List<MonsterImage>
-    fun getMonsterImageJsonUrl(): Flow<String>
-    suspend fun saveMonsterImages(monsterImages: List<MonsterImage>)
-    suspend fun saveMonsterImage(monsterImage: MonsterImage)
-    suspend fun deleteMonsterImage(monsterIndex: String)
+androidLibrary {
+    namespace = "br.alexandregpereira.hunter.ui.color"
 }

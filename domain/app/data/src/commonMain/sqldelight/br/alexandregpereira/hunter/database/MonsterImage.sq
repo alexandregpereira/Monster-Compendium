@@ -21,6 +21,9 @@ LEFT JOIN MonsterImageEntity
 ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex
 ;
 
+getMonsterImages:
+SELECT * FROM MonsterImageEntity;
+
 insert:
 INSERT OR REPLACE INTO MonsterImageEntity VALUES ?;
 

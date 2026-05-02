@@ -18,9 +18,9 @@
 package br.alexandregpereira.hunter.settings.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
-import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.single
@@ -31,13 +31,13 @@ internal fun interface GetAppearanceSettingsFromMonsters {
 
 internal fun GetAppearanceSettingsFromMonsters(
     getAppearanceSettings: GetAppearanceSettings,
-    getMonsters: GetMonsterPreviewsUseCase,
+    monsterRepository: MonsterLocalRepository,
 ): GetAppearanceSettingsFromMonsters = GetAppearanceSettingsFromMonsters {
     flow {
         val appearanceSettings = getAppearanceSettings().single()
         emit(value = appearanceSettings)
 
-        val monsters = getMonsters().single()
+        val monsters = monsterRepository.getMonsterPreviews().single()
         val (mostCommonBackgroundLight, mostCommonBackgroundDark) = monsters.getMostCommonColors()
 
         appearanceSettings.copy(

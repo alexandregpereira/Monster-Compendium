@@ -70,13 +70,11 @@ internal data class SettingsLanguageState(
 )
 
 internal data class AppearanceSettingsState(
-    val forceLightImageBackground: Boolean = false,
     val defaultLightBackground: String = "",
     val defaultDarkBackground: String = "",
     val monsterImageContentScaleOptions: List<AppImageContentScale> = AppImageContentScale.entries,
     val monsterImageContentSelectedOptionIndex: Int = 0,
 ) {
-    val defaultDarkBackgroundEnabled: Boolean = forceLightImageBackground.not()
     val monsterImageContentSelected: AppImageContentScale
         get() = monsterImageContentScaleOptions[monsterImageContentSelectedOptionIndex]
 }

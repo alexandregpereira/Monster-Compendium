@@ -43,11 +43,11 @@ import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
 import br.alexandregpereira.hunter.monster.registration.ui.strings
 import br.alexandregpereira.hunter.strings.format
+import br.alexandregpereira.hunter.ui.color.ColorPicker
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppSwitch
 import br.alexandregpereira.hunter.ui.compose.AppTextField
-import br.alexandregpereira.hunter.ui.compose.ColorTextField
 import br.alexandregpereira.hunter.ui.compose.Form
 import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
 import br.alexandregpereira.hunter.ui.compose.PickerField
@@ -156,10 +156,10 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
-            ColorTextField(
-                text = infoState.backgroundColorLight,
+            ColorPicker(
+                color = infoState.backgroundColorLight,
                 label = strings.imageBackgroundColorLight,
-                onValueChange = {
+                onColorPicked = {
                     onMonsterChanged(
                         infoState.copy(
                             backgroundColorLight = it,
@@ -169,10 +169,10 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
-            ColorTextField(
-                text = infoState.backgroundColorDark,
+            ColorPicker(
+                color = infoState.backgroundColorDark,
                 label = strings.imageBackgroundColorDark,
-                onValueChange = {
+                onColorPicked = {
                     onMonsterChanged(
                         infoState.copy(
                             backgroundColorDark = it

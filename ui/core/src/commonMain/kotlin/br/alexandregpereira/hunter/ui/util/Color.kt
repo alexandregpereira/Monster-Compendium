@@ -37,3 +37,8 @@ fun String.toColor(): Color {
         blue = (colorARGB.shr(0) and 0xFF).toInt(),
     )
 }
+
+fun Color.toHex(): String {
+    fun Int.hex() = toString(16).padStart(2, '0')
+    return "#${(red * 255).toInt().hex()}${(green * 255).toInt().hex()}${(blue * 255).toInt().hex()}".uppercase()
+}

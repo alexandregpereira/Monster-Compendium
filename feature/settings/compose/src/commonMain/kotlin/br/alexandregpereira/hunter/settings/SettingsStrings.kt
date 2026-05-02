@@ -30,7 +30,6 @@ interface SettingsStrings {
     val languageLabel: String
     val save: String
     val appearanceSettingsTitle: String
-    val forceLightImageBackground: String
     val defaultLightBackground: String
     val defaultDarkBackground: String
     val importContent: String
@@ -59,7 +58,6 @@ internal data class SettingsEnStrings(
     override val languageLabel: String = "Language",
     override val save: String = "Save",
     override val appearanceSettingsTitle: String = "Appearance",
-    override val forceLightImageBackground: String = "Use Light Background Color in Images",
     override val defaultLightBackground: String = "Default Image Light Background Color",
     override val defaultDarkBackground: String = "Default Image Dark Background Color",
     override val importContent: String = "Import Shared Content",
@@ -88,7 +86,6 @@ internal data class SettingsPtStrings(
     override val languageLabel: String = "Idioma",
     override val save: String = "Salvar",
     override val appearanceSettingsTitle: String = "Aparência",
-    override val forceLightImageBackground: String = "Usar Cor de Fundo Claro nas Imagens",
     override val defaultLightBackground: String = "Cor Padrão de Fundo das Imagens Light",
     override val defaultDarkBackground: String = "Cor Padrão de Fundo das Imagens Dark",
     override val importContent: String = "Importar Conteúdo Compartilhado",
@@ -117,7 +114,6 @@ internal data class SettingsEsStrings(
     override val languageLabel: String = "Idioma",
     override val save: String = "Guardar",
     override val appearanceSettingsTitle: String = "Apariencia",
-    override val forceLightImageBackground: String = "Usar Color de Fondo Claro en Imágenes",
     override val defaultLightBackground: String = "Color de Fondo Claro Predeterminado",
     override val defaultDarkBackground: String = "Color de Fondo Oscuro Predeterminado",
     override val importContent: String = "Importar Contenido Compartido",
