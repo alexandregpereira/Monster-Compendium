@@ -29,6 +29,11 @@ internal class ResetMonsterImageImpl(
 
     override suspend fun invoke(monsterIndex: String) {
         monsterImageRepository.deleteMonsterImage(monsterIndex)
-        fileManager.deleteFileFromAppStorage(fileName = monsterIndex, fileType = FileType.PNG)
+        val fileType = FileType.PNG
+        fileManager.getFileNamesFromAppStorage(fileType).filter { fileName ->
+            fileName.startsWith(monsterIndex)
+        }.forEach { fileName ->
+            fileManager.deleteFileFromAppStorage(fileName = fileName, fileType)
+        }
     }
 }

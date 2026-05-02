@@ -351,10 +351,6 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
 
 internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
     val isImageDataFromCustomDatabase = customImageUrl != null
-            || customBackgroundColorLight != null
-            || customBackgroundColorDark != null
-            || customIsHorizontalImage != null
-            || customImageContentScale != null
 
     return toMonsterEntity(
         index = this.index,

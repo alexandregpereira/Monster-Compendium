@@ -21,6 +21,10 @@ import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import platform.Foundation.NSData
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -30,14 +34,16 @@ import platform.Foundation.create
 import platform.Foundation.writeToFile
 
 @OptIn(ExperimentalForeignApi::class)
-internal class IosFileManager : FileManager {
+internal class IosFileManager(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+) : FileManager {
 
     @OptIn(BetaInteropApi::class)
     override suspend fun saveFileToAppStorage(
         bytes: ByteArray,
         fileName: String,
         fileType: FileType,
-    ): String {
+    ): String = withContext(dispatcher) {
         val filesDir = filesDirectory(fileFolder = getFileFolder(fileType))
         NSFileManager.defaultManager.createDirectoryAtPath(
             filesDir,
@@ -50,26 +56,25 @@ internal class IosFileManager : FileManager {
         bytes.usePinned { pinned ->
             NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
         }.writeToFile(filePath, atomically = true)
-        return "file://$filePath"
+        "file://$filePath"
     }
 
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
-        val filePath = "${filesDirectory(fileFolder = getFileFolder(fileType))}/$fileName"
-        NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
+        withContext(dispatcher) {
+            val filePath = "${filesDirectory(fileFolder = getFileFolder(fileType))}/$fileName"
+            NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
+        }
     }
 
-    override suspend fun getFileNamesFromAppStorage(): List<String> {
-        val folderPaths = getFileFolders().map {
-            filesDirectory(fileFolder = it)
-        }
-
-        return folderPaths.mapNotNull { folderPath ->
-            NSFileManager.defaultManager.contentsOfDirectoryAtPath(folderPath, error = null)
-        }.fold(emptyList<Any?>()) { acc, list ->
-            acc + list
-        }.mapNotNull { file ->
+    override suspend fun getFileNamesFromAppStorage(
+        fileType: FileType,
+    ): List<String> = withContext(dispatcher) {
+        val folderPath = filesDirectory(fileFolder = getFileFolder(fileType))
+        NSFileManager.defaultManager.contentsOfDirectoryAtPath(
+            folderPath, error = null
+        )?.mapNotNull { file ->
             file as? String
-        }
+        }.orEmpty()
     }
 
     private fun filesDirectory(fileFolder: String): String {

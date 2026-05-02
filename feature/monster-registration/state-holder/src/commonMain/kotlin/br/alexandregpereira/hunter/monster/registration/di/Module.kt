@@ -22,6 +22,8 @@ import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationParam
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStateHolder
 import br.alexandregpereira.hunter.monster.registration.di.MonsterRegistrationQualifiers.eventManagerQualifier
 import br.alexandregpereira.hunter.monster.registration.di.MonsterRegistrationQualifiers.paramsQualifier
+import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
+import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManagerImpl
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCaseImpl
@@ -63,6 +65,11 @@ val monsterRegistrationModule = module {
             monsterImageRepository = get(),
             saveMonstersLoreUseCase = get(),
             monsterLocalRepository = get(),
+        )
+    }
+    single<MonsterRegistrationFileManager> {
+        MonsterRegistrationFileManagerImpl(
+            fileManager = get(),
         )
     }
 

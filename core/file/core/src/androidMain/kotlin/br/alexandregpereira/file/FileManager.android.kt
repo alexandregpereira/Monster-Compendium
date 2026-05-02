@@ -18,39 +18,41 @@
 package br.alexandregpereira.file
 
 import android.app.Application
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 
 internal class AndroidFileManager(
-    internal val app: Application,
+    private val app: Application,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FileManager {
 
     override suspend fun saveFileToAppStorage(
         bytes: ByteArray,
         fileName: String,
         fileType: FileType
-    ): String {
+    ): String = withContext(dispatcher) {
         val dir = filesDirectory(fileFolder = getFileFolder(fileType)).apply { mkdirs() }
-        return "file://" + File(dir, fileName).also {
+        "file://" + File(dir, fileName).also {
             it.writeBytes(bytes)
         }.absolutePath
     }
 
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
-        val dir = filesDirectory(fileFolder = getFileFolder(fileType))
-        File(dir, fileName).delete()
+        withContext(dispatcher) {
+            val dir = filesDirectory(fileFolder = getFileFolder(fileType))
+            File(dir, fileName).delete()
+        }
     }
 
-    override suspend fun getFileNamesFromAppStorage(): List<String> {
-        val folders = getFileFolders().map {
-            filesDirectory(fileFolder = it)
-        }
-        return folders.mapNotNull { folder ->
-            folder.listFiles()
-        }.fold(emptyList<File>()) { acc, list ->
-            acc + list
-        }.map { file ->
+    override suspend fun getFileNamesFromAppStorage(
+        fileType: FileType,
+    ): List<String> = withContext(dispatcher) {
+        val folder = filesDirectory(fileFolder = getFileFolder(fileType))
+        folder.listFiles()?.mapNotNull { file ->
             file.name
-        }
+        }.orEmpty()
     }
 
     private fun filesDirectory(fileFolder: String): File = File(
