@@ -44,6 +44,10 @@ internal class MonsterImageRepositoryImpl(
         return monsterImageDao.getMonsterImages().map { it.toDomain() }
     }
 
+    override suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage? {
+        return monsterImageDao.getMonsterImage(monsterIndex)?.toDomain()
+    }
+
     override fun getMonsterImageJsonUrl(): Flow<String> {
         return getMonsterImageJsonUrlUseCase()
     }

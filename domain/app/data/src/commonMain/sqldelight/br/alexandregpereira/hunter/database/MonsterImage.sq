@@ -24,6 +24,9 @@ ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex
 getMonsterImages:
 SELECT * FROM MonsterImageEntity;
 
+getMonsterImage:
+SELECT * FROM MonsterImageEntity WHERE monsterIndex = :monsterIndex;
+
 insert:
 INSERT OR REPLACE INTO MonsterImageEntity VALUES ?;
 

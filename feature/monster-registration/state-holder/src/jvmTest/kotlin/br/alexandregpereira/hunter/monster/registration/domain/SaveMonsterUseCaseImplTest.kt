@@ -22,6 +22,7 @@ package br.alexandregpereira.hunter.monster.registration.domain
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImage
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
@@ -30,6 +31,10 @@ import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
+import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
+import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
+import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
+import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -45,12 +50,16 @@ internal class SaveMonsterUseCaseImplTest {
     private val monsterImageRepository: MonsterImageRepository = mockk(relaxUnitFun = true)
     private val saveMonstersLoreUseCase: SaveMonstersLoreUseCase = mockk()
     private val monsterLocalRepository: MonsterLocalRepository = mockk()
+    private val resetMonsterImage: ResetMonsterImage = mockk(relaxUnitFun = true)
+    private val getAppearanceSettings: GetAppearanceSettings = mockk()
 
     private val useCase = SaveMonsterUseCaseImpl(
         saveMonsters = saveMonstersUseCase,
         monsterImageRepository = monsterImageRepository,
         saveMonstersLoreUseCase = saveMonstersLoreUseCase,
         monsterLocalRepository = monsterLocalRepository,
+        resetMonsterImage = resetMonsterImage,
+        getAppearanceSettings = getAppearanceSettings,
     )
 
     @Test
@@ -169,9 +178,14 @@ internal class SaveMonsterUseCaseImplTest {
             url = "https://example.com/goblin.png",
             backgroundColor = Color(light = "#ffffff", dark = "#000000"),
             isHorizontal = true,
+            contentScale = MonsterImageContentScale.Crop,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns null
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
         every { saveMonstersUseCase(any()) } returns flowOf(Unit)
         every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
 
@@ -185,6 +199,70 @@ internal class SaveMonsterUseCaseImplTest {
                     isHorizontalImage = imageData.isHorizontal,
                     imageUrl = imageData.url,
                     contentScale = imageData.contentScale,
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `invoke When image data changed and all values revert to local monster values Then resets monster image`() = runTest {
+        val imageData = MonsterImageData(
+            url = "original.png",
+            backgroundColor = Color(light = "#ffffff", dark = "#000000"),
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Crop,
+        )
+        val monster = createMonster(imageData = imageData)
+        val previousMonster = createMonster(imageData = MonsterImageData(url = "changed.png"), status = MonsterStatus.Edited)
+        val localMonster = createMonster(imageData = imageData)
+        val currentLocalMonsterImage = MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = imageData.backgroundColor,
+            isHorizontalImage = imageData.isHorizontal,
+            imageUrl = imageData.url,
+            contentScale = imageData.contentScale,
+        )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns localMonster
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns currentLocalMonsterImage
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster, emptyList(), null)
+
+        coVerify { resetMonsterImage(monsterIndex = monster.index) }
+        coVerify(exactly = 0) { monsterImageRepository.saveMonsterImage(any()) }
+    }
+
+    @Test
+    fun `invoke When contentScale matches settings Then saves without contentScale`() = runTest {
+        val imageData = MonsterImageData(
+            url = "goblin.png",
+            backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        val monster = createMonster(imageData = imageData)
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns null
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster = null, emptyList(), null)
+
+        coVerify {
+            monsterImageRepository.saveMonsterImage(
+                MonsterImage(
+                    monsterIndex = monster.index,
+                    backgroundColor = imageData.backgroundColor,
+                    isHorizontalImage = imageData.isHorizontal,
+                    imageUrl = imageData.url,
+                    contentScale = null,
                 )
             )
         }
