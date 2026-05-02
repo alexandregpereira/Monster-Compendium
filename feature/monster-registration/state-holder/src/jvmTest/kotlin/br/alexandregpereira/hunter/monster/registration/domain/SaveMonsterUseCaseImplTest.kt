@@ -269,6 +269,183 @@ internal class SaveMonsterUseCaseImplTest {
     }
 
     @Test
+    fun `invoke When backgroundColor matches local monster image value Then saves without backgroundColor`() = runTest {
+        val imageData = MonsterImageData(
+            backgroundColor = Color(light = "#ffffff", dark = "#000000"),
+            url = "new.png",
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Crop,
+        )
+        val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        val localMonster = createMonster(imageData = MonsterImageData(
+            backgroundColor = Color(light = "#ffffff", dark = "#000000"),
+            url = "old.png",
+            isHorizontal = false,
+        ))
+        val currentLocalMonsterImage = MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = Color(light = "#ffffff", dark = "#000000"),
+            imageUrl = "other.png",
+            isHorizontalImage = false,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns localMonster
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns currentLocalMonsterImage
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster = null, emptyList(), null)
+
+        coVerify {
+            monsterImageRepository.saveMonsterImage(
+                MonsterImage(
+                    monsterIndex = monster.index,
+                    backgroundColor = null,
+                    isHorizontalImage = true,
+                    imageUrl = "new.png",
+                    contentScale = MonsterImageContentScale.Crop,
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `invoke When isHorizontalImage matches local monster image value Then saves without isHorizontalImage`() = runTest {
+        val imageData = MonsterImageData(
+            backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+            url = "new.png",
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Crop,
+        )
+        val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        val localMonster = createMonster(imageData = MonsterImageData(
+            backgroundColor = Color(light = "#old", dark = "#000000"),
+            url = "old.png",
+            isHorizontal = true,
+        ))
+        val currentLocalMonsterImage = MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = Color(light = "#diff", dark = "#000000"),
+            imageUrl = "other.png",
+            isHorizontalImage = true,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns localMonster
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns currentLocalMonsterImage
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster = null, emptyList(), null)
+
+        coVerify {
+            monsterImageRepository.saveMonsterImage(
+                MonsterImage(
+                    monsterIndex = monster.index,
+                    backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+                    isHorizontalImage = null,
+                    imageUrl = "new.png",
+                    contentScale = MonsterImageContentScale.Crop,
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `invoke When imageUrl matches local monster image value Then saves without imageUrl`() = runTest {
+        val imageData = MonsterImageData(
+            backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+            url = "same.png",
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Crop,
+        )
+        val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        val localMonster = createMonster(imageData = MonsterImageData(
+            backgroundColor = Color(light = "#old", dark = "#000000"),
+            url = "same.png",
+            isHorizontal = false,
+        ))
+        val currentLocalMonsterImage = MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = Color(light = "#diff", dark = "#000000"),
+            imageUrl = "same.png",
+            isHorizontalImage = false,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns localMonster
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns currentLocalMonsterImage
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Fit)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster = null, emptyList(), null)
+
+        coVerify {
+            monsterImageRepository.saveMonsterImage(
+                MonsterImage(
+                    monsterIndex = monster.index,
+                    backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+                    isHorizontalImage = true,
+                    imageUrl = null,
+                    contentScale = MonsterImageContentScale.Crop,
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `invoke When contentScale matches local monster image value Then saves without contentScale`() = runTest {
+        val imageData = MonsterImageData(
+            backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+            url = "new.png",
+            isHorizontal = true,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
+        val localMonster = createMonster(imageData = MonsterImageData(
+            backgroundColor = Color(light = "#old", dark = "#000000"),
+            url = "old.png",
+            isHorizontal = false,
+            contentScale = MonsterImageContentScale.Fit,
+        ))
+        val currentLocalMonsterImage = MonsterImage(
+            monsterIndex = monster.index,
+            backgroundColor = Color(light = "#diff", dark = "#000000"),
+            imageUrl = "other.png",
+            isHorizontalImage = false,
+            contentScale = MonsterImageContentScale.Fit,
+        )
+        coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns localMonster
+        coEvery { monsterImageRepository.getLocalMonsterImage(any()) } returns currentLocalMonsterImage
+        every { getAppearanceSettings() } returns flowOf(
+            AppearanceSettings(defaultLightBackground = "", defaultDarkBackground = "", imageContentScale = AppSettingsImageContentScale.Crop)
+        )
+        every { saveMonstersUseCase(any()) } returns flowOf(Unit)
+        every { saveMonstersLoreUseCase(any(), any()) } returns flowOf(Unit)
+
+        useCase(monster, previousMonster = null, emptyList(), null)
+
+        coVerify {
+            monsterImageRepository.saveMonsterImage(
+                MonsterImage(
+                    monsterIndex = monster.index,
+                    backgroundColor = Color(light = "#ff0000", dark = "#000000"),
+                    isHorizontalImage = true,
+                    imageUrl = "new.png",
+                    contentScale = null,
+                )
+            )
+        }
+    }
+
+    @Test
     fun `invoke When lore entries changed Then saves lore with Edited status`() = runTest {
         val monster = createMonster(status = MonsterStatus.Edited)
         val newEntries = listOf(MonsterLoreEntry(index = "entry-1", description = "New lore"))
