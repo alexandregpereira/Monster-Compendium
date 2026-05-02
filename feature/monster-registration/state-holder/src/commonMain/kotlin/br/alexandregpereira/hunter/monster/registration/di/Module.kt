@@ -65,6 +65,8 @@ val monsterRegistrationModule = module {
             monsterImageRepository = get(),
             saveMonstersLoreUseCase = get(),
             monsterLocalRepository = get(),
+            resetMonsterImage = get(),
+            getAppearanceSettings = get(),
         )
     }
     single<MonsterRegistrationFileManager> {

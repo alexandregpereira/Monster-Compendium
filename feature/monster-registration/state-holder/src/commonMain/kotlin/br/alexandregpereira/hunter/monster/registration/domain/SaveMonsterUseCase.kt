@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.registration.domain
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImage
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
@@ -26,8 +27,12 @@ import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
+import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
+import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
+import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 
 internal fun interface SaveMonsterUseCase {
     suspend operator fun invoke(
@@ -43,6 +48,8 @@ internal class SaveMonsterUseCaseImpl(
     private val monsterImageRepository: MonsterImageRepository,
     private val saveMonstersLoreUseCase: SaveMonstersLoreUseCase,
     private val monsterLocalRepository: MonsterLocalRepository,
+    private val resetMonsterImage: ResetMonsterImage,
+    private val getAppearanceSettings: GetAppearanceSettings,
 ) : SaveMonsterUseCase {
 
     override suspend fun invoke(
@@ -52,19 +59,36 @@ internal class SaveMonsterUseCaseImpl(
         originalMonsterLore: MonsterLore?,
     ) {
         val currentLocalMonster = getCurrentLocalMonster(monster.index)
-        val newMonster = monster
-            .changeStatus(previousMonster)
+        monster.changeStatus(previousMonster)
             .rollbackImageData(currentLocalMonster)
+            .let { newMonster ->
+                saveMonsters(monsters = listOf(newMonster)).collect()
+                saveMonsterLore(newMonster, monsterLoreEntries, originalMonsterLore)
+            }
 
-        saveMonsters(monsters = listOf(newMonster)).collect()
-        saveMonsterLore(newMonster, monsterLoreEntries, originalMonsterLore)
+        saveMonsterImage(
+            previousMonster = previousMonster,
+            monster = monster,
+            currentLocalMonster = currentLocalMonster,
+        )
+    }
 
+    private suspend fun saveMonsterImage(
+        previousMonster: Monster?,
+        monster: Monster,
+        currentLocalMonster: Monster?,
+    ) {
         val previousImageData = previousMonster?.imageData
         val newImageData = monster.imageData
         val alreadyExistMonster = currentLocalMonster != null
         if (alreadyExistMonster && previousImageData != newImageData) {
-            monsterImageRepository.saveMonsterImage(
-                monster.toMonsterImage()
+            val currentLocalMonsterImage = monsterImageRepository.getLocalMonsterImage(
+                monsterIndex = monster.index
+            )
+            saveMonsterImageIfIsDifferent(
+                newMonster = monster,
+                currentLocalMonster = currentLocalMonster,
+                currentLocalMonsterImage = currentLocalMonsterImage,
             )
         }
     }
@@ -77,13 +101,14 @@ internal class SaveMonsterUseCaseImpl(
             imageData = originalImageData ?: this.imageData
         )
         return when (this.status) {
-            MonsterStatus.Original ->  {
+            MonsterStatus.Original -> {
                 val status = if (monsterWithoutImageDataToCompare != previousMonster) {
                     MonsterStatus.Edited
                 } else MonsterStatus.Original
 
                 this.copy(status = status)
             }
+
             MonsterStatus.Edited,
             MonsterStatus.Imported,
             MonsterStatus.Clone -> this
@@ -127,13 +152,81 @@ internal class SaveMonsterUseCaseImpl(
         ).collect()
     }
 
-    private fun Monster.toMonsterImage(): MonsterImage {
-        return MonsterImage(
-            monsterIndex = index,
-            backgroundColor = imageData.backgroundColor,
-            isHorizontalImage = imageData.isHorizontal,
-            imageUrl = imageData.url,
-            contentScale = imageData.contentScale,
+    private suspend fun saveMonsterImageIfIsDifferent(
+        newMonster: Monster,
+        currentLocalMonster: Monster,
+        currentLocalMonsterImage: MonsterImage?,
+    ) {
+        val imageData = newMonster.imageData
+        val backgroundColor = imageData.backgroundColor.takeImageValueIfIsDifferent(
+            currentLocalMonsterValue = currentLocalMonster.imageData.backgroundColor,
+            currentLocalMonsterImageValue = currentLocalMonsterImage?.backgroundColor,
         )
+        val isHorizontalImage = imageData.isHorizontal.takeImageValueIfIsDifferent(
+            currentLocalMonsterValue = currentLocalMonster.imageData.isHorizontal,
+            currentLocalMonsterImageValue = currentLocalMonsterImage?.isHorizontalImage,
+        )
+        val imageUrl = imageData.url.takeImageValueIfIsDifferent(
+            currentLocalMonsterValue = currentLocalMonster.imageData.url,
+            currentLocalMonsterImageValue = currentLocalMonsterImage?.imageUrl,
+        )
+        val currentImageContentScaleFromSettings = getAppearanceSettings()
+            .firstOrNull()
+            ?.imageContentScale
+            ?.toImageContentScale()
+        val contentScale = imageData.contentScale.takeImageValueIfIsDifferent(
+            currentLocalMonsterValue = currentLocalMonster.imageData.contentScale,
+            currentLocalMonsterImageValue = currentLocalMonsterImage?.contentScale,
+            currentValueFromSettings = currentImageContentScaleFromSettings,
+        )
+
+        if (backgroundColor == null &&
+            isHorizontalImage == null &&
+            imageUrl == null &&
+            contentScale == null &&
+            currentLocalMonsterImage != null
+        ) {
+            resetMonsterImage(monsterIndex = newMonster.index)
+        } else {
+            val newMonsterImage = MonsterImage(
+                monsterIndex = newMonster.index,
+                backgroundColor = backgroundColor,
+                isHorizontalImage = isHorizontalImage,
+                imageUrl = imageUrl,
+                contentScale = contentScale,
+            )
+            monsterImageRepository.saveMonsterImage(newMonsterImage)
+        }
+    }
+
+    private fun <Value> Value.takeImageValueIfIsDifferent(
+        currentLocalMonsterValue: Value?,
+        currentLocalMonsterImageValue: Value?,
+        currentValueFromSettings: Value? = null,
+    ): Value? {
+        return this.let { value ->
+            val currentLocalMonsterOrSettingsValue = currentLocalMonsterValue
+                ?: currentValueFromSettings
+            if (currentLocalMonsterImageValue == null) {
+                value.takeIf {
+                    it != currentLocalMonsterOrSettingsValue
+                }
+            } else {
+                val newValue = value.takeIf {
+                    it != currentLocalMonsterImageValue
+                } ?: currentLocalMonsterImageValue
+
+                newValue.takeIf {
+                    it != currentLocalMonsterOrSettingsValue
+                }
+            }
+        }
+    }
+
+    private fun AppSettingsImageContentScale.toImageContentScale(): MonsterImageContentScale? {
+        return when (this) {
+            AppSettingsImageContentScale.Fit -> MonsterImageContentScale.Fit
+            AppSettingsImageContentScale.Crop -> MonsterImageContentScale.Crop
+        }
     }
 }

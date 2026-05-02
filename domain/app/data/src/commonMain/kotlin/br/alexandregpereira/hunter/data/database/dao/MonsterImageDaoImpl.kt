@@ -24,6 +24,12 @@ internal class MonsterImageDaoImpl(
         }
     }
 
+    override suspend fun getMonsterImage(monsterIndex: String): MonsterImageEntity? {
+        return monsterImageQueries.getMonsterImage(monsterIndex)
+            .executeAsOneOrNull()
+            ?.toLocalEntity()
+    }
+
     override suspend fun insert(
         monsterImages: List<MonsterImageEntity>
     ) = mutex.withLock {
