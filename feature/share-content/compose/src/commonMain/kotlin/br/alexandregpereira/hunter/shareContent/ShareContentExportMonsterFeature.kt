@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.shareContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,8 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Export
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
@@ -72,12 +71,10 @@ fun ShareContentExportMonsterFeature(
         opened = isOpen,
         onClose = { isOpen = false },
     ) {
-        val stateHolder = koinInject<ShareContentStateHolder>()
-        val clipboardManager = LocalClipboardManager.current
+        val stateHolder = rememberStateHolder()
         LaunchedEffect(monsterIndexes) {
             stateHolder.fetchMonsterContentToExport(
                 monsterIndexes = monsterIndexes,
-                actualClipboardContent = clipboardManager.getText()?.text
             )
         }
 
@@ -86,11 +83,7 @@ fun ShareContentExportMonsterFeature(
 
         CompositionLocalProvider(LocalStrings provides state.strings) {
             ShareContentExportScreen(
-                contentToExportShort = state.contentToExportShort,
-                exportCopyButtonText = state.exportCopyButtonText,
-                exportCopyButtonEnabled = state.exportCopyButtonEnabled,
-                onExport = stateHolder::onExport,
-                onExportToFile = { stateHolder.onExportToFile(monsterIndexes) },
+                onExportToFile = { stateHolder.onExportToFile() },
             )
         }
 
@@ -101,9 +94,6 @@ fun ShareContentExportMonsterFeature(
         LaunchedEffect(stateHolder.action) {
             stateHolder.action.collect { action ->
                 when (action) {
-                    is ShareContentUiEvent.CopyContentUiToExport -> {
-                        clipboardManager.setText(AnnotatedString(action.content))
-                    }
                     is ShareContentUiEvent.ShareFile -> {
                         fileUriToShare = action.filePath
                     }
@@ -111,4 +101,17 @@ fun ShareContentExportMonsterFeature(
             }
         }
     }
+}
+
+@Composable
+internal fun rememberStateHolder(): ShareContentStateHolder {
+    val stateHolder = koinInject<ShareContentStateHolder>()
+
+    DisposableEffect(stateHolder) {
+        onDispose {
+            stateHolder.onCleared()
+        }
+    }
+
+    return stateHolder
 }

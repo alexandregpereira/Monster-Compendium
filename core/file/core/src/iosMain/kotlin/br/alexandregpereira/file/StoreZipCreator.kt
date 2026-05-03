@@ -19,57 +19,72 @@ package br.alexandregpereira.file
 
 // Pure-Kotlin STORE-mode (no compression) ZIP archive with a single entry.
 // Used on platforms that lack java.util.zip (e.g. iOS Kotlin/Native).
-internal fun createStoreZip(content: ByteArray, entryName: String): ByteArray {
-    val nameBytes = entryName.encodeToByteArray()
-    val crc = crc32(content)
-    val size = content.size
-    val centralDirOffset = 30 + nameBytes.size + size
-
+internal fun createStoreZip(
+    zipEntryFiles: List<ZipFile>,
+): ByteArray {
     val zip = ZipBuilder()
+    val localHeaderOffsets = IntArray(zipEntryFiles.size)
 
-    // Local file header
-    zip.le32(0x04034b50)
-    zip.le16(20)
-    zip.le16(0)
-    zip.le16(0) // STORE
-    zip.le16(0)
-    zip.le16(0)
-    zip.le32(crc)
-    zip.le32(size)
-    zip.le32(size)
-    zip.le16(nameBytes.size)
-    zip.le16(0)
-    zip.bytes(nameBytes)
-    zip.bytes(content)
+    zipEntryFiles.forEachIndexed { index, entry ->
+        val nameBytes = entry.name.encodeToByteArray()
+        val crc = crc32(entry.content)
+        val size = entry.content.size
 
-    // Central directory file header
-    zip.le32(0x02014b50)
-    zip.le16(20)
-    zip.le16(20)
-    zip.le16(0)
-    zip.le16(0) // STORE
-    zip.le16(0)
-    zip.le16(0)
-    zip.le32(crc)
-    zip.le32(size)
-    zip.le32(size)
-    zip.le16(nameBytes.size)
-    zip.le16(0)
-    zip.le16(0)
-    zip.le16(0)
-    zip.le16(0)
-    zip.le32(0)
-    zip.le32(0) // offset of local header
-    zip.bytes(nameBytes)
+        localHeaderOffsets[index] = zip.size()
+
+        // Local file header
+        zip.le32(0x04034b50)
+        zip.le16(20)
+        zip.le16(0)
+        zip.le16(0) // STORE
+        zip.le16(0)
+        zip.le16(0)
+        zip.le32(crc)
+        zip.le32(size)
+        zip.le32(size)
+        zip.le16(nameBytes.size)
+        zip.le16(0)
+        zip.bytes(nameBytes)
+        zip.bytes(entry.content)
+    }
+
+    val centralDirOffset = zip.size()
+
+    zipEntryFiles.forEachIndexed { index, entry ->
+        val nameBytes = entry.name.encodeToByteArray()
+        val crc = crc32(entry.content)
+        val size = entry.content.size
+
+        // Central directory file header
+        zip.le32(0x02014b50)
+        zip.le16(20)
+        zip.le16(20)
+        zip.le16(0)
+        zip.le16(0) // STORE
+        zip.le16(0)
+        zip.le16(0)
+        zip.le32(crc)
+        zip.le32(size)
+        zip.le32(size)
+        zip.le16(nameBytes.size)
+        zip.le16(0)
+        zip.le16(0)
+        zip.le16(0)
+        zip.le16(0)
+        zip.le32(0)
+        zip.le32(localHeaderOffsets[index])
+        zip.bytes(nameBytes)
+    }
 
     val centralDirSize = zip.size() - centralDirOffset
+    val entryCount = zipEntryFiles.size
 
     // End of central directory
     zip.le32(0x06054b50)
     zip.le16(0)
     zip.le16(0)
-    zip.le16(1)
-    zip.le16(1)
+    zip.le16(entryCount)
+    zip.le16(entryCount)
     zip.le32(centralDirSize)
     zip.le32(centralDirOffset)
     zip.le16(0)

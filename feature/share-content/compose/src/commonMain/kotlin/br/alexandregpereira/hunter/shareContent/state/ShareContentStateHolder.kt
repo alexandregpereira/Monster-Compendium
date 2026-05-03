@@ -19,8 +19,11 @@ package br.alexandregpereira.hunter.shareContent.state
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.shareContent.domain.ContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFile
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
@@ -35,6 +38,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class ShareContentStateHolder(
     private val dispatcher: CoroutineDispatcher,
@@ -44,9 +49,12 @@ internal class ShareContentStateHolder(
     private val getMonstersContentToExport: GetMonstersContentToExport,
     private val exportMonstersContentToFile: ExportMonstersContentToFile,
     private val analytics: Analytics,
+    private val fileManager: FileManager,
 ) : UiModel<ShareContentState>(
     ShareContentState(strings = appLocalization.getLanguage().getStrings())
 ), MutableActionHandler<ShareContentUiEvent> by MutableActionHandler() {
+
+    private var contentToExport: ContentToExport? = null
 
     init {
         appLocalization.languageFlow
@@ -81,33 +89,41 @@ internal class ShareContentStateHolder(
         copy(contentToImport = content.trim(), importError = null)
     }
 
-    fun fetchMonsterContentToExport(monsterIndexes: List<String>, actualClipboardContent: String?) {
-        val contentToExportFlow = getMonstersContentToExport(monsterIndexes)
-        contentToExportFlow
+    fun fetchMonsterContentToExport(
+        monsterIndexes: List<String>,
+    ) {
+        getMonstersContentToExport(monsterIndexes)
             .flowOn(dispatcher)
             .onEach { contentToExport ->
+                this.contentToExport = contentToExport
                 setState {
                     copy(
-                        contentToExport = contentToExport,
-                        exportCopyButtonEnabled = contentToExport != actualClipboardContent,
+                        exportButtonEnabled = true,
                     )
                 }
             }
             .launchIn(scope)
     }
 
-    fun onExport() {
-        setState { copy(exportCopyButtonEnabled = false) }
-        sendAction(ShareContentUiEvent.CopyContentUiToExport(state.value.contentToExport))
-    }
-
-    fun onExportToFile(monsterIndexes: List<String>) {
+    fun onExportToFile() {
         flow {
-            emit(exportMonstersContentToFile(monsterIndexes))
+            val contentToExport = contentToExport ?: throw IllegalStateException(
+                "contentToExport must not be null"
+            )
+            emit(exportMonstersContentToFile(contentToExport))
         }.flowOn(dispatcher)
             .onEach { filePath ->
                 sendAction(ShareContentUiEvent.ShareFile(filePath))
             }
             .launchIn(scope)
+    }
+
+    override fun onCleared() {
+        scope.launch {
+            withContext(dispatcher) {
+                fileManager.deleteAllsFilesFromAppStorage(FileType.ZIP)
+            }
+            super.onCleared()
+        }
     }
 }

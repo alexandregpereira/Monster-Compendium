@@ -18,5 +18,5 @@
 package br.alexandregpereira.hunter.shareContent.domain
 
 internal fun interface ExportMonstersContentToFile {
-    suspend operator fun invoke(monsterIndexes: List<String>): String
+    suspend operator fun invoke(contentToExport: ContentToExport): String
 }

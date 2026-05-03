@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.singleOrNull
 
 internal fun interface GetMonstersContentEditedToExport {
 
-    operator fun invoke(): Flow<String>
+    operator fun invoke(): Flow<ContentToExport>
 }
 
 internal fun GetMonstersContentEditedToExport(
@@ -42,7 +42,11 @@ internal fun GetMonstersContentEditedToExport(
 ): GetMonstersContentEditedToExport = GetMonstersContentEditedToExport {
     val status = setOf(MonsterStatus.Edited, MonsterStatus.Clone, MonsterStatus.Imported)
     getMonstersByStatus(status).map { monsters ->
-        monsters.getContentToExport(getMonstersLore, getSpellsByIds)
+        val contentJson = monsters.getContentToExport(getMonstersLore, getSpellsByIds)
+        ContentToExport(
+            contentJson = contentJson,
+            monsterImagePaths = monsters.getImagePaths(),
+        )
     }
 }
 

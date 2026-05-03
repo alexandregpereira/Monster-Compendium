@@ -26,29 +26,16 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.AppButton
-import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 
 @Composable
 internal fun ShareContentExportScreen(
-    contentToExportShort: String,
-    exportCopyButtonText: String,
-    exportCopyButtonEnabled: Boolean,
-    onExport: () -> Unit,
     onExportToFile: () -> Unit,
 ) = Column {
     Spacer(modifier = Modifier.height(16.dp))
 
     ScreenHeader(title = strings.exportTitle)
-
-    Spacer(modifier = Modifier.height(16.dp))
-
-    AppTextField(
-        text = contentToExportShort,
-        label = strings.contentToImportLabel,
-        enabled = false,
-    )
 
     Spacer(modifier = Modifier.height(32.dp))
 
@@ -62,10 +49,6 @@ internal fun ShareContentExportScreen(
 @Composable
 private fun ShareContentExportScreenPreview() = PreviewWindow {
     ShareContentExportScreen(
-        contentToExportShort = "contentToExportShort",
-        exportCopyButtonText = "Button Text",
-        exportCopyButtonEnabled = true,
-        onExport = {},
         onExportToFile = {},
     )
 }

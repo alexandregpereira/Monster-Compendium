@@ -18,25 +18,35 @@
 package br.alexandregpereira.hunter.shareContent.domain
 
 import br.alexandregpereira.file.FileManager
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import br.alexandregpereira.file.ZipFile
 import kotlin.time.Clock
 
 internal class ExportMonstersContentToFileUseCase(
-    private val getMonstersContentToExport: GetMonstersContentToExport,
     private val fileManager: FileManager,
 ) : ExportMonstersContentToFile {
 
     override suspend fun invoke(
-        monsterIndexes: List<String>
+        contentToExport: ContentToExport,
     ): String {
-        return getMonstersContentToExport(monsterIndexes).map { contentJson ->
-            val timestamp = Clock.System.now().epochSeconds
-            fileManager.createZipFile(
-                content = contentJson,
-                jsonEntryName = "content-$timestamp.json",
-                zipFileName = "content-$timestamp.compendium",
-            )
-        }.first()
+        val timestamp = Clock.System.now().epochSeconds
+        val jsonEntry = ZipFile(
+            name = "content-$timestamp.json",
+            content = contentToExport.contentJson.encodeToByteArray(),
+        )
+        val imageEntries = contentToExport.monsterImagePaths.mapNotNull { path ->
+            val image = runCatching {
+                fileManager.getFileFromAppStorage(path)
+            }.getOrNull()
+            image?.let {
+                ZipFile(
+                    name = path.substringAfterLast('/'),
+                    content = it,
+                )
+            }
+        }
+        return fileManager.createZipFile(
+            zipEntryFiles = listOf(jsonEntry) + imageEntries,
+            zipFileName = "content-$timestamp.compendium",
+        )
     }
 }

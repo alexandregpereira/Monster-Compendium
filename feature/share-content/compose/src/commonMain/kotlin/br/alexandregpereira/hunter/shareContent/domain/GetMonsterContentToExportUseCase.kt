@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.shareContent.domain
 
+import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
@@ -25,20 +26,44 @@ import kotlinx.coroutines.flow.map
 
 internal fun interface GetMonstersContentToExport {
 
-    operator fun invoke(monsterIndexes: List<String>): Flow<String>
+    operator fun invoke(monsterIndexes: List<String>): Flow<ContentToExport>
 }
 
-internal fun GetMonstersContentToExport(
-    getMonsters: GetMonstersByIdsUseCase,
-    getMonstersLore: GetMonstersLoreByIdsUseCase,
-    getSpellsByIds: GetSpellsByIdsUseCase,
-    getMonstersContentEditedToExport: GetMonstersContentEditedToExport,
-): GetMonstersContentToExport = GetMonstersContentToExport { monsterIndexes ->
-    if (monsterIndexes.isEmpty()) {
-        getMonstersContentEditedToExport()
-    } else {
-        getMonsters(monsterIndexes).map { monsters ->
-            monsters.getContentToExport(getMonstersLore, getSpellsByIds)
+internal class GetMonstersContentToExportUseCase(
+    private val getMonsters: GetMonstersByIdsUseCase,
+    private val getMonstersLore: GetMonstersLoreByIdsUseCase,
+    private val getSpellsByIds: GetSpellsByIdsUseCase,
+    private val getMonstersContentEditedToExport: GetMonstersContentEditedToExport,
+): GetMonstersContentToExport {
+
+    override fun invoke(monsterIndexes: List<String>): Flow<ContentToExport> {
+        return if (monsterIndexes.isEmpty()) {
+            getMonstersContentEditedToExport()
+        } else {
+            getMonsters(monsterIndexes).map { monsters ->
+                val contentJson = monsters.getContentToExport(
+                    getMonstersLore,
+                    getSpellsByIds
+                )
+                ContentToExport(
+                    contentJson = contentJson,
+                    monsterImagePaths = monsters.getImagePaths(),
+                )
+            }
         }
     }
 }
+
+internal fun List<Monster>.getImagePaths(): List<String> {
+    return filter {
+        it.imageData.url.startsWith("file://")
+    }.map {
+        it.imageData.url
+    }
+}
+
+
+internal data class ContentToExport(
+    val contentJson: String,
+    val monsterImagePaths: List<String>,
+)

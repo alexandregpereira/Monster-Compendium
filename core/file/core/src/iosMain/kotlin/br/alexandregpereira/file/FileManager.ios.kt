@@ -54,14 +54,10 @@ internal class IosFileManager(
     }
 
     override suspend fun createZipFile(
-        content: String,
-        jsonEntryName: String,
-        zipFileName: String
+        zipEntryFiles: List<ZipFile>,
+        zipFileName: String,
     ): String = withContext(dispatcher) {
-        val zipBytes = createStoreZip(
-            content.encodeToByteArray(),
-            jsonEntryName,
-        )
+        val zipBytes = createStoreZip(zipEntryFiles)
         saveFileToAppStorage(
             bytes = zipBytes,
             fileName = zipFileName,
@@ -73,6 +69,24 @@ internal class IosFileManager(
         withContext(dispatcher) {
             val filePath = "${filesDirectory(fileFolder = fileType.folder)}/$fileName"
             NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
+        }
+    }
+
+    override suspend fun deleteAllsFilesFromAppStorage(
+        fileType: FileType
+    ): Unit = withContext(dispatcher) {
+        val folderPath = filesDirectory(fileFolder = fileType.folder)
+        NSFileManager.defaultManager.removeItemAtPath(folderPath, error = null)
+    }
+
+    override suspend fun getFileFromAppStorage(filePath: String): ByteArray = withContext(dispatcher) {
+        val path = filePath.removePrefix("file://")
+        val data = NSFileManager.defaultManager.contentsAtPath(path)
+            ?: error("File not found: $path")
+        ByteArray(data.length.toInt()).also { bytes ->
+            bytes.usePinned { pinned ->
+                platform.posix.memcpy(pinned.addressOf(0), data.bytes, data.length)
+            }
         }
     }
 

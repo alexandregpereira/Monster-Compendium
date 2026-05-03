@@ -44,15 +44,16 @@ internal class AndroidFileManager(
     }
 
     override suspend fun createZipFile(
-        content: String,
-        jsonEntryName: String,
-        zipFileName: String
+        zipEntryFiles: List<ZipFile>,
+        zipFileName: String,
     ): String = withContext(dispatcher) {
         val folder = filesDirectory(fileFolder = FileType.ZIP.folder).apply { mkdirs() }
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
-            zos.putNextEntry(ZipEntry(jsonEntryName))
-            zos.write(content.toByteArray(Charsets.UTF_8))
+            zipEntryFiles.forEach {
+                zos.putNextEntry(ZipEntry(it.name))
+                zos.write(it.content)
+            }
             zos.closeEntry()
         }
         "file://${zipFile.absolutePath}"
@@ -63,6 +64,16 @@ internal class AndroidFileManager(
             val dir = filesDirectory(fileFolder = fileType.folder)
             File(dir, fileName).delete()
         }
+    }
+
+    override suspend fun deleteAllsFilesFromAppStorage(
+        fileType: FileType,
+    ): Unit = withContext(dispatcher) {
+        filesDirectory(fileFolder = fileType.folder).deleteRecursively()
+    }
+
+    override suspend fun getFileFromAppStorage(filePath: String): ByteArray = withContext(dispatcher) {
+        File(filePath.removePrefix("file://")).readBytes()
     }
 
     override suspend fun getFileNamesFromAppStorage(

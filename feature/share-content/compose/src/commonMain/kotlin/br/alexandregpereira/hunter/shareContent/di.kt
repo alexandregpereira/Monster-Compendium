@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFi
 import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFileUseCase
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentEditedToExport
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExportUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.state.ShareContentStateHolder
 import org.koin.dsl.module
@@ -29,8 +30,30 @@ import org.koin.dsl.module
 val featureShareContentModule = module {
     single { ShareContentEventDispatcher() }
     factory { ImportContent(get(), get(), get()) }
-    factory { GetMonstersContentToExport(get(), get(), get(), get()) }
+    factory<GetMonstersContentToExport> {
+        GetMonstersContentToExportUseCase(
+            getMonsters = get(),
+            getMonstersLore = get(),
+            getSpellsByIds = get(),
+            getMonstersContentEditedToExport = get()
+        )
+    }
     factory { GetMonstersContentEditedToExport(get(), get(), get()) }
-    factory<ExportMonstersContentToFile> { ExportMonstersContentToFileUseCase(get(), get()) }
-    single { ShareContentStateHolder(get(), get(), get(), get(), get(), get(), get()) }
+    factory<ExportMonstersContentToFile> {
+        ExportMonstersContentToFileUseCase(
+            fileManager = get(),
+        )
+    }
+    factory {
+        ShareContentStateHolder(
+            dispatcher = get(),
+            appLocalization = get(),
+            eventDispatcher = get(),
+            importContent = get(),
+            getMonstersContentToExport = get(),
+            exportMonstersContentToFile = get(),
+            analytics = get(),
+            fileManager = get(),
+        )
+    }
 }

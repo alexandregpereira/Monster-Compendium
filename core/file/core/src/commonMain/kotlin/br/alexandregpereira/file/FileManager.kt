@@ -26,15 +26,23 @@ interface FileManager {
     ): String
 
     suspend fun createZipFile(
-        content: String,
-        jsonEntryName: String,
+        zipEntryFiles: List<ZipFile>,
         zipFileName: String,
     ): String
 
+    suspend fun getFileFromAppStorage(filePath: String): ByteArray
+
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
+
+    suspend fun deleteAllsFilesFromAppStorage(fileType: FileType)
 
     suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
 }
+
+class ZipFile(
+    val name: String,
+    val content: ByteArray,
+)
 
 enum class FileType(
     val folder: String
