@@ -21,7 +21,11 @@ import android.app.Application
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.BufferedOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 internal class AndroidFileManager(
     private val app: Application,
@@ -33,15 +37,30 @@ internal class AndroidFileManager(
         fileName: String,
         fileType: FileType
     ): String = withContext(dispatcher) {
-        val dir = filesDirectory(fileFolder = getFileFolder(fileType)).apply { mkdirs() }
+        val dir = filesDirectory(fileFolder = fileType.folder).apply { mkdirs() }
         "file://" + File(dir, fileName).also {
             it.writeBytes(bytes)
         }.absolutePath
     }
 
+    override suspend fun createZipFile(
+        content: String,
+        jsonEntryName: String,
+        zipFileName: String
+    ): String = withContext(dispatcher) {
+        val folder = filesDirectory(fileFolder = FileType.ZIP.folder).apply { mkdirs() }
+        val zipFile = File(folder, zipFileName)
+        ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
+            zos.putNextEntry(ZipEntry(jsonEntryName))
+            zos.write(content.toByteArray(Charsets.UTF_8))
+            zos.closeEntry()
+        }
+        "file://${zipFile.absolutePath}"
+    }
+
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
         withContext(dispatcher) {
-            val dir = filesDirectory(fileFolder = getFileFolder(fileType))
+            val dir = filesDirectory(fileFolder = fileType.folder)
             File(dir, fileName).delete()
         }
     }
@@ -49,7 +68,7 @@ internal class AndroidFileManager(
     override suspend fun getFileNamesFromAppStorage(
         fileType: FileType,
     ): List<String> = withContext(dispatcher) {
-        val folder = filesDirectory(fileFolder = getFileFolder(fileType))
+        val folder = filesDirectory(fileFolder = fileType.folder)
         folder.listFiles()?.mapNotNull { file ->
             file.name
         }.orEmpty()

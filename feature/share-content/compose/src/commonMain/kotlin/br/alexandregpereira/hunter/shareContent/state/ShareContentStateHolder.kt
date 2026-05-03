@@ -21,6 +21,7 @@ import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFile
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentException
@@ -30,6 +31,7 @@ import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -40,6 +42,7 @@ internal class ShareContentStateHolder(
     private val eventDispatcher: ShareContentEventDispatcher,
     private val importContent: ImportContent,
     private val getMonstersContentToExport: GetMonstersContentToExport,
+    private val exportMonstersContentToFile: ExportMonstersContentToFile,
     private val analytics: Analytics,
 ) : UiModel<ShareContentState>(
     ShareContentState(strings = appLocalization.getLanguage().getStrings())
@@ -93,8 +96,18 @@ internal class ShareContentStateHolder(
             .launchIn(scope)
     }
 
-    fun onCopyContentToExport() {
+    fun onExport() {
         setState { copy(exportCopyButtonEnabled = false) }
         sendAction(ShareContentUiEvent.CopyContentUiToExport(state.value.contentToExport))
+    }
+
+    fun onExportToFile(monsterIndexes: List<String>) {
+        flow {
+            emit(exportMonstersContentToFile(monsterIndexes))
+        }.flowOn(dispatcher)
+            .onEach { filePath ->
+                sendAction(ShareContentUiEvent.ShareFile(filePath))
+            }
+            .launchIn(scope)
     }
 }

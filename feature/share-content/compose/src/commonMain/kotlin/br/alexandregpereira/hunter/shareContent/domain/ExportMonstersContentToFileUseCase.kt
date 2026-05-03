@@ -15,25 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster
+package br.alexandregpereira.hunter.shareContent.domain
 
 import br.alexandregpereira.file.FileManager
-import br.alexandregpereira.file.FileType
-import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
-import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlin.time.Clock
 
-internal class ResetMonsterImageImpl(
-    private val monsterImageRepository: MonsterImageRepository,
+internal class ExportMonstersContentToFileUseCase(
+    private val getMonstersContentToExport: GetMonstersContentToExport,
     private val fileManager: FileManager,
-): ResetMonsterImage {
+) : ExportMonstersContentToFile {
 
-    override suspend fun invoke(monsterIndex: String) {
-        monsterImageRepository.deleteMonsterImage(monsterIndex)
-        val fileType = FileType.IMAGE
-        fileManager.getFileNamesFromAppStorage(fileType).filter { fileName ->
-            fileName.startsWith(monsterIndex)
-        }.forEach { fileName ->
-            fileManager.deleteFileFromAppStorage(fileName = fileName, fileType)
-        }
+    override suspend fun invoke(
+        monsterIndexes: List<String>
+    ): String {
+        return getMonstersContentToExport(monsterIndexes).map { contentJson ->
+            val timestamp = Clock.System.now().epochSeconds
+            fileManager.createZipFile(
+                content = contentJson,
+                jsonEntryName = "content-$timestamp.json",
+                zipFileName = "content-$timestamp.compendium",
+            )
+        }.first()
     }
 }

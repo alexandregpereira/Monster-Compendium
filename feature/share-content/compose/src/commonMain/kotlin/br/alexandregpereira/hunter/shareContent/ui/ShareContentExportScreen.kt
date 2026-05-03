@@ -17,38 +17,55 @@
 
 package br.alexandregpereira.hunter.shareContent.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.shareContent.state.ShareContentState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
 
 @Composable
 internal fun ShareContentExportScreen(
-    state: ShareContentState,
-    onCopy: () -> Unit,
-) {
+    contentToExportShort: String,
+    exportCopyButtonText: String,
+    exportCopyButtonEnabled: Boolean,
+    onExport: () -> Unit,
+    onExportToFile: () -> Unit,
+) = Column {
     Spacer(modifier = Modifier.height(16.dp))
 
-    ScreenHeader(title = state.strings.exportTitle)
+    ScreenHeader(title = strings.exportTitle)
 
     Spacer(modifier = Modifier.height(16.dp))
 
     AppTextField(
-        text = state.contentToExportShort,
-        label = state.strings.contentToImportLabel,
+        text = contentToExportShort,
+        label = strings.contentToImportLabel,
         enabled = false,
     )
 
     Spacer(modifier = Modifier.height(32.dp))
 
     AppButton(
-        text = state.exportCopyButtonText,
-        enabled = state.exportCopyButtonEnabled,
-        onClick = onCopy,
+        text = strings.shareButton,
+        onClick = onExportToFile,
+    )
+}
+
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun ShareContentExportScreenPreview() = PreviewWindow {
+    ShareContentExportScreen(
+        contentToExportShort = "contentToExportShort",
+        exportCopyButtonText = "Button Text",
+        exportCopyButtonEnabled = true,
+        onExport = {},
+        onExportToFile = {},
     )
 }

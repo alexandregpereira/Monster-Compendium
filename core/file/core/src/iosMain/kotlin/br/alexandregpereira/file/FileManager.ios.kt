@@ -33,24 +33,18 @@ import platform.Foundation.NSUserDomainMask
 import platform.Foundation.create
 import platform.Foundation.writeToFile
 
-@OptIn(ExperimentalForeignApi::class)
+@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 internal class IosFileManager(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FileManager {
 
-    @OptIn(BetaInteropApi::class)
     override suspend fun saveFileToAppStorage(
         bytes: ByteArray,
         fileName: String,
         fileType: FileType,
     ): String = withContext(dispatcher) {
-        val filesDir = filesDirectory(fileFolder = getFileFolder(fileType))
-        NSFileManager.defaultManager.createDirectoryAtPath(
-            filesDir,
-            withIntermediateDirectories = true,
-            attributes = null,
-            error = null,
-        )
+        val filesDir = filesDirectory(fileFolder = fileType.folder)
+        createDirectoryAtPath(filesDir)
         val filePath = "$filesDir/$fileName"
         @OptIn(ExperimentalForeignApi::class)
         bytes.usePinned { pinned ->
@@ -59,9 +53,25 @@ internal class IosFileManager(
         "file://$filePath"
     }
 
+    override suspend fun createZipFile(
+        content: String,
+        jsonEntryName: String,
+        zipFileName: String
+    ): String = withContext(dispatcher) {
+        val zipBytes = createStoreZip(
+            content.encodeToByteArray(),
+            jsonEntryName,
+        )
+        saveFileToAppStorage(
+            bytes = zipBytes,
+            fileName = zipFileName,
+            fileType = FileType.ZIP,
+        )
+    }
+
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
         withContext(dispatcher) {
-            val filePath = "${filesDirectory(fileFolder = getFileFolder(fileType))}/$fileName"
+            val filePath = "${filesDirectory(fileFolder = fileType.folder)}/$fileName"
             NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
         }
     }
@@ -69,7 +79,7 @@ internal class IosFileManager(
     override suspend fun getFileNamesFromAppStorage(
         fileType: FileType,
     ): List<String> = withContext(dispatcher) {
-        val folderPath = filesDirectory(fileFolder = getFileFolder(fileType))
+        val folderPath = filesDirectory(fileFolder = fileType.folder)
         NSFileManager.defaultManager.contentsOfDirectoryAtPath(
             folderPath, error = null
         )?.mapNotNull { file ->
@@ -82,5 +92,14 @@ internal class IosFileManager(
             NSDocumentDirectory, NSUserDomainMask, true
         ).first() as String
         return "$documents/$fileFolder"
+    }
+
+    private fun createDirectoryAtPath(path: String) {
+        NSFileManager.defaultManager.createDirectoryAtPath(
+            path,
+            withIntermediateDirectories = true,
+            attributes = null,
+            error = null,
+        )
     }
 }

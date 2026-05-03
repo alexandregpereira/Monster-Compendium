@@ -19,10 +19,12 @@ package br.alexandregpereira.hunter.shareContent
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -33,6 +35,7 @@ import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexadregpereira.hunter.shareContent.event.exportEvents
 import br.alexandregpereira.hunter.shareContent.state.ShareContentStateHolder
 import br.alexandregpereira.hunter.shareContent.state.ShareContentUiEvent
+import br.alexandregpereira.hunter.shareContent.ui.LocalStrings
 import br.alexandregpereira.hunter.shareContent.ui.ShareContentExportScreen
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import org.koin.compose.koinInject
@@ -55,6 +58,7 @@ fun ShareContentExportMonsterFeature(
                     monsterIndexes = event.monsterIndexes
                     true
                 }
+
                 is Export.OnFinish -> false
             }
         }
@@ -78,16 +82,30 @@ fun ShareContentExportMonsterFeature(
         }
 
         val state by stateHolder.state.collectAsState()
-        ShareContentExportScreen(
-            state = state,
-            onCopy = stateHolder::onCopyContentToExport,
-        )
+        var fileUriToShare by remember { mutableStateOf<String?>(null) }
+
+        CompositionLocalProvider(LocalStrings provides state.strings) {
+            ShareContentExportScreen(
+                contentToExportShort = state.contentToExportShort,
+                exportCopyButtonText = state.exportCopyButtonText,
+                exportCopyButtonEnabled = state.exportCopyButtonEnabled,
+                onExport = stateHolder::onExport,
+                onExportToFile = { stateHolder.onExportToFile(monsterIndexes) },
+            )
+        }
+
+        fileUriToShare?.let { uri ->
+            ShareFileTrigger(filePath = uri) { fileUriToShare = null }
+        }
 
         LaunchedEffect(stateHolder.action) {
             stateHolder.action.collect { action ->
                 when (action) {
                     is ShareContentUiEvent.CopyContentUiToExport -> {
                         clipboardManager.setText(AnnotatedString(action.content))
+                    }
+                    is ShareContentUiEvent.ShareFile -> {
+                        fileUriToShare = action.filePath
                     }
                 }
             }

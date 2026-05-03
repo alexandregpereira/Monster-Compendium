@@ -18,6 +18,8 @@
 package br.alexandregpereira.hunter.shareContent
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFile
+import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFileUseCase
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentEditedToExport
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
@@ -29,5 +31,6 @@ val featureShareContentModule = module {
     factory { ImportContent(get(), get(), get()) }
     factory { GetMonstersContentToExport(get(), get(), get(), get()) }
     factory { GetMonstersContentEditedToExport(get(), get(), get()) }
-    single { ShareContentStateHolder(get(), get(), get(), get(), get(), get()) }
+    factory<ExportMonstersContentToFile> { ExportMonstersContentToFileUseCase(get(), get()) }
+    single { ShareContentStateHolder(get(), get(), get(), get(), get(), get(), get()) }
 }

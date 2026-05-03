@@ -15,9 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.shareContent.state
+package br.alexandregpereira.hunter.shareContent.domain
 
-internal sealed class ShareContentUiEvent {
-    data class CopyContentUiToExport(val content: String) : ShareContentUiEvent()
-    data class ShareFile(val filePath: String) : ShareContentUiEvent()
+internal fun interface ExportMonstersContentToFile {
+    suspend operator fun invoke(monsterIndexes: List<String>): String
 }

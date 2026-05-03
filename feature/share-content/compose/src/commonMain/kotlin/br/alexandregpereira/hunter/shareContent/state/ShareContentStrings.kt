@@ -23,6 +23,7 @@ interface ShareContentStrings {
     val importButton: String
     val copyButton: String
     val copiedButton: String
+    val shareButton: String
     val contentToImportLabel: String
     val importTitle: String
     val exportTitle: String
@@ -34,6 +35,7 @@ internal data class ShareContentEnStrings(
     override val importButton: String = "Import",
     override val copyButton: String = "Copy",
     override val copiedButton: String = "Copied",
+    override val shareButton: String = "Share",
     override val contentToImportLabel: String = "Content",
     override val importTitle: String = "Import Content",
     override val exportTitle: String = "Share Content",
@@ -45,6 +47,7 @@ internal data class ShareContentPtStrings(
     override val importButton: String = "Importar",
     override val copyButton: String = "Copiar",
     override val copiedButton: String = "Copiado",
+    override val shareButton: String = "Compartilhar",
     override val contentToImportLabel: String = "Conteúdo",
     override val importTitle: String = "Importar Conteúdo",
     override val exportTitle: String = "Compartilhar Conteúdo",
@@ -58,6 +61,7 @@ internal data class ShareContentEsStrings(
     override val importButton: String = "Importar",
     override val copyButton: String = "Copiar",
     override val copiedButton: String = "Copiado",
+    override val shareButton: String = "Compartir",
     override val contentToImportLabel: String = "Contenido",
     override val importTitle: String = "Importar Contenido",
     override val exportTitle: String = "Compartir Contenido",

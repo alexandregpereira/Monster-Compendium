@@ -25,17 +25,20 @@ interface FileManager {
         fileType: FileType
     ): String
 
+    suspend fun createZipFile(
+        content: String,
+        jsonEntryName: String,
+        zipFileName: String,
+    ): String
+
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
 
     suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
 }
 
-enum class FileType(val extension: String) {
-    PNG(extension = "png"),
-}
-
-internal fun getFileFolder(fileType: FileType): String {
-    return when (fileType) {
-        FileType.PNG -> "images"
-    }
+enum class FileType(
+    val folder: String
+) {
+    IMAGE(folder = "images"),
+    ZIP(folder = "content"),
 }
