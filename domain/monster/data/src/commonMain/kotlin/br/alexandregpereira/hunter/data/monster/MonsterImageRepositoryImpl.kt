@@ -64,6 +64,10 @@ internal class MonsterImageRepositoryImpl(
         monsterImageDao.deleteMonsterImage(monsterIndex)
     }
 
+    override suspend fun deleteMonsterImages(monsterIndexes: List<String>) {
+        monsterImageDao.deleteMonsterImages(monsterIndexes)
+    }
+
     private fun MonsterImage.toEntity(): MonsterImageEntity {
         return MonsterImageEntity(
             monsterIndex = monsterIndex,

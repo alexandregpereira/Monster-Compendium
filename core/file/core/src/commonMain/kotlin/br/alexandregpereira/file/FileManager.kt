@@ -26,7 +26,7 @@ interface FileManager {
     ): String
 
     suspend fun createZipFile(
-        zipEntryFiles: List<ZipFile>,
+        zipEntryFiles: List<FileEntry>,
         zipFileName: String,
     ): String
 
@@ -37,16 +37,6 @@ interface FileManager {
     suspend fun deleteAllsFilesFromAppStorage(fileType: FileType)
 
     suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
-}
 
-class ZipFile(
-    val name: String,
-    val content: ByteArray,
-)
-
-enum class FileType(
-    val folder: String
-) {
-    IMAGE(folder = "images"),
-    ZIP(folder = "content"),
+    suspend fun extractZipFile(bytes: ByteArray): List<FileEntry>
 }

@@ -15,22 +15,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.shareContent
-
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import java.awt.Desktop
-import java.io.File
-
-@Composable
-internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
-    LaunchedEffect(filePath) {
-        try {
-            val path = filePath.removePrefix("file://")
-            Desktop.getDesktop().open(File(path).parentFile)
-        } catch (_: Exception) {
-            // Desktop open not supported on this platform
-        }
-        onComplete()
+plugins {
+    id("com.android.library")
+    kotlin("multiplatform")
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
+}
+multiplatform {
+    commonMain {
+        api(project(":core:file:core"))
+        implementation(libs.compose.mp.runtime)
+        implementation(libs.filekit.compose)
+        implementation(libs.kotlin.coroutines.core)
     }
+    androidMain()
+    jvmMain()
+    iosMain()
+}
+
+androidLibrary(withCompose = true) {
+    namespace = "br.alexandregpereira.file.compose"
 }

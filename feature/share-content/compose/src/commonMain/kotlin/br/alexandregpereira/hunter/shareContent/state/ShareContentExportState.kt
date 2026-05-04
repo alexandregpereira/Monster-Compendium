@@ -17,6 +17,6 @@
 
 package br.alexandregpereira.hunter.shareContent.state
 
-internal sealed class ShareContentUiEvent {
-    data class ShareFile(val filePath: String) : ShareContentUiEvent()
-}
+internal data class ShareContentExportState(
+    val isOpen: Boolean = false,
+)

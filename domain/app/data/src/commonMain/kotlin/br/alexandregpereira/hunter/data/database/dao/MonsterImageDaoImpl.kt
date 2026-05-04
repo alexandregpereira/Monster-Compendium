@@ -48,6 +48,12 @@ internal class MonsterImageDaoImpl(
         }
     }
 
+    override suspend fun deleteMonsterImages(monsterIndexes: List<String>) {
+        withContext(dispatcher) {
+            monsterImageQueries.deleteByIndexes(monsterIndexes)
+        }
+    }
+
     private fun MonsterImageEntity.toDatabaseEntity(): MonsterImageDatabaseEntity {
         return MonsterImageDatabaseEntity(
             monsterIndex = monsterIndex,

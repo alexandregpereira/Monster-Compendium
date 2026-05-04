@@ -32,3 +32,6 @@ INSERT OR REPLACE INTO MonsterImageEntity VALUES ?;
 
 delete:
 DELETE FROM MonsterImageEntity WHERE monsterIndex = :monsterIndex;
+
+deleteByIndexes:
+DELETE FROM MonsterImageEntity WHERE monsterIndex IN ?;

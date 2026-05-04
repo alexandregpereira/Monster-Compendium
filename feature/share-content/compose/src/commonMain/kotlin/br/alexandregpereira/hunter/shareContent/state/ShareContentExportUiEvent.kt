@@ -17,26 +17,6 @@
 
 package br.alexandregpereira.hunter.shareContent.state
 
-internal data class ShareContentState(
-    val contentToImport: String = "",
-    val exportButtonEnabled: Boolean = false,
-    val importError: ShareContentImportError? = null,
-    val strings: ShareContentStrings = ShareContentStrings(),
-) {
-    val importErrorMessage: String = importError?.let {
-        when (it) {
-            ShareContentImportError.InvalidContent -> strings.importInvalidContentErrorMessage
-        }
-    } ?: ""
-
-    val contentToImportShort: String = contentToImport.take(1000)
-        .takeIf { it.isNotBlank() }
-        ?.replace("\t", "")
-        ?.replace("\n", "")
-        ?.let { "$it..." }
-        .orEmpty()
-}
-
-internal enum class ShareContentImportError {
-    InvalidContent
+internal sealed class ShareContentExportUiEvent {
+    data class ShareFile(val filePath: String) : ShareContentExportUiEvent()
 }

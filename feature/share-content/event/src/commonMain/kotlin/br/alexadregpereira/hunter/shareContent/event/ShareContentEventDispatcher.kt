@@ -19,19 +19,22 @@ package br.alexadregpereira.hunter.shareContent.event
 
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 
-class ShareContentEventDispatcher : EventDispatcher<ShareContentEvent> by EventDispatcher()
+class ShareContentEventDispatcher : EventDispatcher<ShareContentEvent> by EventDispatcher(
+    extraBufferCapacity = 1,
+    onBufferOverflow = BufferOverflow.DROP_OLDEST,
+)
 
 sealed class ShareContentEvent {
     sealed class Import : ShareContentEvent() {
-        data object OnStart : Import()
-        data object OnFinish : Import()
+        class OnStart(val compendiumFileByteArray: ByteArray? = null) : Import()
+        data class OnFinish(val monsterIndexes: List<String>) : Import()
     }
     sealed class Export : ShareContentEvent() {
         data class OnStart(val monsterIndexes: List<String> = emptyList()) : Export()
-        data object OnFinish : Export()
     }
 }
 

@@ -32,8 +32,9 @@ multiplatform {
         implementation(project(":core:localization"))
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
-        implementation(project(":core:file:core"))
-        implementation(project(":core:state-holder"))
+        implementation(project(":core:file:compose"))
+        implementation(project(":core:state-holder:compose"))
+        implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":ui:core"))
 

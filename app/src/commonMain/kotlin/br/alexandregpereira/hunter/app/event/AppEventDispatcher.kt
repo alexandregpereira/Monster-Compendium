@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.onEach
 
 interface AppEventDispatcher {
     fun observeEvents()
+    fun onFileOpen(bytes: ByteArray)
 }
 
 internal class AppEventDispatcherImpl(
@@ -41,10 +42,23 @@ internal class AppEventDispatcherImpl(
         observeShareContentEvents()
     }
 
+    override fun onFileOpen(bytes: ByteArray) {
+        val event = ShareContentEvent.Import.OnStart(bytes)
+        shareContentEventDispatcher.dispatchEvent(event)
+    }
+
     private fun observeShareContentEvents() {
         shareContentEventDispatcher.events.filterIsInstance<ShareContentEvent.Import.OnFinish>()
-            .onEach {
+            .onEach { event ->
                 monsterEventDispatcher.dispatchEvent(MonsterEvent.OnCompendiumChanges())
+                if (event.monsterIndexes.isNotEmpty()) {
+                    val showEvent = MonsterEvent.OnVisibilityChanges.Show(
+                        index = event.monsterIndexes.first(),
+                        indexes = event.monsterIndexes,
+                        enableMonsterPageChangesEventDispatch = true,
+                    )
+                    monsterEventDispatcher.dispatchEvent(showEvent)
+                }
             }.launchIn(scope)
     }
 }

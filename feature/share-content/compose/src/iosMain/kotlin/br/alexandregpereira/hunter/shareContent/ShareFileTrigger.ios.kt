@@ -26,7 +26,10 @@ import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
 
 @Composable
-internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
+internal actual fun ShareFileTrigger(
+    filePath: String,
+    onClosed: () -> Unit,
+) {
     LaunchedEffect(filePath) {
         val url = NSURL.URLWithString(filePath) ?: return@LaunchedEffect
         dispatch_async(dispatch_get_main_queue()) {
@@ -34,6 +37,9 @@ internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
                 activityItems = listOf(url),
                 applicationActivities = null,
             )
+            activityController.completionWithItemsHandler = { _, _, _, _ ->
+                onClosed()
+            }
             UIApplication.sharedApplication.keyWindow
                 ?.rootViewController
                 ?.presentViewController(
@@ -42,6 +48,5 @@ internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
                     completion = null,
                 )
         }
-        onComplete()
     }
 }

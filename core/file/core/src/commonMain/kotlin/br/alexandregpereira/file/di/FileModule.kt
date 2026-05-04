@@ -17,13 +17,18 @@
 
 package br.alexandregpereira.file.di
 
+import br.alexandregpereira.file.FileKitFilePickerManager
 import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FilePickerManager
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 val fileModule = module {
     single<FileManager> {
         createFileManager()
+    }
+    single<FilePickerManager> {
+        FileKitFilePickerManager()
     }
 }
 

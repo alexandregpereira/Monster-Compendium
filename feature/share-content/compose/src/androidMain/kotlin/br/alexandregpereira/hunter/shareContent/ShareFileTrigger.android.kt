@@ -19,15 +19,36 @@ package br.alexandregpereira.hunter.shareContent
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.io.File
 
 @Composable
-internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
+internal actual fun ShareFileTrigger(
+    filePath: String,
+    onClosed: () -> Unit,
+) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val isSharing = remember { mutableStateOf(false) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME && isSharing.value) {
+                isSharing.value = false
+                onClosed()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
     LaunchedEffect(filePath) {
         val zipFile = File(filePath.removePrefix("file://"))
         val fileUri = FileProvider.getUriForFile(
@@ -42,6 +63,6 @@ internal actual fun ShareFileTrigger(filePath: String, onComplete: () -> Unit) {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         context.startActivity(Intent.createChooser(intent, null))
-        onComplete()
+        isSharing.value = true
     }
 }

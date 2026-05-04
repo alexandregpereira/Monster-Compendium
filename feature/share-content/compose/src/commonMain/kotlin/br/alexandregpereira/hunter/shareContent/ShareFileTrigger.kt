@@ -20,4 +20,7 @@ package br.alexandregpereira.hunter.shareContent
 import androidx.compose.runtime.Composable
 
 @Composable
-internal expect fun ShareFileTrigger(filePath: String, onComplete: () -> Unit)
+internal expect fun ShareFileTrigger(
+    filePath: String,
+    onClosed: () -> Unit,
+)

@@ -17,20 +17,20 @@
 
 package br.alexandregpereira.hunter.shareContent.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
-import br.alexandregpereira.file.ZipFile
 import kotlin.time.Clock
 
 internal class ExportMonstersContentToFileUseCase(
     private val fileManager: FileManager,
+    private val clock: Clock = Clock.System,
 ) : ExportMonstersContentToFile {
 
     override suspend fun invoke(
         contentToExport: ContentToExport,
     ): String {
-        val timestamp = Clock.System.now().epochSeconds
-        val jsonEntry = ZipFile(
-            name = "content-$timestamp.json",
+        val jsonEntry = FileEntry(
+            name = "content.json",
             content = contentToExport.contentJson.encodeToByteArray(),
         )
         val imageEntries = contentToExport.monsterImagePaths.mapNotNull { path ->
@@ -38,12 +38,13 @@ internal class ExportMonstersContentToFileUseCase(
                 fileManager.getFileFromAppStorage(path)
             }.getOrNull()
             image?.let {
-                ZipFile(
+                FileEntry(
                     name = path.substringAfterLast('/'),
                     content = it,
                 )
             }
         }
+        val timestamp = clock.now().epochSeconds
         return fileManager.createZipFile(
             zipEntryFiles = listOf(jsonEntry) + imageEntries,
             zipFileName = "content-$timestamp.compendium",

@@ -24,6 +24,7 @@ plugins {
 multiplatform {
     androidMain()
     commonMain {
+        implementation(project(":core:file:compose"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
@@ -35,7 +36,6 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
-        implementation(libs.filekit.compose)
     }
     jvmMain()
     iosMain()

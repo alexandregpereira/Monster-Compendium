@@ -20,45 +20,45 @@ package br.alexandregpereira.hunter.shareContent.state
 import br.alexandregpereira.hunter.localization.Language
 
 interface ShareContentStrings {
+    val chooseDestinationFolder: String
     val importButton: String
     val shareButton: String
-    val contentToImportLabel: String
     val importTitle: String
     val exportTitle: String
     val importInvalidContentErrorMessage: String
-    val pasteContent: String
+    val pickCompendiumFile: String
 }
 
 internal data class ShareContentEnStrings(
+    override val chooseDestinationFolder: String = "Choose destination folder",
     override val importButton: String = "Import",
     override val shareButton: String = "Share",
-    override val contentToImportLabel: String = "Content",
     override val importTitle: String = "Import Content",
     override val exportTitle: String = "Share Content",
     override val importInvalidContentErrorMessage: String = "Invalid content",
-    override val pasteContent: String = "Paste content",
+    override val pickCompendiumFile: String = "Pick compendium file",
 ) : ShareContentStrings
 
 internal data class ShareContentPtStrings(
+    override val chooseDestinationFolder: String = "Escolher pasta de destino",
     override val importButton: String = "Importar",
     override val shareButton: String = "Compartilhar",
-    override val contentToImportLabel: String = "Conteúdo",
     override val importTitle: String = "Importar Conteúdo",
     override val exportTitle: String = "Compartilhar Conteúdo",
     override val importInvalidContentErrorMessage: String = "Conteúdo inválido",
-    override val pasteContent: String = "Colar conteúdo",
+    override val pickCompendiumFile: String = "Escolher arquivo compendium",
 ) : ShareContentStrings
 
 fun ShareContentStrings(): ShareContentStrings = ShareContentEnStrings()
 
 internal data class ShareContentEsStrings(
+    override val chooseDestinationFolder: String = "Elegir carpeta de destino",
     override val importButton: String = "Importar",
     override val shareButton: String = "Compartir",
-    override val contentToImportLabel: String = "Contenido",
     override val importTitle: String = "Importar Contenido",
     override val exportTitle: String = "Compartir Contenido",
     override val importInvalidContentErrorMessage: String = "Contenido inválido",
-    override val pasteContent: String = "Pegar contenido",
+    override val pickCompendiumFile: String = "Elegir archivo compendium",
 ) : ShareContentStrings
 
 internal fun Language.getStrings(): ShareContentStrings {

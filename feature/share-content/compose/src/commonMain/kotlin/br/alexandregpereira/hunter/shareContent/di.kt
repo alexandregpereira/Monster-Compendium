@@ -20,16 +20,29 @@ package br.alexandregpereira.hunter.shareContent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFile
 import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFileUseCase
+import br.alexandregpereira.hunter.shareContent.domain.GetCompendiumFileContent
+import br.alexandregpereira.hunter.shareContent.domain.GetCompendiumFileContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentEditedToExport
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExportUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
-import br.alexandregpereira.hunter.shareContent.state.ShareContentStateHolder
+import br.alexandregpereira.hunter.shareContent.domain.ImportContentUseCase
+import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
+import br.alexandregpereira.hunter.shareContent.state.ShareContentImportStateHolder
 import org.koin.dsl.module
 
 val featureShareContentModule = module {
     single { ShareContentEventDispatcher() }
-    factory { ImportContent(get(), get(), get()) }
+    factory<ImportContent> {
+        ImportContentUseCase(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+        )
+    }
     factory<GetMonstersContentToExport> {
         GetMonstersContentToExportUseCase(
             getMonsters = get(),
@@ -44,16 +57,30 @@ val featureShareContentModule = module {
             fileManager = get(),
         )
     }
-    factory {
-        ShareContentStateHolder(
-            dispatcher = get(),
-            appLocalization = get(),
-            eventDispatcher = get(),
-            importContent = get(),
-            getMonstersContentToExport = get(),
-            exportMonstersContentToFile = get(),
-            analytics = get(),
+    factory<GetCompendiumFileContent> {
+        GetCompendiumFileContentUseCase(
             fileManager = get(),
+        )
+    }
+    single {
+        ShareContentExportStateHolder(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            eventDispatcher = get<ShareContentEventDispatcher>(),
+        )
+    }
+    single(createdAtStart = true) {
+        ShareContentImportStateHolder(
+            get(),
+            get(),
+            get<ShareContentEventDispatcher>(),
+            get(),
+            get(),
+            get(),
+            get(),
         )
     }
 }

@@ -48,14 +48,16 @@ import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpellcasting
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareType
 
-internal fun ShareMonster.toMonster(): Monster {
+internal fun ShareMonster.toMonster(
+    imageUrl: String?,
+): Monster {
     return Monster(
         index = index,
         name = name,
         type = MonsterType.valueOf(type),
         challengeRatingData = ChallengeRating(challengeRating),
         imageData = MonsterImageData(
-            url = imageUrl,
+            url = imageUrl ?: this.imageUrl,
             backgroundColor = Color(
                 light = imageBackgroundColorLight,
                 dark = imageBackgroundColorDark

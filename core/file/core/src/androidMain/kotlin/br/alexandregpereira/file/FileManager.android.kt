@@ -25,6 +25,7 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
 internal class AndroidFileManager(
@@ -44,7 +45,7 @@ internal class AndroidFileManager(
     }
 
     override suspend fun createZipFile(
-        zipEntryFiles: List<ZipFile>,
+        zipEntryFiles: List<FileEntry>,
         zipFileName: String,
     ): String = withContext(dispatcher) {
         val folder = filesDirectory(fileFolder = FileType.ZIP.folder).apply { mkdirs() }
@@ -74,6 +75,21 @@ internal class AndroidFileManager(
 
     override suspend fun getFileFromAppStorage(filePath: String): ByteArray = withContext(dispatcher) {
         File(filePath.removePrefix("file://")).readBytes()
+    }
+
+    override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> = withContext(dispatcher) {
+        val result = mutableListOf<FileEntry>()
+        ZipInputStream(bytes.inputStream()).use { zip ->
+            var entry = zip.nextEntry
+            while (entry != null) {
+                if (!entry.isDirectory) {
+                    result.add(FileEntry(name = entry.name, content = zip.readBytes()))
+                }
+                zip.closeEntry()
+                entry = zip.nextEntry
+            }
+        }
+        result
     }
 
     override suspend fun getFileNamesFromAppStorage(

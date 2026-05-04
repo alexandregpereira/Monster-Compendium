@@ -29,4 +29,5 @@ interface MonsterImageRepository {
     suspend fun saveMonsterImages(monsterImages: List<MonsterImage>)
     suspend fun saveMonsterImage(monsterImage: MonsterImage)
     suspend fun deleteMonsterImage(monsterIndex: String)
+    suspend fun deleteMonsterImages(monsterIndexes: List<String>)
 }

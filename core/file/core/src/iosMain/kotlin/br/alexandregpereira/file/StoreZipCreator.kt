@@ -20,7 +20,7 @@ package br.alexandregpereira.file
 // Pure-Kotlin STORE-mode (no compression) ZIP archive with a single entry.
 // Used on platforms that lack java.util.zip (e.g. iOS Kotlin/Native).
 internal fun createStoreZip(
-    zipEntryFiles: List<ZipFile>,
+    zipEntryFiles: List<FileEntry>,
 ): ByteArray {
     val zip = ZipBuilder()
     val localHeaderOffsets = IntArray(zipEntryFiles.size)

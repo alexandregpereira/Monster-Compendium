@@ -17,7 +17,11 @@
 
 package br.alexandregpereira.hunter.shareContent.domain
 
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
+import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ShareContent.Companion.CURRENT_VERSION
@@ -27,48 +31,71 @@ import br.alexandregpereira.hunter.shareContent.domain.mapper.toSpell
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpell
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.single
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
-
-internal val json = Json {
-    ignoreUnknownKeys = true
-    explicitNulls = false
-}
 
 internal fun interface ImportContent {
-    operator fun invoke(contentJson: String): Flow<Unit>
+    suspend operator fun invoke(compendiumFileContent: CompendiumFileContent): List<String>
 }
 
-internal fun ImportContent(
-    saveMonsters: SaveMonstersUseCase,
-    saveSpells: SaveSpells,
-    saveMonstersLore: SaveMonstersLoreUseCase,
-): ImportContent = ImportContent { contentJson ->
-    flow {
-        val content = runCatching { json.decodeFromString<ShareContent>(contentJson) }
-            .getOrElse { cause ->
-                when (cause) {
-                    is SerializationException -> throw ImportContentException.InvalidContent(
-                        content = contentJson,
-                        cause = cause,
-                    )
-                    else -> throw cause
-                }
-            }
+internal class ImportContentUseCase(
+    private val saveMonsters: SaveMonstersUseCase,
+    private val saveSpells: SaveSpells,
+    private val saveMonstersLore: SaveMonstersLoreUseCase,
+    private val monsterImageRepository: MonsterImageRepository,
+    private val fileManager: FileManager,
+    private val analytics: Analytics,
+) : ImportContent {
+
+    override suspend fun invoke(compendiumFileContent: CompendiumFileContent): List<String> {
+        val content = compendiumFileContent.shareContent
         content.monsters?.let { monsters ->
-            saveMonsters(monsters.map { it.toMonster() }).single()
+            val paths = compendiumFileContent.images.mapNotNull { image ->
+                try {
+                    fileManager.saveFileToAppStorage(
+                        bytes = image.content,
+                        fileName = image.name,
+                        fileType = FileType.IMAGE,
+                    )
+                } catch (cause: Throwable) {
+                    analytics.logException(
+                        RuntimeException("Fail to import image ${image.name}", cause)
+                    )
+                    null
+                }
+            }.associateBy {
+                it.substringAfterLast("/").substringBefore("-")
+            }
+            saveMonsters(
+                monsters.map {
+                    it.toMonster(imageUrl = paths[it.index] ?: it.imageUrl)
+                }
+            ).catch { cause ->
+                compendiumFileContent.images.forEach { image ->
+                    fileManager.deleteFileFromAppStorage(
+                        fileName = image.name,
+                        fileType = FileType.IMAGE,
+                    )
+                }
+                throw cause
+            }.single()
+
+            paths.keys.takeIf { it.isNotEmpty() }?.toList()?.let {
+                monsterImageRepository.deleteMonsterImages(monsterIndexes = it)
+            }
         }
         content.monstersLore?.let { monstersLore ->
-            saveMonstersLore(monstersLore.map { it.toMonsterLore() }, isSync = false).single()
+            saveMonstersLore(
+                monsterLore = monstersLore.map { it.toMonsterLore() },
+                isSync = false,
+            ).single()
         }
         content.spells?.let { spells ->
             saveSpells(spells.map { it.toSpell() }).single()
         }
-        emit(Unit)
+
+        return content.monsters?.map { it.index }.orEmpty()
     }
 }
 

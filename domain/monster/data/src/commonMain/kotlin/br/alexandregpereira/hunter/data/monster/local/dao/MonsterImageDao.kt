@@ -7,4 +7,5 @@ interface MonsterImageDao {
     suspend fun getMonsterImage(monsterIndex: String): MonsterImageEntity?
     suspend fun insert(monsterImages: List<MonsterImageEntity>)
     suspend fun deleteMonsterImage(monsterIndex: String)
+    suspend fun deleteMonsterImages(monsterIndexes: List<String>)
 }

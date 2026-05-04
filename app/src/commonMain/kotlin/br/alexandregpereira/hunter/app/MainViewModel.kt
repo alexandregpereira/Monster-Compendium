@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.onEach
 internal class MainViewModel(
     private val appLocalization: AppReactiveLocalization,
     private val stateRecovery: StateRecovery,
-    appEventDispatcher: AppEventDispatcher,
+    private val appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
     private val revenueSession: RevenueSession,
     private val adsConsentManager: AdsConsentManager,
@@ -117,6 +117,10 @@ internal class MainViewModel(
                 )
             }
         }.launchIn(scope)
+    }
+
+    fun onFileOpen(bytes: ByteArray) {
+        appEventDispatcher.onFileOpen(bytes)
     }
 
     fun onEvent(event: MainViewEvent) {

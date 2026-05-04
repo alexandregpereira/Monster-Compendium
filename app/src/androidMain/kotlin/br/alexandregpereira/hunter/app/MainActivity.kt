@@ -17,9 +17,11 @@
 
 package br.alexandregpereira.hunter.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.alexandregpereira.hunter.ui.util.createComposeView
+import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,5 +31,21 @@ class MainActivity : AppCompatActivity() {
             HunterApp(contentPadding = contentPadding)
         }
         setContentView(view)
+        handleFileOpenIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleFileOpenIntent(intent)
+    }
+
+    private fun handleFileOpenIntent(intent: Intent?) {
+        val uri = when (intent?.action) {
+            Intent.ACTION_VIEW -> intent.data
+            Intent.ACTION_SEND -> intent.getParcelableExtra(Intent.EXTRA_STREAM)
+            else -> return
+        } ?: return
+        val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
+        get<MainViewModel>().onFileOpen(bytes)
     }
 }

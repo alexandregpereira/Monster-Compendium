@@ -54,7 +54,7 @@ internal class IosFileManager(
     }
 
     override suspend fun createZipFile(
-        zipEntryFiles: List<ZipFile>,
+        zipEntryFiles: List<FileEntry>,
         zipFileName: String,
     ): String = withContext(dispatcher) {
         val zipBytes = createStoreZip(zipEntryFiles)
@@ -88,6 +88,10 @@ internal class IosFileManager(
                 platform.posix.memcpy(pinned.addressOf(0), data.bytes, data.length)
             }
         }
+    }
+
+    override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> = withContext(dispatcher) {
+        extractStoreZip(bytes)
     }
 
     override suspend fun getFileNamesFromAppStorage(
