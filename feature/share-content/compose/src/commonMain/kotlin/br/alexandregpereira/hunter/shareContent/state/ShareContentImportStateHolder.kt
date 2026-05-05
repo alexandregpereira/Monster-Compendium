@@ -91,6 +91,7 @@ internal class ShareContentImportStateHolder(
             )
         }
         onCleared()
+        compendiumFileContent = null
     }
 
     fun onImport() {
@@ -199,7 +200,7 @@ internal class ShareContentImportStateHolder(
                 setState {
                     val contentEntries = buildContentEntries(
                         shareContent = compendiumFileContent.shareContent,
-                        imageQuantity = compendiumFileContent.imagesQuantity,
+                        monsterImages = compendiumFileContent.monsterImages,
                         strings = strings.extractedStrings,
                     )
                     copy(

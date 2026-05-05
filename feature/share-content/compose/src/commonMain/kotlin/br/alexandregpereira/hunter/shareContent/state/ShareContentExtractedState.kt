@@ -26,7 +26,7 @@ internal fun CompendiumFileContent.toShareContentExtractedState(
 ): ShareContentExtractedState {
     val contentEntries = buildContentEntries(
         shareContent = this.shareContent,
-        imageQuantity = this.images.size,
+        monsterImages = this.monsterImages,
         strings = strings,
     )
 
@@ -39,7 +39,7 @@ internal fun CompendiumFileContent.toShareContentExtractedState(
 
 internal fun buildContentEntries(
     shareContent: ShareContent,
-    imageQuantity: Int,
+    monsterImages: List<CompendiumFileContent.MonsterImage>,
     strings: ShareContentExtractedStrings,
 ): ImmutableList<ShareContentExtractedEntryState> {
     return buildList {
@@ -51,6 +51,16 @@ internal fun buildContentEntries(
             content = shareContent.monsters
                 ?.joinToString(", ") { it.name }
                 .orEmpty(),
+        )
+        addIfIsNotEmpty(
+            id = "images",
+            quantity = monsterImages.size,
+            singularLabel = strings.image,
+            pluralLabel = strings.images,
+            content = monsterImages
+                .joinToString(", ") {
+                    it.name ?: it.file.name
+                },
         )
         addIfIsNotEmpty(
             id = "monstersLore",
@@ -69,12 +79,6 @@ internal fun buildContentEntries(
             content = shareContent.spells
                 ?.joinToString(", ") { it.name }
                 .orEmpty(),
-        )
-        addIfIsNotEmpty(
-            id = "images",
-            quantity = imageQuantity,
-            singularLabel = strings.image,
-            pluralLabel = strings.images,
         )
     }.toPersistentList()
 }

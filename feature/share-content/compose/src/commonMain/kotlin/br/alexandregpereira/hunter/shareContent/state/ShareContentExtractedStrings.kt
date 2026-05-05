@@ -29,8 +29,8 @@ interface ShareContentExtractedStrings {
 }
 
 internal data class ShareContentExtractedEnStrings(
-    override val images: String = "Images",
-    override val image: String = "Image",
+    override val images: String = "Local images",
+    override val image: String = "Local image",
     override val spells: String = "Spells",
     override val spell: String = "Spell",
     override val monstersLore: String = "Lore entries",
@@ -40,8 +40,8 @@ internal data class ShareContentExtractedEnStrings(
 ) : ShareContentExtractedStrings
 
 internal data class ShareContentExtractedPtStrings(
-    override val images: String = "Imagens",
-    override val image: String = "Imagem",
+    override val images: String = "Imagens locais",
+    override val image: String = "Imagem local",
     override val spells: String = "Magias",
     override val spell: String = "Magia",
     override val monstersLore: String = "Mitologias",
@@ -52,8 +52,8 @@ internal data class ShareContentExtractedPtStrings(
 
 
 internal data class ShareContentExtractedEsStrings(
-    override val images: String = "Imágenes",
-    override val image: String = "Imagen",
+    override val images: String = "Imágenes locales",
+    override val image: String = "Imagen de local",
     override val spells: String = "Magias",
     override val spell: String = "Magia",
     override val monstersLore: String = "Historias",

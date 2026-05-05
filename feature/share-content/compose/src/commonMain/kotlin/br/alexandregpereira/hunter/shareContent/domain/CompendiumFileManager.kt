@@ -38,10 +38,6 @@ internal class CompendiumFileManagerImpl(
             ?: error("content.json not found in .compendium archive")
         val contentJson = contentJsonByteArray.decodeToString()
 
-        val images = files.filter { file ->
-            file.name.endsWith(".png") || file.name.endsWith(".webp")
-        }
-
         val shareContent = runCatching { json.decodeFromString<ShareContent>(contentJson) }
             .getOrElse { cause ->
                 when (cause) {
@@ -49,15 +45,22 @@ internal class CompendiumFileManagerImpl(
                         content = contentJson,
                         cause = cause,
                     )
+
                     else -> throw cause
                 }
             }
 
-        val contentSize = contentJsonByteArray.size + images.sumOf { it.content.size }
+        val images = files.filter { file ->
+            file.name.endsWith(".png") || file.name.endsWith(".webp")
+        }.getMonsterImages(
+            monsters = shareContent.monsters,
+        )
+
+        val contentSize = contentJsonByteArray.size + images.sumOf { it.file.content.size }
         return CompendiumFileContent(
             name = zipFile.name,
             shareContent = shareContent,
-            images = images,
+            monsterImages = images,
             sizeFormatted = contentSize.getSizeFormatted(),
         )
     }
@@ -86,7 +89,7 @@ internal class CompendiumFileManagerImpl(
         return CompendiumFileContent(
             name = fileName,
             shareContent = shareContent,
-            images = monsterImages,
+            monsterImages = monsterImages.getMonsterImages(shareContent.monsters),
             sizeFormatted = contentSize.getSizeFormatted(),
         )
     }
@@ -99,7 +102,7 @@ internal class CompendiumFileManagerImpl(
             content = compendiumFileContent.shareContent.getContentToExport().encodeToByteArray(),
         )
         return fileManager.createZipFile(
-            zipEntryFiles = listOf(jsonEntry) + compendiumFileContent.images,
+            zipEntryFiles = listOf(jsonEntry) + compendiumFileContent.monsterImageFiles,
             zipFileName = compendiumFileContent.name,
         )
     }
@@ -114,6 +117,27 @@ internal class CompendiumFileManagerImpl(
         }.map {
             it.imageUrl
         }
+    }
+
+    private fun List<FileEntry>.getMonsterImages(
+        monsters: List<ShareMonster>?,
+    ): List<CompendiumFileContent.MonsterImage> {
+        val monsterByImageName = monsters?.filter {
+            it.imageUrl.startsWith("file://")
+        }?.associateBy {
+            it.imageUrl.substringAfterLast("/")
+        }.orEmpty()
+        val monsterImages = mutableListOf<CompendiumFileContent.MonsterImage>()
+        this.forEach { monsterFileImage ->
+            val monster = monsterByImageName[monsterFileImage.name]
+            val monsterImage = CompendiumFileContent.MonsterImage(
+                index = monster?.index,
+                name = monster?.name,
+                file = monsterFileImage,
+            )
+            monsterImages.add(monsterImage)
+        }
+        return monsterImages
     }
 
     private fun Int.getSizeFormatted(): String {

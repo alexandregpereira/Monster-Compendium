@@ -47,7 +47,7 @@ internal class ImportContentUseCase(
     override suspend fun invoke(compendiumFileContent: CompendiumFileContent): List<String> {
         val content = compendiumFileContent.shareContent
         content.monsters?.let { monsters ->
-            val paths = compendiumFileContent.images.mapNotNull { image ->
+            val paths = compendiumFileContent.monsterImageFiles.mapNotNull { image ->
                 try {
                     fileManager.saveFileToAppStorage(
                         bytes = image.content,
@@ -68,7 +68,7 @@ internal class ImportContentUseCase(
                     it.toMonster(imageUrl = paths[it.index] ?: it.imageUrl)
                 }
             ).catch { cause ->
-                compendiumFileContent.images.forEach { image ->
+                compendiumFileContent.monsterImageFiles.forEach { image ->
                     fileManager.deleteFileFromAppStorage(
                         fileName = image.name,
                         fileType = FileType.IMAGE,

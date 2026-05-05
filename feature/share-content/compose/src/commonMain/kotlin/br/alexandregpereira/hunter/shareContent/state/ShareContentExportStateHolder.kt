@@ -84,6 +84,7 @@ internal class ShareContentExportStateHolder(
             }
             onCleared()
             setState { copy(isOpen = false) }
+            compendiumFileContent = null
         }
     }
 
