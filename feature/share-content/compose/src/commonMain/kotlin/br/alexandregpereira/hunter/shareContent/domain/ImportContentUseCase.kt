@@ -24,10 +24,10 @@ import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
-import br.alexandregpereira.hunter.shareContent.domain.ShareContent.Companion.CURRENT_VERSION
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonsterLore
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toSpell
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent.Companion.CURRENT_VERSION
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.single
 

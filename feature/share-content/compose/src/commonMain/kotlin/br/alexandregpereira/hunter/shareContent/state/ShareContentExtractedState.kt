@@ -1,7 +1,7 @@
 package br.alexandregpereira.hunter.shareContent.state
 
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
-import br.alexandregpereira.hunter.shareContent.domain.ShareContent
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList

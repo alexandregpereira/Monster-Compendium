@@ -7,6 +7,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareMonster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareMonsterLore
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareSpell
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single

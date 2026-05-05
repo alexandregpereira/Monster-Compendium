@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.shareContent.domain
 
 import br.alexandregpereira.file.FileEntry
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 
 internal data class CompendiumFileContent(
     val name: String,

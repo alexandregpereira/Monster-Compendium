@@ -3,7 +3,9 @@ package br.alexandregpereira.hunter.shareContent.domain
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
+import br.alexandregpereira.hunter.shareContent.domain.model.json
 import br.alexandregpereira.ktx.runCatching
 import kotlinx.serialization.SerializationException
 

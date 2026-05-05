@@ -1,8 +1,5 @@
-package br.alexandregpereira.hunter.shareContent.domain
+package br.alexandregpereira.hunter.shareContent.domain.model
 
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpell
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
