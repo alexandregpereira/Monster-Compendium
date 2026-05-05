@@ -105,7 +105,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onMonsterChanged(monster: MonsterState) {
-        val newMonster = metadata.monster.editBy(monster, appLocalization.getStrings())
+        val newMonster = metadata.monster?.editBy(monster, appLocalization.getStrings())
         val newMonsterLoreEntries = monster.loreEntries.map { it.asDomain() }
         setMetadata(newMonster, newMonsterLoreEntries)
         updateMonster()
@@ -121,9 +121,10 @@ class MonsterRegistrationStateHolder internal constructor(
             analytics.track(eventName = "MonsterRegistration - image pick cancelled")
             return
         }
-        analytics.trackMonsterRegistrationImagePicked(metadata.monster.index)
+        analytics.trackMonsterRegistrationImagePicked(metadata.monster?.index.orEmpty())
         flow {
-            val imageName = metadata.monster.index
+            val imageName = metadata.monster?.index
+                ?: throw IllegalStateException("Monster is null")
             val path = fileManager.saveImage(
                 bytes = file.content,
                 imageName = imageName,
@@ -131,8 +132,9 @@ class MonsterRegistrationStateHolder internal constructor(
             emit(path)
         }.flowOn(dispatcher)
             .onEach { imagePath ->
-                val newMonster = metadata.monster.copy(
-                    imageData = metadata.monster.imageData.copy(url = imagePath)
+                val monster = metadata.monster
+                val newMonster = monster?.copy(
+                    imageData = monster.imageData.copy(url = imagePath)
                 )
                 setMetadata(newMonster, metadata.monsterLoreEntries)
                 updateMonster()
@@ -147,7 +149,14 @@ class MonsterRegistrationStateHolder internal constructor(
         val monsterLoreEntries = metadata.monsterLoreEntries
         val originalMonster = originalMonster
         val originalMonsterLore = originalMonsterLore
-        normalizeMonster(metadata.monster)
+        val monster = metadata.monster
+        if (monster == null) {
+            analytics.logException(
+                IllegalStateException("Monster Metadata is null when saving on monster registration")
+            )
+            return
+        }
+        normalizeMonster(monster)
             .map { monster ->
                 analytics.trackMonsterRegistrationSaved(monster)
                 saveMonster(monster, originalMonster, monsterLoreEntries, originalMonsterLore)
@@ -219,8 +228,8 @@ class MonsterRegistrationStateHolder internal constructor(
         getSpell(newSpellIndex)
             .flowOn(dispatcher)
             .onEach { newSpell ->
-                val newMonster = metadata.monster.copy(
-                    spellcastings = metadata.monster.spellcastings.map { spellcasting ->
+                val newMonster = metadata.monster?.copy(
+                    spellcastings = metadata.monster?.spellcastings?.map { spellcasting ->
                         spellcasting.copy(
                             usages = spellcasting.usages.map { usage ->
                                 usage.copy(
@@ -239,7 +248,7 @@ class MonsterRegistrationStateHolder internal constructor(
                                 )
                             }
                         )
-                    }
+                    }.orEmpty()
                 )
                 metadata = metadata.copy(monster = newMonster)
                 updateMonster()
@@ -253,7 +262,7 @@ class MonsterRegistrationStateHolder internal constructor(
             val monsterState = metadata.asState(strings)
             copy(
                 monster = monsterState,
-                isSaveButtonEnabled = metadata.monster.filterEmpties() != originalMonster
+                isSaveButtonEnabled = metadata.monster?.filterEmpties() != originalMonster
                         || metadata.monsterLoreEntries != originalMonsterLore?.entries.orEmpty(),
                 isLoading = false,
                 tableContent = SectionTitle.entries.associate { it.name to it.name(strings) },
@@ -326,21 +335,21 @@ class MonsterRegistrationStateHolder internal constructor(
         }.launchIn(scope)
     }
 
-    private fun setMetadata(monster: Monster, monsterLoreEntries: List<MonsterLoreEntry>) {
+    private fun setMetadata(monster: Monster?, monsterLoreEntries: List<MonsterLoreEntry>) {
         val filteredSavingThrowTypes = AbilityScoreType.entries.filterNot { type ->
-            monster.savingThrows.any { it.type == type }
+            monster?.savingThrows?.any { it.type == type } ?: false
         }
         val filteredDamageVulnerabilityTypes = DamageType.entries.filterNot { type ->
-            monster.damageVulnerabilities.any { it.type == type }
+            monster?.damageVulnerabilities?.any { it.type == type } ?: false
         }
         val filteredDamageResistanceTypes = DamageType.entries.filterNot { type ->
-            monster.damageResistances.any { it.type == type }
+            monster?.damageResistances?.any { it.type == type } ?: false
         }
         val filteredDamageImmunityTypes = DamageType.entries.filterNot { type ->
-            monster.damageImmunities.any { it.type == type }
+            monster?.damageImmunities?.any { it.type == type } ?: false
         }
         val filteredConditionTypes = ConditionType.entries.filterNot { type ->
-            monster.conditionImmunities.any { it.type == type }
+            monster?.conditionImmunities?.any { it.type == type } ?: false
         }
 
         metadata = metadata.copy(
@@ -360,7 +369,7 @@ class MonsterRegistrationStateHolder internal constructor(
 }
 
 internal data class Metadata(
-    val monster: Monster = Monster(index = ""),
+    val monster: Monster? = null,
     val filteredSavingThrowTypes: List<AbilityScoreType> = emptyList(),
     val filteredDamageVulnerabilityTypes: List<DamageType> = emptyList(),
     val filteredDamageResistanceTypes: List<DamageType> = emptyList(),

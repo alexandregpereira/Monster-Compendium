@@ -20,7 +20,6 @@
 package br.alexandregpereira.hunter.monster.registration.domain
 
 import br.alexandregpereira.hunter.domain.model.Color
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
@@ -94,7 +93,7 @@ internal class SaveMonsterUseCaseImplTest {
 
     @Test
     fun `invoke When status is Original and only imageUrl changed Then saves with Original status`() = runTest {
-        val imageData = MonsterImageData(url = "old.png")
+        val imageData = createMonsterImageData(url = "old.png")
         val monster = createMonster(imageData = imageData.copy(url = "new.png"), status = MonsterStatus.Original)
         val originalMonster = createMonster(imageData = imageData, status = MonsterStatus.Original)
         coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns null
@@ -160,7 +159,7 @@ internal class SaveMonsterUseCaseImplTest {
 
     @Test
     fun `invoke When monster already exists and image is unchanged Then does not save monster image`() = runTest {
-        val imageData = MonsterImageData(url = "same.png")
+        val imageData = createMonsterImageData(url = "same.png")
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         val previousMonster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
@@ -179,6 +178,7 @@ internal class SaveMonsterUseCaseImplTest {
             backgroundColor = Color(light = "#ffffff", dark = "#000000"),
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Crop,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
@@ -211,9 +211,10 @@ internal class SaveMonsterUseCaseImplTest {
             backgroundColor = Color(light = "#ffffff", dark = "#000000"),
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Crop,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData)
-        val previousMonster = createMonster(imageData = MonsterImageData(url = "changed.png"), status = MonsterStatus.Edited)
+        val previousMonster = createMonster(imageData = createMonsterImageData(url = "changed.png"), status = MonsterStatus.Edited)
         val localMonster = createMonster(imageData = imageData)
         val currentLocalMonsterImage = MonsterImage(
             monsterIndex = monster.index,
@@ -243,6 +244,7 @@ internal class SaveMonsterUseCaseImplTest {
             backgroundColor = Color(light = "#ff0000", dark = "#000000"),
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Fit,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData)
         coEvery { monsterLocalRepository.getMonsterPreview(any()) } returns createMonster()
@@ -275,12 +277,15 @@ internal class SaveMonsterUseCaseImplTest {
             url = "new.png",
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Crop,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         val localMonster = createMonster(imageData = MonsterImageData(
             backgroundColor = Color(light = "#ffffff", dark = "#000000"),
             url = "old.png",
             isHorizontal = false,
+            contentScale = null,
+            isImageDataFromCustomDatabase = false,
         ))
         val currentLocalMonsterImage = MonsterImage(
             monsterIndex = monster.index,
@@ -319,12 +324,15 @@ internal class SaveMonsterUseCaseImplTest {
             url = "new.png",
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Crop,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         val localMonster = createMonster(imageData = MonsterImageData(
             backgroundColor = Color(light = "#old", dark = "#000000"),
             url = "old.png",
             isHorizontal = true,
+            contentScale = null,
+            isImageDataFromCustomDatabase = false,
         ))
         val currentLocalMonsterImage = MonsterImage(
             monsterIndex = monster.index,
@@ -363,12 +371,15 @@ internal class SaveMonsterUseCaseImplTest {
             url = "same.png",
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Crop,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         val localMonster = createMonster(imageData = MonsterImageData(
             backgroundColor = Color(light = "#old", dark = "#000000"),
             url = "same.png",
             isHorizontal = false,
+            contentScale = null,
+            isImageDataFromCustomDatabase = false,
         ))
         val currentLocalMonsterImage = MonsterImage(
             monsterIndex = monster.index,
@@ -407,6 +418,7 @@ internal class SaveMonsterUseCaseImplTest {
             url = "new.png",
             isHorizontal = true,
             contentScale = MonsterImageContentScale.Fit,
+            isImageDataFromCustomDatabase = false,
         )
         val monster = createMonster(imageData = imageData, status = MonsterStatus.Edited)
         val localMonster = createMonster(imageData = MonsterImageData(
@@ -414,6 +426,7 @@ internal class SaveMonsterUseCaseImplTest {
             url = "old.png",
             isHorizontal = false,
             contentScale = MonsterImageContentScale.Fit,
+            isImageDataFromCustomDatabase = false,
         ))
         val currentLocalMonsterImage = MonsterImage(
             monsterIndex = monster.index,
@@ -510,7 +523,24 @@ internal class SaveMonsterUseCaseImplTest {
     private fun createMonster(
         index: String = "goblin",
         name: String = "Goblin",
-        imageData: MonsterImageData = MonsterImageData(),
+        imageData: MonsterImageData = createMonsterImageData(),
         status: MonsterStatus = MonsterStatus.Original,
-    ) = Monster(index = index, name = name, imageData = imageData, status = status)
+    ) = MonsterFactory.createEmpty(
+        index = index,
+    ).copy(
+        name = name, imageData = imageData, status = status
+    )
+
+    private fun createMonsterImageData(
+        url: String = "",
+    ): MonsterImageData = MonsterImageData(
+        url = url,
+        backgroundColor = Color(
+            light = "",
+            dark = "",
+        ),
+        isHorizontal = false,
+        contentScale = null,
+        isImageDataFromCustomDatabase = false,
+    )
 }

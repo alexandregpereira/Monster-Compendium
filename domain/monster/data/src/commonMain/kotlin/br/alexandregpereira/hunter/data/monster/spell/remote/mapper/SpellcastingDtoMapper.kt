@@ -23,10 +23,10 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
 
 fun List<SpellcastingDto>.toDomain(): List<Spellcasting> {
     return map { dto ->
-        Spellcasting(
+        Spellcasting.create(
             description = dto.desc,
             type = SpellcastingType.valueOf(dto.type.name),
-            usages = dto.spellsByGroup.toDomain()
+            usages = dto.spellsByGroup.toDomain(),
         )
     }
 }

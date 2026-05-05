@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -164,11 +165,29 @@ internal class MonsterRegistrationFileManagerImplTest {
             return "file://$fileName"
         }
 
+        override suspend fun createZipFile(
+            zipEntryFiles: List<FileEntry>,
+            zipFileName: String
+        ): String {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
             storage.removeAll { it == fileName }
         }
 
+        override suspend fun deleteAllsFilesFromAppStorage(fileType: FileType) {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
+        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
+            TODO("Not yet implemented")
+        }
     }
 
     private class FailingOnSaveFileManager(private val storage: MutableList<String>) : FileManager {
@@ -179,11 +198,29 @@ internal class MonsterRegistrationFileManagerImplTest {
             fileType: FileType,
         ): String = throw RuntimeException("disk full")
 
+        override suspend fun createZipFile(
+            zipEntryFiles: List<FileEntry>,
+            zipFileName: String
+        ): String {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
             storage.removeAll { it == fileName }
         }
 
+        override suspend fun deleteAllsFilesFromAppStorage(fileType: FileType) {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
+        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
+            TODO("Not yet implemented")
+        }
     }
 
     private class FakeClock : Clock {

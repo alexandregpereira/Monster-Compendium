@@ -19,7 +19,6 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType.CHARISMA
-import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.isComplete
 import io.mockk.every
 import io.mockk.mockk
@@ -45,11 +44,12 @@ class GetMonstersAroundIndexUseCaseTest {
     @Test
     operator fun `invoke`() = runBlocking {
         val monstersCached = (totalRange).map {
-            Monster(index = it.toString())
+            MonsterFactory.createEmpty(index = it.toString())
         }
         val monstersByIdFirstTime = (firstReturnRange).map {
-            Monster(
+            MonsterFactory.createEmpty(
                 index = it.toString(),
+            ).copy(
                 abilityScores = listOf(AbilityScore(type = CHARISMA, value = 10, modifier = 0))
             )
         }
@@ -57,8 +57,9 @@ class GetMonstersAroundIndexUseCaseTest {
             if (position in firstReturnRange) {
                 return@mapNotNull null
             }
-            Monster(
+            MonsterFactory.createEmpty(
                 index = position.toString(),
+            ).copy (
                 abilityScores = listOf(AbilityScore(type = CHARISMA, value = 10, modifier = 0))
             )
         }

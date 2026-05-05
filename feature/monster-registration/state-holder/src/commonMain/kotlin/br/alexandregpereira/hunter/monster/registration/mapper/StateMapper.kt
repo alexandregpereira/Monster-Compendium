@@ -58,6 +58,7 @@ import br.alexandregpereira.hunter.monster.registration.StatsState
 import br.alexandregpereira.hunter.monster.registration.TypeState
 
 internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState {
+    if (monster == null) return MonsterState()
     return MonsterState(
         index = monster.index,
         info = MonsterInfoState(

@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.domain.model.Damage
 import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
@@ -43,10 +44,13 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.SpellPreview
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareAbilityDescription
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareAction
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareSavingThrow
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpellcasting
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareType
+import br.alexandregpereira.ktx.runCatching
 
 internal fun ShareMonster.toMonster(
     imageUrl: String?,
@@ -55,14 +59,18 @@ internal fun ShareMonster.toMonster(
         index = index,
         name = name,
         type = MonsterType.valueOf(type),
-        challengeRatingData = ChallengeRating(challengeRating),
+        challengeRatingData = ChallengeRating.create(challengeRating),
         imageData = MonsterImageData(
             url = imageUrl ?: this.imageUrl,
             backgroundColor = Color(
                 light = imageBackgroundColorLight,
                 dark = imageBackgroundColorDark
             ),
-            isHorizontal = isHorizontalImage
+            isHorizontal = isHorizontalImage,
+            isImageDataFromCustomDatabase = false,
+            contentScale = imageContentScale?.let {
+                runCatching { MonsterImageContentScale.valueOf(it) }.getOrNull()
+            },
         ),
         subtype = subtype,
         group = group,
@@ -94,13 +102,7 @@ internal fun ShareMonster.toMonster(
                 modifier = it.modifier
             )
         },
-        savingThrows = savingThrows.map {
-            SavingThrow(
-                index = it.index,
-                modifier = it.modifier,
-                type = AbilityScoreType.valueOf(it.type)
-            )
-        },
+        savingThrows = savingThrows.map { it.toSavingThrow() },
         skills = skills.map {
             Skill(
                 index = it.index,
@@ -111,12 +113,8 @@ internal fun ShareMonster.toMonster(
         damageVulnerabilities = damageVulnerabilities.map { it.toDamage() },
         damageResistances = damageResistances.map { it.toDamage() },
         damageImmunities = damageImmunities.map { it.toDamage() },
-        conditionImmunities = conditionImmunities.map {
-            Condition(
-                index = it.index,
-                type = ConditionType.valueOf(it.type),
-                name = it.name,
-            )
+        conditionImmunities = conditionImmunities.mapNotNull {
+            it.toCondition()
         },
         specialAbilities = specialAbilities.map { it.toAbilityDescription() },
         actions = actions.map { it.toAction() },
@@ -139,11 +137,30 @@ private fun ShareType.toDamage(): Damage {
     )
 }
 
-private fun ShareType.toAbilityDescription(): AbilityDescription {
+private fun ShareSavingThrow.toSavingThrow(): SavingThrow {
+    return SavingThrow(
+        index = this.index,
+        modifier = this.modifier,
+        type = AbilityScoreType.valueOf(this.type),
+    )
+}
+
+private fun ShareType.toCondition(): Condition? {
+    val type = runCatching { ConditionType.valueOf(this.type) }.getOrNull() ?: return null
+    return Condition(
+        index = this.index,
+        type = type,
+        name = this.name,
+    )
+}
+
+private fun ShareAbilityDescription.toAbilityDescription(): AbilityDescription {
     return AbilityDescription(
         index = index,
         description = type,
         name = name,
+        savingThrows = savingThrows.map { it.toSavingThrow() },
+        conditions = conditions.mapNotNull { it.toCondition() },
     )
 }
 
@@ -151,7 +168,7 @@ private fun ShareAction.toAction(): Action {
     return Action(
         id = id,
         damageDices = damageDices.map {
-            DamageDice(
+            DamageDice.create(
                 dice = it.dice,
                 damage = it.damage.toDamage(),
             )
@@ -162,7 +179,7 @@ private fun ShareAction.toAction(): Action {
 }
 
 private fun ShareSpellcasting.toSpellcastings(type: SpellcastingType): Spellcasting {
-    return Spellcasting(
+    return Spellcasting.create(
         description = description,
         type = type,
         usages = usages.map {

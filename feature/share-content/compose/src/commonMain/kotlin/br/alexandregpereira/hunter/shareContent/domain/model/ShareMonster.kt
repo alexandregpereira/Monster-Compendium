@@ -29,6 +29,7 @@ internal data class ShareMonster(
     val imageBackgroundColorLight: String = "",
     val imageBackgroundColorDark: String = "",
     val isHorizontalImage: Boolean = false,
+    val imageContentScale: String? = null,
     val subtype: String? = null,
     val group: String? = null,
     val subtitle: String = "",
@@ -49,10 +50,10 @@ internal data class ShareMonster(
     val damageResistances: List<ShareType> = emptyList(),
     val damageImmunities: List<ShareType> = emptyList(),
     val conditionImmunities: List<ShareType> = emptyList(),
-    val specialAbilities: List<ShareType> = emptyList(),
+    val specialAbilities: List<ShareAbilityDescription> = emptyList(),
     val actions: List<ShareAction> = emptyList(),
     val legendaryActions: List<ShareAction> = emptyList(),
-    val reactions: List<ShareType> = emptyList(),
+    val reactions: List<ShareAbilityDescription> = emptyList(),
     val spellcaster: ShareSpellcasting? = null,
     val innateSpellcaster: ShareSpellcasting? = null,
     val lore: String? = null,
@@ -87,11 +88,20 @@ internal data class ShareType(
 )
 
 @Serializable
+internal data class ShareAbilityDescription(
+    val index: String,
+    val type: String,
+    val name: String,
+    val savingThrows: List<ShareSavingThrow> = emptyList(),
+    val conditions: List<ShareType> = emptyList(),
+)
+
+@Serializable
 internal data class ShareAction(
     val id: String,
     val damageDices: List<ShareDamageDice>,
     val attackBonus: Int? = null,
-    val abilityDescription: ShareType,
+    val abilityDescription: ShareAbilityDescription,
 )
 
 @Serializable

@@ -23,16 +23,16 @@ data class Spellcasting(
     val description: String,
     val type: SpellcastingType,
     val usages: List<SpellUsage>,
-    val index: String = generateUUID(),
+    val index: String,
 ) {
 
     companion object {
-
         fun create(
-            description: String = "",
+            description: String,
             type: SpellcastingType = SpellcastingType.SPELLCASTER,
-            usages: List<SpellUsage> = emptyList()
+            usages: List<SpellUsage> = emptyList(),
         ) = Spellcasting(
+            index = generateUUID(),
             description = description,
             type = type,
             usages = usages

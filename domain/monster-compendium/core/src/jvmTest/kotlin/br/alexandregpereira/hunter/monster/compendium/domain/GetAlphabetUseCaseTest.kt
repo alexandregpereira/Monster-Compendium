@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,26 +37,38 @@ internal class GetAlphabetUseCaseTest {
             MonsterCompendiumItem.Title(id = "Z0", value = "Z", isHeader = false),
             MonsterCompendiumItem.Title(id = "A0", value = "A", isHeader = true),
             MonsterCompendiumItem.Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "arvore1",
+                ).copy(
                     name = "Arvore1",
                 )
             ),
             MonsterCompendiumItem.Title(id = "E0", value = "E", isHeader = true),
             MonsterCompendiumItem.Title(id = "Elementals0", value = "Elementals", isHeader = false),
             MonsterCompendiumItem.Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "air-elemental",
+                ).copy(
                     name = "Air Elemental",
                     group = "Elementals",
                 )
             ),
             MonsterCompendiumItem.Title(id = "E1", value = "E", isHeader = false),
             MonsterCompendiumItem.Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "elemental",
+                ).copy(
                     name = "Elemental",
-                    imageData = MonsterImageData(isHorizontal = true)
+                    imageData = MonsterImageData(
+                        isHorizontal = true,
+                        url = "",
+                        contentScale = null,
+                        backgroundColor = Color(
+                            light = "",
+                            dark = "",
+                        ),
+                        isImageDataFromCustomDatabase = false,
+                    )
                 )
             ),
         )

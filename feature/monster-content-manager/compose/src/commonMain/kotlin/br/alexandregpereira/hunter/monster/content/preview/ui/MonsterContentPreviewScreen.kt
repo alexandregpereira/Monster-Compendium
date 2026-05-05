@@ -29,12 +29,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
-import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreviewAction
@@ -156,34 +153,6 @@ private fun OnFirstVisibleItemChange(
 ) {
     val firstVisibleItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     onChange(firstVisibleItemIndex)
-}
-
-@Preview
-@Composable
-private fun MonsterContentPreviewScreenPreview() {
-    MonsterContentPreviewScreen(
-        state = MonsterContentPreviewState(
-            title = "Monster Content Preview",
-            monsterCompendiumItems = listOf(
-                MonsterCompendiumItem.Title(
-                    id = "eum",
-                    value = "potenti",
-                    isHeader = false
-                )
-            ) + (0..10).map {
-                MonsterCompendiumItem.Item(
-                    monster = Monster(
-                        index = "usu+$it",
-                        name = "Raphael Bolton",
-                        type = MonsterType.ABERRATION,
-                        challengeRatingData = ChallengeRating(13f),
-                    )
-                )
-            },
-            isOpen = true,
-            alphabet = listOf("A", "B", "C", "D", "E", "F", "G"),
-        ),
-    )
 }
 
 private fun List<MonsterCompendiumItem>.asState(): List<CompendiumItemState> {

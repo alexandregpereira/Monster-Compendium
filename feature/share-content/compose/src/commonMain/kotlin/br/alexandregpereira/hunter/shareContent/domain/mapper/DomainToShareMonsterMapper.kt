@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.shareContent.domain.mapper
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.Action
+import br.alexandregpereira.hunter.domain.model.Condition
 import br.alexandregpereira.hunter.domain.model.Damage
 import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -29,7 +30,17 @@ import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 import br.alexandregpereira.hunter.domain.monster.spell.model.SpellcastingType
-import br.alexandregpereira.hunter.shareContent.domain.model.*
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareAbilityDescription
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareAbilityScore
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareAction
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareDamageDice
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterSpell
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareSavingThrow
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpeedValue
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpellUsage
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpellcasting
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareType
 
 internal fun Monster.toShareMonster(): ShareMonster {
     return ShareMonster(
@@ -61,16 +72,12 @@ internal fun Monster.toShareMonster(): ShareMonster {
         damageResistances = damageResistances.map { it.toShareType() },
         damageImmunities = damageImmunities.map { it.toShareType() },
         conditionImmunities = conditionImmunities.map {
-            ShareType(
-                index = it.index,
-                type = it.type.name,
-                name = it.name
-            )
+            it.toShareCondition()
         },
-        specialAbilities = specialAbilities.map { it.toShareType() },
+        specialAbilities = specialAbilities.map { it.toShareAbilityDescription() },
         actions = actions.map { it.toShareAction() },
         legendaryActions = legendaryActions.map { it.toShareAction() },
-        reactions = reactions.map { it.toShareType() },
+        reactions = reactions.map { it.toShareAbilityDescription() },
         spellcaster = spellcastings.find { it.type == SpellcastingType.SPELLCASTER }
             ?.toShareSpellcasting(),
         innateSpellcaster = spellcastings.find { it.type == SpellcastingType.INNATE }
@@ -109,17 +116,27 @@ private fun Damage.toShareType(): ShareType = ShareType(
     name = name
 )
 
-private fun AbilityDescription.toShareType(): ShareType = ShareType(
-    index = index,
-    type = description,
-    name = name
-)
-
 private fun Action.toShareAction(): ShareAction = ShareAction(
     id = id,
     damageDices = damageDices.map { it.toShareDamageDice() },
     attackBonus = attackBonus,
-    abilityDescription = abilityDescription.toShareType()
+    abilityDescription = abilityDescription.toShareAbilityDescription()
+)
+
+private fun AbilityDescription.toShareAbilityDescription(): ShareAbilityDescription {
+    return ShareAbilityDescription(
+        index = index,
+        type = description,
+        name = name,
+        savingThrows = savingThrows.map { it.toShareSavingThrow() },
+        conditions = conditions.map { it.toShareCondition() }
+    )
+}
+
+private fun Condition.toShareCondition(): ShareType = ShareType(
+    index = index,
+    type = type.name,
+    name = name,
 )
 
 private fun DamageDice.toShareDamageDice(): ShareDamageDice = ShareDamageDice(

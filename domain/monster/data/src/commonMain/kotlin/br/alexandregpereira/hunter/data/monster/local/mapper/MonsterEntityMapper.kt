@@ -140,7 +140,7 @@ internal fun MonsterEntity.toDomain(
     return Monster(
         index = monster.index,
         type = MonsterType.valueOf(monster.type),
-        challengeRatingData = ChallengeRating(monster.challengeRating),
+        challengeRatingData = ChallengeRating.create(monster.challengeRating),
         name = monster.name,
         imageData = MonsterImageData(
             url = monster.imageUrl.replaceOldImageUrl(),
@@ -170,7 +170,22 @@ internal fun MonsterEntity.toDomain(
             MonsterEntityStatus.Clone -> MonsterStatus.Clone
             MonsterEntityStatus.Edited -> MonsterStatus.Edited
             MonsterEntityStatus.Imported -> MonsterStatus.Imported
-        }
+        },
+        speed = Speed(hover = false, values = emptyList()),
+        abilityScores = emptyList(),
+        savingThrows = emptyList(),
+        skills = emptyList(),
+
+        damageVulnerabilities = emptyList(),
+        damageResistances = emptyList(),
+        damageImmunities = emptyList(),
+        conditionImmunities = emptyList(),
+        specialAbilities = emptyList(),
+        actions = emptyList(),
+        reactions = emptyList(),
+        spellcastings = emptyList(),
+        legendaryActions = emptyList(),
+        lore = "",
     )
 }
 

@@ -38,9 +38,13 @@ fun List<Monster>.appendMonsterImages(
         monster.copy(
             imageData = MonsterImageData(
                 url = monsterImage.imageUrl.orEmpty(),
-                backgroundColor = monsterImage.backgroundColor ?: Color(),
+                backgroundColor = monsterImage.backgroundColor ?: Color(
+                    light = "#FAF9F8",
+                    dark = "#262626",
+                ),
                 isHorizontal = monsterImage.isHorizontalImage ?: false,
                 contentScale = monsterImage.contentScale,
+                isImageDataFromCustomDatabase = false,
             )
         )
     }

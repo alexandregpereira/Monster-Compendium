@@ -40,6 +40,8 @@ internal fun List<ReactionEntity>.toDomainReactionEntity(): List<AbilityDescript
             name = it.name,
             description = it.description,
             index = "${it.monsterIndex}-${it.name}",
+            savingThrows = emptyList(),
+            conditions = emptyList(),
         )
     }
 }

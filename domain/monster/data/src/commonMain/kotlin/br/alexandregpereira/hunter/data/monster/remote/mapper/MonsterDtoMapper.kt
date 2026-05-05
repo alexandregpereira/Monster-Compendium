@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Stats
 
@@ -31,12 +32,14 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
         Monster(
             index = it.index,
             type = MonsterType.valueOf(it.type.name),
-            challengeRatingData = ChallengeRating(it.challengeRating),
+            challengeRatingData = ChallengeRating.create(it.challengeRating),
             name = it.name,
             imageData = MonsterImageData(
                 url = "",
                 backgroundColor = Color(light = "", dark = ""),
-                isHorizontal = false
+                isHorizontal = false,
+                contentScale = null,
+                isImageDataFromCustomDatabase = false,
             ),
             subtype = it.subtype,
             group = it.group,
@@ -64,7 +67,9 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             legendaryActions = it.legendaryActions.toDomain(),
             reactions = it.reactions.toDomain(),
             sourceName = it.source.name,
-            spellcastings = it.spellcastings.toDomain()
+            spellcastings = it.spellcastings.toDomain(),
+            lore = "",
+            status = MonsterStatus.Original,
         )
     }
 }

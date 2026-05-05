@@ -27,7 +27,8 @@ fun List<SpellcastingCompleteEntity>.toDomain(): List<Spellcasting> {
         Spellcasting(
             description = entity.spellcasting.description,
             type = SpellcastingType.valueOf(entity.spellcasting.type),
-            usages = entity.usages.toDomain()
+            usages = entity.usages.toDomain(),
+            index = entity.spellcasting.spellcastingId,
         )
     }
 }

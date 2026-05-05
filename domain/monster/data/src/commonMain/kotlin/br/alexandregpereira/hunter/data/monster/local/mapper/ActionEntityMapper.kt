@@ -46,7 +46,8 @@ internal fun List<DamageDiceEntity>.toDamageDiceDomain(): List<DamageDice> {
     return this.map {
         DamageDice(
             dice = it.dice,
-            damage = it.damage.toDamageDomain()
+            damage = it.damage.toDamageDomain(),
+            index = it.id,
         )
     }
 }

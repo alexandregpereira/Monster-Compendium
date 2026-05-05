@@ -34,14 +34,17 @@ interface EventListener<Event> {
 fun <Event> EventDispatcher(
     extraBufferCapacity: Int = 10,
     onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
-): EventDispatcher<Event> = DefaultEventManager(extraBufferCapacity, onBufferOverflow)
+    replay: Int = 0,
+): EventDispatcher<Event> = DefaultEventManager(extraBufferCapacity, onBufferOverflow, replay)
 
 private class DefaultEventManager<Event>(
     extraBufferCapacity: Int = 10,
     onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
+    replay: Int = 0,
 ) : EventDispatcher<Event> {
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow(
+        replay = replay,
         extraBufferCapacity = extraBufferCapacity,
         onBufferOverflow = onBufferOverflow,
     )

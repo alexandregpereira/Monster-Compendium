@@ -27,6 +27,7 @@ internal fun List<SpecialAbilityDto>.toDomain(): List<AbilityDescription> {
             description = abilityDescription.desc,
             savingThrows = abilityDescription.savingThrows.toDomain(),
             conditions = abilityDescription.conditions.toDomain(),
+            index = "",
         )
     }
 }
