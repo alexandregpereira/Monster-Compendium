@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportUiEvent
 import br.alexandregpereira.hunter.shareContent.ui.ShareContentExportBottomSheet
+import br.alexandregpereira.hunter.shareContent.ui.ShareFileTrigger
 import br.alexandregpereira.hunter.state.compose.launchActionEffect
 import br.alexandregpereira.hunter.state.compose.rememberStateHolder
 

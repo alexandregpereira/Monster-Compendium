@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.shareContent
+package br.alexandregpereira.hunter.shareContent.ui
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
