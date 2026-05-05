@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.shareContent
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import br.alexandregpereira.hunter.shareContent.ui.strings
+import br.alexandregpereira.hunter.shareContent.ui.exportStrings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.awt.EventQueue
@@ -31,7 +31,7 @@ internal actual fun ShareFileTrigger(
     filePath: String,
     onClosed: () -> Unit,
 ) {
-    val chooseDestinationFolder = strings.chooseDestinationFolder
+    val chooseDestinationFolder = exportStrings.chooseDestinationFolder
     LaunchedEffect(filePath) {
         val sourceFile = File(filePath.removePrefix("file://"))
         withContext(Dispatchers.IO) {

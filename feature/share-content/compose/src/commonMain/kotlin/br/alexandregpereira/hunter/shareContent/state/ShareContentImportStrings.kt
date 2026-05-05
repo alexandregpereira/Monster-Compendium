@@ -19,52 +19,44 @@ package br.alexandregpereira.hunter.shareContent.state
 
 import br.alexandregpereira.hunter.localization.Language
 
-interface ShareContentStrings {
-    val chooseDestinationFolder: String
+interface ShareContentImportStrings {
     val importButton: String
-    val shareButton: String
     val importTitle: String
-    val exportTitle: String
     val importInvalidContentErrorMessage: String
     val pickCompendiumFile: String
+    val extractedStrings: ShareContentExtractedStrings
 }
 
-internal data class ShareContentEnStrings(
-    override val chooseDestinationFolder: String = "Choose destination folder",
+internal data class ShareContentEnImportStrings(
     override val importButton: String = "Import",
-    override val shareButton: String = "Share",
-    override val importTitle: String = "Import Content",
-    override val exportTitle: String = "Share Content",
+    override val importTitle: String = "Import content",
     override val importInvalidContentErrorMessage: String = "Invalid content",
     override val pickCompendiumFile: String = "Pick compendium file",
-) : ShareContentStrings
+    override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEnStrings(),
+) : ShareContentImportStrings
 
-internal data class ShareContentPtStrings(
-    override val chooseDestinationFolder: String = "Escolher pasta de destino",
+internal data class ShareContentPtImportStrings(
     override val importButton: String = "Importar",
-    override val shareButton: String = "Compartilhar",
-    override val importTitle: String = "Importar Conteúdo",
-    override val exportTitle: String = "Compartilhar Conteúdo",
+    override val importTitle: String = "Importar conteúdo",
     override val importInvalidContentErrorMessage: String = "Conteúdo inválido",
     override val pickCompendiumFile: String = "Escolher arquivo compendium",
-) : ShareContentStrings
+    override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedPtStrings(),
+) : ShareContentImportStrings
 
-fun ShareContentStrings(): ShareContentStrings = ShareContentEnStrings()
+fun ShareContentImportStrings(): ShareContentImportStrings = ShareContentEnImportStrings()
 
-internal data class ShareContentEsStrings(
-    override val chooseDestinationFolder: String = "Elegir carpeta de destino",
+internal data class ShareContentEsImportStrings(
     override val importButton: String = "Importar",
-    override val shareButton: String = "Compartir",
-    override val importTitle: String = "Importar Contenido",
-    override val exportTitle: String = "Compartir Contenido",
+    override val importTitle: String = "Importar contenido",
     override val importInvalidContentErrorMessage: String = "Contenido inválido",
     override val pickCompendiumFile: String = "Elegir archivo compendium",
-) : ShareContentStrings
+    override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEsStrings(),
+) : ShareContentImportStrings
 
-internal fun Language.getStrings(): ShareContentStrings {
+internal fun Language.getImportStrings(): ShareContentImportStrings {
     return when (this) {
-        Language.ENGLISH -> ShareContentEnStrings()
-        Language.PORTUGUESE -> ShareContentPtStrings()
-        Language.SPANISH -> ShareContentEsStrings()
+        Language.ENGLISH -> ShareContentEnImportStrings()
+        Language.PORTUGUESE -> ShareContentPtImportStrings()
+        Language.SPANISH -> ShareContentEsImportStrings()
     }
 }

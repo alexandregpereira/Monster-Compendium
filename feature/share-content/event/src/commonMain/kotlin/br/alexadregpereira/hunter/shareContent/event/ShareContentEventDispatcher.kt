@@ -17,6 +17,7 @@
 
 package br.alexadregpereira.hunter.shareContent.event
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import kotlinx.coroutines.channels.BufferOverflow
@@ -30,7 +31,7 @@ class ShareContentEventDispatcher : EventDispatcher<ShareContentEvent> by EventD
 
 sealed class ShareContentEvent {
     sealed class Import : ShareContentEvent() {
-        class OnStart(val compendiumFileByteArray: ByteArray? = null) : Import()
+        class OnStart(val compendiumFile: FileEntry? = null) : Import()
         data class OnFinish(val monsterIndexes: List<String>) : Import()
     }
     sealed class Export : ShareContentEvent() {

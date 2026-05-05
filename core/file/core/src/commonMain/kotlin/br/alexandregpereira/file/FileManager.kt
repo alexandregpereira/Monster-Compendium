@@ -30,7 +30,7 @@ interface FileManager {
         zipFileName: String,
     ): String
 
-    suspend fun getFileFromAppStorage(filePath: String): ByteArray
+    suspend fun getFileFromAppStorage(filePath: String): FileEntry
 
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
 

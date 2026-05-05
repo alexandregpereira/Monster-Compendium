@@ -46,7 +46,7 @@ internal class JvmFileManager(
         zipEntryFiles: List<FileEntry>,
         zipFileName: String,
     ): String = withContext(dispatcher) {
-        val folder = filesDirectory(fileFolder = FileType.ZIP.folder).apply { mkdirs() }
+        val folder = filesDirectory(fileFolder = FileType.COMPENDIUM.folder).apply { mkdirs() }
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
@@ -70,8 +70,13 @@ internal class JvmFileManager(
         filesDirectory(fileFolder = fileType.folder).deleteRecursively()
     }
 
-    override suspend fun getFileFromAppStorage(filePath: String): ByteArray = withContext(dispatcher) {
-        File(filePath.removePrefix("file://")).readBytes()
+    override suspend fun getFileFromAppStorage(filePath: String): FileEntry = withContext(dispatcher) {
+        File(filePath.removePrefix("file://")).let {
+            FileEntry(
+                name = it.name,
+                content = it.readBytes(),
+            )
+        }
     }
 
     override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> = withContext(dispatcher) {

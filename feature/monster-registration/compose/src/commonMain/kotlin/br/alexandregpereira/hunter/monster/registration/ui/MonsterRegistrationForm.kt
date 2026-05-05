@@ -137,7 +137,7 @@ private fun MonsterRegistrationForm(
         keys = monster.keys,
         infoState = monster.info,
         onMonsterChanged = { intent.onMonsterChanged(monster.copy(info = it)) },
-        onMonsterImagePicked = intent::onMonsterImagePicked,
+        onMonsterImagePickClick = intent::onMonsterImagePickClick,
     )
     MonsterHeaderForm(
         keys = monster.keys,

@@ -20,15 +20,16 @@ package br.alexandregpereira.hunter.shareContent.state
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.importEvents
-import br.alexandregpereira.file.FilePickerManager
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
-import br.alexandregpereira.hunter.shareContent.domain.GetCompendiumFileContent
+import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentException
 import br.alexandregpereira.hunter.shareContent.state.ShareContentImportError.InvalidContent
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -44,18 +45,17 @@ internal class ShareContentImportStateHolder(
     private val eventDispatcher: EventDispatcher<ShareContentEvent>,
     private val importContent: ImportContent,
     private val analytics: Analytics,
-    private val getCompendiumFileContent: GetCompendiumFileContent,
-    private val filePickerManager: FilePickerManager,
+    private val compendiumFileManager: CompendiumFileManager,
 ) : UiModel<ShareContentImportState>(
-    ShareContentImportState(strings = appLocalization.getLanguage().getStrings())
-) {
+    ShareContentImportState(strings = appLocalization.getLanguage().getImportStrings())
+), MutableActionHandler<ShareContentImportUiEvent> by MutableActionHandler() {
 
     private var compendiumFileContent: CompendiumFileContent? = null
 
     init {
         eventDispatcher.importEvents().filterIsInstance<Import.OnStart>().onEach { event ->
-            val compendiumFileByteArray = event.compendiumFileByteArray
-            val hasCompendiumFile = compendiumFileByteArray != null
+            val compendiumFile = event.compendiumFile
+            val hasCompendiumFile = compendiumFile != null
             analytics.track(
                 eventName = "Import content - opened",
                 params = mapOf("hasCompendiumFile" to hasCompendiumFile),
@@ -65,16 +65,16 @@ internal class ShareContentImportStateHolder(
                     copy(
                         isOpen = true,
                         isLoading = hasCompendiumFile,
-                        strings = appLocalization.getLanguage().getStrings(),
+                        strings = appLocalization.getLanguage().getImportStrings(),
                     )
                 }
-                extractZipAndPrepareImport(zipBytes = compendiumFileByteArray)
+                extractZipAndPrepareImport(zipFile = compendiumFile)
             } else {
                 setState {
                     copy(
                         isOpen = true,
                         isLoading = hasCompendiumFile,
-                        strings = appLocalization.getLanguage().getStrings(),
+                        strings = appLocalization.getLanguage().getImportStrings(),
                     )
                 }
             }
@@ -148,21 +148,32 @@ internal class ShareContentImportStateHolder(
             .launchIn(featureScope)
     }
 
-    fun onFilePicked(fileName: String, fileBytes: ByteArray) {
+    fun onFilePickClick() {
+        analytics.track(eventName = "Import content - file pick clicked")
+        sendAction(ShareContentImportUiEvent.PickFile)
+    }
+
+    fun onFilePicked(fileEntry: FileEntry?) {
+        if (fileEntry == null) {
+            analytics.track(
+                eventName = "Import content - file pick cancelled",
+            )
+            return
+        }
         analytics.track(
             eventName = "Import content - file picked",
             params = mapOf(
-                "fileName" to fileName,
-                "fileSize" to fileBytes.size.toString(),
+                "fileName" to fileEntry.name,
+                "fileSize" to fileEntry.content.size.toString(),
             )
         )
-        setState { copy(isLoading = true, contentToImport = fileName) }
-        extractZipAndPrepareImport(zipBytes = fileBytes)
+        setState { copy(isLoading = true, contentToImport = fileEntry.name) }
+        extractZipAndPrepareImport(zipFile = fileEntry)
     }
 
-    private fun extractZipAndPrepareImport(zipBytes: ByteArray) {
+    private fun extractZipAndPrepareImport(zipFile: FileEntry) {
         flow {
-            emit(getCompendiumFileContent(zipBytes))
+            emit(compendiumFileManager.getCompendiumFileContent(zipFile))
         }.flowOn(dispatcher)
             .catch { cause ->
                 analytics.logException(
@@ -186,27 +197,18 @@ internal class ShareContentImportStateHolder(
                     )
                 )
                 setState {
-                    val monsterQuantityFormatted = compendiumFileContent.monstersQuantity
-                        .let {
-                            "$it creatures"
-                        }
-                    val monsterLoreQuantityFormatted = compendiumFileContent.monstersLoreQuantity
-                        .let {
-                            "$it lore creatures"
-                        }
-
-                    val spellQuantityFormatted = compendiumFileContent.spellsQuantity
-                        .let {
-                            "$it spells"
-                        }
+                    val contentEntries = buildContentEntries(
+                        shareContent = compendiumFileContent.shareContent,
+                        imageQuantity = compendiumFileContent.imagesQuantity,
+                        strings = strings.extractedStrings,
+                    )
                     copy(
                         importError = null,
                         isLoading = false,
-                        importExtractedState = ShareContentImportExtractedState(
+                        importExtractedState = ShareContentExtractedState(
+                            fileName = compendiumFileContent.name,
                             contentSize = compendiumFileContent.sizeFormatted,
-                            monsterQuantity = monsterQuantityFormatted,
-                            monsterLoreQuantity = monsterLoreQuantityFormatted,
-                            spellQuantity = spellQuantityFormatted,
+                            contentEntries = contentEntries,
                         )
                     )
                 }

@@ -25,11 +25,15 @@ import platform.Foundation.NSData
 import platform.posix.memcpy
 
 @OptIn(ExperimentalForeignApi::class)
-fun handleCompendiumFileOpen(data: NSData) {
+fun handleCompendiumFileOpen(name: String, data: NSData) {
     val bytes = ByteArray(data.length.toInt()).also { byteArray ->
         byteArray.usePinned { pinned ->
             memcpy(pinned.addressOf(0), data.bytes, data.length)
         }
     }
-    appKoin().get<AppEventDispatcher>().onFileOpen(bytes)
+    val eventDispatcher = appKoin().get<AppEventDispatcher>()
+    eventDispatcher.onFileOpen(
+        name = name.substringAfterLast("/"),
+        bytes = bytes,
+    )
 }

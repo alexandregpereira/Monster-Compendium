@@ -24,7 +24,10 @@ struct MonsterCompendiumApp: App {
                     _ = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     guard let data = try? Data(contentsOf: url) else { return }
-                    FileOpenHandlerKt.handleCompendiumFileOpen(data: (data as NSData) as Data)
+                    FileOpenHandlerKt.handleCompendiumFileOpen(
+                        name: url.absoluteString,
+                        data: (data as NSData) as Data
+                    )
                 }
         }
     }

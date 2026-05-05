@@ -21,9 +21,9 @@ internal data class ShareContentImportState(
     val isOpen: Boolean = false,
     val isLoading: Boolean = false,
     val contentToImport: String = "",
-    val importExtractedState: ShareContentImportExtractedState? = null,
+    val importExtractedState: ShareContentExtractedState? = null,
     val importError: ShareContentImportError? = null,
-    val strings: ShareContentStrings = ShareContentStrings(),
+    val strings: ShareContentImportStrings = ShareContentImportStrings(),
 ) {
     val importErrorMessage: String = importError?.let {
         when (it) {
@@ -31,13 +31,6 @@ internal data class ShareContentImportState(
         }
     } ?: ""
 }
-
-internal data class ShareContentImportExtractedState(
-    val contentSize: String = "",
-    val monsterQuantity: String = "",
-    val monsterLoreQuantity: String = "",
-    val spellQuantity: String = "",
-)
 
 internal enum class ShareContentImportError {
     InvalidContent

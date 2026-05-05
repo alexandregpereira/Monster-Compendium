@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.app.event
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import kotlinx.coroutines.MainScope
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.onEach
 
 interface AppEventDispatcher {
     fun observeEvents()
-    fun onFileOpen(bytes: ByteArray)
+    fun onFileOpen(name: String, bytes: ByteArray)
 }
 
 internal class AppEventDispatcherImpl(
@@ -42,8 +43,12 @@ internal class AppEventDispatcherImpl(
         observeShareContentEvents()
     }
 
-    override fun onFileOpen(bytes: ByteArray) {
-        val event = ShareContentEvent.Import.OnStart(bytes)
+    override fun onFileOpen(name: String, bytes: ByteArray) {
+        val file = FileEntry(
+            name = name,
+            content = bytes,
+        )
+        val event = ShareContentEvent.Import.OnStart(file)
         shareContentEventDispatcher.dispatchEvent(event)
     }
 

@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -110,16 +111,21 @@ class MonsterRegistrationStateHolder internal constructor(
         updateMonster()
     }
 
-    override fun onMonsterImagePicked(bytes: ByteArray?) {
-        if (bytes == null) {
-            analytics.logException(IllegalStateException("File is null on monster registration"))
+    override fun onMonsterImagePickClick() {
+        analytics.track(eventName =  "MonsterRegistration - image pick clicked")
+        sendAction(MonsterRegistrationAction.PickImage)
+    }
+
+    override fun onMonsterImagePicked(file: FileEntry?) {
+        if (file == null) {
+            analytics.track(eventName = "MonsterRegistration - image pick cancelled")
             return
         }
         analytics.trackMonsterRegistrationImagePicked(metadata.monster.index)
         flow {
             val imageName = metadata.monster.index
             val path = fileManager.saveImage(
-                bytes = bytes,
+                bytes = file.content,
                 imageName = imageName,
             )
             emit(path)
@@ -208,6 +214,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     private fun updateSpells(currentSpellIndex: String, newSpellIndex: String) {
+        @Suppress("UnusedFlow")
         spellCompendiumEventDispatcher.dispatchEventResult(SpellCompendiumEvent.Hide)
         getSpell(newSpellIndex)
             .flowOn(dispatcher)

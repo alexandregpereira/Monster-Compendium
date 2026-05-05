@@ -17,39 +17,34 @@
 
 package br.alexandregpereira.hunter.shareContent
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import br.alexandregpereira.file.rememberCompendiumFilePickerLauncher
 import br.alexandregpereira.hunter.shareContent.state.ShareContentImportStateHolder
-import br.alexandregpereira.hunter.shareContent.ui.ShareContentImportScreen
+import br.alexandregpereira.hunter.shareContent.state.ShareContentImportUiEvent
+import br.alexandregpereira.hunter.shareContent.ui.ShareContentImportBottomSheet
+import br.alexandregpereira.hunter.state.compose.launchActionEffect
 import br.alexandregpereira.hunter.state.compose.rememberStateHolder
-import br.alexandregpereira.hunter.ui.compose.BottomSheet
 
 @Composable
-fun ShareContentImportFeature(
-    contentPadding: PaddingValues = PaddingValues(),
-) {
+fun ShareContentImportFeature() {
     val stateHolder = rememberStateHolder<ShareContentImportStateHolder>()
-    val state by stateHolder.state.collectAsState()
-    BottomSheet(
-        contentPadding = PaddingValues(
-            end = 16.dp,
-            start = 16.dp,
-            bottom = 16.dp + contentPadding.calculateBottomPadding(),
-        ),
-        topSpaceHeight = 0.dp,
-        opened = state.isOpen,
-        onClose = stateHolder::onClose,
-        modifier = Modifier.animateContentSize()
-    ) {
-        ShareContentImportScreen(
-            state = state,
-            onImport = stateHolder::onImport,
-            onFilePicked = stateHolder::onFilePicked,
-        )
+
+    val launcher = rememberCompendiumFilePickerLauncher(onResult = stateHolder::onFilePicked)
+
+    stateHolder.launchActionEffect { action ->
+        when (action) {
+            ShareContentImportUiEvent.PickFile -> launcher.launch()
+        }
     }
+
+    val state by stateHolder.state.collectAsState()
+    ShareContentImportBottomSheet(
+        isOpen = state.isOpen,
+        state = state,
+        onImport = stateHolder::onImport,
+        onFilePickClick = stateHolder::onFilePickClick,
+        onClose = stateHolder::onClose,
+    )
 }

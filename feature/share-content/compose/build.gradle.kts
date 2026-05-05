@@ -33,6 +33,7 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:file:compose"))
+        implementation(project(":core:ktx"))
         implementation(project(":core:state-holder:compose"))
         implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))

@@ -18,8 +18,6 @@
 package br.alexandregpereira.hunter.shareContent
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,33 +25,37 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportUiEvent
-import br.alexandregpereira.hunter.shareContent.ui.LocalStrings
+import br.alexandregpereira.hunter.shareContent.ui.ShareContentExportBottomSheet
+import br.alexandregpereira.hunter.state.compose.launchActionEffect
 import br.alexandregpereira.hunter.state.compose.rememberStateHolder
 
+@Suppress("AssignedValueIsNeverRead")
 @Composable
 fun ShareContentExportMonsterFeature() {
     val stateHolder = rememberStateHolder<ShareContentExportStateHolder>()
-    val state by stateHolder.state.collectAsState()
     var fileUriToShare by remember { mutableStateOf<String?>(null) }
-    CompositionLocalProvider(LocalStrings provides state.strings) {
-        fileUriToShare?.let { uri ->
-            ShareFileTrigger(
-                filePath = uri,
-                onClosed = {
-                    fileUriToShare = null
-                    stateHolder.onClose()
-                }
-            )
-        }
+    fileUriToShare?.let { uri ->
+        ShareFileTrigger(
+            filePath = uri,
+            onClosed = {
+                fileUriToShare = null
+                stateHolder.onClose()
+            }
+        )
     }
 
-    LaunchedEffect(stateHolder.action) {
-        stateHolder.action.collect { action ->
-            when (action) {
-                is ShareContentExportUiEvent.ShareFile -> {
-                    fileUriToShare = action.filePath
-                }
+    stateHolder.launchActionEffect { action ->
+        when (action) {
+            is ShareContentExportUiEvent.ShareFile -> {
+                fileUriToShare = action.filePath
             }
         }
     }
+
+    val state by stateHolder.state.collectAsState()
+    ShareContentExportBottomSheet(
+        state = state,
+        onClose = stateHolder::onClose,
+        onExportToFile = stateHolder::onExportToFile,
+    )
 }

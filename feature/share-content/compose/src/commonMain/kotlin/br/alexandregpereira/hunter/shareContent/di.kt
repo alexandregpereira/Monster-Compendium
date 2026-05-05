@@ -18,13 +18,10 @@
 package br.alexandregpereira.hunter.shareContent
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
-import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFile
-import br.alexandregpereira.hunter.shareContent.domain.ExportMonstersContentToFileUseCase
-import br.alexandregpereira.hunter.shareContent.domain.GetCompendiumFileContent
-import br.alexandregpereira.hunter.shareContent.domain.GetCompendiumFileContentUseCase
-import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentEditedToExport
-import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
-import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExportUseCase
+import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
+import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManagerImpl
+import br.alexandregpereira.hunter.shareContent.domain.GetShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetShareContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentUseCase
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
@@ -43,23 +40,16 @@ val featureShareContentModule = module {
             get(),
         )
     }
-    factory<GetMonstersContentToExport> {
-        GetMonstersContentToExportUseCase(
-            getMonsters = get(),
-            getMonstersLore = get(),
-            getSpellsByIds = get(),
-            getMonstersContentEditedToExport = get()
+    factory<GetShareContent> {
+        GetShareContentUseCase(
+            get(),
+            get(),
+            get(),
         )
     }
-    factory { GetMonstersContentEditedToExport(get(), get(), get()) }
-    factory<ExportMonstersContentToFile> {
-        ExportMonstersContentToFileUseCase(
-            fileManager = get(),
-        )
-    }
-    factory<GetCompendiumFileContent> {
-        GetCompendiumFileContentUseCase(
-            fileManager = get(),
+    single<CompendiumFileManager> {
+        CompendiumFileManagerImpl(
+            get(),
         )
     }
     single {
@@ -77,7 +67,6 @@ val featureShareContentModule = module {
             get(),
             get(),
             get<ShareContentEventDispatcher>(),
-            get(),
             get(),
             get(),
             get(),

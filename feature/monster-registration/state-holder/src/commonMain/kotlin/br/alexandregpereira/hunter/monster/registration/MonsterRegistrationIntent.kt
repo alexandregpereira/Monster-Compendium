@@ -17,13 +17,17 @@
 
 package br.alexandregpereira.hunter.monster.registration
 
+import br.alexandregpereira.file.FileEntry
+
 interface MonsterRegistrationIntent {
 
     fun onClose()
 
     fun onMonsterChanged(monster: MonsterState)
 
-    fun onMonsterImagePicked(bytes: ByteArray?)
+    fun onMonsterImagePickClick()
+
+    fun onMonsterImagePicked(file: FileEntry?)
 
     fun onSaved()
 
@@ -42,7 +46,9 @@ class EmptyMonsterRegistrationIntent : MonsterRegistrationIntent {
 
     override fun onMonsterChanged(monster: MonsterState) {}
 
-    override fun onMonsterImagePicked(bytes: ByteArray?) {}
+    override fun onMonsterImagePickClick() {}
+
+    override fun onMonsterImagePicked(file: FileEntry?) {}
 
     override fun onSaved() {}
 

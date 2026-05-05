@@ -58,7 +58,7 @@ internal actual fun ShareFileTrigger(
         ).toString()
         val contentUri = fileUri.toUri()
         val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "application/zip"
+            type = "application/octet-stream"
             putExtra(Intent.EXTRA_STREAM, contentUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }

@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         handleFileOpenIntent(intent)
     }
 
+    @Suppress("DEPRECATION")
     private fun handleFileOpenIntent(intent: Intent?) {
         val uri = when (intent?.action) {
             Intent.ACTION_VIEW -> intent.data
@@ -46,6 +47,6 @@ class MainActivity : AppCompatActivity() {
             else -> return
         } ?: return
         val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
-        get<MainViewModel>().onFileOpen(bytes)
+        get<MainViewModel>().onFileOpen(uri.path.orEmpty(), bytes)
     }
 }

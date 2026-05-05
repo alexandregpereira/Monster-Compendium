@@ -61,7 +61,7 @@ internal class IosFileManager(
         saveFileToAppStorage(
             bytes = zipBytes,
             fileName = zipFileName,
-            fileType = FileType.ZIP,
+            fileType = FileType.COMPENDIUM,
         )
     }
 
@@ -79,7 +79,7 @@ internal class IosFileManager(
         NSFileManager.defaultManager.removeItemAtPath(folderPath, error = null)
     }
 
-    override suspend fun getFileFromAppStorage(filePath: String): ByteArray = withContext(dispatcher) {
+    override suspend fun getFileFromAppStorage(filePath: String): FileEntry = withContext(dispatcher) {
         val path = filePath.removePrefix("file://")
         val data = NSFileManager.defaultManager.contentsAtPath(path)
             ?: error("File not found: $path")
@@ -87,6 +87,11 @@ internal class IosFileManager(
             bytes.usePinned { pinned ->
                 platform.posix.memcpy(pinned.addressOf(0), data.bytes, data.length)
             }
+        }.let {
+            FileEntry(
+                name = filePath.substringAfterLast("/"),
+                content = it,
+            )
         }
     }
 

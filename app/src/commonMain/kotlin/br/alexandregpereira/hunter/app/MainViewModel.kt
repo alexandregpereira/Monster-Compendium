@@ -119,8 +119,11 @@ internal class MainViewModel(
         }.launchIn(scope)
     }
 
-    fun onFileOpen(bytes: ByteArray) {
-        appEventDispatcher.onFileOpen(bytes)
+    fun onFileOpen(uri: String, bytes: ByteArray) {
+        appEventDispatcher.onFileOpen(
+            name = uri.substringAfterLast("/"),
+            bytes,
+        )
     }
 
     fun onEvent(event: MainViewEvent) {

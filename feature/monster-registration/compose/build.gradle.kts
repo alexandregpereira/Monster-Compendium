@@ -25,7 +25,7 @@ multiplatform {
     androidMain()
     commonMain {
         implementation(project(":core:file:compose"))
-        implementation(project(":core:state-holder"))
+        implementation(project(":core:state-holder:compose"))
         implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))

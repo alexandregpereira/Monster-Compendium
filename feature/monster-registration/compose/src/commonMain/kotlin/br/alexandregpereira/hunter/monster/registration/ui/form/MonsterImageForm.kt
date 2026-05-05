@@ -37,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.file.rememberImagePickerLauncher
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.monster.registration.MonsterInfoState
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationStrings
@@ -60,7 +59,7 @@ internal fun LazyListScope.MonsterImageForm(
     keys: Iterator<String>,
     infoState: MonsterInfoState,
     onMonsterChanged: (MonsterInfoState) -> Unit = {},
-    onMonsterImagePicked: (bytes: ByteArray?) -> Unit = {},
+    onMonsterImagePickClick: () -> Unit = {},
 ) {
     FormLazy(
         titleKey = keys.next(),
@@ -134,14 +133,11 @@ internal fun LazyListScope.MonsterImageForm(
             )
         }
         formItem(key = keys.next()) {
-            val launcher = rememberImagePickerLauncher { file ->
-                onMonsterImagePicked(file.content)
-            }
             AppButton(
                 text = strings.pickImageFromGallery,
                 isPrimary = false,
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { launcher.launch() },
+                onClick = onMonsterImagePickClick,
             )
         }
         formItem(key = keys.next()) {

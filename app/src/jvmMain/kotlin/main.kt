@@ -64,7 +64,12 @@ fun main(args: Array<String>) = application {
         LaunchedEffect(Unit) {
             args.firstOrNull()
                 ?.let { File(it).takeIf { f -> f.exists() } }
-                ?.let { koin.get<AppEventDispatcher>().onFileOpen(it.readBytes()) }
+                ?.let {
+                    koin.get<AppEventDispatcher>().onFileOpen(
+                        name = it.name,
+                        bytes = it.readBytes(),
+                    )
+                }
         }
         CompositionLocalProvider(
             LocalBackDispatcher provides backDispatcher
