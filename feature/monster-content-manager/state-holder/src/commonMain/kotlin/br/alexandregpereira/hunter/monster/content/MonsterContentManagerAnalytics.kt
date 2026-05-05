@@ -28,7 +28,7 @@ internal class MonsterContentManagerAnalytics(
         analytics.track(
             eventName = "MonsterContentManager - monster contents loaded",
             params = mapOf(
-                "monsterContents" to monsterContents.map { it.originalName }.toString(),
+                "monsterContents" to monsterContents.map { it.name }.toString(),
             )
         )
     }
@@ -67,5 +67,13 @@ internal class MonsterContentManagerAnalytics(
 
     fun trackClose() {
         analytics.track(eventName = "MonsterContentManager - close")
+    }
+
+    fun trackOnTryAgain() {
+        analytics.track(eventName = "MonsterContentManager - try again")
+    }
+
+    fun trackGenericErrorPageView() {
+        analytics.track(eventName = "MonsterContentManager - generic error page view")
     }
 }

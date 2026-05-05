@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.monster.content.preview.MonsterContentPreview
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -58,14 +60,14 @@ class MonsterContentManagerStateHolder internal constructor(
     }
 
     private fun load() {
-        setState { copy(isLoading = true) }
-        getAlternativeSourcesUseCase(onlyContentEnabled = false)
+        setState { copy(isLoading = true, showGenericError = false) }
+        getAlternativeSourcesUseCase(onlyContentEnabled = true)
             .flowOn(dispatcher)
             .onEach { alternativeSources ->
                 analytics.trackMonsterContentLoaded(alternativeSources)
                 setState {
                     copy(
-                        monsterContents = alternativeSources.map { it.asState() },
+                        monsterContents = alternativeSources.map { it.asState() }.toImmutableList(),
                         strings = appLocalization.getStrings(),
                         isLoading = false,
                     )
@@ -73,6 +75,8 @@ class MonsterContentManagerStateHolder internal constructor(
             }
             .catch {
                 analytics.logException(it)
+                analytics.trackGenericErrorPageView()
+                setState { copy(showGenericError = true, isLoading = false) }
             }
             .launchIn(scope)
     }
@@ -85,6 +89,7 @@ class MonsterContentManagerStateHolder internal constructor(
                         setState { copy(isOpen = true).saveState(stateRecovery) }
                         load()
                     }
+
                     is MonsterContentManagerEvent.Hide -> {
                         setState { hide().saveState(stateRecovery) }
                     }
@@ -99,21 +104,43 @@ class MonsterContentManagerStateHolder internal constructor(
         addAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
             .onEach {
-                load()
+                setState {
+                    copy(
+                        monsterContents = changeEnabledContent(
+                            acronym = acronym,
+                            isAdded = true,
+                        ),
+                    )
+                }
             }
-            .catch {}
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(scope)
     }
 
     fun onRemoveContentClick(acronym: String) {
+        val isDefault = state.value
+            .monsterContentsByAcronym[acronym]
+            ?.isDefault ?: false
+        if (isDefault) return
         analytics.trackRemoveContentClick(acronym)
         hasChanges = true
         removeAlternativeSourceUseCase(acronym)
             .flowOn(dispatcher)
             .onEach {
-                load()
+                setState {
+                    copy(
+                        monsterContents = changeEnabledContent(
+                            acronym = acronym,
+                            isAdded = false,
+                        ),
+                    )
+                }
             }
-            .catch {}
+            .catch {
+                analytics.logException(it)
+            }
             .launchIn(scope)
     }
 
@@ -129,5 +156,22 @@ class MonsterContentManagerStateHolder internal constructor(
             syncEventDispatcher.startSync()
         }
         eventDispatcher.dispatchEvent(MonsterContentManagerEvent.Hide)
+    }
+
+    fun onTryAgain() {
+        analytics.trackOnTryAgain()
+        load()
+    }
+
+    private fun MonsterContentManagerState.changeEnabledContent(
+        acronym: String,
+        isAdded: Boolean,
+    ): ImmutableList<MonsterContentState> {
+        return monsterContentsByAcronym
+            .toMutableMap().let {
+                it[acronym] = it[acronym]?.copy(isAdded = isAdded)
+                    ?: return@let monsterContents
+                it.values.toImmutableList()
+            }
     }
 }

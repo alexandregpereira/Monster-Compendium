@@ -27,6 +27,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compose.AppButton
@@ -42,10 +44,10 @@ internal fun SearchKeyButtons(
     onScrollChanges: (Int) -> Unit,
 ) {
     val scrollState = rememberScrollState(initial = initialScrollOffset)
-    onScrollChanges(
-        getScrollPosition = { scrollState.value },
-        onScrollChanges = onScrollChanges,
-    )
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollState.value }
+            .collect { onScrollChanges(it) }
+    }
     AnimatedVisibility(
         visible = shouldShow(),
         enter = fadeIn(),
@@ -62,14 +64,6 @@ internal fun SearchKeyButtons(
             }
         }
     }
-}
-
-@Composable
-private fun onScrollChanges(
-    getScrollPosition: () -> Int,
-    onScrollChanges: (Int) -> Unit,
-) {
-    onScrollChanges(getScrollPosition())
 }
 
 @Composable

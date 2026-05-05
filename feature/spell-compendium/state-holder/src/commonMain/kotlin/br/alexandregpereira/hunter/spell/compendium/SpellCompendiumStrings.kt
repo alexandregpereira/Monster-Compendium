@@ -40,9 +40,17 @@ internal interface SpellCompendiumStrings {
     val searchLabel: String
 }
 
+internal class SpellCompendiumEsStrings : SpellCompendiumStrings {
+    override val searchResults: (Int) -> String = { count -> "$count resultados" }
+    override val cantrips: String = "Trucos de magia"
+    override val level: (Int) -> String = { level -> "Nivel $level" }
+    override val searchLabel: String = "Buscar"
+}
+
 internal fun getSpellCompendiumStrings(lang: Language): SpellCompendiumStrings {
     return when (lang) {
         Language.ENGLISH -> SpellCompendiumEnStrings()
         Language.PORTUGUESE -> SpellCompendiumPtStrings()
+        Language.SPANISH -> SpellCompendiumEsStrings()
     }
 }

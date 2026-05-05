@@ -17,13 +17,19 @@
 
 package br.alexandregpereira.hunter.folder.list.ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.list.FolderListState
+import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
+import br.alexandregpereira.hunter.ui.compose.SectionTitle
 
 @Composable
 internal fun FolderListScreen(
@@ -37,16 +43,29 @@ internal fun FolderListScreen(
     onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
 ) {
     Box(Modifier.fillMaxSize()) {
-        FolderCardGrid(
-            folders = state.folders,
-            title = state.strings.title,
-            initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex },
-            initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset },
-            contentPadding = contentPadding,
-            onCLick = onCLick,
-            onLongCLick = onLongCLick,
-            onScrollChanges = onScrollChanges,
-        )
+        AnimatedContent(
+            targetState = state.folders.isEmpty(),
+            label = "FolderList",
+        ) { isFoldersEmpty ->
+            if (isFoldersEmpty) {
+                FolderListEmptyScreen(
+                    pageTitle = state.strings.title,
+                    emptyScreenTitle = state.strings.emptyScreenTitle,
+                    emptyScreenDescription = state.strings.emptyScreenDescription,
+                )
+            } else {
+                FolderCardGrid(
+                    folders = state.folders,
+                    title = state.strings.title,
+                    initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex },
+                    initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset },
+                    contentPadding = contentPadding,
+                    onCLick = onCLick,
+                    onLongCLick = onLongCLick,
+                    onScrollChanges = onScrollChanges,
+                )
+            }
+        }
 
         ItemSelection(
             itemSelectionText = state.strings.itemSelected(state.itemSelectionCount),
@@ -59,4 +78,20 @@ internal fun FolderListScreen(
             isOpen = state.isItemSelectionOpen,
         )
     }
+}
+
+@Composable
+private fun FolderListEmptyScreen(
+    pageTitle: String,
+    emptyScreenTitle: String,
+    emptyScreenDescription: String,
+) = Column(
+    modifier = Modifier.padding(16.dp),
+) {
+    SectionTitle(title = pageTitle, isHeader = true)
+
+    EmptyScreenMessage(
+        title = emptyScreenTitle,
+        description = emptyScreenDescription,
+    )
 }

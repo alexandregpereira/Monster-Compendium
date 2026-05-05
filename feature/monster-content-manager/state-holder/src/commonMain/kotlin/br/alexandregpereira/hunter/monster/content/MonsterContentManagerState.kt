@@ -17,12 +17,18 @@
 
 package br.alexandregpereira.hunter.monster.content
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+
 data class MonsterContentManagerState(
-    val monsterContents: List<MonsterContentState> = emptyList(),
+    val monsterContents: ImmutableList<MonsterContentState> = persistentListOf(),
     val isOpen: Boolean = false,
     val isLoading: Boolean = false,
-    val strings: MonsterContentManagerStrings = MonsterContentManagerEmptyStrings(),
-)
+    val showGenericError: Boolean = false,
+    val strings: MonsterContentManagerStrings = MonsterContentManagerStrings(),
+) {
+    val monsterContentsByAcronym = monsterContents.associateBy { it.acronym }
+}
 
 data class MonsterContentState(
     val acronym: String,
@@ -30,8 +36,9 @@ data class MonsterContentState(
     val originalName: String?,
     val totalMonsters: Int,
     val summary: String,
-    val coverImageUrl: String,
-    val isEnabled: Boolean,
+    val coverImageUrl: String?,
+    val isAdded: Boolean,
+    val isDefault: Boolean = false,
 )
 
 internal fun MonsterContentManagerState.hide(): MonsterContentManagerState {

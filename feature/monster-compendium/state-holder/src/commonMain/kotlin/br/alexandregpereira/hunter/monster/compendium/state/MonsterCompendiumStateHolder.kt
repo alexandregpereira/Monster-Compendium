@@ -114,7 +114,6 @@ class MonsterCompendiumStateHolder internal constructor(
             }
             .flowOn(dispatcher)
             .catch { error ->
-                error.printStackTrace()
                 analytics.logException(error)
                 emit(state.value.error(error) to initialScrollItemPosition)
             }

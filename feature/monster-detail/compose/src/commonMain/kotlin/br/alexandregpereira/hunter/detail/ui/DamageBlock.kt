@@ -26,13 +26,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.monster.detail.DamageState
+import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import br.alexandregpereira.hunter.ui.util.toColor
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 private fun DamageBlock(
@@ -47,7 +49,7 @@ private fun DamageBlock(
             text = damage.name,
             fontWeight = FontWeight.Light,
             fontSize = 14.sp,
-            modifier = Modifier.padding(top = 24.dp)
+            modifier = Modifier.padding(top = 24.dp).padding(horizontal = 16.dp),
         )
     }
 }
@@ -83,7 +85,8 @@ internal fun DamageGrid(
                 painter = painterResource(iconRes),
                 iconColor = damage.type.getIconColor(),
                 iconAlpha = 1f,
-                modifier = Modifier.width(GridItemWidth)
+                iconSize = 48.dp,
+                modifier = Modifier.width(GridItemWidth).padding(horizontal = 8.dp),
             )
         }
     }
@@ -106,6 +109,7 @@ internal fun DamageType.getIconColor(): Color {
         DamageType.PSYCHIC -> colors.psychic
         DamageType.RADIANT -> colors.radiant
         DamageType.THUNDER -> colors.thunder
+        DamageType.FORCE -> colors.force
     }
 }
 
@@ -122,4 +126,31 @@ private class DamageIconColors(isDark: Boolean) {
     val bludgeoning = (if (isDark) "#E1A8A8" else "#613A3A").toColor()
     val piercing = (if (isDark) "#BAAFE2" else "#464058").toColor()
     val slashing = (if (isDark) "#9ECAEA" else "#364450").toColor()
+    val force = (if (isDark) "#5E6AD4" else "#001AFF").toColor()
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DamageBlockPreview() = HunterTheme {
+    val damages = listOf(
+        DamageState(
+            index = "acid",
+            type = DamageType.ACID,
+            name = "Acid"
+        ),
+        DamageState(
+            index = "acid",
+            type = DamageType.ACID,
+            name = "Acid"
+        ),
+        DamageState(
+            index = "acid",
+            type = DamageType.BLUDGEONING,
+            name = "Bludgeoning*"
+        ),
+    )
+    DamageBlock(
+        damages = damages,
+        title = "Vulnerabilities"
+    )
 }

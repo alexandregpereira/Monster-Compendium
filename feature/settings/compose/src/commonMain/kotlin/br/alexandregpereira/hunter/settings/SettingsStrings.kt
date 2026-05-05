@@ -30,7 +30,6 @@ interface SettingsStrings {
     val languageLabel: String
     val save: String
     val appearanceSettingsTitle: String
-    val forceLightImageBackground: String
     val defaultLightBackground: String
     val defaultDarkBackground: String
     val importContent: String
@@ -38,33 +37,27 @@ interface SettingsStrings {
     val imageContentScaleFit: String
     val imageContentScaleCrop: String
     val openGitHubProject: String
-    val donateStrings: DonateStrings
-}
-
-interface DonateStrings {
-    val buyMeACoffee: String
-    val donateDescription: String
-    val fromBrazil: String
-    val fromBrazilDescription: String
-    val pixCopyAndPaste: String
-    val pixKey: String
-    val supportMe: String
-    val donateAppName: String
-    val copy: String
+    val subscribePremium: String
+    val spells: String
+    val about: String
+    val content: String
+    val screenTitle: String
+    val premiumCardTitle: String
+    val premiumCardDescription: String
+    val premiumCardButton: String
 }
 
 internal data class SettingsEnStrings(
     override val additionalContent: String = "Additional Content",
     override val monsterImagesJson: String = "Monster Images JSON URL",
     override val alternativeSourcesJson: String = "Alternative Sources JSON URL",
-    override val manageMonsterContent: String = "Manage Monsters Content",
+    override val manageMonsterContent: String = "Manage Content",
     override val sync: String = "Sync",
     override val manageAdvancedSettings: String = "Advanced Settings",
-    override val settingsTitle: String = "Language",
+    override val settingsTitle: String = "Settings",
     override val languageLabel: String = "Language",
     override val save: String = "Save",
     override val appearanceSettingsTitle: String = "Appearance",
-    override val forceLightImageBackground: String = "Use Light Background Color in Images",
     override val defaultLightBackground: String = "Default Image Light Background Color",
     override val defaultDarkBackground: String = "Default Image Dark Background Color",
     override val importContent: String = "Import Shared Content",
@@ -72,31 +65,27 @@ internal data class SettingsEnStrings(
     override val imageContentScaleFit: String = "Show entire image",
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
-    override val donateStrings: DonateStrings = object : DonateStrings {
-        override val buyMeACoffee: String = "Buy me a Coffee"
-        override val donateDescription: String = "If you are enjoying this app and want to help me maintain it, please consider buying me a coffee."
-        override val fromBrazil: String = "Hey Brazil"
-        override val fromBrazilDescription: String = "If you are from Brazil, you can also buy me a coffee using Pix."
-        override val pixCopyAndPaste: String = "Pix Copy and Paste"
-        override val pixKey: String = "Pix Key"
-        override val supportMe: String = "Support me"
-        override val donateAppName: String = "on Ko-fi"
-        override val copy: String = "Copy"
-    }
+    override val subscribePremium: String = "Remove ads with Premium",
+    override val spells: String = "Spells",
+    override val about: String = "About",
+    override val content: String = "Content",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendium Premium",
+    override val premiumCardDescription: String = "Remove ads",
+    override val premiumCardButton: String = "Check out",
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
     override val additionalContent: String = "Conteúdo Adicional",
     override val monsterImagesJson: String = "URL do JSON de Imagens de Monstros",
     override val alternativeSourcesJson: String = "URL do JSON de Fontes Alternativas",
-    override val manageMonsterContent: String = "Gerenciar Conteúdo de Monstros",
+    override val manageMonsterContent: String = "Gerenciar Conteúdo",
     override val sync: String = "Sincronizar",
     override val manageAdvancedSettings: String = "Configurações Avançadas",
-    override val settingsTitle: String = "Idioma",
+    override val settingsTitle: String = "Configurações",
     override val languageLabel: String = "Idioma",
     override val save: String = "Salvar",
     override val appearanceSettingsTitle: String = "Aparência",
-    override val forceLightImageBackground: String = "Usar Cor de Fundo Claro nas Imagens",
     override val defaultLightBackground: String = "Cor Padrão de Fundo das Imagens Light",
     override val defaultDarkBackground: String = "Cor Padrão de Fundo das Imagens Dark",
     override val importContent: String = "Importar Conteúdo Compartilhado",
@@ -104,22 +93,48 @@ internal data class SettingsPtStrings(
     override val imageContentScaleFit: String = "Mostrar imagem inteira",
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
-    override val donateStrings: DonateStrings = object : DonateStrings {
-        override val buyMeACoffee: String = "Pague um café"
-        override val donateDescription: String = "Se você está gostando deste aplicativo e quer me ajudar a mantê-lo, considere me pagar um café."
-        override val fromBrazil: String = "E aí Brasil"
-        override val fromBrazilDescription: String = "Se você é do Brasil, também pode me pagar um café usando Pix."
-        override val pixCopyAndPaste: String = "Pix Copia e Cola"
-        override val pixKey: String = "Chave Pix"
-        override val supportMe: String = "Me apoie"
-        override val donateAppName: String = "no Ko-fi"
-        override val copy: String = "Copiar"
-    }
+    override val subscribePremium: String = "Remover anúncios com Premium",
+    override val spells: String = "Magias",
+    override val about: String = "Sobre",
+    override val content: String = "Conteúdo",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compêndio Premium",
+    override val premiumCardDescription: String = "Remover anúncios",
+    override val premiumCardButton: String = "Saiba mais",
+) : SettingsStrings
+
+internal data class SettingsEsStrings(
+    override val additionalContent: String = "Contenido Adicional",
+    override val monsterImagesJson: String = "URL JSON de Imágenes de Monstruos",
+    override val alternativeSourcesJson: String = "URL JSON de Fuentes Alternativas",
+    override val manageMonsterContent: String = "Gestionar Contenido",
+    override val sync: String = "Sincronizar",
+    override val manageAdvancedSettings: String = "Ajustes Avanzados",
+    override val settingsTitle: String = "Configuraciones",
+    override val languageLabel: String = "Idioma",
+    override val save: String = "Guardar",
+    override val appearanceSettingsTitle: String = "Apariencia",
+    override val defaultLightBackground: String = "Color de Fondo Claro Predeterminado",
+    override val defaultDarkBackground: String = "Color de Fondo Oscuro Predeterminado",
+    override val importContent: String = "Importar Contenido Compartido",
+    override val monsterImageContentScale: String = "Escala de Contenido de Imagen",
+    override val imageContentScaleFit: String = "Mostrar imagen completa",
+    override val imageContentScaleCrop: String = "Expandir la imagen",
+    override val openGitHubProject: String = "Abrir Proyecto en GitHub",
+    override val subscribePremium: String = "Eliminar anuncios con Premium",
+    override val spells: String = "Magias",
+    override val about: String = "Acerca de",
+    override val content: String = "Contenido",
+    override val screenTitle: String = "Menu",
+    override val premiumCardTitle: String = "Compendio Premium",
+    override val premiumCardDescription: String = "Eliminar anuncios",
+    override val premiumCardButton: String = "Verificar",
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {
     return when (lang) {
         Language.ENGLISH -> SettingsEnStrings()
         Language.PORTUGUESE -> SettingsPtStrings()
+        Language.SPANISH -> SettingsEsStrings()
     }
 }

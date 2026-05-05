@@ -25,5 +25,20 @@ import org.koin.dsl.module
 val syncDomainModule = module {
     factory { IsFirstTime(get()) }
     factory { ResetFirstTime(get()) }
-    factory { SyncUseCase(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    factory {
+        SyncUseCase(
+            syncMonsters = get(),
+            syncSpells = get(),
+            syncMonstersLoreUseCase = get(),
+            getLanguageUseCase = get(),
+            saveLanguageUseCase = get(),
+            syncAlternativeSourceContentVersionUseCase = get(),
+            saveAlternativeSourceContentVersionsUseCase = get(),
+            isFirstTime = get(),
+            resetFirstTime = get(),
+            syncConditions = get(),
+            getContentVersionUseCase = get(),
+            saveContentVersionUseCase = get(),
+        )
+    }
 }

@@ -24,6 +24,9 @@ data class AlternativeSource(
     val coverImageUrl: String,
     val isEnabled: Boolean,
     val isLoreEnabled: Boolean,
+    val contentVersion: Int = 0,
+    val isDefault: Boolean = false,
+    val isAdded: Boolean = false,
 ) {
     val acronym: String
         get() = source.acronym

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82CB83D0D7B909A1A552AC22 /* Pods_MonsterCompendium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */; };
+		C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */; };
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
 		C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8629847A85002F517C /* Assets.xcassets */; };
 		C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8929847A85002F517C /* Preview Assets.xcassets */; };
@@ -30,12 +32,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonsterCompendium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A4FE53266E7B419904B697F /* Pods-MonsterCompendium.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonsterCompendium.debug.xcconfig"; path = "Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium.debug.xcconfig"; sourceTree = "<group>"; };
+		A1CA874E548FC31A34B143DF /* Pods-MonsterCompendium.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonsterCompendium.release.xcconfig"; path = "Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium.release.xcconfig"; sourceTree = "<group>"; };
+		C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C1BC0E7F29847A84002F517C /* MonsterCompendium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonsterCompendium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCompendiumApp.swift; sourceTree = "<group>"; };
 		C1BC0E8629847A85002F517C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1BC0E8929847A85002F517C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C1BC0E8F29847A85002F517C /* MonsterCompendiumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonsterCompendiumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E9929847A85002F517C /* MonsterCompendiumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonsterCompendiumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1F8CDFA2F84340800B4A20A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82CB83D0D7B909A1A552AC22 /* Pods_MonsterCompendium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,11 +71,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50EA597424A16704445E0C94 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C1BC0E7629847A83002F517C = {
 			isa = PBXGroup;
 			children = (
 				C1BC0E8129847A84002F517C /* MonsterCompendium */,
 				C1BC0E8029847A84002F517C /* Products */,
+				C2183D9CE28767C4DF2A0CA1 /* Pods */,
+				50EA597424A16704445E0C94 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +105,8 @@
 				C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */,
 				C1BC0E8629847A85002F517C /* Assets.xcassets */,
 				C1BC0E8829847A85002F517C /* Preview Content */,
+				C1F8CDFA2F84340800B4A20A /* Info.plist */,
+				C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */,
 			);
 			path = MonsterCompendium;
 			sourceTree = "<group>";
@@ -99,6 +119,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C2183D9CE28767C4DF2A0CA1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8A4FE53266E7B419904B697F /* Pods-MonsterCompendium.debug.xcconfig */,
+				A1CA874E548FC31A34B143DF /* Pods-MonsterCompendium.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,18 +135,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C1BC0EA329847A85002F517C /* Build configuration list for PBXNativeTarget "MonsterCompendium" */;
 			buildPhases = (
+				AB96F7D59FE14E4CD5A7C964 /* [CP] Check Pods Manifest.lock */,
 				C1BC0EAD29848147002F517C /* Run Script */,
 				C1BC0E7B29847A84002F517C /* Sources */,
 				C1BC0E7C29847A84002F517C /* Frameworks */,
 				C1BC0E7D29847A84002F517C /* Resources */,
+				681AC63E04636CC93F0717FB /* [CP] Embed Pods Frameworks */,
+				C193C3C12F8B08EE00E9D21E /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MonsterCompendium;
-			packageProductDependencies = (
-			);
 			productName = MonsterCompendium;
 			productReference = C1BC0E7F29847A84002F517C /* MonsterCompendium.app */;
 			productType = "com.apple.product-type.application";
@@ -191,8 +221,6 @@
 				Base,
 			);
 			mainGroup = C1BC0E7629847A83002F517C;
-			packageReferences = (
-			);
 			productRefGroup = C1BC0E8029847A84002F517C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -211,6 +239,7 @@
 			files = (
 				C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */,
 				C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */,
+				C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,24 +260,87 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C1BC0EAD29848147002F517C /* Run Script */ = {
+		681AC63E04636CC93F0717FB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB96F7D59FE14E4CD5A7C964 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MonsterCompendium-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C193C3C12F8B08EE00E9D21E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n";
+		};
+		C1BC0EAD29848147002F517C /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../app/src",
+				"${SRCROOT}/../buildSrc",
 			);
 			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${SRCROOT}/../build/xcode-frameworks/${CONFIGURATION}/${SDK_NAME}/MonsterCompendium.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :app:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :app:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -407,15 +499,25 @@
 		};
 		C1BC0EA429847A85002F517C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A4FE53266E7B419904B697F /* Pods-MonsterCompendium.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MonsterCompendium/Preview Content\"";
+				DEVELOPMENT_TEAM = UF66T7J8P8;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../app/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../app/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonsterCompendium/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Compendium;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -425,7 +527,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
@@ -434,6 +535,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendium;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -442,15 +544,25 @@
 		};
 		C1BC0EA529847A85002F517C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1CA874E548FC31A34B143DF /* Pods-MonsterCompendium.release.xcconfig */;
 			buildSettings = {
+				"ARCHS[sdk=iphonesimulator*]" = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MonsterCompendium/Preview Content\"";
+				DEVELOPMENT_TEAM = UF66T7J8P8;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../app/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../app/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonsterCompendium/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Compendium;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -460,7 +572,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
@@ -469,6 +580,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendium;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -481,10 +593,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendiumTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -500,10 +610,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendiumTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -518,9 +626,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendiumUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -535,9 +641,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.alexandregpereira.MonsterCompendiumUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

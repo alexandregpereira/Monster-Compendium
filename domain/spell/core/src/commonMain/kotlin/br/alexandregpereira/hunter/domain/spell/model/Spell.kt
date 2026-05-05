@@ -37,5 +37,8 @@ data class Spell(
 
 enum class SpellStatus {
     Original,
-    Imported
+    Imported,
+    Edited,
+    Cloned,
+    Created
 }

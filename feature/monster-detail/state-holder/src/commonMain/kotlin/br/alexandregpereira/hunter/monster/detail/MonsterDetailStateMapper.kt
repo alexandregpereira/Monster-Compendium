@@ -67,12 +67,13 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         conditionImmunities = conditionImmunities.map { it.asState() },
         senses = senses,
         languages = languages,
-        specialAbilities = specialAbilities.map { it.asState() },
-        actions = actions.map { it.asState() },
-        legendaryActions = legendaryActions.map { it.asState() },
-        reactions = reactions.map { it.asState() },
+        specialAbilities = specialAbilities.map { it.asState(strings) },
+        actions = actions.map { it.asState(strings) },
+        legendaryActions = legendaryActions.map { it.asState(strings) },
+        reactions = reactions.map { it.asState(strings) },
         spellcastings = spellcastings.map { it.asState(strings) },
-        lore = lore.orEmpty()
+        lore = lore.orEmpty(),
+        sourceName = sourceName,
     )
 }
 
@@ -157,18 +158,20 @@ private fun Condition.asState(): ConditionState {
     )
 }
 
-private fun AbilityDescription.asState(): AbilityDescriptionState {
+private fun AbilityDescription.asState(strings: MonsterDetailStrings): AbilityDescriptionState {
     return AbilityDescriptionState(
         name = name,
-        description = description
+        description = description,
+        savingThrows = savingThrows.map { it.asSavingThrowState(strings) },
+        conditions = conditions.map { it.asState() },
     )
 }
 
-private fun Action.asState(): ActionState {
+private fun Action.asState(strings: MonsterDetailStrings): ActionState {
     return ActionState(
         damageDices = damageDices.map { it.asState() },
         attackBonus = attackBonus,
-        abilityDescription = abilityDescription.asState()
+        abilityDescription = abilityDescription.asState(strings)
     )
 }
 

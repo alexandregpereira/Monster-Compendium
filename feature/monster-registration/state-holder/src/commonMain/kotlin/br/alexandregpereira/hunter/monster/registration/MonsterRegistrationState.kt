@@ -136,11 +136,11 @@ data class ConditionState(
     val key: String = generateUUID(),
     val typeOptions: List<TypeState> = emptyList(),
     val selectedIndex: Int = 0,
-    val name: String = typeOptions.getOrNull(selectedIndex)?.name.orEmpty(),
 ) {
     private val filteredTypeOptions: List<TypeState> = typeOptions.filter { it.enabled }
     val filteredOptions: List<String> = filteredTypeOptions.map { it.name }
     val typeName: String = typeOptions.getOrNull(selectedIndex)?.name.orEmpty()
+    val name: String = typeName
 
     fun selectedIndex(filteredIndex: Int): Int {
         return filteredTypeOptions[filteredIndex].index
@@ -151,6 +151,8 @@ data class AbilityDescriptionState(
     val key: String = generateUUID(),
     val name: String = "",
     val description: String = "",
+    val savingThrows: List<SavingThrowState> = emptyList(),
+    val conditions: List<ConditionState> = emptyList(),
 )
 
 data class ActionState(

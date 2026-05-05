@@ -31,13 +31,19 @@ interface EventListener<Event> {
     val events: Flow<Event>
 }
 
-fun <Event> EventDispatcher(): EventDispatcher<Event> = DefaultEventManager()
+fun <Event> EventDispatcher(
+    extraBufferCapacity: Int = 10,
+    onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
+): EventDispatcher<Event> = DefaultEventManager(extraBufferCapacity, onBufferOverflow)
 
-private class DefaultEventManager<Event> : EventDispatcher<Event> {
+private class DefaultEventManager<Event>(
+    extraBufferCapacity: Int = 10,
+    onBufferOverflow: BufferOverflow = BufferOverflow.DROP_OLDEST,
+) : EventDispatcher<Event> {
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow(
-        extraBufferCapacity = 10,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        extraBufferCapacity = extraBufferCapacity,
+        onBufferOverflow = onBufferOverflow,
     )
     override val events: Flow<Event> = _events
 

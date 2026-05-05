@@ -33,15 +33,29 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             totalMonsters = 0,
             summary = "",
             coverImageUrl = "",
+            isAdded = true,
             isEnabled = true,
             isLoreEnabled = true,
+            contentVersion = it.contentVersion,
+            isDefault = it.isDefault,
         )
     }
 }
 
-internal fun String.toEntity(): AlternativeSourceEntity {
+internal fun String.toEntity(contentVersion: Int = 0): AlternativeSourceEntity {
     return AlternativeSourceEntity(
         acronym = this,
-        createdAt = Clock.System.now().toEpochMilliseconds()
+        createdAt = Clock.System.now().toEpochMilliseconds(),
+        contentVersion = contentVersion,
+    )
+
+}
+
+internal fun AlternativeSource.toEntity(): AlternativeSourceEntity {
+    return AlternativeSourceEntity(
+        acronym = acronym,
+        createdAt = Clock.System.now().toEpochMilliseconds(),
+        contentVersion = contentVersion,
+        isDefault = isDefault,
     )
 }

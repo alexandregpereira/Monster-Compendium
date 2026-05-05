@@ -31,7 +31,6 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
@@ -51,7 +50,6 @@ import br.alexandregpereira.hunter.database.SkillQueries
 import br.alexandregpereira.hunter.database.SpecialAbilityQueries
 import br.alexandregpereira.hunter.database.SpeedQueries
 import br.alexandregpereira.hunter.database.SpeedValueQueries
-import br.alexandregpereira.hunter.database.SpellPreviewQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
@@ -166,12 +164,6 @@ internal fun SpellUsageQueries.insert(entities: List<SpellUsageEntity>) {
 }
 
 internal fun SpellUsageSpellCrossRefQueries.insert(entities: List<SpellUsageSpellCrossRefEntity>) {
-    entities.forEach {
-        insert(it.toDatabaseEntity())
-    }
-}
-
-internal fun SpellPreviewQueries.insert(entities: List<SpellPreviewEntity>) {
     entities.forEach {
         insert(it.toDatabaseEntity())
     }

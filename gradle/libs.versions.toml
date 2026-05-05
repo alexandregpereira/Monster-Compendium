@@ -1,40 +1,51 @@
 [versions]
-amplitude-android = "1.26.0"
+amplitude-android = "1.28.1"
+amplitude-experiment-android = "1.15.0"
 amplitude-jvm = "1.13.0"
 android_gradle_plugin = "8.10.0"
+android_lifecycle_compose = "2.10.0"
 android_test_version = "1.7.0"
 appcompat = "1.7.1"
-arch_core_testing = "2.2.0"
 coil3 = "3.4.0"
-compose_activity = '1.12.4'
-compose = '1.10.4'
-compose_plugin = '1.10.2'
+colorpicker = "1.1.3"
+compose_activity = '1.13.0'
+compose = '1.11.0'
+compose_plugin = '1.10.3'
 compose_material_icons_extended = "1.7.3"
-core_ktx = '1.17.0'
-firebase_bom = "34.11.0"
+core_ktx = '1.18.0'
+filekit = "0.13.0"
+firebase_bom = "34.12.0"
 googleplay_services = "4.4.4"
-gradle_firebase_crashlytics = "3.0.6"
+gradle_firebase_crashlytics = "3.0.7"
 junit_ext = "1.3.0"
 junit = "4.13.2"
 json-jvm = "20251224"
-koin = '4.1.1'
-koin_compose = "4.1.1"
-kotlin = '2.3.0'
+koin = '4.2.1'
+koin_compose = "4.2.1"
+kotlin = '2.3.21'
+kotlin_collections_immutable = "0.4.0"
 kotlin_coroutines_test = '1.10.2'
 kotlin_coroutines = '1.10.2'
 kotlin_datetime = "0.7.1"
-kotlinx_serialization = "1.10.0"
-ktor = "3.4.1"
+kotlinx_serialization = "1.11.0"
+ktor = "3.4.3"
 material = "1.13.0"
 mockk = "1.14.9"
+multiplatform-markdown-renderer = "0.40.2"
 multiplatform-settings = "1.3.0"
+play-services-ads = "25.2.0"
+user-messaging-platform = "4.0.0"
+revenuecat_kmp = "2.10.2+17.55.1"
 sqldelight = "1.5.5"
 
 [libraries]
 amplitude-android = { module = "com.amplitude:analytics-android", version.ref = "amplitude-android" }
+amplitude-experiment-android = { module = "com.amplitude:experiment-android-client", version.ref = "amplitude-experiment-android" }
 amplitude-jvm = { module = "com.amplitude:java-sdk", version.ref = "amplitude-jvm" }
+android-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "android_lifecycle_compose" }
 android-test-runner = { module = "androidx.test:runner", version.ref = "android_test_version" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
@@ -52,10 +63,10 @@ compose-mp-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch_core_testing" }
+filekit-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android_gradle_plugin" }
 gradle-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "gradle_firebase_crashlytics" }
 gradle-googleplay-services = { module = "com.google.gms:google-services", version.ref = "googleplay_services" }
@@ -67,6 +78,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+kotlin-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin_collections_immutable" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_test" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }
 kotlin-coroutines-desktop = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin_coroutines" }
@@ -82,11 +94,15 @@ ktor-jvm = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+multiplatform-markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer-m2", version.ref = "multiplatform-markdown-renderer" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatform-settings" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
+user-messaging-platform-android = { module = "com.google.android.ump:user-messaging-platform", version.ref = "user-messaging-platform" }
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+revenuecat-kmp-core = { module = "com.revenuecat.purchases:purchases-kmp-core", version.ref = "revenuecat_kmp" }
 
 [bundles]
 instrumentedtest = ["android-test-runner", "junit-ext"]

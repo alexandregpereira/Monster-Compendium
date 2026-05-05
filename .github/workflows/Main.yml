@@ -6,20 +6,30 @@ on:
       - main
     paths-ignore:
       - '**.md'
+      - '**.html'
       - 'media/**'
       - 'content/**'
+      - 'docs/**'
+
+env:
+  MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+  AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+  AMPLITUDE_SANDBOX_API_KEY: ${{ secrets.AMPLITUDE_SANDBOX_API_KEY }}
+  REVENUE_CAT_ANDROID_API_KEY: ${{ secrets.REVENUE_CAT_ANDROID_API_KEY }}
+  REVENUE_CAT_IOS_API_KEY: ${{ secrets.REVENUE_CAT_IOS_API_KEY }}
+  REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
 
 jobs:
-  multiplatform-build:
+  android-distribution:
     name: Android Distribution
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -29,9 +39,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease
 
       - name: Verify database migration
@@ -47,23 +54,13 @@ jobs:
             data/build/reports/tests
             domain/build/reports/tests
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4.6.2
+      - name: Upload to Google Play Internal Testing
+        uses: r0adkll/upload-google-play@v1
         with:
-          name: app-release-apk
-          path: app/build/outputs/apk/release/app-release.apk
-
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: app-release-aab
-          path: app/build/outputs/bundle/release/app-release.aab
-
-      - name: Upload APK metadata JSON
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: app-output-metadata-json
-          path: app/build/outputs/apk/release/output-metadata.json
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: br.alexandregpereira.hunter.app
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          tracks: internal
 
   android-dev-distribution:
     name: Android APK Dev Distribution
@@ -71,10 +68,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -84,27 +81,30 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate Dev Apk
-        env:
-          MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew assembleRelease -Pdev
 
-      - name: Upload Dev APK
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: app-dev-release-apk
-          path: app/build/outputs/apk/release/app-dev-release.apk
+      - name: Get Dev APK path
+        id: dev-apk-path
+        run: echo "path=$(find app/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
 
-  macos-desktop-distribution:
-    name: MacOs Desktop Distribution
+      - name: Upload Dev APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          file: ${{ steps.dev-apk-path.outputs.path }}
+          groups: Testers
+
+  ios-distribution:
+    name: iOS Distribution
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -113,77 +113,95 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: '26.3'
+
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+
+      - name: Install Pod dependencies
+        working-directory: iosApp
+        run: pod install
+
+      - name: Update iOS version in xcconfig
+        run: ./gradlew :app:updateIosVersion
+
+      - name: Import signing certificate
         env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-        run: ./gradlew :app:packageReleaseDmg
+          APPLE_BUILD_CERTIFICATE_BASE64: ${{ secrets.APPLE_BUILD_CERTIFICATE_BASE64 }}
+          APPLE_BUILD_P12_PASSWORD: ${{ secrets.APPLE_BUILD_P12_PASSWORD }}
+          APPLE_BUILD_KEYCHAIN_PASSWORD: ${{ secrets.APPLE_BUILD_KEYCHAIN_PASSWORD }}
+        run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo -n "$APPLE_BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          security create-keychain -p "$APPLE_BUILD_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$APPLE_BUILD_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERTIFICATE_PATH -P "$APPLE_BUILD_P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$APPLE_BUILD_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
 
-      - name: Upload Dmg
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-dmg
-          path: app/build/compose/binaries/main-release/dmg/*.dmg
-
-  linux-desktop-distribution:
-    name: Linux Desktop Distribution
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.5.0
-
-      - name: set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
+      - name: Install provisioning profile
         env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-        run: ./gradlew :app:packageReleaseDeb :app:packageReleaseRpm
+          APPLE_BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.APPLE_BUILD_PROVISION_PROFILE_BASE64 }}
+        run: |
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          echo -n "$APPLE_BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Upload Deb
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-deb
-          path: app/build/compose/binaries/main-release/deb/*.deb
+      - name: Archive iOS app
+        working-directory: iosApp
+        run: |
+          xcodebuild archive \
+            -workspace MonsterCompendium.xcworkspace \
+            -scheme MonsterCompendium \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath ${{ github.workspace }}/MonsterCompendium.xcarchive \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE_SPECIFIER="${{ secrets.APPLE_BUILD_PROVISION_PROFILE_NAME }}"
 
-      - name: Upload Rpm
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-rpm
-          path: app/build/compose/binaries/main-release/rpm/*.rpm
+      - name: Export IPA
+        run: |
+          cat > $RUNNER_TEMP/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>teamID</key>
+            <string>UF66T7J8P8</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>br.alexandregpereira.MonsterCompendium</key>
+              <string>${{ secrets.APPLE_BUILD_PROVISION_PROFILE_NAME }}</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath ${{ github.workspace }}/MonsterCompendium.xcarchive \
+            -exportPath ${{ github.workspace }}/export \
+            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist
 
-  windows-desktop-distribution:
-    name: Windows Desktop Distribution
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2.5.0
-
-      - name: set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
+      - name: Upload to TestFlight
         env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-        run: ./gradlew :app:packageReleaseMsi
-
-      - name: Upload Msi
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-msi
-          path: app/build/compose/binaries/main-release/msi/*.msi
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo -n "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode -o ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+          xcrun altool --upload-app \
+            --type ios \
+            --file ${{ github.workspace }}/export/MonsterCompendium.ipa \
+            --apiKey $APP_STORE_CONNECT_API_KEY_ID \
+            --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID

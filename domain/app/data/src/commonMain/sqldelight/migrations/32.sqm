@@ -1,0 +1,22 @@
+ALTER TABLE MonsterImageEntity ADD COLUMN `imageUrl` TEXT;
+
+DROP VIEW IF EXISTS MonsterWithImageEntityView;
+DROP VIEW IF EXISTS MonsterFolderCompleteEntityView;
+
+CREATE VIEW IF NOT EXISTS MonsterWithImageEntityView AS
+SELECT
+    MonsterEntity.*,
+    MonsterImageEntity.backgroundColorLight AS customBackgroundColorLight,
+    MonsterImageEntity.backgroundColorDark AS customBackgroundColorDark,
+    MonsterImageEntity.isHorizontalImage AS customIsHorizontalImage,
+    MonsterImageEntity.imageContentScale AS customImageContentScale,
+    MonsterImageEntity.imageUrl AS customImageUrl
+FROM MonsterEntity
+LEFT JOIN MonsterImageEntity
+ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex;
+
+CREATE VIEW IF NOT EXISTS MonsterFolderCompleteEntityView AS
+SELECT * FROM MonsterFolderEntity
+INNER JOIN MonsterWithImageEntityView
+ON MonsterWithImageEntityView.`index` == MonsterFolderEntity.`monsterIndex`
+;

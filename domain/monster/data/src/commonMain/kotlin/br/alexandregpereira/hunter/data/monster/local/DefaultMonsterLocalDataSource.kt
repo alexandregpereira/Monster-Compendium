@@ -40,6 +40,10 @@ internal class DefaultMonsterLocalDataSource(
         }
     }
 
+    override suspend fun getMonsterPreview(index: String): MonsterEntity? {
+        return monsterDao.getMonsterPreview(index)
+    }
+
     override fun getMonsterPreviewsEdited(): Flow<List<MonsterEntity>> = flow {
         emit(mutex.withLock { monsterDao.getMonstersPreviewsEdited() })
     }

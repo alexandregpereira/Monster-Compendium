@@ -176,4 +176,52 @@ class MonsterDetailAnalytics(
             )
         )
     }
+
+    fun trackResetImageClicked(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - reset image clicked",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackResetImageConfirmed(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - reset image confirmed",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackResetImageClosed(monsterIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - reset image canceled",
+            params = mapOf(
+                "monsterIndex" to monsterIndex,
+            )
+        )
+    }
+
+    fun trackConditionClicked(conditionIndex: String) {
+        analytics.track(
+            eventName = "MonsterDetail - condition clicked",
+            params = mapOf(
+                "conditionIndex" to conditionIndex,
+            )
+        )
+    }
+
+    fun trackConditionDetailOpened() {
+        analytics.track(
+            eventName = "MonsterDetail - condition opened",
+        )
+    }
+
+    fun trackConditionDetailClosed() {
+        analytics.track(
+            eventName = "MonsterDetail - condition detail closed",
+        )
+    }
 }

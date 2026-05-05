@@ -19,25 +19,31 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.condition.GetCondition
+import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
+import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddToFolder
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Delete
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Edit
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Export
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetImage
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.ResetToOriginal
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.ADD_TO_FOLDER
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLONE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_IMAGE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
@@ -54,6 +60,8 @@ import br.alexandregpereira.hunter.monster.event.collectOnVisibilityChanges
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -66,6 +74,7 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -79,6 +88,7 @@ class MonsterDetailStateHolder internal constructor(
     private val cloneMonster: CloneMonsterUseCase,
     private val deleteMonster: DeleteMonsterUseCase,
     private val resetMonsterToOriginal: ResetMonsterToOriginal,
+    private val resetMonsterImage: ResetMonsterImage,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
@@ -90,6 +100,8 @@ class MonsterDetailStateHolder internal constructor(
     private val analytics: MonsterDetailAnalytics,
     private val appLocalization: AppLocalization,
     private val stateRecovery: StateRecovery,
+    private val spellResultListener: EventListener<SpellResult>,
+    private val getCondition: GetCondition,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -99,6 +111,7 @@ class MonsterDetailStateHolder internal constructor(
         get() = stateRecovery.monsterIndexes
 
     private var currentJob: Job? = null
+    private var spellResultJob: Job? = null
     private var enableMonsterPageChangesEventDispatch = false
     private var metadata: List<Monster> = emptyList()
     var initialMonsterListPositionIndex: Int = 0
@@ -109,6 +122,7 @@ class MonsterDetailStateHolder internal constructor(
         observeEvents()
         state.value.run {
             if (showDetail && monsters.isEmpty()) {
+                observeSpellResultEvents()
                 getMonstersByInitialIndex(monsterIndex, monsterIndexes)
             }
         }
@@ -119,6 +133,7 @@ class MonsterDetailStateHolder internal constructor(
             when (event) {
                 is Show -> {
                     analytics.trackMonsterDetailShown(event)
+                    observeSpellResultEvents()
                     enableMonsterPageChangesEventDispatch =
                         event.enableMonsterPageChangesEventDispatch
                     setState {
@@ -162,7 +177,6 @@ class MonsterDetailStateHolder internal constructor(
             }
             .catch {
                 setState { copy(isLoading = false) }
-                it.printStackTrace()
                 analytics.logException(it)
             }
             .emitState()
@@ -229,6 +243,11 @@ class MonsterDetailStateHolder internal constructor(
                 setState { copy(showResetConfirmation = true) }
             }
 
+            RESET_IMAGE -> {
+                analytics.trackResetImageClicked(monsterIndex)
+                setState { copy(showResetImageConfirmation = true) }
+            }
+
             EXPORT -> {
                 analytics.trackMonsterDetailExportClicked(monsterIndex)
                 shareContentEventDispatcher.dispatchEvent(
@@ -251,6 +270,7 @@ class MonsterDetailStateHolder internal constructor(
     fun onClose() {
         analytics.trackMonsterDetailClosed()
         monsterEventDispatcher.dispatchEvent(Hide)
+        spellResultJob?.cancel()
     }
 
     fun onCloneFormClosed() {
@@ -287,6 +307,59 @@ class MonsterDetailStateHolder internal constructor(
 
     fun onResetClosed() {
         setState { copy(showResetConfirmation = false) }
+    }
+
+    fun onResetImageConfirmed() {
+        analytics.trackResetImageConfirmed(monsterIndex)
+        setState { copy(showResetImageConfirmation = false) }
+        resetMonsterImage()
+    }
+
+    fun onResetImageClosed() {
+        analytics.trackResetImageClosed(monsterIndex)
+        setState { copy(showResetImageConfirmation = false) }
+    }
+
+    fun onConditionClicked(conditionIndex: String) {
+        analytics.trackConditionClicked(conditionIndex)
+        loadCondition(conditionIndex)
+    }
+
+    fun onCloseConditionDetail() {
+        analytics.trackConditionDetailClosed()
+        setState { copy(isConditionDetailOpen = false) }
+    }
+
+    fun onConditionTryAgainClicked(conditionIndex: String) {
+        analytics.trackConditionClicked(conditionIndex)
+        loadCondition(conditionIndex)
+    }
+
+    private fun loadCondition(conditionIndex: String) {
+        setState {
+            copy(
+                isConditionDetailOpen = true,
+                selectedCondition = ConditionLoadingState.Loading,
+            )
+        }
+        flow {
+            emit(getCondition(conditionIndex))
+        }.flowOn(dispatcher)
+            .catch { cause ->
+                analytics.logException(cause)
+                setState { copy(selectedCondition = ConditionLoadingState.Error(conditionIndex)) }
+            }
+            .onEach { condition ->
+                analytics.trackConditionDetailOpened()
+                val selectedCondition = ConditionState(
+                    index = condition.index,
+                    type = ConditionType.valueOf(condition.type.name),
+                    name = condition.name,
+                    description = condition.description,
+                )
+                setState { copy(selectedCondition = ConditionLoadingState.Loaded(selectedCondition)) }
+            }
+            .launchIn(scope)
     }
 
     private fun getMonsterDetail(
@@ -334,9 +407,12 @@ class MonsterDetailStateHolder internal constructor(
             MonsterStatus.Clone -> listOf(Edit(strings), Delete(strings))
             MonsterStatus.Edited -> listOf(Edit(strings), ResetToOriginal(strings))
         }
+        val resetImageOption = if (monster.imageData.isImageDataFromCustomDatabase) {
+            listOf(ResetImage(strings))
+        } else emptyList()
 
         return copy(
-            options = listOf(AddToFolder(strings), Export(strings), Clone(strings)) + editOption
+            options = listOf(AddToFolder(strings), Export(strings), Clone(strings)) + editOption + resetImageOption
         )
     }
 
@@ -382,6 +458,20 @@ class MonsterDetailStateHolder internal constructor(
             .launchIn(scope)
     }
 
+    private fun resetMonsterImage() {
+        flow {
+            resetMonsterImage(monsterIndex)
+            emit(Unit)
+        }.flowOn(dispatcher)
+            .onEach {
+                monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
+            }
+            .catch {
+                analytics.logException(it)
+            }
+            .launchIn(scope)
+    }
+
     private fun resetMonster() {
         resetMonsterToOriginal(monsterIndex)
             .flowOn(dispatcher)
@@ -389,5 +479,13 @@ class MonsterDetailStateHolder internal constructor(
                 syncEventDispatcher.startSync()
             }
             .launchIn(scope)
+    }
+
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.collectOnChanged {
+            getMonstersByInitialIndex(monsterIndex, monsterIndexes, invalidateCache = false)
+
+        }.launchIn(scope)
     }
 }

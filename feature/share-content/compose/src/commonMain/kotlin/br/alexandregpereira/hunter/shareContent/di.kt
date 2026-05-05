@@ -29,5 +29,5 @@ val featureShareContentModule = module {
     factory { ImportContent(get(), get(), get()) }
     factory { GetMonstersContentToExport(get(), get(), get(), get()) }
     factory { GetMonstersContentEditedToExport(get(), get(), get()) }
-    single { ShareContentStateHolder(get(), get(), get(), get(), get()) }
+    single { ShareContentStateHolder(get(), get(), get(), get(), get(), get()) }
 }

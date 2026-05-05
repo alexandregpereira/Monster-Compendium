@@ -49,14 +49,14 @@ fun AppButton(
     modifier: Modifier = Modifier,
     size: AppButtonSize = AppButtonSize.MEDIUM,
     enabled: Boolean = true,
-    isPrimary: Boolean = true,
+    type: AppButtonType,
     elevation: Int = 1,
     onClick: () -> Unit = {}
 ) {
     AppBasicButton(
         modifier = modifier.height(size.height.dp).fillMaxWidth(),
         enabled = enabled,
-        isPrimary = isPrimary,
+        type = type,
         elevation = elevation,
         onClick = onClick
     ) {
@@ -76,6 +76,27 @@ fun AppButton(
 }
 
 @Composable
+fun AppButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    size: AppButtonSize = AppButtonSize.MEDIUM,
+    enabled: Boolean = true,
+    isPrimary: Boolean = true,
+    elevation: Int = 1,
+    onClick: () -> Unit = {}
+) {
+    AppButton(
+        text = text,
+        modifier = modifier,
+        size = size,
+        enabled = enabled,
+        type = if (isPrimary) AppButtonType.PRIMARY else AppButtonType.SECONDARY,
+        elevation = elevation,
+        onClick = onClick
+    )
+}
+
+@Composable
 fun AppCircleButton(
     modifier: Modifier = Modifier,
     size: AppButtonSize = AppButtonSize.MEDIUM,
@@ -88,7 +109,7 @@ fun AppCircleButton(
         modifier = modifier.size(size.height.dp),
         enabled = enabled,
         shape = CircleShape,
-        isPrimary = isPrimary,
+        type = if (isPrimary) AppButtonType.PRIMARY else AppButtonType.SECONDARY,
         onClick = onClick
     ) {
         content()
@@ -100,7 +121,7 @@ private fun AppBasicButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: RoundedCornerShape = RoundedCornerShape(24.dp),
-    isPrimary: Boolean = true,
+    type: AppButtonType = AppButtonType.PRIMARY,
     elevation: Int = 1,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit
@@ -109,17 +130,19 @@ private fun AppBasicButton(
         targetValue = if (enabled) 1f else 0.5f
     )
 
-    val backgroundColor = if (isPrimary) {
-        MaterialTheme.colors.primary
-    } else {
-        val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
-        MaterialTheme.colors.onSurface.copy(alpha = alpha)
-            .compositeOver(MaterialTheme.colors.surface)
+    val backgroundColor = when (type) {
+        AppButtonType.PRIMARY -> MaterialTheme.colors.primary
+        AppButtonType.SECONDARY -> {
+            val alpha = ((4.5f * ln(elevation.toFloat() + 1)) + 2f) / 100f
+            MaterialTheme.colors.onSurface.copy(alpha = alpha)
+                .compositeOver(MaterialTheme.colors.surface)
+        }
+        AppButtonType.TERTIARY -> MaterialTheme.colors.surface.copy(alpha = 0.1f)
     }
-    val contentColor = if (isPrimary) {
-        MaterialTheme.colors.onPrimary
-    } else {
-        MaterialTheme.colors.onSurface
+    val contentColor = when (type) {
+        AppButtonType.PRIMARY -> MaterialTheme.colors.onPrimary
+        AppButtonType.SECONDARY,
+        AppButtonType.TERTIARY -> MaterialTheme.colors.onSurface
     }
 
     Box(
@@ -146,14 +169,30 @@ enum class AppButtonSize(val height: Int) {
     MEDIUM(48),
 }
 
+enum class AppButtonType {
+    PRIMARY,
+    SECONDARY,
+    TERTIARY,
+}
+
 @Preview
 @Composable
-private fun AppButtonPreview() = Window {
+private fun AppButtonPreview() = PreviewWindow {
     Column {
-        AppButton(text = "Text")
+        AppButton(text = "Primary")
         AppButton(
             text = "Text Disabled",
             enabled = false,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        AppButton(
+            text = "Secondary",
+            type = AppButtonType.SECONDARY,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        AppButton(
+            text = "Tertiary",
+            type = AppButtonType.TERTIARY,
             modifier = Modifier.padding(top = 16.dp)
         )
     }

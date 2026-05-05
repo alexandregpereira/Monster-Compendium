@@ -30,7 +30,6 @@ import br.alexandregpereira.hunter.domain.model.SpeedType
 import br.alexandregpereira.hunter.domain.model.SpeedValue
 import br.alexandregpereira.hunter.domain.model.Stats
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
-import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -40,18 +39,17 @@ import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
+@Suppress("UnusedFlow")
 class SaveMonstersUseCaseTest {
 
     private val getMeasurementUnitUseCase: GetMeasurementUnitUseCase = mockk()
     private val monsterRepository: MonsterRepository = mockk()
     private val measurementUnitRepository: MeasurementUnitRepository = mockk()
-    private val monsterImageRepository: MonsterImageRepository = mockk(relaxUnitFun = true)
 
     private val useCase = SaveMonstersUseCase(
         getMeasurementUnitUseCase,
         monsterRepository,
         measurementUnitRepository,
-        monsterImageRepository,
     )
 
     @Test

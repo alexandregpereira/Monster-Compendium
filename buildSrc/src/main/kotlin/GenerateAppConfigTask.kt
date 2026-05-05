@@ -23,6 +23,12 @@ abstract class GenerateAppConfigTask : DefaultTask() {
     @get:Input
     abstract val taskAmplitudeApiKey: Property<String>
 
+    @get:Input
+    abstract val taskRevenueCatApiKey: Property<String>
+
+    @get:Input
+    abstract val taskAdsConsentDeviceHashTestId: Property<String>
+
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
 
@@ -40,6 +46,8 @@ abstract class GenerateAppConfigTask : DefaultTask() {
         val versionCode = taskVersionCode.get()
         val versionNameSuffix = taskVersionNameSuffix.get()
         val amplitudeApiKey = taskAmplitudeApiKey.get()
+        val revenueCatApiKey = taskRevenueCatApiKey.get()
+        val adsConsentDeviceHashTestId = taskAdsConsentDeviceHashTestId.get()
 
         val targetDir = outputDir.get().asFile
         val packagePath = "br/alexandregpereira/hunter/app"
@@ -55,6 +63,8 @@ abstract class GenerateAppConfigTask : DefaultTask() {
                 const val VERSION_CODE: Int = $versionCode
                 const val VERSION_NAME_SUFFIX = "$versionNameSuffix"
                 const val AMPLITUDE_API_KEY = "$amplitudeApiKey"
+                const val REVENUE_CAT_API_KEY = "$revenueCatApiKey"
+                const val ADS_CONSENT_DEVICE_HASH_TEST_ID = "$adsConsentDeviceHashTestId"
             }
         """.trimIndent())
     }

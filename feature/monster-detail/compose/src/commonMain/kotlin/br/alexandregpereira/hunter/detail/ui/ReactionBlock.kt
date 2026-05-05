@@ -24,9 +24,11 @@ import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 @Composable
 internal fun ReactionBlock(
     reactions: List<AbilityDescriptionState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onConditionClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = strings.reactions,
     abilityDescriptions = reactions,
-    modifier = modifier
+    modifier = modifier,
+    onConditionClicked = onConditionClicked,
 )

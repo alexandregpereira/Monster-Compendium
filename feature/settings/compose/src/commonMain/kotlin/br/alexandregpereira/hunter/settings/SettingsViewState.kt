@@ -18,6 +18,11 @@
 package br.alexandregpereira.hunter.settings
 
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 
 internal data class SettingsViewState(
     val imageBaseUrl: String = "",
@@ -29,15 +34,30 @@ internal data class SettingsViewState(
     val settingsState: SettingsState = SettingsState(),
     val appearanceState: AppearanceSettingsState = AppearanceSettingsState(),
     val strings: SettingsStrings = SettingsEnStrings(),
-    val donateIsOpen: Boolean = false,
-    val donateState: DonateState = DonateState(),
+    val menuItems: ImmutableList<MenuItemState> = persistentListOf(),
+    val showPremium: Boolean = false,
+) {
+    val menuItemsGroupBySection: ImmutableMap<String, ImmutableList<MenuItemState>> =
+        menuItems.groupBy { it.section }
+            .mapValues { it.value.toImmutableList() }
+            .toImmutableMap()
+}
+
+internal data class MenuItemState(
+    val id: MenuItemIdState,
+    val text: String = "",
+    val section: String = "",
 )
 
-internal data class DonateState(
-    val coverImageUrl: String = "https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium/main/content/media/buy-me-coffee-cover.png",
-    val pixCode: String = "00020126580014BR.GOV.BCB.PIX01365bc29fc7-557c-4935-bdad-1d1f53dd29e65204000053039865802BR5923Alexandre Gomes Pereira6009SAO PAULO62140510FdKlqycExz6304BCEF",
-    val pixKey: String = "5bc29fc7-557c-4935-bdad-1d1f53dd29e6",
-)
+internal enum class MenuItemIdState {
+    OPEN_GITHUB_PROJECT,
+    SETTINGS,
+    ADVANCED_SETTINGS,
+    APPEARANCE_SETTINGS,
+    IMPORT_CONTENT,
+    SPELLS,
+    MANAGE_MONSTER_CONTENT,
+}
 
 internal data class SettingsState(
     val language: SettingsLanguageState = SettingsLanguageState(),
@@ -50,13 +70,11 @@ internal data class SettingsLanguageState(
 )
 
 internal data class AppearanceSettingsState(
-    val forceLightImageBackground: Boolean = false,
     val defaultLightBackground: String = "",
     val defaultDarkBackground: String = "",
     val monsterImageContentScaleOptions: List<AppImageContentScale> = AppImageContentScale.entries,
     val monsterImageContentSelectedOptionIndex: Int = 0,
 ) {
-    val defaultDarkBackgroundEnabled: Boolean = forceLightImageBackground.not()
     val monsterImageContentSelected: AppImageContentScale
         get() = monsterImageContentScaleOptions[monsterImageContentSelectedOptionIndex]
 }

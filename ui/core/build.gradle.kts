@@ -24,6 +24,7 @@ plugins {
 
 multiplatform {
     androidMain {
+        implementation(libs.android.lifecycle.compose)
         implementation(libs.core.ktx)
         implementation(libs.compose.activity)
         implementation(libs.kotlin.reflect)
@@ -36,6 +37,7 @@ multiplatform {
         api(libs.compose.mp.ui.util)
         api(libs.compose.mp.components.resources)
         api(libs.compose.mp.ui.tooling.preview)
+        api(libs.kotlin.collections.immutable)
         implementation(libs.ktor.core)
         implementation(libs.coil.compose)
         implementation(libs.coil.mp)

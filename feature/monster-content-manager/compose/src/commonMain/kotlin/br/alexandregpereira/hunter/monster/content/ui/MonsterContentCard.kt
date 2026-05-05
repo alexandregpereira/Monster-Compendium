@@ -35,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.monster.content.MonsterContentManagerEmptyStrings
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerStrings
 import br.alexandregpereira.hunter.strings.format
 import br.alexandregpereira.hunter.ui.compose.AppButton
@@ -55,10 +54,11 @@ internal fun MonsterContentCard(
     originalName: String?,
     totalMonsters: Int,
     summary: String,
-    coverImageUrl: String,
-    isEnabled: Boolean,
+    coverImageUrl: String?,
+    isAdded: Boolean,
     strings: MonsterContentManagerStrings,
     modifier: Modifier = Modifier,
+    isDefault: Boolean = false,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
@@ -70,21 +70,23 @@ internal fun MonsterContentCard(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Cover(
-            coverImageUrl = coverImageUrl,
-            name = name,
-            totalMonsters = strings.totalMonsters.format(totalMonsters),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(Modifier.height(8.dp))
+        coverImageUrl?.let {
+            Cover(
+                coverImageUrl = coverImageUrl,
+                name = name,
+                totalMonsters = strings.totalMonsters.format(totalMonsters),
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(8.dp))
+        }
 
         Summary(summary = summary)
 
         Spacer(Modifier.height(8.dp))
 
         Buttons(
-            isEnabled = isEnabled,
+            isAdded = isAdded,
+            isDefault = isDefault,
             removeText = strings.remove,
             addText = strings.add,
             previewLabel = strings.preview,
@@ -168,25 +170,27 @@ private fun Summary(
 
 @Composable
 private fun Buttons(
-    isEnabled: Boolean,
+    isAdded: Boolean,
     removeText: String,
     addText: String,
     previewLabel: String,
     modifier: Modifier = Modifier,
+    isDefault: Boolean = false,
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onPreviewClick: () -> Unit = {},
 ) {
-    val text = if (isEnabled) {
+    val text = if (isAdded) {
         removeText
     } else addText
 
-    val click = if (isEnabled) onRemoveClick else onAddClick
+    val click = if (isAdded) onRemoveClick else onAddClick
 
     Row(modifier) {
         AppButton(
             text = text,
             onClick = click,
+            enabled = !isDefault,
             size = AppButtonSize.SMALL,
             modifier = Modifier
                 .padding(end = 8.dp)
@@ -214,8 +218,8 @@ private fun MonsterContentCardPreview() = HunterTheme {
             totalMonsters = 10,
             summary = "A menagerie of deadly monsters for the world's greatest roleplaying game. The Monster Manual presents a horde of classic Dungeons & Dragons creatures, including dragons, giants, mind flayers, and beholders—a monstrous feast for Dungeon Masters ready to challenge their players and populate their adventures.",
             coverImageUrl = "",
-            isEnabled = true,
-            strings = MonsterContentManagerEmptyStrings(),
+            isAdded = true,
+            strings = MonsterContentManagerStrings(),
         )
     }
 }

@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.CLO
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.DELETE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EDIT
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.EXPORT
+import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_IMAGE
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionStateId.RESET_TO_ORIGINAL
 import kotlin.native.ObjCName
 
@@ -79,6 +80,14 @@ data class MonsterDetailOptionState(
                 name = strings.delete
             )
         }
+
+        @Suppress("FunctionName")
+        internal fun ResetImage(strings: MonsterDetailStrings): MonsterDetailOptionState {
+            return MonsterDetailOptionState(
+                id = RESET_IMAGE,
+                name = strings.resetImage
+            )
+        }
     }
 }
 
@@ -88,5 +97,6 @@ enum class MonsterDetailOptionStateId {
     EDIT,
     DELETE,
     RESET_TO_ORIGINAL,
+    RESET_IMAGE,
     EXPORT,
 }

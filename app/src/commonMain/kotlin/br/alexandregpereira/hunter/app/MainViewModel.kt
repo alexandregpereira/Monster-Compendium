@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app
 
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.COMPENDIUM
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
@@ -25,8 +26,13 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
+import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
+import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -35,12 +41,52 @@ internal class MainViewModel(
     private val stateRecovery: StateRecovery,
     appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
+    private val revenueSession: RevenueSession,
+    private val adsConsentManager: AdsConsentManager,
+    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
         setState { updateState(stateRecovery) }
         observeLanguageChanges()
         appEventDispatcher.observeEvents()
+    }
+
+    fun onStart() {
+        analytics.track("App - started")
+        revenueSession.initialize(apiKey = AppConfig.REVENUE_CAT_API_KEY)
+        revenueSession.start()
+        checkAdsConsent()
+    }
+
+    fun onStop() {
+        analytics.track("App - stopped")
+        revenueSession.stop()
+    }
+
+    fun onPause() {
+        analytics.track("App - paused")
+        revenueSession.stop()
+    }
+
+    fun onResume() {
+        analytics.track("App - resumed")
+        revenueSession.start()
+        checkAdsConsent()
+    }
+
+    private fun checkAdsConsent() {
+        flow {
+            emit(isSessionUsageLimitReached())
+        }.flowOn(Dispatchers.Default)
+            .onEach { isLimitReached ->
+                if (isLimitReached) {
+                    adsConsentManager.showConsentFormIfRequired()
+                } else {
+                    adsConsentManager.loadConsentInfo()
+                }
+            }
+            .launchIn(scope)
     }
 
     private fun observeLanguageChanges() {

@@ -17,8 +17,23 @@
 
 package br.alexandregpereira.hunter.data.database.dao
 
-import br.alexandregpereira.hunter.data.monster.local.entity.*
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.AbilityScoreEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ConditionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
+import br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
@@ -39,7 +54,6 @@ import br.alexandregpereira.hunter.database.SkillEntity as SkillDatabaseEntity
 import br.alexandregpereira.hunter.database.SpecialAbilityEntity as SpecialAbilityDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedEntity as SpeedDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedValueEntity as SpeedValueDatabaseEntity
-import br.alexandregpereira.hunter.database.SpellPreviewEntity as SpellPreviewDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageEntity as SpellUsageDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefEntity as SpellUsageSpellCrossRefDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellcastingEntity as SpellcastingDatabaseEntity
@@ -308,29 +322,109 @@ internal fun LegendaryActionDatabaseEntity.toLocalEntity(): ActionEntity {
     )
 }
 
-internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
-    return MonsterEntity(
+internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
+    return toMonsterEntity(
         index = this.index,
         type = this.type,
         subtype = this.subtype,
         group = this.group,
-        challengeRating = this.challengeRating.toFloat(),
+        challengeRating = this.challengeRating,
         name = this.name,
         subtitle = this.subtitle,
         imageUrl = this.imageUrl,
-        backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
-        backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
-        isHorizontalImage = (customIsHorizontalImage ?: this.isHorizontalImage) == 1L,
+        backgroundColorLight = this.backgroundColorLight,
+        backgroundColorDark = this.backgroundColorDark,
+        isHorizontalImage = this.isHorizontalImage,
         size = this.size,
         alignment = this.alignment,
-        armorClass = this.armorClass.toInt(),
-        hitPoints = this.hitPoints.toInt(),
+        armorClass = this.armorClass,
+        hitPoints = this.hitPoints,
         hitDice = this.hitDice,
         senses = this.senses,
         languages = this.languages,
         sourceName = this.sourceName,
-        status = MonsterEntityStatus.entries[this.isClone.toInt()],
-        imageContentScale = (customImageContentScale ?: this.imageContentScale)?.toInt(),
+        isClone = this.isClone,
+        imageContentScale = this.imageContentScale,
+        isImageDataFromCustomDatabase = false,
+    )
+}
+
+internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
+    val isImageDataFromCustomDatabase = customImageUrl != null
+
+    return toMonsterEntity(
+        index = this.index,
+        type = this.type,
+        subtype = this.subtype,
+        group = this.group,
+        challengeRating = this.challengeRating,
+        name = this.name,
+        subtitle = this.subtitle,
+        imageUrl = customImageUrl ?: this.imageUrl,
+        backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
+        isHorizontalImage = customIsHorizontalImage ?: this.isHorizontalImage,
+        size = this.size,
+        alignment = this.alignment,
+        armorClass = this.armorClass,
+        hitPoints = this.hitPoints,
+        hitDice = this.hitDice,
+        senses = this.senses,
+        languages = this.languages,
+        sourceName = this.sourceName,
+        isClone = this.isClone,
+        imageContentScale = customImageContentScale ?: this.imageContentScale,
+        isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
+    )
+}
+
+private fun toMonsterEntity(
+    index: String,
+    type: String,
+    subtype: String?,
+    group: String?,
+    challengeRating: Double,
+    name: String,
+    subtitle: String,
+    imageUrl: String,
+    backgroundColorLight: String,
+    backgroundColorDark: String,
+    isHorizontalImage: Long,
+    size: String,
+    alignment: String,
+    armorClass: Long,
+    hitPoints: Long,
+    hitDice: String,
+    senses: String,
+    languages: String,
+    sourceName: String,
+    isClone: Long,
+    imageContentScale: Long?,
+    isImageDataFromCustomDatabase: Boolean,
+): MonsterEntity {
+    return MonsterEntity(
+        index = index,
+        type = type,
+        subtype = subtype,
+        group = group,
+        challengeRating = challengeRating.toFloat(),
+        name = name,
+        subtitle = subtitle,
+        imageUrl = imageUrl,
+        backgroundColorLight = backgroundColorLight,
+        backgroundColorDark = backgroundColorDark,
+        isHorizontalImage = isHorizontalImage == 1L,
+        size = size,
+        alignment = alignment,
+        armorClass = armorClass.toInt(),
+        hitPoints = hitPoints.toInt(),
+        hitDice = hitDice,
+        senses = senses,
+        languages = languages,
+        sourceName = sourceName,
+        status = MonsterEntityStatus.entries[isClone.toInt()],
+        imageContentScale = imageContentScale?.toInt(),
+        isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
     )
 }
 
@@ -403,15 +497,6 @@ internal fun SpellcastingEntity.toDatabaseEntity(): SpellcastingDatabaseEntity {
         type = this.type,
         description = this.description,
         monsterIndex = monsterIndex
-    )
-}
-
-internal fun SpellPreviewEntity.toDatabaseEntity(): SpellPreviewDatabaseEntity {
-    return SpellPreviewDatabaseEntity(
-        spellIndex = this.spellIndex,
-        name = this.name,
-        level = this.level.toLong(),
-        school = this.school,
     )
 }
 

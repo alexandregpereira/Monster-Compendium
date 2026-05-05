@@ -18,9 +18,12 @@
 package br.alexandregpereira.hunter.data.di
 
 import br.alexandregpereira.hunter.data.IosDispatchers
+import br.alexandregpereira.hunter.revenue.di.revenueMobileDataModule
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 
-internal actual fun getAdditionalModule(): List<Module> = emptyList()
+internal actual fun getAdditionalModule(): List<Module> = listOf(
+    revenueMobileDataModule,
+)
 
 actual fun getDispatcherIO(): CoroutineDispatcher = IosDispatchers.IO

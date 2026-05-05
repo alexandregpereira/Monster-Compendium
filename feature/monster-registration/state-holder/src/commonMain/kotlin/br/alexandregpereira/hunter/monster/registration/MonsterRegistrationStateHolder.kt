@@ -23,14 +23,15 @@ import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
-import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.filterEmpties
@@ -46,18 +47,24 @@ import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventRe
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MonsterRegistrationStateHolder internal constructor(
@@ -74,6 +81,8 @@ class MonsterRegistrationStateHolder internal constructor(
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val getSpell: GetSpellUseCase,
     private val appLocalization: AppLocalization,
+    private val spellResultListener: EventListener<SpellResult>,
+    private val fileManager: MonsterRegistrationFileManager,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -81,6 +90,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private var originalMonster: Monster? = null
     private var originalMonsterLore: MonsterLore? = null
     private var metadata: Metadata = Metadata()
+    private var spellResultJob: Job? = null
 
     init {
         observeEvents()
@@ -90,7 +100,7 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     override fun onClose() {
-        eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
+        deleteLastSavedImageIfExistsAndClose()
     }
 
     override fun onMonsterChanged(monster: MonsterState) {
@@ -98,6 +108,33 @@ class MonsterRegistrationStateHolder internal constructor(
         val newMonsterLoreEntries = monster.loreEntries.map { it.asDomain() }
         setMetadata(newMonster, newMonsterLoreEntries)
         updateMonster()
+    }
+
+    override fun onMonsterImagePicked(bytes: ByteArray?) {
+        if (bytes == null) {
+            analytics.logException(IllegalStateException("File is null on monster registration"))
+            return
+        }
+        analytics.trackMonsterRegistrationImagePicked(metadata.monster.index)
+        flow {
+            val imageName = metadata.monster.index
+            val path = fileManager.saveImage(
+                bytes = bytes,
+                imageName = imageName,
+            )
+            emit(path)
+        }.flowOn(dispatcher)
+            .onEach { imagePath ->
+                val newMonster = metadata.monster.copy(
+                    imageData = metadata.monster.imageData.copy(url = imagePath)
+                )
+                setMetadata(newMonster, metadata.monsterLoreEntries)
+                updateMonster()
+            }
+            .catch { cause: Throwable ->
+                analytics.logException(cause)
+            }
+            .launchIn(scope)
     }
 
     override fun onSaved() {
@@ -110,9 +147,15 @@ class MonsterRegistrationStateHolder internal constructor(
                 saveMonster(monster, originalMonster, monsterLoreEntries, originalMonsterLore)
                 monster
             }
-            .flowOn(dispatcher)
             .onEach {
-                onClose()
+                fileManager.deleteImageIfExists(imagePath = originalMonster?.imageData?.url)
+            }
+            .flowOn(dispatcher)
+            .catch { cause: Throwable ->
+                analytics.logException(cause)
+            }
+            .onEach {
+                close()
                 eventResultManager.dispatchEvent(
                     MonsterRegistrationResult.OnSaved(
                         monsterIndex = state.value.monster.index
@@ -137,6 +180,7 @@ class MonsterRegistrationStateHolder internal constructor(
                     currentSpellIndex = spellIndex,
                     newSpellIndex = result.spellIndex
                 )
+
                 is SpellCompendiumResult.OnSpellLongClick -> openSpellDetail(result.spellIndex)
             }
         }.launchIn(scope)
@@ -155,12 +199,12 @@ class MonsterRegistrationStateHolder internal constructor(
 
     override fun onTableContentClose() {
         analytics.onTableContentClosed()
-        setState { copy(isTableContentOpen = false)}
+        setState { copy(isTableContentOpen = false) }
     }
 
     override fun onTableContentOpen() {
         analytics.onTableContentOpened()
-        setState { copy(isTableContentOpen = true)}
+        setState { copy(isTableContentOpen = true) }
     }
 
     private fun updateSpells(currentSpellIndex: String, newSpellIndex: String) {
@@ -240,11 +284,13 @@ class MonsterRegistrationStateHolder internal constructor(
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
                         setState { copy(isOpen = false, isSaveButtonEnabled = false) }
+                        spellResultJob?.cancel()
                     }
 
                     is MonsterRegistrationEvent.ShowEdit -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
+                        observeSpellResultEvents()
                         setState {
                             copy(
                                 isOpen = true,
@@ -257,6 +303,20 @@ class MonsterRegistrationStateHolder internal constructor(
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun deleteLastSavedImageIfExistsAndClose() {
+        scope.launch {
+            withContext(dispatcher) { fileManager.deleteLastSavedImageIfExists() }
+            close()
+        }
+    }
+
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.collectOnChanged {
+            fetchMonster()
+        }.launchIn(scope)
     }
 
     private fun setMetadata(monster: Monster, monsterLoreEntries: List<MonsterLoreEntry>) {
@@ -285,6 +345,10 @@ class MonsterRegistrationStateHolder internal constructor(
             filteredConditionTypes = filteredConditionTypes,
             monsterLoreEntries = monsterLoreEntries,
         )
+    }
+
+    private fun close() {
+        eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
     }
 }
 

@@ -35,7 +35,7 @@ internal class JvmAmplitudeAnalytics(
             jsonParams.put(key, value)
         }
         event.eventProperties = jsonParams
-        println("Tracking event: $event")
+        println("Tracking event -> event name: $eventName. params: $params")
         amplitude.logEvent(event)
     }
 

@@ -55,6 +55,7 @@ interface MonsterRegistrationStrings {
     val damageTypeRadiant: String
     val damageTypeSlashing: String
     val damageTypeThunder: String
+    val damageTypeForce: String
     val damageTypeOther: String
     val conditionTypeBlinded: String
     val conditionTypeCharmed: String
@@ -137,6 +138,15 @@ interface MonsterRegistrationStrings {
     val imageContentScaleCrop: String
     val monsterLoreFormTitle: String
     val monsterLoreFormTitleFieldLabel: String
+    val addDifficultClass: String
+    val removeDifficultClass: String
+    val addCondition: String
+    val removeCondition: String
+    val difficultClassValue: String
+    val difficultClassType: String
+    val savingThrowType: String
+    val savingThrowModifier: String
+    val pickImageFromGallery: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -174,6 +184,7 @@ internal data class MonsterRegistrationEnStrings(
     override val damageTypeRadiant: String = "Radiant",
     override val damageTypeSlashing: String = "Slashing",
     override val damageTypeThunder: String = "Thunder",
+    override val damageTypeForce: String = "Force",
     override val damageTypeOther: String = "Other",
     override val conditionTypeBlinded: String = "Blinded",
     override val conditionTypeCharmed: String = "Charmed",
@@ -256,6 +267,15 @@ internal data class MonsterRegistrationEnStrings(
     override val imageContentScaleCrop: String = "Expand the image",
     override val monsterLoreFormTitle: String = "Lore",
     override val monsterLoreFormTitleFieldLabel: String = "Title (Optional)",
+    override val addDifficultClass: String = "Add DC",
+    override val removeDifficultClass: String = "Remove DC",
+    override val addCondition: String = "Add condition",
+    override val removeCondition: String = "Remove condition",
+    override val difficultClassValue: String = "Difficult class (DC) value",
+    override val difficultClassType: String = "Difficult class (DC) type",
+    override val savingThrowType: String = "Saving throw type",
+    override val savingThrowModifier: String = "Saving throw modifier",
+    override val pickImageFromGallery: String = "Pick from gallery",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -293,18 +313,19 @@ internal data class MonsterRegistrationPtStrings(
     override val damageTypeRadiant: String = "Radiante",
     override val damageTypeSlashing: String = "Cortante",
     override val damageTypeThunder: String = "Trovão",
+    override val damageTypeForce: String = "Força",
     override val damageTypeOther: String = "Outro",
     override val conditionTypeBlinded: String = "Cego",
     override val conditionTypeCharmed: String = "Encantado",
     override val conditionTypeDeafened: String = "Surdo",
-    override val conditionTypeExhaustion: String = "Exausto",
+    override val conditionTypeExhaustion: String = "Exaustão",
     override val conditionTypeFrightened: String = "Amedrontado",
     override val conditionTypeGrappled: String = "Agarrado",
     override val conditionTypeParalyzed: String = "Paralisado",
     override val conditionTypePetrified: String = "Petrificado",
     override val conditionTypePoisoned: String = "Envenenado",
     override val conditionTypeProne: String = "Caído",
-    override val conditionTypeRestrained: String = "Contido",
+    override val conditionTypeRestrained: String = "Imobilizado",
     override val conditionTypeStunned: String = "Atordoado",
     override val conditionTypeUnconscious: String = "Inconsciente",
     override val name: String = "Nome",
@@ -375,13 +396,152 @@ internal data class MonsterRegistrationPtStrings(
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val monsterLoreFormTitle: String = "Mitologia",
     override val monsterLoreFormTitleFieldLabel: String = "Título (Opcional)",
+    override val addDifficultClass: String = "Adicionar CD",
+    override val removeDifficultClass: String = "Remover CD",
+    override val addCondition: String = "Adicionar condição",
+    override val removeCondition: String = "Remover condição",
+    override val difficultClassValue: String = "Valor da classe de dificuldade (CD)",
+    override val difficultClassType: String = "Tipo da classe de dificuldade (CD)",
+    override val savingThrowType: String = "Tipo de salvaguarda",
+    override val savingThrowModifier: String = "Modificador da salvaguarda",
+    override val pickImageFromGallery: String = "Escolher da galeria",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
+
+internal data class MonsterRegistrationEsStrings(
+    override val savingThrows: String = "Tiradas de Salvación",
+    override val strength: String = "Fuerza",
+    override val dexterity: String = "Destreza",
+    override val constitution: String = "Constitución",
+    override val intelligence: String = "Inteligencia",
+    override val wisdom: String = "Sabiduría",
+    override val charisma: String = "Carisma",
+    override val actions: String = "Acciones",
+    override val aberration: String = "Aberración",
+    override val beast: String = "Bestia",
+    override val celestial: String = "Celestial",
+    override val construct: String = "Constructo",
+    override val dragon: String = "Dragón",
+    override val elemental: String = "Elemental",
+    override val fey: String = "Feérico",
+    override val fiend: String = "Infernal",
+    override val giant: String = "Gigante",
+    override val humanoid: String = "Humanoide",
+    override val monstrosity: String = "Monstruosidad",
+    override val ooze: String = "Cieno",
+    override val plant: String = "Planta",
+    override val undead: String = "No muerto",
+    override val damageTypeAcid: String = "Ácido",
+    override val damageTypeBludgeoning: String = "Contundente",
+    override val damageTypeCold: String = "Frío",
+    override val damageTypeFire: String = "Fuego",
+    override val damageTypeLightning: String = "Rayo",
+    override val damageTypeNecrotic: String = "Necrótico",
+    override val damageTypePiercing: String = "Perforante",
+    override val damageTypePoison: String = "Veneno",
+    override val damageTypePsychic: String = "Psíquico",
+    override val damageTypeRadiant: String = "Radiante",
+    override val damageTypeSlashing: String = "Cortante",
+    override val damageTypeThunder: String = "Trueno",
+    override val damageTypeForce: String = "Fuerza",
+    override val damageTypeOther: String = "Otro",
+    override val conditionTypeBlinded: String = "Ciego",
+    override val conditionTypeCharmed: String = "Encantado",
+    override val conditionTypeDeafened: String = "Sordo",
+    override val conditionTypeExhaustion: String = "Agotamiento",
+    override val conditionTypeFrightened: String = "Atemorizado",
+    override val conditionTypeGrappled: String = "Aferrado",
+    override val conditionTypeParalyzed: String = "Paralizado",
+    override val conditionTypePetrified: String = "Petrificado",
+    override val conditionTypePoisoned: String = "Envenenado",
+    override val conditionTypeProne: String = "Caído",
+    override val conditionTypeRestrained: String = "Inmovilizado",
+    override val conditionTypeStunned: String = "Aturdido",
+    override val conditionTypeUnconscious: String = "Inconsciente",
+    override val name: String = "Nombre",
+    override val subtitle: String = "Subtítulo",
+    override val description: String = "Descripción",
+    override val abilityScores: String = "Puntuaciones de Habilidad",
+    override val attackBonus: String = "Bonificador de Ataque",
+    override val damageType: String = "Tipo de Daño",
+    override val damageDice: String = "Dados de Daño",
+    override val conditionType: String = "Tipo de Condición",
+    override val header: String = "Encabezado",
+    override val group: String = "Grupo",
+    override val imageUrl: String = "URL de Imagen",
+    override val type: String = "Tipo",
+    override val speed: String = "Velocidad",
+    override val speedType: String = "Tipo de velocidad",
+    override val spells: String = "Conjuros",
+    override val workInProgress: String = "En construcción",
+    override val stats: String = "Stats",
+    override val armorClass: String = "Clase de Armadura",
+    override val hitPoints: String = "Puntos de Golpe",
+    override val hitDice: String = "Dados de Golpe",
+    override val skills: String = "Habilidades",
+    override val damageVulnerabilities: String = "Vulnerabilidades al Daño",
+    override val damageResistances: String = "Resistencias al Daño",
+    override val damageImmunities: String = "Inmunidades al Daño",
+    override val conditionImmunities: String = "Inmunidades a Condiciones",
+    override val senses: String = "Sentidos",
+    override val languages: String = "Idiomas",
+    override val specialAbilities: String = "Habilidades Especiales",
+    override val reactions: String = "Reacciones",
+    override val legendaryActions: String = "Acciones Legendarias",
+    override val imageBackgroundColorLight: String = "Color de Fondo Claro",
+    override val imageBackgroundColorDark: String = "Color de Fondo Oscuro",
+    override val speedTypeWalk: String = "Velocidad",
+    override val speedTypeFly: String = "Vuelo",
+    override val speedTypeSwim: String = "Natación",
+    override val speedTypeClimb: String = "Escalar",
+    override val speedTypeBurrow: String = "Excavar",
+    override val spellcastingCasterType: String = "Lanzador de Conjuros",
+    override val spellcastingInnateType: String = "Lanzador de Conjuros Innato",
+    override val spellcastingTypeLabel: String = "Tipo de Lanzamiento",
+    override val spellGroup: String = "Grupo de Conjuros",
+    override val spellLabel: String = "Conjuro",
+    override val addSpellGroup: String = "Añadir grupo",
+    override val removeSpellGroup: String = "Eliminar grupo",
+    override val addSpell: String = "Añadir conjuro",
+    override val removeSpell: String = "Eliminar conjuro",
+    override val addSpellcastingType: String = "Añadir lanzamiento",
+    override val removeSpellcastingType: String = "Eliminar lanzamiento",
+    override val addDamageDice: String = "Añadir daño",
+    override val removeDamageDice: String = "Eliminar daño",
+    override val addAction: String = "Añadir acción",
+    override val removeAction: String = "Eliminar acción",
+    override val addSpecialAbility: String = "Añadir habilidad",
+    override val removeSpecialAbility: String = "Eliminar habilidad",
+    override val addReaction: String = "Añadir reacción",
+    override val removeReaction: String = "Eliminar reacción",
+    override val add: String = "Añadir",
+    override val remove: String = "Eliminar",
+    override val imageFormTitle: String = "Imagen",
+    override val imageHorizontalSwitchLabel: String = "Imagen Horizontal",
+    override val darkThemeSwitchLabel: String = "Vista previa Tema Oscuro",
+    override val imageProportion: String = "Proporción - {0}",
+    override val challengeRating: String = "Nivel de Desafío",
+    override val monsterImageContentScale: String = "Escala de Contenido de Imagen",
+    override val imageContentScaleFit: String = "Mostrar imagen completa",
+    override val imageContentScaleCrop: String = "Expandir la imagen",
+    override val monsterLoreFormTitle: String = "Historia",
+    override val monsterLoreFormTitleFieldLabel: String = "Título (Opcional)",
+    override val addDifficultClass: String = "Añadir CD",
+    override val removeDifficultClass: String = "Eliminar CD",
+    override val addCondition: String = "Añadir condición",
+    override val removeCondition: String = "Eliminar condición",
+    override val difficultClassValue: String = "Valor de la clase de dificultad (CD)",
+    override val difficultClassType: String = "Tipo de clase de dificultad (CD)",
+    override val savingThrowType: String = "Tipo de tirada de salvación",
+    override val savingThrowModifier: String = "Modificador de tirada de salvación",
+    override val pickImageFromGallery: String = "Elegir de la galería",
+) : MonsterRegistrationStrings
 
 internal fun AppLocalization.getStrings(): MonsterRegistrationStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> MonsterRegistrationEnStrings()
         Language.PORTUGUESE -> MonsterRegistrationPtStrings()
+        Language.SPANISH -> MonsterRegistrationEsStrings()
     }
 }

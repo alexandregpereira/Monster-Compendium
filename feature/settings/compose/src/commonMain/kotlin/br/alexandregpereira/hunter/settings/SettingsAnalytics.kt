@@ -107,27 +107,9 @@ internal class SettingsAnalytics(
         )
     }
 
-    fun trackDonateClick() {
+    fun trackSpellsClick() {
         analytics.track(
-            eventName = "Settings - donate click",
-        )
-    }
-
-    fun trackPixCodeCopyClick() {
-        analytics.track(
-            eventName = "Donate - pix code copy click",
-        )
-    }
-
-    fun trackBuyMeCoffeeClick() {
-        analytics.track(
-            eventName = "Donate - buy me coffee click",
-        )
-    }
-
-    fun trackPixKeyCopyClick() {
-        analytics.track(
-            eventName = "Donate - pix key copy click",
+            eventName = "Settings - spells click",
         )
     }
 }

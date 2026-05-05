@@ -1,0 +1,10 @@
+platform :ios, '14.0'
+use_frameworks!
+
+target 'MonsterCompendium' do
+  pod 'AmplitudeSwift', '~> 1.10'
+  pod 'AmplitudeExperiment', '~> 1.6'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseCrashlytics'
+  pod 'PurchasesHybridCommon', '17.55.1'
+end

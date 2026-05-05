@@ -29,7 +29,12 @@ internal fun TextBlock(
     title: String,
     text: String,
     modifier: Modifier = Modifier
-) = Block(modifier = modifier, title = title, contentTextPaddingBottom = 8.dp) {
+) = Block(
+    modifier = modifier,
+    title = title,
+    contentHorizontalPadding = 16.dp,
+    contentTextPaddingBottom = 8.dp,
+) {
 
     Text(
         text = text,

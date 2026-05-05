@@ -17,15 +17,19 @@
 
 package br.alexandregpereira.hunter.settings.di
 
+import br.alexandregpereira.hunter.paywall.event.PaywallEventDispatcher
+import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import org.koin.dsl.module
 
 val featureSettingsModule = module {
     factory { GetAppearanceSettingsFromMonsters(get(), get()) }
-    factory { ApplyAppearanceSettings(get(), get(), get(), get()) }
+    factory { ApplyAppearanceSettings(get(), get(), get()) }
     single {
         SettingsStateHolder(
             getMonsterImageJsonUrl = get(),
@@ -41,6 +45,13 @@ val featureSettingsModule = module {
             getAppearanceSettings = get(),
             monsterEventDispatcher = get(),
             shareContentEventDispatcher = get(),
+            paywallEventDispatcher = get<PaywallEventDispatcher>(),
+            isSessionUsageLimitReached = get(),
+            paywallResultListener = get<PaywallResultDispatcher>(),
+            spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
+            spellDetailEventDispatcher = get(),
+            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
+            environment = get(),
         )
     }
 }

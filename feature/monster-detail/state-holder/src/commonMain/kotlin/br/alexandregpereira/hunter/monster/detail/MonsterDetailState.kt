@@ -37,12 +37,16 @@ data class MonsterDetailState(
     val monsterCloneName: String = "",
     val showDeleteConfirmation: Boolean = false,
     val showResetConfirmation: Boolean = false,
+    val showResetImageConfirmation: Boolean = false,
+    val isConditionDetailOpen: Boolean = false,
+    val selectedCondition: ConditionLoadingState = ConditionLoadingState.Loading,
     val strings: MonsterDetailStrings = MonsterDetailStrings(),
-) {
+)
 
-    companion object {
-        val Empty: MonsterDetailState = MonsterDetailState()
-    }
+sealed class ConditionLoadingState {
+    object Loading : ConditionLoadingState()
+    data class Loaded(val selectedCondition: ConditionState) : ConditionLoadingState()
+    data class Error(val index: String) : ConditionLoadingState()
 }
 
 @ObjCName(name = "MonsterState", exact = true)
@@ -68,6 +72,7 @@ data class MonsterState(
     val reactions: List<AbilityDescriptionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
     val lore: String = "",
+    val sourceName: String = "",
 ) {
 
     val type: MonsterType
@@ -138,13 +143,16 @@ data class DamageState(
 data class ConditionState(
     val index: String,
     val type: ConditionType,
-    val name: String
+    val name: String,
+    val description: String = "",
 )
 
 @ObjCName(name = "AbilityDescriptionState", exact = true)
 data class AbilityDescriptionState(
     val name: String,
-    val description: String
+    val description: String,
+    val savingThrows: List<ProficiencyState> = emptyList(),
+    val conditions: List<ConditionState> = emptyList(),
 )
 
 @ObjCName(name = "ActionState", exact = true)

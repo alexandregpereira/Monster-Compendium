@@ -24,6 +24,8 @@ interface FolderListStrings {
     val delete: String
     val addToPreview: String
     val itemSelected: (Int) -> String
+    val emptyScreenTitle: String
+    val emptyScreenDescription: String
 }
 
 internal data class FolderListEnStrings(
@@ -36,7 +38,9 @@ internal data class FolderListEnStrings(
         } else {
             "$count items selected"
         }
-    }
+    },
+    override val emptyScreenTitle: String = "No folders found",
+    override val emptyScreenDescription: String = "Create a folder by selecting a creature and adding it to a new folder. You can also select multiple creatures by long pressing a creature card and adding them to a new folder.",
 ) : FolderListStrings
 
 internal data class FolderListPtStrings(
@@ -49,19 +53,39 @@ internal data class FolderListPtStrings(
         } else {
             "$count itens selecionados"
         }
-    }
+    },
+    override val emptyScreenTitle: String = "Nenhuma pasta encontrada",
+    override val emptyScreenDescription: String = "Crie uma pasta selecionando uma criatura e adicionando-o a uma nova pasta. Você também pode selecionar várias criaturas pressionando e segurando a carta de uma criatura e adicionando-as a uma nova pasta.",
 ) : FolderListStrings
 
 internal data class FolderListEmptyStrings(
     override val title: String = "",
     override val delete: String = "",
     override val addToPreview: String = "",
-    override val itemSelected: (Int) -> String = { _ -> "" }
+    override val itemSelected: (Int) -> String = { _ -> "" },
+    override val emptyScreenTitle: String = "",
+    override val emptyScreenDescription: String = "",
+) : FolderListStrings
+
+internal data class FolderListEsStrings(
+    override val title: String = "Carpetas",
+    override val delete: String = "Eliminar",
+    override val addToPreview: String = "Añadir a Vista Previa",
+    override val itemSelected: (Int) -> String = { count ->
+        if (count == 1) {
+            "$count elemento seleccionado"
+        } else {
+            "$count elementos seleccionados"
+        }
+    },
+    override val emptyScreenTitle: String = "No se encontraron carpetas",
+    override val emptyScreenDescription: String = "Crea una carpeta seleccionando una criatura y añadiéndola a una nueva carpeta. También puedes seleccionar varias criaturas manteniendo pulsada la tarjeta de una criatura y añadiéndolas a una nueva carpeta.",
 ) : FolderListStrings
 
 internal fun getFolderListStrings(lang: Language): FolderListStrings {
     return when (lang) {
         Language.ENGLISH -> FolderListEnStrings()
         Language.PORTUGUESE -> FolderListPtStrings()
+        Language.SPANISH -> FolderListEsStrings()
     }
 }

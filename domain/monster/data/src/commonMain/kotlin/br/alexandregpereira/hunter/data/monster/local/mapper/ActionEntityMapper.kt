@@ -34,7 +34,9 @@ internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
             abilityDescription = AbilityDescription(
                 index = it.action.id,
                 name = it.action.name,
-                description = it.action.description
+                description = it.action.description,
+                savingThrows = it.savingThrows.toDomain(),
+                conditions = it.conditions.toConditionDomain(),
             )
         )
     }
@@ -53,25 +55,26 @@ internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageD
     return this.map { action ->
         val actionId = action.id.takeUnless { it.isBlank() } ?: "action-${generateUUID()}"
         ActionWithDamageDicesEntity(
-            damageDices = action.damageDices.toDamageDiceEntity(actionId, monsterIndex),
+            damageDices = action.damageDices.toDamageDiceEntity(actionId),
             action = ActionEntity(
                 id = actionId,
                 attackBonus = action.attackBonus,
                 description = action.abilityDescription.description,
                 name = action.abilityDescription.name,
                 monsterIndex = monsterIndex
-            )
+            ),
+            savingThrows = action.abilityDescription.savingThrows.toSavingThrowEntity(actionId),
+            conditions = action.abilityDescription.conditions.toEntity(actionId),
         )
     }
 }
 
 internal fun List<DamageDice>.toDamageDiceEntity(
     actionId: String,
-    monsterIndex: String
 ): List<DamageDiceEntity> {
     return this.map {
         DamageDiceEntity(
-            id = it.dice + actionId + monsterIndex,
+            id = it.index,
             dice = it.dice,
             damage = it.damage.toEntity(actionId),
             actionId = actionId

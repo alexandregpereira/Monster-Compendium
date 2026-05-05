@@ -24,9 +24,11 @@ import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 @Composable
 internal fun SpecialAbilityBlock(
     specialAbilities: List<AbilityDescriptionState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onConditionClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = strings.specialAbilities,
     abilityDescriptions = specialAbilities,
-    modifier = modifier
+    modifier = modifier,
+    onConditionClicked = onConditionClicked,
 )

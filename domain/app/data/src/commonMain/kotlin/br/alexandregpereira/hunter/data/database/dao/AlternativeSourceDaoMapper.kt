@@ -23,13 +23,17 @@ import br.alexandregpereira.hunter.database.AlternativeSourceEntity as Alternati
 internal fun AlternativeSourceEntity.toDatabaseEntity(): AlternativeSourceDatabaseEntity {
     return AlternativeSourceDatabaseEntity(
         acronym = acronym,
-        createdAt = createdAt
+        createdAt = createdAt,
+        contentVersion = contentVersion.toLong(),
+        isDefault = if (isDefault) 1L else 0L,
     )
 }
 
 internal fun AlternativeSourceDatabaseEntity.toLocalEntity(): AlternativeSourceEntity {
     return AlternativeSourceEntity(
         acronym = acronym,
-        createdAt = createdAt
+        createdAt = createdAt,
+        contentVersion = contentVersion.toInt(),
+        isDefault = isDefault != 0L,
     )
 }

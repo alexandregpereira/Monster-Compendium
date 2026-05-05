@@ -17,22 +17,24 @@
 
 package br.alexandregpereira.hunter.domain.sync
 
+import br.alexandregpereira.hunter.condition.SyncConditions
 import br.alexandregpereira.hunter.domain.monster.lore.SyncMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.settings.GetContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.GetLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveContentVersionUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
+import br.alexandregpereira.hunter.domain.source.SaveAlternativeSourceContentVersionsUseCase
+import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVersionUseCase
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.ktx.runCatching
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
@@ -44,17 +46,25 @@ class SyncUseCase internal constructor(
     private val syncMonstersLoreUseCase: SyncMonstersLoreUseCase,
     private val getLanguageUseCase: GetLanguageUseCase,
     private val saveLanguageUseCase: SaveLanguageUseCase,
-    private val getContentVersionUseCase: GetContentVersionUseCase,
-    private val saveContentVersionUseCase: SaveContentVersionUseCase,
+    private val syncAlternativeSourceContentVersionUseCase: SyncAlternativeSourceContentVersionUseCase,
+    private val saveAlternativeSourceContentVersionsUseCase: SaveAlternativeSourceContentVersionsUseCase,
     private val isFirstTime: IsFirstTime,
     private val resetFirstTime: ResetFirstTime,
+    private val syncConditions: SyncConditions,
+    private val getContentVersionUseCase: GetContentVersionUseCase,
+    private val saveContentVersionUseCase: SaveContentVersionUseCase,
 ) {
 
-    private val contentVersion = 5
+    private val localContentVersion = 6
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {
-            val (isToSync, lastLanguageRollback, lastContentVersionRollback) = isToSync().single()
+            val (
+                isToSync,
+                lastLanguageRollback,
+                lastContentVersionRollback,
+                lastLocalContentVersionRollback,
+            ) = isToSync().single()
             if (forceSync || isToSync) {
                 emit(SyncStatus.BUSY)
                 coroutineScope {
@@ -63,10 +73,14 @@ class SyncUseCase internal constructor(
                             async { syncMonsters().single() },
                             async { syncSpells().single() },
                             async { syncMonstersLoreUseCase().single() },
+                            async {
+                                runCatching { syncConditions() }
+                            },
                         )
                     }.onFailure {
                         runCatching { saveLanguageUseCase(lastLanguageRollback).single() }
-                        runCatching { saveContentVersionUseCase(lastContentVersionRollback).single() }
+                        runCatching { saveAlternativeSourceContentVersionsUseCase(lastContentVersionRollback).single() }
+                        runCatching { saveContentVersionUseCase(lastLocalContentVersionRollback).single() }
                     }
                 }
                 resetFirstTime()
@@ -77,11 +91,20 @@ class SyncUseCase internal constructor(
         }
     }
 
-    private fun isToSync(): Flow<Triple<Boolean, String, Int>> {
+    private fun isToSync(): Flow<IsToSyncData> {
         return isLangSyncScenario()
             .zip(isContentVersionSyncScenario()) { (isLangSyncScenario, lastLanguageRollback), (isContentVersionSyncScenario, lastContentVersionRollback) ->
-                val isToSync = isFirstTime() || isLangSyncScenario || isContentVersionSyncScenario
-                Triple(isToSync, lastLanguageRollback, lastContentVersionRollback)
+                val (
+                    isLocalContentVersionSyncScenario,
+                    lastLocalContentVersionRollback,
+                ) = isLocalContentVersionSyncScenario()
+                val isToSync = isFirstTime() || isLangSyncScenario || isLocalContentVersionSyncScenario || isContentVersionSyncScenario
+                IsToSyncData(
+                    isToSync,
+                    lastLanguageRollback,
+                    lastContentVersionRollback,
+                    lastLocalContentVersionRollback,
+                )
             }
     }
 
@@ -91,13 +114,22 @@ class SyncUseCase internal constructor(
         }
     }
 
-    private fun isContentVersionSyncScenario(): Flow<Pair<Boolean, Int>> {
-        return getContentVersionUseCase().flatMapLatest { lastContentVersion ->
-            if (contentVersion != lastContentVersion) {
-                saveContentVersionUseCase(contentVersion).map {
-                    true to lastContentVersion
-                }
-            } else flowOf(false to lastContentVersion)
-        }
+    private fun isContentVersionSyncScenario(): Flow<SyncAlternativeSourceContentVersionUseCase.IsToSyncData> {
+        return syncAlternativeSourceContentVersionUseCase()
     }
+
+    private suspend fun isLocalContentVersionSyncScenario(): Pair<Boolean, Int> {
+        val lastContentVersion = getContentVersionUseCase().single()
+        return if (localContentVersion != lastContentVersion) {
+            saveContentVersionUseCase(localContentVersion).single()
+            true to lastContentVersion
+        } else false to lastContentVersion
+    }
+
+    private data class IsToSyncData(
+        val isToSync: Boolean,
+        val lastLanguageRollback: String,
+        val lastContentVersionRollback: Map<String, Int>,
+        val lastLocalContentVersionRollback: Int,
+    )
 }

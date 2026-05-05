@@ -23,6 +23,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:file:core"))
         implementation(project(":core:uuid"))
         implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:monster:core"))

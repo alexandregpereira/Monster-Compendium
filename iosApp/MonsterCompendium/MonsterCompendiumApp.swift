@@ -7,11 +7,13 @@
 
 import SwiftUI
 import KotlinApp
+import FirebaseCore
 
 @main
 struct MonsterCompendiumApp: App {
 
     init() {
+        FirebaseApp.configure()
         IosAppModuleKt.doInitKoin()
     }
     

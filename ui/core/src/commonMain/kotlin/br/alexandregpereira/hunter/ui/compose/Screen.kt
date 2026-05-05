@@ -57,36 +57,45 @@ fun AppScreen(
     showCloseButton: Boolean = true,
     backgroundColor: Color = MaterialTheme.colors.surface,
     level: Int = 1,
+    swipeTriggerPercentage: Float = 0.1f,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) {
     var enterExitState: EnterExitState? by remember { mutableStateOf(null) }
-    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(key = enterExitState)
-    Closeable(
-        isOpen = isOpen,
-        onClosed = onClose,
-        getScrollOffset = { swipeVerticalState.offset.toInt() }
+    val swipeVerticalState: SwipeVerticalState = rememberSwipeVerticalState(
+        key = enterExitState,
+        swipeTriggerPercentage = swipeTriggerPercentage,
     )
-
-    SwipeVerticalToDismiss(
-        visible = isOpen,
-        swipeVerticalState = swipeVerticalState,
-        modifier = Modifier.padding(contentPaddingValues),
-        onAnimationStateChange = { enterExitState = it },
-        onClose = onClose
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomStart,
     ) {
-        val isSwipeVerticalInProgress = swipeVerticalState.isSwipeInProgress || swipeVerticalState.offset > 0f
-        CompositionLocalProvider(
-            LocalIsSwipeVerticalInProgress provides isSwipeVerticalInProgress
+        Closeable(
+            isOpen = isOpen,
+            onClosed = onClose,
+            getScrollOffset = { swipeVerticalState.offset.toInt() }
+        )
+
+        SwipeVerticalToDismiss(
+            visible = isOpen,
+            swipeVerticalState = swipeVerticalState,
+            modifier = Modifier.padding(contentPaddingValues),
+            onAnimationStateChange = { enterExitState = it },
+            onClose = onClose
         ) {
-            Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
-                if (showCloseButton) {
-                    BoxClosable(
-                        onClick = onClose,
-                        content = content,
-                    )
-                } else {
-                    content()
+            val isSwipeVerticalInProgress = swipeVerticalState.isSwipeInProgress || swipeVerticalState.offset > 0f
+            CompositionLocalProvider(
+                LocalIsSwipeVerticalInProgress provides isSwipeVerticalInProgress
+            ) {
+                Window(backgroundColor = backgroundColor, level = level, modifier = modifier) {
+                    if (showCloseButton) {
+                        BoxClosable(
+                            onClick = onClose,
+                            content = content,
+                        )
+                    } else {
+                        content()
+                    }
                 }
             }
         }
@@ -99,6 +108,7 @@ fun AppFullScreen(
     contentPaddingValues: PaddingValues = PaddingValues(),
     backgroundColor: Color = MaterialTheme.colors.surface,
     level: Int = 1,
+    showCloseButton: Boolean = true,
     onClose: () -> Unit,
     content: @Composable () -> Unit
 ) = AppScreen(
@@ -107,6 +117,7 @@ fun AppFullScreen(
     modifier = Modifier.fillMaxSize(),
     backgroundColor = backgroundColor,
     level = level,
+    showCloseButton = showCloseButton,
     onClose = onClose,
     content = content
 )

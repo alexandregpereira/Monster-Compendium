@@ -28,7 +28,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerability
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedWithValuesEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageCompleteEntity
@@ -145,50 +145,90 @@ internal fun getConditionImmunities(
 
 internal fun getSpecialAbilities(
     monsterIndexes: List<String>,
-    specialAbilityQueries: SpecialAbilityQueries
-): Map<String, List<SpecialAbilityEntity>> {
-    return specialAbilityQueries.getByMonsterIndexes(monsterIndexes)
+    specialAbilityQueries: SpecialAbilityQueries,
+    savingThrowQueries: SavingThrowQueries,
+    conditionQueries: ConditionQueries,
+): Map<String, List<SpecialAbilityCompleteEntity>> {
+    val specialAbilities = specialAbilityQueries.getByMonsterIndexes(monsterIndexes)
         .executeAsList()
         .map { it.toLocalEntity() }
-        .groupBy { it.monsterIndex }
+
+    val abilityKeys = specialAbilities.map { "${it.monsterIndex}-${it.name}" }
+
+    val savingThrowsByAbilityKey = savingThrowQueries.getByMonsterIndexes(abilityKeys)
+        .executeAsList()
+        .map { it.toLocalEntity() }
+        .groupBy { it.value.monsterIndex }
+
+    val conditionsByAbilityKey = conditionQueries.getByMonsterIndexes(abilityKeys)
+        .executeAsList()
+        .map { it.toLocalEntity() }
+        .groupBy { it.value.monsterIndex }
+
+    return specialAbilities.map { ability ->
+        val abilityKey = "${ability.monsterIndex}-${ability.name}"
+        SpecialAbilityCompleteEntity(
+            specialAbility = ability,
+            savingThrows = savingThrowsByAbilityKey[abilityKey].orEmpty(),
+            conditions = conditionsByAbilityKey[abilityKey].orEmpty(),
+        )
+    }.groupBy { it.specialAbility.monsterIndex }
 }
 
 internal fun getActions(
     monsterIndexes: List<String>,
     actionQueries: ActionQueries,
-    damageDiceQueries: DamageDiceQueries
+    damageDiceQueries: DamageDiceQueries,
+    savingThrowQueries: SavingThrowQueries,
+    conditionQueries: ConditionQueries,
 ): Map<String, List<ActionWithDamageDicesEntity>> {
     val actions = actionQueries.getByMonsterIndexes(monsterIndexes)
         .executeAsList()
         .map { it.toLocalEntity() }
 
-    return getActionWithDamageDicesEntities(actions, damageDiceQueries)
+    return getActionWithDamageDicesEntities(actions, damageDiceQueries, savingThrowQueries, conditionQueries)
 }
 
 internal fun getLegendaryActions(
     monsterIndexes: List<String>,
     legendaryActionQueries: LegendaryActionQueries,
-    damageDiceQueries: DamageDiceQueries
+    damageDiceQueries: DamageDiceQueries,
+    savingThrowQueries: SavingThrowQueries,
+    conditionQueries: ConditionQueries,
 ): Map<String, List<ActionWithDamageDicesEntity>> {
     val actions = legendaryActionQueries.getByMonsterIndexes(monsterIndexes)
         .executeAsList()
         .map { it.toLocalEntity() }
 
-    return getActionWithDamageDicesEntities(actions, damageDiceQueries)
+    return getActionWithDamageDicesEntities(actions, damageDiceQueries, savingThrowQueries, conditionQueries)
 }
 
 private fun getActionWithDamageDicesEntities(
     actions: List<ActionEntity>,
-    damageDiceQueries: DamageDiceQueries
+    damageDiceQueries: DamageDiceQueries,
+    savingThrowQueries: SavingThrowQueries,
+    conditionQueries: ConditionQueries,
 ): Map<String, List<ActionWithDamageDicesEntity>> {
     val actionIds = actions.map { it.id }
 
     val damageDices = getActionWithDamageDices(actionIds, damageDiceQueries)
 
+    val savingThrowsByActionId = savingThrowQueries.getByMonsterIndexes(actionIds)
+        .executeAsList()
+        .map { it.toLocalEntity() }
+        .groupBy { it.value.monsterIndex }
+
+    val conditionsByActionId = conditionQueries.getByMonsterIndexes(actionIds)
+        .executeAsList()
+        .map { it.toLocalEntity() }
+        .groupBy { it.value.monsterIndex }
+
     return actions.map { action ->
         ActionWithDamageDicesEntity(
             action = action,
-            damageDices = damageDices[action.id].orEmpty()
+            damageDices = damageDices[action.id].orEmpty(),
+            savingThrows = savingThrowsByActionId[action.id].orEmpty(),
+            conditions = conditionsByActionId[action.id].orEmpty(),
         )
     }.groupBy { it.action.monsterIndex }
 }

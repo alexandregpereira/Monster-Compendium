@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.shareContent.state
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent.Import
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersContentToExport
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
@@ -39,6 +40,7 @@ internal class ShareContentStateHolder(
     private val eventDispatcher: ShareContentEventDispatcher,
     private val importContent: ImportContent,
     private val getMonstersContentToExport: GetMonstersContentToExport,
+    private val analytics: Analytics,
 ) : UiModel<ShareContentState>(
     ShareContentState(strings = appLocalization.getLanguage().getStrings())
 ), MutableActionHandler<ShareContentUiEvent> by MutableActionHandler() {
@@ -62,7 +64,7 @@ internal class ShareContentStateHolder(
             }
             .catch { cause ->
                 if (cause is ImportContentException) {
-                    cause.printStackTrace()
+                    analytics.logException(cause)
                     val importError = when (cause) {
                         is ImportContentException.InvalidContent -> InvalidContent
                     }

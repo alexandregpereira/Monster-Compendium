@@ -32,7 +32,6 @@ import br.alexandregpereira.hunter.domain.usecase.GetRemoteMonstersBySourceUseCa
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
-import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import org.koin.dsl.module
 
 val monsterDomainModule = module {
@@ -48,8 +47,7 @@ val monsterDomainModule = module {
     factory { GetMonstersUseCase(get()) }
     factory { SaveCompendiumScrollItemPositionUseCase(get()) }
     factory { SaveMeasurementUnitUseCase(get(), get()) }
-    factory { SaveMonstersUseCase(get(), get(), get(), get()) }
-    factory { SyncMonstersUseCase(get(), get(), get(), get(), get(), get(), get()) }
+    factory { SaveMonstersUseCase(get(), get(), get()) }
     factory { GetRemoteMonstersBySourceUseCase(get(), get()) }
     factory { GetMonstersByStatus(get()) }
 }

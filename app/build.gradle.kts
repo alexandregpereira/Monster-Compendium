@@ -16,7 +16,6 @@
  */
 
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Properties
 
 plugins {
@@ -44,19 +43,27 @@ multiplatform {
     }
 
     commonMain {
+        implementation(project(":core:ads-consent"))
         implementation(project(":core:analytics"))
+        implementation(project(":core:app-config"))
         implementation(project(":core:event"))
+        implementation(project(":core:feature-flag"))
+        implementation(project(":core:file:core"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":domain:app:data"))
         implementation(project(":domain:app:core"))
+        implementation(project(":domain:revenue:core"))
+        implementation(project(":domain:revenue:data"))
         implementation(project(":domain:sync:core"))
 
         implementation(project(":feature:share-content:event"))
         implementation(project(":domain:monster:event"))
+        implementation(project(":domain:spell:event"))
 
         implementation(project(":feature:folder-detail:compose"))
+        implementation(project(":feature:ads:compose"))
         implementation(project(":feature:folder-insert:compose"))
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
@@ -65,13 +72,16 @@ multiplatform {
         implementation(project(":feature:monster-detail:compose"))
         implementation(project(":feature:monster-lore-detail:compose"))
         implementation(project(":feature:monster-registration:compose"))
+        implementation(project(":feature:paywall:compose"))
         implementation(project(":feature:search:compose"))
         implementation(project(":feature:settings:compose"))
         implementation(project(":feature:share-content:compose"))
         implementation(project(":feature:spell-compendium:compose"))
         implementation(project(":feature:spell-detail:compose"))
+        implementation(project(":feature:spell-registration:compose"))
         implementation(project(":feature:sync:compose"))
 
+        implementation(project(":ui:color-picker"))
         implementation(project(":ui:core"))
 
         implementation(libs.kotlin.coroutines.core)
@@ -99,15 +109,44 @@ multiplatform {
 
 val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
 
+tasks.register<UpdateIosVersionTask>("updateIosVersion") {
+    versionName.set(appVersionName)
+    versionCode.set(appVersionCode)
+    iosAppDir.set(rootProject.layout.projectDirectory.dir("iosApp"))
+}
+
+tasks.matching { it.name.contains("embedAndSignAppleFrameworkForXcode") }
+    .configureEach { dependsOn("updateIosVersion") }
+
 // Load local.properties manually to ensure AMPLITUDE_API_KEY is available
 val localProps = Properties()
-val localPropsFile: File? = rootProject.file("local.properties")
-if (localPropsFile?.exists() == true) {
+val localPropsFile: File = rootProject.file("local.properties")
+if (localPropsFile.exists()) {
     localProps.load(localPropsFile.inputStream())
 }
 
+val isIos = System.getenv("PLATFORM_NAME") != null
+val isRelease = project.gradle.startParameter.taskNames.any { it.contains("Release") }
+    || System.getenv("CONFIGURATION") == "Release"
+val isDebug = !isRelease
+
+fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String = sandboxKey, fallback: String = ""): String {
+    val isDevBuild = project.hasProperty("dev")
+    val key = when {
+        isDevBuild -> homologKey
+        isRelease -> prodKey
+        else -> sandboxKey
+    }
+    val envVar = System.getenv(key)?.takeIf { it.isNotEmpty() }
+    val propVar = localProps.getProperty(key)?.takeIf { it.isNotEmpty() }
+    val keyValue = envVar ?: propVar ?: fallback
+    if (keyValue.isBlank()) {
+        logger.warn("Warning: Missing environment variable $key")
+    }
+    return keyValue
+}
+
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
-    val isDebug = project.gradle.startParameter.taskNames.any { it.contains("Release") }.not()
     val versionNameSuffix = when {
         project.hasProperty("dev") -> {
             "-dev"
@@ -118,18 +157,29 @@ tasks.register<GenerateAppConfigTask>("generateAppConfig") {
         else -> ""
     }
 
-    // Read AMPLITUDE_API_KEY from environment, local.properties, or use empty string
-    val amplitudeApiKeyEnvVarName = "AMPLITUDE_API_KEY"
-    val envVar = System.getenv(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val propVar = localProps.getProperty(amplitudeApiKeyEnvVarName)?.takeIf { it.isNotEmpty() }
-    val amplitudeApiKey = envVar ?: propVar ?: ""
-
-    logger.quiet("Using Amplitude API Key: ${if (amplitudeApiKey.isNotEmpty()) "****" else "(none)"}")
+    val amplitudeApiKey = getEnvVar(
+        prodKey = "AMPLITUDE_API_KEY",
+        sandboxKey = "AMPLITUDE_SANDBOX_API_KEY",
+    )
+    val revenueCatApiKey = when {
+        isIos -> getEnvVar(
+            prodKey = "REVENUE_CAT_IOS_API_KEY",
+            homologKey = "REVENUE_CAT_IOS_API_KEY",
+            sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
+        )
+        else -> getEnvVar(
+            prodKey = "REVENUE_CAT_ANDROID_API_KEY",
+            homologKey = "REVENUE_CAT_ANDROID_API_KEY",
+            sandboxKey = "REVENUE_CAT_SANDBOX_API_KEY",
+        )
+    }
 
     taskVersionName.set(appVersionName + versionNameSuffix)
     taskVersionCode.set(appVersionCode)
     taskVersionNameSuffix.set(versionNameSuffix)
     taskAmplitudeApiKey.set(amplitudeApiKey)
+    taskRevenueCatApiKey.set(revenueCatApiKey)
+    taskAdsConsentDeviceHashTestId.set(findProperty("eeaDeviceId")?.toString() ?: "")
 }
 
 kotlin {
@@ -174,19 +224,33 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
 
-        if (hasProperty("dev")) {
-            setProperty("archivesBaseName", "app-dev")
-        }
+        val admobAppId = getEnvVar(
+            prodKey = "ADMOB_APP_ID",
+            sandboxKey = "ADMOB_SANDBOX_APP_ID",
+            fallback = "ca-app-pub-3940256099942544~3347511713",
+        )
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
     }
 
+    applicationVariants.all {
+        val buildTypeName = buildType.name
+        val version = versionName
+        val prefix = if (hasProperty("dev")) "app-dev" else "app"
+        outputs.all {
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl)
+                .outputFileName = "$prefix-$buildTypeName-$version.apk"
+        }
+    }
+
     signingConfigs {
+        val appKeyPassword = getEnvVar(prodKey = "MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
         create("release") {
             storeFile = file("monster-keystore.jks")
-            storePassword = System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+            storePassword = appKeyPassword
             keyAlias = "monster"
-            keyPassword = System.getenv("MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
+            keyPassword = appKeyPassword
         }
     }
 
@@ -253,7 +317,3 @@ compose {
     }
 }
 
-// Ensure the task runs before compilation
-tasks.withType<KotlinCompile>().configureEach {
-    dependsOn("generateAppConfig")
-}

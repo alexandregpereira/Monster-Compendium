@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.spell.compendium
 
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
@@ -25,15 +26,20 @@ import br.alexandregpereira.hunter.search.removeAccents
 import br.alexandregpereira.hunter.spell.compendium.domain.GetSpellsUseCase
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
+import br.alexandregpereira.hunter.spell.event.SpellResult
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import br.alexandregpereira.hunter.event.v2.EventListener as EventListenerV2
 
 @OptIn(FlowPreview::class)
 class SpellCompendiumStateHolder internal constructor(
@@ -41,13 +47,17 @@ class SpellCompendiumStateHolder internal constructor(
     private val getSpellsUseCase: GetSpellsUseCase,
     private val eventListener: EventListener<SpellCompendiumEvent>,
     private val resultDispatcher: EventDispatcher<SpellCompendiumResult>,
+    private val spellRegistrationEventDispatcher: SpellRegistrationEventDispatcher,
     private val appLocalization: AppLocalization,
+    private val analytics: Analytics,
+    private val spellResultListener: EventListenerV2<SpellResult>,
 ) : UiModel<SpellCompendiumState>(SpellCompendiumState()),
     SpellCompendiumIntent {
 
     private val searchQuery = MutableStateFlow(state.value.searchText)
     private val originalSpellsGroupByLevel = mutableMapOf<String, List<SpellCompendiumItemState>>()
     private var strings: SpellCompendiumStrings = getSpellCompendiumStrings(appLocalization.getLanguage())
+    private var spellResultJob: Job? = null
 
     init {
         debounceSearch()
@@ -65,6 +75,10 @@ class SpellCompendiumStateHolder internal constructor(
         setState { copy(searchText = "", searchTextLabel = strings.searchLabel) }
         getSpellsUseCase()
             .onEach { spells ->
+                analytics.track(
+                    eventName = "Spell Compendium - loaded",
+                    params = mapOf("count" to spells.size.toString()),
+                )
                 val spellsGroupByLevel = spells.groupByLevel(selectedSpellIndexes)
                 val compendiumIndex = spells.firstOrNull {
                     it.index == spellIndex
@@ -90,6 +104,10 @@ class SpellCompendiumStateHolder internal constructor(
                 it.removeAccents().trim()
             }
             .onEach { text ->
+                analytics.track(
+                    eventName = "Spell Compendium - search text changed",
+                    params = mapOf("text" to text),
+                )
                 setState {
                     val spellsGroupByLevel = if (text.isNotBlank()){
                         val spellsFiltered = originalSpellsGroupByLevel.values.flatten()
@@ -108,6 +126,8 @@ class SpellCompendiumStateHolder internal constructor(
         eventListener.events.onEach { event ->
             when (event) {
                 is SpellCompendiumEvent.Show -> {
+                    analytics.track(eventName = "Spell Compendium - opened")
+                    observeSpellResultEvents()
                     fetch(
                         spellIndex = event.spellIndex,
                         selectedSpellIndexes = event.selectedSpellIndexes,
@@ -125,15 +145,40 @@ class SpellCompendiumStateHolder internal constructor(
     }
 
     override fun onSpellClick(spellIndex: String) {
+        analytics.track(
+            eventName = "Spell Compendium - spell clicked",
+            params = mapOf("index" to spellIndex),
+        )
         resultDispatcher.dispatchEvent(SpellCompendiumResult.OnSpellClick(spellIndex))
     }
 
     override fun onSpellLongClick(spellIndex: String) {
+        analytics.track(
+            eventName = "Spell Compendium - spell long clicked",
+            params = mapOf("index" to spellIndex),
+        )
         resultDispatcher.dispatchEvent(SpellCompendiumResult.OnSpellLongClick(spellIndex))
     }
 
+    override fun onAddSpell() {
+        analytics.track(eventName = "Spell Compendium - add spell clicked")
+        spellRegistrationEventDispatcher.dispatchEvent(SpellRegistrationEvent.Show())
+    }
+
     override fun onClose() {
+        analytics.track(eventName = "Spell Compendium - closed")
+        spellResultJob?.cancel()
         setState { copy(isShowing = false) }
+    }
+
+    private fun observeSpellResultEvents() {
+        spellResultJob?.cancel()
+        spellResultJob = spellResultListener.events.onEach { result ->
+            when (result) {
+                is SpellResult.OnAdded -> fetch(spellIndex = result.spellIndex)
+                is SpellResult.OnChanged -> fetch(spellIndex = result.spellIndex)
+            }
+        }.launchIn(scope)
     }
 
     private fun List<Spell>.groupByLevel(

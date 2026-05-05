@@ -19,25 +19,41 @@ package br.alexandregpereira.hunter.settings
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.app.config.Environment
 import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
 import br.alexandregpereira.hunter.domain.settings.GetAlternativeSourceJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.GetMonsterImageJsonUrlUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveLanguageUseCase
 import br.alexandregpereira.hunter.domain.settings.SaveUrlsUseCase
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent.Show
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.paywall.event.PaywallEvent
+import br.alexandregpereira.hunter.paywall.event.PaywallResult
+import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
+import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
+import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -46,7 +62,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.zip
 
 internal class SettingsStateHolder(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
@@ -62,6 +77,13 @@ internal class SettingsStateHolder(
     private val saveLanguage: SaveLanguageUseCase,
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
+    private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
+    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val paywallResultListener: EventListener<PaywallResult>,
+    private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
+    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
+    private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
+    private val environment: Environment,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -69,14 +91,16 @@ internal class SettingsStateHolder(
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
 
-    private fun observeLanguageChanges() {
-        appLocalization.languageFlow.onEach {
-            load()
+    private fun observeEvents() {
+        paywallResultListener.events.onEach { result ->
+            if (result is PaywallResult.OnSubscribe) {
+                load()
+            }
         }.launchIn(scope)
     }
 
     fun onStart() {
-        observeLanguageChanges()
+        observeEvents()
         load()
     }
 
@@ -101,19 +125,19 @@ internal class SettingsStateHolder(
             .launchIn(scope)
     }
 
-    override fun onManageMonsterContentClick() {
+    private fun onManageMonsterContentClick() {
         analytics.trackManageMonsterContentClick()
         monsterContentManagerEventDispatcher.dispatchEvent(Show)
     }
 
-    override fun onAdvancedSettingsClick() {
+    private fun onAdvancedSettingsClick() {
         analytics.trackAdvancedSettingsClick()
         setState { copy(advancedSettingsOpened = true) }
     }
 
     override fun onAdvancedSettingsCloseClick() = closeAdvancedSettings()
 
-    override fun onSettingsClick() {
+    private fun onSettingsClick() {
         analytics.trackSettingsClick()
         setState { copy(settingsOpened = true) }
     }
@@ -132,7 +156,13 @@ internal class SettingsStateHolder(
                     syncEventDispatcher.startSync()
                     originalSettingsState = state.value.settingsState
                 }
-                setState { copy(strings = this@SettingsStateHolder.strings) }
+                val strings = this@SettingsStateHolder.strings
+                setState {
+                    copy(
+                        strings = strings,
+                        menuItems = updateMenuItems(strings),
+                    )
+                }
             }
             .launchIn(scope)
     }
@@ -142,7 +172,7 @@ internal class SettingsStateHolder(
         setState { copy(settingsState = settingsState.copy(language = language)) }
     }
 
-    override fun onAppearanceSettingsClick() {
+    private fun onAppearanceSettingsClick() {
         analytics.trackAppearanceSettingsClick()
         fillAppearanceSettingsState()
         setState { copy(appearanceSettingsOpened = true) }
@@ -158,7 +188,6 @@ internal class SettingsStateHolder(
         val appearanceState = state.value.appearanceState
         flow {
             AppearanceSettings(
-                forceLightImageBackground = appearanceState.forceLightImageBackground,
                 defaultLightBackground = appearanceState.defaultLightBackground,
                 defaultDarkBackground = appearanceState.defaultDarkBackground,
                 imageContentScale = when (appearanceState.monsterImageContentSelected) {
@@ -181,63 +210,84 @@ internal class SettingsStateHolder(
         setState { copy(appearanceState = appearance) }
     }
 
-    override fun onImport() {
+    private fun onImport() {
         analytics.trackImportContentClick()
         shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
     }
 
-    override fun onOpenGitHubProjectClick() {
+    private fun onOpenGitHubProjectClick() {
         analytics.trackOpenGitHubProjectClick()
         SettingsViewAction.GoToExternalUrl(
             url = "https://github.com/alexandregpereira/Monster-Compendium"
         ).also { sendAction(it) }
     }
 
-    override fun onDonateClick() {
-        analytics.trackDonateClick()
-        setState { copy(donateIsOpen = true) }
+    fun onSubscribePremiumClick() {
+        paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
-    fun onDonateCloseClick() {
-        setState { copy(donateIsOpen = false) }
-    }
+    private fun onSpellsClick() {
+        analytics.trackSpellsClick()
+        spellCompendiumEventDispatcher.dispatchEventResult(event = SpellCompendiumEvent.Show())
+            .onEach { spellCompendiumResult ->
+                when (spellCompendiumResult) {
+                    is SpellCompendiumResult.OnSpellClick -> {
+                        spellDetailEventDispatcher.dispatchEvent(
+                            SpellDetailEvent.ShowSpell(spellCompendiumResult.spellIndex)
+                        )
+                    }
 
-    fun onPixCodeCopyClick() {
-        analytics.trackPixCodeCopyClick()
-    }
-
-    fun onPixKeyCopyClick() {
-        analytics.trackPixKeyCopyClick()
-    }
-
-    fun onBuyMeCoffeeClick() {
-        analytics.trackBuyMeCoffeeClick()
-        SettingsViewAction.GoToExternalUrl(
-            url = "https://ko-fi.com/monstercompendium"
-        ).also { sendAction(it) }
+                    is SpellCompendiumResult.OnSpellLongClick -> {
+                        spellRegistrationEventDispatcher.dispatchEvent(
+                            SpellRegistrationEvent.Show(spellCompendiumResult.spellIndex)
+                        )
+                    }
+                }
+            }
+            .launchIn(scope)
     }
 
     private fun load() {
-        getMonsterImageJsonUrl()
-            .zip(getAlternativeSourceJsonUrl()) { imageBaseUrl, alternativeSourceBaseUrl ->
-                state.value.copy(
-                    imageBaseUrl = imageBaseUrl,
-                    alternativeSourceBaseUrl = alternativeSourceBaseUrl,
-                    strings = this@SettingsStateHolder.strings,
+        val currentState = state.value
+        flow {
+            coroutineScope {
+                val currentStrings = this@SettingsStateHolder.strings
+                val newState = currentState.copy(
+                    strings = currentStrings,
                     settingsState = SettingsState(
                         languages = Language.entries.map { it.asState() },
                         language = appLocalization.getLanguage().asState()
-                    )
+                    ),
+                    menuItems = buildMenuItems(
+                        strings = currentStrings,
+                    ),
                 )
+                emit(0 to newState)
+                val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
+                val alternativeSourceBaseUrlDeferred =
+                    async { getAlternativeSourceJsonUrl().single() }
+                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
+                val newState2 = newState.copy(
+                    imageBaseUrl = imageBaseUrlDeferred.await(),
+                    alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
+                    showPremium = isSessionUsageLimitReachedDeferred.await(),
+                )
+                emit(1 to newState2)
             }
-            .flowOn(dispatcher)
+        }.flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
             }
-            .onEach { state ->
-                analytics.trackLoadSettings(state)
-                originalSettingsState = state.settingsState
-                setState { state }
+            .onEach { (index, newState) ->
+                if (currentState.alternativeSourceBaseUrl != newState.alternativeSourceBaseUrl ||
+                    currentState.imageBaseUrl != newState.imageBaseUrl
+                ) {
+                    analytics.trackLoadSettings(newState)
+                }
+                if (index == 1) {
+                    originalSettingsState = newState.settingsState
+                }
+                setState { newState }
             }
             .launchIn(scope)
     }
@@ -248,7 +298,6 @@ internal class SettingsStateHolder(
             .map { appearanceSettings ->
                 state.value.copy(
                     appearanceState = AppearanceSettingsState(
-                        forceLightImageBackground = appearanceSettings.forceLightImageBackground,
                         defaultLightBackground = appearanceSettings.defaultLightBackground,
                         defaultDarkBackground = appearanceSettings.defaultDarkBackground,
                         monsterImageContentSelectedOptionIndex = appearanceSettings.imageContentScale.ordinal
@@ -261,6 +310,83 @@ internal class SettingsStateHolder(
             .launchIn(scope)
     }
 
+    override fun onMenuItemClick(id: MenuItemIdState) {
+        when (id) {
+            MenuItemIdState.OPEN_GITHUB_PROJECT -> onOpenGitHubProjectClick()
+            MenuItemIdState.SETTINGS -> onSettingsClick()
+            MenuItemIdState.ADVANCED_SETTINGS -> onAdvancedSettingsClick()
+            MenuItemIdState.APPEARANCE_SETTINGS -> onAppearanceSettingsClick()
+            MenuItemIdState.IMPORT_CONTENT -> onImport()
+            MenuItemIdState.SPELLS -> onSpellsClick()
+            MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
+        }
+    }
+
+    private fun buildMenuItems(
+        strings: SettingsStrings,
+    ): ImmutableList<MenuItemState> =
+        buildList {
+            add(MenuItemIdState.SPELLS.toMenuItem(strings))
+            add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
+            add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
+            add(MenuItemIdState.SETTINGS.toMenuItem(strings))
+            add(MenuItemIdState.APPEARANCE_SETTINGS.toMenuItem(strings))
+            if (environment == Environment.Sandbox) {
+                add(MenuItemIdState.ADVANCED_SETTINGS.toMenuItem(strings))
+            }
+            add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
+        }.toImmutableList()
+
+    private fun SettingsViewState.updateMenuItems(
+        strings: SettingsStrings,
+    ): ImmutableList<MenuItemState> {
+        return this.menuItems.map { menuItem ->
+            menuItem.id.toMenuItem(strings)
+        }.toImmutableList()
+    }
+
+    private fun MenuItemIdState.toMenuItem(
+        strings: SettingsStrings,
+    ): MenuItemState {
+        return when (this) {
+            MenuItemIdState.OPEN_GITHUB_PROJECT -> MenuItemState(
+                id = this,
+                text = strings.openGitHubProject,
+                section = strings.about,
+            )
+            MenuItemIdState.SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.languageLabel,
+                section = strings.settingsTitle,
+            )
+            MenuItemIdState.APPEARANCE_SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.appearanceSettingsTitle,
+                section = strings.settingsTitle,
+            )
+            MenuItemIdState.IMPORT_CONTENT -> MenuItemState(
+                id = this,
+                text = strings.importContent,
+                section = strings.content,
+            )
+            MenuItemIdState.SPELLS -> MenuItemState(
+                id = this,
+                text = strings.spells,
+                section = strings.content,
+            )
+            MenuItemIdState.MANAGE_MONSTER_CONTENT -> MenuItemState(
+                id = this,
+                text = strings.manageMonsterContent,
+                section = strings.content,
+            )
+            MenuItemIdState.ADVANCED_SETTINGS -> MenuItemState(
+                id = this,
+                text = strings.manageAdvancedSettings,
+                section = strings.settingsTitle,
+            )
+        }
+    }
+
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }
     }
@@ -269,6 +395,7 @@ internal class SettingsStateHolder(
         val string = when (this) {
             Language.ENGLISH -> "English (United States)"
             Language.PORTUGUESE -> "Português (Brasil)"
+            Language.SPANISH -> "Español"
         }
 
         return SettingsLanguageState(

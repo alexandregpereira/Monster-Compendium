@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.GetMonsterDetailUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.ResetMonsterToOriginal
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
+import br.alexandregpereira.hunter.spell.event.SpellResultDispatcher
 import br.alexandregpereira.hunter.ui.StateRecovery
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -50,8 +51,11 @@ val monsterDetailModule = module {
             appLocalization = get(),
             stateRecovery = get(named(MonsterDetailStateRecoveryQualifier)),
             resetMonsterToOriginal = get(),
+            resetMonsterImage = get(),
             syncEventDispatcher = get(),
             shareContentEventDispatcher = get(),
+            spellResultListener = get<SpellResultDispatcher>(),
+            getCondition = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get()) }

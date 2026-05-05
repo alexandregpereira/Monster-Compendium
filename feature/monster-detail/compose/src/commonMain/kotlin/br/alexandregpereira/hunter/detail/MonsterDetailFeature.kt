@@ -84,6 +84,7 @@ fun MonsterDetailFeature(
                     onOptionsClicked = viewModel::onShowOptionsClicked,
                     onSpellClicked = viewModel::onSpellClicked,
                     onLoreClicked = viewModel::onLoreClicked,
+                    onConditionClicked = viewModel::onConditionClicked,
                     onClose = viewModel::onClose,
                 )
 

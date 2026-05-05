@@ -22,5 +22,9 @@ import kotlinx.coroutines.flow.Flow
 
 internal interface AlternativeSourceRemoteDataSource {
 
-    fun getAlternativeSources(lang: String): Flow<List<AlternativeSourceDto>>
+    suspend fun getAlternativeSources(lang: String): List<AlternativeSourceDto>
+
+    suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto>
+
+    fun getDefaultSources(lang: String): Flow<List<AlternativeSourceDto>>
 }

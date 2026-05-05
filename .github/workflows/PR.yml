@@ -2,10 +2,21 @@ name: Multiplatform PR
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
     paths-ignore:
       - '**.md'
+      - '**.html'
       - 'media/**'
       - 'content/**'
+      - 'docs/**'
+
+env:
+  MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+  AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+  AMPLITUDE_SANDBOX_API_KEY: ${{ secrets.AMPLITUDE_SANDBOX_API_KEY }}
+  REVENUE_CAT_ANDROID_API_KEY: ${{ secrets.REVENUE_CAT_ANDROID_API_KEY }}
+  REVENUE_CAT_IOS_API_KEY: ${{ secrets.REVENUE_CAT_IOS_API_KEY }}
+  REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
 
 jobs:
   android-distribution:
@@ -14,10 +25,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2.5.0
 
-    - name: set up JDK 17
+    - name: set up JDK 21
       uses: actions/setup-java@v3.6.0
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'adopt'
 
     - name: Setup Gradle
@@ -27,8 +38,6 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      env:
-        AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
       run: ./gradlew testDebugUnitTest jvmTest assembleDebug
 
     - name: Verify database migration
@@ -48,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v4.6.2
       with:
         name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug-*.apk
 
     - name: Upload an APK metadata JSON
       uses: actions/upload-artifact@v4.6.2
@@ -62,10 +71,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -77,12 +86,21 @@ jobs:
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: '16.4'
+          xcode-version: '26.3'
+
+      - name: Install CocoaPods dependencies
+        run: cd iosApp && pod install
+
+      - name: Build Kotlin iOS Framework
+        run: |
+          ./gradlew :app:linkDebugFrameworkIosSimulatorArm64
+          SDK_NAME=iphonesimulator$(xcrun --sdk iphonesimulator --show-sdk-version)
+          mkdir -p "app/build/xcode-frameworks/Debug/${SDK_NAME}"
+          cp -R app/build/bin/iosSimulatorArm64/debugFramework/KotlinApp.framework \
+                "app/build/xcode-frameworks/Debug/${SDK_NAME}/"
 
       - name: Build iOS
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-        run: xcodebuild build -configuration Debug -project ./iosApp/MonsterCompendium.xcodeproj -scheme MonsterCompendium CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ARCHS=arm64
 
   macos-desktop-distribution:
     name: MacOs Desktop Distribution
@@ -90,10 +108,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -103,8 +121,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageDmg
 
       - name: Upload Dmg
@@ -119,10 +135,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -132,8 +148,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageDeb :app:packageRpm
 
       - name: Upload Deb
@@ -154,10 +168,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.5.0
 
-      - name: set up JDK 17
+      - name: set up JDK 21
         uses: actions/setup-java@v3.6.0
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       - name: Setup Gradle
@@ -167,8 +181,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: ./gradlew :app:packageMsi
 
       - name: Upload Msi
@@ -176,3 +188,37 @@ jobs:
         with:
           name: MonsterCompendium-msi
           path: app/build/compose/binaries/main/msi/*.msi
+
+  firebase-distribution:
+    name: Firebase App Distribution
+    if: (github.event.action == 'labeled' && github.event.label.name == 'cd') || (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'cd'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.5.0
+
+      - name: set up JDK 21
+        uses: actions/setup-java@v3.6.0
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate Dev APK
+        run: ./gradlew assembleRelease -Pdev
+
+      - name: Get Dev APK path
+        id: dev-apk-path
+        run: echo "path=$(find app/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          file: ${{ steps.dev-apk-path.outputs.path }}
+          groups: Testers

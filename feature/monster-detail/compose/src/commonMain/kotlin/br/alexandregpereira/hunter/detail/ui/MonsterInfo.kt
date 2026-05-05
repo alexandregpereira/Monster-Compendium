@@ -44,7 +44,8 @@ internal fun LazyListScope.monsterInfo(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     getItemsKeys: () -> List<Any> = { emptyList() },
     onSpellClicked: (String) -> Unit = {},
-    onLoreClick: (String) -> Unit = {}
+    onLoreClick: (String) -> Unit = {},
+    onConditionClicked: (String) -> Unit = {},
 ) {
     monsterInfoPart1(
         monsters = monsters,
@@ -63,6 +64,7 @@ internal fun LazyListScope.monsterInfo(
         monsters = monsters,
         pagerState = pagerState,
         getItemsKeys = getItemsKeys,
+        onConditionClicked = onConditionClicked,
     )
 
     monsterInfoPart4(
@@ -75,6 +77,7 @@ internal fun LazyListScope.monsterInfo(
         monsters = monsters,
         pagerState = pagerState,
         getItemsKeys = getItemsKeys,
+        onConditionClicked = onConditionClicked,
     )
 
     spellBlock(
@@ -83,6 +86,19 @@ internal fun LazyListScope.monsterInfo(
         getItemsKeys = getItemsKeys,
         onSpellClicked = onSpellClicked
     )
+
+    item(key = "source") {
+        MonsterOptionalSectionAlphaTransition(
+            valueToValidate = { monster -> monster.sourceName.isNotBlank() },
+            dataList = monsters,
+            pagerState = pagerState,
+        ) {
+            TextBlock(
+                title = strings.source,
+                text = it.sourceName,
+            )
+        }
+    }
 
     item(key = "space") {
         Spacer(
@@ -186,6 +202,7 @@ private fun LazyListScope.monsterInfoPart3(
     monsters: List<MonsterState>,
     pagerState: PagerState,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    onConditionClicked: (String) -> Unit = {},
 ) {
     item(key = "damageVulnerabilities") {
         ListOptionalSectionAlphaTransition(
@@ -224,7 +241,7 @@ private fun LazyListScope.monsterInfoPart3(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            ConditionBlock(conditions = it)
+            ConditionBlock(conditions = it, onConditionClicked = onConditionClicked)
         }
     }
 }
@@ -263,6 +280,7 @@ private fun LazyListScope.monsterInfoPart5(
     monsters: List<MonsterState>,
     pagerState: PagerState,
     getItemsKeys: () -> List<Any> = { emptyList() },
+    onConditionClicked: (String) -> Unit = {},
 ) {
     item(key = "specialAbilities") {
         ListOptionalSectionAlphaTransition(
@@ -271,7 +289,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            SpecialAbilityBlock(specialAbilities = it)
+            SpecialAbilityBlock(
+                specialAbilities = it,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 
@@ -282,7 +303,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) { actions ->
-            ActionBlock(actions = actions)
+            ActionBlock(
+                actions = actions,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 
@@ -293,7 +317,10 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            ReactionBlock(reactions = it)
+            ReactionBlock(
+                reactions = it,
+                onConditionClicked = onConditionClicked,
+            )
         }
     }
 
@@ -306,7 +333,8 @@ private fun LazyListScope.monsterInfoPart5(
         ) { legendaryActions ->
             ActionBlock(
                 title = strings.legendaryActions,
-                actions = legendaryActions
+                actions = legendaryActions,
+                onConditionClicked = onConditionClicked,
             )
         }
     }

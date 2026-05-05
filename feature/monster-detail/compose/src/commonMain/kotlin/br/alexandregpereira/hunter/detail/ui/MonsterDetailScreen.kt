@@ -101,6 +101,7 @@ internal fun MonsterDetailScreen(
     onOptionsClicked: () -> Unit = {},
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {},
+    onConditionClicked: (String) -> Unit = {},
     onClose: () -> Unit = {},
 ) = AppSurface(color = Color.Transparent) {
     HorizontalPagerTransitionController(pagerState)
@@ -166,7 +167,8 @@ internal fun MonsterDetailScreen(
             contentPadding = contentPadding,
             getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
             onSpellClicked = onSpellClicked,
-            onLoreClick = onLoreClicked
+            onLoreClick = onLoreClicked,
+            onConditionClicked = onConditionClicked,
         )
     }
 
@@ -414,8 +416,8 @@ private fun MonsterTypeIcon(
     AlphaTransition(dataList = monsters, pagerState, modifier = modifier) { data: MonsterState ->
         MonsterTypeIcon(
             icon = data.type.toIcon(),
-            iconSize = 24.dp,
-            size = 80.dp,
+            iconSize = 32.dp,
+            size = 100.dp,
         )
     }
 }

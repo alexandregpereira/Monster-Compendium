@@ -58,4 +58,8 @@ internal class DefaultSpellLocalRepository(
     override fun deleteLocalSpells(): Flow<Unit> {
         return localDataSource.deleteSpells()
     }
+
+    override fun deleteLocalSpell(index: String): Flow<Unit> {
+        return localDataSource.deleteSpell(index)
+    }
 }

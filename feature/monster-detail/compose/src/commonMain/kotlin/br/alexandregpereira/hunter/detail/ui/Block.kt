@@ -37,7 +37,7 @@ internal fun Block(
     title: String? = null,
     contentPaddingBottom: Dp = 0.dp,
     contentTextPaddingBottom: Dp = 16.dp,
-    contentHorizontalPadding: Dp = 16.dp,
+    contentHorizontalPadding: Dp = 0.dp,
     content: @Composable ColumnScope.() -> Unit
 ) = Column(
     modifier.padding(top = 16.dp, bottom = 16.dp + contentPaddingBottom)

@@ -25,12 +25,7 @@ internal interface SettingsViewIntent {
 
     fun onSaveButtonClick()
 
-    fun onManageMonsterContentClick()
-
-    fun onAdvancedSettingsClick()
     fun onAdvancedSettingsCloseClick()
-
-    fun onSettingsClick()
 
     fun onSettingsCloseClick()
 
@@ -38,17 +33,11 @@ internal interface SettingsViewIntent {
 
     fun onLanguageChange(language: SettingsLanguageState)
 
-    fun onAppearanceSettingsClick()
-
     fun onAppearanceSettingsCloseClick()
 
     fun onAppearanceSettingsSaveClick()
 
     fun onAppearanceChange(appearance: AppearanceSettingsState)
 
-    fun onImport()
-
-    fun onOpenGitHubProjectClick()
-
-    fun onDonateClick()
+    fun onMenuItemClick(id: MenuItemIdState)
 }

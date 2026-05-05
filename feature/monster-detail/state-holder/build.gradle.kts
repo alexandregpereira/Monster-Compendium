@@ -26,8 +26,10 @@ multiplatform {
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":core:localization"))
         api(project(":domain:monster:core"))
+        implementation(project(":domain:condition:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:spell:event"))
         implementation(project(":feature:folder-insert:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))
@@ -39,5 +41,8 @@ multiplatform {
         implementation(libs.koin.core)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain()
 }

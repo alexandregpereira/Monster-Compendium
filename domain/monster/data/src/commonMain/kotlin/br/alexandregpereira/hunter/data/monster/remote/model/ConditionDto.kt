@@ -25,37 +25,7 @@ data class ConditionDto(
     @SerialName("index")
     val index: String,
     @SerialName("type")
-    val type: ConditionTypeDto,
+    val type: String,
     @SerialName("name")
     val name: String
 )
-
-@Serializable
-enum class ConditionTypeDto {
-    @SerialName("BLINDED")
-    BLINDED,
-    @SerialName("CHARMED")
-    CHARMED,
-    @SerialName("DEAFENED")
-    DEAFENED,
-    @SerialName("EXHAUSTION")
-    EXHAUSTION,
-    @SerialName("FRIGHTENED")
-    FRIGHTENED,
-    @SerialName("GRAPPLED")
-    GRAPPLED,
-    @SerialName("PARALYZED")
-    PARALYZED,
-    @SerialName("PETRIFIED")
-    PETRIFIED,
-    @SerialName("POISONED")
-    POISONED,
-    @SerialName("PRONE")
-    PRONE,
-    @SerialName("RESTRAINED")
-    RESTRAINED,
-    @SerialName("STUNNED")
-    STUNNED,
-    @SerialName("UNCONSCIOUS")
-    UNCONSCIOUS,
-}

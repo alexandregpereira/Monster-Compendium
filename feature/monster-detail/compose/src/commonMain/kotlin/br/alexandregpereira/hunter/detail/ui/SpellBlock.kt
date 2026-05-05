@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
@@ -138,13 +139,14 @@ private fun Spells(
     Spacer(modifier = Modifier.height(8.dp))
 
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(spells) { spell ->
             SpellIconInfo(
                 name = spell.name,
                 school = spell.school.asState(),
+                modifier = Modifier.width(80.dp),
                 onClick = { onSpellClicked(spell.index) }
             )
         }
@@ -252,6 +254,7 @@ private fun SchoolsOfMagicPreview() = Window {
     }
 }
 
+@Preview
 @Composable
 private fun SchoolsOfMagicDarkThemePreview() = PreviewWindow(darkTheme = true) {
     LazyVerticalGrid(

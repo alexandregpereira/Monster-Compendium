@@ -23,12 +23,15 @@ multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:file:core"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:localization"))
         implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
+        implementation(project(":domain:settings:core"))
         implementation(project(":domain:spell:core"))
+        implementation(project(":domain:spell:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:spell-compendium:event"))
@@ -36,5 +39,8 @@ multiplatform {
         implementation(libs.koin.core)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain()
 }

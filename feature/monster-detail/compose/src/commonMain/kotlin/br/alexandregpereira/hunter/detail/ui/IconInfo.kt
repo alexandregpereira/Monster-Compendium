@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.resources.Res
@@ -34,7 +35,6 @@ import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
 import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.resources.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import br.alexandregpereira.hunter.ui.compose.IconInfo as IconInfoUi
 
 @Composable
@@ -45,6 +45,7 @@ internal fun IconInfo(
     iconSize: Dp = 56.dp,
     iconColor: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
     iconAlpha: Float = 0.7f,
+    textAlpha: Float = 0.7f,
     iconText: String? = null,
     iconPadding: PaddingValues = PaddingValues(0.dp)
 ) = IconInfoUi(
@@ -53,6 +54,7 @@ internal fun IconInfo(
     iconColor = iconColor,
     iconSize = iconSize,
     iconAlpha = iconAlpha,
+    textAlpha = textAlpha,
     iconText = iconText,
     iconPadding = iconPadding,
     modifier = modifier

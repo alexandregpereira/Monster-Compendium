@@ -19,15 +19,29 @@
 
 package br.alexandregpereira.hunter.data.source.di
 
-import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
-import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteRepositoryImpl
+import br.alexandregpereira.hunter.data.source.AddAlternativeSourceUseCaseImpl
 import br.alexandregpereira.hunter.data.source.AlternativeSourceSettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.source.GetAlternativeSourceAcronymsAddedImpl
+import br.alexandregpereira.hunter.data.source.GetAlternativeSourcesUseCaseImpl
+import br.alexandregpereira.hunter.data.source.GetMonsterLoreSourcesUseCaseImpl
+import br.alexandregpereira.hunter.data.source.RemoveAlternativeSourceUseCaseImpl
+import br.alexandregpereira.hunter.data.source.SaveAlternativeSourceContentVersionsUseCaseImpl
+import br.alexandregpereira.hunter.data.source.SyncAlternativeSourceContentVersionUseCaseImpl
 import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalDataSource
 import br.alexandregpereira.hunter.data.source.local.AlternativeSourceLocalRepositoryImpl
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteDataSource
+import br.alexandregpereira.hunter.data.source.remote.AlternativeSourceRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.source.remote.DefaultAlternativeSourceRemoteDataSource
+import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceSettingsRepository
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourceAcronymsAdded
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
+import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
+import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
+import br.alexandregpereira.hunter.domain.source.SaveAlternativeSourceContentVersionsUseCase
+import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVersionUseCase
 import org.koin.dsl.module
 
 val alternativeSourceDataModule = module {
@@ -38,6 +52,22 @@ val alternativeSourceDataModule = module {
         DefaultAlternativeSourceRemoteDataSource(get(), get())
     }
     factory<AlternativeSourceLocalRepository> { AlternativeSourceLocalRepositoryImpl(get()) }
-    factory<AlternativeSourceRemoteRepository> { AlternativeSourceRemoteRepositoryImpl(get()) }
+    factory<AlternativeSourceRemoteRepository> {
+        AlternativeSourceRemoteRepositoryImpl(
+            remoteDataSource = get(),
+            featureFlagProvider = get(),
+        )
+    }
     factory<AlternativeSourceSettingsRepository> { AlternativeSourceSettingsRepositoryImpl(get()) }
+    factory<GetAlternativeSourcesUseCase> { GetAlternativeSourcesUseCaseImpl(get(), get(), get()) }
+    factory<GetMonsterLoreSourcesUseCase> { GetMonsterLoreSourcesUseCaseImpl(get()) }
+    factory<AddAlternativeSourceUseCase> { AddAlternativeSourceUseCaseImpl(get()) }
+    factory<RemoveAlternativeSourceUseCase> { RemoveAlternativeSourceUseCaseImpl(get()) }
+    factory<SyncAlternativeSourceContentVersionUseCase> { SyncAlternativeSourceContentVersionUseCaseImpl(get(), get(), get()) }
+    factory<SaveAlternativeSourceContentVersionsUseCase> { SaveAlternativeSourceContentVersionsUseCaseImpl(get()) }
+    factory<GetAlternativeSourceAcronymsAdded> {
+        GetAlternativeSourceAcronymsAddedImpl(
+            getAlternativeSourcesUseCase = get(),
+        )
+    }
 }

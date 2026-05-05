@@ -17,8 +17,10 @@
 
 package br.alexandregpereira.hunter.data.di
 
+import br.alexandregpereira.hunter.condition.data.local.ConditionLocalDataSource
 import br.alexandregpereira.hunter.data.Database
 import br.alexandregpereira.hunter.data.database.dao.AlternativeSourceDaoImpl
+import br.alexandregpereira.hunter.data.database.dao.ConditionLocalDataSourceImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterFolderDaoImpl
 import br.alexandregpereira.hunter.data.database.dao.MonsterImageDaoImpl
@@ -68,7 +70,6 @@ fun databaseModule(databaseName: String) = module {
             spellUsageQueries = database.spellUsageQueries,
             spellcastingSpellUsageCrossRefQueries = database.spellcastingSpellUsageCrossRefQueries,
             spellUsageCrossRefQueries = database.spellUsageSpellCrossRefQueries,
-            spellPreviewQueries = database.spellPreviewQueries,
             legendaryActionQueries = database.legendaryActionQueries,
             dispatcher = getDispatcherIO()
         )
@@ -92,6 +93,9 @@ fun databaseModule(databaseName: String) = module {
         )
     }
     factory<SpellDao> { SpellDaoImpl(get<Database>().spellQueries, getDispatcherIO()) }
+    factory<ConditionLocalDataSource> {
+        ConditionLocalDataSourceImpl(get<Database>().conditionDataQueries, getDispatcherIO())
+    }
 }
 
 expect fun getDispatcherIO(): CoroutineDispatcher

@@ -10,9 +10,7 @@ internal class AndroidAmplitudeAnalytics(
         eventName: String,
         params: Map<String, Any?>
     ) {
-        if (BuildConfig.DEBUG.not()) {
-            amplitude.track(eventName, params)
-        }
+        amplitude.track(eventName, params)
     }
 
     override fun logException(throwable: Throwable) {

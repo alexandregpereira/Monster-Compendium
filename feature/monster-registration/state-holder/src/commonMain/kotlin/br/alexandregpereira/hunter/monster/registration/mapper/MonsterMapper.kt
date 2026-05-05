@@ -165,6 +165,8 @@ private fun AbilityDescriptionState.asDomain(): AbilityDescription {
         index = key,
         name = name,
         description = description,
+        savingThrows = savingThrows.map { it.asDomain() },
+        conditions = conditions.map { it.asDomain() },
     )
 }
 

@@ -63,6 +63,15 @@ interface MonsterDetailStrings {
     val resetQuestion: String
     val resetConfirmation: String
     val export: String
+    val resetImage: String
+    val resetImageQuestion: String
+    val resetImageConfirmation: String
+    val source: String
+    val noInternetConnection: String
+    val tryAgain: String
+    val iGotIt: String
+    val dc: String
+
 }
 
 internal data class MonsterDetailEnStrings(
@@ -102,10 +111,18 @@ internal data class MonsterDetailEnStrings(
     override val deleteQuestion: String = "Are you sure you want to delete this monster?",
     override val deleteConfirmation: String = "I'm sure",
     override val save: String = "Save",
-    override val resetToOriginal: String = "Reset to Original",
-    override val resetQuestion: String = "Are you sure you want to reset this monster to its original state?",
+    override val resetToOriginal: String = "Restore to original creature",
+    override val resetQuestion: String = "Are you sure you want to restore this creature to its original state?",
     override val resetConfirmation: String = "I'm sure",
     override val export: String = "Share",
+    override val resetImage: String = "Restore to default image",
+    override val resetImageQuestion: String = "Are you sure you want to restore to default image?",
+    override val resetImageConfirmation: String = "I'm sure",
+    override val source: String = "Source",
+    override val noInternetConnection: String = "No Internet Connection",
+    override val tryAgain: String = "Try Again",
+    override val iGotIt: String = "I Got It!",
+    override val dc: String = "DC"
 ) : MonsterDetailStrings
 
 internal data class MonsterDetailPtStrings(
@@ -145,17 +162,77 @@ internal data class MonsterDetailPtStrings(
     override val deleteQuestion: String = "Tem certeza que deseja excluir esse monstro?",
     override val deleteConfirmation: String = "Tenho certeza",
     override val save: String = "Salvar",
-    override val resetToOriginal: String = "Restaurar para o Original",
-    override val resetQuestion: String = "Tem certeza que deseja restaurar esse monstro para o estado original?",
+    override val resetToOriginal: String = "Restaurar para a criatura original",
+    override val resetQuestion: String = "Tem certeza que deseja restaurar essa criatura para o estado original?",
     override val resetConfirmation: String = "Tenho certeza",
     override val export: String = "Compartilhar",
+    override val resetImage: String = "Restaurar para a imagem padrão",
+    override val resetImageQuestion: String = "Tem certeza que deseja restaurar para a imagem padrão?",
+    override val resetImageConfirmation: String = "Tenho certeza",
+    override val source: String = "Fonte",
+    override val noInternetConnection: String = "Sem conexão com a Internet",
+    override val tryAgain: String = "Tentar novamente",
+    override val iGotIt: String = "Entendi!",
+    override val dc: String = "CD"
 ) : MonsterDetailStrings
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
+
+internal data class MonsterDetailEsStrings(
+    override val armorClass: String = "Clase de Armadura",
+    override val speedTitle: String = "Velocidad",
+    override val speedHover: String = "Levitar",
+    override val vulnerabilities: String = "Vulnerabilidades",
+    override val resistances: String = "Resistencias",
+    override val immunities: String = "Inmunidades",
+    override val conditionImmunities: String = "Inmunidades a Condiciones",
+    override val savingThrows: String = "Tiradas de Salvación",
+    override val skills: String = "Habilidades",
+    override val senses: String = "Sentidos",
+    override val languages: String = "Idiomas",
+    override val specialAbilities: String = "Habilidades Especiales",
+    override val actions: String = "Acciones",
+    override val legendaryActions: String = "Acciones Legendarias",
+    override val attack: String = "Ataque",
+    override val options: String = "Opciones",
+    override val goToTop: String = "Ir arriba",
+    override val reactions: String = "Reacciones",
+    override val spells: String = "Conjuros",
+    override val spellcasting: String = "Lanzamiento de Conjuros",
+    override val innateSpellcasting: String = "Lanzamiento de Conjuros Innato",
+    override val abilityScores: String = "Puntuaciones de Habilidad",
+    override val optionsAddToFolder: String = "Añadir a Carpeta",
+    override val savingThrowStrength: String = "Fuerza",
+    override val savingThrowDexterity: String = "Destreza",
+    override val savingThrowConstitution: String = "Constitución",
+    override val savingThrowIntelligence: String = "Inteligencia",
+    override val savingThrowWisdom: String = "Sabiduría",
+    override val savingThrowCharisma: String = "Carisma",
+    override val clone: String = "Clonar",
+    override val cloneMonsterName: String = "Nombre",
+    override val edit: String = "Editar",
+    override val delete: String = "Eliminar",
+    override val deleteQuestion: String = "¿Estás seguro de que quieres eliminar esta criatura?",
+    override val deleteConfirmation: String = "Estoy seguro",
+    override val save: String = "Guardar",
+    override val resetToOriginal: String = "Restaurar a criatura original",
+    override val resetQuestion: String = "¿Estás seguro de que quieres restaurar esta criatura a su estado original?",
+    override val resetConfirmation: String = "Estoy seguro",
+    override val export: String = "Compartir",
+    override val resetImage: String = "Restaurar a imagen por defecto",
+    override val resetImageQuestion: String = "¿Estás seguro de que quieres restaurar a la imagen por defecto?",
+    override val resetImageConfirmation: String = "Estoy seguro",
+    override val source: String = "Fuente",
+    override val noInternetConnection: String = "Sin Conexión a Internet",
+    override val tryAgain: String = "Reintentar",
+    override val iGotIt: String = "Entendido!",
+    override val dc: String = "CD"
+) : MonsterDetailStrings
 
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {
     return when (getLanguage()) {
         Language.ENGLISH -> MonsterDetailEnStrings()
         Language.PORTUGUESE -> MonsterDetailPtStrings()
+        Language.SPANISH -> MonsterDetailEsStrings()
     }
 }

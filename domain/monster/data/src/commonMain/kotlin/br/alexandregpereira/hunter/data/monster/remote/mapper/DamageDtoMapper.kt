@@ -28,10 +28,13 @@ internal fun List<DamageDto>.toDomain(): List<Damage> {
 }
 
 internal fun DamageDto.asDomain(): Damage {
-    val index = this.type.name.lowercase()
+    val index = this.type.lowercase()
+    val type = runCatching {
+        DamageType.valueOf(this.type)
+    }.getOrNull() ?: DamageType.OTHER
     return Damage(
         index = index,
-        type = DamageType.valueOf(this.type.name),
+        type = type,
         name = this.name,
     )
 }

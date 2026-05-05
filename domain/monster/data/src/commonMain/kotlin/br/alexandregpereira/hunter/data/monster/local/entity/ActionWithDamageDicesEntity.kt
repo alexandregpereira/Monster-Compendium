@@ -20,4 +20,6 @@ package br.alexandregpereira.hunter.data.monster.local.entity
 data class ActionWithDamageDicesEntity(
     val action: ActionEntity,
     val damageDices: List<DamageDiceEntity>,
+    val savingThrows: List<SavingThrowEntity> = emptyList(),
+    val conditions: List<ConditionEntity> = emptyList(),
 )
