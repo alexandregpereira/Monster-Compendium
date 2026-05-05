@@ -20,8 +20,8 @@ package br.alexandregpereira.hunter.shareContent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManagerImpl
-import br.alexandregpereira.hunter.shareContent.domain.GetShareContent
-import br.alexandregpereira.hunter.shareContent.domain.GetShareContentUseCase
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentUseCase
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
@@ -40,8 +40,8 @@ val featureShareContentModule = module {
             get(),
         )
     }
-    factory<GetShareContent> {
-        GetShareContentUseCase(
+    factory<GetMonstersShareContent> {
+        GetMonstersShareContentUseCase(
             get(),
             get(),
             get(),

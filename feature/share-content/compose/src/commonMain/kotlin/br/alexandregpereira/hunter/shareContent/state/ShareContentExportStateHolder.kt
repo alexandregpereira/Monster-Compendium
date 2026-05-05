@@ -25,7 +25,7 @@ import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
-import br.alexandregpereira.hunter.shareContent.domain.GetShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,7 +44,7 @@ internal class ShareContentExportStateHolder(
     private val analytics: Analytics,
     private val appLocalization: AppLocalization,
     private val compendiumFileManager: CompendiumFileManager,
-    private val getShareContent: GetShareContent,
+    private val getMonstersShareContent: GetMonstersShareContent,
     private val clock: Clock = Clock.System,
     eventDispatcher: EventDispatcher<ShareContentEvent>,
 ) : UiModel<ShareContentExportState>(
@@ -109,7 +109,7 @@ internal class ShareContentExportStateHolder(
         monsterIndexes: List<String>,
     ) {
         flow {
-            emit(getShareContent(monsterIndexes))
+            emit(getMonstersShareContent(monsterIndexes))
         }.map { shareContent ->
             val timestamp = clock.now().epochSeconds
             val fileName = "content-$timestamp.compendium"

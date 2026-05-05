@@ -28,12 +28,8 @@ import br.alexandregpereira.hunter.shareContent.domain.ShareContent.Companion.CU
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonsterLore
 import br.alexandregpereira.hunter.shareContent.domain.mapper.toSpell
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpell
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.single
-import kotlinx.serialization.Serializable
 
 internal fun interface ImportContent {
     suspend operator fun invoke(compendiumFileContent: CompendiumFileContent): List<String>
@@ -96,19 +92,6 @@ internal class ImportContentUseCase(
         }
 
         return content.monsters?.map { it.index }.orEmpty()
-    }
-}
-
-@Serializable
-internal data class ShareContent(
-    val monsters: List<ShareMonster>? = null,
-    val monstersLore: List<ShareMonsterLore>? = null,
-    val spells: List<ShareSpell>? = null,
-) {
-    val version: Int = CURRENT_VERSION
-
-    companion object {
-        const val CURRENT_VERSION = 1
     }
 }
 

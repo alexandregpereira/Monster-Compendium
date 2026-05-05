@@ -12,15 +12,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.singleOrNull
 
-internal fun interface GetShareContent {
+internal fun interface GetMonstersShareContent {
     suspend operator fun invoke(monsterIndexes: List<String>): ShareContent
 }
 
-internal class GetShareContentUseCase(
+internal class GetMonstersShareContentUseCase(
     private val getMonsters: GetMonstersByIdsUseCase,
     private val getMonstersLore: GetMonstersLoreByIdsUseCase,
     private val getSpellsByIds: GetSpellsByIdsUseCase,
-) : GetShareContent {
+) : GetMonstersShareContent {
 
     override suspend fun invoke(monsterIndexes: List<String>): ShareContent {
         return getMonsters(monsterIndexes).map { monsters ->
