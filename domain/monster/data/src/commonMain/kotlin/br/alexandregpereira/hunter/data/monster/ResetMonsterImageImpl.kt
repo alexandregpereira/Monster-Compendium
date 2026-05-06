@@ -28,12 +28,16 @@ internal class ResetMonsterImageImpl(
 ): ResetMonsterImage {
 
     override suspend fun invoke(monsterIndex: String) {
+        val monsterImage = monsterImageRepository.getLocalMonsterImage(monsterIndex)
         monsterImageRepository.deleteMonsterImage(monsterIndex)
-        val fileType = FileType.IMAGE
-        fileManager.getFileNamesFromAppStorage(fileType).filter { fileName ->
-            fileName.startsWith(monsterIndex)
-        }.forEach { fileName ->
-            fileManager.deleteFileFromAppStorage(fileName = fileName, fileType)
+        val fileName = monsterImage?.imageUrl
+            ?.takeIf { it.startsWith("file://") }
+            ?.substringAfterLast("/")
+        if (fileName != null) {
+            fileManager.deleteFileFromAppStorage(
+                fileName = fileName,
+                fileType = FileType.IMAGE,
+            )
         }
     }
 }

@@ -47,25 +47,33 @@ internal class ImportContentUseCase(
     override suspend fun invoke(compendiumFileContent: CompendiumFileContent): List<String> {
         val content = compendiumFileContent.shareContent
         content.monsters?.let { monsters ->
-            val paths = compendiumFileContent.monsterImageFiles.mapNotNull { image ->
-                try {
-                    fileManager.saveFileToAppStorage(
-                        bytes = image.content,
-                        fileName = image.name,
-                        fileType = FileType.IMAGE,
-                    )
-                } catch (cause: Throwable) {
-                    analytics.logException(
-                        RuntimeException("Fail to import image ${image.name}", cause)
-                    )
-                    null
-                }
+            val monstersByImageName = monsters.filter {
+                it.imageUrl.startsWith("file://")
             }.associateBy {
-                it.substringAfterLast("/").substringBefore("-")
+                it.imageUrl.substringAfterLast("/")
             }
+
+            val pathsByMonsterIndex = compendiumFileContent.monsterImageFiles
+                .mapNotNull { image ->
+                    val monster = monstersByImageName[image.name] ?: return@mapNotNull null
+                    try {
+                        val path = fileManager.saveFileToAppStorage(
+                            bytes = image.content,
+                            fileName = image.name,
+                            fileType = FileType.IMAGE,
+                        )
+                        monster.index to path
+                    } catch (cause: Throwable) {
+                        analytics.logException(
+                            RuntimeException("Fail to import image ${image.name}", cause)
+                        )
+                        null
+                    }
+                }.toMap()
+
             saveMonsters(
                 monsters.map {
-                    it.toMonster(imageUrl = paths[it.index] ?: it.imageUrl)
+                    it.toMonster(imageUrl = pathsByMonsterIndex[it.index] ?: it.imageUrl)
                 }
             ).catch { cause ->
                 compendiumFileContent.monsterImageFiles.forEach { image ->
@@ -77,7 +85,7 @@ internal class ImportContentUseCase(
                 throw cause
             }.single()
 
-            paths.keys.takeIf { it.isNotEmpty() }?.toList()?.let {
+            pathsByMonsterIndex.keys.takeIf { it.isNotEmpty() }?.toList()?.let {
                 monsterImageRepository.deleteMonsterImages(monsterIndexes = it)
             }
         }
