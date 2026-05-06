@@ -43,7 +43,7 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
                         light = image.backgroundColor.light,
                         dark = image.backgroundColor.dark,
                     ),
-                    isHorizontal = image.isHorizontal,
+                    isHorizontal = false,
                     contentScale = image.contentScale?.let {
                         runCatching {
                             MonsterImageContentScale.valueOf(image.contentScale.name)

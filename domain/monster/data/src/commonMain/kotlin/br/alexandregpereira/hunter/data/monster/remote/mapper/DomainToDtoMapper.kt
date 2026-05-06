@@ -83,7 +83,6 @@ internal fun Monster.toDto(): MonsterDto {
                 dark = imageData.backgroundColor.dark
             ),
             imageUrl = imageData.url,
-            isHorizontal = imageData.isHorizontal,
             contentScale = imageData.contentScale?.let {
                 when (it) {
                     MonsterImageContentScale.Fit -> MonsterImageContentScaleDto.Fit
