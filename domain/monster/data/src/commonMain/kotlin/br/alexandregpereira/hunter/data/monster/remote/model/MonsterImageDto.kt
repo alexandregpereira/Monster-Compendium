@@ -30,6 +30,8 @@ data class MonsterImageDto(
     val imageUrl: String,
     @SerialName("content_scale")
     val contentScale: MonsterImageContentScaleDto? = null,
+    @SerialName("is_horizontal_image")
+    val isHorizontal: Boolean = false,
 )
 
 enum class MonsterImageContentScaleDto {

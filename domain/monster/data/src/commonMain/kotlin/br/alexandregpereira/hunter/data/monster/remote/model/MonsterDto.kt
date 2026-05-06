@@ -38,7 +38,7 @@ data class MonsterDto(
     @SerialName("subtitle")
     val subtitle: String = "",
     @SerialName("size")
-    val size: MonsterSizeDto,
+    val size: String,
     @SerialName("alignment")
     val alignment: String,
     @SerialName("armor_class")
@@ -78,5 +78,8 @@ data class MonsterDto(
     @SerialName("spellcasting")
     val spellcastings: List<SpellcastingDto> = emptyList(),
     @SerialName("source")
-    val source: SourceDto
+    val source: SourceDto,
+    val lore: String? = null,
+    val status: String? = null,
+    val image: MonsterImageDto? = null,
 )

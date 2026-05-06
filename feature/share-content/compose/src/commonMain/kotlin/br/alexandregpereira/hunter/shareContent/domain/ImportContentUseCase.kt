@@ -24,10 +24,6 @@ import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonster
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toSpell
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent.Companion.CURRENT_VERSION
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.single
 
@@ -48,9 +44,9 @@ internal class ImportContentUseCase(
         val content = compendiumFileContent.shareContent
         content.monsters?.let { monsters ->
             val monstersByImageName = monsters.filter {
-                it.imageUrl.startsWith("file://")
+                it.imageData.url.startsWith("file://")
             }.associateBy {
-                it.imageUrl.substringAfterLast("/")
+                it.imageData.url.substringAfterLast("/")
             }
 
             val pathsByMonsterIndex = compendiumFileContent.monsterImageFiles
@@ -73,7 +69,11 @@ internal class ImportContentUseCase(
 
             saveMonsters(
                 monsters.map {
-                    it.toMonster(imageUrl = pathsByMonsterIndex[it.index] ?: it.imageUrl)
+                    it.copy(
+                        imageData = it.imageData.copy(
+                            url =pathsByMonsterIndex[it.index] ?: it.imageData.url
+                        )
+                    )
                 }
             ).catch { cause ->
                 compendiumFileContent.monsterImageFiles.forEach { image ->
@@ -91,12 +91,12 @@ internal class ImportContentUseCase(
         }
         content.monstersLore?.let { monstersLore ->
             saveMonstersLore(
-                monsterLore = monstersLore.map { it.toMonsterLore() },
+                monsterLore = monstersLore,
                 isSync = false,
             ).single()
         }
         content.spells?.let { spells ->
-            saveSpells(spells.map { it.toSpell() }).single()
+            saveSpells(spells).single()
         }
 
         return content.monsters?.map { it.index }.orEmpty()
@@ -107,7 +107,6 @@ internal sealed class ImportContentException(message: String) : RuntimeException
     class InvalidContent(content: String, cause: Throwable) : ImportContentException(
         message = "SerializationException. " +
                 "cause = ${cause.message}" +
-                "current content version = $CURRENT_VERSION, " +
                 "content imported version= ${content.replace("\n", "")}"
     )
 }

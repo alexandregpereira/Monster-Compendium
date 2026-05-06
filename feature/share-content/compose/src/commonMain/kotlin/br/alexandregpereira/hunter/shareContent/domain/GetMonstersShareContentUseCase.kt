@@ -4,9 +4,6 @@ import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonstersLoreByIdsUseCase
 import br.alexandregpereira.hunter.domain.spell.GetSpellsByIdsUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersByIdsUseCase
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareMonster
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toShareSpell
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -43,9 +40,9 @@ internal class GetMonstersShareContentUseCase(
         val spells = getSpellsByIds(spellIndexes).single().takeIf { it.isNotEmpty() }
 
         return ShareContent(
-            monsters = monsters.map { it.toShareMonster() },
-            monstersLore = monstersLore?.map { it.toShareMonsterLore() },
-            spells = spells?.map { it.toShareSpell() },
+            monsters = monsters,
+            monstersLore = monstersLore,
+            spells = spells,
         )
     }
 

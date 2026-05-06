@@ -22,7 +22,9 @@ import br.alexandregpereira.hunter.ads.consent.di.adsConsentCoreModule
 import br.alexandregpereira.hunter.ads.di.adsFeatureModule
 import br.alexandregpereira.hunter.analytics.di.analyticsModule
 import br.alexandregpereira.hunter.app.AppConfig
+import br.alexandregpereira.hunter.app.AppInfoProviderImpl
 import br.alexandregpereira.hunter.app.MainViewModel
+import br.alexandregpereira.hunter.app.config.AppInfoProvider
 import br.alexandregpereira.hunter.app.config.Environment
 import br.alexandregpereira.hunter.app.event.appEventModule
 import br.alexandregpereira.hunter.data.di.dataModules
@@ -121,6 +123,9 @@ private val appModule = module {
         } else {
             Environment.Sandbox
         }
+    }
+    single<AppInfoProvider> {
+        AppInfoProviderImpl()
     }
 }
 

@@ -24,8 +24,11 @@ import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentUseCase
+import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapper
+import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapperImpl
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportStateHolder
 import br.alexandregpereira.hunter.shareContent.state.ShareContentImportStateHolder
+import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 val featureShareContentModule = module {
@@ -50,6 +53,7 @@ val featureShareContentModule = module {
     single<CompendiumFileManager> {
         CompendiumFileManagerImpl(
             get(),
+            get(),
         )
     }
     single {
@@ -67,6 +71,16 @@ val featureShareContentModule = module {
             get(),
             get(),
             get<ShareContentEventDispatcher>(),
+            get(),
+            get(),
+            get(),
+        )
+    }
+    single<ShareContentMapper> {
+        ShareContentMapperImpl(
+            dispatcher = Dispatchers.Default,
+            get(),
+            get(),
             get(),
             get(),
             get(),

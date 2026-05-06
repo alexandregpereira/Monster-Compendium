@@ -18,7 +18,6 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    kotlin("plugin.serialization")
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
 }
@@ -31,6 +30,7 @@ multiplatform {
         implementation(project(":domain:spell:core"))
         implementation(project(":core:localization"))
         implementation(project(":core:analytics"))
+        implementation(project(":core:app-config"))
         implementation(project(":core:event"))
         implementation(project(":core:file:compose"))
         implementation(project(":core:ktx"))

@@ -3,9 +3,9 @@ package br.alexandregpereira.hunter.shareContent.domain
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapper
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
-import br.alexandregpereira.hunter.shareContent.domain.model.json
 import br.alexandregpereira.ktx.runCatching
 import kotlinx.serialization.SerializationException
 
@@ -29,6 +29,7 @@ internal interface CompendiumFileManager {
 
 internal class CompendiumFileManagerImpl(
     private val fileManager: FileManager,
+    private val shareContentMapper: ShareContentMapper,
 ) : CompendiumFileManager {
 
     override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
@@ -38,7 +39,7 @@ internal class CompendiumFileManagerImpl(
             ?: error("content.json not found in .compendium archive")
         val contentJson = contentJsonByteArray.decodeToString()
 
-        val shareContent = runCatching { json.decodeFromString<ShareContent>(contentJson) }
+        val shareContent = runCatching { shareContentMapper.decodeFromJson(contentJson) }
             .getOrElse { cause ->
                 when (cause) {
                     is SerializationException -> throw ImportContentException.InvalidContent(
@@ -111,21 +112,21 @@ internal class CompendiumFileManagerImpl(
         fileManager.deleteAllsFilesFromAppStorage(FileType.COMPENDIUM)
     }
 
-    private fun List<ShareMonster>.getImagePaths(): List<String> {
+    private fun List<Monster>.getImagePaths(): List<String> {
         return filter {
-            it.imageUrl.startsWith("file://")
+            it.imageData.url.startsWith("file://")
         }.map {
-            it.imageUrl
+            it.imageData.url
         }
     }
 
     private fun List<FileEntry>.getMonsterImages(
-        monsters: List<ShareMonster>?,
+        monsters: List<Monster>?,
     ): List<CompendiumFileContent.MonsterImage> {
         val monsterByImageName = monsters?.filter {
-            it.imageUrl.startsWith("file://")
+            it.imageData.url.startsWith("file://")
         }?.associateBy {
-            it.imageUrl.substringAfterLast("/")
+            it.imageData.url.substringAfterLast("/")
         }.orEmpty()
         val monsterImages = mutableListOf<CompendiumFileContent.MonsterImage>()
         this.forEach { monsterFileImage ->
@@ -149,8 +150,8 @@ internal class CompendiumFileManagerImpl(
         }
     }
 
-    private fun ShareContent.getContentToExport(): String {
+    private suspend fun ShareContent.getContentToExport(): String {
         val shareContent = this
-        return json.encodeToString(shareContent)
+        return shareContentMapper.encodeToJson(shareContent)
     }
 }

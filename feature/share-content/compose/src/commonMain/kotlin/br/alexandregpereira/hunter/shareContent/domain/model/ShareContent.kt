@@ -1,22 +1,16 @@
 package br.alexandregpereira.hunter.shareContent.domain.model
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
+import br.alexandregpereira.hunter.domain.spell.model.Spell
 
-@Serializable
 internal data class ShareContent(
-    val monsters: List<ShareMonster>? = null,
-    val monstersLore: List<ShareMonsterLore>? = null,
-    val spells: List<ShareSpell>? = null,
+    val monsters: List<Monster>? = null,
+    val monstersLore: List<MonsterLore>? = null,
+    val spells: List<Spell>? = null,
+    val minimumAppVersionCode: Int = CURRENT_MINIMUM_APP_VERSION_CODE,
 ) {
-    val version: Int = CURRENT_VERSION
-
     companion object {
-        const val CURRENT_VERSION = 1
+        const val CURRENT_MINIMUM_APP_VERSION_CODE = 258813
     }
-}
-
-internal val json = Json {
-    ignoreUnknownKeys = true
-    explicitNulls = false
 }

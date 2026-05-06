@@ -19,6 +19,8 @@
 
 package br.alexandregpereira.hunter.data.monster.di
 
+import br.alexandregpereira.hunter.content.MonsterContentJsonMapper
+import br.alexandregpereira.hunter.content.MonsterContentJsonMapperImpl
 import br.alexandregpereira.hunter.data.monster.DefaultMonsterLocalRepository
 import br.alexandregpereira.hunter.data.monster.MonsterCacheRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
@@ -86,6 +88,11 @@ val monsterDataModule = module {
             getMonsterImages = get(),
             saveMonstersUseCase = get(),
             saveCompendiumScrollItemPositionUseCase = get(),
+        )
+    }
+    single<MonsterContentJsonMapper> {
+        MonsterContentJsonMapperImpl(
+            get(),
         )
     }
 }.apply { includes(getAdditionalModule()) }
