@@ -5,7 +5,10 @@ import br.alexandregpereira.hunter.content.MonsterContentJsonMapper
 import br.alexandregpereira.hunter.content.MonsterImageContentJsonMapper
 import br.alexandregpereira.hunter.content.MonsterLoreContentJsonMapper
 import br.alexandregpereira.hunter.content.SpellContentJsonMapper
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
+import br.alexandregpereira.hunter.shareContent.domain.model.appendMonsterName
 import br.alexandregpereira.ktx.runCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -46,30 +49,34 @@ internal class ShareContentMapperImpl(
         val contentJsonObject = decodeFromJsonOrThrow(contentJson) {
             json.decodeFromString<JsonObject>(contentJson)
         }
-        val monsters = extractContentFromJson(
-            key = monstersKey,
-            parentJsonObject = contentJsonObject,
-        ) {
-            monsterContentJsonMapper.decodeFromJson(contentJson = it)
-        }
-        val monstersLore = extractContentFromJson(
-            key = monstersLoreKey,
-            parentJsonObject = contentJsonObject,
-        ) {
-            monsterLoreContentJsonMapper.decodeFromJson(contentJson = it)
-        }
-        val spells = extractContentFromJson(
-            key = spellsKey,
-            parentJsonObject = contentJsonObject,
-        ) {
-            spellContentJsonMapper.decodeFromJson(contentJson = it)
-        }
         val monsterImages = extractContentFromJson(
             key = monsterImagesKey,
             parentJsonObject = contentJsonObject,
         ) {
             monsterImageContentJsonMapper.decodeFromJson(contentJson = it)
         }
+
+        val monsters = extractContentFromJson(
+            key = monstersKey,
+            parentJsonObject = contentJsonObject,
+        ) {
+            monsterContentJsonMapper.decodeFromJson(contentJson = it)
+        }?.appendCustomMonsterImages(monsterImages.orEmpty())
+
+        val monstersLore = extractContentFromJson(
+            key = monstersLoreKey,
+            parentJsonObject = contentJsonObject,
+        ) {
+            monsterLoreContentJsonMapper.decodeFromJson(contentJson = it)
+        }?.appendMonsterName(monsters.orEmpty())
+
+        val spells = extractContentFromJson(
+            key = spellsKey,
+            parentJsonObject = contentJsonObject,
+        ) {
+            spellContentJsonMapper.decodeFromJson(contentJson = it)
+        }
+
         val minimumAppVersionCode = extractContentFromJson(
             key = minimumAppVersionCodeKey,
             parentJsonObject = contentJsonObject,
@@ -123,6 +130,17 @@ internal class ShareContentMapperImpl(
             decode()
         }.getOrElse { cause ->
             throw FailToDecode(key, contentJson, cause)
+        }
+    }
+
+    private fun List<Monster>.appendCustomMonsterImages(
+        monsterImages: List<MonsterImage>
+    ): List<Monster> {
+        val monsterImagesMap = monsterImages.associateBy { it.monsterIndex }
+        return map {
+            it.copy(
+                customMonsterImage = monsterImagesMap[it.index],
+            )
         }
     }
 

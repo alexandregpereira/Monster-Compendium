@@ -68,7 +68,9 @@ internal fun buildContentEntries(
             singularLabel = strings.monsterLore,
             pluralLabel = strings.monstersLore,
             content = shareContent.monstersLore
-                ?.joinToString(", ") { it.index }
+                ?.joinToString(", ") { monsterLore ->
+                    monsterLore.name.takeUnless { it.isBlank() } ?: monsterLore.index
+                }
                 .orEmpty(),
         )
         addIfIsNotEmpty(
