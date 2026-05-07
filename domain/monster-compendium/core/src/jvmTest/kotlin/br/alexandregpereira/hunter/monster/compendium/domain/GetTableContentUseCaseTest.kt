@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem

@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import br.alexandregpereira.hunter.data.monster.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
@@ -31,33 +32,13 @@ import br.alexandregpereira.ktx.runCatching
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
+        val imageData = it.image?.toMonsterImageData().orEmpty()
         Monster(
             index = it.index,
             type = MonsterType.valueOf(it.type.name),
             challengeRatingData = ChallengeRating.create(it.challengeRating),
             name = it.name,
-            imageData = it.image?.let { image ->
-                MonsterImageData(
-                    url = image.imageUrl,
-                    backgroundColor = Color(
-                        light = image.backgroundColor.light,
-                        dark = image.backgroundColor.dark,
-                    ),
-                    isHorizontal = false,
-                    contentScale = image.contentScale?.let {
-                        runCatching {
-                            MonsterImageContentScale.valueOf(image.contentScale.name)
-                        }.getOrNull()
-                    },
-                    isImageDataFromCustomDatabase = false,
-                )
-            } ?: MonsterImageData(
-                url = "",
-                backgroundColor = Color(light = "", dark = ""),
-                isHorizontal = false,
-                contentScale = null,
-                isImageDataFromCustomDatabase = false,
-            ),
+            imageData = imageData,
             subtype = it.subtype,
             group = it.group,
             subtitle = it.subtitle,
@@ -91,6 +72,36 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
                     MonsterStatus.valueOf(status)
                 }.getOrNull() ?: MonsterStatus.Imported
             } ?: MonsterStatus.Original,
+            originalImageData = imageData,
+            customMonsterImage = null,
         )
     }
+}
+
+internal fun MonsterImageDto.toMonsterImageData(): MonsterImageData {
+    return MonsterImageData(
+        url = this.imageUrl.orEmpty(),
+        backgroundColor = Color(
+            light = this.backgroundColor?.light.orEmpty(),
+            dark = this.backgroundColor?.dark.orEmpty(),
+        ),
+        isHorizontal = false,
+        contentScale = this.contentScale?.let {
+            runCatching {
+                MonsterImageContentScale.valueOf(it.name)
+            }.getOrNull()
+        },
+        isImageDataFromCustomDatabase = false,
+    )
+}
+
+internal fun MonsterImageData?.orEmpty(): MonsterImageData {
+    if (this != null) return this
+    return MonsterImageData(
+        url = "",
+        backgroundColor = Color(light = "", dark = ""),
+        isHorizontal = false,
+        contentScale = null,
+        isImageDataFromCustomDatabase = false,
+    )
 }

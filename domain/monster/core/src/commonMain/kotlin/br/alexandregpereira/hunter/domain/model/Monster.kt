@@ -26,6 +26,8 @@ data class Monster(
     val type: MonsterType,
     val challengeRatingData: ChallengeRating,
     val imageData: MonsterImageData,
+    val originalImageData: MonsterImageData,
+    val customMonsterImage: MonsterImage?,
     val subtype: String?,
     val group: String?,
     val subtitle: String,

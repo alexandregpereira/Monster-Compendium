@@ -23,16 +23,42 @@ import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 
 internal fun List<MonsterImageDto>.toDomain(): List<MonsterImage> {
-    return this.map {
-        MonsterImage(
-            monsterIndex = it.monsterIndex,
-            backgroundColor = it.backgroundColor.toDomain(),
-            imageUrl = it.imageUrl,
-            contentScale = when (it.contentScale) {
-                MonsterImageContentScaleDto.Fit -> MonsterImageContentScale.Fit
-                MonsterImageContentScaleDto.Crop -> MonsterImageContentScale.Crop
-                null -> null
-            },
-        )
+    return this.map { it.toMonsterImage() }
+}
+
+internal fun MonsterImageDto.toMonsterImage(): MonsterImage {
+    return MonsterImage(
+        monsterIndex = this.monsterIndex,
+        backgroundColor = this.backgroundColor?.toDomain(),
+        imageUrl = this.imageUrl,
+        contentScale = this.contentScale?.toContentScale(),
+    )
+}
+
+internal fun MonsterImage.toMonsterImageDto(): MonsterImageDto {
+    return MonsterImageDto(
+        monsterIndex = monsterIndex,
+        backgroundColor = backgroundColor?.toColorDto(),
+        imageUrl = imageUrl,
+        contentScale = contentScale?.let {
+            when (it) {
+                MonsterImageContentScale.Fit -> MonsterImageContentScaleDto.Fit
+                MonsterImageContentScale.Crop -> MonsterImageContentScaleDto.Crop
+            }
+        },
+    )
+}
+
+internal fun MonsterImageContentScaleDto.toContentScale(): MonsterImageContentScale {
+    return when (this) {
+        MonsterImageContentScaleDto.Fit -> MonsterImageContentScale.Fit
+        MonsterImageContentScaleDto.Crop -> MonsterImageContentScale.Crop
+    }
+}
+
+internal fun MonsterImageContentScale.toContentScaleDto(): MonsterImageContentScaleDto {
+    return when (this) {
+        MonsterImageContentScale.Fit -> MonsterImageContentScaleDto.Fit
+        MonsterImageContentScale.Crop -> MonsterImageContentScaleDto.Crop
     }
 }

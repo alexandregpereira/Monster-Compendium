@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import io.mockk.every
 import io.mockk.mockk

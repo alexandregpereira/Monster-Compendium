@@ -1,4 +1,4 @@
-package br.alexandregpereira.hunter.monster.registration.domain
+package br.alexandregpereira.hunter.domain.model.factory
 
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
@@ -9,21 +9,22 @@ import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
 
-internal object MonsterFactory {
+object MonsterFactory {
 
     fun createEmpty(index: String): Monster {
+        val imageData = MonsterImageData(
+            url = "",
+            backgroundColor = Color(light = "", dark = ""),
+            isHorizontal = false,
+            contentScale = null,
+            isImageDataFromCustomDatabase = false,
+        )
         return Monster(
             index = index,
             name = "",
-            type = MonsterType.CELESTIAL,
+            type = MonsterType.ABERRATION,
             challengeRatingData = ChallengeRating.create(0.0f),
-            imageData = MonsterImageData(
-                url = "",
-                backgroundColor = Color(light = "", dark = ""),
-                isHorizontal = false,
-                contentScale = null,
-                isImageDataFromCustomDatabase = false,
-            ),
+            imageData = imageData,
             subtype = null,
             group = null,
             subtitle = "",
@@ -55,6 +56,8 @@ internal object MonsterFactory {
             spellcastings = emptyList(),
             lore = null,
             status = MonsterStatus.Original,
+            originalImageData = imageData,
+            customMonsterImage = null,
         )
     }
 }

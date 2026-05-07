@@ -20,7 +20,6 @@ package br.alexandregpereira.hunter.data.database.dao
 import br.alexandregpereira.hunter.data.monster.folder.local.dao.MonsterFolderDao
 import br.alexandregpereira.hunter.data.monster.folder.local.entity.MonsterFolderEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.database.MonsterFolderCompleteEntityView
 import br.alexandregpereira.hunter.database.MonsterFolderQueries
 import kotlinx.coroutines.CoroutineDispatcher
@@ -92,29 +91,33 @@ internal class MonsterFolderDaoImpl(
     }
 
     private fun MonsterFolderCompleteEntityView.toMonsterEntity(): MonsterEntity {
-        return MonsterEntity(
+        return toMonsterEntity(
             index = index,
             type = type,
             subtype = subtype,
             group = subtitle,
-            challengeRating = challengeRating.toFloat(),
+            challengeRating = challengeRating,
             name = name,
             subtitle = subtitle,
-            imageUrl = customImageUrl ?: this.imageUrl,
-            backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
-            backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
-            isHorizontalImage = (customIsHorizontalImage ?: this.isHorizontalImage) == 1L,
+            imageUrl = this.imageUrl,
+            backgroundColorLight = this.backgroundColorLight,
+            backgroundColorDark = this.backgroundColorDark,
+            isHorizontalImage = this.isHorizontalImage,
             size = size,
             alignment = alignment,
-            armorClass = armorClass.toInt(),
-            hitPoints = hitPoints.toInt(),
+            armorClass = armorClass,
+            hitPoints = hitPoints,
             hitDice = hitDice,
             senses = senses,
             languages = languages,
             sourceName = sourceName,
-            status = MonsterEntityStatus.entries[isClone.toInt()],
-            imageContentScale = (customImageContentScale ?: this.imageContentScale)?.toInt(),
-            isImageDataFromCustomDatabase = false,
+            isClone = isClone,
+            imageContentScale = this.imageContentScale,
+            customImageUrl = this.customImageUrl,
+            customBackgroundColorLight = this.customBackgroundColorLight,
+            customBackgroundColorDark = this.customBackgroundColorDark,
+            customIsHorizontalImage = this.customIsHorizontalImage,
+            customImageContentScale = this.customImageContentScale,
         )
     }
 }

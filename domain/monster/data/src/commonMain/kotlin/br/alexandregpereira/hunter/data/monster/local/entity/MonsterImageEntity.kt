@@ -8,3 +8,13 @@ data class MonsterImageEntity(
     val isHorizontalImage: Boolean?,
     val imageContentScale: Int?,
 )
+
+fun MonsterImageEntity.takeIfContentIsNotNull(): MonsterImageEntity? {
+    return this.takeUnless {
+        it.imageUrl == null &&
+                it.backgroundColorLight == null &&
+                it.backgroundColorDark == null &&
+                it.isHorizontalImage == null &&
+                it.imageContentScale == null
+    }
+}

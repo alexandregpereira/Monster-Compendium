@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEnt
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
+import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
@@ -34,6 +35,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntit
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity
+import br.alexandregpereira.hunter.data.monster.local.entity.takeIfContentIsNotNull
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
@@ -346,12 +348,11 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         isClone = this.isClone,
         imageContentScale = this.imageContentScale,
         isImageDataFromCustomDatabase = false,
+        customMonsterImage = null,
     )
 }
 
 internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
-    val isImageDataFromCustomDatabase = customImageUrl != null
-
     return toMonsterEntity(
         index = this.index,
         type = this.type,
@@ -360,10 +361,10 @@ internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
         challengeRating = this.challengeRating,
         name = this.name,
         subtitle = this.subtitle,
-        imageUrl = customImageUrl ?: this.imageUrl,
-        backgroundColorLight = customBackgroundColorLight ?: this.backgroundColorLight,
-        backgroundColorDark = customBackgroundColorDark ?: this.backgroundColorDark,
-        isHorizontalImage = customIsHorizontalImage ?: this.isHorizontalImage,
+        imageUrl = this.imageUrl,
+        backgroundColorLight = this.backgroundColorLight,
+        backgroundColorDark = this.backgroundColorDark,
+        isHorizontalImage = this.isHorizontalImage,
         size = this.size,
         alignment = this.alignment,
         armorClass = this.armorClass,
@@ -373,8 +374,77 @@ internal fun MonsterWithImageEntityView.toLocalEntity(): MonsterEntity {
         languages = this.languages,
         sourceName = this.sourceName,
         isClone = this.isClone,
-        imageContentScale = customImageContentScale ?: this.imageContentScale,
+        imageContentScale = this.imageContentScale,
+        customImageUrl = this.customImageUrl,
+        customBackgroundColorLight = this.customBackgroundColorLight,
+        customBackgroundColorDark = this.customBackgroundColorDark,
+        customIsHorizontalImage = this.customIsHorizontalImage,
+        customImageContentScale = this.customImageContentScale,
+    )
+}
+
+internal fun toMonsterEntity(
+    index: String,
+    type: String,
+    subtype: String?,
+    group: String?,
+    challengeRating: Double,
+    name: String,
+    subtitle: String,
+    imageUrl: String,
+    backgroundColorLight: String,
+    backgroundColorDark: String,
+    isHorizontalImage: Long,
+    size: String,
+    alignment: String,
+    armorClass: Long,
+    hitPoints: Long,
+    hitDice: String,
+    senses: String,
+    languages: String,
+    sourceName: String,
+    isClone: Long,
+    imageContentScale: Long?,
+    customImageUrl: String?,
+    customBackgroundColorLight: String?,
+    customBackgroundColorDark: String?,
+    customIsHorizontalImage: Long?,
+    customImageContentScale: Long?
+): MonsterEntity {
+    val isImageDataFromCustomDatabase = customImageUrl != null
+    val customMonsterImage = MonsterImageEntity(
+        monsterIndex = index,
+        imageUrl = customImageUrl,
+        backgroundColorLight = customBackgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark,
+        isHorizontalImage = customIsHorizontalImage?.let { it == 1L },
+        imageContentScale = customImageContentScale?.toInt(),
+    )
+
+    return toMonsterEntity(
+        index = index,
+        type = type,
+        subtype = subtype,
+        group = group,
+        challengeRating = challengeRating,
+        name = name,
+        subtitle = subtitle,
+        imageUrl = customImageUrl ?: imageUrl,
+        backgroundColorLight = customBackgroundColorLight ?: backgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark ?: backgroundColorDark,
+        isHorizontalImage = customIsHorizontalImage ?: isHorizontalImage,
+        size = size,
+        alignment = alignment,
+        armorClass = armorClass,
+        hitPoints = hitPoints,
+        hitDice = hitDice,
+        senses = senses,
+        languages = languages,
+        sourceName = sourceName,
+        isClone = isClone,
+        imageContentScale = customImageContentScale ?: imageContentScale,
         isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
+        customMonsterImage = customMonsterImage,
     )
 }
 
@@ -401,7 +471,16 @@ private fun toMonsterEntity(
     isClone: Long,
     imageContentScale: Long?,
     isImageDataFromCustomDatabase: Boolean,
+    customMonsterImage: MonsterImageEntity?,
 ): MonsterEntity {
+    val originalMonsterImage = MonsterImageEntity(
+        monsterIndex = index,
+        imageUrl = imageUrl,
+        backgroundColorLight = backgroundColorLight,
+        backgroundColorDark = backgroundColorDark,
+        isHorizontalImage = isHorizontalImage == 1L,
+        imageContentScale = imageContentScale?.toInt(),
+    )
     return MonsterEntity(
         index = index,
         type = type,
@@ -425,6 +504,8 @@ private fun toMonsterEntity(
         status = MonsterEntityStatus.entries[isClone.toInt()],
         imageContentScale = imageContentScale?.toInt(),
         isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
+        originalMonsterImage = originalMonsterImage,
+        customMonsterImage = customMonsterImage?.takeIfContentIsNotNull(),
     )
 }
 

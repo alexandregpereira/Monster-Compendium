@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.data.monster.local.mapper
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
+import br.alexandregpereira.hunter.data.monster.local.entity.takeIfContentIsNotNull
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toDomain
 import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
@@ -31,6 +32,7 @@ import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Speed
 import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.hunter.domain.model.takeIfContentIsNotNull
 
 fun List<MonsterCompleteEntity>.toDomain(
     monsterImageContentScale: MonsterImageContentScale,
@@ -92,12 +94,13 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             languages = languages,
             sourceName = sourceName,
             status = status.toEntityStatus(),
-            imageContentScale = when (imageData.contentScale) {
-                MonsterImageContentScale.Fit -> 0
-                MonsterImageContentScale.Crop -> 1
-                else -> null
-            },
+            imageContentScale = imageData.contentScale?.toInt(),
             isImageDataFromCustomDatabase = imageData.isImageDataFromCustomDatabase,
+            originalMonsterImage = originalImageData.toMonsterImageEntity(
+                monsterIndex = index,
+            ),
+            customMonsterImage = customMonsterImage?.toMonsterImageEntity()
+                ?.takeIfContentIsNotNull()
         ),
         speed = speed.toEntity(index),
         abilityScores = toAbilityScoreEntity(),
@@ -132,11 +135,8 @@ internal fun MonsterEntity.toDomain(
     monsterImageContentScale: MonsterImageContentScale? = null,
 ): Monster {
     val monster = this
-    val imageContentScale = when (monster.imageContentScale) {
-        0 -> MonsterImageContentScale.Fit
-        1 -> MonsterImageContentScale.Crop
-        else -> monsterImageContentScale
-    }
+    val imageContentScale = monster.imageContentScale?.toMonsterImageContentScale()
+        ?: monsterImageContentScale
     return Monster(
         index = monster.index,
         type = MonsterType.valueOf(monster.type),
@@ -186,6 +186,10 @@ internal fun MonsterEntity.toDomain(
         spellcastings = emptyList(),
         legendaryActions = emptyList(),
         lore = "",
+        originalImageData = originalMonsterImage.toMonsterImageData(
+            isImageDataFromCustomDatabase = false,
+        ),
+        customMonsterImage = customMonsterImage?.toMonsterImage()?.takeIfContentIsNotNull()
     )
 }
 

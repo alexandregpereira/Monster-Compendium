@@ -24,3 +24,12 @@ data class MonsterImage(
     val imageUrl: String?,
     val contentScale: MonsterImageContentScale?,
 )
+
+fun MonsterImage.takeIfContentIsNotNull(): MonsterImage? {
+    return this.takeUnless {
+        it.imageUrl == null &&
+                it.backgroundColor == null &&
+                it.isHorizontalImage == null &&
+                it.contentScale == null
+    }
+}
