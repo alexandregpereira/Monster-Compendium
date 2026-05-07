@@ -71,18 +71,13 @@ internal class CompendiumFileManagerImpl(
         shareContent: ShareContent,
     ): CompendiumFileContent {
         val contentJson = shareContent.getContentToExport()
-        val monsterImagePaths = mutableListOf<String>()
         val monsterImages = mutableListOf<FileEntry>()
-        shareContent.monsters?.getImagePaths()?.forEach { filePath ->
-            val file = runCatching {
-                fileManager.getFileFromAppStorage(filePath)
-            }.getOrNull()
-
-            file?.let {
-                monsterImagePaths.add(filePath)
-                monsterImages.add(file)
-            }
-        }
+        shareContent.monsters?.getOriginalImagePaths()?.accumulateImages(
+            monsterImages = monsterImages,
+        )
+        shareContent.monsters?.getCustomImagePaths()?.accumulateImages(
+            monsterImages = monsterImages,
+        )
         val contentSize = contentJson.encodeToByteArray().size + monsterImages.sumOf {
             it.content.size
         }
@@ -112,11 +107,33 @@ internal class CompendiumFileManagerImpl(
         fileManager.deleteAllsFilesFromAppStorage(FileType.COMPENDIUM)
     }
 
-    private fun List<Monster>.getImagePaths(): List<String> {
+    private suspend fun List<String>.accumulateImages(
+        monsterImages: MutableList<FileEntry>,
+    ) {
+        this.forEach { filePath ->
+            val file = runCatching {
+                fileManager.getFileFromAppStorage(filePath)
+            }.getOrNull()
+
+            file?.let {
+                monsterImages.add(file)
+            }
+        }
+    }
+
+    private fun List<Monster>.getOriginalImagePaths(): List<String> {
         return filter {
-            it.imageData.url.startsWith("file://")
+            it.originalImageData.url.startsWith("file://")
         }.map {
-            it.imageData.url
+            it.originalImageData.url
+        }
+    }
+
+    private fun List<Monster>.getCustomImagePaths(): List<String> {
+        return mapNotNull {
+            it.customMonsterImage?.imageUrl?.takeIf { imageUrl ->
+                imageUrl.startsWith("file://")
+            }
         }
     }
 
@@ -124,9 +141,13 @@ internal class CompendiumFileManagerImpl(
         monsters: List<Monster>?,
     ): List<CompendiumFileContent.MonsterImage> {
         val monsterByImageName = monsters?.filter {
-            it.imageData.url.startsWith("file://")
+            it.originalImageData.url.startsWith("file://") ||
+                    it.customMonsterImage?.imageUrl?.startsWith("file://") == true
         }?.associateBy {
-            it.imageData.url.substringAfterLast("/")
+            it.customMonsterImage?.imageUrl?.takeIf { imageUrl ->
+                imageUrl.startsWith("file://")
+            }?.substringAfterLast("/")
+                ?: it.originalImageData.url.substringAfterLast("/")
         }.orEmpty()
         val monsterImages = mutableListOf<CompendiumFileContent.MonsterImage>()
         this.forEach { monsterFileImage ->

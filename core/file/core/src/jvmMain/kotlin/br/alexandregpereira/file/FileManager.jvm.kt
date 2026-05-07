@@ -24,6 +24,7 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
+import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
@@ -50,8 +51,12 @@ internal class JvmFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                zos.putNextEntry(ZipEntry(it.name))
-                zos.write(it.content)
+                try {
+                    zos.putNextEntry(ZipEntry(it.name))
+                    zos.write(it.content)
+                } catch (cause: ZipException) {
+                    cause.printStackTrace()
+                }
             }
             zos.closeEntry()
         }

@@ -26,10 +26,12 @@ data class MonsterImage(
 )
 
 fun MonsterImage.takeIfContentIsNotNull(): MonsterImage? {
-    return this.takeUnless {
-        it.imageUrl == null &&
-                it.backgroundColor == null &&
-                it.isHorizontalImage == null &&
-                it.contentScale == null
-    }
+    return this.takeUnless { it.isContentNull() }
+}
+
+fun MonsterImage.isContentNull(): Boolean {
+    return this.imageUrl == null &&
+            this.backgroundColor == null &&
+            this.isHorizontalImage == null &&
+            this.contentScale == null
 }

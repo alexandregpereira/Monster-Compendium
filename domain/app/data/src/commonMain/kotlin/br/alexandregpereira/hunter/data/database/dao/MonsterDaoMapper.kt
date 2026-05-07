@@ -347,8 +347,11 @@ internal fun MonsterDatabaseEntity.toLocalEntity(): MonsterEntity {
         sourceName = this.sourceName,
         isClone = this.isClone,
         imageContentScale = this.imageContentScale,
-        isImageDataFromCustomDatabase = false,
-        customMonsterImage = null,
+        customImageUrl = null,
+        customBackgroundColorLight = null,
+        customBackgroundColorDark = null,
+        customIsHorizontalImage = null,
+        customImageContentScale = null,
     )
 }
 
@@ -409,70 +412,9 @@ internal fun toMonsterEntity(
     customBackgroundColorLight: String?,
     customBackgroundColorDark: String?,
     customIsHorizontalImage: Long?,
-    customImageContentScale: Long?
+    customImageContentScale: Long?,
 ): MonsterEntity {
     val isImageDataFromCustomDatabase = customImageUrl != null
-    val customMonsterImage = MonsterImageEntity(
-        monsterIndex = index,
-        imageUrl = customImageUrl,
-        backgroundColorLight = customBackgroundColorLight,
-        backgroundColorDark = customBackgroundColorDark,
-        isHorizontalImage = customIsHorizontalImage?.let { it == 1L },
-        imageContentScale = customImageContentScale?.toInt(),
-    )
-
-    return toMonsterEntity(
-        index = index,
-        type = type,
-        subtype = subtype,
-        group = group,
-        challengeRating = challengeRating,
-        name = name,
-        subtitle = subtitle,
-        imageUrl = customImageUrl ?: imageUrl,
-        backgroundColorLight = customBackgroundColorLight ?: backgroundColorLight,
-        backgroundColorDark = customBackgroundColorDark ?: backgroundColorDark,
-        isHorizontalImage = customIsHorizontalImage ?: isHorizontalImage,
-        size = size,
-        alignment = alignment,
-        armorClass = armorClass,
-        hitPoints = hitPoints,
-        hitDice = hitDice,
-        senses = senses,
-        languages = languages,
-        sourceName = sourceName,
-        isClone = isClone,
-        imageContentScale = customImageContentScale ?: imageContentScale,
-        isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
-        customMonsterImage = customMonsterImage,
-    )
-}
-
-private fun toMonsterEntity(
-    index: String,
-    type: String,
-    subtype: String?,
-    group: String?,
-    challengeRating: Double,
-    name: String,
-    subtitle: String,
-    imageUrl: String,
-    backgroundColorLight: String,
-    backgroundColorDark: String,
-    isHorizontalImage: Long,
-    size: String,
-    alignment: String,
-    armorClass: Long,
-    hitPoints: Long,
-    hitDice: String,
-    senses: String,
-    languages: String,
-    sourceName: String,
-    isClone: Long,
-    imageContentScale: Long?,
-    isImageDataFromCustomDatabase: Boolean,
-    customMonsterImage: MonsterImageEntity?,
-): MonsterEntity {
     val originalMonsterImage = MonsterImageEntity(
         monsterIndex = index,
         imageUrl = imageUrl,
@@ -481,6 +423,14 @@ private fun toMonsterEntity(
         isHorizontalImage = isHorizontalImage == 1L,
         imageContentScale = imageContentScale?.toInt(),
     )
+    val customMonsterImage = MonsterImageEntity(
+        monsterIndex = index,
+        imageUrl = customImageUrl,
+        backgroundColorLight = customBackgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark,
+        isHorizontalImage = customIsHorizontalImage?.let { it == 1L },
+        imageContentScale = customImageContentScale?.toInt(),
+    ).takeIfContentIsNotNull()
     return MonsterEntity(
         index = index,
         type = type,
@@ -489,10 +439,10 @@ private fun toMonsterEntity(
         challengeRating = challengeRating.toFloat(),
         name = name,
         subtitle = subtitle,
-        imageUrl = imageUrl,
-        backgroundColorLight = backgroundColorLight,
-        backgroundColorDark = backgroundColorDark,
-        isHorizontalImage = isHorizontalImage == 1L,
+        imageUrl = customImageUrl ?: imageUrl,
+        backgroundColorLight = customBackgroundColorLight ?: backgroundColorLight,
+        backgroundColorDark = customBackgroundColorDark ?: backgroundColorDark,
+        isHorizontalImage = (customIsHorizontalImage ?: isHorizontalImage) == 1L,
         size = size,
         alignment = alignment,
         armorClass = armorClass.toInt(),
@@ -502,10 +452,10 @@ private fun toMonsterEntity(
         languages = languages,
         sourceName = sourceName,
         status = MonsterEntityStatus.entries[isClone.toInt()],
-        imageContentScale = imageContentScale?.toInt(),
+        imageContentScale = (customImageContentScale ?: imageContentScale)?.toInt(),
         isImageDataFromCustomDatabase = isImageDataFromCustomDatabase,
         originalMonsterImage = originalMonsterImage,
-        customMonsterImage = customMonsterImage?.takeIfContentIsNotNull(),
+        customMonsterImage = customMonsterImage,
     )
 }
 

@@ -26,6 +26,10 @@ internal fun List<MonsterImageDto>.toDomain(): List<MonsterImage> {
     return this.map { it.toMonsterImage() }
 }
 
+internal fun List<MonsterImage>.toMonsterImageDtos(): List<MonsterImageDto> {
+    return this.map { it.toMonsterImageDto() }
+}
+
 internal fun MonsterImageDto.toMonsterImage(): MonsterImage {
     return MonsterImage(
         monsterIndex = this.monsterIndex,
@@ -53,12 +57,5 @@ internal fun MonsterImageContentScaleDto.toContentScale(): MonsterImageContentSc
     return when (this) {
         MonsterImageContentScaleDto.Fit -> MonsterImageContentScale.Fit
         MonsterImageContentScaleDto.Crop -> MonsterImageContentScale.Crop
-    }
-}
-
-internal fun MonsterImageContentScale.toContentScaleDto(): MonsterImageContentScaleDto {
-    return when (this) {
-        MonsterImageContentScale.Fit -> MonsterImageContentScaleDto.Fit
-        MonsterImageContentScale.Crop -> MonsterImageContentScaleDto.Crop
     }
 }

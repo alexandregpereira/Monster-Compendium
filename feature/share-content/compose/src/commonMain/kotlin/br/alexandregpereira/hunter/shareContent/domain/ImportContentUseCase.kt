@@ -17,16 +17,17 @@
 
 package br.alexandregpereira.hunter.shareContent.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
-import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
+import br.alexandregpereira.hunter.domain.usecase.SaveMonsterImages
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.single
 
 internal fun interface ImportContent {
@@ -37,7 +38,7 @@ internal class ImportContentUseCase(
     private val saveMonsters: SaveMonstersUseCase,
     private val saveSpells: SaveSpells,
     private val saveMonstersLore: SaveMonstersLoreUseCase,
-    private val monsterImageRepository: MonsterImageRepository,
+    private val saveMonsterImages: SaveMonsterImages,
     private val fileManager: FileManager,
     private val analytics: Analytics,
 ) : ImportContent {
@@ -66,19 +67,22 @@ internal class ImportContentUseCase(
     private suspend fun CompendiumFileContent.saveMonsters() {
         val compendiumFileContent = this
         val monsters = compendiumFileContent.shareContent.monsters ?: return
-        val imagePathsByMonsterIndex = compendiumFileContent.saveImagesToAppStorage(
+        val originalImagePathsByMonsterIndex = saveOriginalImagesToAppStorage(
             monsters = monsters,
+            monsterImageFiles = compendiumFileContent.monsterImageFiles,
         )
 
-        saveMonsters(
-            monsters.map {
+        try {
+            val monsterWithUpdatedImages = monsters.map {
                 it.copy(
                     imageData = it.imageData.copy(
-                        url = imagePathsByMonsterIndex[it.index] ?: it.imageData.url
+                        url = originalImagePathsByMonsterIndex[it.index] ?: it.imageData.url
                     )
                 )
             }
-        ).catch { cause ->
+            saveMonsters(monsterWithUpdatedImages).single()
+            compendiumFileContent.saveMonsterImages()
+        } catch (cause: Throwable) {
             compendiumFileContent.monsterImageFiles.forEach { image ->
                 fileManager.deleteFileFromAppStorage(
                     fileName = image.name,
@@ -86,32 +90,70 @@ internal class ImportContentUseCase(
                 )
             }
             throw cause
-        }.single()
-
-        imagePathsByMonsterIndex.keys.takeIf { it.isNotEmpty() }?.toList()?.let {
-            monsterImageRepository.deleteMonsterImages(monsterIndexes = it)
         }
     }
 
-    private suspend fun CompendiumFileContent.saveImagesToAppStorage(
-        monsters: List<Monster>
+    private suspend fun CompendiumFileContent.saveMonsterImages() {
+        val monsterImages = shareContent.monsterImages ?: return
+        val imagePathsByMonsterIndex = saveCustomImagesToAppStorage(
+            monsterImages = monsterImages,
+            monsterImageFiles = this.monsterImageFiles,
+        )
+        val monsterImagesWithUpdatedUrls = monsterImages.map {
+            it.copy(
+                imageUrl = imagePathsByMonsterIndex[it.monsterIndex] ?: it.imageUrl
+            )
+        }
+        saveMonsterImages(*monsterImagesWithUpdatedUrls.toTypedArray())
+    }
+
+    private suspend fun saveOriginalImagesToAppStorage(
+        monsters: List<Monster>,
+        monsterImageFiles: List<FileEntry>,
     ): Map<String, String> {
-        val monstersByImageName = monsters.filter {
-            it.imageData.url.startsWith("file://")
-        }.associateBy {
-            it.imageData.url.substringAfterLast("/")
+        val monsterIndexAndImageUrl = monsters.map {
+            it.index to it.originalImageData.url
+        }
+        return saveImagesToAppStorage(
+            monsterIndexAndImageUrl = monsterIndexAndImageUrl,
+            monsterImageFiles = monsterImageFiles,
+        )
+    }
+
+    private suspend fun saveCustomImagesToAppStorage(
+        monsterImages: List<MonsterImage>,
+        monsterImageFiles: List<FileEntry>,
+    ): Map<String, String> {
+        val monsterIndexAndImageUrl = monsterImages.mapNotNull {
+            val imageUrl = it.imageUrl ?: return@mapNotNull null
+            it.monsterIndex to imageUrl
+        }
+        return saveImagesToAppStorage(
+            monsterIndexAndImageUrl = monsterIndexAndImageUrl,
+            monsterImageFiles = monsterImageFiles,
+        )
+    }
+
+    private suspend fun saveImagesToAppStorage(
+        monsterIndexAndImageUrl: List<Pair<String, String>>,
+        monsterImageFiles: List<FileEntry>,
+    ): Map<String, String> {
+        val monstersByImageName = monsterIndexAndImageUrl.filter { (_, imageUrl) ->
+            imageUrl.startsWith("file://")
+        }.associateBy { (_, imageUrl) ->
+            imageUrl.substringAfterLast("/")
         }
 
         return monsterImageFiles
             .mapNotNull { image ->
-                val monster = monstersByImageName[image.name] ?: return@mapNotNull null
+                val (monsterIndex, _) = monstersByImageName[image.name] ?: return@mapNotNull null
                 try {
                     val path = fileManager.saveFileToAppStorage(
                         bytes = image.content,
                         fileName = image.name,
                         fileType = FileType.IMAGE,
                     )
-                    monster.index to path
+                    monsterIndex to path
                 } catch (cause: Throwable) {
                     analytics.logException(
                         RuntimeException("Fail to import image ${image.name}", cause)

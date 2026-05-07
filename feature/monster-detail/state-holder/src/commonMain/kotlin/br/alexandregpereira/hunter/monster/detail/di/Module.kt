@@ -58,7 +58,7 @@ val monsterDetailModule = module {
             getCondition = get(),
         )
     }
-    factory { CloneMonsterUseCase(get(), get(), get(), get()) }
+    factory { CloneMonsterUseCase(get(), get(), get(), get(), get()) }
     factory { DeleteMonsterUseCase(repository = get(), fileManager = get()) }
     factory { ResetMonsterToOriginal(get(), get(), get(), get()) }
 }

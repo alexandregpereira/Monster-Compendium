@@ -2,6 +2,7 @@ package br.alexandregpereira.hunter.shareContent.domain.mapper
 
 import br.alexandregpereira.hunter.app.config.AppInfoProvider
 import br.alexandregpereira.hunter.content.MonsterContentJsonMapper
+import br.alexandregpereira.hunter.content.MonsterImageContentJsonMapper
 import br.alexandregpereira.hunter.content.MonsterLoreContentJsonMapper
 import br.alexandregpereira.hunter.content.SpellContentJsonMapper
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
@@ -29,12 +30,14 @@ internal class ShareContentMapperImpl(
     private val monsterContentJsonMapper: MonsterContentJsonMapper,
     private val monsterLoreContentJsonMapper: MonsterLoreContentJsonMapper,
     private val spellContentJsonMapper: SpellContentJsonMapper,
+    private val monsterImageContentJsonMapper: MonsterImageContentJsonMapper,
     private val appInfoProvider: AppInfoProvider,
 ) : ShareContentMapper {
 
     private val monstersKey = "monsters"
     private val monstersLoreKey = "monstersLore"
     private val spellsKey = "spells"
+    private val monsterImagesKey = "monsterImages"
     private val minimumAppVersionCodeKey = "minimumAppVersionCode"
 
     override suspend fun decodeFromJson(
@@ -46,31 +49,34 @@ internal class ShareContentMapperImpl(
         val monsters = extractContentFromJson(
             key = monstersKey,
             parentJsonObject = contentJsonObject,
-            parentJson = contentJson,
         ) {
             monsterContentJsonMapper.decodeFromJson(contentJson = it)
         }
         val monstersLore = extractContentFromJson(
             key = monstersLoreKey,
             parentJsonObject = contentJsonObject,
-            parentJson = contentJson,
         ) {
             monsterLoreContentJsonMapper.decodeFromJson(contentJson = it)
         }
         val spells = extractContentFromJson(
             key = spellsKey,
             parentJsonObject = contentJsonObject,
-            parentJson = contentJson,
         ) {
             spellContentJsonMapper.decodeFromJson(contentJson = it)
+        }
+        val monsterImages = extractContentFromJson(
+            key = monsterImagesKey,
+            parentJsonObject = contentJsonObject,
+        ) {
+            monsterImageContentJsonMapper.decodeFromJson(contentJson = it)
         }
         val minimumAppVersionCode = extractContentFromJson(
             key = minimumAppVersionCodeKey,
             parentJsonObject = contentJsonObject,
-            parentJson = contentJson,
-        ) {
-            it.toInt()
-        }
+        ) { it.toInt() } ?: throw MissingField(
+            field = minimumAppVersionCodeKey,
+            contentJson = contentJson,
+        )
 
         if (minimumAppVersionCode > appInfoProvider.getVersionCode()) {
             throw UnsupportedVersion(
@@ -83,6 +89,7 @@ internal class ShareContentMapperImpl(
             monsters = monsters,
             monstersLore = monstersLore,
             spells = spells,
+            monsterImages = monsterImages,
             minimumAppVersionCode = minimumAppVersionCode,
         )
     }
@@ -94,11 +101,14 @@ internal class ShareContentMapperImpl(
             .encodeToJson(value.monstersLore.orEmpty())
         val spellsContentJson = spellContentJsonMapper
             .encodeToJson(value.spells.orEmpty())
+        val monsterImagesContentJson = monsterImageContentJsonMapper
+            .encodeToJson(value.monsterImages.orEmpty())
         return@withContext """
             {
                 "$monstersKey":$monstersContentJson,
                 "$monstersLoreKey":$monstersLoreContentJson,
                 "$spellsKey":$spellsContentJson,
+                "$monsterImagesKey":$monsterImagesContentJson,
                 "$minimumAppVersionCodeKey":${value.minimumAppVersionCode}
             }
         """.trimIndent()
@@ -119,15 +129,11 @@ internal class ShareContentMapperImpl(
     private suspend fun <T> extractContentFromJson(
         key: String,
         parentJsonObject: JsonObject,
-        parentJson: String,
         decode: suspend (String) -> T
-    ): T {
+    ): T? {
         return parentJsonObject[key]?.toString()?.let { contentJson ->
             decodeFromJsonOrThrow(contentJson, key = key, decode = { decode(contentJson) })
-        } ?: throw MissingField(
-            field = key,
-            contentJson = parentJson,
-        )
+        }
     }
 
     class FailToDecode(

@@ -30,7 +30,7 @@ internal interface MonsterRegistrationFileManager {
 
     suspend fun deleteLastSavedImageIfExists()
 
-    suspend fun deleteImageIfExists(imagePath: String?)
+    fun clear()
 }
 
 internal class MonsterRegistrationFileManagerImpl(
@@ -71,11 +71,7 @@ internal class MonsterRegistrationFileManagerImpl(
         lastFileSaved = null
     }
 
-    override suspend fun deleteImageIfExists(imagePath: String?) {
+    override fun clear() {
         lastFileSaved = null
-        imagePath?.takeIf { it.startsWith("file://") }?.let {
-            val fileName = it.substringAfterLast("/")
-            fileManager.deleteFileFromAppStorage(fileName = fileName, fileType = fileType)
-        }
     }
 }

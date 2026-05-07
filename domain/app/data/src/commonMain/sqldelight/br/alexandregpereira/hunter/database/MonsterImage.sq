@@ -24,6 +24,9 @@ ON MonsterEntity.`index` == MonsterImageEntity.monsterIndex
 getMonsterImages:
 SELECT * FROM MonsterImageEntity;
 
+getMonsterImagesByIndexes:
+SELECT * FROM MonsterImageEntity WHERE monsterIndex IN ?;
+
 getMonsterImage:
 SELECT * FROM MonsterImageEntity WHERE monsterIndex = :monsterIndex;
 

@@ -21,6 +21,8 @@ package br.alexandregpereira.hunter.data.monster.di
 
 import br.alexandregpereira.hunter.content.MonsterContentJsonMapper
 import br.alexandregpereira.hunter.content.MonsterContentJsonMapperImpl
+import br.alexandregpereira.hunter.content.MonsterImageContentJsonMapper
+import br.alexandregpereira.hunter.content.MonsterImageContentJsonMapperImpl
 import br.alexandregpereira.hunter.data.monster.DefaultMonsterLocalRepository
 import br.alexandregpereira.hunter.data.monster.MonsterCacheRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterImageRepositoryImpl
@@ -28,6 +30,7 @@ import br.alexandregpereira.hunter.data.monster.MonsterRemoteRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.MonsterSettingsRepositoryImpl
 import br.alexandregpereira.hunter.data.monster.ResetMonsterImageImpl
+import br.alexandregpereira.hunter.data.monster.SaveMonsterImagesUseCase
 import br.alexandregpereira.hunter.data.monster.SyncMonstersUseCaseImpl
 import br.alexandregpereira.hunter.data.monster.cache.MonsterCacheDataSource
 import br.alexandregpereira.hunter.data.monster.local.DefaultMonsterLocalDataSource
@@ -45,6 +48,7 @@ import br.alexandregpereira.hunter.domain.repository.MonsterRemoteRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterSettingsRepository
 import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
+import br.alexandregpereira.hunter.domain.usecase.SaveMonsterImages
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
@@ -92,6 +96,18 @@ val monsterDataModule = module {
     }
     single<MonsterContentJsonMapper> {
         MonsterContentJsonMapperImpl(
+            get(),
+        )
+    }
+    single<MonsterImageContentJsonMapper> {
+        MonsterImageContentJsonMapperImpl(
+            get(),
+        )
+    }
+    factory<SaveMonsterImages> {
+        SaveMonsterImagesUseCase(
+            get(),
+            get(),
             get(),
         )
     }

@@ -162,9 +162,6 @@ class MonsterRegistrationStateHolder internal constructor(
                 saveMonster(monster, originalMonster, monsterLoreEntries, originalMonsterLore)
                 monster
             }
-            .onEach {
-                fileManager.deleteImageIfExists(imagePath = originalMonster?.imageData?.url)
-            }
             .flowOn(dispatcher)
             .catch { cause: Throwable ->
                 analytics.logException(cause)
@@ -300,7 +297,9 @@ class MonsterRegistrationStateHolder internal constructor(
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
                         setState { copy(isOpen = false, isSaveButtonEnabled = false) }
+                        fileManager.clear()
                         spellResultJob?.cancel()
+                        onCleared()
                     }
 
                     is MonsterRegistrationEvent.ShowEdit -> {
@@ -332,7 +331,7 @@ class MonsterRegistrationStateHolder internal constructor(
         spellResultJob?.cancel()
         spellResultJob = spellResultListener.collectOnChanged {
             fetchMonster()
-        }.launchIn(scope)
+        }.launchIn(featureScope)
     }
 
     private fun setMetadata(monster: Monster?, monsterLoreEntries: List<MonsterLoreEntry>) {

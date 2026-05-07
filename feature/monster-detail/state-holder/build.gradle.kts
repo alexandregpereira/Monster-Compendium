@@ -24,6 +24,7 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
+        implementation(project(":core:uuid"))
         implementation(project(":core:localization"))
         api(project(":domain:monster:core"))
         implementation(project(":domain:condition:core"))
