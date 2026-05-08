@@ -72,7 +72,7 @@ internal class IosFileManager(
         }
     }
 
-    override suspend fun deleteAllsFilesFromAppStorage(
+    override suspend fun deleteAllFilesFromAppStorage(
         fileType: FileType
     ): Unit = withContext(dispatcher) {
         val folderPath = filesDirectory(fileFolder = fileType.folder)

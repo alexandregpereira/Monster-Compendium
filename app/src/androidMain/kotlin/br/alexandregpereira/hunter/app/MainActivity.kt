@@ -18,7 +18,9 @@
 package br.alexandregpereira.hunter.app
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import androidx.appcompat.app.AppCompatActivity
 import br.alexandregpereira.hunter.ui.util.createComposeView
 import org.koin.android.ext.android.get
@@ -47,6 +49,21 @@ class MainActivity : AppCompatActivity() {
             else -> return
         } ?: return
         val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
-        get<MainViewModel>().onFileOpen(uri.path.orEmpty(), bytes)
+        get<MainViewModel>().onFileOpen(getFileName(uri), bytes)
+    }
+
+    private fun getFileName(uri: Uri): String {
+        if (uri.scheme == "content") {
+            contentResolver.query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME),
+                null, null, null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+                }
+            }
+        }
+        return uri.lastPathSegment ?: uri.toString()
     }
 }

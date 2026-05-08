@@ -34,7 +34,7 @@ interface FileManager {
 
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
 
-    suspend fun deleteAllsFilesFromAppStorage(fileType: FileType)
+    suspend fun deleteAllFilesFromAppStorage(fileType: FileType)
 
     suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
 

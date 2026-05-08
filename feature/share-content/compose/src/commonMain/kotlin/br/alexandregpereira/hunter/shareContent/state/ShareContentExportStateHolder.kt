@@ -98,8 +98,14 @@ internal class ShareContentExportStateHolder(
             return
         }
         featureScope.launch {
-            val filePath = withContext(dispatcher) {
-                compendiumFileManager.createCompendiumFile(compendiumFileContent)
+            val filePath = runCatching {
+                withContext(dispatcher) {
+                    compendiumFileManager.createCompendiumFile(compendiumFileContent)
+                }
+            }.getOrElse { cause ->
+                analytics.logException(cause)
+                setState { copy(exportError = true) }
+                return@launch
             }
             sendAction(ShareContentExportUiEvent.ShareFile(filePath))
             setState { copy(isOpen = false) }

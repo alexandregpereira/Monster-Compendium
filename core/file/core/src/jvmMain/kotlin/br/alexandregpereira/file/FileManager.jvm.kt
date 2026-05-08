@@ -24,7 +24,6 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
-import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
@@ -51,14 +50,10 @@ internal class JvmFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                try {
-                    zos.putNextEntry(ZipEntry(it.name))
-                    zos.write(it.content)
-                } catch (cause: ZipException) {
-                    cause.printStackTrace()
-                }
+                zos.putNextEntry(ZipEntry(it.name))
+                zos.write(it.content)
+                zos.closeEntry()
             }
-            zos.closeEntry()
         }
         "file://${zipFile.absolutePath}"
     }
@@ -69,7 +64,7 @@ internal class JvmFileManager(
         }
     }
 
-    override suspend fun deleteAllsFilesFromAppStorage(
+    override suspend fun deleteAllFilesFromAppStorage(
         fileType: FileType,
     ): Unit = withContext(dispatcher) {
         filesDirectory(fileFolder = fileType.folder).deleteRecursively()

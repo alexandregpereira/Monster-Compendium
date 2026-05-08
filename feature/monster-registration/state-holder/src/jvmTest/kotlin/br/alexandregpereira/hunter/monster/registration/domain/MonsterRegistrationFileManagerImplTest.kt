@@ -145,7 +145,7 @@ internal class MonsterRegistrationFileManagerImplTest {
             storage.removeAll { it == fileName }
         }
 
-        override suspend fun deleteAllsFilesFromAppStorage(fileType: FileType) {
+        override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {
             TODO("Not yet implemented")
         }
 
@@ -178,7 +178,7 @@ internal class MonsterRegistrationFileManagerImplTest {
             storage.removeAll { it == fileName }
         }
 
-        override suspend fun deleteAllsFilesFromAppStorage(fileType: FileType) {
+        override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {
             TODO("Not yet implemented")
         }
 

@@ -35,6 +35,7 @@ import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedEntry
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
+import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
@@ -59,6 +60,7 @@ internal fun ShareContentExportBottomSheet(
     CompositionLocalProvider(LocalExportStrings provides state.strings) {
         ShareContentExportScreen(
             isLoading = state.isLoading,
+            exportError = state.exportError,
             exportExtractedState = state.exportExtractedState,
             onExportToFile = onExportToFile,
         )
@@ -68,6 +70,7 @@ internal fun ShareContentExportBottomSheet(
 @Composable
 internal fun ShareContentExportScreen(
     isLoading: Boolean,
+    exportError: Boolean,
     exportExtractedState: ShareContentExtractedState?,
     onExportToFile: () -> Unit,
 ) = Column(
@@ -76,19 +79,21 @@ internal fun ShareContentExportScreen(
 ) {
     ScreenHeader(title = exportStrings.exportTitle)
 
-    val loadingState = remember(isLoading, exportExtractedState) {
-        if (isLoading) {
-            LoadingScreenState.LoadingScreen
-        } else if (exportExtractedState != null) {
-            LoadingScreenState.Success(exportExtractedState)
-        } else {
-            LoadingScreenState.Error(Unit)
+    val loadingState = remember(isLoading, exportError, exportExtractedState) {
+        when {
+            isLoading -> LoadingScreenState.LoadingScreen
+            exportError -> LoadingScreenState.Error(Unit)
+            exportExtractedState != null -> LoadingScreenState.Success(exportExtractedState)
+            else -> LoadingScreenState.LoadingScreen
         }
     }
 
     LoadingScreen<ShareContentExtractedState, Unit>(
         state = loadingState,
         fillMaxSize = false,
+        errorContent = {
+            EmptyScreenMessageContent(title = exportStrings.exportErrorTitle)
+        }
     ) { extractedState ->
         Column(
             modifier = Modifier,

@@ -23,6 +23,7 @@ interface ShareContentExportStrings {
     val chooseDestinationFolder: String
     val shareButton: String
     val exportTitle: String
+    val exportErrorTitle: String
     val extractedStrings: ShareContentExtractedStrings
 }
 
@@ -30,6 +31,7 @@ internal data class ShareContentEnExportStrings(
     override val chooseDestinationFolder: String = "Choose destination folder",
     override val shareButton: String = "Share",
     override val exportTitle: String = "Share content",
+    override val exportErrorTitle: String = "Something went wrong",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEnStrings(),
 ) : ShareContentExportStrings
 
@@ -37,6 +39,7 @@ internal data class ShareContentPtExportStrings(
     override val chooseDestinationFolder: String = "Escolher pasta de destino",
     override val shareButton: String = "Compartilhar",
     override val exportTitle: String = "Compartilhar conteúdo",
+    override val exportErrorTitle: String = "Algo deu errado",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedPtStrings(),
 ) : ShareContentExportStrings
 
@@ -46,6 +49,7 @@ internal data class ShareContentEsExportStrings(
     override val chooseDestinationFolder: String = "Elegir carpeta de destino",
     override val shareButton: String = "Compartir",
     override val exportTitle: String = "Compartir contenido",
+    override val exportErrorTitle: String = "Algo salió mal",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEsStrings(),
 ) : ShareContentExportStrings
 

@@ -35,7 +35,6 @@ multiplatform {
         implementation(project(":core:file:compose"))
         implementation(project(":core:ktx"))
         implementation(project(":core:state-holder:compose"))
-        implementation(project(":domain:monster:event"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":ui:core"))
 
@@ -45,8 +44,8 @@ multiplatform {
     }
     jvmMain()
     jvmTest {
-        implementation(kotlin("test"))
-        implementation(libs.kotlin.coroutines.test)
+        implementation(libs.bundles.unittest)
+        implementation(project(":core:flow:test"))
     }
     iosMain()
 }

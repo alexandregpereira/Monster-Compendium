@@ -70,7 +70,7 @@ internal class CompendiumFileManagerImpl(
         fileName: String,
         shareContent: ShareContent,
     ): CompendiumFileContent {
-        val contentJson = shareContent.getContentToExport()
+        val contentJson = shareContentMapper.encodeToJson(shareContent)
         val monsterImages = mutableListOf<FileEntry>()
         shareContent.monsters?.getOriginalImagePaths()?.accumulateImages(
             monsterImages = monsterImages,
@@ -95,7 +95,7 @@ internal class CompendiumFileManagerImpl(
     ): String {
         val jsonEntry = FileEntry(
             name = "content.json",
-            content = compendiumFileContent.shareContent.getContentToExport().encodeToByteArray(),
+            content = shareContentMapper.encodeToJson(compendiumFileContent.shareContent).encodeToByteArray(),
         )
         return fileManager.createZipFile(
             zipEntryFiles = listOf(jsonEntry) + compendiumFileContent.monsterImageFiles,
@@ -104,7 +104,7 @@ internal class CompendiumFileManagerImpl(
     }
 
     override suspend fun deleteCompendiumFiles() {
-        fileManager.deleteAllsFilesFromAppStorage(FileType.COMPENDIUM)
+        fileManager.deleteAllFilesFromAppStorage(FileType.COMPENDIUM)
     }
 
     private suspend fun List<String>.accumulateImages(
@@ -171,8 +171,4 @@ internal class CompendiumFileManagerImpl(
         }
     }
 
-    private suspend fun ShareContent.getContentToExport(): String {
-        val shareContent = this
-        return shareContentMapper.encodeToJson(shareContent)
-    }
 }

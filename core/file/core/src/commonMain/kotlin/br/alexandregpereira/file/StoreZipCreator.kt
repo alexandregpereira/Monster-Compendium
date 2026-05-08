@@ -110,25 +110,34 @@ private val crcTable = IntArray(256) { n ->
 }
 
 private class ZipBuilder {
-    private val data = mutableListOf<Byte>()
+    private var data = ByteArray(1024)
+    private var pos = 0
+
+    private fun ensureCapacity(extra: Int) {
+        if (pos + extra > data.size) data = data.copyOf(maxOf(data.size * 2, pos + extra))
+    }
 
     fun le32(value: Int) {
-        data.add((value and 0xFF).toByte())
-        data.add(((value shr 8) and 0xFF).toByte())
-        data.add(((value shr 16) and 0xFF).toByte())
-        data.add(((value shr 24) and 0xFF).toByte())
+        ensureCapacity(4)
+        data[pos++] = (value and 0xFF).toByte()
+        data[pos++] = ((value shr 8) and 0xFF).toByte()
+        data[pos++] = ((value shr 16) and 0xFF).toByte()
+        data[pos++] = ((value shr 24) and 0xFF).toByte()
     }
 
     fun le16(value: Int) {
-        data.add((value and 0xFF).toByte())
-        data.add(((value shr 8) and 0xFF).toByte())
+        ensureCapacity(2)
+        data[pos++] = (value and 0xFF).toByte()
+        data[pos++] = ((value shr 8) and 0xFF).toByte()
     }
 
     fun bytes(src: ByteArray) {
-        for (b in src) data.add(b)
+        ensureCapacity(src.size)
+        src.copyInto(data, pos)
+        pos += src.size
     }
 
-    fun size(): Int = data.size
+    fun size(): Int = pos
 
-    fun toByteArray(): ByteArray = data.toByteArray()
+    fun toByteArray(): ByteArray = data.copyOf(pos)
 }

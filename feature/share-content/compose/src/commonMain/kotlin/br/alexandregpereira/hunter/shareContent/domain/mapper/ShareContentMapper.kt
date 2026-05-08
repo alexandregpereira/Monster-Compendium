@@ -14,6 +14,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 internal interface ShareContentMapper {
 
@@ -102,23 +104,17 @@ internal class ShareContentMapperImpl(
     }
 
     override suspend fun encodeToJson(value: ShareContent): String = withContext(dispatcher) {
-        val monstersContentJson = monsterContentJsonMapper
-            .encodeToJson(value.monsters.orEmpty())
-        val monstersLoreContentJson = monsterLoreContentJsonMapper
-            .encodeToJson(value.monstersLore.orEmpty())
-        val spellsContentJson = spellContentJsonMapper
-            .encodeToJson(value.spells.orEmpty())
-        val monsterImagesContentJson = monsterImageContentJsonMapper
-            .encodeToJson(value.monsterImages.orEmpty())
-        return@withContext """
-            {
-                "$monstersKey":$monstersContentJson,
-                "$monstersLoreKey":$monstersLoreContentJson,
-                "$spellsKey":$spellsContentJson,
-                "$monsterImagesKey":$monsterImagesContentJson,
-                "$minimumAppVersionCodeKey":${value.minimumAppVersionCode}
-            }
-        """.trimIndent()
+        val monstersContentJson = monsterContentJsonMapper.encodeToJson(value.monsters.orEmpty())
+        val monstersLoreContentJson = monsterLoreContentJsonMapper.encodeToJson(value.monstersLore.orEmpty())
+        val spellsContentJson = spellContentJsonMapper.encodeToJson(value.spells.orEmpty())
+        val monsterImagesContentJson = monsterImageContentJsonMapper.encodeToJson(value.monsterImages.orEmpty())
+        buildJsonObject {
+            put(monstersKey, json.parseToJsonElement(monstersContentJson))
+            put(monstersLoreKey, json.parseToJsonElement(monstersLoreContentJson))
+            put(spellsKey, json.parseToJsonElement(spellsContentJson))
+            put(monsterImagesKey, json.parseToJsonElement(monsterImagesContentJson))
+            put(minimumAppVersionCodeKey, value.minimumAppVersionCode)
+        }.toString()
     }
 
     private suspend fun <T> decodeFromJsonOrThrow(

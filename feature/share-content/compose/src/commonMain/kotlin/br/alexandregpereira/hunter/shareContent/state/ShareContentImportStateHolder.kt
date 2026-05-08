@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 internal class ShareContentImportStateHolder(
     private val dispatcher: CoroutineDispatcher,
@@ -54,7 +55,11 @@ internal class ShareContentImportStateHolder(
 
     init {
         eventDispatcher.importEvents().filterIsInstance<Import.OnStart>().onEach { event ->
-            val compendiumFile = event.compendiumFile
+            val fileName = event.compendiumFileName
+            val fileBytes = event.compendiumFileBytes
+            val compendiumFile = if (fileName != null && fileBytes != null) {
+                FileEntry(name = fileName, content = fileBytes)
+            } else null
             val hasCompendiumFile = compendiumFile != null
             analytics.track(
                 eventName = "Import content - opened",
@@ -115,22 +120,6 @@ internal class ShareContentImportStateHolder(
         flow {
             emit(importContent(compendiumFileContent))
         }.flowOn(dispatcher)
-            .onEach { monsterIndexes ->
-                analytics.track(
-                    eventName = "Import content - import finished",
-                    params = mapOf(
-                        "monstersQuantity" to monsterIndexes.size,
-                    )
-                )
-                eventDispatcher.dispatchEvent(Import.OnFinish(monsterIndexes))
-                setState {
-                    copy(
-                        importExtractedState = null,
-                        importError = null,
-                    )
-                }
-                onClose()
-            }
             .catch { cause ->
                 if (cause is ImportContentException) {
                     analytics.logException(cause)
@@ -145,6 +134,22 @@ internal class ShareContentImportStateHolder(
                     )
                     setState { copy(importError = importError) }
                 } else throw cause
+            }
+            .onEach { monsterIndexes ->
+                analytics.track(
+                    eventName = "Import content - import finished",
+                    params = mapOf(
+                        "monstersQuantity" to monsterIndexes.size,
+                    )
+                )
+                eventDispatcher.dispatchEvent(Import.OnFinish(monsterIndexes))
+                setState {
+                    copy(
+                        importExtractedState = null,
+                        importError = null,
+                    )
+                }
+                scope.launch { onClose() }
             }
             .launchIn(featureScope)
     }

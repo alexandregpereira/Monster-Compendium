@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.shareContent.state
 internal data class ShareContentExportState(
     val isOpen: Boolean = false,
     val isLoading: Boolean = false,
+    val exportError: Boolean = false,
     val exportExtractedState: ShareContentExtractedState? = null,
     val strings: ShareContentExportStrings = ShareContentExportStrings(),
 )
