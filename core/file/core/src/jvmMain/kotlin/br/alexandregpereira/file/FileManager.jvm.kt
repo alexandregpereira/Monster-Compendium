@@ -50,7 +50,14 @@ internal class JvmFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                zos.putNextEntry(ZipEntry(it.name))
+                val crc = java.util.zip.CRC32().also { c -> c.update(it.content) }
+                val entry = ZipEntry(it.name).also { e ->
+                    e.method = ZipEntry.STORED
+                    e.size = it.content.size.toLong()
+                    e.compressedSize = it.content.size.toLong()
+                    e.crc = crc.value
+                }
+                zos.putNextEntry(entry)
                 zos.write(it.content)
                 zos.closeEntry()
             }

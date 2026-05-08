@@ -19,7 +19,7 @@ package br.alexandregpereira.file
 
 // Pure-Kotlin STORE-mode (no compression) ZIP reader.
 // Mirrors StoreZipCreator: handles local file headers with method=0.
-// TODO: add DEFLATE (method=8) support for cross-platform .compendium files created on Android/JVM.
+// Android/JVM createZipFile also uses STORED mode so cross-platform reads work.
 internal fun extractStoreZip(bytes: ByteArray): List<FileEntry> {
     val result = mutableListOf<FileEntry>()
     var pos = 0

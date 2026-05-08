@@ -87,4 +87,33 @@ class StoreZipTest {
         val extracted = extractStoreZip(zip)
         assertEquals(emptyList(), extracted)
     }
+
+    @Test
+    fun `JVM ZipOutputStream STORED zip is readable by extractStoreZip`() {
+        val entries = listOf(
+            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
+            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
+        )
+        val baos = java.io.ByteArrayOutputStream()
+        java.util.zip.ZipOutputStream(baos).use { zos ->
+            entries.forEach {
+                val crc = java.util.zip.CRC32().also { c -> c.update(it.content) }
+                val entry = java.util.zip.ZipEntry(it.name).also { e ->
+                    e.method = java.util.zip.ZipEntry.STORED
+                    e.size = it.content.size.toLong()
+                    e.compressedSize = it.content.size.toLong()
+                    e.crc = crc.value
+                }
+                zos.putNextEntry(entry)
+                zos.write(it.content)
+                zos.closeEntry()
+            }
+        }
+        val extracted = extractStoreZip(baos.toByteArray())
+        assertEquals(2, extracted.size)
+        assertEquals("content.json", extracted[0].name)
+        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals("goblin.png", extracted[1].name)
+        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+    }
 }
