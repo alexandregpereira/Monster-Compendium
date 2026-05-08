@@ -212,7 +212,7 @@ internal class SettingsStateHolder(
 
     private fun onImport() {
         analytics.trackImportContentClick()
-        shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart)
+        shareContentEventDispatcher.dispatchEvent(ShareContentEvent.Import.OnStart())
     }
 
     private fun onOpenGitHubProjectClick() {

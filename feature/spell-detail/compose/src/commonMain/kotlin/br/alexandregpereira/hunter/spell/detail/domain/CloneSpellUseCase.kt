@@ -41,7 +41,7 @@ internal class CloneSpellUseCaseImpl(
         spellName: String
     ): Flow<String> {
         return getSpell(spellIndex).flatMapConcat { original ->
-            val newIndex = generateUUID()
+            val newIndex = "spell-$spellIndex-${generateUUID()}-k4k4sh1"
             saveSpells(listOf(original.copy(index = newIndex, name = spellName, status = SpellStatus.Cloned)))
                 .map { newIndex }
         }

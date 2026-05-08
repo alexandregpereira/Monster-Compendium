@@ -22,6 +22,8 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(libs.filekit.core)
+        implementation(libs.filekit.dialogs)
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }

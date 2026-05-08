@@ -17,13 +17,13 @@
 
 package br.alexandregpereira.hunter.data.monster.remote.model
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class ColorDto(
     @SerialName("light")
-    val light: String = "#00000000",
+    val light: String = "#ffffff",
     @SerialName("dark")
-    val dark: String = "#00000000",
+    val dark: String = "#000000",
 )

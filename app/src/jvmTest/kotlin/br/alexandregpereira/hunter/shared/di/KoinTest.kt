@@ -36,7 +36,6 @@ class KoinTest {
         koinApplication {
             initKoinModules()
             modules(jvmAnalyticsModule)
-            checkModules()
-        }
+        }.checkModules()
     }
 }

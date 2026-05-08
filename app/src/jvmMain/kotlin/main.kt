@@ -16,6 +16,7 @@
  */
 
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.input.key.Key.Companion.Escape
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType.Companion.KeyDown
@@ -28,6 +29,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import br.alexandregpereira.hunter.app.HunterApp
 import br.alexandregpereira.hunter.app.di.initKoinModules
+import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.app.ui.resources.Res
 import br.alexandregpereira.hunter.app.ui.resources.ic_launcher_foreground
 import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
@@ -35,8 +37,9 @@ import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
+import java.io.File
 
-fun main() = application {
+fun main(args: Array<String>) = application {
     val koin = startKoin {
         initKoinModules()
         modules(jvmAnalyticsModule)
@@ -58,6 +61,16 @@ fun main() = application {
             return@onKeyEvent true
         }
     ) {
+        LaunchedEffect(Unit) {
+            args.firstOrNull()
+                ?.let { File(it).takeIf { f -> f.exists() } }
+                ?.let {
+                    koin.get<AppEventDispatcher>().onFileOpen(
+                        name = it.name,
+                        bytes = it.readBytes(),
+                    )
+                }
+        }
         CompositionLocalProvider(
             LocalBackDispatcher provides backDispatcher
         ) {

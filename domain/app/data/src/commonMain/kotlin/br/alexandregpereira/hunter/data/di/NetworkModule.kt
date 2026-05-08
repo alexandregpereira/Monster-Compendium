@@ -30,7 +30,12 @@ internal val networkModule = module {
         }
     }
 
-    single { Json { ignoreUnknownKeys = true } }
+    single {
+        Json {
+            ignoreUnknownKeys = true
+            explicitNulls = false
+        }
+    }
 
     factory<NetworkManager> {
         NetworkManagerImpl(

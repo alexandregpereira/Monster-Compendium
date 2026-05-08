@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.repository.MonsterRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -37,7 +37,7 @@ internal class GetMonstersByIdsUseCaseTest {
         val indexes = listOf("3", "1", "2")
         every { repository.getLocalMonsters(any()) } returns flowOf(
             listOf("1", "2", "3").map {
-                Monster(index = it)
+                MonsterFactory.createEmpty(index = it)
             }
         )
 

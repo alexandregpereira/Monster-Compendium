@@ -40,6 +40,8 @@ data class MonsterEntity(
     val status: MonsterEntityStatus,
     val imageContentScale: Int?,
     val isImageDataFromCustomDatabase: Boolean,
+    val originalMonsterImage: MonsterImageEntity,
+    val customMonsterImage: MonsterImageEntity?,
 )
 
 enum class MonsterEntityStatus {

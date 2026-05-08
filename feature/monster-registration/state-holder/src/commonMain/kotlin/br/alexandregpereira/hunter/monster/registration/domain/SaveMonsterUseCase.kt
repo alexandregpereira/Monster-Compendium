@@ -29,7 +29,7 @@ import br.alexandregpereira.hunter.domain.repository.MonsterImageRepository
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.GetAppearanceSettings
-import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
+import br.alexandregpereira.hunter.domain.usecase.SaveMonsterImages
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
@@ -46,9 +46,9 @@ internal fun interface SaveMonsterUseCase {
 internal class SaveMonsterUseCaseImpl(
     private val saveMonsters: SaveMonstersUseCase,
     private val monsterImageRepository: MonsterImageRepository,
+    private val saveMonsterImages: SaveMonsterImages,
     private val saveMonstersLoreUseCase: SaveMonstersLoreUseCase,
     private val monsterLocalRepository: MonsterLocalRepository,
-    private val resetMonsterImage: ResetMonsterImage,
     private val getAppearanceSettings: GetAppearanceSettings,
 ) : SaveMonsterUseCase {
 
@@ -179,24 +179,14 @@ internal class SaveMonsterUseCaseImpl(
             currentLocalMonsterImageValue = currentLocalMonsterImage?.contentScale,
             currentValueFromSettings = currentImageContentScaleFromSettings,
         )
-
-        if (backgroundColor == null &&
-            isHorizontalImage == null &&
-            imageUrl == null &&
-            contentScale == null &&
-            currentLocalMonsterImage != null
-        ) {
-            resetMonsterImage(monsterIndex = newMonster.index)
-        } else {
-            val newMonsterImage = MonsterImage(
-                monsterIndex = newMonster.index,
-                backgroundColor = backgroundColor,
-                isHorizontalImage = isHorizontalImage,
-                imageUrl = imageUrl,
-                contentScale = contentScale,
-            )
-            monsterImageRepository.saveMonsterImage(newMonsterImage)
-        }
+        val newMonsterImage = MonsterImage(
+            monsterIndex = newMonster.index,
+            backgroundColor = backgroundColor,
+            isHorizontalImage = isHorizontalImage,
+            imageUrl = imageUrl,
+            contentScale = contentScale,
+        )
+        saveMonsterImages(newMonsterImage)
     }
 
     private fun <Value> Value.takeImageValueIfIsDifferent(

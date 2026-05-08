@@ -29,5 +29,16 @@ data class Action(
 data class DamageDice(
     val dice: String,
     val damage: Damage,
-    val index: String = "damageDice-${generateUUID()}",
-)
+    val index: String,
+) {
+    companion object {
+        fun create(
+            dice: String,
+            damage: Damage,
+        ) = DamageDice(
+            index = "damageDice-${generateUUID()}",
+            dice = dice,
+            damage = damage,
+        )
+    }
+}

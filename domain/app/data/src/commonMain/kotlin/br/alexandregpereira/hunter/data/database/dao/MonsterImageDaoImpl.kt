@@ -24,6 +24,14 @@ internal class MonsterImageDaoImpl(
         }
     }
 
+    override suspend fun getLocalMonsterImages(
+        monsterIndexes: List<String>
+    ): List<MonsterImageEntity> = withContext(dispatcher) {
+        monsterImageQueries.getMonsterImagesByIndexes(monsterIndexes).executeAsList().map {
+            it.toLocalEntity()
+        }
+    }
+
     override suspend fun getMonsterImage(monsterIndex: String): MonsterImageEntity? {
         return monsterImageQueries.getMonsterImage(monsterIndex)
             .executeAsOneOrNull()
@@ -45,6 +53,12 @@ internal class MonsterImageDaoImpl(
     override suspend fun deleteMonsterImage(monsterIndex: String) {
         withContext(dispatcher) {
             monsterImageQueries.delete(monsterIndex)
+        }
+    }
+
+    override suspend fun deleteMonsterImages(monsterIndexes: List<String>) {
+        withContext(dispatcher) {
+            monsterImageQueries.deleteByIndexes(monsterIndexes)
         }
     }
 

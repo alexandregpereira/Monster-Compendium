@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.data.spell.di
 
+import br.alexandregpereira.hunter.content.SpellContentJsonMapper
+import br.alexandregpereira.hunter.content.SpellContentJsonMapperImpl
 import br.alexandregpereira.hunter.data.spell.DefaultSpellLocalRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRemoteRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRepository
@@ -38,4 +40,9 @@ val spellDataModule = module {
     factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
     factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
     factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
+    single<SpellContentJsonMapper> {
+        SpellContentJsonMapperImpl(
+            get(),
+        )
+    }
 }

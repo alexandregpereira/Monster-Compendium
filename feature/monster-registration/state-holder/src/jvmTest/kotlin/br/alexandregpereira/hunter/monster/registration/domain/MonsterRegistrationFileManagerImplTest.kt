@@ -17,13 +17,13 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -102,29 +102,7 @@ internal class MonsterRegistrationFileManagerImplTest {
     }
 
     @Test
-    fun `deleteImageIfExists with file path deletes file by extracted name`() = runTest {
-        val storage = mutableListOf<String>()
-        storage.add("goblin-1234.png")
-        val fileManager = MonsterRegistrationFileManagerImpl(FakeFileManager(storage))
-
-        fileManager.deleteImageIfExists("file:///data/images/goblin-1234.png")
-
-        assertFalse(storage.contains("goblin-1234.png"), "Expected goblin-1234.png to be deleted from storage")
-    }
-
-    @Test
-    fun `deleteImageIfExists with null imagePath is a no-op`() = runTest {
-        val storage = mutableListOf<String>()
-        storage.add("goblin-1234.png")
-        val fileManager = MonsterRegistrationFileManagerImpl(FakeFileManager(storage))
-
-        fileManager.deleteImageIfExists(null)
-
-        assertTrue(storage.contains("goblin-1234.png"), "Expected goblin-1234.png to remain in storage")
-    }
-
-    @Test
-    fun `deleteImageIfExists resets lastFileSaved so subsequent deleteLastSaved is a no-op`() = runTest {
+    fun `clear resets lastFileSaved so subsequent deleteLastSaved is a no-op`() = runTest {
         val storage = mutableListOf<String>()
         val fileManager = MonsterRegistrationFileManagerImpl(
             fileManager = FakeFileManager(storage),
@@ -132,25 +110,13 @@ internal class MonsterRegistrationFileManagerImplTest {
         )
 
         fileManager.saveImage(byteArrayOf(1), "goblin")
-        fileManager.deleteImageIfExists(null)
+        fileManager.clear()
 
         fileManager.deleteLastSavedImageIfExists()
 
-        // deleteImageIfExists(null) clears lastFileSaved without deleting any file.
         // deleteLastSavedImageIfExists is then a no-op because lastFileSaved was already cleared.
         val goblinFiles = storage.filter { it.startsWith("goblin") }
         assertEquals(1, goblinFiles.size, "File should remain since lastFileSaved was cleared by deleteImageIfExists(null)")
-    }
-
-    @Test
-    fun `deleteImageIfExists with remote http URL does not delete local files`() = runTest {
-        val storage = mutableListOf<String>()
-        storage.add("goblin.png")
-        val fileManager = MonsterRegistrationFileManagerImpl(FakeFileManager(storage))
-
-        fileManager.deleteImageIfExists("https://example.com/images/goblin.png")
-
-        assertTrue(storage.contains("goblin.png"), "Remote URLs must not trigger local file deletion")
     }
 
     private class FakeFileManager(private val storage: MutableList<String>) : FileManager {
@@ -164,11 +130,29 @@ internal class MonsterRegistrationFileManagerImplTest {
             return "file://$fileName"
         }
 
+        override suspend fun createZipFile(
+            zipEntryFiles: List<FileEntry>,
+            zipFileName: String
+        ): String {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
             storage.removeAll { it == fileName }
         }
 
+        override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
+        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
+            TODO("Not yet implemented")
+        }
     }
 
     private class FailingOnSaveFileManager(private val storage: MutableList<String>) : FileManager {
@@ -179,11 +163,29 @@ internal class MonsterRegistrationFileManagerImplTest {
             fileType: FileType,
         ): String = throw RuntimeException("disk full")
 
+        override suspend fun createZipFile(
+            zipEntryFiles: List<FileEntry>,
+            zipFileName: String
+        ): String {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
             storage.removeAll { it == fileName }
         }
 
+        override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {
+            TODO("Not yet implemented")
+        }
+
         override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
+        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
+            TODO("Not yet implemented")
+        }
     }
 
     private class FakeClock : Clock {

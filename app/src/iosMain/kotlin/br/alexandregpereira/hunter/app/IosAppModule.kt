@@ -19,11 +19,16 @@ package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
+import org.koin.core.Koin
 import org.koin.core.context.startKoin
 
+private lateinit var koinInstance: Koin
+
+internal fun appKoin(): Koin = koinInstance
+
 fun initKoin() {
-    val koin = startKoin {
+    koinInstance = startKoin {
         initKoinModules()
     }.koin
-    koin.get<FeatureFlagProvider>().initialize()
+    koinInstance.get<FeatureFlagProvider>().initialize()
 }

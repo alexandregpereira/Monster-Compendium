@@ -20,6 +20,15 @@ struct MonsterCompendiumApp: App {
     var body: some Scene {
         WindowGroup {
             ComposeView()
+                .onOpenURL { url in
+                    _ = url.startAccessingSecurityScopedResource()
+                    defer { url.stopAccessingSecurityScopedResource() }
+                    guard let data = try? Data(contentsOf: url) else { return }
+                    FileOpenHandlerKt.handleCompendiumFileOpen(
+                        name: url.lastPathComponent,
+                        data: (data as NSData) as Data
+                    )
+                }
         }
     }
 }

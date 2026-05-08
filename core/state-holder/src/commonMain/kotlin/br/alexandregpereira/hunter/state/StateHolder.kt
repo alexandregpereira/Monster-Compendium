@@ -29,9 +29,12 @@ abstract class UiModel<State : Any>(
     initialState: State,
 ) : StateHolder<State> {
 
-    protected val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Main.immediate
-    )
+    protected val scope: CoroutineScope = createScope()
+    private var _featureScope: CoroutineScope? = null
+    protected val featureScope: CoroutineScope
+        get() = _featureScope ?: createScope().also {
+            _featureScope = it
+        }
 
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlow<State> = _state.asStateFlow()
@@ -41,8 +44,13 @@ abstract class UiModel<State : Any>(
     }
 
     open fun onCleared() {
-        scope.cancel()
+        featureScope.cancel()
+        _featureScope = null
     }
+
+    private fun createScope(): CoroutineScope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main.immediate
+    )
 }
 
 interface StateHolder<State : Any> {

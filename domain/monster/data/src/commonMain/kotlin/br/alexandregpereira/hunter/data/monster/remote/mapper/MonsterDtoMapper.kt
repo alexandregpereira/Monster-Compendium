@@ -18,30 +18,31 @@
 package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.MonsterDto
+import br.alexandregpereira.hunter.data.monster.remote.model.MonsterImageDto
 import br.alexandregpereira.hunter.data.monster.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.Stats
+import br.alexandregpereira.ktx.runCatching
 
 internal fun List<MonsterDto>.toDomain(): List<Monster> {
     return this.map {
+        val imageData = it.image?.toMonsterImageData().orEmpty()
         Monster(
             index = it.index,
             type = MonsterType.valueOf(it.type.name),
-            challengeRatingData = ChallengeRating(it.challengeRating),
+            challengeRatingData = ChallengeRating.create(it.challengeRating),
             name = it.name,
-            imageData = MonsterImageData(
-                url = "",
-                backgroundColor = Color(light = "", dark = ""),
-                isHorizontal = false
-            ),
+            imageData = imageData,
             subtype = it.subtype,
             group = it.group,
             subtitle = it.subtitle,
-            size = it.size.name.lowercase()
+            size = it.size.lowercase()
                 .replaceFirstChar { char -> char.titlecase() },
             alignment = it.alignment,
             stats = Stats(
@@ -64,7 +65,43 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             legendaryActions = it.legendaryActions.toDomain(),
             reactions = it.reactions.toDomain(),
             sourceName = it.source.name,
-            spellcastings = it.spellcastings.toDomain()
+            spellcastings = it.spellcastings.toDomain(),
+            lore = it.lore,
+            status = it.status?.let { status ->
+                runCatching {
+                    MonsterStatus.valueOf(status)
+                }.getOrNull() ?: MonsterStatus.Imported
+            } ?: MonsterStatus.Original,
+            originalImageData = imageData,
+            customMonsterImage = null,
         )
     }
+}
+
+internal fun MonsterImageDto.toMonsterImageData(): MonsterImageData {
+    return MonsterImageData(
+        url = this.imageUrl.orEmpty(),
+        backgroundColor = Color(
+            light = this.backgroundColor?.light.orEmpty(),
+            dark = this.backgroundColor?.dark.orEmpty(),
+        ),
+        isHorizontal = false,
+        contentScale = this.contentScale?.let {
+            runCatching {
+                MonsterImageContentScale.valueOf(it.name)
+            }.getOrNull()
+        },
+        isImageDataFromCustomDatabase = false,
+    )
+}
+
+internal fun MonsterImageData?.orEmpty(): MonsterImageData {
+    if (this != null) return this
+    return MonsterImageData(
+        url = "",
+        backgroundColor = Color(light = "", dark = ""),
+        isHorizontal = false,
+        contentScale = null,
+        isImageDataFromCustomDatabase = false,
+    )
 }

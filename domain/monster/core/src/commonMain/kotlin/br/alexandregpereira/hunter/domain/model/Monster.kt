@@ -22,34 +22,36 @@ import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 
 data class Monster(
     val index: String,
-    val name: String = "",
-    val type: MonsterType = MonsterType.ABERRATION,
-    val challengeRatingData: ChallengeRating = ChallengeRating(),
-    val imageData: MonsterImageData = MonsterImageData(),
-    val subtype: String? = null,
-    val group: String? = null,
-    val subtitle: String = "",
-    val size: String = "",
-    val alignment: String = "",
-    val stats: Stats = Stats(),
-    val senses: List<String> = emptyList(),
-    val languages: String = "",
-    val sourceName: String = "",
-    val speed: Speed = Speed(hover = false, values = emptyList()),
-    val abilityScores: List<AbilityScore> = emptyList(),
-    val savingThrows: List<SavingThrow> = emptyList(),
-    val skills: List<Skill> = emptyList(),
-    val damageVulnerabilities: List<Damage> = emptyList(),
-    val damageResistances: List<Damage> = emptyList(),
-    val damageImmunities: List<Damage> = emptyList(),
-    val conditionImmunities: List<Condition> = emptyList(),
-    val specialAbilities: List<AbilityDescription> = emptyList(),
-    val actions: List<Action> = emptyList(),
-    val legendaryActions: List<Action> = emptyList(),
-    val reactions: List<AbilityDescription> = emptyList(),
-    val spellcastings: List<Spellcasting> = emptyList(),
-    val lore: String? = null,
-    val status: MonsterStatus = MonsterStatus.Original,
+    val name: String,
+    val type: MonsterType,
+    val challengeRatingData: ChallengeRating,
+    val imageData: MonsterImageData,
+    val originalImageData: MonsterImageData,
+    val customMonsterImage: MonsterImage?,
+    val subtype: String?,
+    val group: String?,
+    val subtitle: String,
+    val size: String,
+    val alignment: String,
+    val stats: Stats,
+    val senses: List<String>,
+    val languages: String,
+    val sourceName: String,
+    val speed: Speed,
+    val abilityScores: List<AbilityScore>,
+    val savingThrows: List<SavingThrow>,
+    val skills: List<Skill>,
+    val damageVulnerabilities: List<Damage>,
+    val damageResistances: List<Damage>,
+    val damageImmunities: List<Damage>,
+    val conditionImmunities: List<Condition>,
+    val specialAbilities: List<AbilityDescription>,
+    val actions: List<Action>,
+    val legendaryActions: List<Action>,
+    val reactions: List<AbilityDescription>,
+    val spellcastings: List<Spellcasting>,
+    val lore: String?,
+    val status: MonsterStatus,
 ) {
 
     val xp: Int
@@ -67,10 +69,18 @@ enum class MonsterStatus {
 }
 
 data class ChallengeRating(
-    val value: Float = 0f,
-    val valueInString: String = value.toString(),
-    val formatted: String = value.getChallengeRatingFormatted()
-)
+    val value: Float,
+    val valueInString: String,
+    val formatted: String,
+) {
+    companion object {
+        fun create(value: Float) = ChallengeRating(
+            value = value,
+            valueInString = value.toString(),
+            formatted = value.getChallengeRatingFormatted(),
+        )
+    }
+}
 
 fun Float.getChallengeRatingFormatted(): String {
     if (this == 0f) return "0"
@@ -84,11 +94,11 @@ fun Float.getChallengeRatingFormatted(): String {
 }
 
 data class MonsterImageData(
-    val url: String = "",
-    val backgroundColor: Color = Color(),
-    val isHorizontal: Boolean = false,
-    val contentScale: MonsterImageContentScale? = null,
-    val isImageDataFromCustomDatabase: Boolean = false,
+    val url: String,
+    val backgroundColor: Color,
+    val isHorizontal: Boolean,
+    val contentScale: MonsterImageContentScale?,
+    val isImageDataFromCustomDatabase: Boolean,
 ) {
     fun contentScaleOrDefault(): MonsterImageContentScale {
         return contentScale ?: MonsterImageContentScale.Fit
@@ -100,8 +110,8 @@ enum class MonsterImageContentScale {
 }
 
 data class Color(
-    val light: String = "",
-    val dark: String = ""
+    val light: String,
+    val dark: String
 )
 
 fun Monster.isComplete() = abilityScores.isNotEmpty()

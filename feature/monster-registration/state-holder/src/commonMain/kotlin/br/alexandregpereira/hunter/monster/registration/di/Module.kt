@@ -61,12 +61,12 @@ val monsterRegistrationModule = module {
     factory { NormalizeMonsterUseCase() }
     factory<SaveMonsterUseCase> {
         SaveMonsterUseCaseImpl(
-            saveMonsters = get(),
-            monsterImageRepository = get(),
-            saveMonstersLoreUseCase = get(),
-            monsterLocalRepository = get(),
-            resetMonsterImage = get(),
-            getAppearanceSettings = get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
         )
     }
     single<MonsterRegistrationFileManager> {

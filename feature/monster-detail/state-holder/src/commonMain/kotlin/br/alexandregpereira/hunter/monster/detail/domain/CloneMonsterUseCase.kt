@@ -17,11 +17,14 @@
 
 package br.alexandregpereira.hunter.monster.detail.domain
 
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
+import br.alexandregpereira.hunter.uuid.generateUUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
@@ -36,12 +39,13 @@ internal fun CloneMonsterUseCase(
     getMonsterLore: GetMonsterLoreUseCase,
     saveMonsters: SaveMonstersUseCase,
     saveMonstersLore: SaveMonstersLoreUseCase,
+    fileManager: FileManager,
 ) = CloneMonsterUseCase { monsterIndex, monsterName ->
     getMonster(monsterIndex)
         .map { monster ->
-            val monsterNameIndex = monsterName.lowercase().replace(" ", "-")
+            val newIndex = "monster-$monsterIndex-${generateUUID()}-k4k4sh1"
             monster.copy(
-                index = "$monsterNameIndex-$monsterIndex-k4k4sh1",
+                index = newIndex,
                 name = monsterName,
                 status = MonsterStatus.Clone,
             )
@@ -69,7 +73,24 @@ internal fun CloneMonsterUseCase(
             monster to newMonsterLore
         }
         .map { (monster, monsterLore) ->
-            saveMonsters(listOf(monster)).single()
+            val monsterWithNewPath = if (monster.imageData.url.startsWith("file://")) {
+                val currentImage = fileManager.getFileFromAppStorage(
+                    filePath = monster.imageData.url
+                )
+                val fileExtension = currentImage.name.substringAfterLast(".")
+                val newPath = fileManager.saveFileToAppStorage(
+                    bytes = currentImage.content,
+                    fileName = "${monster.index}.$fileExtension",
+                    fileType = FileType.IMAGE,
+                )
+                monster.copy(
+                    imageData = monster.imageData.copy(url = newPath)
+                )
+            } else {
+                monster
+            }
+
+            saveMonsters(listOf(monsterWithNewPath)).single()
             monsterLore?.let { saveMonstersLore(listOf(monsterLore), isSync = false).single() }
             monster.index
         }

@@ -30,7 +30,7 @@ internal interface MonsterRegistrationFileManager {
 
     suspend fun deleteLastSavedImageIfExists()
 
-    suspend fun deleteImageIfExists(imagePath: String?)
+    fun clear()
 }
 
 internal class MonsterRegistrationFileManagerImpl(
@@ -38,7 +38,7 @@ internal class MonsterRegistrationFileManagerImpl(
     private val clock: Clock = Clock.System,
 ) : MonsterRegistrationFileManager {
 
-    private val fileType = FileType.PNG
+    private val fileType = FileType.IMAGE
     private var lastFileSaved: String? = null
 
     override suspend fun saveImage(
@@ -46,7 +46,7 @@ internal class MonsterRegistrationFileManagerImpl(
         imageName: String,
     ): String {
         val epochMilliSeconds = clock.now().toEpochMilliseconds()
-        val fileNameWithTimestamp = "$imageName-$epochMilliSeconds.${fileType.extension}"
+        val fileNameWithTimestamp = "$imageName-$epochMilliSeconds.png"
         val path = fileManager.saveFileToAppStorage(
             bytes = bytes,
             fileName = fileNameWithTimestamp,
@@ -71,11 +71,7 @@ internal class MonsterRegistrationFileManagerImpl(
         lastFileSaved = null
     }
 
-    override suspend fun deleteImageIfExists(imagePath: String?) {
+    override fun clear() {
         lastFileSaved = null
-        imagePath?.takeIf { it.startsWith("file://") }?.let {
-            val fileName = it.substringAfterLast("/")
-            fileManager.deleteFileFromAppStorage(fileName = fileName, fileType = fileType)
-        }
     }
 }

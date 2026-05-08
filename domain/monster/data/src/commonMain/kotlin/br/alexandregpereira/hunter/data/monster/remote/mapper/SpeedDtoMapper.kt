@@ -31,7 +31,8 @@ internal fun List<SpeedValueDto>.toDomain(): List<SpeedValue> {
     return this.map {
         SpeedValue(
             type = SpeedType.valueOf(it.type.name),
-            valueFormatted = it.valueFormatted
+            valueFormatted = it.valueFormatted,
+            index = "",
         )
     }
 }

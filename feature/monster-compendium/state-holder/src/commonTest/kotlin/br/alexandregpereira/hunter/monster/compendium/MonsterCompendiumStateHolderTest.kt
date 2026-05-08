@@ -25,6 +25,7 @@ import br.alexandregpereira.hunter.analytics.EmptyAnalytics
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -89,15 +90,17 @@ class MonsterCompendiumStateHolderTest {
                 Title(id = "da", value = "Any", isHeader = true),
                 Title(id = "da2", value = "Any", isHeader = false),
                 Title(id = "da3", value = "Any3", isHeader = false),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel1",
+                ).copy(
                     name = "Zariel",
-                    challengeRatingData = ChallengeRating(0.5f),
+                    challengeRatingData = ChallengeRating.create(0.5f),
                 ).asItem(),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel2",
+                ).copy(
                     name = "Zariel",
-                    challengeRatingData = ChallengeRating(1f),
+                    challengeRatingData = ChallengeRating.create(1f),
                 ).asItem()
             ),
             tableContent = listOf(
@@ -181,12 +184,14 @@ class MonsterCompendiumStateHolderTest {
                 Title(id = "da", value = "Any", isHeader = true),
                 Title(id = "da2", value = "Any", isHeader = false),
                 Title(id = "da3", value = "Any3", isHeader = false),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel1",
+                ).copy(
                     name = "Zariel",
                 ).asItem(),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel2",
+                ).copy(
                     name = "Zariel",
                 ).asItem()
             ),
@@ -234,12 +239,14 @@ class MonsterCompendiumStateHolderTest {
                 Title(id = "da2", value = "Any", isHeader = false),
                 Title(id = "da3", value = "Any3", isHeader = false),
                 Title(id = "z", value = "Z", isHeader = false),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel1",
+                ).copy(
                     name = "Zariel",
                 ).asItem(),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel2",
+                ).copy(
                     name = "Zariel",
                 ).asItem()
             ),
@@ -292,12 +299,14 @@ class MonsterCompendiumStateHolderTest {
                 Title(id = "da2", value = "Any", isHeader = false),
                 Title(id = "da3", value = "Any3", isHeader = false),
                 Title(id = "z", value = "Z", isHeader = false),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel1",
+                ).copy(
                     name = "Zariel",
                 ).asItem(),
-                Monster(
+                MonsterFactory.createEmpty(
                     index = "zariel2",
+                ).copy(
                     name = "Zariel",
                 ).asItem()
             ),

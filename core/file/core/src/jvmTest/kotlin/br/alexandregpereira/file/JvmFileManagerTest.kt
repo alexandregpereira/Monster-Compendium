@@ -55,7 +55,7 @@ class JvmFileManagerTest {
     fun `saveFileToAppStorage creates file and returns a file URI path`() = runTest {
         val bytes = byteArrayOf(1, 2, 3)
 
-        val path = fileManager.saveFileToAppStorage(bytes, "goblin.png", FileType.PNG)
+        val path = fileManager.saveFileToAppStorage(bytes, "goblin.png", FileType.IMAGE)
 
         assertTrue(path.startsWith("file://"), "Expected file:// path, got: $path")
         val file = File(path.removePrefix("file://"))
@@ -68,7 +68,7 @@ class JvmFileManagerTest {
         val imagesDir = File(tempFolder.root, ".monster-compendium/images")
         assertFalse(imagesDir.exists())
 
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.PNG)
+        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
 
         assertTrue(imagesDir.exists())
     }
@@ -78,8 +78,8 @@ class JvmFileManagerTest {
         val firstBytes = byteArrayOf(1, 2, 3)
         val secondBytes = byteArrayOf(4, 5, 6)
 
-        fileManager.saveFileToAppStorage(firstBytes, "goblin.png", FileType.PNG)
-        val path = fileManager.saveFileToAppStorage(secondBytes, "goblin.png", FileType.PNG)
+        fileManager.saveFileToAppStorage(firstBytes, "goblin.png", FileType.IMAGE)
+        val path = fileManager.saveFileToAppStorage(secondBytes, "goblin.png", FileType.IMAGE)
 
         val file = File(path.removePrefix("file://"))
         assertEquals(secondBytes.toList(), file.readBytes().toList())
@@ -87,9 +87,9 @@ class JvmFileManagerTest {
 
     @Test
     fun `deleteFileFromAppStorage removes the file`() = runTest {
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.PNG)
+        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
 
-        fileManager.deleteFileFromAppStorage("goblin.png", FileType.PNG)
+        fileManager.deleteFileFromAppStorage("goblin.png", FileType.IMAGE)
 
         val file = File(tempFolder.root, ".monster-compendium/images/goblin.png")
         assertFalse(file.exists(), "Expected file to be deleted")
@@ -98,32 +98,53 @@ class JvmFileManagerTest {
     @Test
     fun `deleteFileFromAppStorage is a no-op when file does not exist`() = runTest {
         // Should not throw
-        fileManager.deleteFileFromAppStorage("nonexistent.png", FileType.PNG)
+        fileManager.deleteFileFromAppStorage("nonexistent.png", FileType.IMAGE)
     }
 
     @Test
     fun `getFileNamesFromAppStorage returns empty list when folder does not exist`() = runTest {
-        val names = fileManager.getFileNamesFromAppStorage(FileType.PNG)
+        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
 
         assertEquals(emptyList(), names)
     }
 
     @Test
     fun `getFileNamesFromAppStorage returns file names in folder`() = runTest {
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.PNG)
-        fileManager.saveFileToAppStorage(byteArrayOf(2), "orc.png", FileType.PNG)
+        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
+        fileManager.saveFileToAppStorage(byteArrayOf(2), "orc.png", FileType.IMAGE)
 
-        val names = fileManager.getFileNamesFromAppStorage(FileType.PNG)
+        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
 
         assertEquals(setOf("goblin.png", "orc.png"), names.toSet())
     }
 
     @Test
     fun `getFileNamesFromAppStorage returns only file names not full paths`() = runTest {
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.PNG)
+        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
 
-        val names = fileManager.getFileNamesFromAppStorage(FileType.PNG)
+        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
 
         assertEquals(listOf("goblin.png"), names)
+    }
+
+    @Test
+    fun `createZipFile and extractZipFile round-trip preserves all entries`() = runTest {
+        val entries = listOf(
+            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
+            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
+            FileEntry("orc.webp", byteArrayOf(4, 5, 6, 7)),
+        )
+
+        val path = fileManager.createZipFile(entries, "test.compendium")
+        val zipFile = fileManager.getFileFromAppStorage(path)
+        val extracted = fileManager.extractZipFile(zipFile.content)
+
+        assertEquals(3, extracted.size)
+        assertEquals("content.json", extracted[0].name)
+        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals("goblin.png", extracted[1].name)
+        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+        assertEquals("orc.webp", extracted[2].name)
+        assertEquals(entries[2].content.toList(), extracted[2].content.toList())
     }
 }

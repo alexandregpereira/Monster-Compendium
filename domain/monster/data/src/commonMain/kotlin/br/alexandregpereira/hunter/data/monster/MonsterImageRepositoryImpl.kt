@@ -44,6 +44,10 @@ internal class MonsterImageRepositoryImpl(
         return monsterImageDao.getMonsterImages().map { it.toDomain() }
     }
 
+    override suspend fun getLocalMonsterImages(monsterIndexes: List<String>): List<MonsterImage> {
+        return monsterImageDao.getLocalMonsterImages(monsterIndexes).map { it.toDomain() }
+    }
+
     override suspend fun getLocalMonsterImage(monsterIndex: String): MonsterImage? {
         return monsterImageDao.getMonsterImage(monsterIndex)?.toDomain()
     }
@@ -56,12 +60,8 @@ internal class MonsterImageRepositoryImpl(
         monsterImageDao.insert(monsterImages = monsterImages.map { it.toEntity() })
     }
 
-    override suspend fun saveMonsterImage(monsterImage: MonsterImage) {
-        saveMonsterImages(monsterImages = listOf(monsterImage))
-    }
-
-    override suspend fun deleteMonsterImage(monsterIndex: String) {
-        monsterImageDao.deleteMonsterImage(monsterIndex)
+    override suspend fun deleteMonsterImages(monsterIndexes: List<String>) {
+        monsterImageDao.deleteMonsterImages(monsterIndexes)
     }
 
     private fun MonsterImage.toEntity(): MonsterImageEntity {

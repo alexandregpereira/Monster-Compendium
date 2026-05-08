@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
@@ -40,23 +40,27 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
     @Test
     fun `invoke When first monster has group is a group Should return title in sequence`() = runTest {
         val monster = listOf(
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental",
+            ).copy(
                 name = "Air Elemental",
                 group = "Elementals",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental2",
+            ).copy(
                 name = "Air Elemental2",
                 group = "Elementals",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental3",
+            ).copy(
                 name = "Air Elemental3",
                 group = "Elementals",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "elemental",
+            ).copy(
                 name = "Elemental",
             ),
         )
@@ -71,30 +75,34 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
                 Title(id = "E0", value = "E", isHeader = true),
                 Title(id = "Elementals0", value = "Elementals", isHeader = false),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental",
+                    ).copy(
                         name = "Air Elemental",
                         group = "Elementals",
                     )
                 ),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental2",
+                    ).copy(
                         name = "Air Elemental2",
                         group = "Elementals",
                     )
                 ),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental3",
+                    ).copy(
                         name = "Air Elemental3",
                         group = "Elementals",
                     )
                 ),
                 Title(id = "E1", value = "E", isHeader = false),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "elemental",
+                    ).copy(
                         name = "Elemental",
                     )
                 ),
@@ -105,20 +113,24 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
     @Test
     fun `invoke When first monster has no group Should return no title in sequence`() = runTest {
         val monster = listOf(
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental",
+            ).copy(
                 name = "Air Elemental",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental2",
+            ).copy(
                 name = "Air Elemental2",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "air-elemental3",
+            ).copy(
                 name = "Air Elemental3",
             ),
-            Monster(
+            MonsterFactory.createEmpty(
                 index = "elemental",
+            ).copy(
                 name = "Elemental",
             ),
         )
@@ -132,27 +144,31 @@ internal class GetMonsterPreviewsBySectionUseCaseTest {
             expected = listOf(
                 Title(id = "A0", value = "A", isHeader = true),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental",
+                    ).copy(
                         name = "Air Elemental",
                     )
                 ),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental2",
+                    ).copy(
                         name = "Air Elemental2",
                     )
                 ),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "air-elemental3",
+                    ).copy(
                         name = "Air Elemental3",
                     )
                 ),
                 Title(id = "E0", value = "E", isHeader = true),
                 Item(
-                    monster = Monster(
+                    monster = MonsterFactory.createEmpty(
                         index = "elemental",
+                    ).copy(
                         name = "Elemental",
                     )
                 ),

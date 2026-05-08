@@ -4,7 +4,9 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 
 interface MonsterImageDao {
     suspend fun getMonsterImages(): List<MonsterImageEntity>
+    suspend fun getLocalMonsterImages(monsterIndexes: List<String>): List<MonsterImageEntity>
     suspend fun getMonsterImage(monsterIndex: String): MonsterImageEntity?
     suspend fun insert(monsterImages: List<MonsterImageEntity>)
     suspend fun deleteMonsterImage(monsterIndex: String)
+    suspend fun deleteMonsterImages(monsterIndexes: List<String>)
 }

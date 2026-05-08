@@ -19,6 +19,8 @@
 
 package br.alexandregpereira.hunter.data.monster.lore.di
 
+import br.alexandregpereira.hunter.content.MonsterLoreContentJsonMapper
+import br.alexandregpereira.hunter.content.MonsterLoreContentJsonMapperImpl
 import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreLocalRepository
 import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRemoteRepository
 import br.alexandregpereira.hunter.data.monster.lore.DefaultMonsterLoreRepository
@@ -44,6 +46,11 @@ val monsterLoreDataModule = module {
     factory<MonsterLoreRemoteRepository> { DefaultMonsterLoreRemoteRepository(get()) }
     factory<MonsterLoreSettingsRepository> { MonsterLoreSettingsRepositoryImpl(get()) }
     factory<MonsterLoreSourceRepository> { MonsterLoreSourceRepositoryImpl(get()) }
+    single<MonsterLoreContentJsonMapper> {
+        MonsterLoreContentJsonMapperImpl(
+            get(),
+        )
+    }
 }.apply { includes(getAdditionalModule()) }
 
 internal expect fun getAdditionalModule(): Module

@@ -17,71 +17,150 @@
 
 package br.alexandregpereira.hunter.shareContent.domain
 
+import br.alexandregpereira.file.FileEntry
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
+import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.MonsterImage
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
 import br.alexandregpereira.hunter.domain.spell.SaveSpells
+import br.alexandregpereira.hunter.domain.usecase.SaveMonsterImages
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
-import br.alexandregpereira.hunter.shareContent.domain.ShareContent.Companion.CURRENT_VERSION
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonster
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.mapper.toSpell
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonster
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareMonsterLore
-import br.alexandregpereira.hunter.shareContent.domain.model.ShareSpell
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.single
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
-
-internal val json = Json {
-    ignoreUnknownKeys = true
-    explicitNulls = false
-}
 
 internal fun interface ImportContent {
-    operator fun invoke(contentJson: String): Flow<Unit>
+    suspend operator fun invoke(compendiumFileContent: CompendiumFileContent): List<String>
 }
 
-internal fun ImportContent(
-    saveMonsters: SaveMonstersUseCase,
-    saveSpells: SaveSpells,
-    saveMonstersLore: SaveMonstersLoreUseCase,
-): ImportContent = ImportContent { contentJson ->
-    flow {
-        val content = runCatching { json.decodeFromString<ShareContent>(contentJson) }
-            .getOrElse { cause ->
-                when (cause) {
-                    is SerializationException -> throw ImportContentException.InvalidContent(
-                        content = contentJson,
-                        cause = cause,
-                    )
-                    else -> throw cause
-                }
-            }
-        content.monsters?.let { monsters ->
-            saveMonsters(monsters.map { it.toMonster() }).single()
-        }
-        content.monstersLore?.let { monstersLore ->
-            saveMonstersLore(monstersLore.map { it.toMonsterLore() }, isSync = false).single()
-        }
-        content.spells?.let { spells ->
-            saveSpells(spells.map { it.toSpell() }).single()
-        }
-        emit(Unit)
+internal class ImportContentUseCase(
+    private val saveMonsters: SaveMonstersUseCase,
+    private val saveSpells: SaveSpells,
+    private val saveMonstersLore: SaveMonstersLoreUseCase,
+    private val saveMonsterImages: SaveMonsterImages,
+    private val fileManager: FileManager,
+    private val analytics: Analytics,
+) : ImportContent {
+
+    override suspend fun invoke(compendiumFileContent: CompendiumFileContent): List<String> {
+        val content = compendiumFileContent.shareContent
+        compendiumFileContent.saveMonsters()
+        compendiumFileContent.shareContent.saveMonstersLore()
+        compendiumFileContent.shareContent.saveSpells()
+        return content.monsters?.map { it.index }.orEmpty()
     }
-}
 
-@Serializable
-internal data class ShareContent(
-    val monsters: List<ShareMonster>? = null,
-    val monstersLore: List<ShareMonsterLore>? = null,
-    val spells: List<ShareSpell>? = null,
-) {
-    val version: Int = CURRENT_VERSION
+    private suspend fun ShareContent.saveMonstersLore() {
+        val monstersLore = this.monstersLore ?: return
+        saveMonstersLore(
+            monsterLore = monstersLore,
+            isSync = false,
+        ).single()
+    }
 
-    companion object {
-        const val CURRENT_VERSION = 1
+    private suspend fun ShareContent.saveSpells() {
+        val spells = this.spells ?: return
+        saveSpells(spells).single()
+    }
+
+    private suspend fun CompendiumFileContent.saveMonsters() {
+        val compendiumFileContent = this
+        val monsters = compendiumFileContent.shareContent.monsters ?: return
+        val originalImagePathsByMonsterIndex = saveOriginalImagesToAppStorage(
+            monsters = monsters,
+            monsterImageFiles = compendiumFileContent.monsterImageFiles,
+        )
+
+        try {
+            val monsterWithUpdatedImages = monsters.map {
+                it.copy(
+                    imageData = it.imageData.copy(
+                        url = originalImagePathsByMonsterIndex[it.index] ?: it.imageData.url
+                    )
+                )
+            }
+            saveMonsters(monsterWithUpdatedImages).single()
+            compendiumFileContent.saveMonsterImages()
+        } catch (cause: Throwable) {
+            compendiumFileContent.monsterImageFiles.forEach { image ->
+                fileManager.deleteFileFromAppStorage(
+                    fileName = image.name,
+                    fileType = FileType.IMAGE,
+                )
+            }
+            throw cause
+        }
+    }
+
+    private suspend fun CompendiumFileContent.saveMonsterImages() {
+        val monsterImages = shareContent.monsterImages ?: return
+        val imagePathsByMonsterIndex = saveCustomImagesToAppStorage(
+            monsterImages = monsterImages,
+            monsterImageFiles = this.monsterImageFiles,
+        )
+        val monsterImagesWithUpdatedUrls = monsterImages.map {
+            it.copy(
+                imageUrl = imagePathsByMonsterIndex[it.monsterIndex] ?: it.imageUrl
+            )
+        }
+        saveMonsterImages(*monsterImagesWithUpdatedUrls.toTypedArray())
+    }
+
+    private suspend fun saveOriginalImagesToAppStorage(
+        monsters: List<Monster>,
+        monsterImageFiles: List<FileEntry>,
+    ): Map<String, String> {
+        val monsterIndexAndImageUrl = monsters.map {
+            it.index to it.originalImageData.url
+        }
+        return saveImagesToAppStorage(
+            monsterIndexAndImageUrl = monsterIndexAndImageUrl,
+            monsterImageFiles = monsterImageFiles,
+        )
+    }
+
+    private suspend fun saveCustomImagesToAppStorage(
+        monsterImages: List<MonsterImage>,
+        monsterImageFiles: List<FileEntry>,
+    ): Map<String, String> {
+        val monsterIndexAndImageUrl = monsterImages.mapNotNull {
+            val imageUrl = it.imageUrl ?: return@mapNotNull null
+            it.monsterIndex to imageUrl
+        }
+        return saveImagesToAppStorage(
+            monsterIndexAndImageUrl = monsterIndexAndImageUrl,
+            monsterImageFiles = monsterImageFiles,
+        )
+    }
+
+    private suspend fun saveImagesToAppStorage(
+        monsterIndexAndImageUrl: List<Pair<String, String>>,
+        monsterImageFiles: List<FileEntry>,
+    ): Map<String, String> {
+        val monstersByImageName = monsterIndexAndImageUrl.filter { (_, imageUrl) ->
+            imageUrl.startsWith("file://")
+        }.associateBy { (_, imageUrl) ->
+            imageUrl.substringAfterLast("/")
+        }
+
+        return monsterImageFiles
+            .mapNotNull { image ->
+                val (monsterIndex, _) = monstersByImageName[image.name] ?: return@mapNotNull null
+                try {
+                    val path = fileManager.saveFileToAppStorage(
+                        bytes = image.content,
+                        fileName = image.name,
+                        fileType = FileType.IMAGE,
+                    )
+                    monsterIndex to path
+                } catch (cause: Throwable) {
+                    analytics.logException(
+                        RuntimeException("Fail to import image ${image.name}", cause)
+                    )
+                    null
+                }
+            }.toMap()
     }
 }
 
@@ -89,7 +168,6 @@ internal sealed class ImportContentException(message: String) : RuntimeException
     class InvalidContent(content: String, cause: Throwable) : ImportContentException(
         message = "SerializationException. " +
                 "cause = ${cause.message}" +
-                "current content version = $CURRENT_VERSION, " +
                 "content imported version= ${content.replace("\n", "")}"
     )
 }

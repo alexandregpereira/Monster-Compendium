@@ -17,7 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.usecase
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.repository.MonsterCacheRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -41,16 +41,16 @@ internal class GetMonsterPreviewsCacheUseCaseTest {
     @Test
     fun `invoke When has cache`() = runTest {
         every { getMonsterPreviewsUseCase() } returns flowOf(
-            listOf(Monster(index = "2"))
+            listOf(MonsterFactory.createEmpty(index = "2"))
         )
         every { cacheRepository.getMonsters() } returns flowOf(
-            listOf(Monster(index = "1"))
+            listOf(MonsterFactory.createEmpty(index = "1"))
         )
 
         val result = useCase().single()
 
         assertEquals(
-            expected = listOf(Monster(index = "1")),
+            expected = listOf(MonsterFactory.createEmpty(index = "1")),
             actual = result
         )
     }
@@ -58,14 +58,14 @@ internal class GetMonsterPreviewsCacheUseCaseTest {
     @Test
     fun `invoke When has no cache`() = runTest {
         every { getMonsterPreviewsUseCase() } returns flowOf(
-            listOf(Monster(index = "2"))
+            listOf(MonsterFactory.createEmpty(index = "2"))
         )
         every { cacheRepository.getMonsters() } returns flowOf(emptyList())
 
         val result = useCase().single()
 
         assertEquals(
-            expected = listOf(Monster(index = "2")),
+            expected = listOf(MonsterFactory.createEmpty(index = "2")),
             actual = result
         )
     }

@@ -17,8 +17,9 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
-import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.model.Color
 import br.alexandregpereira.hunter.domain.model.MonsterImageData
+import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Item
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
@@ -42,33 +43,55 @@ internal class GetTableContentUseCaseTest {
             Title(id = "E0", value = "E", isHeader = true),
             Title(id = "Elementals0", value = "Elementals", isHeader = false),
             Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "air-elemental",
+                ).copy(
                     name = "Air Elemental",
                     group = "Elementals",
                 )
             ),
             Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "air-elemental2",
+                ).copy(
                     name = "Air Elemental2",
                     group = "Elementals",
                 )
             ),
             Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "air-elemental3",
+                ).copy(
                     name = "Air Elemental3",
                     group = "Elementals",
-                    imageData = MonsterImageData(isHorizontal = true)
+                    imageData = MonsterImageData(
+                        isHorizontal = true,
+                        url = "",
+                        contentScale = null,
+                        backgroundColor = Color(
+                            light = "",
+                            dark = "",
+                        ),
+                        isImageDataFromCustomDatabase = false,
+                    )
                 )
             ),
             Title(id = "E1", value = "E", isHeader = false),
             Item(
-                monster = Monster(
+                monster = MonsterFactory.createEmpty(
                     index = "elemental",
+                ).copy(
                     name = "Elemental",
-                    imageData = MonsterImageData(isHorizontal = true)
+                    imageData = MonsterImageData(
+                        isHorizontal = true,
+                        url = "",
+                        contentScale = null,
+                        backgroundColor = Color(
+                            light = "",
+                            dark = "",
+                        ),
+                        isImageDataFromCustomDatabase = false,
+                    )
                 )
             ),
         )

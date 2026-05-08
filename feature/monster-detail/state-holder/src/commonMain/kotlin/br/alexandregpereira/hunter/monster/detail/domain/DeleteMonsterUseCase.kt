@@ -17,8 +17,13 @@
 
 package br.alexandregpereira.hunter.monster.detail.domain
 
+import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.domain.repository.MonsterLocalRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 fun interface DeleteMonsterUseCase {
     operator fun invoke(id: String): Flow<Unit>
@@ -26,6 +31,21 @@ fun interface DeleteMonsterUseCase {
 
 internal fun DeleteMonsterUseCase(
     repository: MonsterLocalRepository,
+    fileManager: FileManager,
 ): DeleteMonsterUseCase = DeleteMonsterUseCase { id ->
-    repository.deleteMonster(id)
+    flow {
+        emit(repository.getMonsterPreview(id))
+    }.map { monster ->
+        repository.deleteMonster(id).first().also {
+            val fileName = monster?.imageData?.url
+                ?.takeIf { it.startsWith("file://") }
+                ?.substringAfterLast("/")
+            if (fileName != null) {
+                fileManager.deleteFileFromAppStorage(
+                    fileName = fileName,
+                    fileType = FileType.IMAGE,
+                )
+            }
+        }
+    }
 }

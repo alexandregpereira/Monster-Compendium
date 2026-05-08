@@ -25,7 +25,7 @@ data class Speed(
 data class SpeedValue(
     val type: SpeedType,
     val valueFormatted: String,
-    val index: String = "",
+    val index: String,
 )
 
 enum class SpeedType {

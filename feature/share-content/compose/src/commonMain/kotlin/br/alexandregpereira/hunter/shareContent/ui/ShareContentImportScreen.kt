@@ -17,75 +17,100 @@
 
 package br.alexandregpereira.hunter.shareContent.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.shareContent.state.ShareContentState
-import br.alexandregpereira.hunter.shareContent.ui.resources.IconContentPaste
-import br.alexandregpereira.hunter.shareContent.ui.resources.Res
+import br.alexandregpereira.hunter.shareContent.state.ShareContentImportState
 import br.alexandregpereira.hunter.ui.compose.AppButton
-import br.alexandregpereira.hunter.ui.compose.AppTextField
+import br.alexandregpereira.hunter.ui.compose.BottomSheet
+import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
-import org.jetbrains.compose.resources.painterResource
+
+@Composable
+internal fun ShareContentImportBottomSheet(
+    isOpen: Boolean,
+    state: ShareContentImportState,
+    onImport: () -> Unit,
+    onFilePickClick: () -> Unit,
+    onClose: () -> Unit,
+) = BottomSheet(
+    contentPadding = PaddingValues(
+        end = 16.dp,
+        start = 16.dp,
+        bottom = 16.dp,
+    ),
+    topSpaceHeight = 0.dp,
+    opened = isOpen,
+    onClose = onClose,
+    modifier = Modifier.animateContentSize()
+) {
+    CompositionLocalProvider(LocalImportStrings provides state.strings) {
+        ShareContentImportScreen(
+            state = state,
+            onImport = onImport,
+            onFilePickClick = onFilePickClick,
+        )
+    }
+}
 
 @Composable
 internal fun ShareContentImportScreen(
-    state: ShareContentState,
+    state: ShareContentImportState,
     onImport: () -> Unit,
-    onPaste: (String) -> Unit,
-) {
+    onFilePickClick: () -> Unit,
+) = Column {
     Spacer(modifier = Modifier.height(16.dp))
 
     ScreenHeader(title = state.strings.importTitle)
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    AppTextField(
-        text = state.contentToImportShort,
-        label = state.strings.contentToImportLabel,
-        onValueChange = onPaste,
-        enabled = false,
-        showClearIcon = true,
-    )
-
-    Spacer(modifier = Modifier.height(8.dp))
-
-    val clipboardManager = LocalClipboardManager.current
-    Row(
-        verticalAlignment = CenterVertically,
-        modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable {
-            onPaste(clipboardManager.getText()?.text.orEmpty())
-        }
+    LoadingScreen(
+        isLoading = state.isLoading,
+        fillMaxSize = false,
     ) {
-        Icon(
-            painterResource(Res.drawable.IconContentPaste),
-            contentDescription = state.strings.pasteContent,
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = state.strings.pasteContent,
-            fontWeight = FontWeight.Medium,
-            fontSize = 16.sp,
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
-    }
+        Column {
+            if (state.importExtractedState != null) {
+                ShareContentExtracted(
+                    state = state.importExtractedState,
+                )
 
-    state.importErrorMessage.takeIf { it.isNotBlank() }?.let { errorMessage ->
+                Spacer(modifier = Modifier.height(32.dp))
+
+                AppButton(
+                    text = importStrings.importButton,
+                    onClick = onImport,
+                )
+            } else {
+                ShareContentImportFilePickerScreen(
+                    importErrorMessage = state.importErrorMessage,
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                AppButton(
+                    text = importStrings.pickCompendiumFile,
+                    onClick = onFilePickClick,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ShareContentImportFilePickerScreen(
+    importErrorMessage: String?,
+) = Column {
+    importErrorMessage?.takeIf { it.isNotBlank() }?.let { errorMessage ->
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = errorMessage,
@@ -93,11 +118,4 @@ internal fun ShareContentImportScreen(
             fontSize = 16.sp,
         )
     }
-
-    Spacer(modifier = Modifier.height(32.dp))
-
-    AppButton(
-        text = state.strings.importButton,
-        onClick = onImport,
-    )
 }

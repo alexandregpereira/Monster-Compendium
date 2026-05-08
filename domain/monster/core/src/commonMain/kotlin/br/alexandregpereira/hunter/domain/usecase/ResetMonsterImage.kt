@@ -18,5 +18,5 @@
 package br.alexandregpereira.hunter.domain.usecase
 
 fun interface ResetMonsterImage {
-    suspend operator fun invoke(monsterIndex: String)
+    suspend operator fun invoke(vararg monsterIndexes: String)
 }

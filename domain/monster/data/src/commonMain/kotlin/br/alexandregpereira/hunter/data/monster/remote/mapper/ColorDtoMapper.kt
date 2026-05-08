@@ -23,3 +23,7 @@ import br.alexandregpereira.hunter.domain.model.Color
 fun ColorDto.toDomain(): Color {
     return Color(light = light, dark = dark)
 }
+
+internal fun Color.toColorDto(): ColorDto {
+    return ColorDto(light = light, dark = dark)
+}

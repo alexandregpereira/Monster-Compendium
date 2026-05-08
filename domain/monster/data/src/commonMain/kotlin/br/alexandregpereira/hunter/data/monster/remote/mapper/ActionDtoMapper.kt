@@ -46,9 +46,9 @@ internal fun List<ActionDto>.toDomain(): List<Action> {
 
 internal fun List<DamageDiceDto>.toDamageDiceDomain(): List<DamageDice> {
     return this.map {
-        DamageDice(
+        DamageDice.create(
             dice = it.dice,
-            damage = it.damage.asDomain()
+            damage = it.damage.asDomain(),
         )
     }
 }
