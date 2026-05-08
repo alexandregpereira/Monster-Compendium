@@ -25,9 +25,9 @@ data class MonsterImageDto(
     @SerialName("monster_index")
     val monsterIndex: String,
     @SerialName("background_color")
-    val backgroundColor: ColorDto? = ColorDto(),
+    val backgroundColor: ColorDto? = null,
     @SerialName("image_url")
-    val imageUrl: String?,
+    val imageUrl: String? = null,
     @SerialName("content_scale")
     val contentScale: MonsterImageContentScaleDto? = null,
 )

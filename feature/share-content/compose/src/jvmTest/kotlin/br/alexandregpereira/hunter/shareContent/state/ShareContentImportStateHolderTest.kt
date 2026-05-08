@@ -117,7 +117,7 @@ internal class ShareContentImportStateHolderTest {
         assertNull(finalState.importError)
         assertEquals(false, finalState.isLoading)
         assertNotNull(finalState.importExtractedState)
-        assertEquals("test.compendium", finalState.importExtractedState?.fileName)
+        assertEquals("test.compendium", finalState.importExtractedState.fileName)
     }
 
     @Test
