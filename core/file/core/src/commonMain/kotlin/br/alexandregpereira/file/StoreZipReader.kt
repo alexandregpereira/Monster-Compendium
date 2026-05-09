@@ -20,7 +20,7 @@ package br.alexandregpereira.file
 // Pure-Kotlin STORE-mode (no compression) ZIP reader.
 // Mirrors StoreZipCreator: handles local file headers with method=0.
 // Android/JVM createZipFile also uses STORED mode so cross-platform reads work.
-internal fun extractStoreZip(bytes: ByteArray): List<FileEntry> {
+internal suspend fun FileManager.extractStoreZip(bytes: ByteArray): List<FileEntry> {
     val result = mutableListOf<FileEntry>()
     var pos = 0
 
@@ -38,7 +38,13 @@ internal fun extractStoreZip(bytes: ByteArray): List<FileEntry> {
         val dataStart = nameStart + nameLen + extraLen
 
         if (method == 0) {
-            result.add(FileEntry(name = name, content = bytes.copyOfRange(dataStart, dataStart + compSize)))
+            this.saveFileToAppStorage(
+                bytes = bytes.copyOfRange(dataStart, dataStart + compSize),
+                fileName = name,
+                fileType = FileType.COMPENDIUM,
+            ).let {
+                result.add(FileEntry(path = it))
+            }
         }
 
         pos = dataStart + compSize

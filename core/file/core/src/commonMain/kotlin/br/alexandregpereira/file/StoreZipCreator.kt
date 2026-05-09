@@ -19,7 +19,7 @@ package br.alexandregpereira.file
 
 // Pure-Kotlin STORE-mode (no compression) ZIP archive with a single entry.
 // Used on platforms that lack java.util.zip (e.g. iOS Kotlin/Native).
-internal fun createStoreZip(
+internal suspend fun createStoreZip(
     zipEntryFiles: List<FileEntry>,
 ): ByteArray {
     val zip = ZipBuilder()
@@ -27,8 +27,8 @@ internal fun createStoreZip(
 
     zipEntryFiles.forEachIndexed { index, entry ->
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.content)
-        val size = entry.content.size
+        val crc = crc32(entry.readBytes())
+        val size = entry.size.toInt()
 
         localHeaderOffsets[index] = zip.size()
 
@@ -45,15 +45,15 @@ internal fun createStoreZip(
         zip.le16(nameBytes.size)
         zip.le16(0)
         zip.bytes(nameBytes)
-        zip.bytes(entry.content)
+        zip.bytes(entry.readBytes())
     }
 
     val centralDirOffset = zip.size()
 
     zipEntryFiles.forEachIndexed { index, entry ->
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.content)
-        val size = entry.content.size
+        val crc = crc32(entry.readBytes())
+        val size = entry.size.toInt()
 
         // Central directory file header
         zip.le32(0x02014b50)

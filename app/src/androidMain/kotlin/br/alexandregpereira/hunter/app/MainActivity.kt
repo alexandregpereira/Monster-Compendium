@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             else -> return
         } ?: return
         val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
-        get<MainViewModel>().onFileOpen(getFileName(uri), bytes)
+        get<MainViewModel>().onFileOpen(uri.toString())
     }
 
     private fun getFileName(uri: Uri): String {

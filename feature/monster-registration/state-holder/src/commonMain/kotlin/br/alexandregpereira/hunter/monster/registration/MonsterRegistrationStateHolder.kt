@@ -126,7 +126,7 @@ class MonsterRegistrationStateHolder internal constructor(
             val imageName = metadata.monster?.index
                 ?: throw IllegalStateException("Monster is null")
             val path = fileManager.saveImage(
-                bytes = file.content,
+                file = file,
                 imageName = imageName,
             )
             emit(path)

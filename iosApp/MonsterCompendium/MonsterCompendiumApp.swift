@@ -23,10 +23,8 @@ struct MonsterCompendiumApp: App {
                 .onOpenURL { url in
                     _ = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
-                    guard let data = try? Data(contentsOf: url) else { return }
                     FileOpenHandlerKt.handleCompendiumFileOpen(
                         name: url.lastPathComponent,
-                        data: (data as NSData) as Data
                     )
                 }
         }

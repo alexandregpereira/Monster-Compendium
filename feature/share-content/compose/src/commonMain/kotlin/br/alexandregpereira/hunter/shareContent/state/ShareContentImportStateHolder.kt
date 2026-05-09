@@ -31,6 +31,7 @@ import br.alexandregpereira.hunter.shareContent.domain.ImportContentException
 import br.alexandregpereira.hunter.shareContent.state.ShareContentImportError.InvalidContent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.ktx.runCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterIsInstance
@@ -55,10 +56,9 @@ internal class ShareContentImportStateHolder(
 
     init {
         eventDispatcher.importEvents().filterIsInstance<Import.OnStart>().onEach { event ->
-            val fileName = event.compendiumFileName
-            val fileBytes = event.compendiumFileBytes
-            val compendiumFile = if (fileName != null && fileBytes != null) {
-                FileEntry(name = fileName, content = fileBytes)
+            val filePath = event.compendiumFilePath
+            val compendiumFile = if (filePath != null) {
+                FileEntry(path = filePath)
             } else null
             val hasCompendiumFile = compendiumFile != null
             analytics.track(
@@ -95,8 +95,15 @@ internal class ShareContentImportStateHolder(
                 importError = null,
             )
         }
-        onCleared()
         compendiumFileContent = null
+        scope.launch {
+            runCatching {
+                compendiumFileManager.deleteCompendiumFiles()
+            }.onFailure {
+                analytics.logException(it)
+            }
+            onCleared()
+        }
     }
 
     fun onImport() {
@@ -149,7 +156,7 @@ internal class ShareContentImportStateHolder(
                         importError = null,
                     )
                 }
-                scope.launch { onClose() }
+                onClose()
             }
             .launchIn(featureScope)
     }
@@ -170,7 +177,7 @@ internal class ShareContentImportStateHolder(
             eventName = "Import content - file picked",
             params = mapOf(
                 "fileName" to fileEntry.name,
-                "fileSize" to fileEntry.content.size.toString(),
+                "fileSize" to fileEntry.size.toString(),
             )
         )
         setState { copy(isLoading = true, contentToImport = fileEntry.name) }

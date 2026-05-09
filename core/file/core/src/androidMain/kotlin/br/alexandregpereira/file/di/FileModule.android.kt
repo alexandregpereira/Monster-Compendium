@@ -33,5 +33,6 @@ internal actual fun Scope.createFileManager(): FileManager {
 internal actual fun Scope.createZipFileManager(): ZipFileManager {
     return AndroidZipFileManager(
         app = get<Application>(),
+        fileManager = get(),
     )
 }

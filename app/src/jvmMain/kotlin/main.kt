@@ -66,8 +66,7 @@ fun main(args: Array<String>) = application {
                 ?.let { File(it).takeIf { f -> f.exists() } }
                 ?.let {
                     koin.get<AppEventDispatcher>().onFileOpen(
-                        name = it.name,
-                        bytes = it.readBytes(),
+                        filePath = it.absolutePath,
                     )
                 }
         }

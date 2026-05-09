@@ -31,6 +31,7 @@ import java.util.zip.ZipOutputStream
 
 internal class AndroidZipFileManager(
     private val app: Application,
+    private val fileManager: FileManager,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ZipFileManager {
 
@@ -42,15 +43,15 @@ internal class AndroidZipFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                val crc = CRC32().also { c -> c.update(it.content) }
+                val crc = CRC32().also { c -> c.update(it.readBytes()) }
                 val entry = ZipEntry(it.name).also { e ->
                     e.method = ZipEntry.STORED
-                    e.size = it.content.size.toLong()
-                    e.compressedSize = it.content.size.toLong()
+                    e.size = it.size
+                    e.compressedSize = it.size
                     e.crc = crc.value
                 }
                 zos.putNextEntry(entry)
-                zos.write(it.content)
+                zos.write(it.readBytes())
                 zos.closeEntry()
             }
         }
@@ -65,7 +66,13 @@ internal class AndroidZipFileManager(
             var entry = zip.nextEntry
             while (entry != null) {
                 if (!entry.isDirectory) {
-                    result.add(FileEntry(name = entry.name, content = zip.readBytes()))
+                    fileManager.saveFileToAppStorage(
+                        bytes = zip.readBytes(),
+                        fileName = entry.name,
+                        fileType = FileType.COMPENDIUM,
+                    ).let {
+                        result.add(FileEntry(path = it))
+                    }
                 }
                 zip.closeEntry()
                 entry = zip.nextEntry

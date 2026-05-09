@@ -17,6 +17,9 @@
 
 package br.alexandregpereira.file
 
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.copyTo
+
 interface FileManager {
 
     suspend fun saveFileToAppStorage(
@@ -25,11 +28,27 @@ interface FileManager {
         fileType: FileType
     ): String
 
-    suspend fun getFileFromAppStorage(filePath: String): FileEntry
-
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
 
     suspend fun deleteAllFilesFromAppStorage(fileType: FileType)
-
-    suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
 }
+
+suspend fun FileManager.copyToAppStorage(
+    file: FileEntry,
+    name: String,
+    fileType: FileType,
+): FileEntry {
+    val destination = PlatformFile(getAppStorageFileFolderPath(name, fileType))
+    file.platformFile.copyTo(
+        destination
+    )
+
+    return FileEntry(destination)
+}
+
+internal expect fun FileManager.getAppStorageFileFolderPath(fileFolder: String): String
+
+internal fun FileManager.getAppStorageFileFolderPath(fileName: String, fileType: FileType): String {
+    return getAppStorageFileFolderPath(fileFolder = fileType.folder) + "/" + fileName
+}
+

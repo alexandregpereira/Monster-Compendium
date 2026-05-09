@@ -4,6 +4,7 @@ import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
 import br.alexandregpereira.file.ZipFileManager
+import br.alexandregpereira.file.readBytes
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ContentInfoMapper
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapper
@@ -38,9 +39,9 @@ internal class CompendiumFileManagerImpl(
 ) : CompendiumFileManager {
 
     override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
-        val files = zipFileManager.extractZipFile(zipFile.content)
+        val files = zipFileManager.extractZipFile(zipFile.readBytes())
         val contentJsonByteArray = files.firstOrNull { it.name == "content.json" }
-            ?.content
+            ?.readBytes()
             ?: error("content.json not found in .compendium archive")
         val contentJson = contentJsonByteArray.decodeToString()
 
@@ -64,14 +65,13 @@ internal class CompendiumFileManagerImpl(
 
         val contentInfo = runCatching {
             val contentInfoJson = files.firstOrNull { it.name == "contentInfo.json" }
-                ?.content?.decodeToString()
+                ?.readBytes()?.decodeToString()
                 ?: error("contentInfo.json not found in .compendium archive")
             contentInfoMapper.decodeFromJson(contentInfoJson)
         }.getOrNull() ?: CompendiumFileContentInfo(
             contentTitle = null,
             contentDescription = null,
-            fileSizeFormatted = (contentJsonByteArray.size +
-                    images.sumOf { it.file.content.size }).getSizeFormatted(),
+            fileSizeFormatted = zipFile.size.getSizeFormatted(),
         )
 
         return CompendiumFileContent(
@@ -95,7 +95,7 @@ internal class CompendiumFileManagerImpl(
             monsterImages = monsterImages,
         )
         val contentSize = contentJson.encodeToByteArray().size + monsterImages.sumOf {
-            it.content.size
+            it.size
         }
 
         val contentInfo = CompendiumFileContentInfo(
@@ -116,16 +116,22 @@ internal class CompendiumFileManagerImpl(
         fileName: String,
         compendiumFileContent: CompendiumFileContent
     ): String {
-        val contentEntry = FileEntry(
-            name = "content.json",
-            content = shareContentMapper.encodeToJson(compendiumFileContent.shareContent)
+        val contentEntry = fileManager.saveFileToAppStorage(
+            bytes = shareContentMapper.encodeToJson(compendiumFileContent.shareContent)
                 .encodeToByteArray(),
-        )
-        val contentInfoEntry = FileEntry(
-            name = "contentInfo.json",
-            content = contentInfoMapper.encodeToJson(compendiumFileContent.contentInfo)
-                .encodeToByteArray()
-        )
+            fileName = "content.json",
+            fileType = FileType.COMPENDIUM,
+        ).let {
+            FileEntry(it)
+        }
+        val contentInfoEntry = fileManager.saveFileToAppStorage(
+            bytes = contentInfoMapper.encodeToJson(compendiumFileContent.contentInfo)
+                .encodeToByteArray(),
+            fileName = "contentInfo.json",
+            fileType = FileType.COMPENDIUM,
+        ).let {
+            FileEntry(it)
+        }
 
         return zipFileManager.createZipFile(
             zipEntryFiles = listOf(contentEntry, contentInfoEntry) +
@@ -138,12 +144,12 @@ internal class CompendiumFileManagerImpl(
         fileManager.deleteAllFilesFromAppStorage(FileType.COMPENDIUM)
     }
 
-    private suspend fun List<String>.accumulateImages(
+    private fun List<String>.accumulateImages(
         monsterImages: MutableList<FileEntry>,
     ) {
         this.forEach { filePath ->
             val file = runCatching {
-                fileManager.getFileFromAppStorage(filePath)
+                FileEntry(filePath)
             }.getOrNull()
 
             file?.let {
@@ -193,7 +199,7 @@ internal class CompendiumFileManagerImpl(
         return monsterImages
     }
 
-    private fun Int.getSizeFormatted(): String {
+    private fun Long.getSizeFormatted(): String {
         return when {
             this >= 1024 * 1024 * 1024 -> (this / (1024 * 1024 * 1024)).toString() + " GB"
             this >= 1024 * 1024 -> (this / (1024 * 1024)).toString() + " MB"

@@ -31,8 +31,7 @@ class ShareContentEventDispatcher : EventDispatcher<ShareContentEvent> by EventD
 sealed class ShareContentEvent {
     sealed class Import : ShareContentEvent() {
         class OnStart(
-            val compendiumFileName: String? = null,
-            val compendiumFileBytes: ByteArray? = null,
+            val compendiumFilePath: String? = null,
         ) : Import()
         data class OnFinish(val monsterIndexes: List<String>) : Import()
     }

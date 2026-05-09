@@ -28,5 +28,7 @@ internal actual fun Scope.createFileManager(): FileManager {
 }
 
 internal actual fun Scope.createZipFileManager(): ZipFileManager {
-    return JvmZipFileManager()
+    return JvmZipFileManager(
+        fileManager = get(),
+    )
 }

@@ -20,6 +20,8 @@ package br.alexandregpereira.hunter.shareContent.domain
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.file.copyToAppStorage
+import br.alexandregpereira.file.delete
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImage
@@ -84,10 +86,7 @@ internal class ImportContentUseCase(
             compendiumFileContent.saveMonsterImages()
         } catch (cause: Throwable) {
             compendiumFileContent.monsterImageFiles.forEach { image ->
-                fileManager.deleteFileFromAppStorage(
-                    fileName = image.name,
-                    fileType = FileType.IMAGE,
-                )
+                image.delete()
             }
             throw cause
         }
@@ -148,11 +147,11 @@ internal class ImportContentUseCase(
             .mapNotNull { image ->
                 val (monsterIndex, _) = monstersByImageName[image.name] ?: return@mapNotNull null
                 try {
-                    val path = fileManager.saveFileToAppStorage(
-                        bytes = image.content,
-                        fileName = image.name,
+                    val path = fileManager.copyToAppStorage(
+                        file = image,
+                        name = image.name,
                         fileType = FileType.IMAGE,
-                    )
+                    ).filePath
                     monsterIndex to path
                 } catch (cause: Throwable) {
                     analytics.logException(
