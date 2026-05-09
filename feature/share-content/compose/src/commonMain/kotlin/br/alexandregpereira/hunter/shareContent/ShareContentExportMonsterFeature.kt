@@ -58,5 +58,7 @@ fun ShareContentExportMonsterFeature() {
         state = state,
         onClose = stateHolder::onClose,
         onExportToFile = stateHolder::onExportToFile,
+        onEditContentTitle = stateHolder::onEditContentTitle,
+        onEditContentDescription = stateHolder::onEditContentDescription,
     )
 }

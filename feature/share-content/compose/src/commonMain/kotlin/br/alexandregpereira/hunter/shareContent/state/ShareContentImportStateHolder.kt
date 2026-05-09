@@ -195,6 +195,8 @@ internal class ShareContentImportStateHolder(
                 analytics.track(
                     eventName = "Import content - content extracted",
                     params = mapOf(
+                        "fileName" to compendiumFileContent.name,
+                        "contentTitle" to compendiumFileContent.contentInfo.contentTitle,
                         "contentSize" to compendiumFileContent.sizeFormatted,
                         "monstersQuantity" to compendiumFileContent.monstersQuantity,
                         "monstersLoreQuantity" to compendiumFileContent.monstersLoreQuantity,
@@ -203,18 +205,11 @@ internal class ShareContentImportStateHolder(
                     )
                 )
                 setState {
-                    val contentEntries = buildContentEntries(
-                        shareContent = compendiumFileContent.shareContent,
-                        monsterImages = compendiumFileContent.monsterImages,
-                        strings = strings.extractedStrings,
-                    )
                     copy(
                         importError = null,
                         isLoading = false,
-                        importExtractedState = ShareContentExtractedState(
-                            fileName = compendiumFileContent.name,
-                            contentSize = compendiumFileContent.sizeFormatted,
-                            contentEntries = contentEntries,
+                        importExtractedState = compendiumFileContent.toShareContentExtractedState(
+                            strings = strings.extractedStrings,
                         )
                     )
                 }

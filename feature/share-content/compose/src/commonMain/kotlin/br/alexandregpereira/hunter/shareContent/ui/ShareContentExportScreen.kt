@@ -27,26 +27,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportState
-import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedEntryState
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
-import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun ShareContentExportBottomSheet(
     state: ShareContentExportState,
     onClose: () -> Unit,
     onExportToFile: () -> Unit,
+    onEditContentTitle: (String) -> Unit,
+    onEditContentDescription: (String) -> Unit,
 ) = BottomSheet(
     contentPadding = PaddingValues(
         end = 16.dp,
@@ -62,7 +59,10 @@ internal fun ShareContentExportBottomSheet(
             isLoading = state.isLoading,
             exportError = state.exportError,
             exportExtractedState = state.exportExtractedState,
+            exportButtonEnabled = state.exportButtonEnabled,
             onExportToFile = onExportToFile,
+            onEditContentTitle = onEditContentTitle,
+            onEditContentDescription = onEditContentDescription,
         )
     }
 }
@@ -72,7 +72,10 @@ internal fun ShareContentExportScreen(
     isLoading: Boolean,
     exportError: Boolean,
     exportExtractedState: ShareContentExtractedState?,
+    exportButtonEnabled: Boolean,
     onExportToFile: () -> Unit,
+    onEditContentTitle: (String) -> Unit,
+    onEditContentDescription: (String) -> Unit,
 ) = Column(
     modifier = Modifier.padding(top = 16.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -101,53 +104,17 @@ internal fun ShareContentExportScreen(
         ) {
             ShareContentExtracted(
                 state = extractedState,
+                onContentTitleChange = onEditContentTitle,
+                onContentDescriptionChange = onEditContentDescription,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             AppButton(
                 text = exportStrings.shareButton,
+                enabled = exportButtonEnabled,
                 onClick = onExportToFile,
             )
         }
     }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun ShareContentExportBottomSheetPreview() = PreviewWindow {
-    val state = ShareContentExportState(
-        isOpen = true,
-        exportExtractedState = ShareContentExtractedState(
-            fileName = "File Name",
-            isFileNameEditable = false,
-            contentSize = "400 MB",
-            contentEntries = persistentListOf(
-                ShareContentExtractedEntryState(
-                    quantity = "50 Monsters",
-                    content = "Monster 1, Monster 2, Monster 3, Monster 4",
-                    contentWarning = "This content will override the monster content",
-                ),
-                ShareContentExtractedEntryState(
-                    quantity = "50 Lore entries",
-                    content = "Monster 1, Monster 2, Monster 3",
-                ),
-                ShareContentExtractedEntryState(
-                    quantity = "20 Spells",
-                    enabled = false,
-                    content = "Spell 1, Spell 2, Spell 3, Spell 5, Spell 65",
-                    contentWarning = "This content will override the monster content",
-                ),
-                ShareContentExtractedEntryState(
-                    quantity = "10 Local images",
-                    content = "Image 1, Image 2, Image 3",
-                ),
-            ),
-        )
-    )
-    ShareContentExportBottomSheet(
-        state = state,
-        onClose = {},
-        onExportToFile = {},
-    )
 }
