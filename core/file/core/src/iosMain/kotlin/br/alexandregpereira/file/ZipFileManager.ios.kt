@@ -17,14 +17,11 @@
 
 package br.alexandregpereira.file
 
-import kotlinx.cinterop.BetaInteropApi
-import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
-@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 internal class IosZipFileManager(
     private val fileManager: FileManager,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,

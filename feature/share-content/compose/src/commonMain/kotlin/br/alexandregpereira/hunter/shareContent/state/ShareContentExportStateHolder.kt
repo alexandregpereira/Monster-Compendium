@@ -139,7 +139,7 @@ internal class ShareContentExportStateHolder(
                 exportExtractedState = exportExtractedState?.copy(
                     contentTitle = title,
                     fileName = compendiumFileContent?.createFileNameWithExtension(title)
-                        .orEmpty(),
+                        ?: exportExtractedState.fileName,
                 ),
             )
         }
@@ -192,7 +192,9 @@ internal class ShareContentExportStateHolder(
 
     private fun CompendiumFileContentInfo.createFileNameWithExtension(title: String?): String {
         val fileName: String = title?.replace(" ", "-")
-            ?.removeAccents()?.takeUnless{ it.isBlank() } ?: createFileName()
+            ?.removeAccents()
+            ?.replace(Regex("[^a-zA-Z0-9_\\-]"), "")
+            ?.takeUnless { it.isBlank() } ?: createFileName()
         return "$fileName.${fileExtension}".lowercase()
     }
 

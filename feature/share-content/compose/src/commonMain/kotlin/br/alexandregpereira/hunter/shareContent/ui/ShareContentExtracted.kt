@@ -1,31 +1,27 @@
 package br.alexandregpereira.hunter.shareContent.ui
 
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedState
+import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedStrings
 import br.alexandregpereira.hunter.ui.compose.AppCard
 import br.alexandregpereira.hunter.ui.compose.AppTextField
-import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 
 @Composable
 internal fun ShareContentExtracted(
     state: ShareContentExtractedState,
+    strings: ShareContentExtractedStrings,
     onContentTitleChange: (String) -> Unit = {},
     onContentDescriptionChange: (String) -> Unit = {},
 ) = Column(
@@ -42,7 +38,7 @@ internal fun ShareContentExtracted(
                 Column {
                     state.contentTitle?.let {
                         ContentInfo(
-                            label = "Title",
+                            label = strings.title,
                             value = state.contentTitle,
                         )
                     }
@@ -51,7 +47,7 @@ internal fun ShareContentExtracted(
                             color = MaterialTheme.colors.background.copy(alpha = .3f),
                         )
                         ContentInfo(
-                            label = "Description",
+                            label = strings.description,
                             value = state.contentDescription,
                         )
                     }
@@ -64,14 +60,14 @@ internal fun ShareContentExtracted(
         ) {
             Column {
                 ContentInfo(
-                    label = "File",
+                    label = strings.file,
                     value = state.fileName,
                 )
                 Divider(
                     color = MaterialTheme.colors.background.copy(alpha = .3f),
                 )
                 ContentInfo(
-                    label = "Size",
+                    label = strings.size,
                     value = state.contentSize,
                 )
             }
@@ -83,7 +79,7 @@ internal fun ShareContentExtracted(
             ) {
                 state.contentTitle?.let {
                     ContentInfoEditable(
-                        label = "Title (optional)",
+                        label = strings.titleOptional,
                         value = state.contentTitle,
                         isEditable = state.isContentEditable,
                         onValueChange = onContentTitleChange,
@@ -91,7 +87,7 @@ internal fun ShareContentExtracted(
                 }
                 state.contentDescription?.let {
                     ContentInfoEditable(
-                        label = "Description (optional)",
+                        label = strings.descriptionOptional,
                         value = state.contentDescription,
                         isEditable = state.isContentEditable,
                         multiline = true,
@@ -105,9 +101,8 @@ internal fun ShareContentExtracted(
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        state.contentEntries.forEachIndexed { _, contentEntry ->
+        state.contentEntries.forEach { contentEntry ->
             ContentEntry(
-                checked = null,
                 value = contentEntry.quantity,
                 content = contentEntry.content,
                 contentWarning = contentEntry.contentWarning,
@@ -168,34 +163,17 @@ private fun ContentInfoEditable(
 
 @Composable
 private fun ContentEntry(
-    checked: Boolean?,
     value: String,
     content: String,
     contentWarning: String?,
-    onCheckedChange: () -> Unit = {},
 ) {
-    val alpha by animateFloatAsState(
-        targetValue = if (checked == false) .5f else 1f,
-        label = "Content alpha",
-    )
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.alpha(alpha)
-            .padding(horizontal = 8.dp)
-            .noIndicationClick(onCheckedChange),
+        modifier = Modifier.padding(horizontal = 8.dp),
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
         ) {
-            if (checked != null) {
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = null,
-                )
-            }
-
             Text(
                 text = value,
                 fontWeight = FontWeight.Normal,

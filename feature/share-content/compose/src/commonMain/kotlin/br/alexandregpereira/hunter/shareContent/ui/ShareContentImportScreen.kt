@@ -82,6 +82,7 @@ internal fun ShareContentImportScreen(
             if (state.importExtractedState != null) {
                 ShareContentExtracted(
                     state = state.importExtractedState,
+                    strings = importStrings.extractedStrings,
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))

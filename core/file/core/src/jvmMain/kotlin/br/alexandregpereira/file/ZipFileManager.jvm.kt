@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.util.zip.CRC32
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -39,7 +40,7 @@ internal class JvmZipFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                val crc = java.util.zip.CRC32().also { c -> c.update(it.content) }
+                val crc = CRC32().also { c -> c.update(it.content) }
                 val entry = ZipEntry(it.name).also { e ->
                     e.method = ZipEntry.STORED
                     e.size = it.content.size.toLong()

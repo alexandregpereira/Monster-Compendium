@@ -104,6 +104,7 @@ internal fun ShareContentExportScreen(
         ) {
             ShareContentExtracted(
                 state = extractedState,
+                strings = exportStrings.extractedStrings,
                 onContentTitleChange = onEditContentTitle,
                 onContentDescriptionChange = onEditContentDescription,
             )
