@@ -18,6 +18,7 @@
 package br.alexandregpereira.file.di
 
 import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.ZipFileManager
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
@@ -25,6 +26,11 @@ val fileModule = module {
     single<FileManager> {
         createFileManager()
     }
+    single<ZipFileManager> {
+        createZipFileManager()
+    }
 }
 
 internal expect fun Scope.createFileManager(): FileManager
+
+internal expect fun Scope.createZipFileManager(): ZipFileManager

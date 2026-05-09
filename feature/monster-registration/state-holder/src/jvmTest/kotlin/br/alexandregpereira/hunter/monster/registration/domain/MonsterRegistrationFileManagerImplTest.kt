@@ -43,7 +43,11 @@ internal class MonsterRegistrationFileManagerImplTest {
         fileManager.saveImage(byteArrayOf(2), "goblin")
 
         val goblinFiles = storage.filter { it.startsWith("goblin") }
-        assertEquals(1, goblinFiles.size, "Expected one file after two sequential saves, got: $goblinFiles")
+        assertEquals(
+            1,
+            goblinFiles.size,
+            "Expected one file after two sequential saves, got: $goblinFiles"
+        )
     }
 
     @Test
@@ -56,7 +60,10 @@ internal class MonsterRegistrationFileManagerImplTest {
 
         val path = fileManager.saveImage(byteArrayOf(1), "goblin")
 
-        assertTrue(storage.single().matches(Regex("goblin-\\d+\\.png")), "Expected timestamped filename, got: ${storage.single()}")
+        assertTrue(
+            storage.single().matches(Regex("goblin-\\d+\\.png")),
+            "Expected timestamped filename, got: ${storage.single()}"
+        )
         assertTrue(path.startsWith("file://"), "Expected file:// path, got: $path")
     }
 
@@ -98,7 +105,10 @@ internal class MonsterRegistrationFileManagerImplTest {
 
         fileManager.deleteLastSavedImageIfExists()
 
-        assertTrue(storage.isEmpty(), "Expected no file to be tracked or deleted after a failed save")
+        assertTrue(
+            storage.isEmpty(),
+            "Expected no file to be tracked or deleted after a failed save"
+        )
     }
 
     @Test
@@ -116,7 +126,11 @@ internal class MonsterRegistrationFileManagerImplTest {
 
         // deleteLastSavedImageIfExists is then a no-op because lastFileSaved was already cleared.
         val goblinFiles = storage.filter { it.startsWith("goblin") }
-        assertEquals(1, goblinFiles.size, "File should remain since lastFileSaved was cleared by deleteImageIfExists(null)")
+        assertEquals(
+            1,
+            goblinFiles.size,
+            "File should remain since lastFileSaved was cleared by deleteImageIfExists(null)"
+        )
     }
 
     private class FakeFileManager(private val storage: MutableList<String>) : FileManager {
@@ -130,13 +144,6 @@ internal class MonsterRegistrationFileManagerImplTest {
             return "file://$fileName"
         }
 
-        override suspend fun createZipFile(
-            zipEntryFiles: List<FileEntry>,
-            zipFileName: String
-        ): String {
-            TODO("Not yet implemented")
-        }
-
         override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
             TODO("Not yet implemented")
         }
@@ -149,10 +156,8 @@ internal class MonsterRegistrationFileManagerImplTest {
             TODO("Not yet implemented")
         }
 
-        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
-        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> =
+            storage.toList()
     }
 
     private class FailingOnSaveFileManager(private val storage: MutableList<String>) : FileManager {
@@ -163,13 +168,6 @@ internal class MonsterRegistrationFileManagerImplTest {
             fileType: FileType,
         ): String = throw RuntimeException("disk full")
 
-        override suspend fun createZipFile(
-            zipEntryFiles: List<FileEntry>,
-            zipFileName: String
-        ): String {
-            TODO("Not yet implemented")
-        }
-
         override suspend fun getFileFromAppStorage(filePath: String): FileEntry {
             TODO("Not yet implemented")
         }
@@ -182,10 +180,8 @@ internal class MonsterRegistrationFileManagerImplTest {
             TODO("Not yet implemented")
         }
 
-        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = storage.toList()
-        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> =
+            storage.toList()
     }
 
     private class FakeClock : Clock {

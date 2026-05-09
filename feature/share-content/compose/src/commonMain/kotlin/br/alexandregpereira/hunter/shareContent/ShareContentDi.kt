@@ -57,6 +57,7 @@ val featureShareContentModule = module {
             get(),
             get(),
             get(),
+            get(),
         )
     }
     single {

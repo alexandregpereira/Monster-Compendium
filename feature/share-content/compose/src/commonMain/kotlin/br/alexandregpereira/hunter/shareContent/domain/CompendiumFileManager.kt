@@ -3,6 +3,7 @@ package br.alexandregpereira.hunter.shareContent.domain
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.file.ZipFileManager
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ContentInfoMapper
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapper
@@ -30,13 +31,14 @@ internal interface CompendiumFileManager {
 }
 
 internal class CompendiumFileManagerImpl(
+    private val zipFileManager: ZipFileManager,
     private val fileManager: FileManager,
     private val shareContentMapper: ShareContentMapper,
     private val contentInfoMapper: ContentInfoMapper,
 ) : CompendiumFileManager {
 
     override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
-        val files = fileManager.extractZipFile(zipFile.content)
+        val files = zipFileManager.extractZipFile(zipFile.content)
         val contentJsonByteArray = files.firstOrNull { it.name == "content.json" }
             ?.content
             ?: error("content.json not found in .compendium archive")
@@ -125,7 +127,7 @@ internal class CompendiumFileManagerImpl(
                 .encodeToByteArray()
         )
 
-        return fileManager.createZipFile(
+        return zipFileManager.createZipFile(
             zipEntryFiles = listOf(contentEntry, contentInfoEntry) +
                     compendiumFileContent.monsterImageFiles,
             zipFileName = fileName,

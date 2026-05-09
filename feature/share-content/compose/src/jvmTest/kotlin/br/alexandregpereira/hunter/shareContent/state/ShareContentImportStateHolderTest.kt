@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
+import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContentInfo
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.Dispatchers
@@ -62,63 +63,79 @@ internal class ShareContentImportStateHolderTest {
     }
 
     @Test
-    fun `Import OnStart with file bytes opens screen in loading state then shows extracted content`() = runTest {
-        val zipBytes = byteArrayOf(1, 2, 3)
-        val expectedContent = CompendiumFileContent(
-            name = "test.compendium",
-            shareContent = ShareContent(monsters = null, monstersLore = null, spells = null, monsterImages = null),
-            monsterImages = emptyList(),
-            sizeFormatted = "3 Bytes",
-        )
+    fun `Import OnStart with file bytes opens screen in loading state then shows extracted content`() =
+        runTest {
+            val zipBytes = byteArrayOf(1, 2, 3)
+            val expectedContent = CompendiumFileContent(
+                name = "test.compendium",
+                shareContent = ShareContent(
+                    monsters = null,
+                    monstersLore = null,
+                    spells = null,
+                    monsterImages = null
+                ),
+                monsterImages = emptyList(),
+                contentInfo = CompendiumFileContentInfo(
+                    contentTitle = null,
+                    contentDescription = null,
+                    fileSizeFormatted = "3 Bytes"
+                ),
+            )
 
-        val stateHolder = createStateHolder(
-            compendiumFileManager = object : CompendiumFileManager {
-                override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
-                    assertEquals("test.compendium", zipFile.name)
-                    assertEquals(zipBytes.toList(), zipFile.content.toList())
-                    return expectedContent
+            val stateHolder = createStateHolder(
+                compendiumFileManager = object : CompendiumFileManager {
+                    override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
+                        assertEquals("test.compendium", zipFile.name)
+                        assertEquals(zipBytes.toList(), zipFile.content.toList())
+                        return expectedContent
+                    }
+
+                    override suspend fun getCompendiumFileContent(
+                        fileName: String,
+                        shareContent: ShareContent
+                    ): CompendiumFileContent =
+                        TODO("Not needed")
+
+                    override suspend fun createCompendiumFile(
+                        fileName: String,
+                        compendiumFileContent: CompendiumFileContent
+                    ): String =
+                        TODO("Not needed")
+
+                    override suspend fun deleteCompendiumFiles() {}
                 }
+            )
 
-                override suspend fun getCompendiumFileContent(fileName: String, shareContent: ShareContent): CompendiumFileContent =
-                    TODO("Not needed")
+            // Let the state holder's init subscribe to the event flow before dispatching
+            advanceUntilIdle()
 
-                override suspend fun createCompendiumFile(compendiumFileContent: CompendiumFileContent): String =
-                    TODO("Not needed")
-
-                override suspend fun deleteCompendiumFiles() {}
+            val states = testFlow(stateHolder.state) {
+                eventDispatcher.dispatchEvent(
+                    ShareContentEvent.Import.OnStart(
+                        compendiumFileName = "test.compendium",
+                        compendiumFileBytes = zipBytes,
+                    )
+                )
             }
-        )
 
-        // Let the state holder's init subscribe to the event flow before dispatching
-        advanceUntilIdle()
-
-        val states = testFlow(stateHolder.state) {
-            eventDispatcher.dispatchEvent(
-                ShareContentEvent.Import.OnStart(
-                    compendiumFileName = "test.compendium",
-                    compendiumFileBytes = zipBytes,
+            // Initial state
+            states.assertNextValue(ShareContentImportState(strings = ShareContentImportStrings()))
+            // Opened with loading
+            states.assertNextValue(
+                ShareContentImportState(
+                    isOpen = true,
+                    isLoading = true,
+                    strings = ShareContentImportStrings(),
                 )
             )
+            // Content extracted
+            val finalState = states.removeAt(0)
+            assertTrue(finalState.isOpen)
+            assertNull(finalState.importError)
+            assertEquals(false, finalState.isLoading)
+            assertNotNull(finalState.importExtractedState)
+            assertEquals("test.compendium", finalState.importExtractedState.fileName)
         }
-
-        // Initial state
-        states.assertNextValue(ShareContentImportState(strings = ShareContentImportStrings()))
-        // Opened with loading
-        states.assertNextValue(
-            ShareContentImportState(
-                isOpen = true,
-                isLoading = true,
-                strings = ShareContentImportStrings(),
-            )
-        )
-        // Content extracted
-        val finalState = states.removeAt(0)
-        assertTrue(finalState.isOpen)
-        assertNull(finalState.importError)
-        assertEquals(false, finalState.isLoading)
-        assertNotNull(finalState.importExtractedState)
-        assertEquals("test.compendium", finalState.importExtractedState.fileName)
-    }
 
     @Test
     fun `Import OnStart without file bytes opens screen without loading`() = runTest {
@@ -158,15 +175,30 @@ internal class ShareContentImportStateHolderTest {
         override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent =
             CompendiumFileContent(
                 name = zipFile.name,
-                shareContent = ShareContent(monsters = null, monstersLore = null, spells = null, monsterImages = null),
+                shareContent = ShareContent(
+                    monsters = null,
+                    monstersLore = null,
+                    spells = null,
+                    monsterImages = null
+                ),
                 monsterImages = emptyList(),
-                sizeFormatted = "0 Bytes",
+                contentInfo = CompendiumFileContentInfo(
+                    contentTitle = null,
+                    contentDescription = null,
+                    fileSizeFormatted = "0 Bytes"
+                ),
             )
 
-        override suspend fun getCompendiumFileContent(fileName: String, shareContent: ShareContent): CompendiumFileContent =
+        override suspend fun getCompendiumFileContent(
+            fileName: String,
+            shareContent: ShareContent
+        ): CompendiumFileContent =
             TODO("Not needed")
 
-        override suspend fun createCompendiumFile(compendiumFileContent: CompendiumFileContent): String =
+        override suspend fun createCompendiumFile(
+            fileName: String,
+            compendiumFileContent: CompendiumFileContent
+        ): String =
             TODO("Not needed")
 
         override suspend fun deleteCompendiumFiles() {}
