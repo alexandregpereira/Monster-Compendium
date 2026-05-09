@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 
 interface AppEventDispatcher {
     fun observeEvents()
-    fun onFileOpen(name: String, bytes: ByteArray)
+    fun onFileOpen(filePath: String)
 }
 
 internal class AppEventDispatcherImpl(
@@ -42,11 +42,10 @@ internal class AppEventDispatcherImpl(
         observeShareContentEvents()
     }
 
-    override fun onFileOpen(name: String, bytes: ByteArray) {
+    override fun onFileOpen(filePath: String) {
         shareContentEventDispatcher.dispatchEvent(
             ShareContentEvent.Import.OnStart(
-                compendiumFileName = name,
-                compendiumFileBytes = bytes,
+                compendiumFilePath = filePath,
             )
         )
     }

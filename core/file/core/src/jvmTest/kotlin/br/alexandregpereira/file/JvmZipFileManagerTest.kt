@@ -39,27 +39,38 @@ class JvmZipFileManagerTest {
     fun setUp() {
         System.setProperty("user.home", tempFolder.root.absolutePath)
         fileManager = JvmFileManager(dispatcher = UnconfinedTestDispatcher())
-        zipFileManager = JvmZipFileManager(dispatcher = UnconfinedTestDispatcher())
+        zipFileManager = JvmZipFileManager(
+            fileManager = fileManager,
+            dispatcher = UnconfinedTestDispatcher(),
+        )
     }
 
     @Test
     fun `createZipFile and extractZipFile round-trip preserves all entries`() = runTest {
+        val contentBytes = """{"key":"value"}""".encodeToByteArray()
+        val goblinBytes = byteArrayOf(1, 2, 3)
+        val orcBytes = byteArrayOf(4, 5, 6, 7)
+
+        val contentFile = tempFolder.newFile("content.json").apply { writeBytes(contentBytes) }
+        val goblinFile = tempFolder.newFile("goblin.png").apply { writeBytes(goblinBytes) }
+        val orcFile = tempFolder.newFile("orc.webp").apply { writeBytes(orcBytes) }
+
         val entries = listOf(
-            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
-            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
-            FileEntry("orc.webp", byteArrayOf(4, 5, 6, 7)),
+            FileEntry("file://${contentFile.absolutePath}"),
+            FileEntry("file://${goblinFile.absolutePath}"),
+            FileEntry("file://${orcFile.absolutePath}"),
         )
 
         val path = zipFileManager.createZipFile(entries, "test.compendium")
-        val zipFile = fileManager.getFileFromAppStorage(path)
-        val extracted = zipFileManager.extractZipFile(zipFile.content)
+        val zipBytes = FileEntry(path).readBytes()
+        val extracted = zipFileManager.extractZipFile(zipBytes)
 
         assertEquals(3, extracted.size)
         assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals(contentBytes.toList(), extracted[0].readBytes().toList())
         assertEquals("goblin.png", extracted[1].name)
-        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+        assertEquals(goblinBytes.toList(), extracted[1].readBytes().toList())
         assertEquals("orc.webp", extracted[2].name)
-        assertEquals(entries[2].content.toList(), extracted[2].content.toList())
+        assertEquals(orcBytes.toList(), extracted[2].readBytes().toList())
     }
 }

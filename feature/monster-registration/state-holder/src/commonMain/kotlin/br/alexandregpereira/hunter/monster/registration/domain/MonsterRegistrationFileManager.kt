@@ -17,14 +17,16 @@
 
 package br.alexandregpereira.hunter.monster.registration.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.file.copyToAppStorage
 import kotlin.time.Clock
 
 internal interface MonsterRegistrationFileManager {
 
     suspend fun saveImage(
-        bytes: ByteArray,
+        file: FileEntry,
         imageName: String,
     ): String
 
@@ -42,16 +44,16 @@ internal class MonsterRegistrationFileManagerImpl(
     private var lastFileSaved: String? = null
 
     override suspend fun saveImage(
-        bytes: ByteArray,
+        file: FileEntry,
         imageName: String,
     ): String {
         val epochMilliSeconds = clock.now().toEpochMilliseconds()
         val fileNameWithTimestamp = "$imageName-$epochMilliSeconds.png"
-        val path = fileManager.saveFileToAppStorage(
-            bytes = bytes,
-            fileName = fileNameWithTimestamp,
+        val path = fileManager.copyToAppStorage(
+            file = file,
+            name = fileNameWithTimestamp,
             fileType = fileType,
-        )
+        ).filePath
         lastFileSaved?.let {
             try {
                 fileManager.deleteFileFromAppStorage(fileName = it, fileType = fileType)

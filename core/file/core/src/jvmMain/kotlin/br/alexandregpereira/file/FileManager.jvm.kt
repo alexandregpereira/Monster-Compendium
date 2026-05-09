@@ -48,27 +48,15 @@ internal class JvmFileManager(
     ): Unit = withContext(dispatcher) {
         filesDirectory(fileFolder = fileType.folder).deleteRecursively()
     }
+}
 
-    override suspend fun getFileFromAppStorage(filePath: String): FileEntry = withContext(dispatcher) {
-        File(filePath.removePrefix("file://")).let {
-            FileEntry(
-                name = it.name,
-                content = it.readBytes(),
-            )
-        }
-    }
+private fun filesDirectory(fileFolder: String): File = File(
+    System.getProperty("user.home"),
+    ".monster-compendium/$fileFolder"
+)
 
-    override suspend fun getFileNamesFromAppStorage(
-        fileType: FileType,
-    ): List<String> = withContext(dispatcher) {
-        val folder = filesDirectory(fileFolder = fileType.folder)
-        folder.listFiles()?.mapNotNull { file ->
-            file.name
-        }.orEmpty()
-    }
-
-    private fun filesDirectory(fileFolder: String): File = File(
-        System.getProperty("user.home"),
-        ".monster-compendium/$fileFolder"
-    )
+internal actual fun FileManager.getAppStorageFileFolderPath(fileFolder: String): String {
+    return filesDirectory(fileFolder).also {
+        it.mkdirs()
+    }.absolutePath
 }

@@ -52,26 +52,14 @@ internal class AndroidFileManager(
         filesDirectory(fileFolder = fileType.folder).deleteRecursively()
     }
 
-    override suspend fun getFileFromAppStorage(filePath: String): FileEntry = withContext(dispatcher) {
-        File(filePath.removePrefix("file://")).let {
-            FileEntry(
-                name = it.name,
-                content = it.readBytes(),
-            )
-        }
-    }
-
-    override suspend fun getFileNamesFromAppStorage(
-        fileType: FileType,
-    ): List<String> = withContext(dispatcher) {
-        val folder = filesDirectory(fileFolder = fileType.folder)
-        folder.listFiles()?.mapNotNull { file ->
-            file.name
-        }.orEmpty()
-    }
-
-    private fun filesDirectory(fileFolder: String): File = File(
+    internal fun filesDirectory(fileFolder: String): File = File(
         app.filesDir,
         fileFolder,
     )
+}
+
+internal actual fun FileManager.getAppStorageFileFolderPath(fileFolder: String): String {
+    return (this as AndroidFileManager).filesDirectory(fileFolder).also {
+        it.mkdirs()
+    }.absolutePath
 }

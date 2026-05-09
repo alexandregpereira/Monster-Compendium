@@ -42,6 +42,6 @@ internal class IosZipFileManager(
     override suspend fun extractZipFile(
         bytes: ByteArray
     ): List<FileEntry> = withContext(dispatcher) {
-        extractStoreZip(bytes)
+        fileManager.extractStoreZip(bytes)
     }
 }

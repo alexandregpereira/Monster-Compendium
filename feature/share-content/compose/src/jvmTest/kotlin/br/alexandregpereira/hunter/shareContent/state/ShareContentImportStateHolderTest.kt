@@ -65,7 +65,6 @@ internal class ShareContentImportStateHolderTest {
     @Test
     fun `Import OnStart with file bytes opens screen in loading state then shows extracted content`() =
         runTest {
-            val zipBytes = byteArrayOf(1, 2, 3)
             val expectedContent = CompendiumFileContent(
                 name = "test.compendium",
                 shareContent = ShareContent(
@@ -86,7 +85,6 @@ internal class ShareContentImportStateHolderTest {
                 compendiumFileManager = object : CompendiumFileManager {
                     override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
                         assertEquals("test.compendium", zipFile.name)
-                        assertEquals(zipBytes.toList(), zipFile.content.toList())
                         return expectedContent
                     }
 
@@ -112,8 +110,7 @@ internal class ShareContentImportStateHolderTest {
             val states = testFlow(stateHolder.state) {
                 eventDispatcher.dispatchEvent(
                     ShareContentEvent.Import.OnStart(
-                        compendiumFileName = "test.compendium",
-                        compendiumFileBytes = zipBytes,
+                        compendiumFilePath = "file:///tmp/test.compendium",
                     )
                 )
             }

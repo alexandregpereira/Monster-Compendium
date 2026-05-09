@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalForeignApi::class)
+
 package br.alexandregpereira.file
 
 import kotlinx.cinterop.BetaInteropApi
@@ -33,7 +35,7 @@ import platform.Foundation.NSUserDomainMask
 import platform.Foundation.create
 import platform.Foundation.writeToFile
 
-@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
+@OptIn(BetaInteropApi::class)
 internal class IosFileManager(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FileManager {
@@ -67,46 +69,27 @@ internal class IosFileManager(
         NSFileManager.defaultManager.removeItemAtPath(folderPath, error = null)
     }
 
-    override suspend fun getFileFromAppStorage(filePath: String): FileEntry = withContext(dispatcher) {
-        val path = filePath.removePrefix("file://")
-        val data = NSFileManager.defaultManager.contentsAtPath(path)
-            ?: error("File not found: $path")
-        ByteArray(data.length.toInt()).also { bytes ->
-            bytes.usePinned { pinned ->
-                platform.posix.memcpy(pinned.addressOf(0), data.bytes, data.length)
-            }
-        }.let {
-            FileEntry(
-                name = filePath.substringAfterLast("/"),
-                content = it,
-            )
-        }
-    }
 
-    override suspend fun getFileNamesFromAppStorage(
-        fileType: FileType,
-    ): List<String> = withContext(dispatcher) {
-        val folderPath = filesDirectory(fileFolder = fileType.folder)
-        NSFileManager.defaultManager.contentsOfDirectoryAtPath(
-            folderPath, error = null
-        )?.mapNotNull { file ->
-            file as? String
-        }.orEmpty()
-    }
+}
 
-    private fun filesDirectory(fileFolder: String): String {
-        val documents = NSSearchPathForDirectoriesInDomains(
-            NSDocumentDirectory, NSUserDomainMask, true
-        ).first() as String
-        return "$documents/$fileFolder"
-    }
+private fun createDirectoryAtPath(path: String) {
+    NSFileManager.defaultManager.createDirectoryAtPath(
+        path,
+        withIntermediateDirectories = true,
+        attributes = null,
+        error = null,
+    )
+}
 
-    private fun createDirectoryAtPath(path: String) {
-        NSFileManager.defaultManager.createDirectoryAtPath(
-            path,
-            withIntermediateDirectories = true,
-            attributes = null,
-            error = null,
-        )
+private fun filesDirectory(fileFolder: String): String {
+    val documents = NSSearchPathForDirectoriesInDomains(
+        NSDocumentDirectory, NSUserDomainMask, true
+    ).first() as String
+    return "$documents/$fileFolder"
+}
+
+internal actual fun FileManager.getAppStorageFileFolderPath(fileFolder: String): String {
+    return filesDirectory(fileFolder).also {
+        createDirectoryAtPath(it)
     }
 }

@@ -1,35 +1,50 @@
 package br.alexandregpereira.file
 
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.absolutePath
+import io.github.vinceglb.filekit.delete
 import io.github.vinceglb.filekit.name
 import io.github.vinceglb.filekit.readBytes
+import io.github.vinceglb.filekit.size
 
-class FileEntry(
-    val name: String,
-    val content: ByteArray,
+class FileEntry internal constructor(
+    internal val platformFile: PlatformFile,
 ) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
+    val name: String
+        get() = platformFile.name
 
-        other as FileEntry
+    val filePath: String
+        get() {
+            val raw = platformFile.absolutePath()
+            return if (raw.startsWith("/") || raw.startsWith("file://")) {
+                "file://" + raw.removePrefix("file://")
+            } else {
+                raw
+            }
+        }
 
-        if (name != other.name) return false
-        if (!content.contentEquals(other.content)) return false
+    val size: Long
+        get() = platformFile.size()
 
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + content.contentHashCode()
-        return result
+    override fun toString(): String {
+        return platformFile.absolutePath()
     }
 }
 
-suspend fun PlatformFile.toFileEntry(): FileEntry {
-    return FileEntry(
-        name = name,
-        content = readBytes(),
-    )
+suspend fun FileEntry.delete() {
+    platformFile.delete(mustExist = false)
+}
+
+fun FileEntry(
+    path: String,
+): FileEntry = FileEntry(
+    platformFile = PlatformFile(path.removePrefix("file://")),
+)
+
+suspend fun FileEntry.readBytes(): ByteArray {
+    return platformFile.readBytes()
+}
+
+fun PlatformFile.toFileEntry(): FileEntry {
+    return FileEntry(this)
 }

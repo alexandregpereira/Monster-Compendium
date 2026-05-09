@@ -18,22 +18,10 @@
 package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
-import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.addressOf
-import kotlinx.cinterop.usePinned
-import platform.Foundation.NSData
-import platform.posix.memcpy
 
-@OptIn(ExperimentalForeignApi::class)
-fun handleCompendiumFileOpen(name: String, data: NSData) {
-    val bytes = ByteArray(data.length.toInt()).also { byteArray ->
-        byteArray.usePinned { pinned ->
-            memcpy(pinned.addressOf(0), data.bytes, data.length)
-        }
-    }
+fun handleCompendiumFileOpen(name: String) {
     val eventDispatcher = appKoin().get<AppEventDispatcher>()
     eventDispatcher.onFileOpen(
-        name = name.substringAfterLast("/"),
-        bytes = bytes,
+        filePath = name,
     )
 }

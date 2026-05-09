@@ -28,19 +28,40 @@ import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.rules.TemporaryFolder
+import java.io.File
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ImportContentUseCaseTest {
 
+    @get:Rule
+    val tempFolder = TemporaryFolder()
+
+    private lateinit var originalUserHome: String
+
+    @Before
+    fun setUp() {
+        originalUserHome = System.getProperty("user.home")
+        System.setProperty("user.home", tempFolder.root.absolutePath)
+    }
+
+    @After
+    fun tearDown() {
+        System.setProperty("user.home", originalUserHome)
+    }
+
     @Test
     fun `when saveMonsters throws, all previously saved image files are deleted`() = runTest {
-        val savedFiles = mutableListOf<String>()
-        val deletedFiles = mutableListOf<String>()
+        val goblinFile = File(tempFolder.root, "goblin.png").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+        val orcFile = File(tempFolder.root, "orc.png").apply { writeBytes(byteArrayOf(4, 5, 6)) }
 
-        val imageFile1 = FileEntry("goblin.png", byteArrayOf(1, 2, 3))
-        val imageFile2 = FileEntry("orc.png", byteArrayOf(4, 5, 6))
+        val imageFile1 = FileEntry("file://${goblinFile.absolutePath}")
+        val imageFile2 = FileEntry("file://${orcFile.absolutePath}")
 
         val monster1 = MonsterFactory.createEmpty("goblin").copy(
             imageData = MonsterFactory.createEmpty("goblin").imageData.copy(url = "file://goblin.png")
@@ -77,14 +98,15 @@ class ImportContentUseCaseTest {
             saveSpells = { flowOf(Unit) },
             saveMonstersLore = { _, _ -> flowOf(Unit) },
             saveMonsterImages = { },
-            fileManager = TrackingFileManager(savedFiles, deletedFiles),
+            fileManager = TrackingFileManager(),
             analytics = NoOpAnalytics(),
         )
 
         val result = runCatching { useCase(content) }
 
         assertTrue(result.isFailure)
-        assertEquals(setOf("goblin.png", "orc.png"), deletedFiles.toSet())
+        assertFalse(goblinFile.exists(), "Expected goblin.png source file to be deleted")
+        assertFalse(orcFile.exists(), "Expected orc.png source file to be deleted")
     }
 
     private class FailingSaveMonstersUseCase : SaveMonstersUseCase {
@@ -93,30 +115,18 @@ class ImportContentUseCaseTest {
         }
     }
 
-    private class TrackingFileManager(
-        private val saved: MutableList<String>,
-        private val deleted: MutableList<String>,
-    ) : FileManager {
+    private class TrackingFileManager : FileManager {
         override suspend fun saveFileToAppStorage(
             bytes: ByteArray,
             fileName: String,
             fileType: FileType
         ): String {
-            saved.add(fileName)
             return "file://$fileName"
         }
 
-        override suspend fun getFileFromAppStorage(filePath: String): FileEntry =
-            TODO("Not needed")
-
-        override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
-            deleted.add(fileName)
-        }
+        override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {}
 
         override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {}
-
-        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> =
-            emptyList()
     }
 
     private class NoOpAnalytics : Analytics {

@@ -17,8 +17,10 @@
 
 package br.alexandregpereira.hunter.monster.detail.domain
 
+import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.file.copyToAppStorage
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.SaveMonstersLoreUseCase
@@ -74,15 +76,15 @@ internal fun CloneMonsterUseCase(
         }
         .map { (monster, monsterLore) ->
             val monsterWithNewPath = if (monster.imageData.url.startsWith("file://")) {
-                val currentImage = fileManager.getFileFromAppStorage(
-                    filePath = monster.imageData.url
+                val currentImage = FileEntry(
+                    path = monster.imageData.url
                 )
                 val fileExtension = currentImage.name.substringAfterLast(".")
-                val newPath = fileManager.saveFileToAppStorage(
-                    bytes = currentImage.content,
-                    fileName = "${monster.index}.$fileExtension",
+                val newPath = fileManager.copyToAppStorage(
+                    file = currentImage,
+                    name = "${monster.index}.$fileExtension",
                     fileType = FileType.IMAGE,
-                )
+                ).filePath
                 monster.copy(
                     imageData = monster.imageData.copy(url = newPath)
                 )
