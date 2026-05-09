@@ -51,12 +51,25 @@ class ImportContentUseCaseTest {
 
         val content = CompendiumFileContent(
             name = "test.compendium",
-            shareContent = ShareContent(monsters = listOf(monster1, monster2), monstersLore = null, spells = null, monsterImages = null),
+            shareContent = ShareContent(
+                monsters = listOf(monster1, monster2),
+                monstersLore = null,
+                spells = null,
+                monsterImages = null
+            ),
             monsterImages = listOf(
-                CompendiumFileContent.MonsterImage(index = "goblin", name = "Goblin", file = imageFile1),
+                CompendiumFileContent.MonsterImage(
+                    index = "goblin",
+                    name = "Goblin",
+                    file = imageFile1
+                ),
                 CompendiumFileContent.MonsterImage(index = "orc", name = "Orc", file = imageFile2),
             ),
-            sizeFormatted = "100 KB",
+            contentInfo = CompendiumFileContentInfo(
+                contentTitle = null,
+                contentDescription = null,
+                fileSizeFormatted = "100 KB"
+            ),
         )
 
         val useCase = ImportContentUseCase(
@@ -84,13 +97,14 @@ class ImportContentUseCaseTest {
         private val saved: MutableList<String>,
         private val deleted: MutableList<String>,
     ) : FileManager {
-        override suspend fun saveFileToAppStorage(bytes: ByteArray, fileName: String, fileType: FileType): String {
+        override suspend fun saveFileToAppStorage(
+            bytes: ByteArray,
+            fileName: String,
+            fileType: FileType
+        ): String {
             saved.add(fileName)
             return "file://$fileName"
         }
-
-        override suspend fun createZipFile(zipEntryFiles: List<FileEntry>, zipFileName: String): String =
-            TODO("Not needed")
 
         override suspend fun getFileFromAppStorage(filePath: String): FileEntry =
             TODO("Not needed")
@@ -101,10 +115,8 @@ class ImportContentUseCaseTest {
 
         override suspend fun deleteAllFilesFromAppStorage(fileType: FileType) {}
 
-        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> = emptyList()
-
-        override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> =
-            TODO("Not needed")
+        override suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String> =
+            emptyList()
     }
 
     private class NoOpAnalytics : Analytics {

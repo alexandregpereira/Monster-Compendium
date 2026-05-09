@@ -23,7 +23,9 @@ import br.alexadregpereira.hunter.shareContent.event.exportEvents
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.search.removeAccents
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
+import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContentInfo
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
 import br.alexandregpereira.hunter.state.MutableActionHandler
@@ -89,10 +91,26 @@ internal class ShareContentExportStateHolder(
     }
 
     fun onExportToFile() {
+        val contentTitle = state.value.exportExtractedState?.contentTitle
+        val contentDescription = state.value.exportExtractedState?.contentDescription
+        val fileName = state.value.exportExtractedState?.fileName
         analytics.track(
             eventName = "Export content - export to file",
+            params = mapOf(
+                "contentTitle" to state.value.exportExtractedState?.contentTitle,
+                "contentSize" to state.value.exportExtractedState?.contentSize,
+                "contentEntriesSize" to state.value.exportExtractedState?.contentEntries?.size,
+            )
         )
-        val compendiumFileContent = compendiumFileContent
+        this.compendiumFileContent = compendiumFileContent?.let {
+            it.copy(
+                contentInfo = it.contentInfo.copy(
+                    contentTitle = contentTitle?.trim(),
+                    contentDescription = contentDescription?.trim(),
+                )
+            )
+        }
+        val compendiumFileContent = this.compendiumFileContent
         if (compendiumFileContent == null) {
             analytics.logException(IllegalStateException("contentToExport must not be null"))
             return
@@ -100,7 +118,10 @@ internal class ShareContentExportStateHolder(
         featureScope.launch {
             val filePath = runCatching {
                 withContext(dispatcher) {
-                    compendiumFileManager.createCompendiumFile(compendiumFileContent)
+                    compendiumFileManager.createCompendiumFile(
+                        fileName = fileName ?: compendiumFileContent.name,
+                        compendiumFileContent = compendiumFileContent,
+                    )
                 }
             }.getOrElse { cause ->
                 analytics.logException(cause)
@@ -112,16 +133,36 @@ internal class ShareContentExportStateHolder(
         }
     }
 
+    fun onEditContentTitle(title: String) {
+        setState {
+            copy(
+                exportExtractedState = exportExtractedState?.copy(
+                    contentTitle = title,
+                    fileName = compendiumFileContent?.createFileNameWithExtension(title)
+                        ?: exportExtractedState.fileName,
+                ),
+            )
+        }
+    }
+
+    fun onEditContentDescription(description: String) {
+        setState {
+            copy(
+                exportExtractedState = exportExtractedState?.copy(
+                    contentDescription = description,
+                ),
+            )
+        }
+    }
+
     private fun fetchMonsterContentToExport(
         monsterIndexes: List<String>,
     ) {
         flow {
             emit(getMonstersShareContent(monsterIndexes))
         }.map { shareContent ->
-            val timestamp = clock.now().epochSeconds
-            val fileName = "content-$timestamp.compendium"
             compendiumFileManager.getCompendiumFileContent(
-                fileName = fileName,
+                fileName = createFileName(),
                 shareContent = shareContent,
             )
         }.onEach {
@@ -136,11 +177,29 @@ internal class ShareContentExportStateHolder(
                     copy(
                         isLoading = false,
                         exportExtractedState = compendiumFileContent.toShareContentExtractedState(
-                            strings = strings.extractedStrings
+                            strings = strings.extractedStrings,
+                            isContentEditable = true,
                         )
                     )
                 }
             }
             .launchIn(featureScope)
+    }
+
+    private fun CompendiumFileContent.createFileNameWithExtension(title: String?): String {
+        return contentInfo.createFileNameWithExtension(title)
+    }
+
+    private fun CompendiumFileContentInfo.createFileNameWithExtension(title: String?): String {
+        val fileName: String = title?.replace(" ", "-")
+            ?.removeAccents()
+            ?.replace(Regex("[^a-zA-Z0-9_\\-]"), "")
+            ?.takeUnless { it.isBlank() } ?: createFileName()
+        return "$fileName.${fileExtension}".lowercase()
+    }
+
+    private fun createFileName(): String {
+        val timestamp = clock.now().epochSeconds
+        return "content-$timestamp"
     }
 }

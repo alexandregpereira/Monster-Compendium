@@ -53,18 +53,6 @@ internal class IosFileManager(
         "file://$filePath"
     }
 
-    override suspend fun createZipFile(
-        zipEntryFiles: List<FileEntry>,
-        zipFileName: String,
-    ): String = withContext(dispatcher) {
-        val zipBytes = createStoreZip(zipEntryFiles)
-        saveFileToAppStorage(
-            bytes = zipBytes,
-            fileName = zipFileName,
-            fileType = FileType.COMPENDIUM,
-        )
-    }
-
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
         withContext(dispatcher) {
             val filePath = "${filesDirectory(fileFolder = fileType.folder)}/$fileName"
@@ -93,10 +81,6 @@ internal class IosFileManager(
                 content = it,
             )
         }
-    }
-
-    override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> = withContext(dispatcher) {
-        extractStoreZip(bytes)
     }
 
     override suspend fun getFileNamesFromAppStorage(

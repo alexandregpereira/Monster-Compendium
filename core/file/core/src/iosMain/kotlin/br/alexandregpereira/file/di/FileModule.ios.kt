@@ -19,8 +19,16 @@ package br.alexandregpereira.file.di
 
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.IosFileManager
+import br.alexandregpereira.file.IosZipFileManager
+import br.alexandregpereira.file.ZipFileManager
 import org.koin.core.scope.Scope
 
 internal actual fun Scope.createFileManager(): FileManager {
     return IosFileManager()
+}
+
+internal actual fun Scope.createZipFileManager(): ZipFileManager {
+    return IosZipFileManager(
+        fileManager = get(),
+    )
 }

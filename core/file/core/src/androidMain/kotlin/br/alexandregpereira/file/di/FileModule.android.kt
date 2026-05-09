@@ -19,11 +19,19 @@ package br.alexandregpereira.file.di
 
 import android.app.Application
 import br.alexandregpereira.file.AndroidFileManager
+import br.alexandregpereira.file.AndroidZipFileManager
 import br.alexandregpereira.file.FileManager
+import br.alexandregpereira.file.ZipFileManager
 import org.koin.core.scope.Scope
 
 internal actual fun Scope.createFileManager(): FileManager {
     return AndroidFileManager(
+        app = get<Application>(),
+    )
+}
+
+internal actual fun Scope.createZipFileManager(): ZipFileManager {
+    return AndroidZipFileManager(
         app = get<Application>(),
     )
 }

@@ -126,25 +126,4 @@ class JvmFileManagerTest {
 
         assertEquals(listOf("goblin.png"), names)
     }
-
-    @Test
-    fun `createZipFile and extractZipFile round-trip preserves all entries`() = runTest {
-        val entries = listOf(
-            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
-            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
-            FileEntry("orc.webp", byteArrayOf(4, 5, 6, 7)),
-        )
-
-        val path = fileManager.createZipFile(entries, "test.compendium")
-        val zipFile = fileManager.getFileFromAppStorage(path)
-        val extracted = fileManager.extractZipFile(zipFile.content)
-
-        assertEquals(3, extracted.size)
-        assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
-        assertEquals("goblin.png", extracted[1].name)
-        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
-        assertEquals("orc.webp", extracted[2].name)
-        assertEquals(entries[2].content.toList(), extracted[2].content.toList())
-    }
 }

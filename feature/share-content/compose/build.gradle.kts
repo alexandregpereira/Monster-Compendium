@@ -34,6 +34,7 @@ multiplatform {
         implementation(project(":core:event"))
         implementation(project(":core:file:compose"))
         implementation(project(":core:ktx"))
+        implementation(project(":core:search"))
         implementation(project(":core:state-holder:compose"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":ui:core"))

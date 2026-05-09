@@ -23,4 +23,9 @@ internal data class ShareContentExportState(
     val exportError: Boolean = false,
     val exportExtractedState: ShareContentExtractedState? = null,
     val strings: ShareContentExportStrings = ShareContentExportStrings(),
-)
+) {
+    val exportButtonEnabled: Boolean = exportExtractedState?.fileName?.let {
+        it.startsWith(".").not() && it.isNotBlank()
+            && it.contains("/").not() && it.contains("\\").not()
+    } ?: false
+}

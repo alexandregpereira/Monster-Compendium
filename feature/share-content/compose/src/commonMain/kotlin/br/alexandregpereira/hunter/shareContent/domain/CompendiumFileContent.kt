@@ -9,7 +9,7 @@ internal data class CompendiumFileContent(
     val name: String,
     val shareContent: ShareContent,
     val monsterImages: List<MonsterImage>,
-    val sizeFormatted: String,
+    val contentInfo: CompendiumFileContentInfo,
 ) {
     val monsterImageFiles: List<FileEntry> = monsterImages.map {
         it.file
@@ -19,9 +19,18 @@ internal data class CompendiumFileContent(
     val monstersLoreQuantity: Int get() = shareContent.monstersLore?.size ?: 0
     val spellsQuantity: Int get() = shareContent.spells?.size ?: 0
 
+    val sizeFormatted: String get() = contentInfo.fileSizeFormatted
+
     data class MonsterImage(
         val index: MonsterIndex?,
         val name: String?,
         val file: FileEntry,
     )
 }
+
+internal data class CompendiumFileContentInfo(
+    val contentTitle: String?,
+    val contentDescription: String?,
+    val fileSizeFormatted: String,
+    val fileExtension: String = "compendium",
+)

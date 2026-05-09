@@ -25,11 +25,6 @@ interface FileManager {
         fileType: FileType
     ): String
 
-    suspend fun createZipFile(
-        zipEntryFiles: List<FileEntry>,
-        zipFileName: String,
-    ): String
-
     suspend fun getFileFromAppStorage(filePath: String): FileEntry
 
     suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType)
@@ -37,6 +32,4 @@ interface FileManager {
     suspend fun deleteAllFilesFromAppStorage(fileType: FileType)
 
     suspend fun getFileNamesFromAppStorage(fileType: FileType): List<String>
-
-    suspend fun extractZipFile(bytes: ByteArray): List<FileEntry>
 }

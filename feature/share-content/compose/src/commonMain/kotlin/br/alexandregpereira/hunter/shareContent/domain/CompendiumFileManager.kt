@@ -3,7 +3,9 @@ package br.alexandregpereira.hunter.shareContent.domain
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
+import br.alexandregpereira.file.ZipFileManager
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.shareContent.domain.mapper.ContentInfoMapper
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ShareContentMapper
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import br.alexandregpereira.ktx.runCatching
@@ -21,6 +23,7 @@ internal interface CompendiumFileManager {
     ): CompendiumFileContent
 
     suspend fun createCompendiumFile(
+        fileName: String,
         compendiumFileContent: CompendiumFileContent,
     ): String
 
@@ -28,12 +31,14 @@ internal interface CompendiumFileManager {
 }
 
 internal class CompendiumFileManagerImpl(
+    private val zipFileManager: ZipFileManager,
     private val fileManager: FileManager,
     private val shareContentMapper: ShareContentMapper,
+    private val contentInfoMapper: ContentInfoMapper,
 ) : CompendiumFileManager {
 
     override suspend fun getCompendiumFileContent(zipFile: FileEntry): CompendiumFileContent {
-        val files = fileManager.extractZipFile(zipFile.content)
+        val files = zipFileManager.extractZipFile(zipFile.content)
         val contentJsonByteArray = files.firstOrNull { it.name == "content.json" }
             ?.content
             ?: error("content.json not found in .compendium archive")
@@ -57,12 +62,23 @@ internal class CompendiumFileManagerImpl(
             monsters = shareContent.monsters,
         )
 
-        val contentSize = contentJsonByteArray.size + images.sumOf { it.file.content.size }
+        val contentInfo = runCatching {
+            val contentInfoJson = files.firstOrNull { it.name == "contentInfo.json" }
+                ?.content?.decodeToString()
+                ?: error("contentInfo.json not found in .compendium archive")
+            contentInfoMapper.decodeFromJson(contentInfoJson)
+        }.getOrNull() ?: CompendiumFileContentInfo(
+            contentTitle = null,
+            contentDescription = null,
+            fileSizeFormatted = (contentJsonByteArray.size +
+                    images.sumOf { it.file.content.size }).getSizeFormatted(),
+        )
+
         return CompendiumFileContent(
             name = zipFile.name,
             shareContent = shareContent,
             monsterImages = images,
-            sizeFormatted = contentSize.getSizeFormatted(),
+            contentInfo = contentInfo,
         )
     }
 
@@ -82,24 +98,39 @@ internal class CompendiumFileManagerImpl(
             it.content.size
         }
 
+        val contentInfo = CompendiumFileContentInfo(
+            contentTitle = "",
+            contentDescription = "",
+            fileSizeFormatted = contentSize.getSizeFormatted(),
+        )
+
         return CompendiumFileContent(
-            name = fileName,
+            name = "$fileName.${contentInfo.fileExtension}",
             shareContent = shareContent,
             monsterImages = monsterImages.getMonsterImages(shareContent.monsters),
-            sizeFormatted = contentSize.getSizeFormatted(),
+            contentInfo = contentInfo,
         )
     }
 
     override suspend fun createCompendiumFile(
+        fileName: String,
         compendiumFileContent: CompendiumFileContent
     ): String {
-        val jsonEntry = FileEntry(
+        val contentEntry = FileEntry(
             name = "content.json",
-            content = shareContentMapper.encodeToJson(compendiumFileContent.shareContent).encodeToByteArray(),
+            content = shareContentMapper.encodeToJson(compendiumFileContent.shareContent)
+                .encodeToByteArray(),
         )
-        return fileManager.createZipFile(
-            zipEntryFiles = listOf(jsonEntry) + compendiumFileContent.monsterImageFiles,
-            zipFileName = compendiumFileContent.name,
+        val contentInfoEntry = FileEntry(
+            name = "contentInfo.json",
+            content = contentInfoMapper.encodeToJson(compendiumFileContent.contentInfo)
+                .encodeToByteArray()
+        )
+
+        return zipFileManager.createZipFile(
+            zipEntryFiles = listOf(contentEntry, contentInfoEntry) +
+                    compendiumFileContent.monsterImageFiles,
+            zipFileName = fileName,
         )
     }
 
@@ -170,5 +201,4 @@ internal class CompendiumFileManagerImpl(
             else -> "$this Bytes"
         }
     }
-
 }

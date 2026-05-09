@@ -20,12 +20,7 @@ package br.alexandregpereira.file
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.BufferedOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
-import java.util.zip.ZipOutputStream
 
 internal class JvmFileManager(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
@@ -40,22 +35,6 @@ internal class JvmFileManager(
             .apply { mkdirs() }
             .let { File(it, fileName).also { f -> f.writeBytes(bytes) } }
             .absolutePath
-    }
-
-    override suspend fun createZipFile(
-        zipEntryFiles: List<FileEntry>,
-        zipFileName: String,
-    ): String = withContext(dispatcher) {
-        val folder = filesDirectory(fileFolder = FileType.COMPENDIUM.folder).apply { mkdirs() }
-        val zipFile = File(folder, zipFileName)
-        ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
-            zipEntryFiles.forEach {
-                zos.putNextEntry(ZipEntry(it.name))
-                zos.write(it.content)
-                zos.closeEntry()
-            }
-        }
-        "file://${zipFile.absolutePath}"
     }
 
     override suspend fun deleteFileFromAppStorage(fileName: String, fileType: FileType) {
@@ -77,21 +56,6 @@ internal class JvmFileManager(
                 content = it.readBytes(),
             )
         }
-    }
-
-    override suspend fun extractZipFile(bytes: ByteArray): List<FileEntry> = withContext(dispatcher) {
-        val result = mutableListOf<FileEntry>()
-        ZipInputStream(bytes.inputStream()).use { zip ->
-            var entry = zip.nextEntry
-            while (entry != null) {
-                if (!entry.isDirectory) {
-                    result.add(FileEntry(name = entry.name, content = zip.readBytes()))
-                }
-                zip.closeEntry()
-                entry = zip.nextEntry
-            }
-        }
-        result
     }
 
     override suspend fun getFileNamesFromAppStorage(

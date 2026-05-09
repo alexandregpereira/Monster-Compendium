@@ -7,8 +7,10 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
 internal data class ShareContentExtractedState(
+    val contentTitle: String? = null,
+    val isContentEditable: Boolean = false,
+    val contentDescription: String? = null,
     val fileName: String = "",
-    val isFileNameEditable: Boolean = false,
     val contentSize: String = "",
     val contentEntries: ImmutableList<ShareContentExtractedEntryState> = persistentListOf(),
 )
@@ -22,7 +24,8 @@ internal data class ShareContentExtractedEntryState(
 )
 
 internal fun CompendiumFileContent.toShareContentExtractedState(
-    strings: ShareContentExtractedStrings
+    strings: ShareContentExtractedStrings,
+    isContentEditable: Boolean = false,
 ): ShareContentExtractedState {
     val contentEntries = buildContentEntries(
         shareContent = this.shareContent,
@@ -31,7 +34,10 @@ internal fun CompendiumFileContent.toShareContentExtractedState(
     )
 
     return ShareContentExtractedState(
-        fileName = this.name,
+        contentTitle = contentInfo.contentTitle,
+        contentDescription = contentInfo.contentDescription,
+        fileName = name,
+        isContentEditable = isContentEditable,
         contentSize = this.sizeFormatted,
         contentEntries = contentEntries,
     )

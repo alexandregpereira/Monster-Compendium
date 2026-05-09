@@ -26,6 +26,12 @@ interface ShareContentExtractedStrings {
     val monsterLore: String
     val monsters: String
     val monster: String
+    val title: String
+    val titleOptional: String
+    val description: String
+    val descriptionOptional: String
+    val file: String
+    val size: String
 }
 
 internal data class ShareContentExtractedEnStrings(
@@ -37,6 +43,12 @@ internal data class ShareContentExtractedEnStrings(
     override val monsterLore: String = "Lore entry",
     override val monsters: String = "Creatures",
     override val monster: String = "Creature",
+    override val title: String = "Title",
+    override val titleOptional: String = "Title (optional)",
+    override val description: String = "Description",
+    override val descriptionOptional: String = "Description (optional)",
+    override val file: String = "File",
+    override val size: String = "Size",
 ) : ShareContentExtractedStrings
 
 internal data class ShareContentExtractedPtStrings(
@@ -48,6 +60,12 @@ internal data class ShareContentExtractedPtStrings(
     override val monsterLore: String = "Mitologia",
     override val monsters: String = "Criaturas",
     override val monster: String = "Criatura",
+    override val title: String = "Título",
+    override val titleOptional: String = "Título (opcional)",
+    override val description: String = "Descrição",
+    override val descriptionOptional: String = "Descrição (opcional)",
+    override val file: String = "Arquivo",
+    override val size: String = "Tamanho",
 ) : ShareContentExtractedStrings
 
 
@@ -60,4 +78,10 @@ internal data class ShareContentExtractedEsStrings(
     override val monsterLore: String = "Historia",
     override val monsters: String = "Creatures",
     override val monster: String = "Creature",
+    override val title: String = "Título",
+    override val titleOptional: String = "Título (opcional)",
+    override val description: String = "Descripción",
+    override val descriptionOptional: String = "Descripción (opcional)",
+    override val file: String = "Archivo",
+    override val size: String = "Tamaño",
 ) : ShareContentExtractedStrings
