@@ -17,103 +17,139 @@
 
 package br.alexandregpereira.file
 
-import kotlin.test.Test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class StoreZipTest {
 
+    @get:Rule
+    val tempFolder = TemporaryFolder()
+
+    private lateinit var originalUserHome: String
+    private lateinit var fileManager: JvmFileManager
+
+    @Before
+    fun setUp() {
+        originalUserHome = System.getProperty("user.home")
+        System.setProperty("user.home", tempFolder.root.absolutePath)
+        fileManager = JvmFileManager(dispatcher = UnconfinedTestDispatcher())
+    }
+
+    @After
+    fun tearDown() {
+        System.setProperty("user.home", originalUserHome)
+    }
+
+    private fun createTempEntry(name: String, bytes: ByteArray): FileEntry {
+        val file = tempFolder.newFile(name).apply { writeBytes(bytes) }
+        return FileEntry("file://${file.absolutePath}")
+    }
+
     @Test
-    fun `createStoreZip and extractStoreZip round-trip with single entry`() {
-        val entries = listOf(
-            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
-        )
+    fun `createStoreZip and extractStoreZip round-trip with single entry`() = runTest {
+        val contentBytes = """{"key":"value"}""".encodeToByteArray()
+        val entries = listOf(createTempEntry("content.json", contentBytes))
 
         val zip = createStoreZip(entries)
-        val extracted = extractStoreZip(zip)
+        val extracted = fileManager.extractStoreZip(zip)
 
         assertEquals(1, extracted.size)
         assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals(contentBytes.toList(), extracted[0].readBytes().toList())
     }
 
     @Test
-    fun `createStoreZip and extractStoreZip round-trip with multiple entries`() {
+    fun `createStoreZip and extractStoreZip round-trip with multiple entries`() = runTest {
+        val contentBytes = """{"key":"value"}""".encodeToByteArray()
+        val goblinBytes = byteArrayOf(1, 2, 3)
+        val orcBytes = byteArrayOf(4, 5, 6, 7)
         val entries = listOf(
-            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
-            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
-            FileEntry("orc.webp", byteArrayOf(4, 5, 6, 7)),
+            createTempEntry("content.json", contentBytes),
+            createTempEntry("goblin.png", goblinBytes),
+            createTempEntry("orc.webp", orcBytes),
         )
 
         val zip = createStoreZip(entries)
-        val extracted = extractStoreZip(zip)
+        val extracted = fileManager.extractStoreZip(zip)
 
         assertEquals(3, extracted.size)
         assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals(contentBytes.toList(), extracted[0].readBytes().toList())
         assertEquals("goblin.png", extracted[1].name)
-        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+        assertEquals(goblinBytes.toList(), extracted[1].readBytes().toList())
         assertEquals("orc.webp", extracted[2].name)
-        assertEquals(entries[2].content.toList(), extracted[2].content.toList())
+        assertEquals(orcBytes.toList(), extracted[2].readBytes().toList())
     }
 
     @Test
-    fun `createStoreZip output is readable by JVM ZipInputStream`() {
+    fun `createStoreZip output is readable by JVM ZipInputStream`() = runTest {
+        val contentBytes = """{"hello":"world"}""".encodeToByteArray()
+        val imageBytes = byteArrayOf(1, 2, 3)
         val entries = listOf(
-            FileEntry("content.json", """{"hello":"world"}""".encodeToByteArray()),
-            FileEntry("image.png", byteArrayOf(1, 2, 3)),
+            createTempEntry("content.json", contentBytes),
+            createTempEntry("image.png", imageBytes),
         )
 
         val zip = createStoreZip(entries)
-        val extracted = mutableListOf<FileEntry>()
+        val extractedContent = mutableMapOf<String, ByteArray>()
         java.util.zip.ZipInputStream(zip.inputStream()).use { zis ->
             var entry = zis.nextEntry
             while (entry != null) {
-                extracted.add(FileEntry(name = entry.name, content = zis.readBytes()))
+                extractedContent[entry.name] = zis.readBytes()
                 zis.closeEntry()
                 entry = zis.nextEntry
             }
         }
 
-        assertEquals(2, extracted.size)
-        assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
-        assertEquals("image.png", extracted[1].name)
-        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+        assertEquals(2, extractedContent.size)
+        assertEquals(contentBytes.toList(), extractedContent["content.json"]?.toList())
+        assertEquals(imageBytes.toList(), extractedContent["image.png"]?.toList())
     }
 
     @Test
-    fun `createStoreZip with empty entry list produces valid empty ZIP`() {
+    fun `createStoreZip with empty entry list produces valid empty ZIP`() = runTest {
         val zip = createStoreZip(emptyList())
-        val extracted = extractStoreZip(zip)
+        val extracted = fileManager.extractStoreZip(zip)
         assertEquals(emptyList(), extracted)
     }
 
     @Test
-    fun `JVM ZipOutputStream STORED zip is readable by extractStoreZip`() {
+    fun `JVM ZipOutputStream STORED zip is readable by extractStoreZip`() = runTest {
+        val contentBytes = """{"key":"value"}""".encodeToByteArray()
+        val goblinBytes = byteArrayOf(1, 2, 3)
         val entries = listOf(
-            FileEntry("content.json", """{"key":"value"}""".encodeToByteArray()),
-            FileEntry("goblin.png", byteArrayOf(1, 2, 3)),
+            createTempEntry("content.json", contentBytes),
+            createTempEntry("goblin.png", goblinBytes),
         )
         val baos = java.io.ByteArrayOutputStream()
         java.util.zip.ZipOutputStream(baos).use { zos ->
             entries.forEach {
-                val crc = java.util.zip.CRC32().also { c -> c.update(it.content) }
+                val bytes = it.readBytes()
+                val crc = java.util.zip.CRC32().also { c -> c.update(bytes) }
                 val entry = java.util.zip.ZipEntry(it.name).also { e ->
                     e.method = java.util.zip.ZipEntry.STORED
-                    e.size = it.content.size.toLong()
-                    e.compressedSize = it.content.size.toLong()
+                    e.size = bytes.size.toLong()
+                    e.compressedSize = bytes.size.toLong()
                     e.crc = crc.value
                 }
                 zos.putNextEntry(entry)
-                zos.write(it.content)
+                zos.write(bytes)
                 zos.closeEntry()
             }
         }
-        val extracted = extractStoreZip(baos.toByteArray())
+        val extracted = fileManager.extractStoreZip(baos.toByteArray())
         assertEquals(2, extracted.size)
         assertEquals("content.json", extracted[0].name)
-        assertEquals(entries[0].content.toList(), extracted[0].content.toList())
+        assertEquals(contentBytes.toList(), extracted[0].readBytes().toList())
         assertEquals("goblin.png", extracted[1].name)
-        assertEquals(entries[1].content.toList(), extracted[1].content.toList())
+        assertEquals(goblinBytes.toList(), extracted[1].readBytes().toList())
     }
 }

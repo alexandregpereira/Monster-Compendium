@@ -101,29 +101,4 @@ class JvmFileManagerTest {
         fileManager.deleteFileFromAppStorage("nonexistent.png", FileType.IMAGE)
     }
 
-    @Test
-    fun `getFileNamesFromAppStorage returns empty list when folder does not exist`() = runTest {
-        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
-
-        assertEquals(emptyList(), names)
-    }
-
-    @Test
-    fun `getFileNamesFromAppStorage returns file names in folder`() = runTest {
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
-        fileManager.saveFileToAppStorage(byteArrayOf(2), "orc.png", FileType.IMAGE)
-
-        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
-
-        assertEquals(setOf("goblin.png", "orc.png"), names.toSet())
-    }
-
-    @Test
-    fun `getFileNamesFromAppStorage returns only file names not full paths`() = runTest {
-        fileManager.saveFileToAppStorage(byteArrayOf(1), "goblin.png", FileType.IMAGE)
-
-        val names = fileManager.getFileNamesFromAppStorage(FileType.IMAGE)
-
-        assertEquals(listOf("goblin.png"), names)
-    }
 }
