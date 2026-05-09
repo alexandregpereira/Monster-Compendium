@@ -24,12 +24,17 @@ internal suspend fun createStoreZip(
 ): ByteArray {
     val zip = ZipBuilder()
     val localHeaderOffsets = IntArray(zipEntryFiles.size)
+    val entriesBytes = Array(zipEntryFiles.size) { ByteArray(0) }
+    val entriesCrcs = IntArray(zipEntryFiles.size)
 
     zipEntryFiles.forEachIndexed { index, entry ->
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.readBytes())
-        val size = entry.size.toInt()
+        val bytes = entry.readBytes()
+        val crc = crc32(bytes)
+        val size = bytes.size
 
+        entriesBytes[index] = bytes
+        entriesCrcs[index] = crc
         localHeaderOffsets[index] = zip.size()
 
         // Local file header
@@ -45,15 +50,15 @@ internal suspend fun createStoreZip(
         zip.le16(nameBytes.size)
         zip.le16(0)
         zip.bytes(nameBytes)
-        zip.bytes(entry.readBytes())
+        zip.bytes(bytes)
     }
 
     val centralDirOffset = zip.size()
 
     zipEntryFiles.forEachIndexed { index, entry ->
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.readBytes())
-        val size = entry.size.toInt()
+        val crc = entriesCrcs[index]
+        val size = entriesBytes[index].size
 
         // Central directory file header
         zip.le32(0x02014b50)

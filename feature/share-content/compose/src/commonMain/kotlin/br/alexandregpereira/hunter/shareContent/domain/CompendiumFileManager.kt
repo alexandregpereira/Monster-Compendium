@@ -4,6 +4,7 @@ import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.file.FileManager
 import br.alexandregpereira.file.FileType
 import br.alexandregpereira.file.ZipFileManager
+import br.alexandregpereira.file.delete
 import br.alexandregpereira.file.readBytes
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ContentInfoMapper
@@ -133,11 +134,17 @@ internal class CompendiumFileManagerImpl(
             FileEntry(it)
         }
 
-        return zipFileManager.createZipFile(
-            zipEntryFiles = listOf(contentEntry, contentInfoEntry) +
-                    compendiumFileContent.monsterImageFiles,
-            zipFileName = fileName,
-        )
+        return try {
+            zipFileManager.createZipFile(
+                zipEntryFiles = listOf(contentEntry, contentInfoEntry) +
+                        compendiumFileContent.monsterImageFiles,
+                zipFileName = fileName,
+            )
+        } catch (e: Exception) {
+            contentEntry.delete()
+            contentInfoEntry.delete()
+            throw e
+        }
     }
 
     override suspend fun deleteCompendiumFiles() {
@@ -147,15 +154,7 @@ internal class CompendiumFileManagerImpl(
     private fun List<String>.accumulateImages(
         monsterImages: MutableList<FileEntry>,
     ) {
-        this.forEach { filePath ->
-            val file = runCatching {
-                FileEntry(filePath)
-            }.getOrNull()
-
-            file?.let {
-                monsterImages.add(file)
-            }
-        }
+        forEach { filePath -> monsterImages.add(FileEntry(filePath)) }
     }
 
     private fun List<Monster>.getOriginalImagePaths(): List<String> {

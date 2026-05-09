@@ -14,8 +14,14 @@ class FileEntry internal constructor(
         get() = platformFile.name
 
     val filePath: String
-        get() = "file://" + platformFile.absolutePath()
-            .removePrefix("file://")
+        get() {
+            val raw = platformFile.absolutePath()
+            return if (raw.startsWith("/") || raw.startsWith("file://")) {
+                "file://" + raw.removePrefix("file://")
+            } else {
+                raw
+            }
+        }
 
     val size: Long
         get() = platformFile.size()

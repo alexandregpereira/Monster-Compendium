@@ -23,9 +23,11 @@ struct MonsterCompendiumApp: App {
                 .onOpenURL { url in
                     _ = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
-                    FileOpenHandlerKt.handleCompendiumFileOpen(
-                        name: url.lastPathComponent,
-                    )
+                    let tempURL = FileManager.default.temporaryDirectory
+                        .appendingPathComponent(url.lastPathComponent)
+                    try? FileManager.default.removeItem(at: tempURL)
+                    guard (try? FileManager.default.copyItem(at: url, to: tempURL)) != nil else { return }
+                    FileOpenHandlerKt.handleCompendiumFileOpen(name: tempURL.absoluteString)
                 }
         }
     }

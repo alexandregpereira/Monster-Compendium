@@ -43,7 +43,8 @@ internal class AndroidZipFileManager(
         val zipFile = File(folder, zipFileName)
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zos ->
             zipEntryFiles.forEach {
-                val crc = CRC32().also { c -> c.update(it.readBytes()) }
+                val bytes = it.readBytes()
+                val crc = CRC32().also { c -> c.update(bytes) }
                 val entry = ZipEntry(it.name).also { e ->
                     e.method = ZipEntry.STORED
                     e.size = it.size
@@ -51,7 +52,7 @@ internal class AndroidZipFileManager(
                     e.crc = crc.value
                 }
                 zos.putNextEntry(entry)
-                zos.write(it.readBytes())
+                zos.write(bytes)
                 zos.closeEntry()
             }
         }

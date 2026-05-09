@@ -18,9 +18,7 @@
 package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
-import kotlinx.cinterop.ExperimentalForeignApi
 
-@OptIn(ExperimentalForeignApi::class)
 fun handleCompendiumFileOpen(name: String) {
     val eventDispatcher = appKoin().get<AppEventDispatcher>()
     eventDispatcher.onFileOpen(
