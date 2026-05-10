@@ -124,6 +124,7 @@ internal fun MonsterStatus.toEntityStatus(): MonsterEntityStatus {
         MonsterStatus.Clone -> MonsterEntityStatus.Clone
         MonsterStatus.Edited -> MonsterEntityStatus.Edited
         MonsterStatus.Imported -> MonsterEntityStatus.Imported
+        MonsterStatus.Created -> MonsterEntityStatus.Created
     }
 }
 
@@ -170,6 +171,7 @@ internal fun MonsterEntity.toDomain(
             MonsterEntityStatus.Clone -> MonsterStatus.Clone
             MonsterEntityStatus.Edited -> MonsterStatus.Edited
             MonsterEntityStatus.Imported -> MonsterStatus.Imported
+            MonsterEntityStatus.Created -> MonsterStatus.Created
         },
         speed = Speed(hover = false, values = emptyList()),
         abilityScores = emptyList(),

@@ -29,7 +29,7 @@ fun List<Monster>.appendMonsterImages(
     return map { monster ->
         val monsterImage = monsterImagesMap[monster.index] ?: MonsterImage(
             monsterIndex = monster.index,
-            backgroundColor = Color(light = "#FAF9F8", dark = "#262626"),
+            backgroundColor = Color.createDefault(),
             isHorizontalImage = false,
             imageUrl = DEFAULT_IMAGE_BASE_URL + "default-${monster.type.name.lowercase()}.png",
             contentScale = null,
@@ -38,10 +38,7 @@ fun List<Monster>.appendMonsterImages(
         monster.copy(
             imageData = MonsterImageData(
                 url = monsterImage.imageUrl.orEmpty(),
-                backgroundColor = monsterImage.backgroundColor ?: Color(
-                    light = "#FAF9F8",
-                    dark = "#262626",
-                ),
+                backgroundColor = monsterImage.backgroundColor ?: Color.createDefault(),
                 isHorizontal = monsterImage.isHorizontalImage ?: false,
                 contentScale = monsterImage.contentScale,
                 isImageDataFromCustomDatabase = false,

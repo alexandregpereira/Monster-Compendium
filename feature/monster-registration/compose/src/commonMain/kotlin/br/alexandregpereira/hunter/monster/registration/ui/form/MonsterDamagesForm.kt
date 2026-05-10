@@ -53,7 +53,7 @@ internal fun LazyListScope.MonsterDamagesForm(
 
                 PickerField(
                     value = damage.typeName,
-                    label = strings.damageType,
+                    label = strings.damageTypeIcon,
                     options = damage.filteredOptions,
                     onValueChange = { optionIndex ->
                         onChanged(
@@ -69,7 +69,7 @@ internal fun LazyListScope.MonsterDamagesForm(
                 if (otherName != null) {
                     AppTextField(
                         text = otherName,
-                        label = damage.typeName,
+                        label = strings.damageTypeText,
                         onValueChange = { newValue ->
                             onChanged(newDamages.changeAt(i) { copy(otherName = newValue) })
                         }

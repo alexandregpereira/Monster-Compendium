@@ -112,4 +112,10 @@ internal class SettingsAnalytics(
             eventName = "Settings - spells click",
         )
     }
+
+    fun trackAddMonsterClick() {
+        analytics.track(
+            eventName = "Settings - add monster click",
+        )
+    }
 }

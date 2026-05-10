@@ -36,7 +36,8 @@ class GetMonstersBySectionUseCase internal constructor() {
     }
 
     private fun String.getFirstLetter(): String {
-        return this.first().uppercaseChar().toString().removeSpecialCharacters()
+        return this.firstOrNull()?.uppercaseChar()?.toString()?.removeSpecialCharacters()
+            .orEmpty()
     }
 
     private fun Flow<List<Monster>>.toMonsterCompendiumItems(): Flow<List<MonsterCompendiumItem>> {

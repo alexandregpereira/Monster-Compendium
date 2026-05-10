@@ -51,7 +51,7 @@ fun main(args: Array<String>) = application {
         title =  "Monster Compendium",
         icon = painterResource(Res.drawable.ic_launcher_foreground),
         state = rememberWindowState(
-            size = DpSize(1600.dp, 900.dp)
+            size = DpSize(600.dp, 1600.dp)
         ),
         onKeyEvent = onKeyEvent@ { keyEvent ->
             val keyPressedHandled = keyEvent.asKeyPressedHandled() ?: return@onKeyEvent false

@@ -32,6 +32,9 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.monster.event.MonsterEvent
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.registration.domain.GenerateNewMonster
 import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
@@ -84,6 +87,8 @@ class MonsterRegistrationStateHolder internal constructor(
     private val appLocalization: AppLocalization,
     private val spellResultListener: EventListener<SpellResult>,
     private val fileManager: MonsterRegistrationFileManager,
+    private val generateNewMonster: GenerateNewMonster,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -168,11 +173,17 @@ class MonsterRegistrationStateHolder internal constructor(
             }
             .onEach {
                 close()
+                val monsterIndex = state.value.monster.index
                 eventResultManager.dispatchEvent(
                     MonsterRegistrationResult.OnSaved(
-                        monsterIndex = state.value.monster.index
+                        monsterIndex = monsterIndex
                     )
                 )
+                if (isMonsterCreation()) {
+                    monsterEventDispatcher.dispatchEvent(
+                        event = MonsterEvent.OnVisibilityChanges.Show(index = monsterIndex)
+                    )
+                }
             }
             .launchIn(scope)
     }
@@ -281,12 +292,16 @@ class MonsterRegistrationStateHolder internal constructor(
             }
             .flowOn(dispatcher)
             .onEach { (monster, monsterLore) ->
-                originalMonster = monster
-                originalMonsterLore = monsterLore
-                setMetadata(monster, monsterLore?.entries.orEmpty())
-                updateMonster()
+                updateMonster(monster, monsterLore)
             }
             .launchIn(scope)
+    }
+
+    private fun updateMonster(monster: Monster, monsterLore: MonsterLore?) {
+        originalMonster = monster
+        originalMonsterLore = monsterLore
+        setMetadata(monster, monsterLore?.entries.orEmpty())
+        updateMonster()
     }
 
     private fun observeEvents() {
@@ -302,7 +317,7 @@ class MonsterRegistrationStateHolder internal constructor(
                         onCleared()
                     }
 
-                    is MonsterRegistrationEvent.ShowEdit -> {
+                    is MonsterRegistrationEvent.Show -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
                         observeSpellResultEvents()
@@ -313,11 +328,20 @@ class MonsterRegistrationStateHolder internal constructor(
                                 isTableContentOpen = false
                             )
                         }
-                        fetchMonster()
+                        if (event.monsterIndex != null) {
+                            fetchMonster()
+                        } else {
+                            generateNewMonsterState()
+                        }
                     }
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun generateNewMonsterState() {
+        val monster = generateNewMonster()
+        updateMonster(monster, monsterLore = null)
     }
 
     private fun deleteLastSavedImageIfExistsAndClose() {
@@ -365,6 +389,8 @@ class MonsterRegistrationStateHolder internal constructor(
     private fun close() {
         eventManager.dispatchEvent(MonsterRegistrationEvent.Hide)
     }
+
+    private fun isMonsterCreation(): Boolean = params.value.monsterIndex == null
 }
 
 internal data class Metadata(

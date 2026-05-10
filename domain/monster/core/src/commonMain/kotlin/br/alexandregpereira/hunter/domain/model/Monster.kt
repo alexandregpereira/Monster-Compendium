@@ -65,7 +65,7 @@ data class Monster(
 }
 
 enum class MonsterStatus {
-    Original, Edited, Clone, Imported
+    Original, Edited, Clone, Imported, Created
 }
 
 data class ChallengeRating(
@@ -112,7 +112,14 @@ enum class MonsterImageContentScale {
 data class Color(
     val light: String,
     val dark: String
-)
+) {
+    companion object {
+        fun createDefault() = Color(
+            light = "#FAF9F8",
+            dark = "#262626",
+        )
+    }
+}
 
 fun Monster.isComplete() = abilityScores.isNotEmpty()
 

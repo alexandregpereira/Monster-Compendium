@@ -111,6 +111,7 @@ internal class SaveMonsterUseCaseImpl(
 
             MonsterStatus.Edited,
             MonsterStatus.Imported,
+            MonsterStatus.Created,
             MonsterStatus.Clone -> this
         }
     }

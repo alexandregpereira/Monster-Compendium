@@ -215,6 +215,7 @@ class MonsterDetailStateHolder internal constructor(
         setState { HideOptions }
     }
 
+    @Suppress("UnusedFlow")
     fun onOptionClicked(option: MonsterDetailOptionState) {
         analytics.trackMonsterDetailOptionClicked(option)
         setState { HideOptions }
@@ -229,7 +230,7 @@ class MonsterDetailStateHolder internal constructor(
                 analytics.trackMonsterDetailEditClicked(monsterIndex)
                 setState { HideOptions }
                 monsterRegistrationEventDispatcher.dispatchEvent(
-                    MonsterRegistrationEvent.ShowEdit(monsterIndex)
+                    MonsterRegistrationEvent.Show(monsterIndex)
                 )
             }
 
@@ -404,6 +405,7 @@ class MonsterDetailStateHolder internal constructor(
         val editOption = when (monster.status) {
             MonsterStatus.Original -> listOf(Edit(strings))
             MonsterStatus.Imported,
+            MonsterStatus.Created,
             MonsterStatus.Clone -> listOf(Edit(strings), Delete(strings))
             MonsterStatus.Edited -> listOf(Edit(strings), ResetToOriginal(strings))
         }

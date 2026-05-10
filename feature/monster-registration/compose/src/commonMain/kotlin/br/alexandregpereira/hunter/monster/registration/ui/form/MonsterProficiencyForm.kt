@@ -45,7 +45,7 @@ internal fun LazyListScope.MonsterProficiencyForm(
             formItem(key = keys.next()) {
                 AppTextField(
                     text = proficiency.name,
-                    label = strings.name,
+                    label = strings.skill,
                     onValueChange = { newValue ->
                         onChanged(mutableProficiencies.changeAt(i) { copy(name = newValue) })
                     }
@@ -55,7 +55,7 @@ internal fun LazyListScope.MonsterProficiencyForm(
             formItem(key = keys.next()) {
                 AppTextField(
                     value = proficiency.modifier,
-                    label = proficiency.name,
+                    label = strings.modifier,
                     onValueChange = { newValue ->
                         onChanged(
                             mutableProficiencies.changeAt(i) {

@@ -39,6 +39,7 @@ interface SettingsStrings {
     val openGitHubProject: String
     val subscribePremium: String
     val spells: String
+    val addMonster: String
     val about: String
     val content: String
     val screenTitle: String
@@ -67,6 +68,7 @@ internal data class SettingsEnStrings(
     override val openGitHubProject: String = "Open GitHub Project",
     override val subscribePremium: String = "Remove ads with Premium",
     override val spells: String = "Spells",
+    override val addMonster: String = "Add Creature",
     override val about: String = "About",
     override val content: String = "Content",
     override val screenTitle: String = "Menu",
@@ -95,6 +97,7 @@ internal data class SettingsPtStrings(
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
     override val subscribePremium: String = "Remover anúncios com Premium",
     override val spells: String = "Magias",
+    override val addMonster: String = "Adicionar Criatura",
     override val about: String = "Sobre",
     override val content: String = "Conteúdo",
     override val screenTitle: String = "Menu",
@@ -123,6 +126,7 @@ internal data class SettingsEsStrings(
     override val openGitHubProject: String = "Abrir Proyecto en GitHub",
     override val subscribePremium: String = "Eliminar anuncios con Premium",
     override val spells: String = "Magias",
+    override val addMonster: String = "Agregar Criatura",
     override val about: String = "Acerca de",
     override val content: String = "Contenido",
     override val screenTitle: String = "Menu",

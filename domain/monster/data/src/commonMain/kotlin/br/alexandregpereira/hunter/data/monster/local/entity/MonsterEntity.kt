@@ -45,5 +45,5 @@ data class MonsterEntity(
 )
 
 enum class MonsterEntityStatus {
-    Original, Clone, Edited, Imported
+    Original, Clone, Edited, Imported, Created
 }

@@ -114,22 +114,25 @@ class GetMonsterDetailUseCase internal constructor(
                     )
                     loreSummary + ellipse
                 },
-                status = when (loreNullable?.status) {
-                    MonsterLoreStatus.Imported -> when (monsterWithLore.status) {
-                        MonsterStatus.Original -> MonsterStatus.Imported
-                        MonsterStatus.Edited,
-                        MonsterStatus.Clone,
-                        MonsterStatus.Imported -> monsterWithLore.status
+                status = loreNullable?.let {
+                    when (it.status) {
+                        MonsterLoreStatus.Imported -> when (monsterWithLore.status) {
+                            MonsterStatus.Original -> MonsterStatus.Imported
+                            MonsterStatus.Edited,
+                            MonsterStatus.Clone,
+                            MonsterStatus.Created,
+                            MonsterStatus.Imported -> monsterWithLore.status
+                        }
+                        MonsterLoreStatus.Edited -> when (monsterWithLore.status) {
+                            MonsterStatus.Original -> MonsterStatus.Edited
+                            MonsterStatus.Edited,
+                            MonsterStatus.Clone,
+                            MonsterStatus.Created,
+                            MonsterStatus.Imported -> monsterWithLore.status
+                        }
+                        MonsterLoreStatus.Original -> monsterWithLore.status
                     }
-                    MonsterLoreStatus.Edited -> when (monsterWithLore.status) {
-                        MonsterStatus.Original -> MonsterStatus.Edited
-                        MonsterStatus.Edited,
-                        MonsterStatus.Clone,
-                        MonsterStatus.Imported -> monsterWithLore.status
-                    }
-                    MonsterLoreStatus.Original,
-                    null -> monsterWithLore.status
-                }
+                } ?: monsterWithLore.status
             )
         }
     }

@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.settings.MenuItemIdState
 import br.alexandregpereira.hunter.settings.MenuItemState
 import br.alexandregpereira.hunter.settings.ui.resources.Res
+import br.alexandregpereira.hunter.settings.ui.resources.ic_add_monster
 import br.alexandregpereira.hunter.settings.ui.resources.ic_github
 import br.alexandregpereira.hunter.settings.ui.resources.ic_import
 import br.alexandregpereira.hunter.settings.ui.resources.ic_language
@@ -165,6 +166,7 @@ private fun MenuItemIdState.toIcon(): Painter {
         MenuItemIdState.IMPORT_CONTENT -> Res.drawable.ic_import
         MenuItemIdState.SPELLS -> Res.drawable.ic_spell
         MenuItemIdState.MANAGE_MONSTER_CONTENT -> Res.drawable.ic_monster
+        MenuItemIdState.ADD_MONSTER -> Res.drawable.ic_add_monster
     }
     return painterResource(resource = icon)
 }
