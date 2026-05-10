@@ -240,6 +240,14 @@ private fun MonsterRegistrationForm(
         onChanged = { intent.onMonsterChanged(monster.copy(spellcastings = it)) },
         onSpellClick = intent::onSpellClick,
     )
+    if (monster.isSourceVisible) {
+        MonsterStringValueForm(
+            keys = monster.keys,
+            title = { strings.source },
+            value = monster.source,
+            onChanged = { intent.onMonsterChanged(monster.copy(source = it)) },
+        )
+    }
     MonsterLoreForm(
         keys = monster.keys,
         title = { strings.monsterLoreFormTitle },

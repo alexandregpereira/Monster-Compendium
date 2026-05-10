@@ -151,6 +151,7 @@ interface MonsterRegistrationStrings {
     val savingThrowModifier: String
     val pickImageFromGallery: String
     val modifier: String
+    val source: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -284,6 +285,7 @@ internal data class MonsterRegistrationEnStrings(
     override val savingThrowModifier: String = "Saving throw modifier",
     override val pickImageFromGallery: String = "Pick from gallery",
     override val modifier: String = "Modifier",
+    override val source: String = "Source",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -417,6 +419,7 @@ internal data class MonsterRegistrationPtStrings(
     override val savingThrowModifier: String = "Modificador da salvaguarda",
     override val pickImageFromGallery: String = "Escolher da galeria",
     override val modifier: String = "Modificador",
+    override val source: String = "Fonte",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
@@ -552,6 +555,7 @@ internal data class MonsterRegistrationEsStrings(
     override val savingThrowModifier: String = "Modificador de tirada de salvación",
     override val pickImageFromGallery: String = "Elegir de la galería",
     override val modifier: String = "Modificador",
+    override val source: String = "Fuente",
 ) : MonsterRegistrationStrings
 
 internal fun AppLocalization.getStrings(): MonsterRegistrationStrings {

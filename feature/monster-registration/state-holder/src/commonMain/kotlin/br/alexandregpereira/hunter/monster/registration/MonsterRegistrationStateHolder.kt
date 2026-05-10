@@ -284,7 +284,11 @@ class MonsterRegistrationStateHolder internal constructor(
                 isSaveButtonEnabled = metadata.monster?.filterEmpties() != originalMonster
                         || metadata.monsterLoreEntries != originalMonsterLore?.entries.orEmpty(),
                 isLoading = false,
-                tableContent = SectionTitle.entries.associate { it.name to it.name(strings) },
+                tableContent = SectionTitle.entries.filter {
+                    if (it == SectionTitle.Source) {
+                        monsterState.isSourceVisible
+                    } else true
+                }.associate { it.name to it.name(strings) },
             )
         }
     }
