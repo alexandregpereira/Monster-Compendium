@@ -80,6 +80,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
                     android:host="*"
+                    android:mimeType="*/*"
                     android:pathSuffix=".compendium"
                     android:scheme="content"
                     tools:targetApi="31" />
@@ -89,6 +90,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
                     android:host="*"
+                    android:mimeType="*/*"
                     android:pathSuffix=".compendium"
                     android:scheme="file"
                     tools:targetApi="31" />
