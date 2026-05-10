@@ -23,5 +23,5 @@ data class MonsterLoreEntity(
 )
 
 enum class MonsterLoreEntityStatus {
-    Original, Imported, Edited
+    Original, Imported, Edited, Created
 }

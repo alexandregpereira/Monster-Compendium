@@ -23,6 +23,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:ktx"))
         implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:settings:core"))

@@ -141,7 +141,13 @@ internal class SaveMonsterUseCaseImpl(
                 name = monster.name,
                 entries = monsterLoreEntries,
                 status = if (hasChangeLore) {
-                    MonsterLoreStatus.Edited
+                    when (monster.status) {
+                        MonsterStatus.Created -> MonsterLoreStatus.Created
+                        MonsterStatus.Original,
+                        MonsterStatus.Clone,
+                        MonsterStatus.Imported,
+                        MonsterStatus.Edited -> MonsterLoreStatus.Edited
+                    }
                 } else {
                     originalMonsterLore.status
                 },

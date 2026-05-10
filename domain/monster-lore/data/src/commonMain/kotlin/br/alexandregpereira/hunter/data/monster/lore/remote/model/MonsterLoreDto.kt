@@ -26,4 +26,5 @@ data class MonsterLoreDto(
     val index: String,
     @SerialName("entries")
     val entries: List<MonsterLoreEntryDto>,
+    val status: String?,
 )

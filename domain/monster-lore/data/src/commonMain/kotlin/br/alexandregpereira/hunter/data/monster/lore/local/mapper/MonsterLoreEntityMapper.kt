@@ -34,6 +34,7 @@ internal fun MonsterLoreCompleteEntity.toDomain(): MonsterLore {
             MonsterLoreEntityStatus.Original -> MonsterLoreStatus.Original
             MonsterLoreEntityStatus.Imported -> MonsterLoreStatus.Imported
             MonsterLoreEntityStatus.Edited -> MonsterLoreStatus.Edited
+            MonsterLoreEntityStatus.Created -> MonsterLoreStatus.Created
         }
     )
 }
@@ -54,6 +55,7 @@ internal fun MonsterLore.toEntity(): MonsterLoreCompleteEntity {
                 MonsterLoreStatus.Original -> MonsterLoreEntityStatus.Original
                 MonsterLoreStatus.Imported -> MonsterLoreEntityStatus.Imported
                 MonsterLoreStatus.Edited -> MonsterLoreEntityStatus.Edited
+                MonsterLoreStatus.Created -> MonsterLoreEntityStatus.Created
             }
         ),
         entries = entries.map { it.toEntity(index) }

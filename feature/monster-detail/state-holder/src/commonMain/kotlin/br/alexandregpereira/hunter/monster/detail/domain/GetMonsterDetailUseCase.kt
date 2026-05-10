@@ -130,6 +130,7 @@ class GetMonsterDetailUseCase internal constructor(
                             MonsterStatus.Created,
                             MonsterStatus.Imported -> monsterWithLore.status
                         }
+                        MonsterLoreStatus.Created,
                         MonsterLoreStatus.Original -> monsterWithLore.status
                     }
                 } ?: monsterWithLore.status

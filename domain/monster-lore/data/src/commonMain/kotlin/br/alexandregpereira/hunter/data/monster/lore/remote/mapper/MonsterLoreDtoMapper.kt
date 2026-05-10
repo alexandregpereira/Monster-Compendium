@@ -22,6 +22,7 @@ import br.alexandregpereira.hunter.data.monster.lore.remote.model.MonsterLoreEnt
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreStatus
+import br.alexandregpereira.ktx.runCatching
 
 internal fun MonsterLoreDto.toDomain(): MonsterLore {
     return MonsterLore(
@@ -30,7 +31,9 @@ internal fun MonsterLoreDto.toDomain(): MonsterLore {
         entries = entries.mapIndexed { i, entry ->
             entry.toDomain(monsterLoreIndex = index, index = i)
         },
-        status = MonsterLoreStatus.Original,
+        status = status?.let {
+            runCatching { MonsterLoreStatus.valueOf(it) }.getOrNull()
+        } ?: MonsterLoreStatus.Original,
     )
 }
 
