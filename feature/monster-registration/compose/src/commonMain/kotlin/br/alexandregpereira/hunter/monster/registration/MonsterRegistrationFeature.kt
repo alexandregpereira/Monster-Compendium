@@ -20,13 +20,20 @@ package br.alexandregpereira.hunter.monster.registration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import br.alexandregpereira.hunter.monster.registration.di.MonsterRegistrationStateRecoveryQualifier
 import br.alexandregpereira.hunter.monster.registration.ui.MonsterRegistrationScreen
+import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
 fun MonsterRegistrationFeature(
     contentPadding: PaddingValues = PaddingValues(),
 ) {
+    StateRecoveryLaunchedEffect(
+        key = MonsterRegistrationStateRecoveryQualifier,
+        stateRecovery = koinInject(named(MonsterRegistrationStateRecoveryQualifier)),
+    )
     val viewModel: MonsterRegistrationStateHolder = koinInject()
     MonsterRegistrationScreen(
         state = viewModel.state.collectAsState().value,

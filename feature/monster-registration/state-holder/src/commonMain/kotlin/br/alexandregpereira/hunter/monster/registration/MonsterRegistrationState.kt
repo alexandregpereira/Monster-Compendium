@@ -33,7 +33,7 @@ data class MonsterRegistrationState(
 
 data class MonsterState(
     val index: String = "",
-    val info: MonsterInfoState = MonsterInfoState(),
+val info: MonsterInfoState = MonsterInfoState(),
     val stats: StatsState = StatsState(),
     val speedValues: List<SpeedValueState> = emptyList(),
     val abilityScores: List<AbilityScoreState> = emptyList(),

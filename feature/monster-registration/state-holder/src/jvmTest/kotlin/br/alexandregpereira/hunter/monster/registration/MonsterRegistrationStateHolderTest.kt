@@ -42,6 +42,7 @@ import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.detail.event.emptySpellDetailEventDispatcher
 import br.alexandregpereira.hunter.spell.event.SpellResult
 import br.alexandregpereira.hunter.state.StateHolderParams
+import br.alexandregpereira.hunter.ui.StateRecovery
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -444,6 +445,9 @@ internal class MonsterRegistrationStateHolderTest {
             appLocalization = mockk(relaxed = true),
             spellResultListener = spellResultListener,
             fileManager = fileManager,
+            generateNewMonster = mockk(relaxed = true),
+            monsterEventDispatcher = mockk(relaxed = true),
+            stateRecovery = StateRecovery(),
         )
     }
 }

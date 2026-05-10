@@ -56,6 +56,7 @@ import br.alexandregpereira.hunter.spell.event.collectOnChanged
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.StateHolderParams
 import br.alexandregpereira.hunter.state.UiModel
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -89,6 +90,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val fileManager: MonsterRegistrationFileManager,
     private val generateNewMonster: GenerateNewMonster,
     private val monsterEventDispatcher: MonsterEventDispatcher,
+    private val stateRecovery: StateRecovery,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -100,8 +102,16 @@ class MonsterRegistrationStateHolder internal constructor(
 
     init {
         observeEvents()
+        setState { updateState(stateRecovery) }
         if (state.value.isOpen) {
-            fetchMonster()
+            params.value = stateRecovery.getParams()
+            val recoveredMetadata = stateRecovery.getMetadata()
+            if (params.value.monsterIndex != null) {
+                fetchMonster()
+            } else {
+                setMetadata(recoveredMetadata.monster, recoveredMetadata.monsterLoreEntries)
+                updateMonster()
+            }
         }
     }
 
@@ -259,6 +269,7 @@ class MonsterRegistrationStateHolder internal constructor(
                     }.orEmpty()
                 )
                 metadata = metadata.copy(monster = newMonster)
+                stateRecovery.saveMetadata(metadata)
                 updateMonster()
             }
             .launchIn(scope)
@@ -311,7 +322,7 @@ class MonsterRegistrationStateHolder internal constructor(
                 when (event) {
                     MonsterRegistrationEvent.Hide -> {
                         analytics.trackMonsterRegistrationClosed(state.value.monster.index)
-                        setState { copy(isOpen = false, isSaveButtonEnabled = false) }
+                        setState { copy(isOpen = false, isSaveButtonEnabled = false).saveState(stateRecovery) }
                         fileManager.clear()
                         spellResultJob?.cancel()
                         onCleared()
@@ -320,13 +331,14 @@ class MonsterRegistrationStateHolder internal constructor(
                     is MonsterRegistrationEvent.Show -> {
                         analytics.trackMonsterRegistrationOpened(event.monsterIndex)
                         params.value = MonsterRegistrationParams(monsterIndex = event.monsterIndex)
+                        stateRecovery.saveParams(params.value)
                         observeSpellResultEvents()
                         setState {
                             copy(
                                 isOpen = true,
                                 strings = appLocalization.getStrings(),
                                 isTableContentOpen = false
-                            )
+                            ).saveState(stateRecovery)
                         }
                         if (event.monsterIndex != null) {
                             fetchMonster()
@@ -384,6 +396,7 @@ class MonsterRegistrationStateHolder internal constructor(
             filteredConditionTypes = filteredConditionTypes,
             monsterLoreEntries = monsterLoreEntries,
         )
+        stateRecovery.saveMetadata(metadata)
     }
 
     private fun close() {

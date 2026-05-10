@@ -35,12 +35,17 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationResult
 import br.alexandregpereira.hunter.spell.event.SpellResultDispatcher
 import br.alexandregpereira.hunter.state.StateHolderParams
+import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.Qualifier
+import org.koin.core.qualifier.named
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val monsterRegistrationModule = module {
+    single(named(MonsterRegistrationStateRecoveryQualifier)) {
+        StateRecovery()
+    }
     single<StateHolderParams<MonsterRegistrationParams>>(qualifier = paramsQualifier) {
         StateHolderParams(MonsterRegistrationParams())
     }
@@ -96,6 +101,7 @@ val monsterRegistrationModule = module {
             fileManager = get(),
             generateNewMonster = get(),
             monsterEventDispatcher = get(),
+            stateRecovery = get(named(MonsterRegistrationStateRecoveryQualifier)),
         )
     }
 
@@ -103,6 +109,8 @@ val monsterRegistrationModule = module {
         GenerateNewMonsterUseCase()
     }
 }
+
+const val MonsterRegistrationStateRecoveryQualifier = "MonsterRegistrationStateRecovery"
 
 object MonsterRegistrationQualifiers {
     val paramsQualifier: Qualifier = qualifier("MonsterRegistrationParams")
