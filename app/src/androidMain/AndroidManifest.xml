@@ -59,12 +59,13 @@
                     android:scheme="file" />
             </intent-filter>
             <!-- Samsung My Files sends ACTION_VIEW with a MediaStore URI (content://media/external/file/<id>)
-                 and an empty MIME type for unknown extensions, so path/mimeType filters never match.
+                 and no path containing the file extension, so pathPattern/pathSuffix filters never match.
+                 mimeType="*/*" is required — without it the filter does not match Samsung My Files intents.
                  This broad filter is intentionally required to support opening .compendium files from Samsung My Files. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="content" />
+                <data android:mimeType="*/*" android:scheme="content" />
             </intent-filter>
         </activity>
 
