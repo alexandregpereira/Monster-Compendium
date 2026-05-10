@@ -115,6 +115,7 @@ internal fun Monster.editBy(
         legendaryActions = state.legendaryActions.map { it.asDomain(strings) },
         reactions = state.reactions.map { it.asDomain() },
         spellcastings = state.spellcastings.map { it.asDomain(spellsMap) },
+        sourceName = state.source,
     )
 }
 

@@ -40,7 +40,7 @@ internal class JvmAmplitudeAnalytics(
     }
 
     override fun logException(throwable: Throwable) {
-        // No-op
+        throwable.printStackTrace()
     }
 
     private fun getDeviceIdFromFile(): String {

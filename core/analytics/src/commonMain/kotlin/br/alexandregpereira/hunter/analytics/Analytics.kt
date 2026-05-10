@@ -28,5 +28,7 @@ class EmptyAnalytics : Analytics {
 
     override fun track(eventName: String, params: Map<String, Any?>) {}
 
-    override fun logException(throwable: Throwable) {}
+    override fun logException(throwable: Throwable) {
+        throwable.printStackTrace()
+    }
 }

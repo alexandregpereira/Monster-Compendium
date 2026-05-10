@@ -57,6 +57,7 @@ internal enum class MenuItemIdState {
     IMPORT_CONTENT,
     SPELLS,
     MANAGE_MONSTER_CONTENT,
+    ADD_MONSTER,
 }
 
 internal data class SettingsState(

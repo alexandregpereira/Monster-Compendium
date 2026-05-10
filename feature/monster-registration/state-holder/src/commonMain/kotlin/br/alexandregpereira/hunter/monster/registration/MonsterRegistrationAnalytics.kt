@@ -20,7 +20,7 @@ package br.alexandregpereira.hunter.monster.registration
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
 
-internal fun Analytics.trackMonsterRegistrationOpened(monsterIndex: String) {
+internal fun Analytics.trackMonsterRegistrationOpened(monsterIndex: String?) {
     track(
         eventName = "MonsterRegistration - opened",
         params = mapOf(

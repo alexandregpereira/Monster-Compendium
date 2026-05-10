@@ -143,6 +143,7 @@ internal fun MonsterEntityStatus.toStatusInt(): Long {
         MonsterEntityStatus.Clone -> 1L
         MonsterEntityStatus.Edited -> 2L
         MonsterEntityStatus.Imported -> 3L
+        MonsterEntityStatus.Created -> 4L
     }
 }
 

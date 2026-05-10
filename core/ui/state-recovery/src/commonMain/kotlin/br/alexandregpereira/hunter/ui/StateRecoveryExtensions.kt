@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.data.monster.lore.local.entity
+package br.alexandregpereira.hunter.ui
 
-data class MonsterLoreEntity(
-    val monsterLoreIndex: String,
-    val status: MonsterLoreEntityStatus,
-)
+fun StateRecovery.getString(key: String): String? {
+    return this[key] as? String
+}
 
-enum class MonsterLoreEntityStatus {
-    Original, Imported, Edited, Created
+fun StateRecovery.getInt(key: String): Int? {
+    return this[key] as? Int
+}
+
+fun StateRecovery.getLong(key: String): Long? {
+    return this[key] as? Long
+}
+
+fun StateRecovery.getFloat(key: String): Float? {
+    return this[key] as? Float
+}
+
+fun StateRecovery.getDouble(key: String): Double? {
+    return this[key] as? Double
+}
+
+fun StateRecovery.getBoolean(key: String): Boolean? {
+    return this[key] as? Boolean
 }

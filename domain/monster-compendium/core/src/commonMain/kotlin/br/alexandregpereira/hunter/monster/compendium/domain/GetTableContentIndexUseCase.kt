@@ -77,15 +77,14 @@ fun List<String>.getAlphabetIndexFromCompendiumItemIndex(
     return indexOf(monsterFirstLetters[itemIndex])
 }
 
-private fun List<MonsterCompendiumItem>.mapToFirstLetters(): List<String> {
+internal fun List<MonsterCompendiumItem>.mapToFirstLetters(): List<String> {
     var lastLetter: Char? = null
-    return map { item ->
+    return mapNotNull { item ->
         when (item) {
             is MonsterCompendiumItem.Title -> {
-                item.value.first().also { lastLetter = it }.toString()
+                item.value.firstOrNull()?.also { lastLetter = it }?.toString()
             }
             is MonsterCompendiumItem.Item -> lastLetter?.toString()
-                ?: throw IllegalArgumentException("Letter not initialized")
         }
     }
 }

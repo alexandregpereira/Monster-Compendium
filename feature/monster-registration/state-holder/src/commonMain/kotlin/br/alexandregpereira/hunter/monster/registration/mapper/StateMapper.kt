@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Damage
 import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.domain.model.MonsterStatus
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.SavingThrow
 import br.alexandregpereira.hunter.domain.model.Skill
@@ -59,8 +60,13 @@ import br.alexandregpereira.hunter.monster.registration.TypeState
 
 internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState {
     if (monster == null) return MonsterState()
+    val sourceVisible = monster.status in setOf(
+        MonsterStatus.Clone, MonsterStatus.Imported, MonsterStatus.Created
+    )
     return MonsterState(
         index = monster.index,
+        source = monster.sourceName,
+        isSourceVisible = sourceVisible,
         info = MonsterInfoState(
             name = monster.name,
             subtitle = monster.subtitle,
@@ -105,7 +111,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
         reactions = monster.reactions.map { it.asState(strings) },
         spellcastings = monster.spellcastings.map { it.asState(strings) },
         loreEntries = monsterLoreEntries.map { it.asState() },
-    ).run { copy(keysList = createKeys()) }
+    ).run { copy(keysList = createKeys(isSourceVisible)) }
 }
 
 private fun MonsterLoreEntry.asState(): MonsterLoreEntryState {
@@ -371,11 +377,12 @@ internal fun SectionTitle.name(strings: MonsterRegistrationStrings): String {
         SectionTitle.Reactions -> strings.reactions
         SectionTitle.LegendaryActions -> strings.legendaryActions
         SectionTitle.Spellcastings -> strings.spells
+        SectionTitle.Source -> strings.source
         SectionTitle.MonsterLore -> strings.monsterLoreFormTitle
     }
 }
 
-private fun MonsterState.createKeys(): List<String> {
+private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
     val monster = this
     return buildList {
         add(SectionTitle.Image.name)
@@ -582,6 +589,10 @@ private fun MonsterState.createKeys(): List<String> {
                 ).also { addAll(it) }
             }
         ).also { addAll(it) }
+        if (isSourceVisible) {
+            add(SectionTitle.Source.name)
+            add("source-name")
+        }
         monster.loreEntries.createDynamicFormKeys(
             key = SectionTitle.MonsterLore,
             getItemKey = { it.key },

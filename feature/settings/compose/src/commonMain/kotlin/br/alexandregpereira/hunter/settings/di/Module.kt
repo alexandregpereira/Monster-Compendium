@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.settings.di
 
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import br.alexandregpereira.hunter.settings.SettingsAnalytics
@@ -51,6 +52,7 @@ val featureSettingsModule = module {
             spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
             spellDetailEventDispatcher = get(),
             spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
+            monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
             environment = get(),
         )
     }

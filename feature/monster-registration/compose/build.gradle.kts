@@ -26,6 +26,7 @@ multiplatform {
     commonMain {
         implementation(project(":core:file:compose"))
         implementation(project(":core:state-holder:compose"))
+        implementation(project(":core:ui:state-recovery"))
         implementation(project(":core:uuid"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))

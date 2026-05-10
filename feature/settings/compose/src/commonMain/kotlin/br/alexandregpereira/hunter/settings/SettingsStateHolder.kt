@@ -34,6 +34,8 @@ import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEv
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallEvent
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
@@ -83,6 +85,7 @@ internal class SettingsStateHolder(
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
+    private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
     private val environment: Environment,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
@@ -226,6 +229,11 @@ internal class SettingsStateHolder(
         paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
 
+    private fun onAddMonsterClick() {
+        analytics.trackAddMonsterClick()
+        monsterRegistrationEventDispatcher.dispatchEvent(MonsterRegistrationEvent.Show())
+    }
+
     private fun onSpellsClick() {
         analytics.trackSpellsClick()
         spellCompendiumEventDispatcher.dispatchEventResult(event = SpellCompendiumEvent.Show())
@@ -319,6 +327,7 @@ internal class SettingsStateHolder(
             MenuItemIdState.IMPORT_CONTENT -> onImport()
             MenuItemIdState.SPELLS -> onSpellsClick()
             MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
+            MenuItemIdState.ADD_MONSTER -> onAddMonsterClick()
         }
     }
 
@@ -328,6 +337,7 @@ internal class SettingsStateHolder(
         buildList {
             add(MenuItemIdState.SPELLS.toMenuItem(strings))
             add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
+            add(MenuItemIdState.ADD_MONSTER.toMenuItem(strings))
             add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
             add(MenuItemIdState.SETTINGS.toMenuItem(strings))
             add(MenuItemIdState.APPEARANCE_SETTINGS.toMenuItem(strings))
@@ -383,6 +393,11 @@ internal class SettingsStateHolder(
                 id = this,
                 text = strings.manageAdvancedSettings,
                 section = strings.settingsTitle,
+            )
+            MenuItemIdState.ADD_MONSTER -> MenuItemState(
+                id = this,
+                text = strings.addMonster,
+                section = strings.content,
             )
         }
     }

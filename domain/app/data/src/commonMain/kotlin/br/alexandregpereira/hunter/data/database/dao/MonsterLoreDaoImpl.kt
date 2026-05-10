@@ -78,6 +78,7 @@ internal class MonsterLoreDaoImpl(
                             MonsterLoreEntityStatus.Original -> 0L
                             MonsterLoreEntityStatus.Imported -> 1L
                             MonsterLoreEntityStatus.Edited -> 2L
+                            MonsterLoreEntityStatus.Created -> 3L
                         }
                     )
                 )
@@ -102,8 +103,9 @@ internal class MonsterLoreDaoImpl(
                 monsterLoreIndex = it.monsterLoreIndex,
                 status = when (it.status) {
                     0L -> MonsterLoreEntityStatus.Original
+                    1L -> MonsterLoreEntityStatus.Imported
                     2L -> MonsterLoreEntityStatus.Edited
-                    else -> MonsterLoreEntityStatus.Imported
+                    else -> MonsterLoreEntityStatus.Created
                 },
             ) to MonsterLoreEntryEntity(
                 id = it.id,

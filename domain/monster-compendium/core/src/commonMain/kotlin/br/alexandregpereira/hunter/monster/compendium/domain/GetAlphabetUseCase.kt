@@ -28,17 +28,4 @@ class GetAlphabetUseCase internal constructor() {
             emit(items.mapToFirstLetters().sorted().distinct())
         }
     }
-
-    private fun List<MonsterCompendiumItem>.mapToFirstLetters(): List<String> {
-        var lastLetter: Char? = null
-        return map { item ->
-            when (item) {
-                is MonsterCompendiumItem.Title -> {
-                    item.value.first().also { lastLetter = it }.toString()
-                }
-                is MonsterCompendiumItem.Item -> lastLetter?.toString()
-                    ?: throw IllegalArgumentException("Letter not initialized")
-            }
-        }
-    }
 }

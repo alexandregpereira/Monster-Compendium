@@ -76,6 +76,8 @@ interface MonsterRegistrationStrings {
     val abilityScores: String
     val attackBonus: String
     val damageType: String
+    val damageTypeIcon: String
+    val damageTypeText: String
     val damageDice: String
     val conditionType: String
     val header: String
@@ -91,6 +93,7 @@ interface MonsterRegistrationStrings {
     val hitPoints: String
     val hitDice: String
     val skills: String
+    val skill: String
     val damageVulnerabilities: String
     val damageResistances: String
     val damageImmunities: String
@@ -147,6 +150,8 @@ interface MonsterRegistrationStrings {
     val savingThrowType: String
     val savingThrowModifier: String
     val pickImageFromGallery: String
+    val modifier: String
+    val source: String
 }
 
 internal data class MonsterRegistrationEnStrings(
@@ -205,6 +210,8 @@ internal data class MonsterRegistrationEnStrings(
     override val abilityScores: String = "Ability Scores",
     override val attackBonus: String = "Attack Bonus",
     override val damageType: String = "Damage Type",
+    override val damageTypeIcon: String = "Damage Type Icon",
+    override val damageTypeText: String = "Damage Type Text",
     override val damageDice: String = "Damage Dice",
     override val conditionType: String = "Condition Type",
     override val header: String = "Header",
@@ -220,6 +227,7 @@ internal data class MonsterRegistrationEnStrings(
     override val hitPoints: String = "Hit Points",
     override val hitDice: String = "Hit Dice",
     override val skills: String = "Skills",
+    override val skill: String = "Skill",
     override val damageVulnerabilities: String = "Damage Vulnerabilities",
     override val damageResistances: String = "Damage Resistances",
     override val damageImmunities: String = "Damage Immunities",
@@ -276,6 +284,8 @@ internal data class MonsterRegistrationEnStrings(
     override val savingThrowType: String = "Saving throw type",
     override val savingThrowModifier: String = "Saving throw modifier",
     override val pickImageFromGallery: String = "Pick from gallery",
+    override val modifier: String = "Modifier",
+    override val source: String = "Source",
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
@@ -334,6 +344,8 @@ internal data class MonsterRegistrationPtStrings(
     override val abilityScores: String = "Atributos",
     override val attackBonus: String = "Ataque Bônus",
     override val damageType: String = "Tipo de Dano",
+    override val damageTypeIcon: String = "Icone do Tipo de Dano",
+    override val damageTypeText: String = "Texto do Tipo de Dano",
     override val damageDice: String = "Dados de Dano",
     override val conditionType: String = "Tipo de Condição",
     override val header: String = "Cabeçalho",
@@ -349,6 +361,7 @@ internal data class MonsterRegistrationPtStrings(
     override val hitPoints: String = "Pontos de Vida",
     override val hitDice: String = "Dados de Vida",
     override val skills: String = "Perícias",
+    override val skill: String = "Perícia",
     override val damageVulnerabilities: String = "Vulnerabilidades a Danos",
     override val damageResistances: String = "Resistências a Danos",
     override val damageImmunities: String = "Imunidades a Danos",
@@ -405,6 +418,8 @@ internal data class MonsterRegistrationPtStrings(
     override val savingThrowType: String = "Tipo de salvaguarda",
     override val savingThrowModifier: String = "Modificador da salvaguarda",
     override val pickImageFromGallery: String = "Escolher da galeria",
+    override val modifier: String = "Modificador",
+    override val source: String = "Fonte",
 ) : MonsterRegistrationStrings
 
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
@@ -465,6 +480,8 @@ internal data class MonsterRegistrationEsStrings(
     override val abilityScores: String = "Puntuaciones de Habilidad",
     override val attackBonus: String = "Bonificador de Ataque",
     override val damageType: String = "Tipo de Daño",
+    override val damageTypeIcon: String = "Icono de Tipo de Daño",
+    override val damageTypeText: String = "Texto de Tipo de Daño",
     override val damageDice: String = "Dados de Daño",
     override val conditionType: String = "Tipo de Condición",
     override val header: String = "Encabezado",
@@ -480,6 +497,7 @@ internal data class MonsterRegistrationEsStrings(
     override val hitPoints: String = "Puntos de Golpe",
     override val hitDice: String = "Dados de Golpe",
     override val skills: String = "Habilidades",
+    override val skill: String = "Habilidad",
     override val damageVulnerabilities: String = "Vulnerabilidades al Daño",
     override val damageResistances: String = "Resistencias al Daño",
     override val damageImmunities: String = "Inmunidades al Daño",
@@ -536,6 +554,8 @@ internal data class MonsterRegistrationEsStrings(
     override val savingThrowType: String = "Tipo de tirada de salvación",
     override val savingThrowModifier: String = "Modificador de tirada de salvación",
     override val pickImageFromGallery: String = "Elegir de la galería",
+    override val modifier: String = "Modificador",
+    override val source: String = "Fuente",
 ) : MonsterRegistrationStrings
 
 internal fun AppLocalization.getStrings(): MonsterRegistrationStrings {

@@ -12,5 +12,6 @@ internal fun MonsterLore.toDto(): MonsterLoreDto {
     return MonsterLoreDto(
         index = index,
         entries = entries.map { MonsterLoreEntryDto(title = it.title, description = it.description) },
+        status = status.name,
     )
 }
