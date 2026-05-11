@@ -6,7 +6,7 @@
 
 [![CI/CD](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml)
 
-Monsters Compendium is an free and open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on monsters from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
+Monsters Compendium is a open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on creatures from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
 
 ## Download
 
