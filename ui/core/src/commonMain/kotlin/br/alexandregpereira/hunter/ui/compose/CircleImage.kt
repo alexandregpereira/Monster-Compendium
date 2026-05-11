@@ -34,7 +34,7 @@ fun CircleImage(
     modifier: Modifier = Modifier,
     size: Dp = 48.dp,
     onClick: () -> Unit = {},
-    onLongClick: () -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
 ) {
     MonsterCoilImage(
         imageUrl = imageUrl,

@@ -23,16 +23,18 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExportState
 import br.alexandregpereira.hunter.shareContent.state.ShareContentExtractedState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
-import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.ScreenHeader
@@ -95,7 +97,11 @@ internal fun ShareContentExportScreen(
         state = loadingState,
         fillMaxSize = false,
         errorContent = {
-            EmptyScreenMessageContent(title = exportStrings.exportErrorTitle)
+            Text(
+                text = exportStrings.exportErrorTitle,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+            )
         }
     ) { extractedState ->
         Column(

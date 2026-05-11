@@ -70,7 +70,7 @@ internal fun Condition(
     painter = painterResource(condition.type.toIcon()),
     iconSize = iconSize,
     modifier = modifier.animatePressed(
-        pressedScale = .7f,
+        pressedScale = .85f,
         onClick = {
             onConditionClicked(condition.index)
         }

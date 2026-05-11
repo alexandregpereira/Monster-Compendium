@@ -22,7 +22,7 @@ internal fun DifficultyClass(
     value: Int,
     name: String,
     modifier: Modifier = Modifier,
-    iconSize: Dp = 56.dp,
+    iconSize: Dp = 48.dp,
     alpha: Float = 0.7f,
 ) = Column(
     modifier
@@ -45,7 +45,8 @@ internal fun DifficultyClass(
             Text(
                 text = value.toString(),
                 fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
+                textAlign = TextAlign.Center,
+                fontSize = 28.sp,
             )
         }
     }
@@ -62,5 +63,5 @@ internal fun DifficultyClass(
 @Preview(showBackground = true)
 @Composable
 private fun DifficultyClassPreview() = HunterTheme {
-    DifficultyClass(value = 10, name = "Dexterity")
+    DifficultyClass(value = 23, name = "Dexterity")
 }

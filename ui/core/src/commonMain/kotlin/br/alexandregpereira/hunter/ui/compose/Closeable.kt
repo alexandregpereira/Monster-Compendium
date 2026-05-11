@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -42,7 +43,9 @@ fun Closeable(
         modifier = modifier,
         visible = isOpen,
         enter = fadeIn(),
-        exit = fadeOut(),
+        exit = fadeOut(
+            animationSpec = tween(durationMillis = 50),
+        ),
     ) {
         val offset = getScrollOffset().absoluteValue
         val fraction = offset.coerceAtMost(300) / 300f

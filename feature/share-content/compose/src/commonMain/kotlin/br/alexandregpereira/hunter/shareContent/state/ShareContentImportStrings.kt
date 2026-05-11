@@ -24,6 +24,7 @@ interface ShareContentImportStrings {
     val importTitle: String
     val importInvalidContentErrorMessage: String
     val pickCompendiumFile: String
+    val pickCompendiumFileDescription: String
     val extractedStrings: ShareContentExtractedStrings
 }
 
@@ -32,6 +33,7 @@ internal data class ShareContentEnImportStrings(
     override val importTitle: String = "Import content",
     override val importInvalidContentErrorMessage: String = "Invalid content",
     override val pickCompendiumFile: String = "Pick compendium file",
+    override val pickCompendiumFileDescription: String = "Pick a .compendium file to add creatures, spells, and other content to your collection. These files are generated when you share content from Monster Compendium.",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEnStrings(),
 ) : ShareContentImportStrings
 
@@ -40,6 +42,7 @@ internal data class ShareContentPtImportStrings(
     override val importTitle: String = "Importar conteúdo",
     override val importInvalidContentErrorMessage: String = "Conteúdo inválido",
     override val pickCompendiumFile: String = "Escolher arquivo compendium",
+    override val pickCompendiumFileDescription: String = "Escolha um arquivo .compendium para adicionar criaturas, magias e outros conteúdos à sua coleção. Esses arquivos são gerados ao compartilhar conteúdo do Monster Compendium.",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedPtStrings(),
 ) : ShareContentImportStrings
 
@@ -50,6 +53,7 @@ internal data class ShareContentEsImportStrings(
     override val importTitle: String = "Importar contenido",
     override val importInvalidContentErrorMessage: String = "Contenido inválido",
     override val pickCompendiumFile: String = "Elegir archivo compendium",
+    override val pickCompendiumFileDescription: String = "Elige un archivo .compendium para añadir criaturas, magias y otro contenido a tu colección. Estos archivos se generan al compartir contenido desde Monster Compendium.",
     override val extractedStrings: ShareContentExtractedStrings = ShareContentExtractedEsStrings(),
 ) : ShareContentImportStrings
 

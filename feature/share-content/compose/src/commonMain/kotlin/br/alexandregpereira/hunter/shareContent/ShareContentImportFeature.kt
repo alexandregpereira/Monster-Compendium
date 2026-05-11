@@ -41,7 +41,6 @@ fun ShareContentImportFeature() {
 
     val state by stateHolder.state.collectAsState()
     ShareContentImportBottomSheet(
-        isOpen = state.isOpen,
         state = state,
         onImport = stateHolder::onImport,
         onFilePickClick = stateHolder::onFilePickClick,

@@ -51,7 +51,7 @@ fun MonsterCard(
     isHorizontal: Boolean = false,
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
-    onLongCLick: () -> Unit = {},
+    onLongCLick: (() -> Unit)? = null,
 ) = ImageCard(
     name = name,
     isHorizontal = isHorizontal,
@@ -75,7 +75,7 @@ fun ImageCard(
     modifier: Modifier = Modifier,
     fontSize: TextUnit = 18.sp,
     onCLick: () -> Unit = {},
-    onLongCLick: () -> Unit = {},
+    onLongCLick: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     val shape = imageCardShape

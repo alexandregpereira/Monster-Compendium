@@ -67,6 +67,7 @@ internal class ShareContentExportStateHolder(
                         copy(
                             isOpen = true,
                             isLoading = true,
+                            exportError = false,
                             strings = appLocalization.getLanguage().getExportStrings(),
                         )
                     }

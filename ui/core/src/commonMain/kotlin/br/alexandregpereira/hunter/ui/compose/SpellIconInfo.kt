@@ -41,7 +41,7 @@ fun SpellIconInfo(
     name: String? = null,
     size: SpellIconSize = SpellIconSize.SMALL,
     onClick: () -> Unit = {},
-    onLongClick: () -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
 ) {
     val iconColor = if (isSystemInDarkTheme()) school.iconColorDark else school.iconColorLight
     IconInfo(
