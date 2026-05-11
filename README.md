@@ -6,7 +6,7 @@
 
 [![CI/CD](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml/badge.svg?branch=main)](https://github.com/alexandregpereira/hunter/actions/workflows/Main.yml)
 
-Monsters Compendium is a open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on creatures from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
+Monsters Compendium is an open-source Kotlin Multiplatform application for Android, iOS, Mac, Windows and Linux, offering extensive information on creatures from the Dungeons & Dragons 5th edition role-playing game. The default content is derived from the SRD (System Reference Document), providing a solid foundation for users. Furthermore, the app supports the addition of new custom content, enhancing its versatility and adaptability for players and game masters alike.
 
 ## Download
 
@@ -37,14 +37,47 @@ You can run the app using [Android Studio](https://developer.android.com/studio?
 
 The following is an overview of the key technologies and libraries used in this Kotlin Multiplatform project, each with a brief description and a URL for further information:
 
-- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform): Declarative framework for sharing UIs across multiple platforms. Based on Kotlin and [Jetpack Compose](https://developer.android.com/jetpack/compose).
-- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html): A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
-- [Kotlin Flow](https://kotlinlang.org/docs/flow.html): Stream of data that can be computed asynchronously. Built in top of the Kotlin Coroutines.
+### UI & Compose
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform): Declarative framework for sharing UIs across Android, iOS, and Desktop. Based on Kotlin and [Jetpack Compose](https://developer.android.com/jetpack/compose).
+- [AndroidX Activity Compose](https://developer.android.com/jetpack/androidx/releases/activity): Jetpack Compose integration for Android Activity.
+- [Lifecycle Runtime Compose](https://developer.android.com/jetpack/androidx/releases/lifecycle): Lifecycle-aware state collection helpers for Compose.
+- [Google Material Design](https://github.com/material-components/material-components-android): Material Design components for Android.
+
+### Image Loading
+- [Coil](https://coil-kt.github.io/coil): Multiplatform image loading library backed by Kotlin Coroutines.
+
+### Networking
+- [Ktor Client](https://github.com/ktorio/ktor): A multiplatform asynchronous HTTP client for Kotlin, providing a clean and extensible API for making network requests.
+
+### Dependency Injection
 - [Koin](https://github.com/InsertKoinIO/koin): A pragmatic lightweight dependency injection framework for Kotlin & Kotlin Multiplatform.
+
+### Data Persistence
 - [SQLDelight](https://github.com/cashapp/sqldelight): A multiplatform SQLite library that generates Kotlin typesafe APIs from SQL statements.
-- [Ktor-client](https://github.com/ktorio/ktor): A multiplatform asynchronous HTTP client for Kotlin, providing a clean and extensible API for making network requests.
 - [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings): A library that provides a simple and consistent API for persisting key-value data across iOS, Android, and JVM platforms.
-- [Coil Compose](https://coil-kt.github.io/coil/compose): An image loading library for Android backed by Kotlin Coroutines and Jetpack Compose.
+
+### Kotlin Ecosystem
+- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html): A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
+- [Kotlin Flow](https://kotlinlang.org/docs/flow.html): Stream of data that can be computed asynchronously. Built on top of Kotlin Coroutines.
+- [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization): Multiplatform JSON serialization library for Kotlin.
+- [Kotlin DateTime](https://github.com/Kotlin/kotlinx-datetime): Multiplatform date and time library for Kotlin.
+- [Kotlin Immutable Collections](https://github.com/Kotlin/kotlinx.collections.immutable): Persistent and immutable collection types for Kotlin.
+
+### Analytics & Feature Flags
+- **Amplitude Analytics:** Product analytics SDK for tracking user behavior. [Android & JVM](https://github.com/amplitude/Amplitude-Kotlin) / [iOS](https://github.com/amplitude/amplitude-swift).
+- **Amplitude Experiment:** Feature flags and A/B experimentation SDK. [Android & JVM](https://github.com/amplitude/experiment-android-client) / [iOS](https://github.com/amplitude/amplitude-experiment-swift).
+- **Firebase Analytics:** Google event analytics for measuring app usage. [Android](https://firebase.google.com/docs/analytics) / [iOS](https://github.com/firebase/firebase-ios-sdk).
+- **Firebase Crashlytics:** Crash reporting and stability monitoring. [Android](https://firebase.google.com/docs/crashlytics) / [iOS](https://github.com/firebase/firebase-ios-sdk).
+
+### Monetization & Ads
+- [RevenueCat](https://github.com/RevenueCat/purchases-kmp): Cross-platform SDK for in-app purchases and subscriptions.
+- [Google Mobile Ads (AdMob)](https://developers.google.com/admob/android/quick-start): Ad network integration for Android.
+- [User Messaging Platform](https://developers.google.com/admob/ump/android/quick-start): GDPR/consent management for ad compliance.
+
+### UI Utilities
+- [Color Picker Compose](https://github.com/skydoves/colorpicker-compose): Compose color picker component.
+- [Multiplatform Markdown Renderer](https://github.com/mikepenz/multiplatform-markdown-renderer): Renders Markdown content in Compose Multiplatform.
+- [FileKit](https://github.com/vinceglb/filekit): Multiplatform file picker and dialog library.
 
 ## API
 
@@ -61,7 +94,7 @@ The icons used in this app have a free license. They are designed by [macrovecto
 ## License
 
     DnD 5th edition monster compendium app
-    Copyright (C) 2025 Alexandre Gomes Pereira
+    Copyright (C) 2026 Alexandre Gomes Pereira
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
