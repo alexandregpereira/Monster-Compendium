@@ -154,7 +154,12 @@ internal class CompendiumFileManagerImpl(
     private fun List<String>.accumulateImages(
         monsterImages: MutableList<FileEntry>,
     ) {
-        forEach { filePath -> monsterImages.add(FileEntry(filePath)) }
+        forEach { filePath ->
+            val file = FileEntry(filePath)
+            if (file.size > 0) {
+                monsterImages.add(file)
+            }
+        }
     }
 
     private fun List<Monster>.getOriginalImagePaths(): List<String> {

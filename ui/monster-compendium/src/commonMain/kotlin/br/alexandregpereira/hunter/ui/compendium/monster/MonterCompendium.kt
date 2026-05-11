@@ -44,7 +44,7 @@ fun MonsterCompendium(
     listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onItemCLick: (index: String) -> Unit = {},
-    onItemLongCLick: (index: String) -> Unit = {},
+    onItemLongCLick: ((index: String) -> Unit)? = null,
 ) {
     val screenSizes = LocalScreenSize.current
     val currentWidth = screenSizes.widthInDp
@@ -71,6 +71,9 @@ fun MonsterCompendium(
         },
         cardContent = { item ->
             val monsterCardState = item.getMonsterCardState()
+            val onLongClick: (() -> Unit)? = if (onItemLongCLick != null) {
+                { onItemLongCLick(monsterCardState.index) }
+            } else null
             MonsterCard(
                 name = monsterCardState.name,
                 url = monsterCardState.imageState.url,
@@ -82,7 +85,7 @@ fun MonsterCompendium(
                 challengeRating = monsterCardState.imageState.challengeRating,
                 contentScale = monsterCardState.imageState.contentScale,
                 onCLick = { onItemCLick(monsterCardState.index) },
-                onLongCLick = { onItemLongCLick(monsterCardState.index) }
+                onLongCLick = onLongClick,
             )
         }
     )

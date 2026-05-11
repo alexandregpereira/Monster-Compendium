@@ -20,16 +20,15 @@ package br.alexandregpereira.hunter.shareContent.state
 internal data class ShareContentImportState(
     val isOpen: Boolean = false,
     val isLoading: Boolean = false,
-    val contentToImport: String = "",
     val importExtractedState: ShareContentExtractedState? = null,
     val importError: ShareContentImportError? = null,
     val strings: ShareContentImportStrings = ShareContentImportStrings(),
 ) {
-    val importErrorMessage: String = importError?.let {
+    val importErrorMessage: String? = importError?.let {
         when (it) {
             ShareContentImportError.InvalidContent -> strings.importInvalidContentErrorMessage
         }
-    } ?: ""
+    }
 }
 
 internal enum class ShareContentImportError {

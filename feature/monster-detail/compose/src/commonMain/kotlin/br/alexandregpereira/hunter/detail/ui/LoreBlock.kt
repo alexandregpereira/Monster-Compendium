@@ -41,6 +41,9 @@ internal fun LoreBlock(
         modifier = modifier
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp)
-            .animatePressed(onClick = onClick),
+            .animatePressed(
+                pressedScale = .95f,
+                onClick = onClick
+            ),
     )
 }

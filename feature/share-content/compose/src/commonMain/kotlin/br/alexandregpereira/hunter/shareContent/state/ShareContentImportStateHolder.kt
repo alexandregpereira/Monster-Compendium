@@ -163,6 +163,7 @@ internal class ShareContentImportStateHolder(
 
     fun onFilePickClick() {
         analytics.track(eventName = "Import content - file pick clicked")
+        setState { copy(isLoading = true) }
         sendAction(ShareContentImportUiEvent.PickFile)
     }
 
@@ -171,6 +172,7 @@ internal class ShareContentImportStateHolder(
             analytics.track(
                 eventName = "Import content - file pick cancelled",
             )
+            setState { copy(isLoading = false) }
             return
         }
         analytics.track(
@@ -180,7 +182,7 @@ internal class ShareContentImportStateHolder(
                 "fileSize" to fileEntry.size.toString(),
             )
         )
-        setState { copy(isLoading = true, contentToImport = fileEntry.name) }
+        setState { copy(isLoading = true) }
         extractZipAndPrepareImport(zipFile = fileEntry)
     }
 

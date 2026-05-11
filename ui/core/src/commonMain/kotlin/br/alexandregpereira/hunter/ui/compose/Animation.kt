@@ -17,60 +17,108 @@
 
 package br.alexandregpereira.hunter.ui.compose
 
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.IndicationNodeFactory
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.node.DelegatableNode
+import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.platform.LocalHapticFeedback
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 fun Modifier.animatePressed(
-    pressedScale: Float = 0.96f,
+    pressedScale: Float = 0.9f,
     enabled: Boolean = true,
     onClick: () -> Unit = {},
     onLongClick: (() -> Unit)? = null,
 ): Modifier = composed {
-    val interactionSource = remember { MutableInteractionSource() }
     val haptic = LocalHapticFeedback.current
-
-    animatePressed(
-        interactionSource = interactionSource,
-        pressedScale = pressedScale
-    ).combinedClickable(
-        interactionSource = interactionSource,
-        indication = null,
+    val onLongClickFinal: (() -> Unit)? = if (onLongClick == null) null else ({
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        onLongClick.invoke()
+    })
+    combinedClickable(
+        interactionSource = remember { MutableInteractionSource() },
+        indication = ScaleIndication(pressedScale),
         enabled = enabled,
         onClick = onClick,
-        onLongClick = {
-            onLongClick?.run {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                invoke()
-            }
-        }
+        onLongClick = onLongClickFinal,
     )
 }
 
-fun Modifier.animatePressed(
-    interactionSource: InteractionSource,
-    pressedScale: Float = 0.96f
-): Modifier = composed {
-    val animationSpec: AnimationSpec<Float> = spring(stiffness = 600f)
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) pressedScale else 1f,
-        animationSpec = animationSpec
-    )
+class ScaleIndication(private val pressedScale: Float = 0.96f) : IndicationNodeFactory {
+    override fun create(interactionSource: InteractionSource): DelegatableNode =
+        ScaleIndicationNode(pressedScale, interactionSource)
 
-    this.graphicsLayer(
-        scaleX = scale,
-        scaleY = scale
-    )
+    override fun equals(other: Any?) =
+        other is ScaleIndication && other.pressedScale == pressedScale
+
+    override fun hashCode() = pressedScale.hashCode()
+}
+
+private class ScaleIndicationNode(
+    private val pressedScale: Float,
+    private val interactionSource: InteractionSource,
+) : Modifier.Node(), DrawModifierNode {
+
+    private val animatableScale = Animatable(1f)
+
+    override fun onAttach() {
+        coroutineScope.launch {
+            var animationJob: Job? = null
+            interactionSource.interactions.collect { interaction ->
+                when (interaction) {
+                    is PressInteraction.Press -> {
+                        animationJob?.cancel()
+                        animationJob = launch {
+                            animatableScale.animateTo(
+                                targetValue = pressedScale,
+                                animationSpec = spring(
+                                    stiffness = 600f,
+                                    dampingRatio = Spring.DampingRatioNoBouncy
+                                )
+                            )
+                        }
+                    }
+
+                    is PressInteraction.Release, is PressInteraction.Cancel -> {
+                        animationJob?.cancel()
+                        animationJob = launch {
+                            animatableScale.animateTo(
+                                targetValue = pressedScale,
+                                animationSpec = spring(
+                                    stiffness = 600f,
+                                    dampingRatio = Spring.DampingRatioNoBouncy
+                                )
+                            )
+                            animatableScale.animateTo(
+                                targetValue = 1f,
+                                animationSpec = spring(
+                                    stiffness = 400f,
+                                    dampingRatio = Spring.DampingRatioMediumBouncy
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun ContentDrawScope.draw() {
+        scale(animatableScale.value) {
+            this@draw.drawContent()
+        }
+    }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.Velocity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 internal class MildBounceOverscrollFactory : OverscrollFactory {
     override fun createOverscrollEffect(): OverscrollEffect = MildBounceOverscrollEffect()
@@ -45,10 +46,14 @@ internal class MildBounceOverscrollFactory : OverscrollFactory {
 private class MildBounceOverscrollEffect : OverscrollEffect {
     private var offsetY by mutableStateOf(0f)
     private var bounceJob: Job? = null
+    private var activeFlingJob: Job? = null
     private var edgeHitHandled = false
     private var nodeScope: CoroutineScope? = null
+    private var isSpringAnimating = false
 
-    override val isInProgress: Boolean get() = offsetY != 0f
+    // False during spring-back so pointer events are not intercepted by the
+    // scrollable while the visual bounce animation plays.
+    override val isInProgress: Boolean get() = offsetY != 0f && !isSpringAnimating
 
     override fun applyToScroll(
         delta: Offset,
@@ -68,13 +73,16 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
             }
             // SideEffect is the source during a fling animation. When performScroll doesn't
             // consume all the delta the fling has hit an edge. Start the spring immediately
-            // here rather than waiting for performFling to return (which on iOS can take ~1s).
+            // here rather than waiting for performFling to return (which on iOS can take ~1s),
+            // and cancel the fling so the gesture coroutine is freed immediately — otherwise
+            // it stays blocked on performFling and swallows the first tap after the bounce.
             source == NestedScrollSource.SideEffect && overscrollY != 0f && !edgeHitHandled -> {
                 edgeHitHandled = true
                 val startOffset = offsetY + overscrollY * Resistance
                 offsetY = startOffset
                 bounceJob?.cancel()
                 bounceJob = nodeScope?.launch { springBackToZero(startOffset) }
+                activeFlingJob?.cancel()
             }
         }
         return delta
@@ -88,7 +96,15 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
         // fling could reset edgeHitHandled while SideEffect callbacks from the first are live.
         bounceJob?.cancel()
         edgeHitHandled = false
-        performFling(velocity)
+        // Run performFling as a cancellable child job so applyToScroll can cancel it the moment
+        // the edge is hit and the spring starts. supervisorScope prevents the child cancellation
+        // from propagating to the outer gesture coroutine.
+        supervisorScope {
+            val flingCoroutine = launch { performFling(velocity) }
+            activeFlingJob = flingCoroutine
+            flingCoroutine.join()
+            activeFlingJob = null
+        }
         // Edge spring is already handled in applyToScroll(SideEffect). Only spring back here
         // for drag-based overscroll (UserInput) that wasn't followed by an edge-hitting fling.
         if (!edgeHitHandled && offsetY != 0f) {
@@ -97,8 +113,14 @@ private class MildBounceOverscrollEffect : OverscrollEffect {
     }
 
     private suspend fun springBackToZero(from: Float) {
-        Animatable(from).animateTo(0f, SpringSpec) {
-            offsetY = value
+        isSpringAnimating = true
+        try {
+            Animatable(from).animateTo(0f, SpringSpec) {
+                offsetY = value
+            }
+        } finally {
+            isSpringAnimating = false
+            offsetY = 0f
         }
     }
 
