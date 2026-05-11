@@ -17,9 +17,9 @@ Monsters Compendium is an open-source Kotlin Multiplatform application for Andro
 ## Preview
 
 <p align="center">
-    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-compendium-2.gif" width ="32%" />
-    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-detail-pager-2.gif" width ="32%" />
-    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-detail-2.gif" width ="32%" />
+    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-compendium-2.gif" width ="30%" />
+    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-detail-pager-2.gif" width ="30%" />
+    <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-detail-2.gif" width ="30%" />
 </p>
 
 ## Runnning
