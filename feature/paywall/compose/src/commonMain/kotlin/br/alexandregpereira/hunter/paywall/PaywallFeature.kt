@@ -28,7 +28,7 @@ fun PaywallFeature() {
 
     LifecycleEventObserver(
         onStart = stateHolder::onStart,
-        onResume = stateHolder::onStart,
+        onResume = stateHolder::onResume,
     )
 
     CompositionLocalProvider(LocalStrings provides state.strings) {

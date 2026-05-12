@@ -16,6 +16,7 @@ val paywallFeatureModule = module {
             getCurrentOffer = get(),
             settings = get(),
             analytics = get(),
+            adsConsentManager = get(),
         )
     }
     factory {

@@ -56,6 +56,13 @@ internal class PaywallStateHolder(
         }
     }
 
+    fun onResume() {
+        if (state.value.isOpen) {
+            return
+        }
+        onStart()
+    }
+
     fun onClose() {
         closePaywall()
         loadOfferJob?.cancel()
