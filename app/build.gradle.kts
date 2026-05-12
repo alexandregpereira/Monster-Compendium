@@ -113,6 +113,13 @@ tasks.register<UpdateIosVersionTask>("updateIosVersion") {
     versionName.set(appVersionName)
     versionCode.set(appVersionCode)
     iosAppDir.set(rootProject.layout.projectDirectory.dir("iosApp"))
+    admobAppId.set(
+        getEnvVar(
+            prodKey = "ADMOB_IOS_APP_ID",
+            sandboxKey = "ADMOB_SANDBOX_IOS_APP_ID",
+            fallback = "ca-app-pub-3940256099942544~3347511713",
+        )
+    )
 }
 
 tasks.matching { it.name.contains("embedAndSignAppleFrameworkForXcode") }

@@ -20,6 +20,7 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
+    kotlin("native.cocoapods")
 }
 
 multiplatform {
@@ -41,6 +42,19 @@ multiplatform {
     }
     jvmMain()
     iosMain()
+}
+
+kotlin {
+    cocoapods {
+        name = "ads_compose"
+        version = "1.0"
+        summary = "Ads compose feature"
+        homepage = "https://github.com/alexandregpereira/monster-compendium"
+        ios.deploymentTarget = "14.0"
+        pod("Google-Mobile-Ads-SDK") {
+            moduleName = "GoogleMobileAds"
+        }
+    }
 }
 
 androidLibrary {

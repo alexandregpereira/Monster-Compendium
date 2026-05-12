@@ -46,5 +46,9 @@
 			</dict>
 		</dict>
 	</array>
+    <key>GADApplicationIdentifier</key>
+    <string>$(GAD_APPLICATION_IDENTIFIER)</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>This identifier will be used to deliver personalized ads to you.</string>
 </dict>
 </plist>

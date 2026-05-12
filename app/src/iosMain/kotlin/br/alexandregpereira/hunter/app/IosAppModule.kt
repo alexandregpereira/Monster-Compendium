@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.app
 
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import org.koin.core.Koin
@@ -31,4 +32,5 @@ fun initKoin() {
         initKoinModules()
     }.koin
     koinInstance.get<FeatureFlagProvider>().initialize()
+    koinInstance.get<AdsConsentManager>().initialize()
 }

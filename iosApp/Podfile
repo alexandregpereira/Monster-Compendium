@@ -7,4 +7,6 @@ target 'MonsterCompendium' do
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
   pod 'PurchasesHybridCommon', '17.55.1'
+  pod 'GoogleUserMessagingPlatform'
+  pod 'Google-Mobile-Ads-SDK'
 end
