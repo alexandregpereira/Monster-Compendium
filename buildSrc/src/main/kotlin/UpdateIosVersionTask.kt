@@ -13,11 +13,14 @@ abstract class UpdateIosVersionTask : DefaultTask() {
     @get:Input
     abstract val versionCode: Property<Int>
 
+    @get:Input
+    abstract val admobAppId: Property<String>
+
     @get:OutputDirectory
     abstract val iosAppDir: DirectoryProperty
 
     init {
-        description = "Updates MARKETING_VERSION and CURRENT_PROJECT_VERSION in the CocoaPods xcconfig files."
+        description = "Updates MARKETING_VERSION, CURRENT_PROJECT_VERSION and GAD_APPLICATION_IDENTIFIER in the CocoaPods xcconfig files."
         group = "build"
     }
 
@@ -29,10 +32,15 @@ abstract class UpdateIosVersionTask : DefaultTask() {
 
         podsXcconfigDir.listFiles { f -> f.extension == "xcconfig" }?.forEach { xcconfig ->
             val lines = xcconfig.readLines()
-                .filter { !it.startsWith("MARKETING_VERSION") && !it.startsWith("CURRENT_PROJECT_VERSION") }
+                .filter {
+                    !it.startsWith("MARKETING_VERSION")
+                        && !it.startsWith("CURRENT_PROJECT_VERSION")
+                        && !it.startsWith("GAD_APPLICATION_IDENTIFIER")
+                }
             val updated = (lines + listOf(
                 "MARKETING_VERSION = ${versionName.get()}",
                 "CURRENT_PROJECT_VERSION = ${versionCode.get()}",
+                "GAD_APPLICATION_IDENTIFIER = ${admobAppId.get()}",
             )).joinToString("\n")
             xcconfig.writeText(updated)
         }

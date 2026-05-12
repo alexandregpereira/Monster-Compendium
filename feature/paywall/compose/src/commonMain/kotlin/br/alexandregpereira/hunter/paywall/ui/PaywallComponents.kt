@@ -60,6 +60,8 @@ internal fun PaywallFooter(
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit,
+    onTerms: () -> Unit,
+    onPrivacy: () -> Unit,
 ) = Column(
     modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -69,6 +71,8 @@ internal fun PaywallFooter(
     PaywallButtons(
         subscribe = subscribe,
         restore = restore,
+        onTerms = onTerms,
+        onPrivacy = onPrivacy,
     )
 }
 
@@ -76,6 +80,8 @@ internal fun PaywallFooter(
 internal fun PaywallButtons(
     subscribe: () -> Unit,
     restore: () -> Unit,
+    onTerms: () -> Unit,
+    onPrivacy: () -> Unit,
 ) = Column(
     verticalArrangement = Arrangement.spacedBy(8.dp),
 ) {
@@ -84,12 +90,29 @@ internal fun PaywallButtons(
         modifier = Modifier,
         onClick = subscribe,
     )
-    AppButton(
-        text = strings.restoreButton,
-        type = AppButtonType.TERTIARY,
-        size = AppButtonSize.SMALL,
-        onClick = restore,
-    )
+    Row {
+        AppButton(
+            modifier = Modifier.weight(1f),
+            text = strings.restoreButton,
+            type = AppButtonType.TERTIARY,
+            size = AppButtonSize.SMALL,
+            onClick = restore,
+        )
+        AppButton(
+            modifier = Modifier.weight(1f),
+            text = strings.termsButton,
+            type = AppButtonType.TERTIARY,
+            size = AppButtonSize.SMALL,
+            onClick = onTerms,
+        )
+        AppButton(
+            modifier = Modifier.weight(1f),
+            text = strings.privacyButton,
+            type = AppButtonType.TERTIARY,
+            size = AppButtonSize.SMALL,
+            onClick = onPrivacy,
+        )
+    }
 }
 
 @Composable

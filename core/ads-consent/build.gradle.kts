@@ -18,6 +18,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
 }
 
 multiplatform {
@@ -32,6 +33,21 @@ multiplatform {
     }
     jvmMain()
     iosMain()
+}
+
+kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Ads consent module"
+        homepage = "https://github.com/alexandregpereira/monster-compendium"
+        ios.deploymentTarget = "14.0"
+        pod("GoogleUserMessagingPlatform") {
+            moduleName = "UserMessagingPlatform"
+        }
+        pod("Google-Mobile-Ads-SDK") {
+            moduleName = "GoogleMobileAds"
+        }
+    }
 }
 
 android {

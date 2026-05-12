@@ -15,19 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.ads.consent.di
+package br.alexandregpereira.hunter.paywall
 
-import android.app.Application
-import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
-import br.alexandregpereira.hunter.ads.consent.AndroidAdsConsentManager
-import org.koin.core.scope.Scope
-
-internal actual fun Scope.createAdsConsentManager(
-    deviceDebugHashTestId: String?
-): AdsConsentManager {
-    return AndroidAdsConsentManager(
-        context = get<Application>(),
-        analytics = get(),
-        debugHashedId = deviceDebugHashTestId,
-    )
+internal sealed class PaywallViewAction {
+    data class GoToUrl(val url: String) : PaywallViewAction()
 }
