@@ -2,7 +2,7 @@
 amplitude-android = "1.28.1"
 amplitude-experiment-android = "1.15.0"
 amplitude-jvm = "1.13.0"
-android_gradle_plugin = "8.10.0"
+android_gradle_plugin = "9.2.1"
 android_lifecycle_compose = "2.10.0"
 android_test_version = "1.7.0"
 appcompat = "1.7.1"
