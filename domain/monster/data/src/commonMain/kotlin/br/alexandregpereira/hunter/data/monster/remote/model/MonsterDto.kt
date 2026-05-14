@@ -68,13 +68,15 @@ data class MonsterDto(
     @SerialName("languages")
     val languages: String,
     @SerialName("special_abilities")
-    val specialAbilities: List<SpecialAbilityDto> = emptyList(),
+    val specialAbilities: List<ActionDto> = emptyList(),
     @SerialName("actions")
     val actions: List<ActionDto> = emptyList(),
+    @SerialName("bonus_actions")
+    val bonusActions: List<ActionDto> = emptyList(),
     @SerialName("legendary_actions")
     val legendaryActions: List<ActionDto> = emptyList(),
     @SerialName("reactions")
-    val reactions: List<SpecialAbilityDto> = emptyList(),
+    val reactions: List<ActionDto> = emptyList(),
     @SerialName("spellcasting")
     val spellcastings: List<SpellcastingDto> = emptyList(),
     @SerialName("source")

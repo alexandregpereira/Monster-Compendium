@@ -62,15 +62,11 @@ fun databaseModule(databaseName: String) = module {
             damageDiceQueries = database.damageDiceQueries,
             savingThrowQueries = database.savingThrowQueries,
             skillQueries = database.skillQueries,
-            specialAbilityQueries = database.specialAbilityQueries,
             speedQueries = database.speedQueries,
             speedValueQueries = database.speedValueQueries,
-            reactionQueries = database.reactionQueries,
             spellcastingQueries = database.spellcastingQueries,
             spellUsageQueries = database.spellUsageQueries,
-            spellcastingSpellUsageCrossRefQueries = database.spellcastingSpellUsageCrossRefQueries,
             spellUsageCrossRefQueries = database.spellUsageSpellCrossRefQueries,
-            legendaryActionQueries = database.legendaryActionQueries,
             dispatcher = getDispatcherIO()
         )
     }

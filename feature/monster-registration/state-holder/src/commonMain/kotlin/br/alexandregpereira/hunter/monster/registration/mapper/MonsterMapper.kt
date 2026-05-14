@@ -56,15 +56,12 @@ internal fun Monster.editBy(
 ): Monster {
     val monster = this
     val spellsMap = mutableMapOf<String, SpellPreview>()
-    monster.spellcastings.asSequence()
-        .map { it.usages }
-        .flatten()
-        .map { it.spells }
-        .flatten()
-        .toSet()
-        .forEach {
-            spellsMap[it.index] = it
-        }
+    (monster.spellcastings.asSequence().map { it.usages }.flatten() +
+        (monster.actions + monster.bonusActions + monster.specialAbilities +
+            monster.reactions + monster.legendaryActions).asSequence().map { it.spellsByGroup }.flatten()
+    ).map { it.spells }.flatten().toSet().forEach {
+        spellsMap[it.index] = it
+    }
 
     return monster.copy(
         name = state.info.name,
@@ -110,10 +107,11 @@ internal fun Monster.editBy(
         conditionImmunities = state.conditionImmunities.map { it.asDomain() },
         senses = state.senses,
         languages = state.languages,
-        specialAbilities = state.specialAbilities.map { it.asDomain() },
-        actions = state.actions.map { it.asDomain(strings) },
-        legendaryActions = state.legendaryActions.map { it.asDomain(strings) },
-        reactions = state.reactions.map { it.asDomain() },
+        specialAbilities = state.specialAbilities.map { it.asDomain(strings, spellsMap) },
+        actions = state.actions.map { it.asDomain(strings, spellsMap) },
+        bonusActions = state.bonusActions.map { it.asDomain(strings, spellsMap) },
+        legendaryActions = state.legendaryActions.map { it.asDomain(strings, spellsMap) },
+        reactions = state.reactions.map { it.asDomain(strings, spellsMap) },
         spellcastings = state.spellcastings.map { it.asDomain(spellsMap) },
         sourceName = state.source,
     )
@@ -171,12 +169,16 @@ private fun AbilityDescriptionState.asDomain(): AbilityDescription {
     )
 }
 
-private fun ActionState.asDomain(strings: MonsterRegistrationStrings): Action {
+private fun ActionState.asDomain(
+    strings: MonsterRegistrationStrings,
+    spellsMap: Map<String, SpellPreview> = emptyMap(),
+): Action {
     return Action(
         id = key,
         damageDices = damageDices.map { it.asDomain(strings) },
         attackBonus = attackBonus,
         abilityDescription = abilityDescription.asDomain(),
+        spellsByGroup = spellsByGroup.map { it.asDomain(spellsMap) },
     )
 }
 

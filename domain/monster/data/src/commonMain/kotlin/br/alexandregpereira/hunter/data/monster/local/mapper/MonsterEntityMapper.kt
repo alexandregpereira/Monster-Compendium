@@ -65,7 +65,8 @@ internal fun MonsterCompleteEntity.toDomain(
         conditionImmunities = this.conditionImmunities.toConditionDomain(),
         specialAbilities = this.specialAbilities.toDomain(),
         actions = this.actions.toDomain(),
-        reactions = this.reactions.toDomainReactionEntity(),
+        bonusActions = this.bonusActions.toDomain(),
+        reactions = this.reactions.toDomain(),
         spellcastings = this.spellcastings.toDomain(),
         legendaryActions = this.legendaryActions.toDomain()
     )
@@ -110,11 +111,12 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
         damageResistances = damageResistances.toDamageResistanceEntity(index),
         damageImmunities = damageImmunities.toDamageImmunityEntity(index),
         conditionImmunities = conditionImmunities.toEntity(index),
-        specialAbilities = specialAbilities.toEntity(index),
+        specialAbilities = specialAbilities.toEntity(index, "SPECIAL_ABILITY"),
         actions = actions.toEntity(index),
-        reactions = reactions.toReactionEntity(index),
+        bonusActions = bonusActions.toEntity(index, "BONUS_ACTION"),
+        reactions = reactions.toEntity(index, "REACTION"),
         spellcastings = spellcastings.toEntity(index),
-        legendaryActions = legendaryActions.toEntity(index)
+        legendaryActions = legendaryActions.toEntity(index, "LEGENDARY_ACTION")
     )
 }
 
@@ -184,6 +186,7 @@ internal fun MonsterEntity.toDomain(
         conditionImmunities = emptyList(),
         specialAbilities = emptyList(),
         actions = emptyList(),
+        bonusActions = emptyList(),
         reactions = emptyList(),
         spellcastings = emptyList(),
         legendaryActions = emptyList(),

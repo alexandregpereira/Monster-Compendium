@@ -20,6 +20,8 @@ package br.alexandregpereira.hunter.data.monster.local.mapper
 import br.alexandregpereira.hunter.data.monster.local.entity.ActionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ActionWithDamageDicesEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
+import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toDomain
+import br.alexandregpereira.hunter.data.monster.spell.local.mapper.toEntity
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
@@ -37,7 +39,8 @@ internal fun List<ActionWithDamageDicesEntity>.toDomain(): List<Action> {
                 description = it.action.description,
                 savingThrows = it.savingThrows.toDomain(),
                 conditions = it.conditions.toConditionDomain(),
-            )
+            ),
+            spellsByGroup = it.spellUsages.toDomain(),
         )
     }
 }
@@ -52,9 +55,12 @@ internal fun List<DamageDiceEntity>.toDamageDiceDomain(): List<DamageDice> {
     }
 }
 
-internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageDicesEntity> {
+internal fun List<Action>.toEntity(
+    monsterIndex: String,
+    type: String = "ACTION",
+): List<ActionWithDamageDicesEntity> {
     return this.map { action ->
-        val actionId = action.id.takeUnless { it.isBlank() } ?: "action-${generateUUID()}"
+        val actionId = action.id.takeUnless { it.isBlank() } ?: "$type-${generateUUID()}"
         ActionWithDamageDicesEntity(
             damageDices = action.damageDices.toDamageDiceEntity(actionId),
             action = ActionEntity(
@@ -62,10 +68,12 @@ internal fun List<Action>.toEntity(monsterIndex: String): List<ActionWithDamageD
                 attackBonus = action.attackBonus,
                 description = action.abilityDescription.description,
                 name = action.abilityDescription.name,
-                monsterIndex = monsterIndex
+                monsterIndex = monsterIndex,
+                type = type,
             ),
             savingThrows = action.abilityDescription.savingThrows.toSavingThrowEntity(actionId),
             conditions = action.abilityDescription.conditions.toEntity(actionId),
+            spellUsages = action.spellsByGroup.toEntity(actionId),
         )
     }
 }

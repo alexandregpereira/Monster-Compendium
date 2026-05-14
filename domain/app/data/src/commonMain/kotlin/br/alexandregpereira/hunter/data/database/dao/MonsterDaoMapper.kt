@@ -28,10 +28,8 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterImageEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ProficiencyEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity
@@ -39,7 +37,6 @@ import br.alexandregpereira.hunter.data.monster.local.entity.takeIfContentIsNotN
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import br.alexandregpereira.hunter.database.MonsterWithImageEntityView
 import br.alexandregpereira.hunter.database.AbilityScoreEntity as AbilityScoreDatabaseEntity
 import br.alexandregpereira.hunter.database.ActionEntity as ActionDatabaseEntity
@@ -48,18 +45,14 @@ import br.alexandregpereira.hunter.database.DamageDiceEntity as DamageDiceDataba
 import br.alexandregpereira.hunter.database.DamageImmunityEntity as DamageImmunityDatabaseEntity
 import br.alexandregpereira.hunter.database.DamageResistanceEntity as DamageResistanceDatabaseEntity
 import br.alexandregpereira.hunter.database.DamageVulnerabilityEntity as DamageVulnerabilityDatabaseEntity
-import br.alexandregpereira.hunter.database.LegendaryActionEntity as LegendaryActionDatabaseEntity
 import br.alexandregpereira.hunter.database.MonsterEntity as MonsterDatabaseEntity
-import br.alexandregpereira.hunter.database.ReactionEntity as ReactionDatabaseEntity
 import br.alexandregpereira.hunter.database.SavingThrowEntity as SavingThrowDatabaseEntity
 import br.alexandregpereira.hunter.database.SkillEntity as SkillDatabaseEntity
-import br.alexandregpereira.hunter.database.SpecialAbilityEntity as SpecialAbilityDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedEntity as SpeedDatabaseEntity
 import br.alexandregpereira.hunter.database.SpeedValueEntity as SpeedValueDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageEntity as SpellUsageDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefEntity as SpellUsageSpellCrossRefDatabaseEntity
 import br.alexandregpereira.hunter.database.SpellcastingEntity as SpellcastingDatabaseEntity
-import br.alexandregpereira.hunter.database.SpellcastingSpellUsageCrossRefEntity as SpellcastingSpellUsageCrossRefDatabaseEntity
 
 internal fun AbilityScoreEntity.toDatabaseEntity(): AbilityScoreDatabaseEntity {
     return AbilityScoreDatabaseEntity(
@@ -76,7 +69,8 @@ internal fun ActionEntity.toDatabaseEntity(): ActionDatabaseEntity {
         attackBonus = this.attackBonus?.toLong(),
         description = this.description,
         name = this.name,
-        monsterIndex = this.monsterIndex
+        monsterIndex = this.monsterIndex,
+        type = this.type,
     )
 }
 
@@ -98,16 +92,6 @@ internal fun DamageDiceEntity.toDatabaseEntity(): DamageDiceDatabaseEntity {
         type = this.damage.type,
         name = this.damage.name,
         monsterIndex = this.damage.monsterIndex
-    )
-}
-
-internal fun ActionEntity.toLegendaryActionDatabaseEntity(): LegendaryActionDatabaseEntity {
-    return LegendaryActionDatabaseEntity(
-        id = this.id,
-        attackBonus = this.attackBonus?.toLong(),
-        description = this.description,
-        name = this.name,
-        monsterIndex = this.monsterIndex
     )
 }
 
@@ -147,14 +131,6 @@ internal fun MonsterEntityStatus.toStatusInt(): Long {
     }
 }
 
-internal fun ReactionEntity.toDatabaseEntity(): ReactionDatabaseEntity {
-    return ReactionDatabaseEntity(
-        name = this.name,
-        description = this.description,
-        monsterIndex = this.monsterIndex
-    )
-}
-
 internal fun SavingThrowEntity.toDatabaseEntity(): SavingThrowDatabaseEntity {
     return SavingThrowDatabaseEntity(
         index = this.value.index,
@@ -173,14 +149,6 @@ internal fun SkillEntity.toDatabaseEntity(): SkillDatabaseEntity {
     )
 }
 
-internal fun SpecialAbilityEntity.toDatabaseEntity(): SpecialAbilityDatabaseEntity {
-    return SpecialAbilityDatabaseEntity(
-        name = this.name,
-        description = this.description,
-        monsterIndex = this.monsterIndex
-    )
-}
-
 internal fun SpeedEntity.toDatabaseEntity(): SpeedDatabaseEntity {
     return SpeedDatabaseEntity(
         id = this.id,
@@ -194,13 +162,6 @@ internal fun SpeedValueEntity.toDatabaseEntity(): SpeedValueDatabaseEntity {
         type = this.type,
         valueFormatted = this.valueFormatted,
         speedId = this.speedId
-    )
-}
-
-internal fun SpellcastingSpellUsageCrossRefEntity.toDatabaseEntity(): SpellcastingSpellUsageCrossRefDatabaseEntity {
-    return SpellcastingSpellUsageCrossRefDatabaseEntity(
-        spellcastingId = spellcastingId,
-        spellUsageId = spellUsageId
     )
 }
 
@@ -226,7 +187,8 @@ internal fun ActionDatabaseEntity.toLocalEntity(): ActionEntity {
         attackBonus = this.attackBonus?.toInt(),
         description = this.description,
         name = this.name,
-        monsterIndex = this.monsterIndex
+        monsterIndex = this.monsterIndex,
+        type = this.type,
     )
 }
 
@@ -312,16 +274,6 @@ internal fun DamageImmunityEntity.toDatabaseEntity(): DamageImmunityDatabaseEnti
         type = this.value.type,
         name = this.value.name,
         monsterIndex = this.value.monsterIndex
-    )
-}
-
-internal fun LegendaryActionDatabaseEntity.toLocalEntity(): ActionEntity {
-    return ActionEntity(
-        id = this.id,
-        attackBonus = this.attackBonus?.toInt(),
-        description = this.description,
-        name = this.name,
-        monsterIndex = this.monsterIndex
     )
 }
 
@@ -460,14 +412,6 @@ internal fun toMonsterEntity(
     )
 }
 
-internal fun ReactionDatabaseEntity.toLocalEntity(): ReactionEntity {
-    return ReactionEntity(
-        name = this.name,
-        description = this.description,
-        monsterIndex = this.monsterIndex
-    )
-}
-
 internal fun SavingThrowDatabaseEntity.toLocalEntity(): SavingThrowEntity {
     return SavingThrowEntity(
         value = ProficiencyEntity(
@@ -487,14 +431,6 @@ internal fun SkillDatabaseEntity.toLocalEntity(): SkillEntity {
             name = this.name,
             monsterIndex = this.monsterIndex
         )
-    )
-}
-
-internal fun SpecialAbilityDatabaseEntity.toLocalEntity(): SpecialAbilityEntity {
-    return SpecialAbilityEntity(
-        name = this.name,
-        description = this.description,
-        monsterIndex = this.monsterIndex
     )
 }
 
@@ -536,7 +472,7 @@ internal fun SpellUsageDatabaseEntity.toLocalEntity(): SpellUsageEntity {
     return SpellUsageEntity(
         spellUsageId = this.spellUsageId,
         group = this.group,
-        spellcastingId = this.spellcastingId
+        parentId = this.parentId,
     )
 }
 
@@ -544,6 +480,6 @@ internal fun SpellUsageEntity.toDatabaseEntity(): SpellUsageDatabaseEntity {
     return SpellUsageDatabaseEntity(
         spellUsageId = this.spellUsageId,
         group = this.group,
-        spellcastingId = this.spellcastingId
+        parentId = this.parentId,
     )
 }

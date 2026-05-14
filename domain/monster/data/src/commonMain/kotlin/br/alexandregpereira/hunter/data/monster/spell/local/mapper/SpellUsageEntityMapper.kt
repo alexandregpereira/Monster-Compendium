@@ -30,13 +30,13 @@ internal fun List<SpellUsageCompleteEntity>.toDomain(): List<SpellUsage> {
     }
 }
 
-internal fun List<SpellUsage>.toEntity(spellcastingId: String): List<SpellUsageCompleteEntity> {
+internal fun List<SpellUsage>.toEntity(parentId: String): List<SpellUsageCompleteEntity> {
     return map { usage ->
         SpellUsageCompleteEntity(
             spellUsage = SpellUsageEntity(
-                spellUsageId = "${usage.group}-$spellcastingId",
+                spellUsageId = "${usage.group}-$parentId",
                 group = usage.group,
-                spellcastingId = spellcastingId
+                parentId = parentId
             ),
             spells = usage.spells.toEntity()
         )

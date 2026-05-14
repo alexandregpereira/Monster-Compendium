@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.data.monster.local.entity.MonsterCompleteEnti
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntityStatus
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import br.alexandregpereira.hunter.database.AbilityScoreQueries
 import br.alexandregpereira.hunter.database.ActionQueries
 import br.alexandregpereira.hunter.database.ConditionQueries
@@ -30,19 +29,15 @@ import br.alexandregpereira.hunter.database.DamageDiceQueries
 import br.alexandregpereira.hunter.database.DamageImmunityQueries
 import br.alexandregpereira.hunter.database.DamageResistanceQueries
 import br.alexandregpereira.hunter.database.DamageVulnerabilityQueries
-import br.alexandregpereira.hunter.database.LegendaryActionQueries
 import br.alexandregpereira.hunter.database.MonsterQueries
 import br.alexandregpereira.hunter.database.MonsterWithImageEntityView
-import br.alexandregpereira.hunter.database.ReactionQueries
 import br.alexandregpereira.hunter.database.SavingThrowQueries
 import br.alexandregpereira.hunter.database.SkillQueries
-import br.alexandregpereira.hunter.database.SpecialAbilityQueries
 import br.alexandregpereira.hunter.database.SpeedQueries
 import br.alexandregpereira.hunter.database.SpeedValueQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
-import br.alexandregpereira.hunter.database.SpellcastingSpellUsageCrossRefQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -57,15 +52,11 @@ internal class MonsterDaoImpl(
     private val damageDiceQueries: DamageDiceQueries,
     private val savingThrowQueries: SavingThrowQueries,
     private val skillQueries: SkillQueries,
-    private val specialAbilityQueries: SpecialAbilityQueries,
     private val speedQueries: SpeedQueries,
     private val speedValueQueries: SpeedValueQueries,
-    private val reactionQueries: ReactionQueries,
     private val spellcastingQueries: SpellcastingQueries,
     private val spellUsageQueries: SpellUsageQueries,
-    private val spellcastingSpellUsageCrossRefQueries: SpellcastingSpellUsageCrossRefQueries,
     private val spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries,
-    private val legendaryActionQueries: LegendaryActionQueries,
     private val dispatcher: CoroutineDispatcher
 ) : MonsterDao {
 
@@ -122,19 +113,21 @@ internal class MonsterDaoImpl(
             monsterQueries.insert(monsters.map { it.monster })
             abilityScoreQueries.insert(monsters.mapAndReduce { abilityScores })
 
-            val actions = monsters.mapAndReduce { actions }
-            actionQueries.insert(actions.map { it.action })
-            damageDiceQueries.insert(actions.mapAndReduce { damageDices })
-            savingThrowQueries.insert(actions.mapAndReduce { savingThrows })
-            conditionQueries.insert(actions.mapAndReduce { conditions })
+            val allActionGroups = listOf(
+                monsters.mapAndReduce { actions },
+                monsters.mapAndReduce { bonusActions },
+                monsters.mapAndReduce { specialAbilities },
+                monsters.mapAndReduce { reactions },
+                monsters.mapAndReduce { legendaryActions },
+            )
+            val allActions = allActionGroups.flatten()
+            actionQueries.insert(allActions.map { it.action })
+            damageDiceQueries.insert(allActions.mapAndReduce { damageDices })
+            savingThrowQueries.insert(allActions.mapAndReduce { savingThrows })
+            conditionQueries.insert(allActions.mapAndReduce { conditions })
 
             savingThrowQueries.insert(monsters.mapAndReduce { savingThrows })
             skillQueries.insert(monsters.mapAndReduce { skills })
-
-            val specialAbilities = monsters.mapAndReduce { specialAbilities }
-            specialAbilityQueries.insert(specialAbilities.map { it.specialAbility })
-            savingThrowQueries.insert(specialAbilities.mapAndReduce { savingThrows })
-            conditionQueries.insert(specialAbilities.mapAndReduce { conditions })
 
             speedQueries.insert(monsters.mapNotNull { it.speed?.speed })
             speedValueQueries.insert(monsters.mapNotNull { it.speed?.values }.reduceList())
@@ -142,29 +135,18 @@ internal class MonsterDaoImpl(
             damageResistanceQueries.insert(monsters.mapAndReduce { damageResistances })
             damageVulnerabilityQueries.insert(monsters.mapAndReduce { damageVulnerabilities })
             conditionQueries.insert(monsters.mapAndReduce { conditionImmunities })
-            reactionQueries.insert(monsters.mapAndReduce { reactions })
-
-            val legendaryActions = monsters.mapAndReduce { legendaryActions }
-            legendaryActionQueries.insert(legendaryActions.map { it.action })
-            damageDiceQueries.insert(legendaryActions.mapAndReduce { damageDices })
-            savingThrowQueries.insert(legendaryActions.mapAndReduce { savingThrows })
-            conditionQueries.insert(legendaryActions.mapAndReduce { conditions })
 
             val spellcastings = monsters.mapAndReduce { spellcastings }
             spellcastingQueries.insert(spellcastings.map { it.spellcasting })
 
-            val usages = spellcastings.mapAndReduce { usages }
-            spellUsageQueries.insert(usages.map { it.spellUsage })
+            val spellcastingUsages = spellcastings.mapAndReduce { usages }
+            spellUsageQueries.insert(spellcastingUsages.map { it.spellUsage })
 
-            val spellUsageCrossRefs = usages.map { usage ->
-                SpellcastingSpellUsageCrossRefEntity(
-                    spellcastingId = usage.spellUsage.spellcastingId,
-                    spellUsageId = usage.spellUsage.spellUsageId
-                )
-            }
-            spellcastingSpellUsageCrossRefQueries.insert(spellUsageCrossRefs)
+            val actionSpellUsages = allActions.mapAndReduce { spellUsages }
+            spellUsageQueries.insert(actionSpellUsages.map { it.spellUsage })
 
-            val spellsAndCrossRefs = usages.mapAndReduce {
+            val allSpellUsages = spellcastingUsages + actionSpellUsages
+            val spellsAndCrossRefs = allSpellUsages.mapAndReduce {
                 spells.map { spell ->
                     spell to SpellUsageSpellCrossRefEntity(
                         spellUsageId = spellUsage.spellUsageId, spellIndex = spell.spellIndex
@@ -195,41 +177,37 @@ internal class MonsterDaoImpl(
 
     private fun deleteAllEntries(monsters: List<MonsterCompleteEntity>) {
         val monsterIndexes = monsters.map { it.monster.index }
-        val actionsIds = monsters.mapAndReduce { actions.map { it.action.id } }
-        val legendaryActionsIds = monsters.mapAndReduce { legendaryActions.map { it.action.id } }
-        val abilityKeys = monsters.mapAndReduce {
-            specialAbilities.map { "${it.specialAbility.monsterIndex}-${it.specialAbility.name}" }
+        val allActionIds = monsters.mapAndReduce {
+            (actions + bonusActions + specialAbilities + reactions + legendaryActions)
+                .map { it.action.id }
         }
         val speedIds = monsters.mapNotNull { it.speed?.speed?.id }
         val spellcastings = monsters.mapAndReduce { spellcastings }
         val spellcastingIds = spellcastings.map { it.spellcasting.spellcastingId }
         val spellUsageIds = spellcastings.mapAndReduce { usages.map { it.spellUsage.spellUsageId } }
+        val actionSpellUsageIds = monsters.mapAndReduce {
+            (actions + bonusActions + specialAbilities + reactions + legendaryActions)
+                .mapAndReduce { spellUsages.map { it.spellUsage.spellUsageId } }
+        }
 
         abilityScoreQueries.deleteWithMonsterIndex(monsterIndexes)
         actionQueries.deleteWithMonsterIndex(monsterIndexes)
         conditionQueries.deleteWithMonsterIndex(monsterIndexes)
-        conditionQueries.deleteWithMonsterIndex(actionsIds)
-        conditionQueries.deleteWithMonsterIndex(legendaryActionsIds)
-        conditionQueries.deleteWithMonsterIndex(abilityKeys)
+        conditionQueries.deleteWithMonsterIndex(allActionIds)
         damageResistanceQueries.deleteWithMonsterIndex(monsterIndexes)
         damageImmunityQueries.deleteWithMonsterIndex(monsterIndexes)
         damageVulnerabilityQueries.deleteWithMonsterIndex(monsterIndexes)
-        damageDiceQueries.deleteWithActionId(actionsIds)
-        damageDiceQueries.deleteWithActionId(legendaryActionsIds)
+        damageDiceQueries.deleteWithActionId(allActionIds)
         savingThrowQueries.deleteWithMonsterIndex(monsterIndexes)
-        savingThrowQueries.deleteWithMonsterIndex(actionsIds)
-        savingThrowQueries.deleteWithMonsterIndex(legendaryActionsIds)
-        savingThrowQueries.deleteWithMonsterIndex(abilityKeys)
+        savingThrowQueries.deleteWithMonsterIndex(allActionIds)
         skillQueries.deleteWithMonsterIndex(monsterIndexes)
-        specialAbilityQueries.deleteWithMonsterIndex(monsterIndexes)
         speedQueries.deleteWithMonsterIndex(monsterIndexes)
         speedValueQueries.deleteWithSpeedId(speedIds)
-        reactionQueries.deleteWithMonsterIndex(monsterIndexes)
         spellcastingQueries.deleteWithMonsterIndex(monsterIndexes)
-        spellcastingSpellUsageCrossRefQueries.deleteWithSpellcastingId(spellcastingIds)
-        spellUsageQueries.deleteWithSpellcastingId(spellcastingIds)
+        spellUsageQueries.deleteWithParentId(spellcastingIds)
+        spellUsageQueries.deleteWithParentId(allActionIds)
         spellUsageCrossRefQueries.deleteWithSpellUsageId(spellUsageIds)
-        legendaryActionQueries.deleteWithMonsterIndex(monsterIndexes)
+        spellUsageCrossRefQueries.deleteWithSpellUsageId(actionSpellUsageIds)
     }
 
     private fun getMonstersByIsNotClone(): List<MonsterCompleteEntity> {
@@ -242,10 +220,11 @@ internal class MonsterDaoImpl(
         val monsterIndexes = map { it.index }
         val allSpeedMap = getSpeeds(monsterIndexes, speedQueries, speedValueQueries)
         val allAbilityScoresMap = getAbilityScores(monsterIndexes, abilityScoreQueries)
-        val allActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries)
-        val allReactionsMap = getReactions(monsterIndexes, reactionQueries)
-        val allSpecialAbilitiesMap = getSpecialAbilities(monsterIndexes, specialAbilityQueries, savingThrowQueries, conditionQueries)
-        val allLegendaryActionsMap = getLegendaryActions(monsterIndexes, legendaryActionQueries, damageDiceQueries, savingThrowQueries, conditionQueries)
+        val allActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries, spellUsageQueries, spellUsageCrossRefQueries, "ACTION")
+        val allBonusActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries, spellUsageQueries, spellUsageCrossRefQueries, "BONUS_ACTION")
+        val allSpecialAbilitiesMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries, spellUsageQueries, spellUsageCrossRefQueries, "SPECIAL_ABILITY")
+        val allReactionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries, spellUsageQueries, spellUsageCrossRefQueries, "REACTION")
+        val allLegendaryActionsMap = getActions(monsterIndexes, actionQueries, damageDiceQueries, savingThrowQueries, conditionQueries, spellUsageQueries, spellUsageCrossRefQueries, "LEGENDARY_ACTION")
         val allSpellcastingsMap = getSpellcastings(monsterIndexes, spellcastingQueries, spellUsageQueries, spellUsageCrossRefQueries)
         val allSavingThrowsMap = getSavingThrows(monsterIndexes, savingThrowQueries)
         val allSkillsMap = getSkills(monsterIndexes, skillQueries)
@@ -258,8 +237,9 @@ internal class MonsterDaoImpl(
             val speed = allSpeedMap[monster.index]
             val abilityScores = allAbilityScoresMap[monster.index].orEmpty()
             val actions = allActionsMap[monster.index].orEmpty()
-            val reactions = allReactionsMap[monster.index].orEmpty()
+            val bonusActions = allBonusActionsMap[monster.index].orEmpty()
             val specialAbilities = allSpecialAbilitiesMap[monster.index].orEmpty()
+            val reactions = allReactionsMap[monster.index].orEmpty()
             val legendaryActions = allLegendaryActionsMap[monster.index].orEmpty()
             val spellcastings = allSpellcastingsMap[monster.index].orEmpty()
             val savingThrows = allSavingThrowsMap[monster.index].orEmpty()
@@ -274,8 +254,9 @@ internal class MonsterDaoImpl(
                 speed = speed,
                 abilityScores = abilityScores,
                 actions = actions,
-                reactions = reactions,
+                bonusActions = bonusActions,
                 specialAbilities = specialAbilities,
+                reactions = reactions,
                 legendaryActions = legendaryActions,
                 spellcastings = spellcastings,
                 savingThrows = savingThrows,

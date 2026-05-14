@@ -25,10 +25,8 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageDiceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityCompleteEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedWithValuesEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellPreviewEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageCompleteEntity
@@ -40,11 +38,8 @@ import br.alexandregpereira.hunter.database.DamageDiceQueries
 import br.alexandregpereira.hunter.database.DamageImmunityQueries
 import br.alexandregpereira.hunter.database.DamageResistanceQueries
 import br.alexandregpereira.hunter.database.DamageVulnerabilityQueries
-import br.alexandregpereira.hunter.database.LegendaryActionQueries
-import br.alexandregpereira.hunter.database.ReactionQueries
 import br.alexandregpereira.hunter.database.SavingThrowQueries
 import br.alexandregpereira.hunter.database.SkillQueries
-import br.alexandregpereira.hunter.database.SpecialAbilityQueries
 import br.alexandregpereira.hunter.database.SpeedQueries
 import br.alexandregpereira.hunter.database.SpeedValueQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
@@ -143,64 +138,24 @@ internal fun getConditionImmunities(
         .groupBy { it.value.monsterIndex }
 }
 
-internal fun getSpecialAbilities(
-    monsterIndexes: List<String>,
-    specialAbilityQueries: SpecialAbilityQueries,
-    savingThrowQueries: SavingThrowQueries,
-    conditionQueries: ConditionQueries,
-): Map<String, List<SpecialAbilityCompleteEntity>> {
-    val specialAbilities = specialAbilityQueries.getByMonsterIndexes(monsterIndexes)
-        .executeAsList()
-        .map { it.toLocalEntity() }
-
-    val abilityKeys = specialAbilities.map { "${it.monsterIndex}-${it.name}" }
-
-    val savingThrowsByAbilityKey = savingThrowQueries.getByMonsterIndexes(abilityKeys)
-        .executeAsList()
-        .map { it.toLocalEntity() }
-        .groupBy { it.value.monsterIndex }
-
-    val conditionsByAbilityKey = conditionQueries.getByMonsterIndexes(abilityKeys)
-        .executeAsList()
-        .map { it.toLocalEntity() }
-        .groupBy { it.value.monsterIndex }
-
-    return specialAbilities.map { ability ->
-        val abilityKey = "${ability.monsterIndex}-${ability.name}"
-        SpecialAbilityCompleteEntity(
-            specialAbility = ability,
-            savingThrows = savingThrowsByAbilityKey[abilityKey].orEmpty(),
-            conditions = conditionsByAbilityKey[abilityKey].orEmpty(),
-        )
-    }.groupBy { it.specialAbility.monsterIndex }
-}
-
 internal fun getActions(
     monsterIndexes: List<String>,
     actionQueries: ActionQueries,
     damageDiceQueries: DamageDiceQueries,
     savingThrowQueries: SavingThrowQueries,
     conditionQueries: ConditionQueries,
+    spellUsageQueries: SpellUsageQueries,
+    spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries,
+    type: String,
 ): Map<String, List<ActionWithDamageDicesEntity>> {
-    val actions = actionQueries.getByMonsterIndexes(monsterIndexes)
+    val actions = actionQueries.getByMonsterIndexesAndType(monsterIndexes, type)
         .executeAsList()
         .map { it.toLocalEntity() }
 
-    return getActionWithDamageDicesEntities(actions, damageDiceQueries, savingThrowQueries, conditionQueries)
-}
-
-internal fun getLegendaryActions(
-    monsterIndexes: List<String>,
-    legendaryActionQueries: LegendaryActionQueries,
-    damageDiceQueries: DamageDiceQueries,
-    savingThrowQueries: SavingThrowQueries,
-    conditionQueries: ConditionQueries,
-): Map<String, List<ActionWithDamageDicesEntity>> {
-    val actions = legendaryActionQueries.getByMonsterIndexes(monsterIndexes)
-        .executeAsList()
-        .map { it.toLocalEntity() }
-
-    return getActionWithDamageDicesEntities(actions, damageDiceQueries, savingThrowQueries, conditionQueries)
+    return getActionWithDamageDicesEntities(
+        actions, damageDiceQueries, savingThrowQueries, conditionQueries,
+        spellUsageQueries, spellUsageCrossRefQueries,
+    )
 }
 
 private fun getActionWithDamageDicesEntities(
@@ -208,6 +163,8 @@ private fun getActionWithDamageDicesEntities(
     damageDiceQueries: DamageDiceQueries,
     savingThrowQueries: SavingThrowQueries,
     conditionQueries: ConditionQueries,
+    spellUsageQueries: SpellUsageQueries,
+    spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries,
 ): Map<String, List<ActionWithDamageDicesEntity>> {
     val actionIds = actions.map { it.id }
 
@@ -223,12 +180,15 @@ private fun getActionWithDamageDicesEntities(
         .map { it.toLocalEntity() }
         .groupBy { it.value.monsterIndex }
 
+    val spellUsagesByActionId = getActionSpellUsages(actionIds, spellUsageQueries, spellUsageCrossRefQueries)
+
     return actions.map { action ->
         ActionWithDamageDicesEntity(
             action = action,
             damageDices = damageDices[action.id].orEmpty(),
             savingThrows = savingThrowsByActionId[action.id].orEmpty(),
             conditions = conditionsByActionId[action.id].orEmpty(),
+            spellUsages = spellUsagesByActionId[action.id].orEmpty(),
         )
     }.groupBy { it.action.monsterIndex }
 }
@@ -243,14 +203,39 @@ private fun getActionWithDamageDices(
         .groupBy { it.actionId }
 }
 
-internal fun getReactions(
-    monsterIndexes: List<String>,
-    reactionQueries: ReactionQueries,
-): Map<String, List<ReactionEntity>> {
-    return reactionQueries.getByMonsterIndexes(monsterIndexes)
-        .executeAsList()
-        .map { it.toLocalEntity() }
-        .groupBy { it.monsterIndex }
+internal fun getActionSpellUsages(
+    actionIds: List<String>,
+    spellUsageQueries: SpellUsageQueries,
+    spellUsageCrossRefQueries: SpellUsageSpellCrossRefQueries,
+): Map<String, List<SpellUsageCompleteEntity>> {
+    if (actionIds.isEmpty()) return emptyMap()
+
+    val spellUsages = spellUsageQueries.getByParentIds(actionIds)
+        .executeAsList().map { it.toLocalEntity() }
+    val spellUsageIds = spellUsages.map { it.spellUsageId }
+
+    val spellsMap = spellUsageCrossRefQueries.getBySpellUsageIdsAndSpellIndex(
+        spellUsageIds,
+        mapper = { spellIndex: String, level: Long, name: String, school: String, spellUsageId: String ->
+            spellUsageId to SpellPreviewEntity(
+                spellIndex = spellIndex,
+                name = name,
+                level = level.toInt(),
+                school = school
+            )
+        }
+    ).executeAsList().groupBy { (spellUsageId, _) ->
+        spellUsageId
+    }.mapValues { (_, spellsGroupedByUsageId) ->
+        spellsGroupedByUsageId.map { (_, spells) -> spells }
+    }
+
+    return spellUsages.map { spellUsage ->
+        SpellUsageCompleteEntity(
+            spellUsage = spellUsage,
+            spells = spellsMap[spellUsage.spellUsageId].orEmpty()
+        )
+    }.groupBy { it.spellUsage.parentId }
 }
 
 internal fun getSpellcastings(
@@ -263,7 +248,7 @@ internal fun getSpellcastings(
         .map { it.toLocalEntity() }
     val spellcastingIds = spellcastings.map { it.spellcastingId }
 
-    val spellUsages = spellUsageQueries.getBySpellcastingIds(spellcastingIds)
+    val spellUsages = spellUsageQueries.getByParentIds(spellcastingIds)
         .executeAsList().map { it.toLocalEntity() }
     val spellUsageIds = spellUsages.map { it.spellUsageId }
 
@@ -288,7 +273,7 @@ internal fun getSpellcastings(
             spellUsage = spellUsage,
             spells = spellsMap[spellUsage.spellUsageId].orEmpty()
         )
-    }.groupBy { it.spellUsage.spellcastingId }
+    }.groupBy { it.spellUsage.parentId }
 
     return spellcastings.map { spellcastingEntity ->
         SpellcastingCompleteEntity(

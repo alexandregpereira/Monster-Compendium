@@ -19,27 +19,30 @@ package br.alexandregpereira.hunter.data.monster.remote.mapper
 
 import br.alexandregpereira.hunter.data.monster.remote.model.ActionDto
 import br.alexandregpereira.hunter.data.monster.remote.model.DamageDiceDto
+import br.alexandregpereira.hunter.data.monster.spell.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.DamageDice
 import br.alexandregpereira.hunter.uuid.generateUUID
 
-internal fun List<ActionDto>.toDomain(): List<Action> {
+internal fun List<ActionDto>.toDomain(idPrefix: String = "action"): List<Action> {
     return this.map { action ->
         val uuid = generateUUID()
+        val id = "$idPrefix-$uuid"
         val damageDices = action.damageDices.toDamageDiceDomain()
         val damageDicesV2 = action.damageDicesV2.toDamageDiceDomain()
         Action(
-            id = "action-$uuid",
+            id = id,
             damageDices = damageDices + damageDicesV2,
             attackBonus = action.attackBonus,
             abilityDescription = AbilityDescription(
                 name = action.name,
-                description = action.description,
-                index = "action-$uuid",
+                description = action.desc ?: action.description,
+                index = id,
                 savingThrows = action.savingThrows.toDomain(),
                 conditions = action.conditions.toDomain(),
-            )
+            ),
+            spellsByGroup = action.spellsByGroup.toDomain(),
         )
     }
 }

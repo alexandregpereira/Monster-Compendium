@@ -31,6 +31,7 @@ internal fun LazyListScope.MonsterActionsForm(
     keys: Iterator<String>,
     title: @Composable () -> String,
     actions: List<ActionState>,
+    onSpellClick: (String) -> Unit = {},
     onChanged: (List<ActionState>) -> Unit = {}
 ) = FormLazy(titleKey = keys.next(), title) {
     val newActions = actions.toMutableList()
@@ -160,6 +161,15 @@ internal fun LazyListScope.MonsterActionsForm(
                         copy(abilityDescription = abilityDescription.copy(conditions = it))
                     }
                 )
+            }
+        )
+
+        MonsterSpellsUsageForm(
+            keys = keys,
+            spellsByGroup = action.spellsByGroup,
+            onSpellClick = onSpellClick,
+            onChanged = { newSpellsByGroup ->
+                onChanged(newActions.changeAt(actionIndex) { copy(spellsByGroup = newSpellsByGroup) })
             }
         )
     }

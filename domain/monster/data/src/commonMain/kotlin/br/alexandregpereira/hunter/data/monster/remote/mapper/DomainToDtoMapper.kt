@@ -15,7 +15,6 @@ import br.alexandregpereira.hunter.data.monster.remote.model.MonsterTypeDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SavingThrowDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SkillDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SourceDto
-import br.alexandregpereira.hunter.data.monster.remote.model.SpecialAbilityDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SpeedDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SpeedTypeDto
 import br.alexandregpereira.hunter.data.monster.remote.model.SpeedValueDto
@@ -24,7 +23,6 @@ import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellPreviewD
 import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellUsageDto
 import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellcastingDto
 import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellcastingTypeDto
-import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.Condition
@@ -68,10 +66,11 @@ internal fun Monster.toDto(): MonsterDto {
         conditionImmunities = conditionImmunities.toConditionDtos(),
         senses = senses,
         languages = languages,
-        specialAbilities = specialAbilities.toSpecialAbilityDtos(),
+        specialAbilities = specialAbilities.toActionDtos(),
         actions = actions.toActionDtos(),
+        bonusActions = bonusActions.toActionDtos(),
         legendaryActions = legendaryActions.toActionDtos(),
-        reactions = reactions.toSpecialAbilityDtos(),
+        reactions = reactions.toActionDtos(),
         spellcastings = spellcastings.toSpellcastingDtos(),
         source = SourceDto(name = sourceName, acronym = ""),
         lore = lore,
@@ -151,17 +150,6 @@ private fun List<Condition>.toConditionDtos(): List<ConditionDto> {
     return map { ConditionDto(index = it.index, type = it.type.name, name = it.name) }
 }
 
-private fun List<AbilityDescription>.toSpecialAbilityDtos(): List<SpecialAbilityDto> {
-    return map {
-        SpecialAbilityDto(
-            name = it.name,
-            desc = it.description,
-            savingThrows = it.savingThrows.toSavingThrowDtos(),
-            conditions = it.conditions.toConditionDtos(),
-        )
-    }
-}
-
 private fun List<Action>.toActionDtos(): List<ActionDto> {
     return map { action ->
         ActionDto(
@@ -172,6 +160,7 @@ private fun List<Action>.toActionDtos(): List<ActionDto> {
             damageDicesV2 = emptyList(),
             savingThrows = action.abilityDescription.savingThrows.toSavingThrowDtos(),
             conditions = action.abilityDescription.conditions.toConditionDtos(),
+            spellsByGroup = action.spellsByGroup.toSpellUsageDtos(),
         )
     }
 }

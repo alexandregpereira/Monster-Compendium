@@ -29,6 +29,7 @@ interface MonsterRegistrationStrings {
     val wisdom: String
     val charisma: String
     val actions: String
+    val bonusActions: String
     val aberration: String
     val beast: String
     val celestial: String
@@ -163,6 +164,7 @@ internal data class MonsterRegistrationEnStrings(
     override val wisdom: String = "Wisdom",
     override val charisma: String = "Charisma",
     override val actions: String = "Actions",
+    override val bonusActions: String = "Bonus Actions",
     override val aberration: String = "Aberration",
     override val beast: String = "Beast",
     override val celestial: String = "Celestial",
@@ -297,6 +299,7 @@ internal data class MonsterRegistrationPtStrings(
     override val wisdom: String = "Sabedoria",
     override val charisma: String = "Carisma",
     override val actions: String = "Ações",
+    override val bonusActions: String = "Ações de Bônus",
     override val aberration: String = "Aberração",
     override val beast: String = "Fera",
     override val celestial: String = "Celestial",
@@ -433,6 +436,7 @@ internal data class MonsterRegistrationEsStrings(
     override val wisdom: String = "Sabiduría",
     override val charisma: String = "Carisma",
     override val actions: String = "Acciones",
+    override val bonusActions: String = "Acciones de Bonificación",
     override val aberration: String = "Aberración",
     override val beast: String = "Bestia",
     override val celestial: String = "Celestial",

@@ -69,6 +69,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         languages = languages,
         specialAbilities = specialAbilities.map { it.asState(strings) },
         actions = actions.map { it.asState(strings) },
+        bonusActions = bonusActions.map { it.asState(strings) },
         legendaryActions = legendaryActions.map { it.asState(strings) },
         reactions = reactions.map { it.asState(strings) },
         spellcastings = spellcastings.map { it.asState(strings) },

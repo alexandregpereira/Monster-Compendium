@@ -382,8 +382,8 @@ internal class SearchMonstersByUseCase internal constructor(
 
     private fun Monster.containsBySpecialAbility(value: String): Boolean {
         return specialAbilities.any { ability ->
-            ability.name.removeAccents().contains(value, ignoreCase = true) ||
-                ability.description.removeAccents()
+            ability.abilityDescription.name.removeAccents().contains(value, ignoreCase = true) ||
+                ability.abilityDescription.description.removeAccents()
                     .contains(value, ignoreCase = true)
         }
     }

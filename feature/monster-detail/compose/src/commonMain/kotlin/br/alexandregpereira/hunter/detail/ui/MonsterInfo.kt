@@ -289,8 +289,9 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            SpecialAbilityBlock(
-                specialAbilities = it,
+            ActionBlock(
+                title = strings.specialAbilities,
+                actions = it,
                 onConditionClicked = onConditionClicked,
             )
         }
@@ -310,6 +311,21 @@ private fun LazyListScope.monsterInfoPart5(
         }
     }
 
+    item(key = "bonusActions") {
+        ListOptionalSectionAlphaTransition(
+            valueToValidate = { it.bonusActions },
+            dataList = monsters,
+            pagerState = pagerState,
+            getItemsKeys = getItemsKeys,
+        ) { bonusActions ->
+            ActionBlock(
+                title = strings.bonusActions,
+                actions = bonusActions,
+                onConditionClicked = onConditionClicked,
+            )
+        }
+    }
+
     item(key = "reactions") {
         ListOptionalSectionAlphaTransition(
             valueToValidate = { it.reactions },
@@ -317,8 +333,9 @@ private fun LazyListScope.monsterInfoPart5(
             pagerState = pagerState,
             getItemsKeys = getItemsKeys,
         ) {
-            ReactionBlock(
-                reactions = it,
+            ActionBlock(
+                title = strings.reactions,
+                actions = it,
                 onConditionClicked = onConditionClicked,
             )
         }

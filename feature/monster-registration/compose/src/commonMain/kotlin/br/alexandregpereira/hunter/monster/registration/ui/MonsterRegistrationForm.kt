@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterState
-import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityDescriptionForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterAbilityScoresForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterActionsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterConditionsForm
@@ -206,32 +205,39 @@ private fun MonsterRegistrationForm(
         value = monster.languages,
         onChanged = { intent.onMonsterChanged(monster.copy(languages = it)) },
     )
-    MonsterAbilityDescriptionForm(
+    MonsterActionsForm(
         keys = monster.keys,
         title = { strings.specialAbilities },
-        abilityDescriptions = monster.specialAbilities,
-        addText = { strings.addSpecialAbility },
-        removeText = { strings.removeSpecialAbility },
+        actions = monster.specialAbilities,
+        onSpellClick = intent::onSpellClick,
         onChanged = { intent.onMonsterChanged(monster.copy(specialAbilities = it)) },
     )
     MonsterActionsForm(
         keys = monster.keys,
         title = { strings.actions },
         actions = monster.actions,
+        onSpellClick = intent::onSpellClick,
         onChanged = { intent.onMonsterChanged(monster.copy(actions = it)) },
     )
-    MonsterAbilityDescriptionForm(
+    MonsterActionsForm(
+        keys = monster.keys,
+        title = { strings.bonusActions },
+        actions = monster.bonusActions,
+        onSpellClick = intent::onSpellClick,
+        onChanged = { intent.onMonsterChanged(monster.copy(bonusActions = it)) },
+    )
+    MonsterActionsForm(
         keys = monster.keys,
         title = { strings.reactions },
-        abilityDescriptions = monster.reactions,
-        addText = { strings.addReaction },
-        removeText = { strings.removeReaction },
+        actions = monster.reactions,
+        onSpellClick = intent::onSpellClick,
         onChanged = { intent.onMonsterChanged(monster.copy(reactions = it)) },
     )
     MonsterActionsForm(
         keys = monster.keys,
         title = { strings.legendaryActions },
         actions = monster.legendaryActions,
+        onSpellClick = intent::onSpellClick,
         onChanged = { intent.onMonsterChanged(monster.copy(legendaryActions = it)) },
     )
     MonsterSpellcastingsForm(

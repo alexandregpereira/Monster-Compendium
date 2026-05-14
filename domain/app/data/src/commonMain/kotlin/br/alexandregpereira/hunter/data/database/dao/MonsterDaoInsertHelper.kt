@@ -25,16 +25,13 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntit
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.MonsterEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SavingThrowEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SkillEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.SpecialAbilityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.SpeedValueEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageSpellCrossRefEntity
 import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingEntity
-import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellcastingSpellUsageCrossRefEntity
 import br.alexandregpereira.hunter.database.AbilityScoreQueries
 import br.alexandregpereira.hunter.database.ActionQueries
 import br.alexandregpereira.hunter.database.ConditionQueries
@@ -42,18 +39,14 @@ import br.alexandregpereira.hunter.database.DamageDiceQueries
 import br.alexandregpereira.hunter.database.DamageImmunityQueries
 import br.alexandregpereira.hunter.database.DamageResistanceQueries
 import br.alexandregpereira.hunter.database.DamageVulnerabilityQueries
-import br.alexandregpereira.hunter.database.LegendaryActionQueries
 import br.alexandregpereira.hunter.database.MonsterQueries
-import br.alexandregpereira.hunter.database.ReactionQueries
 import br.alexandregpereira.hunter.database.SavingThrowQueries
 import br.alexandregpereira.hunter.database.SkillQueries
-import br.alexandregpereira.hunter.database.SpecialAbilityQueries
 import br.alexandregpereira.hunter.database.SpeedQueries
 import br.alexandregpereira.hunter.database.SpeedValueQueries
 import br.alexandregpereira.hunter.database.SpellUsageQueries
 import br.alexandregpereira.hunter.database.SpellUsageSpellCrossRefQueries
 import br.alexandregpereira.hunter.database.SpellcastingQueries
-import br.alexandregpereira.hunter.database.SpellcastingSpellUsageCrossRefQueries
 
 internal fun MonsterQueries.insert(entities: List<MonsterEntity>) {
     entities.forEach {
@@ -103,18 +96,6 @@ internal fun DamageDiceQueries.insert(entities: List<DamageDiceEntity>) {
     }
 }
 
-internal fun LegendaryActionQueries.insert(entities: List<ActionEntity>) {
-    entities.forEach {
-        insert(it.toLegendaryActionDatabaseEntity())
-    }
-}
-
-internal fun ReactionQueries.insert(entities: List<ReactionEntity>) {
-    entities.forEach {
-        insert(it.toDatabaseEntity())
-    }
-}
-
 internal fun SavingThrowQueries.insert(entities: List<SavingThrowEntity>) {
     entities.forEach {
         insert(it.toDatabaseEntity())
@@ -122,12 +103,6 @@ internal fun SavingThrowQueries.insert(entities: List<SavingThrowEntity>) {
 }
 
 internal fun SkillQueries.insert(entities: List<SkillEntity>) {
-    entities.forEach {
-        insert(it.toDatabaseEntity())
-    }
-}
-
-internal fun SpecialAbilityQueries.insert(entities: List<SpecialAbilityEntity>) {
     entities.forEach {
         insert(it.toDatabaseEntity())
     }
@@ -146,12 +121,6 @@ internal fun SpeedValueQueries.insert(entities: List<SpeedValueEntity>) {
 }
 
 internal fun SpellcastingQueries.insert(entities: List<SpellcastingEntity>) {
-    entities.forEach {
-        insert(it.toDatabaseEntity())
-    }
-}
-
-internal fun SpellcastingSpellUsageCrossRefQueries.insert(entities: List<SpellcastingSpellUsageCrossRefEntity>) {
     entities.forEach {
         insert(it.toDatabaseEntity())
     }

@@ -17,9 +17,12 @@
 
 package br.alexandregpereira.hunter.data.monster.local.entity
 
+import br.alexandregpereira.hunter.data.monster.spell.local.model.SpellUsageCompleteEntity
+
 data class ActionWithDamageDicesEntity(
     val action: ActionEntity,
     val damageDices: List<DamageDiceEntity>,
     val savingThrows: List<SavingThrowEntity> = emptyList(),
     val conditions: List<ConditionEntity> = emptyList(),
+    val spellUsages: List<SpellUsageCompleteEntity> = emptyList(),
 )

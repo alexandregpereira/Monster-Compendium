@@ -21,9 +21,7 @@ import br.alexandregpereira.hunter.data.monster.local.entity.DamageEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageImmunityEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageResistanceEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.DamageVulnerabilityEntity
-import br.alexandregpereira.hunter.data.monster.local.entity.ReactionEntity
 import br.alexandregpereira.hunter.data.monster.local.entity.ValueEntity
-import br.alexandregpereira.hunter.domain.model.AbilityDescription
 import br.alexandregpereira.hunter.domain.model.Damage
 import br.alexandregpereira.hunter.domain.model.DamageType
 
@@ -111,13 +109,4 @@ internal fun Damage.toEntity(monsterIndex: String): ValueEntity {
         name = this.name,
         monsterIndex = monsterIndex
     )
-}
-internal fun List<AbilityDescription>.toReactionEntity(monsterIndex: String): List<ReactionEntity> {
-    return map {
-        ReactionEntity(
-            name = it.name,
-            description = it.description,
-            monsterIndex = monsterIndex
-        )
-    }
 }

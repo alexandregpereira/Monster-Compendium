@@ -36,6 +36,7 @@ interface MonsterDetailStrings {
     val languages: String
     val specialAbilities: String
     val actions: String
+    val bonusActions: String
     val legendaryActions: String
     val attack: String
     val options: String
@@ -88,6 +89,7 @@ internal data class MonsterDetailEnStrings(
     override val languages: String = "Languages",
     override val specialAbilities: String = "Special Abilities",
     override val actions: String = "Actions",
+    override val bonusActions: String = "Bonus Actions",
     override val legendaryActions: String = "Legendary Actions",
     override val attack: String = "Attack",
     override val options: String = "Options",
@@ -139,6 +141,7 @@ internal data class MonsterDetailPtStrings(
     override val languages: String = "Idiomas",
     override val specialAbilities: String = "Habilidades Especiais",
     override val actions: String = "Ações",
+    override val bonusActions: String = "Ações de Bônus",
     override val legendaryActions: String = "Ações Lendárias",
     override val attack: String = "Ataque",
     override val options: String = "Opções",
@@ -192,6 +195,7 @@ internal data class MonsterDetailEsStrings(
     override val languages: String = "Idiomas",
     override val specialAbilities: String = "Habilidades Especiales",
     override val actions: String = "Acciones",
+    override val bonusActions: String = "Acciones de Bonificación",
     override val legendaryActions: String = "Acciones Legendarias",
     override val attack: String = "Ataque",
     override val options: String = "Opciones",

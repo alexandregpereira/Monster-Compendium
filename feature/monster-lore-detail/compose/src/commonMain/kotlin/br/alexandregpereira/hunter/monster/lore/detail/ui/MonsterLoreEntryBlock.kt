@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.alexandregpereira.hunter.ui.compose.AppMarkdown
 
 @Composable
 internal fun MonsterLoreEntryBlock(
@@ -46,11 +47,9 @@ internal fun MonsterLoreEntryBlock(
         }
 
         description.takeIf { it.isNotBlank() }?.let {
-            Text(
-                text = it,
-                fontWeight = FontWeight.Light,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(top = 8.dp)
+            AppMarkdown(
+                content = it,
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
     }

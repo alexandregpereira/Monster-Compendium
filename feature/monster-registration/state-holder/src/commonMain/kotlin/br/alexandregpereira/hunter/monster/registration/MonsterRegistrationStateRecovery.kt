@@ -71,10 +71,11 @@ internal fun StateRecovery.saveMetadata(metadata: Metadata) {
     saveDamageList("monsterRegistration:metadata:damageResistance", monster.damageResistances)
     saveDamageList("monsterRegistration:metadata:damageImmunity", monster.damageImmunities)
     saveConditionImmunities(monster)
-    saveAbilityDescriptions("monsterRegistration:metadata:specialAbility", monster.specialAbilities)
-    saveAbilityDescriptions("monsterRegistration:metadata:reaction", monster.reactions)
+    saveActions("monsterRegistration:metadata:specialAbility", monster.specialAbilities)
     saveActions("monsterRegistration:metadata:action", monster.actions)
+    saveActions("monsterRegistration:metadata:bonusAction", monster.bonusActions)
     saveActions("monsterRegistration:metadata:legendaryAction", monster.legendaryActions)
+    saveActions("monsterRegistration:metadata:reaction", monster.reactions)
     saveSpellcastings(monster)
     saveMonsterLoreEntries(metadata.monsterLoreEntries)
     dispatchChanges()
@@ -122,10 +123,11 @@ internal fun StateRecovery.getMetadata(): Metadata {
         damageResistances = getDamageList("monsterRegistration:metadata:damageResistance"),
         damageImmunities = getDamageList("monsterRegistration:metadata:damageImmunity"),
         conditionImmunities = getConditionImmunities(),
-        specialAbilities = getAbilityDescriptions("monsterRegistration:metadata:specialAbility"),
-        reactions = getAbilityDescriptions("monsterRegistration:metadata:reaction"),
+        specialAbilities = getActions("monsterRegistration:metadata:specialAbility"),
         actions = getActions("monsterRegistration:metadata:action"),
+        bonusActions = getActions("monsterRegistration:metadata:bonusAction"),
         legendaryActions = getActions("monsterRegistration:metadata:legendaryAction"),
+        reactions = getActions("monsterRegistration:metadata:reaction"),
         spellcastings = getSpellcastings(),
         lore = this["monsterRegistration:metadata:lore"] as? String,
         status = status,
@@ -253,27 +255,6 @@ private fun StateRecovery.saveDamageList(prefix: String, list: List<Damage>) {
     }
 }
 
-private fun StateRecovery.saveAbilityDescriptions(prefix: String, list: List<AbilityDescription>) {
-    this["$prefix:size"] = list.size
-    list.forEachIndexed { i, ad ->
-        this["$prefix:name:$i"] = ad.name
-        this["$prefix:description:$i"] = ad.description
-        this["$prefix:index:$i"] = ad.index
-        this["$prefix:savingThrow:size:$i"] = ad.savingThrows.size
-        ad.savingThrows.forEachIndexed { j, st ->
-            this["$prefix:savingThrow:index:$i:$j"] = st.index
-            this["$prefix:savingThrow:modifier:$i:$j"] = st.modifier
-            this["$prefix:savingThrow:type:$i:$j"] = st.type.name
-        }
-        this["$prefix:condition:size:$i"] = ad.conditions.size
-        ad.conditions.forEachIndexed { j, c ->
-            this["$prefix:condition:index:$i:$j"] = c.index
-            this["$prefix:condition:type:$i:$j"] = c.type.name
-            this["$prefix:condition:name:$i:$j"] = c.name
-        }
-    }
-}
-
 private fun StateRecovery.saveActions(prefix: String, list: List<Action>) {
     this["$prefix:size"] = list.size
     list.forEachIndexed { i, action ->
@@ -398,41 +379,6 @@ private fun StateRecovery.getConditionImmunities(): List<Condition> {
                 ?.let { runCatching { ConditionType.valueOf(it) }.getOrNull() }
                 ?: ConditionType.BLINDED,
             name = getString("monsterRegistration:metadata:conditionImmunity:name:$i") ?: "",
-        )
-    }
-}
-
-private fun StateRecovery.getAbilityDescriptions(prefix: String): List<AbilityDescription> {
-    val size = getInt("$prefix:size") ?: return emptyList()
-    return (0 until size).map { i ->
-        AbilityDescription(
-            name = getString("$prefix:name:$i") ?: "",
-            description = getString("$prefix:description:$i") ?: "",
-            index = getString("$prefix:index:$i") ?: "",
-            savingThrows = run {
-                val stSize = getInt("$prefix:savingThrow:size:$i") ?: 0
-                (0 until stSize).map { j ->
-                    SavingThrow(
-                        index = getString("$prefix:savingThrow:index:$i:$j") ?: "",
-                        modifier = getInt("$prefix:savingThrow:modifier:$i:$j") ?: 0,
-                        type = (getString("$prefix:savingThrow:type:$i:$j"))
-                            ?.let { runCatching { AbilityScoreType.valueOf(it) }.getOrNull() }
-                            ?: AbilityScoreType.STRENGTH,
-                    )
-                }
-            },
-            conditions = run {
-                val condSize = getInt("$prefix:condition:size:$i") ?: 0
-                (0 until condSize).map { j ->
-                    Condition(
-                        index = getString("$prefix:condition:index:$i:$j") ?: "",
-                        type = (getString("$prefix:condition:type:$i:$j"))
-                            ?.let { runCatching { ConditionType.valueOf(it) }.getOrNull() }
-                            ?: ConditionType.BLINDED,
-                        name = getString("$prefix:condition:name:$i:$j") ?: "",
-                    )
-                }
-            },
         )
     }
 }

@@ -20,5 +20,5 @@ package br.alexandregpereira.hunter.data.monster.spell.local.model
 data class SpellUsageEntity(
     val spellUsageId: String,
     val group: String,
-    val spellcastingId: String
+    val parentId: String,
 )

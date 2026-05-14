@@ -47,10 +47,11 @@ data class MonsterState(
     val conditionImmunities: List<ConditionState> = emptyList(),
     val senses: List<String> = emptyList(),
     val languages: String = "",
-    val specialAbilities: List<AbilityDescriptionState> = emptyList(),
+    val specialAbilities: List<ActionState> = emptyList(),
     val actions: List<ActionState> = emptyList(),
+    val bonusActions: List<ActionState> = emptyList(),
     val legendaryActions: List<ActionState> = emptyList(),
-    val reactions: List<AbilityDescriptionState> = emptyList(),
+    val reactions: List<ActionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
     val loreEntries: List<MonsterLoreEntryState> = emptyList(),
     internal val keysList: List<String> = emptyList(),
@@ -162,6 +163,7 @@ data class ActionState(
     val damageDices: List<DamageDiceState> = emptyList(),
     val attackBonus: Int? = null,
     val abilityDescription: AbilityDescriptionState = AbilityDescriptionState(),
+    val spellsByGroup: List<SpellsByGroupState> = emptyList(),
 )
 
 data class DamageState(
@@ -238,6 +240,7 @@ internal enum class SectionTitle {
     Languages,
     SpecialAbilities,
     Actions,
+    BonusActions,
     Reactions,
     LegendaryActions,
     Spellcastings,
