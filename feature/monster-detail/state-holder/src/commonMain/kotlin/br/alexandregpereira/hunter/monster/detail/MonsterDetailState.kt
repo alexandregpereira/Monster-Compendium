@@ -160,7 +160,8 @@ data class AbilityDescriptionState(
 data class ActionState(
     val damageDices: List<DamageDiceState>,
     val attackBonus: Int?,
-    val abilityDescription: AbilityDescriptionState
+    val abilityDescription: AbilityDescriptionState,
+    val spellsByGroup: Map<String, List<SpellPreviewState>> = emptyMap(),
 )
 
 @ObjCName(name = "DamageDiceState", exact = true)

@@ -172,7 +172,12 @@ private fun Action.asState(strings: MonsterDetailStrings): ActionState {
     return ActionState(
         damageDices = damageDices.map { it.asState() },
         attackBonus = attackBonus,
-        abilityDescription = abilityDescription.asState(strings)
+        abilityDescription = abilityDescription.asState(strings),
+        spellsByGroup = spellsByGroup.associate { spellUsage ->
+            spellUsage.group to spellUsage.spells.map { spell ->
+                SpellPreviewState(index = spell.index, name = spell.name, school = spell.school)
+            }
+        },
     )
 }
 

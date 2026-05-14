@@ -78,6 +78,7 @@ internal fun LazyListScope.monsterInfo(
         pagerState = pagerState,
         getItemsKeys = getItemsKeys,
         onConditionClicked = onConditionClicked,
+        onSpellClicked = onSpellClicked,
     )
 
     spellBlock(
@@ -281,6 +282,7 @@ private fun LazyListScope.monsterInfoPart5(
     pagerState: PagerState,
     getItemsKeys: () -> List<Any> = { emptyList() },
     onConditionClicked: (String) -> Unit = {},
+    onSpellClicked: (String) -> Unit = {},
 ) {
     item(key = "specialAbilities") {
         ListOptionalSectionAlphaTransition(
@@ -293,6 +295,7 @@ private fun LazyListScope.monsterInfoPart5(
                 title = strings.specialAbilities,
                 actions = it,
                 onConditionClicked = onConditionClicked,
+                onSpellClicked = onSpellClicked,
             )
         }
     }
@@ -307,6 +310,7 @@ private fun LazyListScope.monsterInfoPart5(
             ActionBlock(
                 actions = actions,
                 onConditionClicked = onConditionClicked,
+                onSpellClicked = onSpellClicked,
             )
         }
     }
@@ -322,6 +326,7 @@ private fun LazyListScope.monsterInfoPart5(
                 title = strings.bonusActions,
                 actions = bonusActions,
                 onConditionClicked = onConditionClicked,
+                onSpellClicked = onSpellClicked,
             )
         }
     }
@@ -337,6 +342,7 @@ private fun LazyListScope.monsterInfoPart5(
                 title = strings.reactions,
                 actions = it,
                 onConditionClicked = onConditionClicked,
+                onSpellClicked = onSpellClicked,
             )
         }
     }
@@ -352,6 +358,7 @@ private fun LazyListScope.monsterInfoPart5(
                 title = strings.legendaryActions,
                 actions = legendaryActions,
                 onConditionClicked = onConditionClicked,
+                onSpellClicked = onSpellClicked,
             )
         }
     }

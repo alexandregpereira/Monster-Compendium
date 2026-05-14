@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -41,6 +43,7 @@ internal fun ActionBlock(
     modifier: Modifier = Modifier,
     title: String = strings.actions,
     onConditionClicked: (String) -> Unit = {},
+    onSpellClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = title,
     abilityDescriptions = actions.map { it.abilityDescription },
@@ -49,22 +52,25 @@ internal fun ActionBlock(
 
     val attackBonus = actions[index].attackBonus
     val damageDices = actions[index].damageDices
-    if (attackBonus == null
-        && damageDices.isEmpty()
-        && actions[index].abilityDescription.savingThrows.isEmpty()
-        && actions[index].abilityDescription.conditions.isEmpty()
+    if (attackBonus != null
+        || damageDices.isNotEmpty()
+        || actions[index].abilityDescription.savingThrows.isNotEmpty()
+        || actions[index].abilityDescription.conditions.isNotEmpty()
     ) {
-        return@AbilityDescriptionBlock
+        ActionDamageGrid(
+            attackBonus = actions[index].attackBonus,
+            damageDices = actions[index].damageDices,
+            savingThrows = actions[index].abilityDescription.savingThrows,
+            conditions = actions[index].abilityDescription.conditions,
+            modifier = Modifier.padding(top = 16.dp),
+            onConditionClicked = onConditionClicked,
+        )
     }
 
-    ActionDamageGrid(
-        attackBonus = actions[index].attackBonus,
-        damageDices = actions[index].damageDices,
-        savingThrows = actions[index].abilityDescription.savingThrows,
-        conditions = actions[index].abilityDescription.conditions,
-        modifier = Modifier.padding(top = 16.dp),
-        onConditionClicked = onConditionClicked,
-    )
+    actions[index].spellsByGroup.forEach { (group, spells) ->
+        Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
+        Spacer(modifier = Modifier.height(24.dp))
+    }
 }
 
 @Composable

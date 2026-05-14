@@ -123,7 +123,7 @@ private fun SpellBlock(
 }
 
 @Composable
-private fun Spells(
+internal fun Spells(
     group: String,
     spells: List<SpellPreviewState>,
     onSpellClicked: (String) -> Unit = {}
