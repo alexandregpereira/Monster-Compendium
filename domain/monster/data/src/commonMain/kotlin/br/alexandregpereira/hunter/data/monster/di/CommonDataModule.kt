@@ -87,7 +87,7 @@ val monsterDataModule = module {
         SyncMonstersUseCaseImpl(
             remoteRepository = get(),
             localRepository = get(),
-            getAlternativeSourceAcronymsAdded = get(),
+            getAlternativeSourcesAdded = get(),
             monsterSettingsRepository = get(),
             getMonsterImages = get(),
             saveMonstersUseCase = get(),

@@ -28,7 +28,7 @@ internal class DefaultSpellRemoteRepository(
     private val remoteDataSource: SpellRemoteDataSource
 ) : SpellRemoteRepository {
 
-    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
-        return remoteDataSource.getSpells(lang).map { it.toDomain() }
+    override fun getRemoteSpells(source: String, lang: String): Flow<List<Spell>> {
+        return remoteDataSource.getSpells(source, lang).map { it.toDomain() }
     }
 }

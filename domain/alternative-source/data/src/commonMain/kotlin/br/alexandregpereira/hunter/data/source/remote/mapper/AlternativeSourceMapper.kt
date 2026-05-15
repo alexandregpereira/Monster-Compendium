@@ -27,7 +27,8 @@ internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
             source = Source(
                 name = it.source.name,
                 acronym = it.source.acronym,
-                originalName = it.source.originalName
+                originalAcronym = it.source.originalAcronym,
+                originalName = it.source.originalName,
             ),
             totalMonsters = it.totalMonsters,
             summary = it.summary,
@@ -35,6 +36,8 @@ internal fun List<AlternativeSourceDto>.toDomain(): List<AlternativeSource> {
             isEnabled = it.isEnabled,
             isLoreEnabled = it.isLoreEnabled,
             contentVersion = it.contentVersion,
+            totalSpells = it.totalSpells,
+            isDefault = it.isDefault,
         )
     }
 }

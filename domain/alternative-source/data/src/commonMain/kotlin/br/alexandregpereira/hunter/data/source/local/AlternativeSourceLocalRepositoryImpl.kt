@@ -37,10 +37,6 @@ internal class AlternativeSourceLocalRepositoryImpl(
         return localDataSource.getAlternativeSources().map { it.toDomain() }
     }
 
-    override fun getDefaultSources(): Flow<List<AlternativeSource>> {
-        return localDataSource.getDefaultSources().map { it.toDomain() }
-    }
-
     override fun addAlternativeSource(acronym: String): Flow<Unit> {
         return flowOf(acronym).map { it.toEntity() }.flatMapLatest { entity ->
             localDataSource.addAlternativeSource(entity)

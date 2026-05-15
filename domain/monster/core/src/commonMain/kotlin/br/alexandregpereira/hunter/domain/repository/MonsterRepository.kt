@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 interface MonsterRepository {
 
     fun saveMonsters(monsters: List<Monster>, isSync: Boolean = false): Flow<Unit>
-    fun getRemoteMonsters(lang: String = "en-us"): Flow<List<Monster>>
     fun getRemoteMonsters(sourceAcronym: String, lang: String = "en-us"): Flow<List<Monster>>
     fun getLocalMonsterPreviews(): Flow<List<Monster>>
     fun getLocalMonsters(): Flow<List<Monster>>

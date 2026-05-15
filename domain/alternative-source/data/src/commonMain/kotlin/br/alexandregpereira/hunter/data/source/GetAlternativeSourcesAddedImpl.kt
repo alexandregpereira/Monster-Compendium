@@ -17,20 +17,19 @@
 
 package br.alexandregpereira.hunter.data.source
 
-import br.alexandregpereira.hunter.domain.source.GetAlternativeSourceAcronymsAdded
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesAdded
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
+import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.firstOrNull
 
-internal class GetAlternativeSourceAcronymsAddedImpl(
+internal class GetAlternativeSourcesAddedImpl(
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
-) : GetAlternativeSourceAcronymsAdded {
+) : GetAlternativeSourcesAdded {
 
-    override suspend fun invoke(): List<String> {
+    override suspend fun invoke(): List<AlternativeSource> {
         return getAlternativeSourcesUseCase()
             .firstOrNull()
             ?.filter { it.isAdded }
-            ?.map {
-                it.acronym
-            }.orEmpty()
+            .orEmpty()
     }
 }

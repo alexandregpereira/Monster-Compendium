@@ -32,8 +32,8 @@ internal class DefaultSpellRepository(
         return localRepository.saveSpells(spells)
     }
 
-    override fun getRemoteSpells(lang: String): Flow<List<Spell>> {
-        return remoteRepository.getRemoteSpells(lang)
+    override fun getRemoteSpells(source: String, lang: String): Flow<List<Spell>> {
+        return remoteRepository.getRemoteSpells(source, lang)
     }
 
     override fun getLocalSpell(index: String): Flow<Spell> {

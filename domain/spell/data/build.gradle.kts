@@ -23,6 +23,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:settings:core"))
         implementation(project(":domain:spell:core"))
         implementation(libs.kotlin.coroutines.core)

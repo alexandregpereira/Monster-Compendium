@@ -35,10 +35,6 @@ internal class MonsterRemoteRepositoryImpl(
 ) : MonsterRemoteRepository {
 
 
-    override fun getMonsters(lang: String): Flow<List<Monster>> {
-        return remoteDataSource.getMonsters(lang).toMonstersDomain()
-    }
-
     override fun getMonsters(sourceAcronym: String, lang: String): Flow<List<Monster>> {
         return remoteDataSource.getMonsters(sourceAcronym, lang)
             .toMonstersDomain()

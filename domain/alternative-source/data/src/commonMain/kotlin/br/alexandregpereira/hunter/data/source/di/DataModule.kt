@@ -21,7 +21,7 @@ package br.alexandregpereira.hunter.data.source.di
 
 import br.alexandregpereira.hunter.data.source.AddAlternativeSourceUseCaseImpl
 import br.alexandregpereira.hunter.data.source.AlternativeSourceSettingsRepositoryImpl
-import br.alexandregpereira.hunter.data.source.GetAlternativeSourceAcronymsAddedImpl
+import br.alexandregpereira.hunter.data.source.GetAlternativeSourcesAddedImpl
 import br.alexandregpereira.hunter.data.source.GetAlternativeSourcesUseCaseImpl
 import br.alexandregpereira.hunter.data.source.GetMonsterLoreSourcesUseCaseImpl
 import br.alexandregpereira.hunter.data.source.RemoveAlternativeSourceUseCaseImpl
@@ -36,7 +36,7 @@ import br.alexandregpereira.hunter.domain.source.AddAlternativeSourceUseCase
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceSettingsRepository
-import br.alexandregpereira.hunter.domain.source.GetAlternativeSourceAcronymsAdded
+import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesAdded
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.GetMonsterLoreSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.RemoveAlternativeSourceUseCase
@@ -65,8 +65,8 @@ val alternativeSourceDataModule = module {
     factory<RemoveAlternativeSourceUseCase> { RemoveAlternativeSourceUseCaseImpl(get()) }
     factory<SyncAlternativeSourceContentVersionUseCase> { SyncAlternativeSourceContentVersionUseCaseImpl(get(), get(), get()) }
     factory<SaveAlternativeSourceContentVersionsUseCase> { SaveAlternativeSourceContentVersionsUseCaseImpl(get()) }
-    factory<GetAlternativeSourceAcronymsAdded> {
-        GetAlternativeSourceAcronymsAddedImpl(
+    factory<GetAlternativeSourcesAdded> {
+        GetAlternativeSourcesAddedImpl(
             getAlternativeSourcesUseCase = get(),
         )
     }

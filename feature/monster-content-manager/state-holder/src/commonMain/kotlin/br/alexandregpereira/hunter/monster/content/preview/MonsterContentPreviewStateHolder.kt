@@ -57,7 +57,10 @@ class MonsterContentPreviewStateHolder internal constructor(
                     is MonsterContentPreviewEvent.Show -> {
                         stateRecovery.sourceAcronym = event.sourceAcronym
                         setState {
-                            copy(isOpen = true, title = event.title).saveState(stateRecovery)
+                            MonsterContentPreviewState(
+                                isOpen = true,
+                                title = event.title,
+                            ).saveState(stateRecovery)
                         }
                         load()
                     }

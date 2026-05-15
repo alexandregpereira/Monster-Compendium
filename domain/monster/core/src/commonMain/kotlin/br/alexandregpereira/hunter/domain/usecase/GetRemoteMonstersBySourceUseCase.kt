@@ -32,15 +32,10 @@ class GetRemoteMonstersBySourceUseCase internal constructor(
 
     operator fun invoke(sourceAcronym: String): Flow<List<Monster>> {
         return monsterSettingsRepository.getLanguage().map { lang: String ->
-            val getMonstersFlow = if (sourceAcronym.equals("srd", ignoreCase = true)) {
-                repository.getMonsters(lang = lang)
-            } else {
-                repository.getMonsters(
-                    sourceAcronym = sourceAcronym,
-                    lang = lang
-                )
-            }
-            getMonstersFlow.single()
+            repository.getMonsters(
+                sourceAcronym = sourceAcronym,
+                lang = lang
+            ).single()
                 .distinctBy { it.index }
                 .sortMonstersByNameAndGroup()
         }

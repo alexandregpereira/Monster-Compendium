@@ -12,10 +12,7 @@ deleteByAcronym:
 DELETE FROM AlternativeSourceEntity WHERE acronym = ?;
 
 getAll:
-SELECT * FROM AlternativeSourceEntity WHERE isDefault = 0;
-
-getByIsDefault:
-SELECT * FROM AlternativeSourceEntity WHERE isDefault = :isDefault;
+SELECT * FROM AlternativeSourceEntity;
 
 updateContentVersion:
 UPDATE AlternativeSourceEntity SET contentVersion = :contentVersion WHERE acronym = :acronym;

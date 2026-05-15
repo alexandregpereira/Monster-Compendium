@@ -28,7 +28,8 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             source = Source(
                 acronym = it.acronym,
                 name = "",
-                originalName = ""
+                originalName = "",
+                originalAcronym = null,
             ),
             totalMonsters = 0,
             summary = "",
@@ -38,6 +39,7 @@ internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
             isLoreEnabled = true,
             contentVersion = it.contentVersion,
             isDefault = it.isDefault,
+            totalSpells = 0,
         )
     }
 }
