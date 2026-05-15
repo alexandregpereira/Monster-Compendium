@@ -123,7 +123,7 @@ private fun SpellBlock(
 }
 
 @Composable
-internal fun Spells(
+private fun Spells(
     group: String,
     spells: List<SpellPreviewState>,
     onSpellClicked: (String) -> Unit = {}
@@ -153,7 +153,7 @@ internal fun Spells(
     }
 }
 
-private fun SchoolOfMagic.asState(): SchoolOfMagicState {
+internal fun SchoolOfMagic.asState(): SchoolOfMagicState {
     return when (this) {
         SchoolOfMagic.ABJURATION -> SchoolOfMagicState.ABJURATION
         SchoolOfMagic.CONJURATION -> SchoolOfMagicState.CONJURATION

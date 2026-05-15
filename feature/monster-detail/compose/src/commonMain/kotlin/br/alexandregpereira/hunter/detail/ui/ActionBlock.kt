@@ -21,19 +21,30 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
+import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
 import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
 import br.alexandregpereira.hunter.monster.detail.ActionState
 import br.alexandregpereira.hunter.monster.detail.ConditionState
 import br.alexandregpereira.hunter.monster.detail.DamageDiceState
 import br.alexandregpereira.hunter.monster.detail.DamageState
 import br.alexandregpereira.hunter.monster.detail.ProficiencyState
+import br.alexandregpereira.hunter.monster.detail.SpellPreviewState
+import br.alexandregpereira.hunter.ui.compose.SpellIconInfo
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import org.jetbrains.compose.resources.painterResource
 
@@ -68,8 +79,8 @@ internal fun ActionBlock(
     }
 
     actions[index].spellsByGroup.forEach { (group, spells) ->
-        Spells(group = group, spells = spells, onSpellClicked = onSpellClicked)
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
+        ActionSpells(group = group, spells = spells, onSpellClicked = onSpellClicked)
     }
 }
 
@@ -135,6 +146,54 @@ internal fun ActionDamageGrid(
     }
 }
 
+@Composable
+private fun ActionSpells(
+    group: String,
+    spells: List<SpellPreviewState>,
+    onSpellClicked: (String) -> Unit = {}
+) {
+    Text(
+        text = remember(group) { group.toAnnotatedString() },
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Light,
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Grid {
+        spells.forEach { spell ->
+            SpellIconInfo(
+                name = spell.name,
+                school = spell.school.asState(),
+                modifier = Modifier.width(GridItemWidth),
+                onClick = { onSpellClicked(spell.index) }
+            )
+        }
+    }
+}
+
+private fun String.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
+    val pattern = Regex("""\*\*(.+?)\*\*|\*(.+?)\*""")
+    var lastIndex = 0
+    pattern.findAll(this@toAnnotatedString).forEach { match ->
+        append(this@toAnnotatedString.substring(lastIndex, match.range.first))
+        when {
+            match.groupValues[1].isNotEmpty() ->
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(match.groupValues[1])
+                }
+            match.groupValues[2].isNotEmpty() ->
+                withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
+                    append(match.groupValues[2])
+                }
+        }
+        lastIndex = match.range.last + 1
+    }
+    append(this@toAnnotatedString.substring(lastIndex))
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun ActionBlockPreview() = HunterTheme {
@@ -169,28 +228,62 @@ private fun ActionBlockPreview() = HunterTheme {
                         name = "Strength"
                     ),
                     ProficiencyState(
-                        index = "strength",
+                        index = "strength1",
                         modifier = 21,
                         name = "Constitution"
                     ),
                     ProficiencyState(
-                        index = "strength",
+                        index = "strength2",
                         modifier = 21,
                         name = "Constitution"
                     ),
                     ProficiencyState(
-                        index = "strength",
+                        index = "strength3",
                         modifier = 21,
                         name = "Constitution"
                     ),
                 ),
                 conditions = listOf(
                     ConditionState(
-                        index = "blinded",
+                        index = "blinded4",
                         type = ConditionType.RESTRAINED,
                         name = "Blinded"
                     )
                 )
+            ),
+            spellsByGroup = mapOf(
+                "**1st level:** *test*" to listOf(
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.ILLUSION,
+                    ),
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.ABJURATION,
+                    ),
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.ENCHANTMENT,
+                    ),
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.CONJURATION,
+                    ),
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.DIVINATION,
+                    ),
+                    SpellPreviewState(
+                        index = "acid-splash",
+                        name = "Acid Splash",
+                        school = SchoolOfMagic.ILLUSION,
+                    ),
+                ),
             )
         )
     )
