@@ -48,7 +48,8 @@ internal fun List<MonsterDto>.toDomain(): List<Monster> {
             stats = Stats(
                 armorClass = it.armorClass,
                 hitPoints = it.hitPoints,
-                hitDice = it.hitDice
+                hitDice = it.hitDice,
+                initiative = it.initiative,
             ),
             speed = it.speed.toDomain(),
             abilityScores = it.abilityScores.toDomain(),

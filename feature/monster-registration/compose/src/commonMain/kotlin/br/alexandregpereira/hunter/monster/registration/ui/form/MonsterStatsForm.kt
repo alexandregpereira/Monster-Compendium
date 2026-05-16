@@ -58,4 +58,13 @@ internal fun LazyListScope.MonsterStatsForm(
             }
         )
     }
+    formItem(key = keys.next()) {
+        AppTextField(
+            value = stats.initiative ?: 0,
+            label = strings.initiative,
+            onValueChange = { newValue ->
+                onChanged(stats.copy(initiative = newValue.takeIf { it != 0 }))
+            }
+        )
+    }
 }

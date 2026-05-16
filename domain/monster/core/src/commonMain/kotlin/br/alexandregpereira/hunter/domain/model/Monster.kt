@@ -63,6 +63,10 @@ data class Monster(
 
     val challengeRatingFormatted: String
         get() = challengeRatingData.value.getChallengeRatingFormatted()
+
+    val initiativeWithFallback: Int? = stats.initiative ?: abilityScores.firstOrNull {
+        it.type == AbilityScoreType.DEXTERITY
+    }?.modifier
 }
 
 enum class MonsterStatus {

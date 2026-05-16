@@ -83,7 +83,8 @@ internal fun Monster.editBy(
         stats = monster.stats.copy(
             armorClass = state.stats.armorClass,
             hitPoints = state.stats.hitPoints,
-            hitDice = state.stats.hitDice
+            hitDice = state.stats.hitDice,
+            initiative = state.stats.initiative,
         ),
         speed = monster.speed.copy(
             values = state.speedValues.map {

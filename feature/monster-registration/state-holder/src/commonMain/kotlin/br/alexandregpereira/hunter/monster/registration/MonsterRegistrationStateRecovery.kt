@@ -108,6 +108,7 @@ internal fun StateRecovery.getMetadata(): Metadata {
             armorClass = this["monsterRegistration:metadata:armorClass"] as? Int ?: 0,
             hitPoints = this["monsterRegistration:metadata:hitPoints"] as? Int ?: 0,
             hitDice = this["monsterRegistration:metadata:hitDice"] as? String ?: "",
+            initiative = this["monsterRegistration:metadata:initiative"] as? Int,
         ),
         senses = getSenses(),
         languages = this["monsterRegistration:metadata:languages"] as? String ?: "",
@@ -169,6 +170,7 @@ private fun StateRecovery.saveMonsterScalars(monster: Monster) {
     this["monsterRegistration:metadata:armorClass"] = monster.stats.armorClass
     this["monsterRegistration:metadata:hitPoints"] = monster.stats.hitPoints
     this["monsterRegistration:metadata:hitDice"] = monster.stats.hitDice
+    this["monsterRegistration:metadata:initiative"] = monster.stats.initiative
     this["monsterRegistration:metadata:languages"] = monster.languages
     this["monsterRegistration:metadata:sourceName"] = monster.sourceName
     this["monsterRegistration:metadata:speedHover"] = monster.speed.hover

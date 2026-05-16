@@ -56,6 +56,7 @@ internal fun Monster.toDto(): MonsterDto {
         armorClass = stats.armorClass,
         hitPoints = stats.hitPoints,
         hitDice = stats.hitDice,
+        initiative = stats.initiative,
         speed = speed.toSpeedDto(),
         abilityScores = abilityScores.toAbilityScoreDtos(),
         savingThrows = savingThrows.toSavingThrowDtos(),

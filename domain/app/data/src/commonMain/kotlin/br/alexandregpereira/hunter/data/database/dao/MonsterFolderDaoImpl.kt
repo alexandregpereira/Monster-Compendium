@@ -108,6 +108,7 @@ internal class MonsterFolderDaoImpl(
             armorClass = armorClass,
             hitPoints = hitPoints,
             hitDice = hitDice,
+            initiative = initiative,
             senses = senses,
             languages = languages,
             sourceName = sourceName,

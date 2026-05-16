@@ -103,6 +103,7 @@ data class StatsState(
     val armorClass: Int = 0,
     val hitPoints: Int = 0,
     val hitDice: String = "",
+    val initiative: String? = null
 )
 
 @ObjCName(name = "SpeedState", exact = true)

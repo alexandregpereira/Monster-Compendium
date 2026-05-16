@@ -52,7 +52,10 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         stats = StatsState(
             armorClass = stats.armorClass,
             hitPoints = stats.hitPoints,
-            hitDice = stats.hitDice
+            hitDice = stats.hitDice,
+            initiative = initiativeWithFallback?.let {
+                if (it > 0) "+$it" else it.toString()
+            }
         ),
         speed = SpeedState(
             hover = speed.hover,

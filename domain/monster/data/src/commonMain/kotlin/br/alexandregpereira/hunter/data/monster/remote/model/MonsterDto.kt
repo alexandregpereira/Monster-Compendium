@@ -47,6 +47,7 @@ data class MonsterDto(
     val hitPoints: Int,
     @SerialName("hit_dice")
     val hitDice: String,
+    val initiative: Int? = null,
     @SerialName("speed")
     val speed: SpeedDto,
     @SerialName("ability_scores")

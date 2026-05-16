@@ -34,6 +34,7 @@ data class MonsterEntity(
     val armorClass: Int,
     val hitPoints: Int,
     val hitDice: String,
+    val initiative: Int?,
     val senses: String,
     val languages: String,
     val sourceName: String,

@@ -91,6 +91,7 @@ internal fun Monster.toEntity(): MonsterCompleteEntity {
             armorClass = stats.armorClass,
             hitPoints = stats.hitPoints,
             hitDice = stats.hitDice,
+            initiative = stats.initiative,
             senses = senses.joinToString(),
             languages = languages,
             sourceName = sourceName,
@@ -163,7 +164,8 @@ internal fun MonsterEntity.toDomain(
         stats = Stats(
             armorClass = monster.armorClass,
             hitPoints = monster.hitPoints,
-            hitDice = monster.hitDice
+            hitDice = monster.hitDice,
+            initiative = monster.initiative,
         ),
         sourceName = monster.sourceName,
         senses = monster.senses.split(", "),

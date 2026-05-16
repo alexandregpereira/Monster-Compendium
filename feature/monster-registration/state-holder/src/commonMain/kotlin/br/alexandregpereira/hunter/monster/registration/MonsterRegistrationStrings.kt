@@ -93,6 +93,7 @@ interface MonsterRegistrationStrings {
     val armorClass: String
     val hitPoints: String
     val hitDice: String
+    val initiative: String
     val skills: String
     val skill: String
     val damageVulnerabilities: String
@@ -228,6 +229,7 @@ internal data class MonsterRegistrationEnStrings(
     override val armorClass: String = "Armor Class",
     override val hitPoints: String = "Hit Points",
     override val hitDice: String = "Hit Dice",
+    override val initiative: String = "Initiative",
     override val skills: String = "Skills",
     override val skill: String = "Skill",
     override val damageVulnerabilities: String = "Damage Vulnerabilities",
@@ -363,6 +365,7 @@ internal data class MonsterRegistrationPtStrings(
     override val armorClass: String = "Classe de Armadura",
     override val hitPoints: String = "Pontos de Vida",
     override val hitDice: String = "Dados de Vida",
+    override val initiative: String = "Iniciativa",
     override val skills: String = "Perícias",
     override val skill: String = "Perícia",
     override val damageVulnerabilities: String = "Vulnerabilidades a Danos",
@@ -500,6 +503,7 @@ internal data class MonsterRegistrationEsStrings(
     override val armorClass: String = "Clase de Armadura",
     override val hitPoints: String = "Puntos de Golpe",
     override val hitDice: String = "Dados de Golpe",
+    override val initiative: String = "Iniciativa",
     override val skills: String = "Habilidades",
     override val skill: String = "Habilidad",
     override val damageVulnerabilities: String = "Vulnerabilidades al Daño",

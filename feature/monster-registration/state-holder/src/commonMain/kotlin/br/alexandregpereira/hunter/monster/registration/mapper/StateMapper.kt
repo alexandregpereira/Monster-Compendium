@@ -84,6 +84,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
             armorClass = monster.stats.armorClass,
             hitPoints = monster.stats.hitPoints,
             hitDice = monster.stats.hitDice,
+            initiative = monster.stats.initiative,
         ),
         speedValues = monster.speed.values.map { it.asState(strings) },
         abilityScores = monster.abilityScores.map { it.asState(strings) },
@@ -405,6 +406,7 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
         add("stats-armorClass")
         add("stats-hitPoints")
         add("stats-hitDice")
+        add("stats-initiative")
         monster.speedValues.createDynamicFormKeys(
             key = SectionTitle.Speed,
             getItemKey = { it.key },
