@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.monster.registration
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType
+import br.alexandregpereira.hunter.domain.model.Action
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.DamageType
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -27,6 +28,7 @@ import br.alexandregpereira.hunter.domain.monster.lore.GetMonsterLoreUseCase
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLore
 import br.alexandregpereira.hunter.domain.monster.lore.model.MonsterLoreEntry
 import br.alexandregpereira.hunter.domain.monster.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
@@ -246,27 +248,39 @@ class MonsterRegistrationStateHolder internal constructor(
         getSpell(newSpellIndex)
             .flowOn(dispatcher)
             .onEach { newSpell ->
+                fun List<SpellUsage>.replaceSpell() = map { usage ->
+                    usage.copy(
+                        spells = usage.spells.map { spell ->
+                            if (spell.index == currentSpellIndex) {
+                                spell.copy(
+                                    index = newSpellIndex,
+                                    name = newSpell.name,
+                                    level = newSpell.level,
+                                    school = SchoolOfMagic.valueOf(newSpell.school.name),
+                                )
+                            } else spell
+                        }
+                    )
+                }
+
+                fun Action.replaceSpell() = copy(
+                    spellsByGroup = spellsByGroup.replaceSpell()
+                )
+
                 val newMonster = metadata.monster?.copy(
                     spellcastings = metadata.monster?.spellcastings?.map { spellcasting ->
-                        spellcasting.copy(
-                            usages = spellcasting.usages.map { usage ->
-                                usage.copy(
-                                    spells = usage.spells.map { spell ->
-                                        if (spell.index == currentSpellIndex) {
-                                            spell.copy(
-                                                index = newSpellIndex,
-                                                name = newSpell.name,
-                                                level = newSpell.level,
-                                                school = SchoolOfMagic.valueOf(newSpell.school.name),
-                                            )
-                                        } else {
-                                            spell
-                                        }
-                                    }
-                                )
-                            }
-                        )
-                    }.orEmpty()
+                        spellcasting.copy(usages = spellcasting.usages.replaceSpell())
+                    }.orEmpty(),
+                    specialAbilities = metadata.monster?.specialAbilities
+                        ?.map { it.replaceSpell() }.orEmpty(),
+                    actions = metadata.monster?.actions
+                        ?.map { it.replaceSpell() }.orEmpty(),
+                    bonusActions = metadata.monster?.bonusActions
+                        ?.map { it.replaceSpell() }.orEmpty(),
+                    legendaryActions = metadata.monster?.legendaryActions
+                        ?.map { it.replaceSpell() }.orEmpty(),
+                    reactions = metadata.monster?.reactions
+                        ?.map { it.replaceSpell() }.orEmpty(),
                 )
                 metadata = metadata.copy(monster = newMonster)
                 stateRecovery.saveMetadata(metadata)
