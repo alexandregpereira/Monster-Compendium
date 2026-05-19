@@ -17,7 +17,7 @@ internal val networkModule = module {
     single {
         HttpClient {
             defaultRequest {
-                url("https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium-Content/feat/monster-2024/json/")
+                url("https://raw.githubusercontent.com/alexandregpereira/Monster-Compendium-Content/main/json/")
             }
             install(Logging) {
                 logger = Logger.SIMPLE
