@@ -91,6 +91,7 @@ internal class MainViewModel(
 
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach { language ->
+            analytics.setUserProperty(name = "appLanguage", value = language.code)
             setState {
                 val strings = language.getStrings()
                 copy(

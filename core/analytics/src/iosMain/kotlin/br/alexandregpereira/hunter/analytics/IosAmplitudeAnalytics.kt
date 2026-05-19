@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.analytics
 
+import cocoapods.AmplitudeSwift.AMPIdentify
 import cocoapods.AmplitudeSwift.Amplitude
 
 @OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
@@ -13,6 +14,12 @@ internal class IosAmplitudeAnalytics(
             eventType = eventName,
             eventProperties = params.toNSDictionary()
         )
+    }
+
+    override fun setUserProperty(name: String, value: String) {
+        val identify = AMPIdentify()
+        identify.set(property = name, value = value)
+        amplitude.identify(identify)
     }
 
     override fun logException(throwable: Throwable) {
