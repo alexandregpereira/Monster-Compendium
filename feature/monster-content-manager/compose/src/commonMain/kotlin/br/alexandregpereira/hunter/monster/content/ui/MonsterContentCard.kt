@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.monster.content.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,6 +54,7 @@ internal fun MonsterContentCard(
     name: String,
     originalName: String?,
     totalMonsters: Int,
+    totalSpells: Int,
     summary: String,
     coverImageUrl: String?,
     isAdded: Boolean,
@@ -74,11 +76,17 @@ internal fun MonsterContentCard(
             Cover(
                 coverImageUrl = coverImageUrl,
                 name = name,
-                totalMonsters = strings.totalMonsters.format(totalMonsters),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
         }
+
+        Totals(
+            totalMonsters = totalMonsters,
+            totalSpells = totalSpells,
+        )
+
+        Spacer(Modifier.height(16.dp))
 
         Summary(summary = summary)
 
@@ -90,6 +98,7 @@ internal fun MonsterContentCard(
             removeText = strings.remove,
             addText = strings.add,
             previewLabel = strings.preview,
+            previewEnabled = totalMonsters > 0,
             onAddClick = onAddClick,
             onRemoveClick = onRemoveClick,
             onPreviewClick = onPreviewClick,
@@ -102,7 +111,6 @@ internal fun MonsterContentCard(
 private fun Cover(
     coverImageUrl: String,
     name: String,
-    totalMonsters: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -120,16 +128,33 @@ private fun Cover(
                 .width(172.dp)
                 .align(alignment = Alignment.CenterHorizontally)
         )
+    }
+}
 
-        Text(
-            text = totalMonsters,
-            fontWeight = FontWeight.Light,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .width(156.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-                .padding(top = 4.dp)
-        )
+@Composable
+private fun Totals(
+    totalMonsters: Int,
+    totalSpells: Int,
+) {
+    if (totalMonsters <= 0 && totalSpells <= 0) return
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        totalMonsters.takeIf { it > 0 }?.let {
+            Text(
+                text = strings.totalMonsters.format(it),
+                fontWeight = FontWeight.Normal,
+                fontSize = 18.sp,
+            )
+        }
+
+        totalSpells.takeIf { it > 0 }?.let {
+            Text(
+                text = strings.totalSpells.format(it),
+                fontWeight = FontWeight.Normal,
+                fontSize = 18.sp,
+            )
+        }
     }
 }
 
@@ -174,6 +199,7 @@ private fun Buttons(
     removeText: String,
     addText: String,
     previewLabel: String,
+    previewEnabled: Boolean,
     modifier: Modifier = Modifier,
     isDefault: Boolean = false,
     onAddClick: () -> Unit = {},
@@ -201,6 +227,7 @@ private fun Buttons(
             text = previewLabel,
             onClick = onPreviewClick,
             size = AppButtonSize.SMALL,
+            enabled = previewEnabled,
             modifier = Modifier
                 .padding(start = 8.dp)
                 .weight(1f),
@@ -216,6 +243,7 @@ private fun MonsterContentCardPreview() = HunterTheme {
             name = "Name",
             originalName = "Other name",
             totalMonsters = 10,
+            totalSpells = 10,
             summary = "A menagerie of deadly monsters for the world's greatest roleplaying game. The Monster Manual presents a horde of classic Dungeons & Dragons creatures, including dragons, giants, mind flayers, and beholders—a monstrous feast for Dungeon Masters ready to challenge their players and populate their adventures.",
             coverImageUrl = "",
             isAdded = true,
