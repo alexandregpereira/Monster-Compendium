@@ -31,11 +31,14 @@ internal class DefaultSpellRemoteDataSource(
 ) : SpellRemoteDataSource {
 
     override fun getSpells(source: String, lang: String): Flow<List<SpellDto>> = flow {
+        val urlString = if (source.equals("srd", ignoreCase = true)) {
+            "$lang/spells.json"
+        } else {
+            "$lang/sources/${source.lowercase()}/spells.json"
+        }
         emit(
             json.decodeFromString(
-                client.get(
-                    "$lang/sources/${source.lowercase()}/spells.json"
-                ).bodyAsText()
+                client.get(urlString).bodyAsText()
             )
         )
     }

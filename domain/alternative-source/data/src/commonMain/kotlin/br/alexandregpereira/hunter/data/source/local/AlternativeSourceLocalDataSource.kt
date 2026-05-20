@@ -30,6 +30,10 @@ internal class AlternativeSourceLocalDataSource(
         emit(dao.getAlternativeSources())
     }
 
+    suspend fun getContentSource(acronym: String): AlternativeSourceEntity? {
+        return dao.getContentSource(acronym)
+    }
+
     fun addAlternativeSource(alternativeSource: AlternativeSourceEntity): Flow<Unit> = flow {
         emit(dao.addAlternativeSource(alternativeSource))
     }

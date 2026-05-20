@@ -17,19 +17,45 @@
 
 package br.alexandregpereira.hunter.data.source
 
+import br.alexandregpereira.hunter.domain.source.AlternativeSourceLocalRepository
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesAdded
 import br.alexandregpereira.hunter.domain.source.GetAlternativeSourcesUseCase
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.single
 
 internal class GetAlternativeSourcesAddedImpl(
     private val getAlternativeSourcesUseCase: GetAlternativeSourcesUseCase,
+    private val localRepository: AlternativeSourceLocalRepository,
 ) : GetAlternativeSourcesAdded {
 
     override suspend fun invoke(): List<AlternativeSource> {
         return getAlternativeSourcesUseCase()
             .firstOrNull()
             ?.filter { it.isAdded }
+            ?.also { handleOriginalAcronymIfExists(it) }
             .orEmpty()
+    }
+
+    private suspend fun handleOriginalAcronymIfExists(
+        remoteSources: List<AlternativeSource>,
+    ) {
+        val originalSourcesToRemove: MutableSet<String> = mutableSetOf()
+        remoteSources.forEach { source ->
+            val originalAcronym = source.originalAcronym
+            if (originalAcronym != null && originalAcronym != source.acronym) {
+                val currentOriginalSource = localRepository.getContentSource(originalAcronym)
+                if (currentOriginalSource != null &&
+                    localRepository.getContentSource(source.acronym) == null
+                ) {
+                    localRepository.addAlternativeSource(source.acronym).single()
+                }
+                originalSourcesToRemove.add(originalAcronym)
+            }
+        }
+
+        originalSourcesToRemove.forEach {
+            localRepository.removeAlternativeSource(it).single()
+        }
     }
 }

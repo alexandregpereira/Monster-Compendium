@@ -32,6 +32,12 @@ internal class AlternativeSourceDaoImpl(
         queries.getAll().executeAsList().map { it.toLocalEntity() }
     }
 
+    override suspend fun getContentSource(
+        acronym: String
+    ): AlternativeSourceEntity? = withContext(dispatcher) {
+        queries.getByAcronym(acronym).executeAsOneOrNull()?.toLocalEntity()
+    }
+
     override suspend fun addAlternativeSource(alternativeSource: AlternativeSourceEntity) = withContext(dispatcher) {
         queries.insert(alternativeSource.toDatabaseEntity())
     }

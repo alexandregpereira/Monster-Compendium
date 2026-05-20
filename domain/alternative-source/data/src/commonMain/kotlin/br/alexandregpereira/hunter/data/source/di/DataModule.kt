@@ -68,6 +68,7 @@ val alternativeSourceDataModule = module {
     factory<GetAlternativeSourcesAdded> {
         GetAlternativeSourcesAddedImpl(
             getAlternativeSourcesUseCase = get(),
+            localRepository = get(),
         )
     }
 }

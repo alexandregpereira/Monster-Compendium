@@ -14,5 +14,8 @@ DELETE FROM AlternativeSourceEntity WHERE acronym = ?;
 getAll:
 SELECT * FROM AlternativeSourceEntity;
 
+getByAcronym:
+SELECT * FROM AlternativeSourceEntity WHERE acronym = :acronym;
+
 updateContentVersion:
 UPDATE AlternativeSourceEntity SET contentVersion = :contentVersion WHERE acronym = :acronym;

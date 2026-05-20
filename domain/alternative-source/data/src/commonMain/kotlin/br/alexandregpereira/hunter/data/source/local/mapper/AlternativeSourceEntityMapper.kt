@@ -23,25 +23,27 @@ import br.alexandregpereira.hunter.domain.source.model.Source
 import kotlin.time.Clock
 
 internal fun List<AlternativeSourceEntity>.toDomain(): List<AlternativeSource> {
-    return this.map {
-        AlternativeSource(
-            source = Source(
-                acronym = it.acronym,
-                name = "",
-                originalName = "",
-                originalAcronym = null,
-            ),
-            totalMonsters = 0,
-            summary = "",
-            coverImageUrl = "",
-            isAdded = true,
-            isEnabled = true,
-            isLoreEnabled = true,
-            contentVersion = it.contentVersion,
-            isDefault = it.isDefault,
-            totalSpells = 0,
-        )
-    }
+    return this.map { it.toDomain() }
+}
+
+internal fun AlternativeSourceEntity.toDomain(): AlternativeSource {
+    return AlternativeSource(
+        source = Source(
+            acronym = this.acronym,
+            name = "",
+            originalName = "",
+            originalAcronym = null,
+        ),
+        totalMonsters = 0,
+        summary = "",
+        coverImageUrl = "",
+        isAdded = true,
+        isEnabled = true,
+        isLoreEnabled = true,
+        contentVersion = this.contentVersion,
+        isDefault = this.isDefault,
+        totalSpells = 0,
+    )
 }
 
 internal fun String.toEntity(contentVersion: Int = 0): AlternativeSourceEntity {

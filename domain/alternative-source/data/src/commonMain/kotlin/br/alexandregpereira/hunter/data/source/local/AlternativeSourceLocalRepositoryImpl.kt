@@ -37,6 +37,10 @@ internal class AlternativeSourceLocalRepositoryImpl(
         return localDataSource.getAlternativeSources().map { it.toDomain() }
     }
 
+    override suspend fun getContentSource(acronym: String): AlternativeSource? {
+        return localDataSource.getContentSource(acronym)?.toDomain()
+    }
+
     override fun addAlternativeSource(acronym: String): Flow<Unit> {
         return flowOf(acronym).map { it.toEntity() }.flatMapLatest { entity ->
             localDataSource.addAlternativeSource(entity)
