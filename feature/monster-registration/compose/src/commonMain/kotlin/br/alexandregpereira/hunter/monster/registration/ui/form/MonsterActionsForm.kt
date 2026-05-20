@@ -98,6 +98,7 @@ internal fun LazyListScope.MonsterActionsForm(
             removeText = { strings.removeDamageDice },
             keys = keys,
             createNew = { DamageDiceState() },
+            showDivider = false,
             onChanged = {
                 onChanged(
                     newActions.changeAt(actionIndex) { copy(damageDices = it) }
@@ -137,6 +138,7 @@ internal fun LazyListScope.MonsterActionsForm(
         MonsterSavingThrowsFormItems(
             keys = keys,
             savingThrows = action.abilityDescription.savingThrows,
+            showDivider = false,
             addText = { strings.addDifficultClass },
             removeText = { strings.removeDifficultClass },
             typeLabel = { strings.difficultClassType },
@@ -153,6 +155,7 @@ internal fun LazyListScope.MonsterActionsForm(
         MonsterConditionsFormItems(
             keys = keys,
             conditions = abilityDescription.conditions,
+            showDivider = false,
             addText = { strings.addCondition },
             removeText = { strings.removeCondition },
             onChanged = {
@@ -167,6 +170,7 @@ internal fun LazyListScope.MonsterActionsForm(
         MonsterSpellsUsageForm(
             keys = keys,
             spellsByGroup = action.spellsByGroup,
+            showDivider = false,
             onSpellClick = onSpellClick,
             onChanged = { newSpellsByGroup ->
                 onChanged(newActions.changeAt(actionIndex) { copy(spellsByGroup = newSpellsByGroup) })
