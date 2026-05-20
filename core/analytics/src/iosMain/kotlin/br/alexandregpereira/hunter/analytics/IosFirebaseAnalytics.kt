@@ -13,6 +13,10 @@ internal class IosFirebaseAnalytics : Analytics {
         FIRAnalytics.logEventWithName(normalized, parameters = params.toNSDictionary())
     }
 
+    override fun setUserProperty(name: String, value: String) {
+        FIRAnalytics.setUserPropertyString(value, forName = name)
+    }
+
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()
         val crashlytics = FIRCrashlytics.crashlytics()

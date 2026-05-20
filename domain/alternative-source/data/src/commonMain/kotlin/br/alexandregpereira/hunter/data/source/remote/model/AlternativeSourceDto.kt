@@ -36,4 +36,6 @@ data class AlternativeSourceDto(
     val isLoreEnabled: Boolean = true,
     @SerialName("contentVersion")
     val contentVersion: Int = 0,
+    val isDefault: Boolean = false,
+    val totalSpells: Int = 0,
 )

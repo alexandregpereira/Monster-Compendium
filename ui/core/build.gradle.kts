@@ -42,6 +42,7 @@ multiplatform {
         implementation(libs.coil.compose)
         implementation(libs.coil.mp)
         implementation(libs.coil.network.ktor)
+        implementation(libs.multiplatform.markdown.renderer)
     }
     jvmMain {
         implementation(libs.ktor.jvm)

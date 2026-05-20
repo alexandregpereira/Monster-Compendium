@@ -22,6 +22,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterRemoteRepository {
 
-    fun getMonsters(lang: String = "en-us"): Flow<List<Monster>>
     fun getMonsters(sourceAcronym: String, lang: String = "en-us"): Flow<List<Monster>>
 }

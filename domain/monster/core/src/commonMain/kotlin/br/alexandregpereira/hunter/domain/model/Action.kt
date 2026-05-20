@@ -17,13 +17,15 @@
 
 package br.alexandregpereira.hunter.domain.model
 
+import br.alexandregpereira.hunter.domain.monster.spell.model.SpellUsage
 import br.alexandregpereira.hunter.uuid.generateUUID
 
 data class Action(
     val id: String,
     val damageDices: List<DamageDice>,
     val attackBonus: Int?,
-    val abilityDescription: AbilityDescription
+    val abilityDescription: AbilityDescription,
+    val spellsByGroup: List<SpellUsage> = emptyList(),
 )
 
 data class DamageDice(

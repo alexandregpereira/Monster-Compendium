@@ -22,5 +22,6 @@ data class ActionEntity(
     val attackBonus: Int?,
     val description: String,
     val name: String,
-    val monsterIndex: String
+    val monsterIndex: String,
+    val type: String = "ACTION",
 )

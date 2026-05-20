@@ -23,6 +23,4 @@ import kotlinx.coroutines.flow.Flow
 interface AlternativeSourceRemoteRepository {
 
     fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>>
-
-    fun getDefaultSources(lang: String): Flow<List<AlternativeSource>>
 }

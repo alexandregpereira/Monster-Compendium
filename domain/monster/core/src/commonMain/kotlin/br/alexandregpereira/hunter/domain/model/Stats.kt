@@ -21,4 +21,5 @@ data class Stats(
     val armorClass: Int,
     val hitPoints: Int,
     val hitDice: String,
+    val initiative: Int? = null,
 )

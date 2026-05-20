@@ -51,6 +51,7 @@ object MonsterFactory {
             conditionImmunities = emptyList(),
             specialAbilities = emptyList(),
             actions = emptyList(),
+            bonusActions = emptyList(),
             legendaryActions = emptyList(),
             reactions = emptyList(),
             spellcastings = emptyList(),

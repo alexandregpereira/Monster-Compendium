@@ -25,6 +25,7 @@ internal fun AlternativeSource.asState(): MonsterContentState {
         name = name,
         originalName = originalName,
         totalMonsters = totalMonsters,
+        totalSpells = totalSpells,
         summary = summary,
         coverImageUrl = coverImageUrl.takeIf { it.isNotBlank() },
         isAdded = isAdded,

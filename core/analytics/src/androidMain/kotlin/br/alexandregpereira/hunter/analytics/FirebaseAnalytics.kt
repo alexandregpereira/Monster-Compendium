@@ -50,6 +50,10 @@ internal class FirebaseAnalytics(
         }
     }
 
+    override fun setUserProperty(name: String, value: String) {
+        analytics.setUserProperty(name, value)
+    }
+
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()
         crashlytics.recordException(throwable)

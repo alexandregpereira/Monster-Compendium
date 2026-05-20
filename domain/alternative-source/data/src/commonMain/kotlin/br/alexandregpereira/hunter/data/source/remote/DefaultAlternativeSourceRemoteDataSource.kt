@@ -21,8 +21,6 @@ import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 
 internal class DefaultAlternativeSourceRemoteDataSource(
@@ -32,17 +30,13 @@ internal class DefaultAlternativeSourceRemoteDataSource(
 
     override suspend fun getAlternativeSources(lang: String): List<AlternativeSourceDto> {
         return json.decodeFromString(
-            client.get(urlString = "$lang/alternative-sources.json").bodyAsText()
+            client.get(urlString = "$lang/content-sources.json").bodyAsText()
         )
     }
 
     override suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto> {
         return json.decodeFromString(
-            client.get(urlString = "$lang/alternative-sources-basic.json").bodyAsText()
+            client.get(urlString = "$lang/content-sources-basic.json").bodyAsText()
         )
-    }
-
-    override fun getDefaultSources(lang: String): Flow<List<AlternativeSourceDto>> = flow {
-        emit(json.decodeFromString(client.get("$lang/default-sources.json").bodyAsText()))
     }
 }

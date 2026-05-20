@@ -91,6 +91,7 @@ internal class MainViewModel(
 
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach { language ->
+            analytics.setUserProperty(name = "appLanguage", value = language.code)
             setState {
                 val strings = language.getStrings()
                 copy(
@@ -131,7 +132,7 @@ internal class MainViewModel(
                 analytics.track(
                     eventName = "BottomBar - item click",
                     params = mapOf(
-                        "item" to event.item.icon,
+                        "item" to event.item.icon.name,
                     )
                 )
                 setStateAndSave { copy(bottomBarItemSelectedIndex = bottomBarItems.indexOf(event.item)) }

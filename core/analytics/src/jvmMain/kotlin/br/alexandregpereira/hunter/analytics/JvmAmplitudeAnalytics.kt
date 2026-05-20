@@ -39,6 +39,10 @@ internal class JvmAmplitudeAnalytics(
         amplitude.logEvent(event)
     }
 
+    override fun setUserProperty(name: String, value: String) {
+        println("setUserProperty -> name: $name. value: $value")
+    }
+
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()
     }

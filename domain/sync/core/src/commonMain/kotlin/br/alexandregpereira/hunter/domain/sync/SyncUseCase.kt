@@ -55,7 +55,7 @@ class SyncUseCase internal constructor(
     private val saveContentVersionUseCase: SaveContentVersionUseCase,
 ) {
 
-    private val localContentVersion = 6
+    private val localContentVersion = 7
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {

@@ -35,6 +35,7 @@ data class MonsterContentState(
     val name: String,
     val originalName: String?,
     val totalMonsters: Int,
+    val totalSpells: Int,
     val summary: String,
     val coverImageUrl: String?,
     val isAdded: Boolean,

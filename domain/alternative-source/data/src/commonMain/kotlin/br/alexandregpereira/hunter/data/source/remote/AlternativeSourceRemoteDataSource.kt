@@ -18,13 +18,10 @@
 package br.alexandregpereira.hunter.data.source.remote
 
 import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
-import kotlinx.coroutines.flow.Flow
 
 internal interface AlternativeSourceRemoteDataSource {
 
     suspend fun getAlternativeSources(lang: String): List<AlternativeSourceDto>
 
     suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto>
-
-    fun getDefaultSources(lang: String): Flow<List<AlternativeSourceDto>>
 }

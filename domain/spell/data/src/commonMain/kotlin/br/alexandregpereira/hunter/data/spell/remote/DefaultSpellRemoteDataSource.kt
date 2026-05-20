@@ -23,7 +23,6 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 internal class DefaultSpellRemoteDataSource(
@@ -31,7 +30,16 @@ internal class DefaultSpellRemoteDataSource(
     private val json: Json
 ) : SpellRemoteDataSource {
 
-    override fun getSpells(lang: String): Flow<List<SpellDto>> = flow {
-        emit(json.decodeFromString(client.get("$lang/spells.json").bodyAsText()))
+    override fun getSpells(source: String, lang: String): Flow<List<SpellDto>> = flow {
+        val urlString = if (source.equals("srd", ignoreCase = true)) {
+            "$lang/spells.json"
+        } else {
+            "$lang/sources/${source.lowercase()}/spells.json"
+        }
+        emit(
+            json.decodeFromString(
+                client.get(urlString).bodyAsText()
+            )
+        )
     }
 }

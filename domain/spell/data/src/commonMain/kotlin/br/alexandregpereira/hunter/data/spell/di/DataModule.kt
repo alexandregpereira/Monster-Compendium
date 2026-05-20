@@ -22,7 +22,7 @@ import br.alexandregpereira.hunter.content.SpellContentJsonMapperImpl
 import br.alexandregpereira.hunter.data.spell.DefaultSpellLocalRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRemoteRepository
 import br.alexandregpereira.hunter.data.spell.DefaultSpellRepository
-import br.alexandregpereira.hunter.data.spell.SpellSettingsRepositoryImpl
+import br.alexandregpereira.hunter.data.spell.SyncSpellsUseCaseImpl
 import br.alexandregpereira.hunter.data.spell.local.DefaultSpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.local.SpellLocalDataSource
 import br.alexandregpereira.hunter.data.spell.remote.DefaultSpellRemoteDataSource
@@ -30,7 +30,7 @@ import br.alexandregpereira.hunter.data.spell.remote.SpellRemoteDataSource
 import br.alexandregpereira.hunter.domain.spell.SpellLocalRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRemoteRepository
 import br.alexandregpereira.hunter.domain.spell.SpellRepository
-import br.alexandregpereira.hunter.domain.spell.SpellSettingsRepository
+import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import org.koin.dsl.module
 
 val spellDataModule = module {
@@ -39,9 +39,16 @@ val spellDataModule = module {
     factory<SpellLocalRepository> { DefaultSpellLocalRepository(get()) }
     factory<SpellRemoteRepository> { DefaultSpellRemoteRepository(get()) }
     factory<SpellRemoteDataSource> { DefaultSpellRemoteDataSource(get(), get()) }
-    factory<SpellSettingsRepository> { SpellSettingsRepositoryImpl(get()) }
     single<SpellContentJsonMapper> {
         SpellContentJsonMapperImpl(
+            get(),
+        )
+    }
+    factory<SyncSpellsUseCase> {
+        SyncSpellsUseCaseImpl(
+            get(),
+            get(),
+            get(),
             get(),
         )
     }

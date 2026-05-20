@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MonsterRemoteDataSource {
 
-    fun getMonsters(lang: String = "en-us"): Flow<List<MonsterDto>>
     fun getMonsterImages(jsonUrl: String): Flow<List<MonsterImageDto>>
     fun getMonsters(sourceAcronym: String, lang: String = "en-us"): Flow<List<MonsterDto>>
 }

@@ -43,11 +43,15 @@ internal class SyncAlternativeSourceContentVersionUseCaseImpl(
                 val (remoteSources, localSources, remoteDefaultSources, localDefaultSources) = coroutineScope {
                     val remoteDeferred = async { remoteRepository.getAlternativeSources(lang).single() }
                     val localDeferred = async { localRepository.getAlternativeSources().single() }
-                    val remoteDefaultDeferred = async { remoteRepository.getDefaultSources(lang).single() }
-                    val localDefaultDeferred = async { localRepository.getDefaultSources().single() }
                     val (remote, local) = remoteDeferred.await() to localDeferred.await()
-                    val (remoteDefault, localDefault) = remoteDefaultDeferred.await() to localDefaultDeferred.await()
-                    quadrupleOf(remote, local, remoteDefault, localDefault)
+                    val remoteDefault = remote.filter { it.isDefault }
+                    val localDefault = local.filter { it.isDefault }
+                    quadrupleOf(
+                        remote.filterNot { it.isDefault },
+                        local.filterNot { it.isDefault },
+                        remoteDefault,
+                        localDefault
+                    )
                 }
 
                 val localMap: Map<String, AlternativeSource> = localSources.associateBy { it.acronym }
@@ -64,7 +68,7 @@ internal class SyncAlternativeSourceContentVersionUseCaseImpl(
                 }
                 if (newDefaultSources.isNotEmpty()) {
                     localRepository.saveDefaultSources(
-                        newDefaultSources.map { it.copy(isDefault = true) }
+                        newDefaultSources
                     ).single()
                 }
 
