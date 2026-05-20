@@ -203,6 +203,7 @@ internal class ShareContentImportStateHolderTest {
 
     private class NoOpAnalytics : Analytics {
         override fun track(eventName: String, params: Map<String, Any?>) {}
+        override fun setUserProperty(name: String, value: String) {}
         override fun logException(throwable: Throwable) {}
     }
 }

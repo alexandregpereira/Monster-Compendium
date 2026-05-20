@@ -52,10 +52,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
         val defaultSource = alternativeSource("PHB", contentVersion = 2, isDefault = true)
 
         setupRepositories(
-            remoteSources = listOf(source),
-            localSources = listOf(source),
-            remoteDefaultSources = listOf(defaultSource),
-            localDefaultSources = listOf(defaultSource),
+            remoteSources = listOf(source, defaultSource),
+            localSources = listOf(source, defaultSource),
         )
 
         val result = useCase().single()
@@ -100,11 +98,11 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
 
     @Test
     fun `when new default source appears remotely, it is saved and emits true`() = runBlocking {
-        val remoteDefault = alternativeSource("NEW_DEFAULT", contentVersion = 1)
+        val remoteDefault = alternativeSource("NEW_DEFAULT", contentVersion = 1, isDefault = true)
 
         setupRepositories(
-            remoteDefaultSources = listOf(remoteDefault),
-            localDefaultSources = emptyList(),
+            remoteSources = listOf(remoteDefault),
+            localSources = emptyList(),
         )
         every { localRepository.saveDefaultSources(any()) } returns flowOf(Unit)
 
@@ -122,8 +120,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
         val remoteDefault = alternativeSource("PHB", contentVersion = 2, isDefault = true)
 
         setupRepositories(
-            remoteDefaultSources = listOf(remoteDefault),
-            localDefaultSources = listOf(localDefault),
+            remoteSources = listOf(remoteDefault),
+            localSources = listOf(localDefault),
         )
         every { localRepository.saveContentVersions(any()) } returns flowOf(Unit)
 
@@ -142,10 +140,8 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
         val remoteDefault = alternativeSource("PHB", contentVersion = 4, isDefault = true)
 
         setupRepositories(
-            remoteSources = listOf(remoteSource),
-            localSources = listOf(localSource),
-            remoteDefaultSources = listOf(remoteDefault),
-            localDefaultSources = listOf(localDefault),
+            remoteSources = listOf(remoteSource, remoteDefault),
+            localSources = listOf(localSource, localDefault),
         )
         every { localRepository.saveContentVersions(any()) } returns flowOf(Unit)
 
@@ -159,14 +155,10 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
     private fun setupRepositories(
         remoteSources: List<AlternativeSource> = emptyList(),
         localSources: List<AlternativeSource> = emptyList(),
-        remoteDefaultSources: List<AlternativeSource> = emptyList(),
-        localDefaultSources: List<AlternativeSource> = emptyList(),
     ) {
         every { settingsRepository.getLanguage() } returns flowOf("en-US")
         every { remoteRepository.getAlternativeSources(any()) } returns flowOf(remoteSources)
         every { localRepository.getAlternativeSources() } returns flowOf(localSources)
-        every { remoteRepository.getDefaultSources(any()) } returns flowOf(remoteDefaultSources)
-        every { localRepository.getDefaultSources() } returns flowOf(localDefaultSources)
     }
 
     private fun alternativeSource(
@@ -174,8 +166,9 @@ class SyncAlternativeSourceContentVersionUseCaseTest {
         contentVersion: Int = 0,
         isDefault: Boolean = false,
     ) = AlternativeSource(
-        source = Source(name = acronym, acronym = acronym, originalName = null),
+        source = Source(name = acronym, acronym = acronym, originalName = null, originalAcronym = null),
         totalMonsters = 0,
+        totalSpells = 0,
         summary = "",
         coverImageUrl = "",
         isEnabled = false,

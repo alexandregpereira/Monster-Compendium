@@ -218,6 +218,7 @@ internal class ShareContentExportStateHolderTest {
     private class RecordingAnalytics : Analytics {
         val loggedExceptions = mutableListOf<Throwable>()
         override fun track(eventName: String, params: Map<String, Any?>) {}
+        override fun setUserProperty(name: String, value: String) {}
         override fun logException(throwable: Throwable) {
             loggedExceptions.add(throwable)
         }
@@ -225,6 +226,7 @@ internal class ShareContentExportStateHolderTest {
 
     private class NoOpAnalytics : Analytics {
         override fun track(eventName: String, params: Map<String, Any?>) {}
+        override fun setUserProperty(name: String, value: String) {}
         override fun logException(throwable: Throwable) {}
     }
 
