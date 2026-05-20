@@ -43,6 +43,9 @@ multiplatform {
         implementation(libs.ktor.darwin)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
 }
 
 android {

@@ -40,6 +40,10 @@ multiplatform {
         implementation(libs.ktor.okhttp)
     }
 
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
+
     iosMain {
         implementation(libs.ktor.darwin)
     }
