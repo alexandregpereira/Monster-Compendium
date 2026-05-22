@@ -51,6 +51,7 @@ internal fun ContactUsBottomSheet(
     onClose: () -> Unit = {},
 ) = BottomSheet(
     opened = opened,
+    topSpaceHeight = 0.dp,
     onClose = onClose,
     contentPadding = contentPadding,
 ) {
@@ -107,10 +108,10 @@ private fun ContactUs(
                     )
                     .padding(12.dp)
             ) {
-                AppInfoRow(label = "Version", value = contactUsInfo.appVersion)
-                AppInfoRow(label = "Platform", value = contactUsInfo.platform)
-                if (contactUsInfo.deviceId.isNotBlank()) {
-                    AppInfoRow(label = "Device ID", value = contactUsInfo.deviceId)
+                AppInfoRow(value = contactUsInfo.appVersion)
+                AppInfoRow(value = contactUsInfo.platform)
+                if (contactUsInfo.deviceId != null) {
+                    AppInfoRow(value = contactUsInfo.deviceId)
                 }
             }
         }
@@ -123,9 +124,9 @@ private fun ContactUs(
 }
 
 @Composable
-private fun AppInfoRow(label: String, value: String) {
+private fun AppInfoRow(value: String) {
     Text(
-        text = "$label: $value",
+        text = value,
         fontFamily = FontFamily.Monospace,
         fontSize = 12.sp,
         fontWeight = FontWeight.Normal,

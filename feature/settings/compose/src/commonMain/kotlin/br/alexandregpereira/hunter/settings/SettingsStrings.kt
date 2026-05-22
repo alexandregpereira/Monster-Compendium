@@ -90,7 +90,7 @@ internal data class SettingsEnStrings(
     override val contactUsButton: String = "Send email",
     override val contactAppInfo: String = "The app info below will be automatically included to help us investigate.",
     override val contactEmailSubjectTitle: String = "Monster Compendium Support",
-    override val contactEmailBodyMessage: String = "Write your message bellow"
+    override val contactEmailBodyMessage: String = "Write your message below"
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -161,7 +161,7 @@ internal data class SettingsEsStrings(
     override val contactUsTitle: String = "Contáctenos",
     override val contactUsDescription: String = "¿Tiene un problema o quiere sugerir algo? Envíenos un correo con sus comentarios.",
     override val contact: String = "Contacto: alexandregpereira.dev@gmail.com",
-    override val contactAppInfo: String = " La información de la aplicación a continuación se incluirá automáticamente para ayudarnos a investigar.",
+    override val contactAppInfo: String = "La información de la aplicación a continuación se incluirá automáticamente para ayudarnos a investigar.",
     override val contactUsButton: String = "Enviar correo",
     override val contactEmailSubjectTitle: String = "Soporte Monster Compendium",
     override val contactEmailBodyMessage: String = "Escriba su mensaje aquí"

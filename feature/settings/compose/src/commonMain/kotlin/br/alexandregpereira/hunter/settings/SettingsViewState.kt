@@ -76,7 +76,7 @@ internal data class SettingsLanguageState(
 internal data class ContactUsInfoState(
     val appVersion: String = "",
     val platform: String = "",
-    val deviceId: String = "",
+    val deviceId: String? = null,
 )
 
 internal data class AppearanceSettingsState(

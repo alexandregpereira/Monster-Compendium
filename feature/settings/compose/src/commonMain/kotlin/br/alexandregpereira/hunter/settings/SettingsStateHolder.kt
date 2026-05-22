@@ -229,20 +229,18 @@ internal class SettingsStateHolder(
 
     private fun onContactUsClick() {
         analytics.trackContactUsClick()
-        featureScope.launch {
-            val deviceId = analytics.deviceId
-            val platform = appInfoProvider.getPlatformName()
-            val versionName = appInfoProvider.getVersionName()
-            setState {
-                copy(
-                    contactUsOpened = true,
-                    contactUsInfo = ContactUsInfoState(
-                        appVersion = versionName,
-                        platform = platform,
-                        deviceId = deviceId ?: "",
-                    )
+        val deviceId = analytics.deviceId
+        val platform = appInfoProvider.getPlatformName()
+        val versionName = appInfoProvider.getVersionName()
+        setState {
+            copy(
+                contactUsOpened = true,
+                contactUsInfo = ContactUsInfoState(
+                    appVersion = "App Version: $versionName",
+                    platform = "Platform: $platform",
+                    deviceId = deviceId?.takeUnless { it.isBlank() }?.let { "Device ID: $it" }
                 )
-            }
+            )
         }
     }
 
@@ -254,15 +252,15 @@ internal class SettingsStateHolder(
     override fun onContactUsSendEmailClick() {
         analytics.trackContactUsSendEmailClick()
         val strings = state.value.strings
+        val deviceId = state.value.contactUsInfo.deviceId
+        val platform = state.value.contactUsInfo.platform
+        val versionName = state.value.contactUsInfo.appVersion
         featureScope.launch {
-            val deviceId = analytics.deviceId
-            val platform = appInfoProvider.getPlatformName()
-            val versionName = appInfoProvider.getVersionName()
             val body = buildString {
-                appendLine("App Version: $versionName")
-                appendLine("Platform: $platform")
+                appendLine(versionName)
+                appendLine(platform)
                 if (!deviceId.isNullOrBlank()) {
-                    appendLine("Device ID: $deviceId")
+                    appendLine(deviceId)
                 }
                 appendLine()
                 val contactEmailBodyMessage = strings.contactEmailBodyMessage
@@ -271,8 +269,8 @@ internal class SettingsStateHolder(
             }
             val subject = strings.contactEmailSubjectTitle
             val url = "mailto:alexandregpereira.dev@gmail.com" +
-                "?subject=${encodeMailtoComponent(subject)}" +
-                "&body=${encodeMailtoComponent(body)}"
+                    "?subject=${encodeMailtoComponent(subject)}" +
+                    "&body=${encodeMailtoComponent(body)}"
             SettingsViewAction.GoToExternalUrl(url).also { sendAction(it) }
             setState { copy(contactUsOpened = false) }
         }
@@ -399,7 +397,7 @@ internal class SettingsStateHolder(
                 add(MenuItemIdState.ADVANCED_SETTINGS.toMenuItem(strings))
             }
             add(MenuItemIdState.CONTACT_US.toMenuItem(strings))
-        add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
+            add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
         }.toImmutableList()
 
     private fun SettingsViewState.updateMenuItems(
@@ -419,41 +417,49 @@ internal class SettingsStateHolder(
                 text = strings.openGitHubProject,
                 section = strings.about,
             )
+
             MenuItemIdState.SETTINGS -> MenuItemState(
                 id = this,
                 text = strings.languageLabel,
                 section = strings.settingsTitle,
             )
+
             MenuItemIdState.APPEARANCE_SETTINGS -> MenuItemState(
                 id = this,
                 text = strings.appearanceSettingsTitle,
                 section = strings.settingsTitle,
             )
+
             MenuItemIdState.IMPORT_CONTENT -> MenuItemState(
                 id = this,
                 text = strings.importContent,
                 section = strings.content,
             )
+
             MenuItemIdState.SPELLS -> MenuItemState(
                 id = this,
                 text = strings.spells,
                 section = strings.content,
             )
+
             MenuItemIdState.MANAGE_MONSTER_CONTENT -> MenuItemState(
                 id = this,
                 text = strings.manageMonsterContent,
                 section = strings.content,
             )
+
             MenuItemIdState.ADVANCED_SETTINGS -> MenuItemState(
                 id = this,
                 text = strings.manageAdvancedSettings,
                 section = strings.settingsTitle,
             )
+
             MenuItemIdState.ADD_MONSTER -> MenuItemState(
                 id = this,
                 text = strings.addMonster,
                 section = strings.content,
             )
+
             MenuItemIdState.CONTACT_US -> MenuItemState(
                 id = this,
                 text = strings.contactUs,
