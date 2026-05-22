@@ -41,7 +41,7 @@ import java.io.File
 
 fun main(args: Array<String>) = application {
     val koin = startKoin {
-        initKoinModules()
+        initKoinModules(platformName = "Desktop")
         modules(jvmAnalyticsModule)
     }.koin
     koin.get<FeatureFlagProvider>().initialize()

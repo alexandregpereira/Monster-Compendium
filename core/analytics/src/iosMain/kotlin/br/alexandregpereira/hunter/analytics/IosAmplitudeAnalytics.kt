@@ -16,10 +16,14 @@ internal class IosAmplitudeAnalytics(
         )
     }
 
-    override fun setUserProperty(name: String, value: String) {
+    override fun setUserProperty(name: String, value: Any) {
         val identify = AMPIdentify()
         identify.set(property = name, value = value)
         amplitude.identify(identify)
+    }
+
+    override fun getDeviceId(): String? {
+        return amplitude.getDeviceId()
     }
 
     override fun logException(throwable: Throwable) {

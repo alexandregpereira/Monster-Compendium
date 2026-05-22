@@ -14,8 +14,12 @@ internal class AndroidAmplitudeAnalytics(
         amplitude.track(eventName, params)
     }
 
-    override fun setUserProperty(name: String, value: String) {
+    override fun setUserProperty(name: String, value: Any) {
         amplitude.identify(Identify().set(name, value))
+    }
+
+    override fun getDeviceId(): String? {
+        return amplitude.getDeviceId()
     }
 
     override fun logException(throwable: Throwable) {

@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.settings
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.app.config.AppInfoProvider
 import br.alexandregpereira.hunter.app.config.Environment
 import br.alexandregpereira.hunter.domain.settings.AppSettingsImageContentScale
 import br.alexandregpereira.hunter.domain.settings.AppearanceSettings
@@ -64,6 +65,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.launch
 
 internal class SettingsStateHolder(
     private val getMonsterImageJsonUrl: GetMonsterImageJsonUrlUseCase,
@@ -86,7 +88,7 @@ internal class SettingsStateHolder(
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
     private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
-    private val environment: Environment,
+    private val appInfoProvider: AppInfoProvider,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
@@ -225,6 +227,57 @@ internal class SettingsStateHolder(
         ).also { sendAction(it) }
     }
 
+    private fun onContactUsClick() {
+        analytics.trackContactUsClick()
+        featureScope.launch {
+            val deviceId = analytics.deviceId
+            val platform = appInfoProvider.getPlatformName()
+            val versionName = appInfoProvider.getVersionName()
+            setState {
+                copy(
+                    contactUsOpened = true,
+                    contactUsInfo = ContactUsInfoState(
+                        appVersion = versionName,
+                        platform = platform,
+                        deviceId = deviceId ?: "",
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onContactUsCloseClick() {
+        analytics.trackContactUsCloseClick()
+        setState { copy(contactUsOpened = false) }
+    }
+
+    override fun onContactUsSendEmailClick() {
+        analytics.trackContactUsSendEmailClick()
+        val strings = state.value.strings
+        featureScope.launch {
+            val deviceId = analytics.deviceId
+            val platform = appInfoProvider.getPlatformName()
+            val versionName = appInfoProvider.getVersionName()
+            val body = buildString {
+                appendLine("App Version: $versionName")
+                appendLine("Platform: $platform")
+                if (!deviceId.isNullOrBlank()) {
+                    appendLine("Device ID: $deviceId")
+                }
+                appendLine()
+                val contactEmailBodyMessage = strings.contactEmailBodyMessage
+                appendLine("--- $contactEmailBodyMessage ---")
+                appendLine()
+            }
+            val subject = strings.contactEmailSubjectTitle
+            val url = "mailto:alexandregpereira.dev@gmail.com" +
+                "?subject=${encodeMailtoComponent(subject)}" +
+                "&body=${encodeMailtoComponent(body)}"
+            SettingsViewAction.GoToExternalUrl(url).also { sendAction(it) }
+            setState { copy(contactUsOpened = false) }
+        }
+    }
+
     fun onSubscribePremiumClick() {
         paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
     }
@@ -328,6 +381,7 @@ internal class SettingsStateHolder(
             MenuItemIdState.SPELLS -> onSpellsClick()
             MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
             MenuItemIdState.ADD_MONSTER -> onAddMonsterClick()
+            MenuItemIdState.CONTACT_US -> onContactUsClick()
         }
     }
 
@@ -341,10 +395,11 @@ internal class SettingsStateHolder(
             add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
             add(MenuItemIdState.SETTINGS.toMenuItem(strings))
             add(MenuItemIdState.APPEARANCE_SETTINGS.toMenuItem(strings))
-            if (environment == Environment.Sandbox) {
+            if (appInfoProvider.getEnvironment() == Environment.Sandbox) {
                 add(MenuItemIdState.ADVANCED_SETTINGS.toMenuItem(strings))
             }
-            add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
+            add(MenuItemIdState.CONTACT_US.toMenuItem(strings))
+        add(MenuItemIdState.OPEN_GITHUB_PROJECT.toMenuItem(strings))
         }.toImmutableList()
 
     private fun SettingsViewState.updateMenuItems(
@@ -399,12 +454,28 @@ internal class SettingsStateHolder(
                 text = strings.addMonster,
                 section = strings.content,
             )
+            MenuItemIdState.CONTACT_US -> MenuItemState(
+                id = this,
+                text = strings.contactUs,
+                section = strings.about,
+            )
         }
     }
 
     private fun closeAdvancedSettings() {
         setState { copy(advancedSettingsOpened = false) }
     }
+
+    private fun encodeMailtoComponent(value: String): String = value
+        .replace("%", "%25")
+        .replace(" ", "%20")
+        .replace("\n", "%0A")
+        .replace("\r", "%0D")
+        .replace("&", "%26")
+        .replace("+", "%2B")
+        .replace("=", "%3D")
+        .replace("?", "%3F")
+        .replace("#", "%23")
 
     private fun Language.asState(): SettingsLanguageState {
         val string = when (this) {

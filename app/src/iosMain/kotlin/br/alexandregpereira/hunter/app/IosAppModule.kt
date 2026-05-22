@@ -29,7 +29,7 @@ internal fun appKoin(): Koin = koinInstance
 
 fun initKoin() {
     koinInstance = startKoin {
-        initKoinModules()
+        initKoinModules(platformName = "iOS")
     }.koin
     koinInstance.get<FeatureFlagProvider>().initialize()
     koinInstance.get<AdsConsentManager>().initialize()

@@ -23,6 +23,8 @@ internal class SettingsAnalytics(
     private val analytics: Analytics
 ) {
 
+    val deviceId: String? get() = analytics.getDeviceId()
+
     fun logException(throwable: Throwable) {
         analytics.logException(throwable)
     }
@@ -116,6 +118,24 @@ internal class SettingsAnalytics(
     fun trackAddMonsterClick() {
         analytics.track(
             eventName = "Settings - add monster click",
+        )
+    }
+
+    fun trackContactUsClick() {
+        analytics.track(
+            eventName = "Settings - contact us click",
+        )
+    }
+
+    fun trackContactUsCloseClick() {
+        analytics.track(
+            eventName = "Settings - contact us closed",
+        )
+    }
+
+    fun trackContactUsSendEmailClick() {
+        analytics.track(
+            eventName = "Settings - contact us send email click",
         )
     }
 }

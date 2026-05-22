@@ -29,6 +29,7 @@ internal class IsPremiumImpl(
     private val revenueSdk: RevenueSdk,
     private val settings: Settings,
     private val analytics: Analytics,
+    private val getRevenueUserId: GetRevenueUserId,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : IsPremium {
 
@@ -51,6 +52,16 @@ internal class IsPremiumImpl(
             analytics.logException(cause)
             withContext(dispatcher) {
                 settings.getBoolean(key = isPremiumFallbackCacheKey, defaultValue = true)
+            }
+        }.also { isPremium ->
+            analytics.setUserProperty(name = "isPremiumUser", value = isPremium)
+            val premiumUserId = if (isPremium) {
+                getRevenueUserId()
+            } else {
+                null
+            }
+            if (premiumUserId != null) {
+                analytics.setUserProperty(name = "premiumUserId", value = premiumUserId)
             }
         }
     }
