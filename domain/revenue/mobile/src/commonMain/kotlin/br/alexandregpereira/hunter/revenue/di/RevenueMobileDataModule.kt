@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import br.alexandregpereira.hunter.revenue.GetCurrentOfferImpl
+import br.alexandregpereira.hunter.revenue.GetRevenueUserId
+import br.alexandregpereira.hunter.revenue.GetRevenueUserIdUseCase
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.IsPremiumImpl
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
@@ -42,13 +44,15 @@ val revenueMobileDataModule get() = module {
     single<Settings>(qualifier = qualifier(preferenceName)) {
         get<Settings.Factory>().create(preferenceName)
     }
+    factory<GetRevenueUserId> {
+        GetRevenueUserIdUseCase()
+    }
     factory<IsSessionUsageLimitReached> {
         IsSessionUsageLimitReachedImpl(
             isPremium = get(),
             revenueSessionRemoteConfig = get(),
             revenueSessionTimeDataSource = get(),
             analytics = get(),
-            featureFlagProvider = get(),
         )
     }
     factory<RevenueSdk> {
@@ -70,6 +74,7 @@ val revenueMobileDataModule get() = module {
             revenueSdk = get(),
             settings = get<Settings>(qualifier(preferenceName)),
             analytics = get(),
+            getRevenueUserId = get(),
         )
     }
     single<RevenueSession> {

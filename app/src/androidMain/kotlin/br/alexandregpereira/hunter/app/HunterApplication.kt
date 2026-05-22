@@ -57,5 +57,5 @@ internal fun KoinApplication.initAndroidModules(app: Application) {
             factory { Firebase.crashlytics }
         },
     )
-    initKoinModules()
+    initKoinModules(platformName = "Android")
 }

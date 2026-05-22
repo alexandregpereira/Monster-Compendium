@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import br.alexandregpereira.hunter.settings.ui.AdvancedSettings
 import br.alexandregpereira.hunter.settings.ui.AppearanceSettingsBottomSheet
+import br.alexandregpereira.hunter.settings.ui.ContactUsBottomSheet
 import br.alexandregpereira.hunter.settings.ui.SettingsBottomSheet
 import br.alexandregpereira.hunter.ui.compose.BottomSheet
 import org.koin.compose.koinInject
@@ -67,5 +68,14 @@ fun SettingsBottomSheets(
         onStateChange = stateHolder::onAppearanceChange,
         onSaveButtonClick = stateHolder::onAppearanceSettingsSaveClick,
         onClose = stateHolder::onAppearanceSettingsCloseClick
+    )
+
+    ContactUsBottomSheet(
+        opened = state.contactUsOpened,
+        strings = state.strings,
+        contactUsInfo = state.contactUsInfo,
+        contentPadding = contentPadding,
+        onSendEmailClick = stateHolder::onContactUsSendEmailClick,
+        onClose = stateHolder::onContactUsCloseClick,
     )
 }

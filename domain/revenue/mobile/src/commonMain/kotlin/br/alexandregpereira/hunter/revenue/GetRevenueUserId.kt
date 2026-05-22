@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,27 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.shared.di
+package br.alexandregpereira.hunter.revenue
 
-import br.alexandregpereira.hunter.app.di.initKoinModules
-import jvmAnalyticsModule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Rule
-import org.junit.Test
-import org.koin.dsl.koinApplication
-import org.koin.test.check.checkModules
+import com.revenuecat.purchases.kmp.Purchases
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class KoinTest {
+internal fun interface GetRevenueUserId {
+    suspend operator fun invoke(): String?
+}
 
-    @get:Rule
-    val testCoroutineRule = TestCoroutineRule()
+internal class GetRevenueUserIdUseCase : GetRevenueUserId {
 
-    @Test
-    fun verifyKoinApp() {
-        koinApplication {
-            initKoinModules(platformName = "")
-            modules(jvmAnalyticsModule)
-        }.checkModules()
+    override suspend fun invoke(): String? = try {
+        Purchases.sharedInstance.appUserID
+    } catch (_: Throwable) {
+        null
     }
 }

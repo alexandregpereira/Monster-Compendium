@@ -53,7 +53,7 @@ val featureSettingsModule = module {
             spellDetailEventDispatcher = get(),
             spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
-            environment = get(),
+            appInfoProvider = get(),
         )
     }
 }

@@ -21,7 +21,9 @@ interface Analytics {
 
     fun track(eventName: String, params: Map<String, Any?> = emptyMap())
 
-    fun setUserProperty(name: String, value: String)
+    fun setUserProperty(name: String, value: Any)
+
+    fun getDeviceId(): String?
 
     fun logException(throwable: Throwable)
 }
@@ -30,7 +32,9 @@ class EmptyAnalytics : Analytics {
 
     override fun track(eventName: String, params: Map<String, Any?>) {}
 
-    override fun setUserProperty(name: String, value: String) {}
+    override fun setUserProperty(name: String, value: Any) {}
+
+    override fun getDeviceId(): String? = null
 
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()

@@ -40,4 +40,8 @@ internal interface SettingsViewIntent {
     fun onAppearanceChange(appearance: AppearanceSettingsState)
 
     fun onMenuItemClick(id: MenuItemIdState)
+
+    fun onContactUsCloseClick()
+
+    fun onContactUsSendEmailClick()
 }

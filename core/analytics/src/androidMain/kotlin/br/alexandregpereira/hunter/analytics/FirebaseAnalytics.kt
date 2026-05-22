@@ -50,9 +50,11 @@ internal class FirebaseAnalytics(
         }
     }
 
-    override fun setUserProperty(name: String, value: String) {
-        analytics.setUserProperty(name, value)
+    override fun setUserProperty(name: String, value: Any) {
+        analytics.setUserProperty(name, value.toString())
     }
+
+    override fun getDeviceId(): String? = null
 
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()

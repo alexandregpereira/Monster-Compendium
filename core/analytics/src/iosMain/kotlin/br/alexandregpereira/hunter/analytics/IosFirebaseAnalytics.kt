@@ -13,9 +13,11 @@ internal class IosFirebaseAnalytics : Analytics {
         FIRAnalytics.logEventWithName(normalized, parameters = params.toNSDictionary())
     }
 
-    override fun setUserProperty(name: String, value: String) {
-        FIRAnalytics.setUserPropertyString(value, forName = name)
+    override fun setUserProperty(name: String, value: Any) {
+        FIRAnalytics.setUserPropertyString(value.toString(), forName = name)
     }
+
+    override fun getDeviceId(): String? = null
 
     override fun logException(throwable: Throwable) {
         throwable.printStackTrace()
