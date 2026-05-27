@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.android.build.api.artifact.SingleArtifact
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import java.util.Properties
 
@@ -200,6 +201,7 @@ kotlin {
     }
 }
 
+@Suppress("DEPRECATION_ERROR")
 android {
     namespace = "br.alexandregpereira.hunter.app"
     compileSdk = findProperty("compileSdk")?.toString()?.toInt()
@@ -241,16 +243,6 @@ android {
         testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
     }
 
-    applicationVariants.all {
-        val buildTypeName = buildType.name
-        val version = versionName
-        val prefix = if (hasProperty("dev")) "app-dev" else "app"
-        outputs.all {
-            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl)
-                .outputFileName = "$prefix-$buildTypeName-$version.apk"
-        }
-    }
-
     signingConfigs {
         val appKeyPassword = getEnvVar(prodKey = "MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
         create("release") {
@@ -282,6 +274,28 @@ android {
         androidTestImplementation(libs.multiplatform.settings)
         androidTestImplementation(libs.multiplatform.settings.test)
         debugImplementation(libs.compose.ui.test.manifest)
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        val buildTypeName = variant.buildType ?: ""
+        val prefix = if (project.hasProperty("dev")) "app-dev" else "app"
+        val variantNameCapitalized = variant.name.replaceFirstChar { it.uppercase() }
+
+        val renameTask = tasks.register<RenameApkTask>("rename${variantNameCapitalized}Apk") {
+            apkPrefix.set(prefix)
+            apkBuildType.set(buildTypeName)
+            apkVersionName.set(appVersionName)
+        }
+
+        val transformationRequest = variant.artifacts.use(renameTask)
+            .wiredWithDirectories(RenameApkTask::input, RenameApkTask::output)
+            .toTransformMany(SingleArtifact.APK)
+
+        renameTask.configure {
+            this.transformationRequest = transformationRequest
+        }
     }
 }
 

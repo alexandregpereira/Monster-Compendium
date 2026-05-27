@@ -105,6 +105,7 @@ fun KotlinMultiplatformExtension.jvmMain(block: KotlinDependencyHandler.() -> Un
 }
 
 fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Unit = {}) {
+    jvm()
     sourceSets.apply {
         jvmTest.dependencies(block)
     }
