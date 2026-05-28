@@ -15,3 +15,7 @@
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 -dontwarn org.apiguardian.api.API$Status
 -dontwarn org.apiguardian.api.API
+
+# R8 full mode (enabled by default in AGP 9+) strips Room-generated _Impl classes found
+# via reflection. Keep all RoomDatabase subclasses so WorkManager's WorkDatabase_Impl survives.
+-keep class * extends androidx.room.RoomDatabase { *; }

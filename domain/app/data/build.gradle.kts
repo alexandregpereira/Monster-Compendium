@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("plugin.serialization")
     alias(libs.plugins.sqldelight)
 }
@@ -39,7 +39,7 @@ multiplatform {
         implementation(libs.ktor.logging)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data") {
         implementation(project(":domain:revenue:mobile"))
         implementation(libs.ktor.okhttp)
         implementation(libs.sqldelight.android)
@@ -55,14 +55,6 @@ multiplatform {
         implementation(project(":domain:revenue:mobile"))
         implementation(libs.ktor.darwin)
         implementation(libs.sqldelight.ios)
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.data"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }
 

@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-internal class MainViewModel(
+class MainViewModel(
     private val appLocalization: AppReactiveLocalization,
     private val stateRecovery: StateRecovery,
     private val appEventDispatcher: AppEventDispatcher,

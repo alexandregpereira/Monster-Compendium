@@ -16,8 +16,8 @@
  */
 
 plugins {
-    id("com.android.library")
     kotlin("multiplatform")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
@@ -27,14 +27,10 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.file")
     jvmMain()
     jvmTest {
         implementation(libs.bundles.unittest)
     }
     iosMain()
-}
-
-androidLibrary(withCompose = false) {
-    namespace = "br.alexandregpereira.file"
 }

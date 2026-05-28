@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("native.cocoapods")
 }
 
@@ -27,7 +27,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ads.consent") {
         implementation(libs.play.services.ads)
         implementation(libs.user.messaging.platform.android)
     }
@@ -47,13 +47,5 @@ kotlin {
         pod("Google-Mobile-Ads-SDK") {
             moduleName = "GoogleMobileAds"
         }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.ads.consent"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

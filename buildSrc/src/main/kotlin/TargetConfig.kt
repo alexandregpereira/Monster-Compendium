@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -28,30 +28,6 @@ private val Project.kotlin: KotlinMultiplatformExtension
 
 private val Project.java: JavaPluginExtension
     get() = extensions.getByType(JavaPluginExtension::class.java)
-
-private val Project.androidLibrary: LibraryExtension
-    get() = extensions.getByType(LibraryExtension::class.java)
-
-fun Project.androidLibrary(
-    withCompose: Boolean = true,
-    block: LibraryExtension.() -> Unit
-) {
-    androidLibrary.apply {
-        compileSdk = findProperty("compileSdk")?.toString()?.toInt()
-
-        defaultConfig {
-            minSdk = findProperty("minSdk")?.toString()?.toInt()
-        }
-
-        if (withCompose) {
-            buildFeatures {
-                compose = true
-            }
-        }
-
-        block()
-    }
-}
 
 fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
     kotlin.apply {
@@ -88,8 +64,18 @@ fun KotlinMultiplatformExtension.commonTest(block: KotlinDependencyHandler.() ->
     }
 }
 
-fun KotlinMultiplatformExtension.androidMain(block: KotlinDependencyHandler.() -> Unit = {}) {
-    androidTarget()
+fun KotlinMultiplatformExtension.androidMain(
+    namespace: String,
+    block: KotlinDependencyHandler.() -> Unit = {}
+) {
+    extensions.getByType(KotlinMultiplatformAndroidLibraryExtension::class.java).apply {
+        compileSdk = (project.findProperty("android.compileSdk") ?: project.findProperty("compileSdk"))?.toString()?.toInt()
+        minSdk = (project.findProperty("android.minSdk") ?: project.findProperty("minSdk"))?.toString()?.toInt()
+        this.namespace = namespace
+    }
+    if (!project.plugins.hasPlugin("com.android.kotlin.multiplatform.library")) {
+        androidTarget()
+    }
 
     sourceSets.apply {
         androidMain.dependencies(block)
@@ -105,6 +91,7 @@ fun KotlinMultiplatformExtension.jvmMain(block: KotlinDependencyHandler.() -> Un
 }
 
 fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Unit = {}) {
+    jvm()
     sourceSets.apply {
         jvmTest.dependencies(block)
     }

@@ -16,14 +16,14 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.settings")
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:app-config"))
@@ -55,12 +55,4 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.settings"
-}
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.settings.ui.resources"
-    generateResClass = always
-}
+composeResources("br.alexandregpereira.hunter.settings.ui.resources")

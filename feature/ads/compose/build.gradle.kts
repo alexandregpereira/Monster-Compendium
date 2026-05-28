@@ -16,9 +16,9 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
     kotlin("native.cocoapods")
 }
@@ -37,7 +37,7 @@ multiplatform {
         implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ads") {
         implementation(libs.play.services.ads)
     }
     jvmMain()
@@ -54,12 +54,5 @@ kotlin {
         pod("Google-Mobile-Ads-SDK") {
             moduleName = "GoogleMobileAds"
         }
-    }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ads"
-    buildFeatures {
-        buildConfig = true
     }
 }

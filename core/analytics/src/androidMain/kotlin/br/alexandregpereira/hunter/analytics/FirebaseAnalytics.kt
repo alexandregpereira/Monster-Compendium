@@ -24,7 +24,8 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 internal class FirebaseAnalytics(
     private val analytics: FirebaseAnalytics,
-    private val crashlytics: FirebaseCrashlytics
+    private val crashlytics: FirebaseCrashlytics,
+    private val isDebug: Boolean,
 ) : Analytics {
 
     override fun track(eventName: String, params: Map<String, Any?>) {
@@ -43,7 +44,7 @@ internal class FirebaseAnalytics(
             }
         }
 
-        if (BuildConfig.DEBUG) {
+        if (isDebug) {
             Log.d("FirebaseAnalytics", "event name: $eventName. params: $params")
         } else {
             analytics.logEvent(eventNameNormalized, bundle)

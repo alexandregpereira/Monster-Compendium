@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("plugin.serialization")
 }
 
@@ -35,7 +35,7 @@ multiplatform {
         implementation(libs.ktor.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data.monster") {
         implementation(libs.ktor.okhttp)
     }
 
@@ -45,13 +45,5 @@ multiplatform {
     jvmMain()
     jvmTest {
         implementation(libs.bundles.unittest)
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.data.monster"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

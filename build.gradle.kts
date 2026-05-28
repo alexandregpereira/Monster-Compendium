@@ -32,6 +32,7 @@ buildscript {
     dependencies {
         classpath(libs.gradle.android)
         classpath(libs.gradle.kotlin)
+        classpath(libs.gradle.compose)
         classpath(libs.gradle.googleplay.services)
         classpath(libs.gradle.firebase.crashlytics)
     }
@@ -39,6 +40,5 @@ buildscript {
 
 plugins {
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
 }

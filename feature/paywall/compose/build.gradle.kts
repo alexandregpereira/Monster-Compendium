@@ -16,13 +16,13 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.paywall")
     commonMain {
         implementation(project(":core:ads-consent"))
         implementation(project(":core:analytics"))
@@ -42,8 +42,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.paywall"
 }

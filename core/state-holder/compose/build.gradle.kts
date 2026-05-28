@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 multiplatform {

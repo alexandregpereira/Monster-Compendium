@@ -16,14 +16,14 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ui") {
         implementation(libs.android.lifecycle.compose)
         implementation(libs.core.ktx)
         implementation(libs.compose.activity)
@@ -52,16 +52,4 @@ multiplatform {
     }
 }
 
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ui"
-}
-
-dependencies {
-    debugImplementation(libs.compose.mp.ui.tooling)
-}
-
-compose.resources {
-    publicResClass = true
-    packageOfResClass = "br.alexandregpereira.hunter.ui.resources"
-    generateResClass = always
-}
+composeResources("br.alexandregpereira.hunter.ui.resources", publicResClass = true)

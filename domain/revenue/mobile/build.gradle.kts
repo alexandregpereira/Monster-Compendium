@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("native.cocoapods")
 }
 
@@ -33,7 +33,7 @@ multiplatform {
         implementation(libs.ktor.core)
         implementation(libs.revenuecat.kmp.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.revenue.mobile") {
         implementation(libs.ktor.okhttp)
     }
     iosMain {
@@ -51,13 +51,5 @@ kotlin {
         pod("PurchasesHybridCommon") {
             version = "17.46.0"
         }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.revenue.mobile"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

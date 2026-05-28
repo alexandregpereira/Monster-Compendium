@@ -16,14 +16,14 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.shareContent")
     commonMain {
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
@@ -51,12 +51,4 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.shareContent"
-}
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.shareContent.ui.resources"
-    generateResClass = always
-}
+composeResources("br.alexandregpereira.hunter.shareContent.ui.resources")

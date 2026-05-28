@@ -57,7 +57,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal fun KoinApplication.initKoinModules(
+fun KoinApplication.initKoinModules(
     platformName: String,
 ) {
     val databaseName = "hunter-database" + AppConfig.VERSION_NAME_SUFFIX

@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
@@ -28,15 +28,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.ktor.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.data.settings")
     jvmMain()
     iosMain()
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.data.settings"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
 }
