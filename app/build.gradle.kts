@@ -21,7 +21,7 @@ import java.util.Properties
 plugins {
     id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
@@ -190,7 +190,7 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.app.lib"
 }
 
-configureComposeAssetsForAndroidMain("br.alexandregpereira.hunter.app.ui.resources")
+composeResources("br.alexandregpereira.hunter.app.ui.resources")
 
 compose {
     desktop {
@@ -223,10 +223,5 @@ compose {
                 configurationFiles.from(project.file("compose-desktop.pro"))
             }
         }
-    }
-    resources {
-        publicResClass = false
-        packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
-        generateResClass = always
     }
 }

@@ -18,7 +18,7 @@
 plugins {
     id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
@@ -59,10 +59,4 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.settings"
 }
 
-configureComposeAssetsForAndroidMain("br.alexandregpereira.hunter.settings.ui.resources")
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.settings.ui.resources"
-    generateResClass = always
-}
+composeResources("br.alexandregpereira.hunter.settings.ui.resources")
