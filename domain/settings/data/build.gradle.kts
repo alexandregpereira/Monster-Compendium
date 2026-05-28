@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
@@ -33,10 +33,6 @@ multiplatform {
     iosMain()
 }
 
-android {
+androidLibrary {
     namespace = "br.alexandregpereira.hunter.data.settings"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
 }

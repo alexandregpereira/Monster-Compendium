@@ -16,7 +16,7 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
@@ -56,9 +56,7 @@ androidLibrary {
     namespace = "br.alexandregpereira.hunter.ui"
 }
 
-dependencies {
-    debugImplementation(libs.compose.mp.ui.tooling)
-}
+configureComposeAssetsForAndroidMain("br.alexandregpereira.hunter.ui.resources")
 
 compose.resources {
     publicResClass = true

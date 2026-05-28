@@ -24,7 +24,7 @@ import br.alexandregpereira.hunter.app.ui.resources.ic_menu
 import br.alexandregpereira.hunter.app.ui.resources.ic_search
 import org.jetbrains.compose.resources.DrawableResource
 
-internal data class MainViewState(
+data class MainViewState(
     val bottomBarItemSelectedIndex: Int = 0,
     val bottomBarItems: List<BottomBarItem> = emptyList(),
 ) {
@@ -32,14 +32,14 @@ internal data class MainViewState(
     val bottomBarItemSelected: BottomBarItem? = bottomBarItems.getOrNull(bottomBarItemSelectedIndex)
 }
 
-internal enum class BottomBarItemIcon(val value: DrawableResource) {
+enum class BottomBarItemIcon(val value: DrawableResource) {
     COMPENDIUM(value = Res.drawable.ic_book),
     SEARCH(value = Res.drawable.ic_search),
     FOLDERS(value = Res.drawable.ic_folder),
     SETTINGS(value = Res.drawable.ic_menu)
 }
 
-internal data class BottomBarItem(
+data class BottomBarItem(
     val icon: BottomBarItemIcon = BottomBarItemIcon.COMPENDIUM,
     val text: String = "",
 )

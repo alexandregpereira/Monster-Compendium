@@ -17,9 +17,10 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("native.cocoapods")
 }
+
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
@@ -46,10 +47,6 @@ kotlin {
     }
 }
 
-android {
+androidLibrary {
     namespace = "br.alexandregpereira.hunter.featureFlag"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
 }

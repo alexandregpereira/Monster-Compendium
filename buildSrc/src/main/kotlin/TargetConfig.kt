@@ -15,7 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.artifact.SingleArtifact
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
+import com.android.build.api.variant.KotlinMultiplatformAndroidComponentsExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -29,26 +31,12 @@ private val Project.kotlin: KotlinMultiplatformExtension
 private val Project.java: JavaPluginExtension
     get() = extensions.getByType(JavaPluginExtension::class.java)
 
-private val Project.androidLibrary: LibraryExtension
-    get() = extensions.getByType(LibraryExtension::class.java)
-
 fun Project.androidLibrary(
-    withCompose: Boolean = true,
-    block: LibraryExtension.() -> Unit
+    block: KotlinMultiplatformAndroidLibraryExtension.() -> Unit = {}
 ) {
-    androidLibrary.apply {
-        compileSdk = findProperty("compileSdk")?.toString()?.toInt()
-
-        defaultConfig {
-            minSdk = findProperty("minSdk")?.toString()?.toInt()
-        }
-
-        if (withCompose) {
-            buildFeatures {
-                compose = true
-            }
-        }
-
+    kotlin.extensions.getByType(KotlinMultiplatformAndroidLibraryExtension::class.java).apply {
+        compileSdk = (findProperty("android.compileSdk") ?: findProperty("compileSdk"))?.toString()?.toInt()
+        minSdk = (findProperty("android.minSdk") ?: findProperty("minSdk"))?.toString()?.toInt()
         block()
     }
 }
@@ -89,7 +77,9 @@ fun KotlinMultiplatformExtension.commonTest(block: KotlinDependencyHandler.() ->
 }
 
 fun KotlinMultiplatformExtension.androidMain(block: KotlinDependencyHandler.() -> Unit = {}) {
-    androidTarget()
+    if (!project.plugins.hasPlugin("com.android.kotlin.multiplatform.library")) {
+        androidTarget()
+    }
 
     sourceSets.apply {
         androidMain.dependencies(block)
@@ -109,6 +99,37 @@ fun KotlinMultiplatformExtension.jvmTest(block: KotlinDependencyHandler.() -> Un
     sourceSets.apply {
         jvmTest.dependencies(block)
     }
+}
+
+/**
+ * Wires Compose Multiplatform resources into the androidMain variant's ASSETS artifact.
+ * Workaround for Compose MP 1.10.x bug with AGP 9's com.android.kotlin.multiplatform.library:
+ * variant.sources.assets is null for androidMain, so copyAndroidMainComposeResourcesToAndroidAssets
+ * never gets its outputDirectory configured and the resources are missing from the AAR.
+ */
+@Suppress("UnstableApiUsage")
+fun Project.configureComposeAssetsForAndroidMain(packageOfResClass: String) {
+    extensions.findByType(KotlinMultiplatformAndroidComponentsExtension::class.java)
+        ?.onVariants { variant ->
+            if (variant.name != "androidMain") return@onVariants
+
+            val preparedResourcesDir = layout.buildDirectory.dir(
+                "generated/compose/resourceGenerator/preparedResources/commonMain/composeResources"
+            )
+
+            val copyTask = tasks.register(
+                "copyAndroidMainComposeResourcesToAndroidAssetsFixed",
+                ComposeResourcesToAndroidMainAssetsTask::class.java
+            ) { task ->
+                task.dependsOn(tasks.named("prepareComposeResourcesTaskForCommonMain"))
+                task.composeResources.from(preparedResourcesDir)
+                task.packageName.set(packageOfResClass)
+            }
+
+            variant.artifacts.use(copyTask)
+                .wiredWith(ComposeResourcesToAndroidMainAssetsTask::outputDirectory)
+                .toCreate(SingleArtifact.ASSETS)
+        }
 }
 
 fun KotlinMultiplatformExtension.iosMain(

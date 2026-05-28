@@ -16,8 +16,8 @@
  */
 
 plugins {
-    id("com.android.library")
     kotlin("multiplatform")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
@@ -35,6 +35,6 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary(withCompose = false) {
+androidLibrary {
     namespace = "br.alexandregpereira.file"
 }

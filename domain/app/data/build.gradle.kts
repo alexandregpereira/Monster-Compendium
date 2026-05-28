@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("plugin.serialization")
     alias(libs.plugins.sqldelight)
 }
@@ -58,12 +58,8 @@ multiplatform {
     }
 }
 
-android {
+androidLibrary {
     namespace = "br.alexandregpereira.hunter.data"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
 }
 
 sqldelight {

@@ -28,6 +28,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'hunter'
 include ':app'
+include ':app-android'
 
 include ':core:ads-consent'
 include ':core:analytics'

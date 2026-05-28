@@ -16,7 +16,7 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
@@ -33,6 +33,6 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary(withCompose = true) {
+androidLibrary {
     namespace = "br.alexandregpereira.file.compose"
 }
