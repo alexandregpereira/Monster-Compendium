@@ -33,10 +33,6 @@ multiplatform {
     iosMain {
         implementation(libs.ktor.darwin)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.data.monster.folder")
     jvmMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.data.monster.folder"
 }

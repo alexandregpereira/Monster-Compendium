@@ -27,14 +27,10 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.file")
     jvmMain()
     jvmTest {
         implementation(libs.bundles.unittest)
     }
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.file"
 }

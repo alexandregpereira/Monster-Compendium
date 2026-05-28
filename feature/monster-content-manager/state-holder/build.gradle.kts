@@ -21,7 +21,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.monster.content.state")
 
     commonMain {
         implementation(project(":core:analytics"))
@@ -39,8 +39,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.monster.content.state"
 }

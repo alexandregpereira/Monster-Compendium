@@ -22,7 +22,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.folder.insert")
     commonMain {
         implementation(project(":feature:folder-insert:state-holder"))
         implementation(project(":ui:core"))
@@ -32,8 +32,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.folder.insert"
 }

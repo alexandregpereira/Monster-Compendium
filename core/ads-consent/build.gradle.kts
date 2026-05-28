@@ -27,7 +27,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ads.consent") {
         implementation(libs.play.services.ads)
         implementation(libs.user.messaging.platform.android)
     }
@@ -48,8 +48,4 @@ kotlin {
             moduleName = "GoogleMobileAds"
         }
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ads.consent"
 }

@@ -31,15 +31,11 @@ multiplatform {
         implementation(libs.ktor.core)
     }
     jvmMain()
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.condition") {
         implementation(libs.ktor.okhttp)
     }
 
     iosMain {
         implementation(libs.ktor.darwin)
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.condition"
 }

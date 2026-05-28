@@ -23,7 +23,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.detail")
     commonMain {
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
@@ -47,10 +47,6 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.detail"
 }
 
 composeResources("br.alexandregpereira.hunter.detail.ui.resources")

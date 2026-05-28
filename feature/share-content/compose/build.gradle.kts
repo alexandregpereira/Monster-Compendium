@@ -23,7 +23,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.shareContent")
     commonMain {
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-lore:core"))
@@ -49,10 +49,6 @@ multiplatform {
         implementation(project(":core:flow:test"))
     }
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.shareContent"
 }
 
 composeResources("br.alexandregpereira.hunter.shareContent.ui.resources")

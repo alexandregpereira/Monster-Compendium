@@ -25,11 +25,7 @@ multiplatform {
         implementation(project(":domain:revenue:core"))
         implementation(libs.koin.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.revenue.data")
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.revenue.data"
 }

@@ -2,7 +2,7 @@
 amplitude-android = "1.28.1"
 amplitude-experiment-android = "1.15.0"
 amplitude-jvm = "1.13.0"
-android_gradle_plugin = "9.1.0"
+android_gradle_plugin = "9.1.1"
 android_lifecycle_compose = "2.10.0"
 android_test_version = "1.7.0"
 appcompat = "1.7.1"
@@ -112,7 +112,6 @@ instrumentedtest = ["android-test-runner", "junit-ext"]
 unittest = ["kotlin-coroutines-test", "mockk", "junit", "kotlin-test"]
 
 [plugins]
-compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }

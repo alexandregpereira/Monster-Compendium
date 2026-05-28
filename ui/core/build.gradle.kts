@@ -23,7 +23,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ui") {
         implementation(libs.android.lifecycle.compose)
         implementation(libs.core.ktx)
         implementation(libs.compose.activity)
@@ -50,10 +50,6 @@ multiplatform {
     iosMain {
         implementation(libs.ktor.darwin)
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ui"
 }
 
 composeResources("br.alexandregpereira.hunter.ui.resources", publicResClass = true)

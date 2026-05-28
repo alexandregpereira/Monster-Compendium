@@ -33,7 +33,7 @@ multiplatform {
         implementation(libs.ktor.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data.monster.lore") {
         implementation(libs.ktor.okhttp)
     }
 
@@ -44,8 +44,4 @@ multiplatform {
     iosMain {
         implementation(libs.ktor.darwin)
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.data.monster.lore"
 }

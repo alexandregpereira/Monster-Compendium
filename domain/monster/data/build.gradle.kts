@@ -35,7 +35,7 @@ multiplatform {
         implementation(libs.ktor.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data.monster") {
         implementation(libs.ktor.okhttp)
     }
 
@@ -46,8 +46,4 @@ multiplatform {
     jvmTest {
         implementation(libs.bundles.unittest)
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.data.monster"
 }

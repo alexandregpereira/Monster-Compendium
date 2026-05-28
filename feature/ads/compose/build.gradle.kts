@@ -37,7 +37,7 @@ multiplatform {
         implementation(libs.kotlin.collections.immutable)
         implementation(libs.koin.compose)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ads") {
         implementation(libs.play.services.ads)
     }
     jvmMain()
@@ -55,8 +55,4 @@ kotlin {
             moduleName = "GoogleMobileAds"
         }
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ads"
 }

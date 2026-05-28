@@ -29,16 +29,6 @@ private val Project.kotlin: KotlinMultiplatformExtension
 private val Project.java: JavaPluginExtension
     get() = extensions.getByType(JavaPluginExtension::class.java)
 
-fun Project.androidLibrary(
-    block: KotlinMultiplatformAndroidLibraryExtension.() -> Unit = {}
-) {
-    kotlin.extensions.getByType(KotlinMultiplatformAndroidLibraryExtension::class.java).apply {
-        compileSdk = (findProperty("android.compileSdk") ?: findProperty("compileSdk"))?.toString()?.toInt()
-        minSdk = (findProperty("android.minSdk") ?: findProperty("minSdk"))?.toString()?.toInt()
-        block()
-    }
-}
-
 fun Project.multiplatform(block: KotlinMultiplatformExtension.() -> Unit) {
     kotlin.apply {
         block()
@@ -74,7 +64,15 @@ fun KotlinMultiplatformExtension.commonTest(block: KotlinDependencyHandler.() ->
     }
 }
 
-fun KotlinMultiplatformExtension.androidMain(block: KotlinDependencyHandler.() -> Unit = {}) {
+fun KotlinMultiplatformExtension.androidMain(
+    namespace: String,
+    block: KotlinDependencyHandler.() -> Unit = {}
+) {
+    extensions.getByType(KotlinMultiplatformAndroidLibraryExtension::class.java).apply {
+        compileSdk = (project.findProperty("android.compileSdk") ?: project.findProperty("compileSdk"))?.toString()?.toInt()
+        minSdk = (project.findProperty("android.minSdk") ?: project.findProperty("minSdk"))?.toString()?.toInt()
+        this.namespace = namespace
+    }
     if (!project.plugins.hasPlugin("com.android.kotlin.multiplatform.library")) {
         androidTarget()
     }

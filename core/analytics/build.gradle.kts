@@ -27,7 +27,7 @@ multiplatform {
         implementation(libs.kotlin.coroutines.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.analytics") {
         implementation(project.dependencies.platform(libs.firebase.bom))
         implementation(libs.firebase.analytics)
         implementation(libs.firebase.crashlytics)
@@ -53,8 +53,4 @@ kotlin {
         pod("FirebaseAnalytics")
         pod("FirebaseCrashlytics")
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.analytics"
 }

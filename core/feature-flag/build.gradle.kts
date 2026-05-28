@@ -28,7 +28,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.featureFlag") {
         implementation(libs.amplitude.experiment.android)
     }
     jvmMain()
@@ -45,8 +45,4 @@ kotlin {
             version = "~> 1.6"
         }
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.featureFlag"
 }

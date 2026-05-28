@@ -22,7 +22,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.monster.registration")
     commonMain {
         implementation(project(":core:file:compose"))
         implementation(project(":core:state-holder:compose"))
@@ -40,8 +40,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.monster.registration"
 }

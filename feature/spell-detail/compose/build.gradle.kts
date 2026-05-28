@@ -37,11 +37,7 @@ multiplatform {
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.spell.detail")
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.spell.detail"
 }

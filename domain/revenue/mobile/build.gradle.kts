@@ -33,7 +33,7 @@ multiplatform {
         implementation(libs.ktor.core)
         implementation(libs.revenuecat.kmp.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.revenue.mobile") {
         implementation(libs.ktor.okhttp)
     }
     iosMain {
@@ -52,8 +52,4 @@ kotlin {
             version = "17.46.0"
         }
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.revenue.mobile"
 }

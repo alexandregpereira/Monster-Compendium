@@ -23,7 +23,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.settings")
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:app-config"))
@@ -53,10 +53,6 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.settings"
 }
 
 composeResources("br.alexandregpereira.hunter.settings.ui.resources")

@@ -39,7 +39,7 @@ multiplatform {
         implementation(libs.ktor.logging)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data") {
         implementation(project(":domain:revenue:mobile"))
         implementation(libs.ktor.okhttp)
         implementation(libs.sqldelight.android)
@@ -56,10 +56,6 @@ multiplatform {
         implementation(libs.ktor.darwin)
         implementation(libs.sqldelight.ios)
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.data"
 }
 
 sqldelight {

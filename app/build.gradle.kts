@@ -26,7 +26,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.app.lib")
 
     commonMain {
         implementation(project(":core:ads-consent"))
@@ -184,10 +184,6 @@ kotlin {
             kotlin.srcDir(srcPath)
         }
     }
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.app.lib"
 }
 
 composeResources("br.alexandregpereira.hunter.app.ui.resources")

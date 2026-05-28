@@ -28,11 +28,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.ktor.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.data.settings")
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.data.settings"
 }

@@ -23,14 +23,10 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.ui.compendium")
     commonMain {
         implementation(project(":ui:core"))
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.ui.compendium"
 }

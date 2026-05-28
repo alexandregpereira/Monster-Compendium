@@ -22,7 +22,7 @@ plugins {
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.folder.list")
     commonMain {
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":feature:folder-list:state-holder"))
@@ -33,8 +33,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.folder.list"
 }

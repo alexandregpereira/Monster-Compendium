@@ -28,11 +28,7 @@ multiplatform {
         implementation(libs.filekit.compose)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain()
+    androidMain("br.alexandregpereira.file.compose")
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.file.compose"
 }
