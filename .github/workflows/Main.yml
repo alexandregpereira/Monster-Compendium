@@ -39,7 +39,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease
+        run: ./gradlew jvmTest testReleaseUnitTest bundleRelease
 
       - name: Verify database migration
         run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -59,7 +59,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: br.alexandregpereira.hunter.app
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app-android/build/outputs/bundle/release/app-android-release.aab
           tracks: internal
 
   android-dev-distribution:
