@@ -38,6 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,11 +67,16 @@ fun AppButton(
             AppButtonSize.SMALL,
             AppButtonSize.MEDIUM -> 16.sp
         }
+        val textDecoration = TextDecoration.Underline.takeIf {
+            type == AppButtonType.TERTIARY
+        }
         Text(
             text = text,
             fontWeight = FontWeight.Normal,
             color = LocalContentColor.current,
             fontSize = fontSizes,
+            textAlign = TextAlign.Center,
+            textDecoration = textDecoration,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
     }

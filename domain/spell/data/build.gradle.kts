@@ -17,12 +17,13 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("plugin.serialization")
 }
 
 multiplatform {
     commonMain {
+        implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:settings:core"))
         implementation(project(":domain:spell:core"))
         implementation(libs.kotlin.coroutines.core)
@@ -31,7 +32,7 @@ multiplatform {
         implementation(libs.ktor.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.data.spell") {
         implementation(libs.ktor.okhttp)
     }
 
@@ -39,15 +40,11 @@ multiplatform {
         implementation(libs.ktor.okhttp)
     }
 
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
+
     iosMain {
         implementation(libs.ktor.darwin)
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.data.spell"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

@@ -1,41 +1,41 @@
 [versions]
-amplitude-android = "1.28.1"
-amplitude-experiment-android = "1.15.0"
+amplitude-android = "1.28.2"
+amplitude-experiment-android = "1.16.1"
 amplitude-jvm = "1.13.0"
-android_gradle_plugin = "8.10.0"
+android_gradle_plugin = "9.2.1"
 android_lifecycle_compose = "2.10.0"
 android_test_version = "1.7.0"
 appcompat = "1.7.1"
 coil3 = "3.4.0"
 colorpicker = "1.1.4"
 compose_activity = '1.13.0'
-compose = '1.11.0'
-compose_plugin = '1.10.3'
+compose = '1.11.2'
+compose_plugin = '1.11.0'
 compose_material_icons_extended = "1.7.3"
 core_ktx = '1.18.0'
-filekit = "0.13.0"
-firebase_bom = "34.12.0"
+filekit = "0.14.1"
+firebase_bom = "34.14.0"
 googleplay_services = "4.4.4"
 gradle_firebase_crashlytics = "3.0.7"
 junit_ext = "1.3.0"
 junit = "4.13.2"
-json-jvm = "20251224"
+json-jvm = "20260522"
 koin = '4.2.1'
 koin_compose = "4.2.1"
 kotlin = '2.3.21'
 kotlin_collections_immutable = "0.4.0"
-kotlin_coroutines_test = '1.10.2'
-kotlin_coroutines = '1.10.2'
-kotlin_datetime = "0.7.1"
+kotlin_coroutines_test = '1.11.0'
+kotlin_coroutines = '1.11.0'
+kotlin_datetime = "0.8.0"
 kotlinx_serialization = "1.11.0"
-ktor = "3.4.3"
-material = "1.13.0"
-mockk = "1.14.9"
-multiplatform-markdown-renderer = "0.40.2"
+ktor = "3.5.0"
+material = "1.14.0"
+mockk = "1.14.11"
+multiplatform-markdown-renderer = "0.41.0"
 multiplatform-settings = "1.3.0"
-play-services-ads = "25.2.0"
+play-services-ads = "25.3.0"
 user-messaging-platform = "4.0.0"
-revenuecat_kmp = "2.10.2+17.55.1"
+revenuecat_kmp = "3.0.3"
 sqldelight = "1.5.5"
 
 [libraries]
@@ -70,6 +70,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android_gradle_plugin" }
+gradle-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose_plugin" }
 gradle-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "gradle_firebase_crashlytics" }
 gradle-googleplay-services = { module = "com.google.gms:google-services", version.ref = "googleplay_services" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -111,7 +112,6 @@ instrumentedtest = ["android-test-runner", "junit-ext"]
 unittest = ["kotlin-coroutines-test", "mockk", "junit", "kotlin-test"]
 
 [plugins]
-compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }

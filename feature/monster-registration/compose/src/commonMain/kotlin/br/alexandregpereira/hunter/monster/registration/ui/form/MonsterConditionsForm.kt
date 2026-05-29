@@ -47,6 +47,7 @@ internal fun LazyListScope.MonsterConditionsForm(
 internal fun LazyListScope.MonsterConditionsFormItems(
     keys: Iterator<String>,
     conditions: List<ConditionState>,
+    showDivider: Boolean = true,
     addText: @Composable () -> String = { strings.add },
     removeText: @Composable () -> String = { strings.remove },
     onChanged: (List<ConditionState>) -> Unit = {}
@@ -56,6 +57,7 @@ internal fun LazyListScope.MonsterConditionsFormItems(
         keys = keys,
         items = newConditions,
         createNew = { ConditionState() },
+        showDivider = showDivider,
         addText = addText,
         removeText = removeText,
         onChanged = onChanged

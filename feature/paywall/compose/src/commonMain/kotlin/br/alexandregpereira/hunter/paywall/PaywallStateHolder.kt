@@ -13,6 +13,7 @@ import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.OfferPeriod
 import br.alexandregpereira.hunter.revenue.Purchase
 import br.alexandregpereira.hunter.revenue.RestorePurchase
+import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -37,7 +38,8 @@ internal class PaywallStateHolder(
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
-) : UiModel<PaywallState>(initialState = PaywallState()) {
+) : UiModel<PaywallState>(initialState = PaywallState()),
+    MutableActionHandler<PaywallViewAction> by MutableActionHandler() {
 
     private var loadOfferJob: Job? = null
     private var selectedOfferId: String = ""
@@ -52,6 +54,13 @@ internal class PaywallStateHolder(
                 openPaywall()
             }
         }
+    }
+
+    fun onResume() {
+        if (state.value.isOpen) {
+            return
+        }
+        onStart()
     }
 
     fun onClose() {
@@ -120,6 +129,16 @@ internal class PaywallStateHolder(
     fun onComeBackToOffer() {
         analytics.track(eventName = "Paywall - come back to offer clicked")
         setState { copy(actionResultState = null) }
+    }
+
+    fun onTermsClick() {
+        analytics.track(eventName = "Paywall - terms clicked")
+        sendAction(PaywallViewAction.GoToUrl(state.value.strings.termsUrl))
+    }
+
+    fun onPrivacyClick() {
+        analytics.track(eventName = "Paywall - privacy clicked")
+        sendAction(PaywallViewAction.GoToUrl(state.value.strings.privacyUrl))
     }
 
     private fun loadOffer() {

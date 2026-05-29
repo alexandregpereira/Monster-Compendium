@@ -52,7 +52,10 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         stats = StatsState(
             armorClass = stats.armorClass,
             hitPoints = stats.hitPoints,
-            hitDice = stats.hitDice
+            hitDice = stats.hitDice,
+            initiative = initiativeWithFallback?.let {
+                if (it > 0) "+$it" else it.toString()
+            }
         ),
         speed = SpeedState(
             hover = speed.hover,
@@ -69,6 +72,7 @@ private fun Monster.asState(strings: MonsterDetailStrings): MonsterState {
         languages = languages,
         specialAbilities = specialAbilities.map { it.asState(strings) },
         actions = actions.map { it.asState(strings) },
+        bonusActions = bonusActions.map { it.asState(strings) },
         legendaryActions = legendaryActions.map { it.asState(strings) },
         reactions = reactions.map { it.asState(strings) },
         spellcastings = spellcastings.map { it.asState(strings) },
@@ -171,7 +175,12 @@ private fun Action.asState(strings: MonsterDetailStrings): ActionState {
     return ActionState(
         damageDices = damageDices.map { it.asState() },
         attackBonus = attackBonus,
-        abilityDescription = abilityDescription.asState(strings)
+        abilityDescription = abilityDescription.asState(strings),
+        spellsByGroup = spellsByGroup.associate { spellUsage ->
+            spellUsage.group to spellUsage.spells.map { spell ->
+                SpellPreviewState(index = spell.index, name = spell.name, school = spell.school)
+            }
+        },
     )
 }
 

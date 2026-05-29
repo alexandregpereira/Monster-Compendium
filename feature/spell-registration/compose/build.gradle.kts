@@ -16,13 +16,13 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.spell.registration")
     commonMain {
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
@@ -40,8 +40,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.spell.registration"
 }

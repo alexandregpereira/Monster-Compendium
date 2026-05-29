@@ -84,6 +84,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
             armorClass = monster.stats.armorClass,
             hitPoints = monster.stats.hitPoints,
             hitDice = monster.stats.hitDice,
+            initiative = monster.stats.initiative,
         ),
         speedValues = monster.speed.values.map { it.asState(strings) },
         abilityScores = monster.abilityScores.map { it.asState(strings) },
@@ -107,6 +108,7 @@ internal fun Metadata.asState(strings: MonsterRegistrationStrings): MonsterState
         languages = monster.languages,
         specialAbilities = monster.specialAbilities.map { it.asState(strings) },
         actions = monster.actions.map { it.asState(strings) },
+        bonusActions = monster.bonusActions.map { it.asState(strings) },
         legendaryActions = monster.legendaryActions.map { it.asState(strings) },
         reactions = monster.reactions.map { it.asState(strings) },
         spellcastings = monster.spellcastings.map { it.asState(strings) },
@@ -237,6 +239,7 @@ private fun Action.asState(strings: MonsterRegistrationStrings): ActionState {
         damageDices = damageDices.map { it.asState(strings) },
         attackBonus = attackBonus,
         abilityDescription = abilityDescription.asState(strings),
+        spellsByGroup = spellsByGroup.map { it.asState() },
     )
 }
 
@@ -374,6 +377,7 @@ internal fun SectionTitle.name(strings: MonsterRegistrationStrings): String {
         SectionTitle.Languages -> strings.languages
         SectionTitle.SpecialAbilities -> strings.specialAbilities
         SectionTitle.Actions -> strings.actions
+        SectionTitle.BonusActions -> strings.bonusActions
         SectionTitle.Reactions -> strings.reactions
         SectionTitle.LegendaryActions -> strings.legendaryActions
         SectionTitle.Spellcastings -> strings.spells
@@ -402,6 +406,7 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
         add("stats-armorClass")
         add("stats-hitPoints")
         add("stats-hitDice")
+        add("stats-initiative")
         monster.speedValues.createDynamicFormKeys(
             key = SectionTitle.Speed,
             getItemKey = { it.key },
@@ -468,20 +473,41 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
         monster.specialAbilities.createDynamicFormKeys(
             key = SectionTitle.SpecialAbilities,
             getItemKey = { it.key },
-            addKeys = { ability ->
+            addKeys = { action ->
                 add("name")
                 add("description")
-                ability.savingThrows.createDynamicFormKeys(
+                add("attackBonus")
+                action.damageDices.createDynamicFormKeys(
+                    key = SectionTitle.SpecialAbilities,
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { add("type"); add("value") }
+                ).also { addAll(it) }
+                action.abilityDescription.savingThrows.createDynamicFormKeys(
                     key = "${SectionTitle.SpecialAbilities}-savingThrows",
                     getItemKey = { it.key },
                     hasTitle = false,
                     addKeys = { add("type"); add("modifier") }
                 ).also { addAll(it) }
-                ability.conditions.createDynamicFormKeys(
+                action.abilityDescription.conditions.createDynamicFormKeys(
                     key = "${SectionTitle.SpecialAbilities}-conditions",
                     getItemKey = { it.key },
                     hasTitle = false,
                     addKeys = { add("type") }
+                ).also { addAll(it) }
+                action.spellsByGroup.createDynamicFormKeys(
+                    key = "specialAbilities-usages",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { usage ->
+                        add("value")
+                        usage.spells.createDynamicFormKeys(
+                            key = "specialAbilities-usages-spells",
+                            getItemKey = { it.index },
+                            hasTitle = false,
+                            addKeys = { add("value") }
+                        ).also { addAll(it) }
+                    }
                 ).also { addAll(it) }
             }
         ).also { addAll(it) }
@@ -496,10 +522,7 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
                     key = SectionTitle.Actions,
                     getItemKey = { it.key },
                     hasTitle = false,
-                    addKeys = {
-                        add("type")
-                        add("value")
-                    }
+                    addKeys = { add("type"); add("value") }
                 ).also { addAll(it) }
                 action.abilityDescription.savingThrows.createDynamicFormKeys(
                     key = "${SectionTitle.Actions}-savingThrows",
@@ -513,25 +536,101 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
                     hasTitle = false,
                     addKeys = { add("type") }
                 ).also { addAll(it) }
+                action.spellsByGroup.createDynamicFormKeys(
+                    key = "actions-usages",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { usage ->
+                        add("value")
+                        usage.spells.createDynamicFormKeys(
+                            key = "actions-usages-spells",
+                            getItemKey = { it.index },
+                            hasTitle = false,
+                            addKeys = { add("value") }
+                        ).also { addAll(it) }
+                    }
+                ).also { addAll(it) }
+            }
+        ).also { addAll(it) }
+        monster.bonusActions.createDynamicFormKeys(
+            key = SectionTitle.BonusActions,
+            getItemKey = { it.key },
+            addKeys = { action ->
+                add("name")
+                add("description")
+                add("attackBonus")
+                action.damageDices.createDynamicFormKeys(
+                    key = SectionTitle.BonusActions,
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { add("type"); add("value") }
+                ).also { addAll(it) }
+                action.abilityDescription.savingThrows.createDynamicFormKeys(
+                    key = "${SectionTitle.BonusActions}-savingThrows",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { add("type"); add("modifier") }
+                ).also { addAll(it) }
+                action.abilityDescription.conditions.createDynamicFormKeys(
+                    key = "${SectionTitle.BonusActions}-conditions",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { add("type") }
+                ).also { addAll(it) }
+                action.spellsByGroup.createDynamicFormKeys(
+                    key = "bonusActions-usages",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { usage ->
+                        add("value")
+                        usage.spells.createDynamicFormKeys(
+                            key = "bonusActions-usages-spells",
+                            getItemKey = { it.index },
+                            hasTitle = false,
+                            addKeys = { add("value") }
+                        ).also { addAll(it) }
+                    }
+                ).also { addAll(it) }
             }
         ).also { addAll(it) }
         monster.reactions.createDynamicFormKeys(
             key = SectionTitle.Reactions,
             getItemKey = { it.key },
-            addKeys = { reaction ->
+            addKeys = { action ->
                 add("name")
                 add("description")
-                reaction.savingThrows.createDynamicFormKeys(
+                add("attackBonus")
+                action.damageDices.createDynamicFormKeys(
+                    key = SectionTitle.Reactions,
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { add("type"); add("value") }
+                ).also { addAll(it) }
+                action.abilityDescription.savingThrows.createDynamicFormKeys(
                     key = "${SectionTitle.Reactions}-savingThrows",
                     getItemKey = { it.key },
                     hasTitle = false,
                     addKeys = { add("type"); add("modifier") }
                 ).also { addAll(it) }
-                reaction.conditions.createDynamicFormKeys(
+                action.abilityDescription.conditions.createDynamicFormKeys(
                     key = "${SectionTitle.Reactions}-conditions",
                     getItemKey = { it.key },
                     hasTitle = false,
                     addKeys = { add("type") }
+                ).also { addAll(it) }
+                action.spellsByGroup.createDynamicFormKeys(
+                    key = "reactions-usages",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { usage ->
+                        add("value")
+                        usage.spells.createDynamicFormKeys(
+                            key = "reactions-usages-spells",
+                            getItemKey = { it.index },
+                            hasTitle = false,
+                            addKeys = { add("value") }
+                        ).also { addAll(it) }
+                    }
                 ).also { addAll(it) }
             }
         ).also { addAll(it) }
@@ -546,10 +645,7 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
                     key = SectionTitle.LegendaryActions,
                     getItemKey = { it.key },
                     hasTitle = false,
-                    addKeys = {
-                        add("type")
-                        add("value")
-                    }
+                    addKeys = { add("type"); add("value") }
                 ).also { addAll(it) }
                 action.abilityDescription.savingThrows.createDynamicFormKeys(
                     key = "${SectionTitle.LegendaryActions}-savingThrows",
@@ -562,6 +658,20 @@ private fun MonsterState.createKeys(isSourceVisible: Boolean): List<String> {
                     getItemKey = { it.key },
                     hasTitle = false,
                     addKeys = { add("type") }
+                ).also { addAll(it) }
+                action.spellsByGroup.createDynamicFormKeys(
+                    key = "legendaryActions-usages",
+                    getItemKey = { it.key },
+                    hasTitle = false,
+                    addKeys = { usage ->
+                        add("value")
+                        usage.spells.createDynamicFormKeys(
+                            key = "legendaryActions-usages-spells",
+                            getItemKey = { it.index },
+                            hasTitle = false,
+                            addKeys = { add("value") }
+                        ).also { addAll(it) }
+                    }
                 ).also { addAll(it) }
             }
         ).also { addAll(it) }

@@ -17,9 +17,10 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("native.cocoapods")
 }
+
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
@@ -27,7 +28,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.featureFlag") {
         implementation(libs.amplitude.experiment.android)
     }
     jvmMain()
@@ -43,13 +44,5 @@ kotlin {
         pod("AmplitudeExperiment") {
             version = "~> 1.6"
         }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.featureFlag"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

@@ -36,21 +36,21 @@ internal class GetAlternativeSourcesUseCaseImpl(
 
     override operator fun invoke(onlyContentEnabled: Boolean): Flow<List<AlternativeSource>> {
         return settingsRepository.getLanguage().map { lang ->
-            val (remoteSources, localSourcesMap, remoteDefaultSources) = coroutineScope {
+            val (remoteSources, localSourcesMap) = coroutineScope {
                 val localDeferred = async {
                     localRepository.getAlternativeSources().single().groupBy { it.acronym }
                 }
                 val remoteDeferred = async { remoteRepository.getAlternativeSources(lang).single() }
-                val remoteDefaultDeferred = async { remoteRepository.getDefaultSources(lang).single() }
-                Triple(remoteDeferred.await(), localDeferred.await(), remoteDefaultDeferred.await())
-            }
-            val defaultSources = remoteDefaultSources.map {
-                it.copy(isAdded = true)
+                Pair(remoteDeferred.await(), localDeferred.await())
             }
             val alternativeSources = remoteSources.map {
-                it.copy(isAdded = localSourcesMap[it.acronym] != null)
+                it.copy(
+                    isAdded = it.isDefault ||
+                            (it.originalAcronym != null && localSourcesMap[it.originalAcronym] != null) ||
+                            localSourcesMap[it.acronym] != null
+                )
             }
-            alternativeSources + defaultSources
+            alternativeSources
         }.map { sources ->
             sources.filter { !onlyContentEnabled || it.isEnabled }
         }

@@ -28,4 +28,5 @@ data class SourceDto(
     val acronym: String,
     @SerialName("originalName")
     val originalName: String? = null,
+    val originalAcronym: String? = null,
 )

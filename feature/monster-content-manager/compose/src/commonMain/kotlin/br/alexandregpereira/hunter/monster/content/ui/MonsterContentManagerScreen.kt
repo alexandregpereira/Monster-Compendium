@@ -105,6 +105,7 @@ internal fun MonsterContentManagerScreen(
                     name = monsterContent.name,
                     originalName = monsterContent.originalName,
                     totalMonsters = monsterContent.totalMonsters,
+                    totalSpells = monsterContent.totalSpells,
                     summary = monsterContent.summary,
                     coverImageUrl = monsterContent.coverImageUrl,
                     isAdded = monsterContent.isAdded,
@@ -135,6 +136,7 @@ private fun MonsterContentManagerScreenPreview() {
                     name = "Monster Content",
                     originalName = "Other Name",
                     totalMonsters = 10,
+                    totalSpells = 10,
                     summary = "Summary",
                     coverImageUrl = "https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
                     isAdded = true

@@ -17,11 +17,18 @@
 
 package br.alexandregpereira.hunter.analytics.di
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.analytics.FirebaseAnalytics
 import org.koin.core.scope.Scope
 
-internal actual fun Scope.createAnalytics(): Analytics = FirebaseAnalytics(
-    analytics = get(),
-    crashlytics = get()
-)
+internal actual fun Scope.createAnalytics(): Analytics {
+    val context: Context = get()
+    val isDebug = context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+    return FirebaseAnalytics(
+        analytics = get(),
+        crashlytics = get(),
+        isDebug = isDebug,
+    )
+}

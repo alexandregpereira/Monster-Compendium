@@ -1,0 +1,65 @@
+-- 1. Update SavingThrow keys for SpecialAbilities before dropping the table
+--    Old key: "{monsterIndex}-{name}"  →  New key: "specialAbility-{name}-{monsterIndex}"
+UPDATE SavingThrowEntity
+SET monsterIndex = (
+    SELECT 'specialAbility-' || sa.name || '-' || sa.monsterIndex
+    FROM SpecialAbilityEntity sa
+    WHERE sa.monsterIndex || '-' || sa.name = SavingThrowEntity.monsterIndex
+    LIMIT 1
+)
+WHERE EXISTS (
+    SELECT 1 FROM SpecialAbilityEntity sa
+    WHERE sa.monsterIndex || '-' || sa.name = SavingThrowEntity.monsterIndex
+);
+
+-- 2. Same for ConditionEntity
+UPDATE ConditionEntity
+SET monsterIndex = (
+    SELECT 'specialAbility-' || sa.name || '-' || sa.monsterIndex
+    FROM SpecialAbilityEntity sa
+    WHERE sa.monsterIndex || '-' || sa.name = ConditionEntity.monsterIndex
+    LIMIT 1
+)
+WHERE EXISTS (
+    SELECT 1 FROM SpecialAbilityEntity sa
+    WHERE sa.monsterIndex || '-' || sa.name = ConditionEntity.monsterIndex
+);
+
+-- 3. Add type column to ActionEntity
+ALTER TABLE ActionEntity ADD COLUMN `type` TEXT NOT NULL DEFAULT 'ACTION';
+
+-- 4. Migrate LegendaryActionEntity → ActionEntity
+INSERT OR REPLACE INTO ActionEntity (id, attackBonus, description, name, monsterIndex, type)
+SELECT id, attackBonus, description, name, monsterIndex, 'LEGENDARY_ACTION'
+FROM LegendaryActionEntity;
+
+-- 5. Migrate ReactionEntity → ActionEntity (no attackBonus, generate ID)
+INSERT OR REPLACE INTO ActionEntity (id, attackBonus, description, name, monsterIndex, type)
+SELECT 'reaction-' || name || '-' || monsterIndex, NULL, description, name, monsterIndex, 'REACTION'
+FROM ReactionEntity;
+
+-- 6. Migrate SpecialAbilityEntity → ActionEntity (no attackBonus, generate ID)
+INSERT OR REPLACE INTO ActionEntity (id, attackBonus, description, name, monsterIndex, type)
+SELECT 'specialAbility-' || name || '-' || monsterIndex, NULL, description, name, monsterIndex, 'SPECIAL_ABILITY'
+FROM SpecialAbilityEntity;
+
+-- 7. Drop old tables
+DROP TABLE LegendaryActionEntity;
+DROP TABLE ReactionEntity;
+DROP TABLE SpecialAbilityEntity;
+
+-- 8. Rename spellcastingId → parentId in SpellUsageEntity
+--    Recreate table because SQLite < 3.25.0 doesn't support RENAME COLUMN
+CREATE TABLE SpellUsageEntityNew (
+  `spellUsageId` TEXT NOT NULL,
+  `group` TEXT NOT NULL,
+  `parentId` TEXT NOT NULL,
+  PRIMARY KEY(`spellUsageId`)
+);
+INSERT INTO SpellUsageEntityNew SELECT spellUsageId, `group`, spellcastingId FROM SpellUsageEntity;
+DROP TABLE SpellUsageEntity;
+ALTER TABLE SpellUsageEntityNew RENAME TO SpellUsageEntity;
+CREATE INDEX IF NOT EXISTS index_SpellUsageEntity_parentId ON SpellUsageEntity (parentId);
+
+-- 9. Drop SpellcastingSpellUsageCrossRefEntity — redundant since parentId is already on SpellUsageEntity
+DROP TABLE SpellcastingSpellUsageCrossRefEntity;

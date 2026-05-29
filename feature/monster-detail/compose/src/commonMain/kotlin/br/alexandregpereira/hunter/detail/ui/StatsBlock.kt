@@ -17,15 +17,16 @@
 
 package br.alexandregpereira.hunter.detail.ui
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.detail.ui.resources.Res
 import br.alexandregpereira.hunter.detail.ui.resources.ic_hit_point
+import br.alexandregpereira.hunter.detail.ui.resources.ic_initiative
 import br.alexandregpereira.hunter.detail.ui.resources.ic_shield
 import br.alexandregpereira.hunter.monster.detail.StatsState
+import br.alexandregpereira.hunter.ui.compose.IconInfo
 import br.alexandregpereira.hunter.ui.compose.Window
 import org.jetbrains.compose.resources.painterResource
 
@@ -54,15 +55,28 @@ private fun StatsGrid(
         painter = painterResource(Res.drawable.ic_hit_point),
         iconSize = 72.dp,
         iconText = stats.hitPoints.toString(),
-        iconPadding = PaddingValues(top = 4.dp),
     )
+
+    stats.initiative?.let {
+        IconInfo(
+            title = strings.initiative,
+            painter = painterResource(Res.drawable.ic_initiative),
+            iconSize = 72.dp,
+            iconText = it,
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun StatsGridPreview() = Window {
     StatsGrid(
-        stats = StatsState(armorClass = 20, hitPoints = 100, hitDice = "28d20 + 252")
+        stats = StatsState(
+            armorClass = 20,
+            hitPoints = 100,
+            hitDice = "28d20 + 252",
+            initiative = "+12"
+        )
     )
 }
 

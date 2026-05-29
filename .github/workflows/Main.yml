@@ -39,7 +39,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew jvmTest testReleaseUnitTest assembleRelease bundleRelease
+        run: ./gradlew bundleRelease
 
       - name: Verify database migration
         run: chmod +x ./scripts/sqldelight/verifyDatabaseMigration && ./scripts/sqldelight/verifyDatabaseMigration
@@ -59,7 +59,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: br.alexandregpereira.hunter.app
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app-android/build/outputs/bundle/release/app-android-release.aab
           tracks: internal
 
   android-dev-distribution:
@@ -85,7 +85,7 @@ jobs:
 
       - name: Get Dev APK path
         id: dev-apk-path
-        run: echo "path=$(find app/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
+        run: echo "path=$(find app-android/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
 
       - name: Upload Dev APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1

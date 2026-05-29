@@ -103,9 +103,10 @@ internal fun Monster.filterEmpties(): Monster {
         conditionImmunities = conditionImmunities.filter { it.name.isNotBlank() },
         savingThrows = savingThrows.filter { it.modifier != 0 },
         skills = skills.filter { it.name.isNotBlank() },
-        specialAbilities = specialAbilities.filter { it.isEmpty().not() },
+        specialAbilities = specialAbilities.filterDamageDices { it.abilityDescription.isEmpty().not() },
         actions = actions.filterDamageDices { it.abilityDescription.isEmpty().not() },
-        reactions = reactions.filter { it.isEmpty().not() },
+        bonusActions = bonusActions.filterDamageDices { it.abilityDescription.isEmpty().not() },
+        reactions = reactions.filterDamageDices { it.abilityDescription.isEmpty().not() },
         legendaryActions = legendaryActions.filterDamageDices { it.abilityDescription.isEmpty().not() },
         spellcastings = spellcastings.filterSpellUsages { it.usages.isNotEmpty() }
     )
@@ -161,17 +162,12 @@ private fun Monster.createIndexes(): Monster {
         damageImmunities = damageImmunities.map { damageImmunity ->
             damageImmunity.copy(index = damageImmunity.type.name.normalizeIndex())
         },
-        specialAbilities = specialAbilities.normalizeAbilityDescriptionsConditionsIndexes(),
+        specialAbilities = specialAbilities.normalizeConditionsIndexes(),
         actions = actions.normalizeConditionsIndexes(),
+        bonusActions = bonusActions.normalizeConditionsIndexes(),
         legendaryActions = legendaryActions.normalizeConditionsIndexes(),
-        reactions = reactions.normalizeAbilityDescriptionsConditionsIndexes(),
+        reactions = reactions.normalizeConditionsIndexes(),
     )
-}
-
-private fun List<AbilityDescription>.normalizeAbilityDescriptionsConditionsIndexes(): List<AbilityDescription> {
-    return map { ability ->
-        ability.normalizeConditionsIndexes()
-    }
 }
 
 private fun List<Action>.normalizeConditionsIndexes(): List<Action> {

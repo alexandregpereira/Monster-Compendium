@@ -38,6 +38,8 @@ internal fun PaywallScreen(
     onTryAgainLoadOffer: () -> Unit = {},
     onTryAgainPurchase: () -> Unit = {},
     onComeBackToOffer: () -> Unit = {},
+    onTerms: () -> Unit = {},
+    onPrivacy: () -> Unit = {},
 ) = AppScreen(
     isOpen = state.isOpen,
     swipeTriggerPercentage = 0.4f,
@@ -73,6 +75,8 @@ internal fun PaywallScreen(
                     subscriptionOfferFormatted = state.subscriptionOfferFormatted,
                     subscribe = subscribe,
                     restore = restore,
+                    onTerms = onTerms,
+                    onPrivacy = onPrivacy,
                 )
 
                 ScreenSizeType.LandscapeCompact,
@@ -81,6 +85,8 @@ internal fun PaywallScreen(
                     subscriptionOfferFormatted = state.subscriptionOfferFormatted,
                     subscribe = subscribe,
                     restore = restore,
+                    onTerms = onTerms,
+                    onPrivacy = onPrivacy,
                 )
             }
         }
@@ -94,6 +100,8 @@ internal fun PaywallScreenContent(
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit = {},
+    onTerms: () -> Unit = {},
+    onPrivacy: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -111,6 +119,8 @@ internal fun PaywallScreenContent(
             subscriptionOfferFormatted = subscriptionOfferFormatted,
             subscribe = subscribe,
             restore = restore,
+            onTerms = onTerms,
+            onPrivacy = onPrivacy,
             modifier = Modifier.padding(bottom = 16.dp),
         )
     }
@@ -123,6 +133,8 @@ internal fun PaywallLandscapeScreenContent(
     modifier: Modifier = Modifier,
     subscribe: () -> Unit,
     restore: () -> Unit = {},
+    onTerms: () -> Unit = {},
+    onPrivacy: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -139,6 +151,8 @@ internal fun PaywallLandscapeScreenContent(
             subscriptionOfferFormatted = subscriptionOfferFormatted,
             subscribe = subscribe,
             restore = restore,
+            onTerms = onTerms,
+            onPrivacy = onPrivacy,
         )
     }
 }

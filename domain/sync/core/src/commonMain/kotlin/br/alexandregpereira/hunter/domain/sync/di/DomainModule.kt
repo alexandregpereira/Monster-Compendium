@@ -39,6 +39,7 @@ val syncDomainModule = module {
             syncConditions = get(),
             getContentVersionUseCase = get(),
             saveContentVersionUseCase = get(),
+            networkManager = get(),
         )
     }
 }

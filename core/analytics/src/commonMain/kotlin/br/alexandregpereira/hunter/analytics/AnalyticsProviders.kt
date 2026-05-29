@@ -13,6 +13,15 @@ internal class AnalyticsProviders(
         firebaseAnalytics.track(eventName, params)
     }
 
+    override fun setUserProperty(name: String, value: Any) {
+        amplitudeAnalytics.setUserProperty(name, value)
+        firebaseAnalytics.setUserProperty(name, value)
+    }
+
+    override fun getDeviceId(): String? {
+        return amplitudeAnalytics.getDeviceId()
+    }
+
     override fun logException(throwable: Throwable) {
         firebaseAnalytics.logException(throwable)
     }

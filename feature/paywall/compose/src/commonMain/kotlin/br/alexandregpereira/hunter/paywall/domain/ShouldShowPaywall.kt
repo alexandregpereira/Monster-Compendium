@@ -1,9 +1,11 @@
 package br.alexandregpereira.hunter.paywall.domain
 
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.network.NetworkManager
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
+import kotlinx.coroutines.flow.firstOrNull
 
 internal class ShouldShowPaywall(
     private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
@@ -11,12 +13,25 @@ internal class ShouldShowPaywall(
     private val getCurrentOffer: GetCurrentOffer,
     private val settings: PaywallSettings,
     private val analytics: Analytics,
+    private val adsConsentManager: AdsConsentManager,
 ) {
     suspend operator fun invoke(): Boolean {
         val paywallWasNotClosed = settings.getPaywallWasClosedFlag().not()
-        return paywallWasNotClosed && isSessionUsageLimitReached() &&
+        val shouldShow = paywallWasNotClosed && isSessionUsageLimitReached() &&
                 networkManager.isNetworkAvailable() &&
-                isCurrentOfferAvailable()
+                isCurrentOfferAvailable() &&
+                canRequestAds()
+        return shouldShow
+    }
+
+    private suspend fun canRequestAds(): Boolean {
+        if (adsConsentManager.canRequestAds.value) {
+            return true
+        }
+        val canRequestAds = adsConsentManager.canRequestAds.firstOrNull { canRequestAds ->
+            canRequestAds
+        }
+        return canRequestAds ?: false
     }
 
     private suspend fun isCurrentOfferAvailable(): Boolean {

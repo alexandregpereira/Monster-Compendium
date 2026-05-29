@@ -49,6 +49,7 @@ internal fun LazyListScope.MonsterSavingThrowsForm(
 internal fun LazyListScope.MonsterSavingThrowsFormItems(
     keys: Iterator<String>,
     savingThrows: List<SavingThrowState>,
+    showDivider: Boolean = true,
     addText: @Composable () -> String = { strings.add },
     removeText: @Composable () -> String = { strings.remove },
     typeLabel: @Composable () -> String = { strings.savingThrowType },
@@ -60,6 +61,7 @@ internal fun LazyListScope.MonsterSavingThrowsFormItems(
         keys = keys,
         items = mutableSavingThrows,
         createNew = { SavingThrowState() },
+        showDivider = showDivider,
         addText = addText,
         removeText = removeText,
         onChanged = onChanged

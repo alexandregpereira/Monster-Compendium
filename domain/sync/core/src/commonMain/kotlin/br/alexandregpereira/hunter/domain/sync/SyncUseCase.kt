@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.domain.source.SyncAlternativeSourceContentVer
 import br.alexandregpereira.hunter.domain.spell.SyncSpellsUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
 import br.alexandregpereira.hunter.domain.usecase.SyncMonstersUseCase
+import br.alexandregpereira.hunter.network.NetworkManager
 import br.alexandregpereira.ktx.runCatching
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -53,9 +54,10 @@ class SyncUseCase internal constructor(
     private val syncConditions: SyncConditions,
     private val getContentVersionUseCase: GetContentVersionUseCase,
     private val saveContentVersionUseCase: SaveContentVersionUseCase,
+    private val networkManager: NetworkManager,
 ) {
 
-    private val localContentVersion = 6
+    private val localContentVersion = 7
 
     operator fun invoke(forceSync: Boolean = true): Flow<SyncStatus> {
         return flow {
@@ -120,10 +122,14 @@ class SyncUseCase internal constructor(
 
     private suspend fun isLocalContentVersionSyncScenario(): Pair<Boolean, Int> {
         val lastContentVersion = getContentVersionUseCase().single()
-        return if (localContentVersion != lastContentVersion) {
+        return if (localContentVersion != lastContentVersion && isNetworkAvailable()) {
             saveContentVersionUseCase(localContentVersion).single()
             true to lastContentVersion
         } else false to lastContentVersion
+    }
+
+    private suspend fun isNetworkAvailable(): Boolean {
+        return networkManager.isNetworkAvailable()
     }
 
     private data class IsToSyncData(

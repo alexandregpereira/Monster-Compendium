@@ -142,6 +142,7 @@
 				C1BC0E7D29847A84002F517C /* Resources */,
 				681AC63E04636CC93F0717FB /* [CP] Embed Pods Frameworks */,
 				C193C3C12F8B08EE00E9D21E /* ShellScript */,
+				1B20CA1578FE33E289AE3EDD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -260,6 +261,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1B20CA1578FE33E289AE3EDD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MonsterCompendium/Pods-MonsterCompendium-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		681AC63E04636CC93F0717FB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

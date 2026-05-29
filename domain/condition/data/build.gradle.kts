@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("plugin.serialization")
 }
 
@@ -31,19 +31,11 @@ multiplatform {
         implementation(libs.ktor.core)
     }
     jvmMain()
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.condition") {
         implementation(libs.ktor.okhttp)
     }
 
     iosMain {
         implementation(libs.ktor.darwin)
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.condition"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

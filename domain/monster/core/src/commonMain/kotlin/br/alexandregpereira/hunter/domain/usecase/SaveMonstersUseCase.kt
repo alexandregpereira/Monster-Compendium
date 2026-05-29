@@ -88,7 +88,7 @@ private class SaveMonstersUseCaseImpl(
             speed = this.speed.changeSpeedMeasurementUnit(previousUnit, unit),
             senses = this.senses.changeStringsMeasurementUnit(previousUnit, unit),
             languages = this.languages.changeMeasurementUnit(previousUnit, unit),
-            specialAbilities = this.specialAbilities.changeAbilitiesMeasurementUnit(previousUnit, unit),
+            specialAbilities = this.specialAbilities.changeActionMeasurementUnit(previousUnit, unit),
             actions = this.actions.changeActionMeasurementUnit(previousUnit, unit)
         )
     }
@@ -105,15 +105,6 @@ private class SaveMonstersUseCaseImpl(
                 )
             }
         )
-    }
-
-    private fun List<AbilityDescription>.changeAbilitiesMeasurementUnit(
-        previousUnit: MeasurementUnit,
-        unit: MeasurementUnit
-    ): List<AbilityDescription> {
-        return this.map {
-            it.changeAbilityMeasurementUnit(previousUnit, unit)
-        }
     }
 
     private fun AbilityDescription.changeAbilityMeasurementUnit(

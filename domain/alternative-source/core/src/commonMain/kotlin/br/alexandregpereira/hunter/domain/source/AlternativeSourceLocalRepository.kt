@@ -24,7 +24,7 @@ interface AlternativeSourceLocalRepository {
 
     fun getAlternativeSources(): Flow<List<AlternativeSource>>
 
-    fun getDefaultSources(): Flow<List<AlternativeSource>>
+    suspend fun getContentSource(acronym: String): AlternativeSource?
 
     fun addAlternativeSource(acronym: String): Flow<Unit>
 

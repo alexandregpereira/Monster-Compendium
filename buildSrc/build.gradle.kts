@@ -28,5 +28,6 @@ repositories {
 dependencies {
     implementation(kotlin("gradle-plugin"))
     implementation(libs.gradle.android)
+    implementation(libs.gradle.compose)
     compileOnly(kotlin("compiler-embeddable"))
 }

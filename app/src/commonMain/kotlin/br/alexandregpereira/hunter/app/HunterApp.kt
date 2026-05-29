@@ -42,7 +42,7 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-internal fun HunterApp(
+fun HunterApp(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) = AppWindow {
     StateRecoveryLaunchedEffect(

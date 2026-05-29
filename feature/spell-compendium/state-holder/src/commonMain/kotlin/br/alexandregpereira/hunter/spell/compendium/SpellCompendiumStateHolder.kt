@@ -104,12 +104,12 @@ class SpellCompendiumStateHolder internal constructor(
                 it.removeAccents().trim()
             }
             .onEach { text ->
-                analytics.track(
-                    eventName = "Spell Compendium - search text changed",
-                    params = mapOf("text" to text),
-                )
                 setState {
                     val spellsGroupByLevel = if (text.isNotBlank()){
+                        analytics.track(
+                            eventName = "Spell Compendium - search text changed",
+                            params = mapOf("text" to text),
+                        )
                         val spellsFiltered = originalSpellsGroupByLevel.values.flatten()
                             .filter { it.name.removeAccents().contains(text, ignoreCase = true) }
                         mapOf(strings.searchResults(spellsFiltered.size) to spellsFiltered)

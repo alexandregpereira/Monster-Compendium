@@ -66,10 +66,11 @@ data class MonsterState(
     val conditionImmunities: List<ConditionState> = emptyList(),
     val senses: List<String> = emptyList(),
     val languages: String = "",
-    val specialAbilities: List<AbilityDescriptionState> = emptyList(),
+    val specialAbilities: List<ActionState> = emptyList(),
     val actions: List<ActionState> = emptyList(),
+    val bonusActions: List<ActionState> = emptyList(),
     val legendaryActions: List<ActionState> = emptyList(),
-    val reactions: List<AbilityDescriptionState> = emptyList(),
+    val reactions: List<ActionState> = emptyList(),
     val spellcastings: List<SpellcastingState> = emptyList(),
     val lore: String = "",
     val sourceName: String = "",
@@ -102,6 +103,7 @@ data class StatsState(
     val armorClass: Int = 0,
     val hitPoints: Int = 0,
     val hitDice: String = "",
+    val initiative: String? = null
 )
 
 @ObjCName(name = "SpeedState", exact = true)
@@ -159,7 +161,8 @@ data class AbilityDescriptionState(
 data class ActionState(
     val damageDices: List<DamageDiceState>,
     val attackBonus: Int?,
-    val abilityDescription: AbilityDescriptionState
+    val abilityDescription: AbilityDescriptionState,
+    val spellsByGroup: Map<String, List<SpellPreviewState>> = emptyMap(),
 )
 
 @ObjCName(name = "DamageDiceState", exact = true)

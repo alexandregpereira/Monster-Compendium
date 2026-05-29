@@ -17,7 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("native.cocoapods")
 }
 
@@ -27,7 +27,7 @@ multiplatform {
         implementation(libs.kotlin.coroutines.core)
     }
 
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.analytics") {
         implementation(project.dependencies.platform(libs.firebase.bom))
         implementation(libs.firebase.analytics)
         implementation(libs.firebase.crashlytics)
@@ -52,16 +52,5 @@ kotlin {
         }
         pod("FirebaseAnalytics")
         pod("FirebaseCrashlytics")
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.analytics"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
-    buildFeatures {
-        buildConfig = true
     }
 }

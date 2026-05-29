@@ -16,13 +16,13 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.folder.detail")
     commonMain {
         implementation(project(":core:ui:state-recovery"))
         implementation(project(":feature:folder-detail:state-holder"))
@@ -34,8 +34,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.folder.detail"
 }

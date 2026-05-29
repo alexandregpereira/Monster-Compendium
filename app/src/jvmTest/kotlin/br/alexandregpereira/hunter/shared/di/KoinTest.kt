@@ -34,7 +34,7 @@ class KoinTest {
     @Test
     fun verifyKoinApp() {
         koinApplication {
-            initKoinModules()
+            initKoinModules(platformName = "")
             modules(jvmAnalyticsModule)
         }.checkModules()
     }

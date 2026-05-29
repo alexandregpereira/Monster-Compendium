@@ -57,13 +57,15 @@ import org.koin.core.KoinApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal fun KoinApplication.initKoinModules() {
+fun KoinApplication.initKoinModules(
+    platformName: String,
+) {
     val databaseName = "hunter-database" + AppConfig.VERSION_NAME_SUFFIX
     allowOverride(false)
     modules(domainModules)
     modules(dataModules(databaseName))
     modules(
-        appModule,
+        appModule(platformName),
         adsFeatureModule,
         featureFolderDetailModule,
         featureFolderInsertModule,
@@ -98,7 +100,9 @@ internal fun KoinApplication.initKoinModules() {
     )
 }
 
-private val appModule = module {
+private fun appModule(
+    platformName: String,
+) = module {
     factory { Dispatchers.Default }
 
     single(named(AppStateRecoveryQualifier)) {
@@ -125,7 +129,10 @@ private val appModule = module {
         }
     }
     single<AppInfoProvider> {
-        AppInfoProviderImpl()
+        AppInfoProviderImpl(
+            environment = get(),
+            platformName = platformName,
+        )
     }
 }
 

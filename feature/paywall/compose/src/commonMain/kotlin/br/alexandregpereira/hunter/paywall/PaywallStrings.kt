@@ -29,13 +29,17 @@ internal interface PaywallStrings {
     val subscriptionSuccessTitle: String
     val subscriptionSuccessDescription: String
     val buttonContinue: String
+    val termsButton: String
+    val privacyButton: String
+    val termsUrl: String
+    val privacyUrl: String
 }
 
 internal data class PaywallEnUsStrings(
     override val title: String = "Remove ads with Premium",
     override val description: String = "By subscribing to the premium plan, you remove ads and help maintain the project",
     override val subscribeButton: String = "Subscribe",
-    override val restoreButton: String = "Restore subscription",
+    override val restoreButton: String = "Restore",
     override val cancelAnytime: String = "Cancel anytime",
     override val featuresColumnHeader: String = "Features",
     override val freeColumnHeader: String = "Free",
@@ -57,13 +61,17 @@ internal data class PaywallEnUsStrings(
     override val subscriptionSuccessTitle: String = "You are a Premium member now!",
     override val subscriptionSuccessDescription: String = "Thank you for subscribing! You can now enjoy all the features of the app with no ads.",
     override val buttonContinue: String = "Continue",
+    override val termsButton: String = "Terms",
+    override val privacyButton: String = "Privacy",
+    override val termsUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/terms_of_use.html",
+    override val privacyUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/privacy_policy.html",
 ) : PaywallStrings
 
 internal data class PaywallPtBrStrings(
     override val title: String = "Remover anúncios com Premium",
     override val description: String = "Ao assinar o plano premium, você remove os anúncios e ajuda a manter o projeto",
     override val subscribeButton: String = "Assinar",
-    override val restoreButton: String = "Restaurar assinatura",
+    override val restoreButton: String = "Restaurar",
     override val cancelAnytime: String = "Cancele quando quiser",
     override val featuresColumnHeader: String = "Recursos",
     override val freeColumnHeader: String = "Grátis",
@@ -85,6 +93,10 @@ internal data class PaywallPtBrStrings(
     override val subscriptionSuccessTitle: String = "Você é um membro Premium agora!",
     override val subscriptionSuccessDescription: String = "Obrigado por assinar! Agora você pode aproveitar todos os recursos do aplicativo sem anúncios.",
     override val buttonContinue: String = "Continuar",
+    override val termsButton: String = "Termos",
+    override val privacyButton: String = "Privacidade",
+    override val termsUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/terms_of_use_pt_br.html",
+    override val privacyUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/privacy_policy_pt_br.html",
 ) : PaywallStrings
 
 internal fun PaywallStrings(): PaywallStrings = PaywallEnUsStrings()
@@ -93,7 +105,7 @@ internal data class PaywallEsStrings(
     override val title: String = "Eliminar anuncios con Premium",
     override val description: String = "Al suscribirte al plan premium, eliminas los anuncios y ayudas a mantener el proyecto",
     override val subscribeButton: String = "Suscribirse",
-    override val restoreButton: String = "Restaurar suscripción",
+    override val restoreButton: String = "Restaurar",
     override val cancelAnytime: String = "Cancela cuando quieras",
     override val featuresColumnHeader: String = "Características",
     override val freeColumnHeader: String = "Gratis",
@@ -115,6 +127,10 @@ internal data class PaywallEsStrings(
     override val subscriptionSuccessTitle: String = "¡Ahora eres miembro Premium!",
     override val subscriptionSuccessDescription: String = "¡Gracias por suscribirte! Ahora puedes disfrutar de todas las funciones de la aplicación sin anuncios.",
     override val buttonContinue: String = "Continuar",
+    override val termsButton: String = "Términos",
+    override val privacyButton: String = "Privacidad",
+    override val termsUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/terms_of_use_es.html",
+    override val privacyUrl: String = "https://alexandregpereira.github.io/Monster-Compendium/docs/privacy_policy_es.html",
 ) : PaywallStrings
 
 internal fun AppLocalization.getPaywallStrings(): PaywallStrings {

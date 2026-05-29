@@ -131,6 +131,8 @@ class ImportContentUseCaseTest {
 
     private class NoOpAnalytics : Analytics {
         override fun track(eventName: String, params: Map<String, Any?>) {}
+        override fun setUserProperty(name: String, value: Any) {}
+        override fun getDeviceId(): String? = null
         override fun logException(throwable: Throwable) {}
     }
 }

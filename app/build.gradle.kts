@@ -19,28 +19,14 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain {
-        implementation(libs.core.ktx)
-        implementation(libs.appcompat)
-        implementation(libs.material)
-
-        implementation(libs.koin.android)
-
-        implementation(libs.compose.activity)
-
-        implementation(project.dependencies.platform(libs.firebase.bom))
-        implementation(libs.firebase.analytics)
-        implementation(libs.firebase.crashlytics)
-    }
+    androidMain("br.alexandregpereira.hunter.app.lib")
 
     commonMain {
         implementation(project(":core:ads-consent"))
@@ -107,17 +93,6 @@ multiplatform {
     }
 }
 
-val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
-
-tasks.register<UpdateIosVersionTask>("updateIosVersion") {
-    versionName.set(appVersionName)
-    versionCode.set(appVersionCode)
-    iosAppDir.set(rootProject.layout.projectDirectory.dir("iosApp"))
-}
-
-tasks.matching { it.name.contains("embedAndSignAppleFrameworkForXcode") }
-    .configureEach { dependsOn("updateIosVersion") }
-
 // Load local.properties manually to ensure AMPLITUDE_API_KEY is available
 val localProps = Properties()
 val localPropsFile: File = rootProject.file("local.properties")
@@ -145,6 +120,24 @@ fun getEnvVar(prodKey: String, sandboxKey: String = prodKey, homologKey: String 
     }
     return keyValue
 }
+
+val (appVersionCode, appVersionName) = getVersionCodeAndVersionName()
+
+tasks.register<UpdateIosVersionTask>("updateIosVersion") {
+    versionName.set(appVersionName)
+    versionCode.set(appVersionCode)
+    iosAppDir.set(rootProject.layout.projectDirectory.dir("iosApp"))
+    admobAppId.set(
+        getEnvVar(
+            prodKey = "ADMOB_IOS_APP_ID",
+            sandboxKey = "ADMOB_SANDBOX_IOS_APP_ID",
+            fallback = "ca-app-pub-3940256099942544~3347511713",
+        )
+    )
+}
+
+tasks.matching { it.name.contains("embedAndSignAppleFrameworkForXcode") }
+    .configureEach { dependsOn("updateIosVersion") }
 
 tasks.register<GenerateAppConfigTask>("generateAppConfig") {
     val versionNameSuffix = when {
@@ -193,90 +186,7 @@ kotlin {
     }
 }
 
-android {
-    namespace = "br.alexandregpereira.hunter.app"
-    compileSdk = findProperty("compileSdk")?.toString()?.toInt()
-
-    packaging {
-        jniLibs {
-            excludes += "META-INF/licenses/**"
-        }
-        resources {
-            excludes += "**/attach_hotspot_windows.dll"
-            excludes += "META-INF/licenses/**"
-            excludes += "META-INF/AL2.0"
-            excludes += "META-INF/LGPL2.1"
-            excludes += "META-INF/LICENSE**"
-        }
-    }
-
-    defaultConfig {
-        applicationId = "br.alexandregpereira.hunter.app"
-        minSdk = findProperty("minSdk")?.toString()?.toInt()
-        targetSdk = findProperty("targetSdk")?.toString()?.toInt()
-        applicationIdSuffix = when {
-            hasProperty("dev") -> {
-                ".dev"
-            }
-            else -> ""
-        }
-
-        versionCode = appVersionCode
-        versionName = appVersionName
-
-        val admobAppId = getEnvVar(
-            prodKey = "ADMOB_APP_ID",
-            sandboxKey = "ADMOB_SANDBOX_APP_ID",
-            fallback = "ca-app-pub-3940256099942544~3347511713",
-        )
-        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
-
-        testInstrumentationRunner = "br.alexandregpereira.hunter.app.KoinTestRunner"
-    }
-
-    applicationVariants.all {
-        val buildTypeName = buildType.name
-        val version = versionName
-        val prefix = if (hasProperty("dev")) "app-dev" else "app"
-        outputs.all {
-            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl)
-                .outputFileName = "$prefix-$buildTypeName-$version.apk"
-        }
-    }
-
-    signingConfigs {
-        val appKeyPassword = getEnvVar(prodKey = "MONSTER_COMPENDIUM_KEYSTORE_PASSWORD")
-        create("release") {
-            storeFile = file("monster-keystore.jks")
-            storePassword = appKeyPassword
-            keyAlias = "monster"
-            keyPassword = appKeyPassword
-        }
-    }
-
-    buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-    dependencies {
-        debugImplementation(libs.compose.mp.ui.tooling)
-        androidTestImplementation(libs.bundles.instrumentedtest)
-        androidTestImplementation(libs.compose.ui.test)
-        androidTestImplementation(libs.sqldelight.android)
-        androidTestImplementation(libs.multiplatform.settings)
-        androidTestImplementation(libs.multiplatform.settings.test)
-        debugImplementation(libs.compose.ui.test.manifest)
-    }
-}
+composeResources("br.alexandregpereira.hunter.app.ui.resources")
 
 compose {
     desktop {
@@ -310,10 +220,4 @@ compose {
             }
         }
     }
-    resources {
-        publicResClass = false
-        packageOfResClass = "br.alexandregpereira.hunter.app.ui.resources"
-        generateResClass = always
-    }
 }
-

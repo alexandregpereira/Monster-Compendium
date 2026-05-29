@@ -45,10 +45,11 @@ data class Monster(
     val damageResistances: List<Damage>,
     val damageImmunities: List<Damage>,
     val conditionImmunities: List<Condition>,
-    val specialAbilities: List<AbilityDescription>,
+    val specialAbilities: List<Action>,
     val actions: List<Action>,
+    val bonusActions: List<Action>,
     val legendaryActions: List<Action>,
-    val reactions: List<AbilityDescription>,
+    val reactions: List<Action>,
     val spellcastings: List<Spellcasting>,
     val lore: String?,
     val status: MonsterStatus,
@@ -62,6 +63,10 @@ data class Monster(
 
     val challengeRatingFormatted: String
         get() = challengeRatingData.value.getChallengeRatingFormatted()
+
+    val initiativeWithFallback: Int? = stats.initiative ?: abilityScores.firstOrNull {
+        it.type == AbilityScoreType.DEXTERITY
+    }?.modifier
 }
 
 enum class MonsterStatus {

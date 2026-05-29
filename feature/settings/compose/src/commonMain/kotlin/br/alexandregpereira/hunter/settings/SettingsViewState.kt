@@ -31,6 +31,8 @@ internal data class SettingsViewState(
     val advancedSettingsOpened: Boolean = false,
     val settingsOpened: Boolean = false,
     val appearanceSettingsOpened: Boolean = false,
+    val contactUsOpened: Boolean = false,
+    val contactUsInfo: ContactUsInfoState = ContactUsInfoState(),
     val settingsState: SettingsState = SettingsState(),
     val appearanceState: AppearanceSettingsState = AppearanceSettingsState(),
     val strings: SettingsStrings = SettingsEnStrings(),
@@ -58,6 +60,7 @@ internal enum class MenuItemIdState {
     SPELLS,
     MANAGE_MONSTER_CONTENT,
     ADD_MONSTER,
+    CONTACT_US,
 }
 
 internal data class SettingsState(
@@ -68,6 +71,12 @@ internal data class SettingsState(
 internal data class SettingsLanguageState(
     val code: String = "",
     val value: String = "",
+)
+
+internal data class ContactUsInfoState(
+    val appVersion: String = "",
+    val platform: String = "",
+    val deviceId: String? = null,
 )
 
 internal data class AppearanceSettingsState(

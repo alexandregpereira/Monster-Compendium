@@ -19,16 +19,16 @@ package br.alexandregpereira.hunter.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.monster.detail.AbilityDescriptionState
+import br.alexandregpereira.hunter.monster.detail.ActionState
 
 @Composable
 internal fun ReactionBlock(
-    reactions: List<AbilityDescriptionState>,
+    reactions: List<ActionState>,
     modifier: Modifier = Modifier,
     onConditionClicked: (String) -> Unit = {},
 ) = AbilityDescriptionBlock(
     title = strings.reactions,
-    abilityDescriptions = reactions,
+    abilityDescriptions = reactions.map { it.abilityDescription },
     modifier = modifier,
     onConditionClicked = onConditionClicked,
 )

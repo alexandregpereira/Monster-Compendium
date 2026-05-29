@@ -16,14 +16,14 @@
  */
 
 plugins {
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
-    alias(libs.plugins.compose)
+    id("org.jetbrains.compose")
     alias(libs.plugins.compose.compiler)
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.detail")
     commonMain {
         implementation(project(":core:state-holder"))
         implementation(project(":core:ui:state-recovery"))
@@ -49,12 +49,4 @@ multiplatform {
     iosMain()
 }
 
-androidLibrary {
-    namespace = "br.alexandregpereira.hunter.detail"
-}
-
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "br.alexandregpereira.hunter.detail.ui.resources"
-    generateResClass = always
-}
+composeResources("br.alexandregpereira.hunter.detail.ui.resources")

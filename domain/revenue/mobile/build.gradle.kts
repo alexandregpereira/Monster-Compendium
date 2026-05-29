@@ -17,8 +17,7 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
-    kotlin("native.cocoapods")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
@@ -33,31 +32,10 @@ multiplatform {
         implementation(libs.ktor.core)
         implementation(libs.revenuecat.kmp.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.revenue.mobile") {
         implementation(libs.ktor.okhttp)
     }
     iosMain {
         implementation(libs.ktor.darwin)
-    }
-}
-
-kotlin {
-    cocoapods {
-        name = "revenue_mobile"
-        version = "1.0"
-        summary = "Revenue mobile module"
-        homepage = "https://github.com/alexandregpereira/monster-compendium"
-        ios.deploymentTarget = "14.0"
-        pod("PurchasesHybridCommon") {
-            version = "17.46.0"
-        }
-    }
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.revenue.mobile"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }

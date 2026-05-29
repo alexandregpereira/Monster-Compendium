@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.data.monster.remote.model
 
+import br.alexandregpereira.hunter.data.monster.spell.remote.model.SpellUsageDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,7 +28,9 @@ data class ActionDto(
     @SerialName("attack_bonus")
     val attackBonus: Int? = null,
     @SerialName("description")
-    val description: String,
+    val description: String = "",
+    @SerialName("desc")
+    val desc: String? = null,
     @SerialName("name")
     val name: String,
     @SerialName("damage_dices_v2")
@@ -36,6 +39,8 @@ data class ActionDto(
     val savingThrows: List<SavingThrowDto> = emptyList(),
     @SerialName("conditions")
     val conditions: List<ConditionDto> = emptyList(),
+    @SerialName("spells_by_group")
+    val spellsByGroup: List<SpellUsageDto> = emptyList(),
 )
 
 @Serializable

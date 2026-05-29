@@ -36,6 +36,7 @@ interface MonsterDetailStrings {
     val languages: String
     val specialAbilities: String
     val actions: String
+    val bonusActions: String
     val legendaryActions: String
     val attack: String
     val options: String
@@ -71,7 +72,7 @@ interface MonsterDetailStrings {
     val tryAgain: String
     val iGotIt: String
     val dc: String
-
+    val initiative: String
 }
 
 internal data class MonsterDetailEnStrings(
@@ -88,6 +89,7 @@ internal data class MonsterDetailEnStrings(
     override val languages: String = "Languages",
     override val specialAbilities: String = "Special Abilities",
     override val actions: String = "Actions",
+    override val bonusActions: String = "Bonus Actions",
     override val legendaryActions: String = "Legendary Actions",
     override val attack: String = "Attack",
     override val options: String = "Options",
@@ -122,7 +124,8 @@ internal data class MonsterDetailEnStrings(
     override val noInternetConnection: String = "No Internet Connection",
     override val tryAgain: String = "Try Again",
     override val iGotIt: String = "I Got It!",
-    override val dc: String = "DC"
+    override val dc: String = "DC",
+    override val initiative: String = "Initiative",
 ) : MonsterDetailStrings
 
 internal data class MonsterDetailPtStrings(
@@ -139,6 +142,7 @@ internal data class MonsterDetailPtStrings(
     override val languages: String = "Idiomas",
     override val specialAbilities: String = "Habilidades Especiais",
     override val actions: String = "Ações",
+    override val bonusActions: String = "Ações de Bônus",
     override val legendaryActions: String = "Ações Lendárias",
     override val attack: String = "Ataque",
     override val options: String = "Opções",
@@ -173,7 +177,8 @@ internal data class MonsterDetailPtStrings(
     override val noInternetConnection: String = "Sem conexão com a Internet",
     override val tryAgain: String = "Tentar novamente",
     override val iGotIt: String = "Entendi!",
-    override val dc: String = "CD"
+    override val dc: String = "CD",
+    override val initiative: String = "Iniciativa",
 ) : MonsterDetailStrings
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
@@ -192,6 +197,7 @@ internal data class MonsterDetailEsStrings(
     override val languages: String = "Idiomas",
     override val specialAbilities: String = "Habilidades Especiales",
     override val actions: String = "Acciones",
+    override val bonusActions: String = "Acciones de Bonificación",
     override val legendaryActions: String = "Acciones Legendarias",
     override val attack: String = "Ataque",
     override val options: String = "Opciones",
@@ -226,7 +232,8 @@ internal data class MonsterDetailEsStrings(
     override val noInternetConnection: String = "Sin Conexión a Internet",
     override val tryAgain: String = "Reintentar",
     override val iGotIt: String = "Entendido!",
-    override val dc: String = "CD"
+    override val dc: String = "CD",
+    override val initiative: String = "Iniciativa",
 ) : MonsterDetailStrings
 
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {

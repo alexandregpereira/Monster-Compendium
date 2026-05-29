@@ -153,7 +153,7 @@ private fun Spells(
     }
 }
 
-private fun SchoolOfMagic.asState(): SchoolOfMagicState {
+internal fun SchoolOfMagic.asState(): SchoolOfMagicState {
     return when (this) {
         SchoolOfMagic.ABJURATION -> SchoolOfMagicState.ABJURATION
         SchoolOfMagic.CONJURATION -> SchoolOfMagicState.CONJURATION

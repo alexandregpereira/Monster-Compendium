@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ActionEntity (`id` TEXT NOT NULL, `attackBonus` INTEGER, `description` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, PRIMARY KEY(`id`));
+CREATE TABLE IF NOT EXISTS ActionEntity (`id` TEXT NOT NULL, `attackBonus` INTEGER, `description` TEXT NOT NULL, `name` TEXT NOT NULL, `monsterIndex` TEXT NOT NULL, `type` TEXT NOT NULL DEFAULT 'ACTION', PRIMARY KEY(`id`));
 
 CREATE INDEX IF NOT EXISTS index_ActionEntity_monsterIndex ON ActionEntity (monsterIndex);
 
@@ -9,4 +9,7 @@ deleteWithMonsterIndex:
 DELETE FROM ActionEntity WHERE monsterIndex IN ?;
 
 getByMonsterIndexes:
-SELECT * FROM ActionEntity WHERE monsterIndex IN ?;
+SELECT * FROM ActionEntity WHERE monsterIndex IN ? AND type = 'ACTION';
+
+getByMonsterIndexesAndType:
+SELECT * FROM ActionEntity WHERE monsterIndex IN ? AND type = :type;

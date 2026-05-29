@@ -17,11 +17,11 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
 }
 
 multiplatform {
-    androidMain()
+    androidMain("br.alexandregpereira.hunter.monster.content.state")
 
     commonMain {
         implementation(project(":core:analytics"))
@@ -39,12 +39,4 @@ multiplatform {
     }
     jvmMain()
     iosMain()
-}
-
-android {
-    namespace = "br.alexandregpereira.hunter.monster.content.state"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-    }
 }

@@ -28,6 +28,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'hunter'
 include ':app'
+include ':app-android'
 
 include ':core:ads-consent'
 include ':core:analytics'
@@ -86,8 +87,6 @@ include ':feature:folder-preview:compose'
 include ':feature:folder-preview:event'
 include ':feature:folder-preview:state-holder'
 include ':feature:monster-compendium:compose'
-include ':feature:monster-compendium:domain'
-include ':feature:monster-compendium:event'
 include ':feature:monster-compendium:state-holder'
 include ':feature:monster-content-manager:compose'
 include ':feature:monster-content-manager:event'

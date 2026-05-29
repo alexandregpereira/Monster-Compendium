@@ -25,6 +25,7 @@ interface MonsterContentManagerStrings {
     val add: String
     val remove: String
     val totalMonsters: String
+    val totalSpells: String
     val preview: String
     val noInternetConnection: String
     val tryAgain: String
@@ -34,7 +35,8 @@ internal data class MonsterContentManagerEnStrings(
     override val title: String = "Manage Content",
     override val add: String = "Add",
     override val remove: String = "Remove",
-    override val totalMonsters: String = "{0} monsters",
+    override val totalMonsters: String = "{0} creatures",
+    override val totalSpells: String = "{0} spells",
     override val preview: String = "Preview",
     override val noInternetConnection: String = "No internet connection",
     override val tryAgain: String = "Try again"
@@ -44,7 +46,8 @@ internal data class MonsterContentManagerPtStrings(
     override val title: String = "Gerenciar Conteúdo",
     override val add: String = "Adicionar",
     override val remove: String = "Remover",
-    override val totalMonsters: String = "{0} monstros",
+    override val totalMonsters: String = "{0} criaturas",
+    override val totalSpells: String = "{0} magias",
     override val preview: String = "Prévia",
     override val noInternetConnection: String = "Sem conexão com a internet",
     override val tryAgain: String = "Tentar novamente",
@@ -58,7 +61,8 @@ internal data class MonsterContentManagerEsStrings(
     override val title: String = "Gestionar Contenido",
     override val add: String = "Añadir",
     override val remove: String = "Eliminar",
-    override val totalMonsters: String = "{0} monstruos",
+    override val totalMonsters: String = "{0} criaturas",
+    override val totalSpells: String = "{0} magias",
     override val preview: String = "Vista previa",
     override val noInternetConnection: String = "Sin conexión a internet",
     override val tryAgain: String = "Intentar de nuevo",

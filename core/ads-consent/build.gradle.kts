@@ -17,7 +17,8 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
+    kotlin("native.cocoapods")
 }
 
 multiplatform {
@@ -26,7 +27,7 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
-    androidMain {
+    androidMain("br.alexandregpereira.hunter.ads.consent") {
         implementation(libs.play.services.ads)
         implementation(libs.user.messaging.platform.android)
     }
@@ -34,10 +35,17 @@ multiplatform {
     iosMain()
 }
 
-android {
-    namespace = "br.alexandregpereira.hunter.ads.consent"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Ads consent module"
+        homepage = "https://github.com/alexandregpereira/monster-compendium"
+        ios.deploymentTarget = "14.0"
+        pod("GoogleUserMessagingPlatform") {
+            moduleName = "UserMessagingPlatform"
+        }
+        pod("Google-Mobile-Ads-SDK") {
+            moduleName = "GoogleMobileAds"
+        }
     }
 }

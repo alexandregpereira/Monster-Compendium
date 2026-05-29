@@ -12,7 +12,7 @@ internal class JvmAmplitudeAnalytics(
     private val jvmAnalyticsProvider: JvmAnalyticsProvider,
 ) : Analytics {
 
-    private val deviceId: String by lazy { getDeviceIdFromFile() }
+    private val localDeviceId: String by lazy { getDeviceIdFromFile() }
     private val sessionId: Long by lazy { System.currentTimeMillis() }
 
     override fun track(
@@ -20,7 +20,7 @@ internal class JvmAmplitudeAnalytics(
         params: Map<String, Any?>
     ) {
         val userId = null
-        val event = Event(eventName, userId, deviceId)
+        val event = Event(eventName, userId, localDeviceId)
         event.appVersion = jvmAnalyticsProvider.getVersionName()
         event.platform = "Desktop"
         event.osName = System.getProperty("os.name") ?: "unknown"
@@ -37,6 +37,14 @@ internal class JvmAmplitudeAnalytics(
         event.eventProperties = jsonParams
         println("Tracking event -> event name: $eventName. params: $params")
         amplitude.logEvent(event)
+    }
+
+    override fun setUserProperty(name: String, value: Any) {
+        println("setUserProperty -> name: $name. value: $value")
+    }
+
+    override fun getDeviceId(): String {
+        return localDeviceId
     }
 
     override fun logException(throwable: Throwable) {

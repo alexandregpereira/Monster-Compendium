@@ -29,9 +29,10 @@ data class MonsterCompleteEntity(
     val damageResistances: List<DamageResistanceEntity>,
     val damageImmunities: List<DamageImmunityEntity>,
     val conditionImmunities: List<ConditionEntity>,
-    val specialAbilities: List<SpecialAbilityCompleteEntity>,
+    val specialAbilities: List<ActionWithDamageDicesEntity>,
     val actions: List<ActionWithDamageDicesEntity>,
+    val bonusActions: List<ActionWithDamageDicesEntity>,
     val legendaryActions: List<ActionWithDamageDicesEntity>,
-    val reactions: List<ReactionEntity>,
+    val reactions: List<ActionWithDamageDicesEntity>,
     val spellcastings: List<SpellcastingCompleteEntity>,
 )

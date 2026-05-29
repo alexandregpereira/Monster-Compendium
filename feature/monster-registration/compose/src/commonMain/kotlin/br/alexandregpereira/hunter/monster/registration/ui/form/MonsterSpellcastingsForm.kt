@@ -70,6 +70,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
             MonsterSpellsUsageForm(
                 keys = keys,
                 spellsByGroup = spellcasting.spellsByGroup,
+                showDivider = false,
                 onSpellClick = onSpellClick,
                 onChanged = { newSpellsByGroup ->
                     onChanged(newSpellcastings.changeAt(index) {
@@ -85,6 +86,7 @@ internal fun LazyListScope.MonsterSpellcastingsForm(
 internal fun LazyListScope.MonsterSpellsUsageForm(
     keys: Iterator<String>,
     spellsByGroup: List<SpellsByGroupState>,
+    showDivider: Boolean = true,
     onSpellClick: (String) -> Unit = {},
     onChanged: (List<SpellsByGroupState>) -> Unit = {}
 ) {
@@ -92,6 +94,7 @@ internal fun LazyListScope.MonsterSpellsUsageForm(
     FormItems(
         keys = keys,
         items = newSpellsByGroupState,
+        showDivider = showDivider,
         addText = { strings.addSpellGroup },
         removeText = { strings.removeSpellGroup },
         createNew = { SpellsByGroupState() },
@@ -126,6 +129,7 @@ internal fun LazyListScope.MonsterSpellsForm(
 ) = FormItems(
     keys = keys,
     items = spells.toMutableList(),
+    showDivider = false,
     addText = { strings.addSpell },
     removeText = { strings.removeSpell },
     createNew = { SpellPreviewState() },

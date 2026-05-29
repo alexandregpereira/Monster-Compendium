@@ -17,9 +17,13 @@
 
 package br.alexandregpereira.hunter.monster.registration.ui.form
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.ui.alsoAdd
 import br.alexandregpereira.hunter.monster.registration.ui.alsoRemoveAt
 import br.alexandregpereira.hunter.monster.registration.ui.strings
@@ -31,6 +35,7 @@ internal fun <T> LazyListScope.FormItems(
     removeText: @Composable () -> String = { strings.remove },
     keys: Iterator<String>,
     createNew: () -> T,
+    showDivider: Boolean = true,
     onChanged: (List<T>) -> Unit = {},
     content: LazyListScope.(Int, T) -> Unit
 ) {
@@ -51,17 +56,22 @@ internal fun <T> LazyListScope.FormItems(
         content(index, item)
 
         formItem(key = keys.next()) {
-            AddRemoveButtons(
-                addText = addText(),
-                removeText = removeText().takeUnless { index == items.lastIndex }.orEmpty(),
-                onAdd = {
-                    onChanged(items.alsoAdd(index + 1, createNew()))
-                },
-                onRemove = {
-                    onChanged(items.alsoRemoveAt(index + 1))
-                },
-                modifier = Modifier.animateItem(),
-            )
+            Column {
+                if (showDivider) {
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+                }
+                AddRemoveButtons(
+                    addText = addText(),
+                    removeText = removeText().takeUnless { index == items.lastIndex }.orEmpty(),
+                    onAdd = {
+                        onChanged(items.alsoAdd(index + 1, createNew()))
+                    },
+                    onRemove = {
+                        onChanged(items.alsoRemoveAt(index + 1))
+                    },
+                    modifier = Modifier.animateItem(),
+                )
+            }
         }
     }
 }

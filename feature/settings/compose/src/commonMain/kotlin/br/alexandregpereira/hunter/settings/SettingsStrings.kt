@@ -46,6 +46,14 @@ interface SettingsStrings {
     val premiumCardTitle: String
     val premiumCardDescription: String
     val premiumCardButton: String
+    val contactUs: String
+    val contactUsTitle: String
+    val contactUsDescription: String
+    val contact: String
+    val contactAppInfo: String
+    val contactUsButton: String
+    val contactEmailSubjectTitle: String
+    val contactEmailBodyMessage: String
 }
 
 internal data class SettingsEnStrings(
@@ -75,6 +83,14 @@ internal data class SettingsEnStrings(
     override val premiumCardTitle: String = "Compendium Premium",
     override val premiumCardDescription: String = "Remove ads",
     override val premiumCardButton: String = "Check out",
+    override val contactUs: String = "Contact Us",
+    override val contactUsTitle: String = "Contact Us",
+    override val contactUsDescription: String = "Having a problem or want to suggest something? Send us an email with your feedback.",
+    override val contact: String = "Contact: alexandregpereira.dev@gmail.com",
+    override val contactUsButton: String = "Send email",
+    override val contactAppInfo: String = "The app info below will be automatically included to help us investigate.",
+    override val contactEmailSubjectTitle: String = "Monster Compendium Support",
+    override val contactEmailBodyMessage: String = "Write your message below"
 ) : SettingsStrings
 
 internal data class SettingsPtStrings(
@@ -104,6 +120,14 @@ internal data class SettingsPtStrings(
     override val premiumCardTitle: String = "Compêndio Premium",
     override val premiumCardDescription: String = "Remover anúncios",
     override val premiumCardButton: String = "Saiba mais",
+    override val contactUs: String = "Fale Conosco",
+    override val contactUsTitle: String = "Fale Conosco",
+    override val contactUsDescription: String = "Tem um problema ou quer sugerir algo? Envie-nos um e-mail com seu feedback.",
+    override val contact: String = "Contato: alexandregpereira.dev@gmail.com",
+    override val contactAppInfo: String = "As informações do aplicativo abaixo serão incluídas automaticamente para nos ajudar a investigar.",
+    override val contactUsButton: String = "Enviar e-mail",
+    override val contactEmailSubjectTitle: String = "Suporte Monster Compendium",
+    override val contactEmailBodyMessage: String = "Escreva sua mensagem abaixo"
 ) : SettingsStrings
 
 internal data class SettingsEsStrings(
@@ -133,6 +157,14 @@ internal data class SettingsEsStrings(
     override val premiumCardTitle: String = "Compendio Premium",
     override val premiumCardDescription: String = "Eliminar anuncios",
     override val premiumCardButton: String = "Verificar",
+    override val contactUs: String = "Contáctenos",
+    override val contactUsTitle: String = "Contáctenos",
+    override val contactUsDescription: String = "¿Tiene un problema o quiere sugerir algo? Envíenos un correo con sus comentarios.",
+    override val contact: String = "Contacto: alexandregpereira.dev@gmail.com",
+    override val contactAppInfo: String = "La información de la aplicación a continuación se incluirá automáticamente para ayudarnos a investigar.",
+    override val contactUsButton: String = "Enviar correo",
+    override val contactEmailSubjectTitle: String = "Soporte Monster Compendium",
+    override val contactEmailBodyMessage: String = "Escriba su mensaje aquí"
 ) : SettingsStrings
 
 internal fun getSettingsStrings(lang: Language): SettingsStrings {

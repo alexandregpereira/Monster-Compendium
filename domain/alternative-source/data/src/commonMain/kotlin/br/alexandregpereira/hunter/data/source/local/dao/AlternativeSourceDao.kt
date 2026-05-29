@@ -23,7 +23,7 @@ interface AlternativeSourceDao {
 
     suspend fun getAlternativeSources(): List<AlternativeSourceEntity>
 
-    suspend fun getAlternativeSourcesByIsDefault(isDefault: Boolean): List<AlternativeSourceEntity>
+    suspend fun getContentSource(acronym: String): AlternativeSourceEntity?
 
     suspend fun addAlternativeSource(alternativeSource: AlternativeSourceEntity)
 
