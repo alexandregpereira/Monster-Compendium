@@ -18,7 +18,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.kotlin.multiplatform.library")
-    kotlin("native.cocoapods")
 }
 
 multiplatform {
@@ -38,18 +37,5 @@ multiplatform {
     }
     iosMain {
         implementation(libs.ktor.darwin)
-    }
-}
-
-kotlin {
-    cocoapods {
-        name = "revenue_mobile"
-        version = "1.0"
-        summary = "Revenue mobile module"
-        homepage = "https://github.com/alexandregpereira/monster-compendium"
-        ios.deploymentTarget = "14.0"
-        pod("PurchasesHybridCommon") {
-            version = "17.46.0"
-        }
     }
 }
