@@ -19,8 +19,8 @@ env:
   REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
 
 jobs:
-  android-distribution:
-    name: Android Distribution
+  android-build:
+    name: Android Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.5.0
@@ -52,18 +52,6 @@ jobs:
           feature-monster-compendium/build/reports/tests
           data/build/reports/tests
           domain/build/reports/tests
-
-    - name: Upload an APK
-      uses: actions/upload-artifact@v4.6.2
-      with:
-        name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug-*.apk
-
-    - name: Upload an APK metadata JSON
-      uses: actions/upload-artifact@v4.6.2
-      with:
-        name: app-output-metadata-json
-        path: app/build/outputs/apk/debug/output-metadata.json
 
   ios-build:
     name: IOS Build
@@ -102,8 +90,8 @@ jobs:
       - name: Build iOS
         run: xcodebuild build -configuration Debug -workspace ./iosApp/MonsterCompendium.xcworkspace -scheme MonsterCompendium -destination 'generic/platform=iOS Simulator' OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ARCHS=arm64
 
-  macos-desktop-distribution:
-    name: MacOs Desktop Distribution
+  macos-desktop-build:
+    name: MacOs Desktop Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -123,14 +111,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew :app:packageDmg
 
-      - name: Upload Dmg
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-dmg
-          path: app/build/compose/binaries/main/dmg/*.dmg
-
-  linux-desktop-distribution:
-    name: Linux Desktop Distribution
+  linux-desktop-build:
+    name: Linux Desktop Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -156,14 +138,8 @@ jobs:
           name: MonsterCompendium-deb
           path: app/build/compose/binaries/main/deb/*.deb
 
-      - name: Upload Rpm
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-rpm
-          path: app/build/compose/binaries/main/rpm/*.rpm
-
-  windows-desktop-distribution:
-    name: Windows Desktop Distribution
+  windows-desktop-build:
+    name: Windows Desktop Build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.5.0
@@ -182,12 +158,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew :app:packageMsi
-
-      - name: Upload Msi
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: MonsterCompendium-msi
-          path: app/build/compose/binaries/main/msi/*.msi
 
   firebase-distribution:
     name: Firebase App Distribution
@@ -213,7 +183,7 @@ jobs:
 
       - name: Get Dev APK path
         id: dev-apk-path
-        run: echo "path=$(find app/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
+        run: echo "path=$(find app-android/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
