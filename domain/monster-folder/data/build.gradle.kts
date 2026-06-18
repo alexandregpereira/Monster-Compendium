@@ -22,6 +22,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster:data"))
         implementation(project(":domain:monster-folder:core"))
         implementation(project(":domain:settings:core"))

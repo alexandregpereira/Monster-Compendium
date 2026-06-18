@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderType
+import br.alexandregpereira.hunter.domain.model.getChallengeRatingFormatted
 
 internal fun List<MonsterFolderCompleteEntity>.asDomain(
     monsterImageContentScale: MonsterPreviewFolderImageContentScale
@@ -62,14 +63,5 @@ internal fun List<MonsterEntity>.asDomainMonsterPreviewFolderEntity(
                 imageContentScale = imageContentScale,
             )
         }
-    }
-}
-
-private fun Float.getChallengeRatingFormatted(): String {
-    return if (this < 1) {
-        val value = 1 / this
-        "1/${value.toInt()}"
-    } else {
-        this.toInt().toString()
     }
 }
