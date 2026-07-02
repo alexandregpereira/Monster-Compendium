@@ -19,14 +19,11 @@ package br.alexandregpereira.hunter.folder.detail
 
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
-import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResult
-import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResultListener
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal class FolderDetailEventManager : FolderDetailEventDispatcher,
-    FolderDetailResultListener {
+internal class FolderDetailEventManager : FolderDetailEventDispatcher {
 
     private val _events: MutableSharedFlow<FolderDetailEvent> = MutableSharedFlow(
         extraBufferCapacity = 1,
@@ -35,18 +32,7 @@ internal class FolderDetailEventManager : FolderDetailEventDispatcher,
 
     val events: Flow<FolderDetailEvent> = _events
 
-    private val _result: MutableSharedFlow<FolderDetailResult> = MutableSharedFlow(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
-    override val result: Flow<FolderDetailResult> = _result
-
     override fun dispatchEvent(event: FolderDetailEvent) {
         _events.tryEmit(event)
-    }
-
-    fun dispatchResult(result: FolderDetailResult) {
-        _result.tryEmit(result)
     }
 }

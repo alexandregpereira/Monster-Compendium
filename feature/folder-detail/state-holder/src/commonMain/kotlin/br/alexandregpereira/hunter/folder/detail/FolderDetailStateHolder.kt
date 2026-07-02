@@ -18,12 +18,16 @@
 package br.alexandregpereira.hunter.folder.detail
 
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
-import br.alexandregpereira.hunter.event.folder.detail.FolderDetailResult.OnVisibilityChanges
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
+import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -32,20 +36,28 @@ import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class FolderDetailStateHolder internal constructor(
     private val stateRecovery: StateRecovery,
     private val getMonstersByFolder: GetMonstersByFolderUseCase,
+    private val removeMonstersFromFolder: RemoveMonstersFromFolderUseCase,
     private val folderDetailEventManager: FolderDetailEventManager,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val folderInsertResultListener: FolderInsertResultListener,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderDetailAnalytics,
+    private val appLocalization: AppLocalization,
+    private val folderListEventDispatcher: EventDispatcher<FolderListEvent>
 ) : UiModel<FolderDetailState>(stateRecovery.getState()) {
+
+    private val strings: FolderDetailStrings
+        get() = getFolderDetailStrings(appLocalization.getLanguage())
 
     init {
         observeEvents()
@@ -56,6 +68,10 @@ class FolderDetailStateHolder internal constructor(
     }
 
     fun onItemClick(index: String) {
+        if (state.value.itemSelectionEnabled) {
+            onItemLongClick(index)
+            return
+        }
         analytics.trackItemClicked(index)
         monsterEventDispatcher.dispatchEvent(
             Show(
@@ -67,13 +83,64 @@ class FolderDetailStateHolder internal constructor(
 
     fun onItemLongClick(index: String) {
         analytics.trackItemLongClicked(index)
-        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
+        setState {
+            val newSelection = selectedMonsterIndexes.toMutableSet().also {
+                if (!it.add(index)) it.remove(index)
+            }
+            val isOpen = newSelection.isNotEmpty()
+            val count = if (isOpen) newSelection.size else itemSelectionCount
+            copy(
+                selectedMonsterIndexes = newSelection,
+                isItemSelectionOpen = isOpen,
+                itemSelectionCount = count,
+                strings = this@FolderDetailStateHolder.strings,
+            )
+        }
+    }
+
+    fun onItemSelectionClose() {
+        analytics.trackItemSelectionClose()
+        setState {
+            copy(
+                selectedMonsterIndexes = emptySet(),
+                isItemSelectionOpen = false,
+            )
+        }
+    }
+
+    fun onItemSelectionDeleteClick() {
+        analytics.trackItemSelectionDeleteClick()
+        val folderName = state.value.folderName
+        flowOf(state.value.selectedMonsterIndexes.toList())
+            .map { indexes ->
+                removeMonstersFromFolder(folderName, indexes)
+            }
+            .flowOn(dispatcher)
+            .onEach { monsters ->
+                onItemSelectionClose()
+                if (monsters.isEmpty()) {
+                    close()
+                } else {
+                    setMonsters(monsters, folderName)
+                }
+                folderListEventDispatcher.dispatchEvent(FolderListEvent.OnFolderChanges)
+            }
+            .catch {
+                analytics.logException(it)
+            }
+            .launchIn(scope)
+    }
+
+    fun onItemSelectionAddToPreviewClick() {
+        analytics.trackItemSelectionAddToPreviewClick()
+        val indexes = state.value.selectedMonsterIndexes.toList()
+        onItemSelectionClose()
+        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(indexes))
     }
 
     fun onClose() {
         analytics.trackClose()
-        setState { copy(isOpen = false).saveState(stateRecovery) }
-        folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = false))
+        close()
     }
 
     fun onScrollChanges(firstVisibleItemIndex: Int, firstVisibleItemScrollOffset: Int) {
@@ -93,12 +160,23 @@ class FolderDetailStateHolder internal constructor(
             }
             .onEach { monsters ->
                 analytics.trackMonstersLoaded(monsters)
-                setState {
-                    copy(monsters = monsters, folderName = folderName)
-                        .saveState(stateRecovery)
-                }
+                setMonsters(monsters = monsters, folderName = folderName)
             }
             .launchIn(scope)
+    }
+
+    private fun close() {
+        setState { copy(isOpen = false).saveState(stateRecovery) }
+    }
+
+    private fun setMonsters(
+        monsters: List<MonsterPreviewFolder>,
+        folderName: String,
+    ) {
+        setState {
+            copy(monsters = monsters, folderName = folderName)
+                .saveState(stateRecovery)
+        }
     }
 
     private fun observeEvents() {
@@ -106,8 +184,14 @@ class FolderDetailStateHolder internal constructor(
             when (event) {
                 is FolderDetailEvent.Show -> {
                     analytics.trackShow()
-                    setState { copy(isOpen = true).saveState(stateRecovery) }
-                    folderDetailEventManager.dispatchResult(OnVisibilityChanges(isShowing = true))
+                    setState {
+                        copy(
+                            isOpen = true,
+                            selectedMonsterIndexes = emptySet(),
+                            isItemSelectionOpen = false,
+                            itemSelectionCount = 0,
+                        ).saveState(stateRecovery)
+                    }
                     loadMonsters(event.folderName)
                 }
             }
