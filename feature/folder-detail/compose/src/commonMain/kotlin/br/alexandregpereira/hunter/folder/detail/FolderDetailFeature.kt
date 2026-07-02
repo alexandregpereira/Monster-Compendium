@@ -49,22 +49,34 @@ fun FolderDetailFeature(
     FolderDetailScreen(
         isOpen = state.isOpen,
         folderName = state.folderName,
-        monsters = remember(state.monsters) { state.monsters.asState() },
+        monsters = remember(state.monsters, state.selectedMonsterIndexes) {
+            state.monsters.asState(state.selectedMonsterIndexes)
+        },
         initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex },
         initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset },
         contentPadding = contentPadding,
+        isItemSelectionOpen = state.isItemSelectionOpen,
+        itemSelectionText = state.strings.itemSelected(state.itemSelectionCount),
+        deleteText = state.strings.delete,
+        addToPreviewText = state.strings.addToPreview,
         onItemCLick = viewModel::onItemClick,
         onItemLongCLick = viewModel::onItemLongClick,
         onClose = viewModel::onClose,
         onScrollChanges = viewModel::onScrollChanges,
+        onItemSelectionClose = viewModel::onItemSelectionClose,
+        onItemSelectionDeleteClick = viewModel::onItemSelectionDeleteClick,
+        onItemSelectionAddToPreviewClick = viewModel::onItemSelectionAddToPreviewClick,
     )
 }
 
-private fun List<MonsterPreviewFolder>.asState(): List<MonsterCardState> = map {
+private fun List<MonsterPreviewFolder>.asState(
+    selectedIndexes: Set<String> = emptySet(),
+): List<MonsterCardState> = map {
     it.run {
         MonsterCardState(
             index = index,
             name = name,
+            selected = selectedIndexes.contains(index),
             imageState = MonsterImageState(
                 url = imageUrl,
                 type = MonsterTypeState.valueOf(type.name),

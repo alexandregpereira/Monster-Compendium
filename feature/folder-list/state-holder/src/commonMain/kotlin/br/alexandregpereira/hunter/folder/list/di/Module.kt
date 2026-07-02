@@ -17,17 +17,15 @@
 
 package br.alexandregpereira.hunter.folder.list.di
 
-import br.alexandregpereira.hunter.event.folder.list.FolderListResultListener
+import br.alexandregpereira.hunter.event.folder.list.FolderListEventDispatcher
 import br.alexandregpereira.hunter.folder.list.FolderListAnalytics
-import br.alexandregpereira.hunter.folder.list.FolderListEventManager
 import br.alexandregpereira.hunter.folder.list.FolderListStateHolder
 import br.alexandregpereira.hunter.ui.StateRecovery
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val folderListModule = module {
-    single { FolderListEventManager() }
-    single<FolderListResultListener> { get<FolderListEventManager>() }
+    single { FolderListEventDispatcher() }
 
     single(named(FolderListStateRecoveryQualifier)) {
         StateRecovery()
@@ -39,7 +37,7 @@ val folderListModule = module {
             removeMonsterFolders = get(),
             folderInsertResultListener = get(),
             folderDetailEventDispatcher = get(),
-            folderListEventManager = get(),
+            folderListEventListener = get<FolderListEventDispatcher>(),
             dispatcher = get(),
             monsterEventDispatcher = get(),
             analytics = FolderListAnalytics(get()),

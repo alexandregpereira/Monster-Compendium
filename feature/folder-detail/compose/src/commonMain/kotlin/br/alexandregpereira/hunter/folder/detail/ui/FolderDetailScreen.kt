@@ -17,10 +17,13 @@
 
 package br.alexandregpereira.hunter.folder.detail.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
@@ -37,10 +40,17 @@ internal fun FolderDetailScreen(
     initialFirstVisibleItemIndex: Int = 0,
     initialFirstVisibleItemScrollOffset: Int = 0,
     contentPadding: PaddingValues = PaddingValues(),
+    isItemSelectionOpen: Boolean = false,
+    itemSelectionText: String = "",
+    deleteText: String = "",
+    addToPreviewText: String = "",
     onItemCLick: (index: String) -> Unit = {},
     onItemLongCLick: (index: String) -> Unit = {},
     onClose: () -> Unit = {},
     onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
+    onItemSelectionClose: () -> Unit = {},
+    onItemSelectionDeleteClick: () -> Unit = {},
+    onItemSelectionAddToPreviewClick: () -> Unit = {},
 ) = AppFullScreen(
     isOpen = isOpen,
     contentPaddingValues = contentPadding,
@@ -65,14 +75,28 @@ internal fun FolderDetailScreen(
         },
         onScrollChanges = onScrollChanges,
     )
-    MonsterCompendium(
-        items = items,
-        listState = listState,
-        animateItems = true,
-        contentPadding = contentPadding + PaddingValues(top = 24.dp),
-        onItemCLick = onItemCLick,
-        onItemLongCLick = onItemLongCLick
-    )
+    Box(Modifier.fillMaxSize()) {
+        val extraBottomPadding = if (isItemSelectionOpen) 200.dp else 0.dp
+        MonsterCompendium(
+            items = items,
+            listState = listState,
+            animateItems = true,
+            contentPadding = contentPadding + PaddingValues(top = 24.dp, bottom = extraBottomPadding),
+            onItemCLick = onItemCLick,
+            onItemLongCLick = onItemLongCLick
+        )
+
+        ItemSelection(
+            itemSelectionText = itemSelectionText,
+            deleteText = deleteText,
+            addToPreviewText = addToPreviewText,
+            contentBottomPadding = contentPadding.calculateBottomPadding(),
+            isOpen = isItemSelectionOpen,
+            onClose = onItemSelectionClose,
+            onDeleteClick = onItemSelectionDeleteClick,
+            onAddToPreviewClick = onItemSelectionAddToPreviewClick,
+        )
+    }
 }
 
 @Composable

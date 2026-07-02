@@ -46,6 +46,18 @@ internal class FolderDetailAnalytics(
         )
     }
 
+    fun trackItemSelectionClose() {
+        analytics.track(eventName = "Folder Detail - item selection close")
+    }
+
+    fun trackItemSelectionDeleteClick() {
+        analytics.track(eventName = "Folder Detail - item selection delete click")
+    }
+
+    fun trackItemSelectionAddToPreviewClick() {
+        analytics.track(eventName = "Folder Detail - item selection add to preview click")
+    }
+
     fun trackClose() {
         analytics.track(
             eventName = "Folder Detail - close",

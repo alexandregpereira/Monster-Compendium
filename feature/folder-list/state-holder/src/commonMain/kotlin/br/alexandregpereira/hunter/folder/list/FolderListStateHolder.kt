@@ -24,7 +24,8 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent.Show
 import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResultListener
-import br.alexandregpereira.hunter.event.folder.list.FolderListResult.OnItemSelectionVisibilityChanges
+import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
@@ -47,7 +48,7 @@ class FolderListStateHolder internal constructor(
     private val removeMonsterFolders: RemoveMonsterFoldersUseCase,
     private val folderInsertResultListener: FolderInsertResultListener,
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
-    private val folderListEventManager: FolderListEventManager,
+    private val folderListEventListener: EventListener<FolderListEvent>,
     private val dispatcher: CoroutineDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val analytics: FolderListAnalytics,
@@ -85,7 +86,6 @@ class FolderListStateHolder internal constructor(
                 isItemSelectionOpen = false,
             ).saveState(stateRecovery)
         }
-        folderListEventManager.dispatchResult(OnItemSelectionVisibilityChanges(isShowing = false))
     }
 
     fun onItemSelectionDeleteClick() {
@@ -146,9 +146,6 @@ class FolderListStateHolder internal constructor(
                 itemSelectionCount = itemSelectionCount,
             ).saveState(stateRecovery)
         }
-        folderListEventManager.dispatchResult(
-            OnItemSelectionVisibilityChanges(isShowing = state.value.isItemSelectionOpen)
-        )
     }
 
     private fun loadMonsterFolders() {
@@ -184,6 +181,12 @@ class FolderListStateHolder internal constructor(
 
     private fun observeEvents() {
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            loadMonsterFolders()
+        }.launchIn(scope)
+
+        folderListEventListener.events.filter { event ->
+            event is FolderListEvent.OnFolderChanges
+        }.onEach {
             loadMonsterFolders()
         }.launchIn(scope)
     }

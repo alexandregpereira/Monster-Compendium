@@ -17,12 +17,15 @@
 
 package br.alexandregpereira.hunter.ui.compendium.monster
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.Compendium
@@ -74,6 +77,10 @@ fun MonsterCompendium(
             val onLongClick: (() -> Unit)? = if (onItemLongCLick != null) {
                 { onItemLongCLick(monsterCardState.index) }
             } else null
+            val scale by animateFloatAsState(
+                targetValue = if (monsterCardState.selected) 0.8f else 1f,
+                label = "animateSelected",
+            )
             MonsterCard(
                 name = monsterCardState.name,
                 url = monsterCardState.imageState.url,
@@ -84,6 +91,10 @@ fun MonsterCompendium(
                 isHorizontal = enableHorizontalImage && monsterCardState.imageState.isHorizontal,
                 challengeRating = monsterCardState.imageState.challengeRating,
                 contentScale = monsterCardState.imageState.contentScale,
+                modifier = Modifier.graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                },
                 onCLick = { onItemCLick(monsterCardState.index) },
                 onLongCLick = onLongClick,
             )

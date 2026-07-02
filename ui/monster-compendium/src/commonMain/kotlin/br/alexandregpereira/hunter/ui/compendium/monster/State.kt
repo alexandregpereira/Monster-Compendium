@@ -39,6 +39,7 @@ data class MonsterCardState(
     val index: String,
     val name: String,
     val imageState: MonsterImageState,
+    val selected: Boolean = false,
 )
 
 data class MonsterImageState(

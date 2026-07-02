@@ -25,4 +25,10 @@ data class FolderDetailState(
     val monsters: List<MonsterPreviewFolder> = emptyList(),
     val firstVisibleItemIndex: Int = 0,
     val firstVisibleItemScrollOffset: Int = 0,
-)
+    val isItemSelectionOpen: Boolean = false,
+    val itemSelectionCount: Int = 0,
+    val selectedMonsterIndexes: Set<String> = emptySet(),
+    val strings: FolderDetailStrings = FolderDetailEmptyStrings(),
+) {
+    internal val itemSelectionEnabled get() = isItemSelectionOpen
+}

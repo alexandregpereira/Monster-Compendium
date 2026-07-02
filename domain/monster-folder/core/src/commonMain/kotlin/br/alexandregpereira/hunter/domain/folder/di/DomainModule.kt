@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolders
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonsterFoldersUseCase
+import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromTemporaryFolderUseCase
 import org.koin.dsl.module
 
@@ -38,6 +39,7 @@ val monsterFolderDomainModule = module {
     factory { GetMonstersByFolderUseCase(get()) }
     factory { GetMonstersByTemporaryFolderUseCase(get()) }
     factory { RemoveMonsterFoldersUseCase(get()) }
+    factory { RemoveMonstersFromFolderUseCase(get(), get(), get()) }
     factory { RemoveMonstersFromTemporaryFolderUseCase(get()) }
     factory { GetMonstersByFolders(get()) }
 }
