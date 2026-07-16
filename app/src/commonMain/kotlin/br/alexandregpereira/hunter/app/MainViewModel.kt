@@ -26,7 +26,7 @@ import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
-import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
+import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
@@ -43,7 +43,7 @@ class MainViewModel(
     private val analytics: Analytics,
     private val revenueSession: RevenueSession,
     private val adsConsentManager: AdsConsentManager,
-    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val isPremium: IsPremium,
 ) : UiModel<MainViewState>(MainViewState()) {
 
     init {
@@ -77,10 +77,10 @@ class MainViewModel(
 
     private fun checkAdsConsent() {
         flow {
-            emit(isSessionUsageLimitReached())
+            emit(isPremium())
         }.flowOn(Dispatchers.Default)
-            .onEach { isLimitReached ->
-                if (isLimitReached) {
+            .onEach { isPremium ->
+                if (isPremium.not()) {
                     adsConsentManager.showConsentFormIfRequired()
                 } else {
                     adsConsentManager.loadConsentInfo()

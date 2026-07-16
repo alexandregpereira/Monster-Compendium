@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val adsFeatureModule = module {
     factory {
         AdsStateHolder(
-            isSessionUsageLimitReached = get(),
+            isPremium = get(),
             paywallResultListener = get<PaywallResultDispatcher>(),
             analytics = get(),
         )

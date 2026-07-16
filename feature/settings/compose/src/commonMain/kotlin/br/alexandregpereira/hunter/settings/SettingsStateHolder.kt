@@ -39,7 +39,7 @@ import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistratio
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallEvent
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
-import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
+import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
@@ -82,7 +82,7 @@ internal class SettingsStateHolder(
     private val getAppearanceSettings: GetAppearanceSettingsFromMonsters,
     private val applyAppearanceSettings: ApplyAppearanceSettings,
     private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
-    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val isPremium: IsPremium,
     private val paywallResultListener: EventListener<PaywallResult>,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
@@ -325,11 +325,11 @@ internal class SettingsStateHolder(
                 val imageBaseUrlDeferred = async { getMonsterImageJsonUrl().single() }
                 val alternativeSourceBaseUrlDeferred =
                     async { getAlternativeSourceJsonUrl().single() }
-                val isSessionUsageLimitReachedDeferred = async { isSessionUsageLimitReached() }
+                val isPremiumDeferred = async { isPremium() }
                 val newState2 = newState.copy(
                     imageBaseUrl = imageBaseUrlDeferred.await(),
                     alternativeSourceBaseUrl = alternativeSourceBaseUrlDeferred.await(),
-                    showPremium = isSessionUsageLimitReachedDeferred.await(),
+                    showPremium = isPremiumDeferred.await().not(),
                 )
                 emit(1 to newState2)
             }
