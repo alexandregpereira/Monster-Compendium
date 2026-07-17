@@ -117,7 +117,7 @@ private fun appModule(
             analytics = get(),
             revenueSession = get(),
             adsConsentManager = get(),
-            isSessionUsageLimitReached = get(),
+            isPremium = get(),
         )
     }
 

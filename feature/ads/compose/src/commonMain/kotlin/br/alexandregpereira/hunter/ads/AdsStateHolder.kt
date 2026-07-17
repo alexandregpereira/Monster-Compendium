@@ -3,7 +3,7 @@ package br.alexandregpereira.hunter.ads
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
-import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
+import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 internal class AdsStateHolder(
-    private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
+    private val isPremium: IsPremium,
     private val paywallResultListener: EventListener<PaywallResult>,
     private val analytics: Analytics,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
@@ -26,13 +26,13 @@ internal class AdsStateHolder(
 
     fun checkUsageLimit(trackBannerView: Boolean = false) {
         flow {
-            emit(isSessionUsageLimitReached())
+            emit(isPremium())
         }.flowOn(dispatcher)
-            .onEach { isLimitReached ->
-                if (isLimitReached && trackBannerView) {
+            .onEach { isPremium ->
+                if (isPremium.not() && trackBannerView) {
                     analytics.track(eventName = "Ads - banner viewed")
                 }
-                setState { copy(isVisible = isLimitReached) }
+                setState { copy(isVisible = isPremium.not()) }
             }
             .launchIn(scope)
     }
