@@ -34,6 +34,8 @@ import platform.Foundation.NSError
 import platform.UIKit.UIApplication
 import platform.UIKit.UISceneActivationStateForegroundActive
 import platform.UIKit.UIWindowScene
+import platform.darwin.dispatch_async
+import platform.darwin.dispatch_get_main_queue
 
 @OptIn(ExperimentalForeignApi::class)
 internal class IosAdsConsentManager(
@@ -46,9 +48,17 @@ internal class IosAdsConsentManager(
     private val _canRequestAds = MutableStateFlow(false)
     override val canRequestAds: StateFlow<Boolean> = _canRequestAds.asStateFlow()
 
-    override fun initialize() {
-        GADMobileAds.sharedInstance().startWithCompletionHandler(null)
-    }
+    private var adsSdkStarted = false
+
+    // Both onStart and onResume trigger a consent check, and the App Tracking Transparency alert
+    // itself causes a resign/become active cycle that triggers another one. Without this guard the
+    // UMP form and the ATT prompt end up presented at the same time.
+    private var consentRequestInProgress = false
+
+    // The Google Mobile Ads SDK must not start before the user answers the App Tracking
+    // Transparency prompt, otherwise it loads ad web content and sets tracking cookies while the
+    // authorization status is still undetermined. It is started in finishConsent() instead.
+    override fun initialize() = Unit
 
     override fun showConsentFormIfRequired() {
         requestConsent(shouldShowConsentForm = true)
@@ -59,6 +69,8 @@ internal class IosAdsConsentManager(
     }
 
     private fun requestConsent(shouldShowConsentForm: Boolean) {
+        if (consentRequestInProgress) return
+
         val scene = UIApplication.sharedApplication.connectedScenes
             .filterIsInstance<UIWindowScene>()
             .firstOrNull { it.activationState == UISceneActivationStateForegroundActive }
@@ -70,6 +82,7 @@ internal class IosAdsConsentManager(
             return
         }
 
+        consentRequestInProgress = true
         val params = UMPRequestParameters()
         debugHashedId?.let { hashedId ->
             val debugSettings = UMPDebugSettings()
@@ -81,7 +94,9 @@ internal class IosAdsConsentManager(
             if (error != null) {
                 analytics.logException(Exception(error.localizedDescription))
                 if (shouldShowConsentForm) {
-                    _canRequestAds.value = consentInformation.canRequestAds
+                    onConsentResolved()
+                } else {
+                    publishConsentState()
                 }
                 return@requestConsentInfoUpdateWithParameters
             }
@@ -89,21 +104,47 @@ internal class IosAdsConsentManager(
                 UMPConsentForm.loadAndPresentIfRequiredFromViewController(
                     rootViewController
                 ) { _: NSError? ->
-                    requestAttIfNeeded()
+                    onConsentResolved()
                 }
+            } else {
+                // Ads are not going to be shown, so there is no reason to ask for tracking
+                // authorization or to start the ads SDK.
+                publishConsentState()
             }
         }
     }
 
-    private fun requestAttIfNeeded() {
-        if (ATTrackingManager.trackingAuthorizationStatus ==
+    private fun onConsentResolved() {
+        if (ATTrackingManager.trackingAuthorizationStatus !=
             ATTrackingManagerAuthorizationStatusNotDetermined
         ) {
-            ATTrackingManager.requestTrackingAuthorizationWithCompletionHandler { _ ->
-                _canRequestAds.value = consentInformation.canRequestAds
-            }
-        } else {
-            _canRequestAds.value = consentInformation.canRequestAds
+            finishConsent()
+            return
         }
+        // Give the consent form time to finish dismissing. The ATT alert only presents when no
+        // other modal owns the window, so requesting it too early can make it never appear.
+        dispatch_async(dispatch_get_main_queue()) {
+            ATTrackingManager.requestTrackingAuthorizationWithCompletionHandler { _ ->
+                finishConsent()
+            }
+        }
+    }
+
+    private fun finishConsent() {
+        if (consentInformation.canRequestAds) {
+            startAdsSdkIfNeeded()
+        }
+        publishConsentState()
+    }
+
+    private fun publishConsentState() {
+        consentRequestInProgress = false
+        _canRequestAds.value = consentInformation.canRequestAds
+    }
+
+    private fun startAdsSdkIfNeeded() {
+        if (adsSdkStarted) return
+        adsSdkStarted = true
+        GADMobileAds.sharedInstance().startWithCompletionHandler(null)
     }
 }
