@@ -1,0 +1,2 @@
+/* Shown in the App Tracking Transparency system prompt. */
+"NSUserTrackingUsageDescription" = "This identifier will be used to deliver personalized ads to you.";

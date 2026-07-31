@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		82CB83D0D7B909A1A552AC22 /* Pods_MonsterCompendium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FF0B9FED5371FF926A9930 /* Pods_MonsterCompendium.framework */; };
 		C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */; };
+		C1A7700429A00001002F517C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1A7700029A00001002F517C /* InfoPlist.strings */; };
 		C1BC0E8329847A84002F517C /* MonsterCompendiumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC0E8229847A84002F517C /* MonsterCompendiumApp.swift */; };
 		C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8629847A85002F517C /* Assets.xcassets */; };
 		C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BC0E8929847A85002F517C /* Preview Assets.xcassets */; };
@@ -43,6 +44,9 @@
 		C1BC0E8F29847A85002F517C /* MonsterCompendiumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonsterCompendiumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1BC0E9929847A85002F517C /* MonsterCompendiumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonsterCompendiumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F8CDFA2F84340800B4A20A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1A7700129A00001002F517C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C1A7700229A00001002F517C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C1A7700329A00001002F517C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 				C1BC0E8829847A85002F517C /* Preview Content */,
 				C1F8CDFA2F84340800B4A20A /* Info.plist */,
 				C193C3BF2F8B03EF00E9D21E /* GoogleService-Info.plist */,
+				C1A7700029A00001002F517C /* InfoPlist.strings */,
 			);
 			path = MonsterCompendium;
 			sourceTree = "<group>";
@@ -129,6 +134,19 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXVariantGroup section */
+		C1A7700029A00001002F517C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1A7700129A00001002F517C /* en */,
+				C1A7700229A00001002F517C /* pt-BR */,
+				C1A7700329A00001002F517C /* es */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXNativeTarget section */
 		C1BC0E7E29847A84002F517C /* MonsterCompendium */ = {
@@ -219,6 +237,7 @@
 			knownRegions = (
 				en,
 				"pt-BR",
+				es,
 				Base,
 			);
 			mainGroup = C1BC0E7629847A83002F517C;
@@ -241,6 +260,7 @@
 				C1BC0E8A29847A85002F517C /* Preview Assets.xcassets in Resources */,
 				C1BC0E8729847A85002F517C /* Assets.xcassets in Resources */,
 				C193C3C02F8B03EF00E9D21E /* GoogleService-Info.plist in Resources */,
+				C1A7700429A00001002F517C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
