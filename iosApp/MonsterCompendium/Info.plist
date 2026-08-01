@@ -50,5 +50,9 @@
     <string>$(GAD_APPLICATION_IDENTIFIER)</string>
     <key>NSUserTrackingUsageDescription</key>
     <string>This identifier will be used to deliver personalized ads to you.</string>
+    <!-- Firebase Analytics must not send ad personalization signals to Google Ads,
+         since that is advertising data collected outside the ATT authorization. -->
+    <key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key>
+    <false/>
 </dict>
 </plist>
