@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import platform.AppTrackingTransparency.ATTrackingManager
+import platform.AppTrackingTransparency.ATTrackingManagerAuthorizationStatusAuthorized
 import platform.AppTrackingTransparency.ATTrackingManagerAuthorizationStatusNotDetermined
 import platform.Foundation.NSError
 import platform.UIKit.UIApplication
@@ -131,10 +132,23 @@ internal class IosAdsConsentManager(
     }
 
     private fun finishConsent() {
+        applyPublisherFirstPartyIdSetting()
         if (consentInformation.canRequestAds) {
             startAdsSdkIfNeeded()
         }
         publishConsentState()
+    }
+
+    /**
+     * The Google Mobile Ads SDK publisher first-party ID is enabled by default and persists across
+     * app sessions, which means it keeps identifying the user through ad request cookies even after
+     * tracking is denied. It has to be reapplied on every launch, before the SDK starts.
+     */
+    private fun applyPublisherFirstPartyIdSetting() {
+        val trackingAuthorized = ATTrackingManager.trackingAuthorizationStatus ==
+            ATTrackingManagerAuthorizationStatusAuthorized
+        GADMobileAds.sharedInstance().requestConfiguration
+            .setPublisherFirstPartyIDEnabled(trackingAuthorized)
     }
 
     private fun publishConsentState() {
