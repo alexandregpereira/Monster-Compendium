@@ -20,25 +20,14 @@ package br.alexandregpereira.hunter.data.source.remote
 import br.alexandregpereira.hunter.data.source.remote.mapper.toDomain
 import br.alexandregpereira.hunter.domain.source.AlternativeSourceRemoteRepository
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 internal class AlternativeSourceRemoteRepositoryImpl(
     private val remoteDataSource: AlternativeSourceRemoteDataSource,
-    private val featureFlagProvider: FeatureFlagProvider,
 ) : AlternativeSourceRemoteRepository {
 
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> = flow {
-        // Fails open: hiding content when the flag cannot be resolved is worse than showing it all.
-        if (featureFlagProvider.isFeatureEnabled(
-                feature = "alternative-sources-complete",
-                defaultValue = true,
-            )
-        ) {
-            emit(remoteDataSource.getAlternativeSources(lang).toDomain())
-        } else {
-            emit(remoteDataSource.getBasicAlternativeSources(lang).toDomain())
-        }
+        emit(remoteDataSource.getAlternativeSources(lang).toDomain())
     }
 }

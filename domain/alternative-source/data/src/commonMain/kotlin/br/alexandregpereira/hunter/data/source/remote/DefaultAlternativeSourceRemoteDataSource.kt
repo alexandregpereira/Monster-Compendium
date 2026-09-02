@@ -33,10 +33,4 @@ internal class DefaultAlternativeSourceRemoteDataSource(
             client.get(urlString = "$lang/content-sources.json").bodyAsText()
         )
     }
-
-    override suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto> {
-        return json.decodeFromString(
-            client.get(urlString = "$lang/content-sources-basic.json").bodyAsText()
-        )
-    }
 }

@@ -53,10 +53,7 @@ val alternativeSourceDataModule = module {
     }
     factory<AlternativeSourceLocalRepository> { AlternativeSourceLocalRepositoryImpl(get()) }
     factory<AlternativeSourceRemoteRepository> {
-        AlternativeSourceRemoteRepositoryImpl(
-            remoteDataSource = get(),
-            featureFlagProvider = get(),
-        )
+        AlternativeSourceRemoteRepositoryImpl(remoteDataSource = get())
     }
     factory<AlternativeSourceSettingsRepository> { AlternativeSourceSettingsRepositoryImpl(get()) }
     factory<GetAlternativeSourcesUseCase> { GetAlternativeSourcesUseCaseImpl(get(), get(), get()) }

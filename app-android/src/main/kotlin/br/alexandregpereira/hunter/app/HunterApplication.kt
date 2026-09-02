@@ -20,7 +20,7 @@ package br.alexandregpereira.hunter.app
 import android.app.Application
 import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.app.di.initKoinModules
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
+//import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.crashlytics
@@ -33,12 +33,14 @@ import org.koin.dsl.module
 class HunterApplication : Application() {
 
     private val adsConsentManager: AdsConsentManager by inject()
-    private val featureFlagProvider: FeatureFlagProvider by inject()
+    //private val featureFlagProvider: FeatureFlagProvider by inject()
 
     override fun onCreate() {
         super.onCreate()
         initKoin()
-        featureFlagProvider.initialize()
+        // Kept for future flags: there is no consumer right now, so this only spends a
+        // network call on startup. Uncomment when a flag is added back.
+        // featureFlagProvider.initialize()
         adsConsentManager.initialize()
     }
 

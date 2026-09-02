@@ -22,7 +22,6 @@ plugins {
 
 multiplatform {
     commonMain {
-        implementation(project(":core:feature-flag"))
         implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:settings:core"))
         implementation(libs.kotlin.coroutines.core)

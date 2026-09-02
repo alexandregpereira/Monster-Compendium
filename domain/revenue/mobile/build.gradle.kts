@@ -23,7 +23,6 @@ plugins {
 multiplatform {
     commonMain {
         implementation(project(":core:analytics"))
-        implementation(project(":core:feature-flag"))
         implementation(project(":domain:revenue:core"))
         implementation(libs.multiplatform.settings)
         implementation(libs.koin.core)
