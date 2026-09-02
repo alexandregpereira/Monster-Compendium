@@ -59,30 +59,39 @@ internal class AmplitudeFeatureFlagProvider(
                         "cause -> ${cause.message}",
                 cause = cause,
             )
-            analytics.logException(error)
+            logUnlessNetworkFailure(error, cause)
             defaultValue
         }
     }
 
     private fun fetch(client: AmplitudeFeatureFlagClient) {
         scope.launch {
-            fetchSuspending(client)
-        }
-    }
-
-    private suspend fun fetchSuspending(client: AmplitudeFeatureFlagClient) = mutex.withLock {
-        if (!fetched) {
             runCatching {
-                withContext(Dispatchers.IO) { client.fetch() }
-            }.onSuccess {
-                fetched = true
+                fetchSuspending(client)
             }.onFailure { cause ->
                 val error = AmplitudeFeatureFlagProviderException(
                     message = "Failed to fetch the flags, cause -> ${cause.message}",
                     cause = cause,
                 )
-                analytics.logException(error)
+                logUnlessNetworkFailure(error, cause)
             }
+        }
+    }
+
+    private fun logUnlessNetworkFailure(error: Throwable, cause: Throwable) {
+        if (cause.isNetworkFailure()) return
+        analytics.logException(error)
+    }
+
+    /**
+     * Throws when the flags could not be fetched, so that callers can tell a disabled flag apart
+     * from an unknown one and fall back to their default value instead of silently reading an
+     * empty variant.
+     */
+    private suspend fun fetchSuspending(client: AmplitudeFeatureFlagClient) = mutex.withLock {
+        if (!fetched) {
+            withContext(Dispatchers.IO) { client.fetch() }
+            fetched = true
         }
     }
 

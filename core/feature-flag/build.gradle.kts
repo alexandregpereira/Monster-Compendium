@@ -32,6 +32,11 @@ multiplatform {
         implementation(libs.amplitude.experiment.android)
     }
     jvmMain()
+
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
+
     iosMain()
 }
 

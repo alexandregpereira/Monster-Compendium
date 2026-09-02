@@ -30,7 +30,12 @@ internal class AlternativeSourceRemoteRepositoryImpl(
 ) : AlternativeSourceRemoteRepository {
 
     override fun getAlternativeSources(lang: String): Flow<List<AlternativeSource>> = flow {
-        if (featureFlagProvider.isFeatureEnabled(feature = "alternative-sources-complete")) {
+        // Fails open: hiding content when the flag cannot be resolved is worse than showing it all.
+        if (featureFlagProvider.isFeatureEnabled(
+                feature = "alternative-sources-complete",
+                defaultValue = true,
+            )
+        ) {
             emit(remoteDataSource.getAlternativeSources(lang).toDomain())
         } else {
             emit(remoteDataSource.getBasicAlternativeSources(lang).toDomain())
