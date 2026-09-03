@@ -1,5 +1,5 @@
 [versions]
-amplitude-android = "1.28.2"
+amplitude-android = "1.29.0"
 amplitude-experiment-android = "1.16.1"
 amplitude-jvm = "1.13.0"
 android_gradle_plugin = "9.2.1"
