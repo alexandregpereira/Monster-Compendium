@@ -28,7 +28,6 @@ multiplatform {
         implementation(project(":core:analytics"))
         implementation(project(":core:app-config"))
         implementation(project(":core:event"))
-        implementation(project(":core:feature-flag"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":domain:alternative-source:core"))

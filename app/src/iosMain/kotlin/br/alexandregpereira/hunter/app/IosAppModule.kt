@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.app.di.initKoinModules
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
+//import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
 
@@ -31,6 +31,8 @@ fun initKoin() {
     koinInstance = startKoin {
         initKoinModules(platformName = "iOS")
     }.koin
-    koinInstance.get<FeatureFlagProvider>().initialize()
+    // Kept for future flags: there is no consumer right now, so this only spends a
+    // network call on startup. Uncomment when a flag is added back.
+    // koinInstance.get<FeatureFlagProvider>().initialize()
     koinInstance.get<AdsConsentManager>().initialize()
 }

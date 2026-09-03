@@ -32,7 +32,7 @@ import br.alexandregpereira.hunter.app.di.initKoinModules
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.app.ui.resources.Res
 import br.alexandregpereira.hunter.app.ui.resources.ic_launcher_foreground
-import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
+//import br.alexandregpereira.hunter.featureFlag.FeatureFlagProvider
 import br.alexandregpereira.hunter.ui.compose.BackDispatcher
 import br.alexandregpereira.hunter.ui.compose.LocalBackDispatcher
 import org.jetbrains.compose.resources.painterResource
@@ -44,7 +44,9 @@ fun main(args: Array<String>) = application {
         initKoinModules(platformName = "Desktop")
         modules(jvmAnalyticsModule)
     }.koin
-    koin.get<FeatureFlagProvider>().initialize()
+    // Kept for future flags: there is no consumer right now, so this only spends a
+    // network call on startup. Uncomment when a flag is added back.
+    // koin.get<FeatureFlagProvider>().initialize()
     val backDispatcher = JvmBackDispatcher()
     Window(
         onCloseRequest = ::exitApplication,

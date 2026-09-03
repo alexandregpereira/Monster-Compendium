@@ -22,6 +22,4 @@ import br.alexandregpereira.hunter.data.source.remote.model.AlternativeSourceDto
 internal interface AlternativeSourceRemoteDataSource {
 
     suspend fun getAlternativeSources(lang: String): List<AlternativeSourceDto>
-
-    suspend fun getBasicAlternativeSources(lang: String): List<AlternativeSourceDto>
 }
