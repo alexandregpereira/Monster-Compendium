@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.ads.di
 
 import br.alexandregpereira.hunter.ads.AdsStateHolder
+import br.alexandregpereira.hunter.paywall.event.PaywallEventDispatcher
 import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import org.koin.dsl.module
 
@@ -9,6 +10,8 @@ val adsFeatureModule = module {
         AdsStateHolder(
             isPremium = get(),
             paywallResultListener = get<PaywallResultDispatcher>(),
+            paywallEventDispatcher = get<PaywallEventDispatcher>(),
+            appLocalization = get(),
             analytics = get(),
         )
     }

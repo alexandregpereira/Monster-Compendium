@@ -18,31 +18,62 @@
 package br.alexandregpereira.hunter.ads
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.viewinterop.UIKitView
 import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import cocoapods.Google_Mobile_Ads_SDK.GADBannerView
+import cocoapods.Google_Mobile_Ads_SDK.GADBannerViewDelegateProtocol
 import cocoapods.Google_Mobile_Ads_SDK.GADLargeAnchoredAdaptiveBannerAdSizeWithWidth
 import cocoapods.Google_Mobile_Ads_SDK.GADRequest
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import org.koin.compose.koinInject
+import platform.Foundation.NSError
 import platform.UIKit.UIApplication
 import platform.UIKit.UISceneActivationStateForegroundActive
 import platform.UIKit.UIScreen
 import platform.UIKit.UIWindowScene
+import platform.darwin.NSObject
 
 @OptIn(ExperimentalForeignApi::class, kotlin.experimental.ExperimentalNativeApi::class)
 @Composable
-internal actual fun AdsBannerView() {
+internal actual fun AdsBannerView(
+    onAdLoaded: () -> Unit,
+    onAdFailedToLoad: () -> Unit,
+) {
     val consentManager: AdsConsentManager = koinInject()
     val canRequestAds by consentManager.canRequestAds.collectAsState()
-    val adLoaded = remember { mutableStateOf(false) }
+    val adRequested = remember { mutableStateOf(false) }
+    val currentOnAdLoaded by rememberUpdatedState(onAdLoaded)
+    val currentOnAdFailedToLoad by rememberUpdatedState(onAdFailedToLoad)
 
-    // UIKitView is always composed so factory runs at app startup when the scene is stable.
+    // GADBannerView holds the delegate weakly, so it has to be kept alive by the composition.
+    val delegate = remember {
+        object : NSObject(), GADBannerViewDelegateProtocol {
+            override fun bannerViewDidReceiveAd(bannerView: GADBannerView) {
+                currentOnAdLoaded()
+            }
+
+            override fun bannerView(
+                bannerView: GADBannerView,
+                didFailToReceiveAdWithError: NSError,
+            ) {
+                currentOnAdFailedToLoad()
+            }
+        }
+    }
+
+    if (!canRequestAds) {
+        // Without consent there is no ad to show, so the promo banner takes the slot back.
+        LaunchedEffect(Unit) { currentOnAdFailedToLoad() }
+        return
+    }
+
     // loadRequest is deferred to update() to avoid a timing issue where the scene is briefly
     // inactive during the UMP/ATT consent modal dismissal animation.
     UIKitView(
@@ -62,12 +93,18 @@ internal actual fun AdsBannerView() {
                     "ca-app-pub-9186388258407371/2524216431"
                 }
                 this.rootViewController = rootViewController
+                this.delegate = delegate
             }
         },
         update = { bannerView ->
-            if (canRequestAds && !adLoaded.value && bannerView.adUnitID != null) {
-                bannerView.loadRequest(GADRequest.request())
-                adLoaded.value = true
+            if (adRequested.value.not()) {
+                adRequested.value = true
+                if (bannerView.adUnitID == null) {
+                    // There was no active scene when the banner was created.
+                    currentOnAdFailedToLoad()
+                } else {
+                    bannerView.loadRequest(GADRequest.request())
+                }
             }
         },
     )

@@ -8,6 +8,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -44,7 +45,20 @@ fun AdsBannerTop(
             exit = fadeOut() + scaleOut(),
             modifier = Modifier.fillMaxWidth().weight(.1f),
         ) {
-            AdsBannerView()
+            // The promo banner and the ad banner share the same slot and are never rendered at
+            // the same time, so the ad is never covered by the promo.
+            if (state.isPromoBannerVisible) {
+                AdsPromoBanner(
+                    strings = state.strings,
+                    modifier = Modifier.fillMaxSize(),
+                    onClick = stateHolder::onPromoBannerClick,
+                )
+            } else {
+                AdsBannerView(
+                    onAdLoaded = stateHolder::onAdLoaded,
+                    onAdFailedToLoad = stateHolder::onAdFailedToLoad,
+                )
+            }
         }
         val screenSize = LocalScreenSize.current
         val newScreenSize = remember(isBannerVisible, screenSize) {
@@ -66,4 +80,7 @@ fun AdsBannerTop(
 }
 
 @Composable
-internal expect fun AdsBannerView()
+internal expect fun AdsBannerView(
+    onAdLoaded: () -> Unit,
+    onAdFailedToLoad: () -> Unit,
+)
