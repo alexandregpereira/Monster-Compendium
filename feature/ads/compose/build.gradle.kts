@@ -28,6 +28,7 @@ multiplatform {
         implementation(project(":core:ads-consent"))
         implementation(project(":core:analytics"))
         implementation(project(":core:event"))
+        implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":domain:revenue:core"))
         implementation(project(":feature:paywall:event"))
@@ -41,6 +42,10 @@ multiplatform {
         implementation(libs.play.services.ads)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+        implementation(project(":core:flow:test"))
+    }
     iosMain()
 }
 
