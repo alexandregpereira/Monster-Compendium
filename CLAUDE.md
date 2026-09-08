@@ -12,9 +12,9 @@ Kotlin Multiplatform D&D 5th edition monster compendium app for Android, iOS, Wi
 # Run desktop app (JVM)
 ./gradlew app:jvmRun -DmainClass=MainKt --quiet
 
-# Android
-./gradlew app:assembleDebug
-./gradlew app:assembleRelease
+# Android (`:app-android` is the Android application module; `:app` is the shared KMP module)
+./gradlew :app-android:assembleDebug
+./gradlew :app-android:assembleRelease
 
 # Desktop packages
 ./gradlew :app:packageDmg    # macOS
