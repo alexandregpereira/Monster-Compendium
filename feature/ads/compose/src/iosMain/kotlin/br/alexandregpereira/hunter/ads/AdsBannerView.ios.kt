@@ -18,21 +18,17 @@
 package br.alexandregpereira.hunter.ads
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.viewinterop.UIKitView
-import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import cocoapods.Google_Mobile_Ads_SDK.GADBannerView
 import cocoapods.Google_Mobile_Ads_SDK.GADBannerViewDelegateProtocol
 import cocoapods.Google_Mobile_Ads_SDK.GADLargeAnchoredAdaptiveBannerAdSizeWithWidth
 import cocoapods.Google_Mobile_Ads_SDK.GADRequest
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
-import org.koin.compose.koinInject
 import platform.Foundation.NSError
 import platform.UIKit.UIApplication
 import platform.UIKit.UISceneActivationStateForegroundActive
@@ -44,12 +40,12 @@ import platform.darwin.NSObject
 @Composable
 internal actual fun AdsBannerView(
     onAdLoaded: () -> Unit,
-    onAdFailedToLoad: () -> Unit,
+    onAdImpression: () -> Unit,
+    onAdFailedToLoad: (errorCode: Int?, errorMessage: String?) -> Unit,
 ) {
-    val consentManager: AdsConsentManager = koinInject()
-    val canRequestAds by consentManager.canRequestAds.collectAsState()
     val adRequested = remember { mutableStateOf(false) }
     val currentOnAdLoaded by rememberUpdatedState(onAdLoaded)
+    val currentOnAdImpression by rememberUpdatedState(onAdImpression)
     val currentOnAdFailedToLoad by rememberUpdatedState(onAdFailedToLoad)
 
     // GADBannerView holds the delegate weakly, so it has to be kept alive by the composition.
@@ -59,19 +55,20 @@ internal actual fun AdsBannerView(
                 currentOnAdLoaded()
             }
 
+            override fun bannerViewDidRecordImpression(bannerView: GADBannerView) {
+                currentOnAdImpression()
+            }
+
             override fun bannerView(
                 bannerView: GADBannerView,
                 didFailToReceiveAdWithError: NSError,
             ) {
-                currentOnAdFailedToLoad()
+                currentOnAdFailedToLoad(
+                    didFailToReceiveAdWithError.code.toInt(),
+                    didFailToReceiveAdWithError.localizedDescription,
+                )
             }
         }
-    }
-
-    if (!canRequestAds) {
-        // Without consent there is no ad to show, so the promo banner takes the slot back.
-        LaunchedEffect(Unit) { currentOnAdFailedToLoad() }
-        return
     }
 
     // loadRequest is deferred to update() to avoid a timing issue where the scene is briefly
@@ -101,7 +98,7 @@ internal actual fun AdsBannerView(
                 adRequested.value = true
                 if (bannerView.adUnitID == null) {
                     // There was no active scene when the banner was created.
-                    currentOnAdFailedToLoad()
+                    currentOnAdFailedToLoad(null, "No active scene to attach the banner to")
                 } else {
                     bannerView.loadRequest(GADRequest.request())
                 }

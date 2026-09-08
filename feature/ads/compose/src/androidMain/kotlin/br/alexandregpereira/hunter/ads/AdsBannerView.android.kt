@@ -4,38 +4,28 @@ import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.widget.LinearLayout
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
-import org.koin.compose.koinInject
 
 @SuppressLint("MissingPermission")
 @Composable
 internal actual fun AdsBannerView(
     onAdLoaded: () -> Unit,
-    onAdFailedToLoad: () -> Unit,
+    onAdImpression: () -> Unit,
+    onAdFailedToLoad: (errorCode: Int?, errorMessage: String?) -> Unit,
 ) {
-    val consentManager: AdsConsentManager = koinInject()
-    val canRequestAds by consentManager.canRequestAds.collectAsState()
     val context = LocalContext.current
     val isDebug = context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
     val currentOnAdLoaded by rememberUpdatedState(onAdLoaded)
+    val currentOnAdImpression by rememberUpdatedState(onAdImpression)
     val currentOnAdFailedToLoad by rememberUpdatedState(onAdFailedToLoad)
-
-    if (!canRequestAds) {
-        // Without consent there is no ad to show, so the promo banner takes the slot back.
-        LaunchedEffect(Unit) { currentOnAdFailedToLoad() }
-        return
-    }
 
     AndroidView(
         factory = { ctx ->
@@ -60,8 +50,12 @@ internal actual fun AdsBannerView(
                         currentOnAdLoaded()
                     }
 
+                    override fun onAdImpression() {
+                        currentOnAdImpression()
+                    }
+
                     override fun onAdFailedToLoad(error: LoadAdError) {
-                        currentOnAdFailedToLoad()
+                        currentOnAdFailedToLoad(error.code, error.message)
                     }
                 }
                 loadAd(AdRequest.Builder().build())

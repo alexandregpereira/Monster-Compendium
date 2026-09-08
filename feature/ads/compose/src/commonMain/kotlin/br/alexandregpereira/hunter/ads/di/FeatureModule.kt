@@ -13,6 +13,7 @@ val adsFeatureModule = module {
             paywallEventDispatcher = get<PaywallEventDispatcher>(),
             appLocalization = get(),
             analytics = get(),
+            adsConsentManager = get(),
         )
     }
 }

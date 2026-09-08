@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ads
 
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
@@ -24,15 +25,18 @@ internal class AdsStateHolder(
     private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
+    private val adsConsentManager: AdsConsentManager,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : UiModel<AdsState>(AdsState()) {
 
     private var promoBannerJob: Job? = null
     private var promoBannerTracked: Boolean = false
+    private var sessionImpressionCount: Int = 0
 
     fun onStart() {
         checkUsageLimit(trackBannerView = true)
         observeSubscriptionResults()
+        observeAdsConsent()
         startPromoBannerWindow()
     }
 
@@ -61,8 +65,14 @@ internal class AdsStateHolder(
      * load, which is what happens when the user has an ad blocker, the promo banner comes back
      * and the ad is requested again only after [PROMO_BANNER_RETRY_DURATION_IN_MILLIS].
      */
-    fun onAdFailedToLoad() {
-        analytics.track(eventName = "Ads - banner load failed")
+    fun onAdFailedToLoad(errorCode: Int? = null, errorMessage: String? = null) {
+        analytics.track(
+            eventName = "Ads - banner load failed",
+            params = mapOf(
+                "error_code" to errorCode,
+                "error_message" to errorMessage,
+            ),
+        )
         startPromoBannerWindow(durationInMillis = PROMO_BANNER_RETRY_DURATION_IN_MILLIS)
     }
 
@@ -70,9 +80,35 @@ internal class AdsStateHolder(
         analytics.track(eventName = "Ads - banner loaded")
     }
 
+    /**
+     * Recorded once per rendered ad, including the ones served by the SDK auto refresh, so the
+     * number of impressions per session can be measured.
+     */
+    fun onAdImpression() {
+        sessionImpressionCount += 1
+        analytics.track(
+            eventName = "Ads - banner impression",
+            params = mapOf("session_impression_count" to sessionImpressionCount),
+        )
+    }
+
     fun onPromoBannerClick() {
         analytics.track(eventName = "Ads - promo banner clicked")
         paywallEventDispatcher.dispatchEvent(PaywallEvent.ShowPaywall)
+    }
+
+    /**
+     * Without consent no ad can be requested, so the slot keeps the promo banner instead of
+     * retrying forever. The consent state is reported as a user property to make the share of
+     * users that cannot be served ads measurable.
+     */
+    private fun observeAdsConsent() {
+        adsConsentManager.canRequestAds
+            .onEach { canRequestAds ->
+                analytics.setUserProperty(name = "ads_consent_granted", value = canRequestAds)
+                setState { copy(isAdConsentGranted = canRequestAds) }
+            }
+            .launchIn(scope)
     }
 
     private fun startPromoBannerWindow(
