@@ -47,16 +47,17 @@ fun AdsBannerTop(
         ) {
             // The promo banner and the ad banner share the same slot and are never rendered at
             // the same time, so the ad is never covered by the promo.
-            if (state.isPromoBannerVisible) {
+            if (state.isAdBannerVisible) {
+                AdsBannerView(
+                    onAdLoaded = stateHolder::onAdLoaded,
+                    onAdImpression = stateHolder::onAdImpression,
+                    onAdFailedToLoad = stateHolder::onAdFailedToLoad,
+                )
+            } else {
                 AdsPromoBanner(
                     strings = state.strings,
                     modifier = Modifier.fillMaxSize(),
                     onClick = stateHolder::onPromoBannerClick,
-                )
-            } else {
-                AdsBannerView(
-                    onAdLoaded = stateHolder::onAdLoaded,
-                    onAdFailedToLoad = stateHolder::onAdFailedToLoad,
                 )
             }
         }
@@ -82,5 +83,6 @@ fun AdsBannerTop(
 @Composable
 internal expect fun AdsBannerView(
     onAdLoaded: () -> Unit,
-    onAdFailedToLoad: () -> Unit,
+    onAdImpression: () -> Unit,
+    onAdFailedToLoad: (errorCode: Int?, errorMessage: String?) -> Unit,
 )

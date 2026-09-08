@@ -1,5 +1,6 @@
 package br.alexandregpereira.hunter.ads
 
+import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
@@ -10,6 +11,8 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResultDispatcher
 import br.alexandregpereira.hunter.revenue.IsPremium
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -137,8 +140,38 @@ internal class AdsStateHolderTest {
         job.cancel()
     }
 
+    @Test
+    fun `ad banner is never shown when the ads consent was not granted`() = runTest {
+        val stateHolder = createStateHolder(canRequestAds = false)
+
+        stateHolder.onStart()
+        advanceTimeBy(15_001)
+
+        assertFalse(stateHolder.state.value.isAdBannerVisible)
+        assertTrue(stateHolder.state.value.isPromoBannerVisible)
+    }
+
+    @Test
+    fun `ad banner is shown once the ads consent is granted`() = runTest {
+        val consentManager = FakeMutableAdsConsentManager(canRequestAds = false)
+        val stateHolder = createStateHolder(adsConsentManager = consentManager)
+
+        stateHolder.onStart()
+        advanceTimeBy(15_001)
+
+        assertFalse(stateHolder.state.value.isAdBannerVisible)
+
+        consentManager.grant()
+        advanceUntilIdle()
+
+        assertTrue(stateHolder.state.value.isAdBannerVisible)
+        assertFalse(stateHolder.state.value.isPromoBannerVisible)
+    }
+
     private fun createStateHolder(
         isPremium: Boolean = false,
+        canRequestAds: Boolean = true,
+        adsConsentManager: AdsConsentManager = FakeAdsConsentManager(canRequestAds),
     ): AdsStateHolder = AdsStateHolder(
         isPremium = IsPremium { isPremium },
         paywallResultListener = paywallResultDispatcher,
@@ -147,8 +180,25 @@ internal class AdsStateHolderTest {
             override fun getLanguage(): Language = Language.ENGLISH
         },
         analytics = FakeAnalytics(),
+        adsConsentManager = adsConsentManager,
         dispatcher = testDispatcher,
     )
+}
+
+private class FakeMutableAdsConsentManager(canRequestAds: Boolean) : AdsConsentManager {
+    private val state = MutableStateFlow(canRequestAds)
+    override val canRequestAds: StateFlow<Boolean> = state
+    fun grant() { state.value = true }
+    override fun initialize() = Unit
+    override fun showConsentFormIfRequired() = Unit
+    override fun loadConsentInfo() = Unit
+}
+
+private class FakeAdsConsentManager(canRequestAds: Boolean) : AdsConsentManager {
+    override val canRequestAds: StateFlow<Boolean> = MutableStateFlow(canRequestAds)
+    override fun initialize() = Unit
+    override fun showConsentFormIfRequired() = Unit
+    override fun loadConsentInfo() = Unit
 }
 
 private class FakeAnalytics : Analytics {

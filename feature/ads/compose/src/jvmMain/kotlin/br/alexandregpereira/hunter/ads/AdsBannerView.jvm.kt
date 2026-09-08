@@ -1,16 +1,13 @@
 package br.alexandregpereira.hunter.ads
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 
 @Composable
 internal actual fun AdsBannerView(
     onAdLoaded: () -> Unit,
-    onAdFailedToLoad: () -> Unit,
+    onAdImpression: () -> Unit,
+    onAdFailedToLoad: (errorCode: Int?, errorMessage: String?) -> Unit,
 ) {
-    // There is no ad SDK on JVM/Desktop, so the promo banner takes the slot back.
-    val currentOnAdFailedToLoad by rememberUpdatedState(onAdFailedToLoad)
-    LaunchedEffect(Unit) { currentOnAdFailedToLoad() }
+    // There is no ad SDK on JVM/Desktop. The ads consent is never granted there, so the promo
+    // banner always owns the slot and this composable is never reached.
 }
