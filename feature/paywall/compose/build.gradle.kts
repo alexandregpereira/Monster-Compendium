@@ -41,5 +41,10 @@ multiplatform {
         implementation(libs.multiplatform.settings)
     }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+        implementation(project(":core:flow:test"))
+        implementation(libs.multiplatform.settings.test)
+    }
     iosMain()
 }

@@ -11,13 +11,37 @@ internal class PaywallSettings(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
-    private val paywallWasClosedKey = "paywall_was_closed"
+    private val dismissCountKey = "paywall_dismiss_count"
+    private val lastDismissedAtKey = "paywall_last_dismissed_at"
 
-    suspend fun savePaywallWasClosedFlag(paywallWasClosed: Boolean) = withContext(dispatcher) {
-        settings.putBoolean(paywallWasClosedKey, paywallWasClosed)
+    /**
+     * Written by a previous version that blocked the paywall forever after the first dismissal.
+     * It is only removed now, so the users it locked out re-enter the cooldown ladder.
+     */
+    private val legacyPaywallWasClosedKey = "paywall_was_closed"
+
+    suspend fun getDismissCount(): Int = withContext(dispatcher) {
+        settings.getInt(dismissCountKey, defaultValue = 0)
     }
 
-    suspend fun getPaywallWasClosedFlag(): Boolean = withContext(dispatcher) {
-        settings.getBoolean(paywallWasClosedKey, false)
+    suspend fun getLastDismissedAtInMillis(): Long? = withContext(dispatcher) {
+        settings.getLongOrNull(lastDismissedAtKey)
+    }
+
+    suspend fun saveDismissal(count: Int, atInMillis: Long) = withContext(dispatcher) {
+        settings.putInt(dismissCountKey, count)
+        settings.putLong(lastDismissedAtKey, atInMillis)
+    }
+
+    suspend fun clearDismissals() = withContext(dispatcher) {
+        settings.remove(dismissCountKey)
+        settings.remove(lastDismissedAtKey)
+        settings.remove(legacyPaywallWasClosedKey)
+    }
+
+    suspend fun removeLegacyPaywallWasClosedFlag() = withContext(dispatcher) {
+        if (settings.hasKey(legacyPaywallWasClosedKey)) {
+            settings.remove(legacyPaywallWasClosedKey)
+        }
     }
 }

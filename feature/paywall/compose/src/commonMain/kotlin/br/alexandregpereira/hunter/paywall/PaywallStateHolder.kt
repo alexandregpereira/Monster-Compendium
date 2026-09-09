@@ -4,7 +4,7 @@ import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.localization.AppLocalization
-import br.alexandregpereira.hunter.paywall.domain.PaywallSettings
+import br.alexandregpereira.hunter.paywall.domain.PaywallCooldown
 import br.alexandregpereira.hunter.paywall.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.paywall.event.PaywallEvent
 import br.alexandregpereira.hunter.paywall.event.PaywallResult
@@ -31,7 +31,7 @@ internal class PaywallStateHolder(
     private val paywallResultDispatcher: EventDispatcher<PaywallResult>,
     private val shouldShowPaywall: ShouldShowPaywall,
     private val isPremium: IsPremium,
-    private val settings: PaywallSettings,
+    private val cooldown: PaywallCooldown,
     private val purchase: Purchase,
     private val getCurrentOffer: GetCurrentOffer,
     private val restorePurchase: RestorePurchase,
@@ -44,14 +44,23 @@ internal class PaywallStateHolder(
     private var loadOfferJob: Job? = null
     private var selectedOfferId: String = ""
 
+    /**
+     * Only an automatic open feeds the cooldown. Closing a paywall the user opened on purpose,
+     * from the promo banner or the settings menu, must not hide the automatic one.
+     */
+    private var openedAutomatically: Boolean = false
+
     init {
         observeEvents()
     }
 
     fun onStart() {
+        if (state.value.isOpen) {
+            return
+        }
         scope.launch {
             if (shouldShowPaywall()) {
-                openPaywall()
+                openPaywall(automatic = true)
             }
         }
     }
@@ -64,16 +73,21 @@ internal class PaywallStateHolder(
     }
 
     fun onClose() {
+        val actionResultState = state.value.actionResultState
         closePaywall()
         loadOfferJob?.cancel()
         loadOfferJob = null
-        scope.launch {
-            val actionResultState = state.value.actionResultState
-            settings.savePaywallWasClosedFlag(
-                paywallWasClosed = actionResultState == null ||
-                        actionResultState is PaywallActionResultState.Success,
-            )
+        if (openedAutomatically.not()) {
+            return
         }
+        // A purchase or restore failure is the highest intent signal there is, so those users get
+        // another chance on the next session instead of starting the cooldown.
+        val shouldRegisterDismissal = actionResultState == null ||
+                actionResultState is PaywallActionResultState.GetCurrentOfferError
+        if (shouldRegisterDismissal.not()) {
+            return
+        }
+        scope.launch { cooldown.registerDismissal() }
     }
 
     fun onSubscribe() {
@@ -189,12 +203,16 @@ internal class PaywallStateHolder(
 
     private fun observeEvents() {
         paywallEventListener.events.onEach {
-            openPaywall()
+            openPaywall(automatic = false)
         }.launchIn(scope)
     }
 
-    private fun openPaywall() {
-        analytics.track(eventName = "Paywall - opened")
+    private fun openPaywall(automatic: Boolean) {
+        openedAutomatically = automatic
+        analytics.track(
+            eventName = "Paywall - opened",
+            params = mapOf("automatic" to automatic),
+        )
         val localizedStrings = appLocalization.getPaywallStrings()
         val features = defaultFeatures(strings = localizedStrings)
         setState {
@@ -217,9 +235,7 @@ internal class PaywallStateHolder(
     private fun changeToSuccessState() {
         paywallResultDispatcher.dispatchEvent(PaywallResult.OnSubscribe)
         setState { copy(isLoading = false, actionResultState = PaywallActionResultState.Success) }
-        scope.launch {
-            settings.savePaywallWasClosedFlag(paywallWasClosed = true)
-        }
+        scope.launch { cooldown.reset() }
     }
 
     private fun defaultFeatures(

@@ -19,32 +19,32 @@ package br.alexandregpereira.hunter.revenue
 
 import br.alexandregpereira.hunter.analytics.Analytics
 
-internal class IsSessionUsageLimitReachedImpl internal constructor(
-    private val isPremium: IsPremium,
+internal class GetPaywallCooldownIntervalsImpl internal constructor(
     private val revenueRemoteConfig: RevenueRemoteConfig,
-    private val revenueSessionTimeDataSource: RevenueSessionTimeDataSource,
     private val analytics: Analytics,
-) : IsSessionUsageLimitReached {
+) : GetPaywallCooldownIntervals {
 
-    override suspend operator fun invoke(): Boolean {
-        if (isPremium()) {
-            return false
-        }
-
-        val sessionTimeLimitInMillis = try {
-            revenueRemoteConfig.getSessionTimeLimitInMillis()
+    /**
+     * Every failure falls back to [DEFAULT_PAYWALL_COOLDOWN_INTERVALS]. Degrading to an empty list
+     * would mean no cooldown at all, which is the behavior this feature exists to prevent.
+     */
+    override suspend fun invoke(): List<Long> {
+        return try {
+            revenueRemoteConfig.getPaywallCooldownIntervalsInMillis()
+                .takeIf { it.isNotEmpty() }
+                ?: DEFAULT_PAYWALL_COOLDOWN_INTERVALS
         } catch (cause: RevenueRemoteConfigException) {
-            val defaultSessionTimeLimitInMillis = 600000L
-            if (cause is RevenueRemoteConfigException.FailToFetchConfig) {
-                defaultSessionTimeLimitInMillis
-            } else {
+            if (cause !is RevenueRemoteConfigException.FailToFetchConfig) {
                 analytics.logException(cause)
-                null
             }
-        } ?: return false
-
-        val sessionTime = revenueSessionTimeDataSource.getSessionTime()
-        val isSessionUsageLimitReached = sessionTime >= sessionTimeLimitInMillis
-        return isSessionUsageLimitReached
+            DEFAULT_PAYWALL_COOLDOWN_INTERVALS
+        }
     }
 }
+
+internal val DEFAULT_PAYWALL_COOLDOWN_INTERVALS: List<Long> = listOf(
+    3L * 24 * 60 * 60 * 1000,
+    7L * 24 * 60 * 60 * 1000,
+    14L * 24 * 60 * 60 * 1000,
+    30L * 24 * 60 * 60 * 1000,
+)

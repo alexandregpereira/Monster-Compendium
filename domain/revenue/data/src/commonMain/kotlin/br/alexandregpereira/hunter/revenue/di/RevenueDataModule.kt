@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.revenue.EmptyRevenueSession
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
+import br.alexandregpereira.hunter.revenue.GetPaywallCooldownIntervals
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.IsSessionUsageLimitReached
 import br.alexandregpereira.hunter.revenue.Purchase
@@ -29,6 +30,10 @@ import org.koin.dsl.module
 val revenueDataModule get() = module {
     factory<IsSessionUsageLimitReached> {
         IsSessionUsageLimitReached { false }
+    }
+    factory<GetPaywallCooldownIntervals> {
+        // The automatic paywall never opens on JVM because IsSessionUsageLimitReached is false.
+        GetPaywallCooldownIntervals { emptyList() }
     }
     factory<IsPremium> {
         IsPremium { true }

@@ -1,6 +1,7 @@
 package br.alexandregpereira.hunter.paywall.di
 
 import br.alexandregpereira.hunter.paywall.PaywallStateHolder
+import br.alexandregpereira.hunter.paywall.domain.PaywallCooldown
 import br.alexandregpereira.hunter.paywall.domain.PaywallSettings
 import br.alexandregpereira.hunter.paywall.domain.ShouldShowPaywall
 import br.alexandregpereira.hunter.paywall.event.PaywallEventDispatcher
@@ -14,7 +15,7 @@ val paywallFeatureModule = module {
             isSessionUsageLimitReached = get(),
             networkManager = get(),
             getCurrentOffer = get(),
-            settings = get(),
+            cooldown = get(),
             analytics = get(),
             adsConsentManager = get(),
         )
@@ -25,12 +26,18 @@ val paywallFeatureModule = module {
             dispatcher = get(),
         )
     }
+    factory {
+        PaywallCooldown(
+            settings = get(),
+            getPaywallCooldownIntervals = get(),
+        )
+    }
     single {
         PaywallStateHolder(
             paywallEventListener = get<PaywallEventDispatcher>(),
             shouldShowPaywall = get(),
             paywallResultDispatcher = get<PaywallResultDispatcher>(),
-            settings = get(),
+            cooldown = get(),
             purchase = get(),
             getCurrentOffer = get<GetCurrentOffer>(),
             restorePurchase = get(),

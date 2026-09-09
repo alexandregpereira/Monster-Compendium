@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import br.alexandregpereira.hunter.revenue.GetCurrentOfferImpl
+import br.alexandregpereira.hunter.revenue.GetPaywallCooldownIntervals
+import br.alexandregpereira.hunter.revenue.GetPaywallCooldownIntervalsImpl
 import br.alexandregpereira.hunter.revenue.GetRevenueUserId
 import br.alexandregpereira.hunter.revenue.GetRevenueUserIdUseCase
 import br.alexandregpereira.hunter.revenue.IsPremium
@@ -30,10 +32,10 @@ import br.alexandregpereira.hunter.revenue.PurchaseImpl
 import br.alexandregpereira.hunter.revenue.RestorePurchase
 import br.alexandregpereira.hunter.revenue.RestorePurchaseImpl
 import br.alexandregpereira.hunter.revenue.RevenueMobileSdk
+import br.alexandregpereira.hunter.revenue.RevenueRemoteConfig
 import br.alexandregpereira.hunter.revenue.RevenueSdk
 import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.revenue.RevenueSessionImpl
-import br.alexandregpereira.hunter.revenue.RevenueSessionRemoteConfig
 import br.alexandregpereira.hunter.revenue.RevenueSessionTimeDataSource
 import com.russhwolf.settings.Settings
 import org.koin.core.qualifier.qualifier
@@ -50,7 +52,7 @@ val revenueMobileDataModule get() = module {
     factory<IsSessionUsageLimitReached> {
         IsSessionUsageLimitReachedImpl(
             isPremium = get(),
-            revenueSessionRemoteConfig = get(),
+            revenueRemoteConfig = get(),
             revenueSessionTimeDataSource = get(),
             analytics = get(),
         )
@@ -63,10 +65,16 @@ val revenueMobileDataModule get() = module {
             settings = get<Settings>(qualifier(preferenceName)),
         )
     }
-    factory {
-        RevenueSessionRemoteConfig(
+    single {
+        RevenueRemoteConfig(
             client = get(),
             json = get(),
+        )
+    }
+    factory<GetPaywallCooldownIntervals> {
+        GetPaywallCooldownIntervalsImpl(
+            revenueRemoteConfig = get(),
+            analytics = get(),
         )
     }
     factory<IsPremium> {

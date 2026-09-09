@@ -11,13 +11,12 @@ internal class ShouldShowPaywall(
     private val isSessionUsageLimitReached: IsSessionUsageLimitReached,
     private val networkManager: NetworkManager,
     private val getCurrentOffer: GetCurrentOffer,
-    private val settings: PaywallSettings,
+    private val cooldown: PaywallCooldown,
     private val analytics: Analytics,
     private val adsConsentManager: AdsConsentManager,
 ) {
     suspend operator fun invoke(): Boolean {
-        val paywallWasNotClosed = settings.getPaywallWasClosedFlag().not()
-        val shouldShow = paywallWasNotClosed && isSessionUsageLimitReached() &&
+        val shouldShow = cooldown.isInCooldown().not() && isSessionUsageLimitReached() &&
                 networkManager.isNetworkAvailable() &&
                 isCurrentOfferAvailable() &&
                 canRequestAds()
