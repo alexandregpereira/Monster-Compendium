@@ -1,0 +1,19 @@
+name: Setup iOS
+description: Installs the Xcode version and the CocoaPods dependencies used by the iOS app.
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Xcode version
+      uses: maxim-lobanov/setup-xcode@v1.6.0
+      with:
+        xcode-version: '26.3'
+
+    - name: Install CocoaPods
+      shell: bash
+      run: sudo gem install cocoapods
+
+    - name: Install Pod dependencies
+      shell: bash
+      working-directory: iosApp
+      run: pod install

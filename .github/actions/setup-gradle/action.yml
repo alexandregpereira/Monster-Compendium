@@ -1,0 +1,18 @@
+name: Setup Gradle
+description: Prepares the JDK and the Gradle build environment. Requires the repository to be checked out.
+
+runs:
+  using: composite
+  steps:
+    - name: set up JDK 21
+      uses: actions/setup-java@v3.6.0
+      with:
+        java-version: '21'
+        distribution: 'adopt'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Grant execute permission for gradlew
+      shell: bash
+      run: chmod +x gradlew
