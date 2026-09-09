@@ -20,10 +20,11 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class PaywallStateHolder(
@@ -160,12 +161,26 @@ internal class PaywallStateHolder(
         loadOfferJob?.cancel()
         loadOfferJob = scope.launch {
             try {
-                val isPremium = withContext(dispatcher) { isPremium(ignoreCache = true) }
-                if (isPremium) {
+                // Both requests are independent, so the paywall waits on the slowest one instead
+                // of the sum. isPremium keeps ignoring the cache: it exists to catch someone who
+                // subscribed on another device before charging them again, and running it
+                // concurrently means it no longer costs serial latency.
+                // coroutineScope makes a failure in either one surface here instead of cancelling
+                // the job from the outside, so the catch below still reports the error state.
+                val offer = coroutineScope {
+                    val isPremiumDeferred = async(dispatcher) { isPremium(ignoreCache = true) }
+                    val offerDeferred = async(dispatcher) { getCurrentOffer() }
+                    if (isPremiumDeferred.await()) {
+                        offerDeferred.cancel()
+                        null
+                    } else {
+                        offerDeferred.await()
+                    }
+                }
+                if (offer == null) {
                     changeToSuccessState()
                     return@launch
                 }
-                val offer = withContext(dispatcher) { getCurrentOffer() }
                 selectedOfferId = offer.id
                 setState {
                     val subscriptionValue = offer.value

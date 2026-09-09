@@ -20,7 +20,12 @@ plugins {
 }
 
 multiplatform {
-    commonMain()
+    commonMain {
+        implementation(libs.kotlin.coroutines.core)
+    }
     jvmMain()
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain()
 }

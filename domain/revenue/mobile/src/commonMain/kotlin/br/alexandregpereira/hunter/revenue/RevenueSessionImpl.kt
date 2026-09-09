@@ -24,6 +24,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Clock
 
 internal class RevenueSessionImpl(
@@ -31,6 +32,7 @@ internal class RevenueSessionImpl(
     private val analytics: Analytics,
     private val isPremium: IsPremium,
     private val revenueSdk: RevenueSdk,
+    private val getCurrentOffer: GetCurrentOffer,
 ) : RevenueSession {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var startTime: Long? = null
@@ -50,6 +52,22 @@ internal class RevenueSessionImpl(
                 eventName = "RevenueSession - started",
                 params = mapOf("sessionStartTime" to time),
             )
+            preloadCurrentOffer()
+        }
+    }
+
+    /**
+     * Warms the offer cache so the paywall does not wait on the offerings request to show a price.
+     * Failures are ignored on purpose: ShouldShowPaywall and the paywall itself already report the
+     * ones that matter, and logging here would repeat that signal on every foreground.
+     */
+    private suspend fun preloadCurrentOffer() {
+        try {
+            getCurrentOffer()
+        } catch (cause: CancellationException) {
+            throw cause
+        } catch (_: Throwable) {
+            // The paywall reports offer failures on the path where they affect the user.
         }
     }
 

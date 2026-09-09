@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.revenue.di
 
 import br.alexandregpereira.hunter.revenue.GetCurrentOffer
 import br.alexandregpereira.hunter.revenue.GetCurrentOfferImpl
+import br.alexandregpereira.hunter.revenue.cached
 import br.alexandregpereira.hunter.revenue.GetPaywallCooldownIntervals
 import br.alexandregpereira.hunter.revenue.GetPaywallCooldownIntervalsImpl
 import br.alexandregpereira.hunter.revenue.GetRevenueUserId
@@ -91,6 +92,7 @@ val revenueMobileDataModule get() = module {
             analytics = get(),
             isPremium = get(),
             revenueSdk = get(),
+            getCurrentOffer = get(),
         )
     }
     factory<Purchase> {
@@ -104,9 +106,9 @@ val revenueMobileDataModule get() = module {
             isPremium = get(),
         )
     }
-    factory<GetCurrentOffer> {
+    single<GetCurrentOffer> {
         GetCurrentOfferImpl(
             revenueSdk = get(),
-        )
+        ).cached()
     }
 }
