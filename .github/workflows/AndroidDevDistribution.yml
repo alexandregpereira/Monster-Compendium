@@ -1,0 +1,36 @@
+name: Android Dev Distribution
+
+on:
+  workflow_call:
+
+env:
+  MONSTER_COMPENDIUM_KEYSTORE_PASSWORD: ${{ secrets.MONSTER_COMPENDIUM_KEYSTORE_PASSWORD }}
+  AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+  AMPLITUDE_SANDBOX_API_KEY: ${{ secrets.AMPLITUDE_SANDBOX_API_KEY }}
+  REVENUE_CAT_ANDROID_API_KEY: ${{ secrets.REVENUE_CAT_ANDROID_API_KEY }}
+  REVENUE_CAT_IOS_API_KEY: ${{ secrets.REVENUE_CAT_IOS_API_KEY }}
+  REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
+
+jobs:
+  firebase-distribution:
+    name: Firebase App Distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.5.0
+
+      - uses: ./.github/actions/setup-gradle
+
+      - name: Generate Dev APK
+        run: ./gradlew assembleRelease -Pdev
+
+      - name: Get Dev APK path
+        id: dev-apk-path
+        run: echo "path=$(find app-android/build/outputs/apk/release -name 'app-dev-release-*.apk')" >> $GITHUB_OUTPUT
+
+      - name: Upload Dev APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          file: ${{ steps.dev-apk-path.outputs.path }}
+          groups: Testers

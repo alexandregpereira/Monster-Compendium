@@ -1,0 +1,15 @@
+name: Upload Test Report
+description: Uploads the Gradle test reports as an artifact when the build fails.
+
+runs:
+  using: composite
+  steps:
+    - name: Upload the test report
+      if: failure()
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: TestReport
+        path: |
+          feature-monster-compendium/build/reports/tests
+          data/build/reports/tests
+          domain/build/reports/tests
