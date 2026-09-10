@@ -46,10 +46,14 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumSta
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.emptyMonsterEventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
 import br.alexandregpereira.hunter.sync.event.emptySyncEventDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -69,6 +73,14 @@ class MonsterCompendiumStateHolderTest {
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
     private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
+    private val searchEvents = mutableListOf<SearchEvent>()
+    private val searchEventDispatcher = object : EventDispatcher<SearchEvent> {
+        override val events: Flow<SearchEvent> = emptyFlow()
+
+        override fun dispatchEvent(event: SearchEvent) {
+            searchEvents.add(event)
+        }
+    }
 
     private lateinit var stateHolder: MonsterCompendiumStateHolder
 
@@ -350,6 +362,28 @@ class MonsterCompendiumStateHolderTest {
         actions.assertHasNoMoreValues()
     }
 
+    @Test
+    fun onSearchClick() = runTest {
+        // Given
+        createStateHolder(
+            getMonsterCompendiumUseCase = {
+                flowOf(
+                    MonsterCompendium(
+                        items = emptyList(),
+                        tableContent = emptyList(),
+                        alphabet = emptyList(),
+                    )
+                )
+            },
+        )
+
+        // When
+        stateHolder.onSearchClick()
+
+        // Then
+        assertEquals(expected = listOf<SearchEvent>(SearchEvent.Show), actual = searchEvents)
+    }
+
     private fun createStateHolder(
         getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
         getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = GetLastCompendiumScrollItemPositionUseCase { flowOf(0) },
@@ -362,6 +396,7 @@ class MonsterCompendiumStateHolderTest {
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             monsterEventDispatcher = monsterDetailEventDispatcher,
             syncEventDispatcher = syncEventDispatcher,
+            searchEventDispatcher = searchEventDispatcher,
             dispatcher = testCoroutineDispatcher,
             analytics = MonsterCompendiumAnalytics(analytics = EmptyAnalytics()),
             appLocalization = object : AppLocalization {

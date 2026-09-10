@@ -21,7 +21,6 @@ import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.COMPENDIUM
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
-import br.alexandregpereira.hunter.app.BottomBarItemIcon.SEARCH
 import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
 import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
@@ -101,10 +100,6 @@ class MainViewModel(
                                 icon = it,
                                 text = strings.compendium
                             )
-                            SEARCH -> BottomBarItem(
-                                icon = it,
-                                text = strings.search
-                            )
                             FOLDERS -> BottomBarItem(
                                 icon = it,
                                 text = strings.folders
@@ -152,7 +147,8 @@ class MainViewModel(
 
     private fun MainViewState.updateState(bundle: Map<String, Any?>): MainViewState {
         return copy(
-            bottomBarItemSelectedIndex = bundle["app:bottomBarItemSelectedIndex"] as? Int ?: 0,
+            bottomBarItemSelectedIndex = (bundle["app:bottomBarItemSelectedIndex"] as? Int)
+                ?.takeIf { it in BottomBarItemIcon.entries.indices } ?: 0,
         )
     }
 }

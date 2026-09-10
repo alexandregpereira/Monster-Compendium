@@ -20,15 +20,18 @@ package br.alexandregpereira.hunter.search.di
 import br.alexandregpereira.hunter.search.SearchAnalytics
 import br.alexandregpereira.hunter.search.SearchStateHolder
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
+import br.alexandregpereira.hunter.search.event.SearchEventDispatcher
 import org.koin.dsl.module
 
 val featureSearchModule = module {
+    single { SearchEventDispatcher() }
     factory { SearchMonstersByUseCase(get(), get(), get(), get()) }
     single {
         SearchStateHolder(
             searchMonstersByNameUseCase = get(),
             folderPreviewEventDispatcher = get(),
             monsterEventDispatcher = get(),
+            eventListener = get<SearchEventDispatcher>(),
             analytics = SearchAnalytics(get()),
             dispatcher = get(),
             appLocalization = get(),

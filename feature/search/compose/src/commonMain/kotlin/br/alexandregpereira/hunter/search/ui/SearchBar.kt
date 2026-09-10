@@ -40,6 +40,7 @@ internal fun SearchBar(
     searchLabel: String,
     modifier: Modifier = Modifier,
     isSearching: Boolean = false,
+    leadingIcon: @Composable (() -> Unit)? = null,
     onValueChange: (TextFieldValue) -> Unit = {}
 ) = Box {
     AppTextField(
@@ -47,6 +48,7 @@ internal fun SearchBar(
         capitalize = false,
         onValueChange = onValueChange,
         label = searchLabel,
+        leadingIcon = leadingIcon,
         modifier = modifier,
     )
     AnimatedVisibility(

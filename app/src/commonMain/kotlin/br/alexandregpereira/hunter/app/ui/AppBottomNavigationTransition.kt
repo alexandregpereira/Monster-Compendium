@@ -47,14 +47,15 @@ internal fun AppBottomNavigationTransition(
                 label = "BottomNavigationTransition"
             ) { item ->
                 when (item.icon) {
-                    BottomBarItemIcon.COMPENDIUM -> MonsterCompendiumFeature()
+                    BottomBarItemIcon.COMPENDIUM -> {
+                        MonsterCompendiumFeature()
+                        SearchScreenFeature()
+                    }
 
                     BottomBarItemIcon.FOLDERS -> {
                         FolderListFeature()
                         FolderDetailFeature()
                     }
-
-                    BottomBarItemIcon.SEARCH -> SearchScreenFeature()
 
                     BottomBarItemIcon.SETTINGS -> SettingsFeature(
                         versionName = AppConfig.VERSION_NAME,

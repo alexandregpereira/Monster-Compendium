@@ -35,6 +35,8 @@ import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChange
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterPageChanges
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -58,6 +60,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
+    private val searchEventDispatcher: EventDispatcher<SearchEvent>,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
     private val isFirstTime: IsFirstTime,
@@ -133,6 +136,11 @@ class MonsterCompendiumStateHolder internal constructor(
     override fun onItemLongClick(index: String) {
         analytics.trackItemLongClick(index)
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
+    }
+
+    override fun onSearchClick() {
+        analytics.trackSearchClick()
+        searchEventDispatcher.dispatchEvent(SearchEvent.Show)
     }
 
     override fun onFirstVisibleItemChange(position: Int) {

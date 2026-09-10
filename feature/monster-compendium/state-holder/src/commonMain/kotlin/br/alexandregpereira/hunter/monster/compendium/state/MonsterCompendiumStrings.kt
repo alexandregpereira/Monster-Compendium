@@ -23,23 +23,27 @@ import br.alexandregpereira.hunter.localization.Language
 interface MonsterCompendiumStrings {
     val noInternetConnection: String
     val tryAgain: String
+    val search: String
 }
 
 internal data class MonsterCompendiumEnStrings(
     override val noInternetConnection: String = "No internet connection",
-    override val tryAgain: String = "Try again"
+    override val tryAgain: String = "Try again",
+    override val search: String = "Search",
 ) : MonsterCompendiumStrings
 
 internal data class MonsterCompendiumPtrStrings(
     override val noInternetConnection: String = "Sem conexão com a internet",
-    override val tryAgain: String = "Tentar novamente"
+    override val tryAgain: String = "Tentar novamente",
+    override val search: String = "Buscar",
 ) : MonsterCompendiumStrings
 
 fun MonsterCompendiumStrings(): MonsterCompendiumStrings = MonsterCompendiumEnStrings()
 
 internal data class MonsterCompendiumEsStrings(
     override val noInternetConnection: String = "Sin conexión a internet",
-    override val tryAgain: String = "Intentar de nuevo"
+    override val tryAgain: String = "Intentar de nuevo",
+    override val search: String = "Buscar",
 ) : MonsterCompendiumStrings
 
 internal fun AppLocalization.getStrings(): MonsterCompendiumStrings {

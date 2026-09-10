@@ -26,8 +26,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.asState
 import br.alexandregpereira.hunter.monster.compendium.asStateTableContentItem
@@ -82,6 +87,7 @@ internal fun MonsterCompendiumScreen(
             tableContentOpened = state.tableContentOpened,
             listState = listState,
             contentPadding = contentPadding,
+            searchLabel = state.strings.search,
             events = events
         )
 
@@ -115,8 +121,12 @@ private fun MonsterCompendiumScreen(
     tableContentOpened: Boolean,
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    searchLabel: String,
     events: MonsterCompendiumIntent,
 ) {
+    val density = LocalDensity.current
+    var searchBarHeight by remember { mutableStateOf(0.dp) }
+    val topPadding = maxOf(searchBarHeight, contentPadding.calculateTopPadding())
     PopupContainer(
         isOpened = popupOpened,
         onPopupClosed = events::onPopupClosed,
@@ -124,9 +134,23 @@ private fun MonsterCompendiumScreen(
             MonsterCompendium(
                 items = remember(items) { items.asState() },
                 listState = listState,
-                contentPadding = contentPadding,
+                contentPadding = PaddingValues(
+                    top = topPadding,
+                    bottom = contentPadding.calculateBottomPadding(),
+                ),
                 onItemCLick = events::onItemClick,
                 onItemLongCLick = events::onItemLongClick,
+            )
+            MonsterCompendiumTopBar(
+                contentDescription = searchLabel,
+                listState = listState,
+                contentPadding = contentPadding,
+                onClick = events::onSearchClick,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .onSizeChanged { size ->
+                        searchBarHeight = with(density) { size.height.toDp() }
+                    },
             )
         },
         popupContent = {
@@ -146,7 +170,7 @@ private fun MonsterCompendiumScreen(
                 onTableContentClosed = events::onTableContentClosed,
                 modifier = Modifier
                     .padding(
-                        top = contentPadding.calculateTopPadding(),
+                        top = topPadding,
                         bottom = paddingBottom
                     )
             )

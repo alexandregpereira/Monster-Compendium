@@ -32,8 +32,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -78,6 +80,7 @@ internal fun SearchScreen(
     onAddClick: () -> Unit = {},
     onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
     onSearchKeysScrollChanges: (Int) -> Unit = {},
+    onClose: () -> Unit = {},
 ) = Box(modifier = Modifier.fillMaxSize()) {
     val listState = rememberLazyGridState(
         initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
@@ -142,6 +145,19 @@ internal fun SearchScreen(
         SearchBar(
             text = searchValue,
             searchLabel = searchLabel,
+            leadingIcon = {
+                IconButton(
+                    onClick = {
+                        focusManager.clearFocus()
+                        onClose()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                    )
+                }
+            },
             onValueChange = { newValue ->
                 if (newValue.text != searchValue.text) {
                     onSearchValueChange(newValue)

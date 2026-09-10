@@ -23,6 +23,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import br.alexandregpereira.hunter.search.ui.SearchScreen
+import br.alexandregpereira.hunter.search.ui.SearchViewState
+import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -32,6 +34,26 @@ fun SearchScreenFeature(
     val stateHolder: SearchStateHolder = koinInject()
     val state by stateHolder.state.collectAsState()
 
+    AppFullScreen(
+        isOpen = state.isShowing,
+        level = 0,
+        showCloseButton = false,
+        onClose = stateHolder::onClose,
+    ) {
+        SearchScreenContent(
+            state = state,
+            stateHolder = stateHolder,
+            contentPadding = contentPadding,
+        )
+    }
+}
+
+@Composable
+private fun SearchScreenContent(
+    state: SearchViewState,
+    stateHolder: SearchStateHolder,
+    contentPadding: PaddingValues,
+) {
     val initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex }
     val initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset }
     val initialSearchKeysScrollOffset = remember { state.searchKeysScrollOffset }
@@ -59,5 +81,6 @@ fun SearchScreenFeature(
         onAddClick = stateHolder::onAddClick,
         onScrollChanges = stateHolder::onScrollChanges,
         onSearchKeysScrollChanges = stateHolder::onSearchKeysScrollChanges,
+        onClose = stateHolder::onClose,
     )
 }
