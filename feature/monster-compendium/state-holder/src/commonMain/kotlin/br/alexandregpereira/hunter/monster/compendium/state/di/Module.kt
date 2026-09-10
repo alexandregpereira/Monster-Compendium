@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.compendium.state.di
 
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
+import br.alexandregpereira.hunter.search.event.SearchEventDispatcher
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
@@ -32,6 +33,7 @@ val monsterCompendiumModule = module {
             folderPreviewEventDispatcher = get(),
             monsterEventDispatcher = get(),
             syncEventDispatcher = get(),
+            searchEventDispatcher = get<SearchEventDispatcher>(),
             dispatcher = get(),
             analytics = MonsterCompendiumAnalytics(get()),
             appLocalization = get(),

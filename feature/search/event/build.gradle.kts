@@ -15,17 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.state
+plugins {
+    kotlin("multiplatform")
+}
 
-interface MonsterCompendiumIntent {
-    fun onFirstVisibleItemChange(position: Int)
-    fun onItemClick(index: String)
-    fun onItemLongClick(index: String)
-    fun onAlphabetIndexClicked(position: Int)
-    fun onPopupClosed()
-    fun onPopupOpened()
-    fun onTableContentIndexClicked(position: Int)
-    fun onTableContentClosed()
-    fun onErrorButtonClick()
-    fun onSearchClick()
+multiplatform {
+    commonMain {
+        implementation(project(":core:event"))
+        implementation(libs.kotlin.coroutines.core)
+    }
+    jvmMain()
+    iosMain()
 }

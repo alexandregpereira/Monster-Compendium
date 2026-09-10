@@ -47,6 +47,14 @@ internal class SearchAnalytics(
         )
     }
 
+    fun trackOpened() {
+        analytics.track(eventName = "Search - opened")
+    }
+
+    fun trackClosed() {
+        analytics.track(eventName = "Search - closed")
+    }
+
     fun trackItemLongClick(index: String, searchQuery: String) {
         analytics.track(
             eventName = "Search - item long click",

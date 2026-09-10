@@ -25,6 +25,7 @@ multiplatform {
     androidMain("br.alexandregpereira.hunter.search")
     commonMain {
         implementation(project(":core:analytics"))
+        implementation(project(":core:event"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
         implementation(project(":core:search"))
@@ -33,6 +34,7 @@ multiplatform {
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:folder-preview:event"))
+        implementation(project(":feature:search:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":ui:core"))
         implementation(project(":ui:monster-compendium"))

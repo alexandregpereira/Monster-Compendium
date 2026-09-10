@@ -15,17 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.monster.compendium.state
+package br.alexandregpereira.hunter.search.event
 
-interface MonsterCompendiumIntent {
-    fun onFirstVisibleItemChange(position: Int)
-    fun onItemClick(index: String)
-    fun onItemLongClick(index: String)
-    fun onAlphabetIndexClicked(position: Int)
-    fun onPopupClosed()
-    fun onPopupOpened()
-    fun onTableContentIndexClicked(position: Int)
-    fun onTableContentClosed()
-    fun onErrorButtonClick()
-    fun onSearchClick()
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+
+sealed class SearchEvent {
+
+    data object Show : SearchEvent()
 }
+
+class SearchEventDispatcher : EventDispatcher<SearchEvent> by EventDispatcher(
+    extraBufferCapacity = 1,
+)

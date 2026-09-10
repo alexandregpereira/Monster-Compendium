@@ -110,4 +110,10 @@ class MonsterCompendiumAnalytics(
             eventName = "MonsterCompendium - error button click",
         )
     }
+
+    fun trackSearchClick() {
+        analytics.track(
+            eventName = "MonsterCompendium - search click",
+        )
+    }
 }

@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.search
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
@@ -30,6 +31,7 @@ import br.alexandregpereira.hunter.search.domain.SearchKey
 import br.alexandregpereira.hunter.search.domain.SearchKeySymbolAnd
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
 import br.alexandregpereira.hunter.search.domain.SearchValueType
+import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.search.ui.SearchContentState
 import br.alexandregpereira.hunter.search.ui.SearchViewState
 import br.alexandregpereira.hunter.state.UiModel
@@ -53,6 +55,7 @@ internal class SearchStateHolder(
     private val searchMonstersByNameUseCase: SearchMonstersByUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
+    private val eventListener: EventListener<SearchEvent>,
     private val analytics: SearchAnalytics,
     private val dispatcher: CoroutineDispatcher,
     private val appLocalization: AppReactiveLocalization,
@@ -72,6 +75,7 @@ internal class SearchStateHolder(
             .launchIn(scope)
 
         observeLanguageChanges()
+        observeEvents()
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             search(clearCache = true)
@@ -173,6 +177,23 @@ internal class SearchStateHolder(
                 )
             }
         }.launchIn(scope)
+    }
+
+    private fun observeEvents() {
+        eventListener.events.onEach { event ->
+            when (event) {
+                SearchEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true) }
+                }
+            }
+        }.launchIn(scope)
+    }
+
+    fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false) }
     }
 
     fun onSearchValueChange(value: TextFieldValue) {

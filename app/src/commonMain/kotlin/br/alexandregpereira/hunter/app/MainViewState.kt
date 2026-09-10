@@ -21,7 +21,6 @@ import br.alexandregpereira.hunter.app.ui.resources.Res
 import br.alexandregpereira.hunter.app.ui.resources.ic_book
 import br.alexandregpereira.hunter.app.ui.resources.ic_folder
 import br.alexandregpereira.hunter.app.ui.resources.ic_menu
-import br.alexandregpereira.hunter.app.ui.resources.ic_search
 import org.jetbrains.compose.resources.DrawableResource
 
 data class MainViewState(
@@ -34,7 +33,6 @@ data class MainViewState(
 
 enum class BottomBarItemIcon(val value: DrawableResource) {
     COMPENDIUM(value = Res.drawable.ic_book),
-    SEARCH(value = Res.drawable.ic_search),
     FOLDERS(value = Res.drawable.ic_folder),
     SETTINGS(value = Res.drawable.ic_menu)
 }
