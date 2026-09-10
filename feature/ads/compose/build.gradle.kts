@@ -56,6 +56,12 @@ kotlin {
         summary = "Ads compose feature"
         homepage = "https://github.com/alexandregpereira/monster-compendium"
         ios.deploymentTarget = "14.0"
+        // A dynamic framework links its pods with ld, which cannot see the pods they depend on
+        // (e.g. FirebaseCore under FirebaseAnalytics, or AmplitudeSwift from core:analytics).
+        // The app consumes a static framework and lets Xcode link every pod from the Podfile.
+        framework {
+            isStatic = true
+        }
         pod("Google-Mobile-Ads-SDK") {
             moduleName = "GoogleMobileAds"
         }
