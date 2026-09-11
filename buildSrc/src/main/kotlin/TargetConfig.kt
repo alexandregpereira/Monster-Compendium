@@ -18,6 +18,7 @@
 import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -79,6 +80,25 @@ fun KotlinMultiplatformExtension.androidMain(
 
     sourceSets.apply {
         androidMain.dependencies(block)
+    }
+
+    addComposePreviewTooling()
+}
+
+/**
+ * Android Studio renders the commonMain @Preview functions through `ComposeViewAdapter`, which lives in
+ * ui-tooling. The Android KMP library plugin has no debug variant, so it's added only to the runtime
+ * classpath of the Compose modules to not leak into the published dependencies.
+ */
+private fun KotlinMultiplatformExtension.addComposePreviewTooling() {
+    project.pluginManager.withPlugin("com.android.kotlin.multiplatform.library") {
+        project.pluginManager.withPlugin("org.jetbrains.kotlin.plugin.compose") {
+            val uiTooling = project.extensions.getByType(VersionCatalogsExtension::class.java)
+                .named("libs")
+                .findLibrary("compose-mp-ui-tooling")
+                .get()
+            project.dependencies.add("androidRuntimeClasspath", uiTooling)
+        }
     }
 }
 

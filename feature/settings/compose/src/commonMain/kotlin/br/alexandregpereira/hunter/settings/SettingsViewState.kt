@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 
 internal data class SettingsViewState(
+    val isShowing: Boolean = false,
     val imageBaseUrl: String = "",
     val alternativeSourceBaseUrl: String = "",
     val saveButtonEnabled: Boolean = true,

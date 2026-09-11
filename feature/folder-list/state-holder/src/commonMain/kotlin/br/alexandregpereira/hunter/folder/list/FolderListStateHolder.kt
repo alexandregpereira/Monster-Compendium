@@ -76,6 +76,12 @@ class FolderListStateHolder internal constructor(
         folderDetailEventDispatcher.dispatchEvent(Show(folderName = folderName))
     }
 
+    fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false).saveState(stateRecovery) }
+    }
+
     fun onItemSelectionClose() {
         analytics.trackItemSelectionClose()
         setState {
@@ -184,10 +190,15 @@ class FolderListStateHolder internal constructor(
             loadMonsterFolders()
         }.launchIn(scope)
 
-        folderListEventListener.events.filter { event ->
-            event is FolderListEvent.OnFolderChanges
-        }.onEach {
-            loadMonsterFolders()
+        folderListEventListener.events.onEach { event ->
+            when (event) {
+                FolderListEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true).saveState(stateRecovery) }
+                }
+
+                FolderListEvent.OnFolderChanges -> loadMonsterFolders()
+            }
         }.launchIn(scope)
     }
 }

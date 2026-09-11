@@ -138,4 +138,12 @@ internal class SettingsAnalytics(
             eventName = "Settings - contact us send email click",
         )
     }
+
+    fun trackOpened() {
+        analytics.track(eventName = "Settings - opened")
+    }
+
+    fun trackClosed() {
+        analytics.track(eventName = "Settings - closed")
+    }
 }

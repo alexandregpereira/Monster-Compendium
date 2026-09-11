@@ -26,6 +26,7 @@ import kotlin.native.ObjCName
 
 @ObjCName(name = "MonsterCompendiumState", exact = true)
 data class MonsterCompendiumState(
+    val isShowing: Boolean = false,
     val isLoading: Boolean = true,
     val items: List<MonsterCompendiumItemState> = emptyList(),
     val alphabet: List<String> = emptyList(),

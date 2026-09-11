@@ -18,32 +18,47 @@
 package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.alexandregpereira.hunter.app.MainViewEvent
-import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
-import br.alexandregpereira.hunter.app.MainViewState
+import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.detail.MonsterDetailBottomSheets
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
+import br.alexandregpereira.hunter.folder.list.FolderListFeature
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
+import br.alexandregpereira.hunter.home.HomeFeature
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
+import br.alexandregpereira.hunter.search.SearchScreenFeature
+import br.alexandregpereira.hunter.settings.SettingsFeature
 
 @Composable
 internal fun AppMainLandscapeScreen(
-    state: MainViewState,
     leftPanelFraction: Float = 0.7f,
-    onEvent: (MainViewEvent) -> Unit
 ) = AppMainScreen {
     Row(Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxHeight().weight(leftPanelFraction)) {
-            AppBottomNavigationTransition(
-                bottomBarItemSelected = state.bottomBarItemSelected,
-                bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
-                bottomBarItems = state.bottomBarItems,
-                onClick = { onEvent(BottomNavigationItemClick(item = it)) },
-            )
+            Column {
+                Box(
+                    modifier = Modifier.weight(1f),
+                ) {
+                    HomeFeature()
+                    MonsterCompendiumFeature()
+                    SearchScreenFeature()
+                    FolderListFeature()
+                    FolderDetailFeature()
+                    SettingsFeature(
+                        versionName = AppConfig.VERSION_NAME,
+                    )
+                }
+                FolderPreviewFeature(
+                    modifier = Modifier,
+                )
+            }
         }
 
         Box(Modifier.fillMaxHeight().weight(1 - leftPanelFraction)) {

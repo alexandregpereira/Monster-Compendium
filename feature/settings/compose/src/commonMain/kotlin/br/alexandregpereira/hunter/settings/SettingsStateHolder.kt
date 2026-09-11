@@ -42,6 +42,7 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
+import br.alexandregpereira.hunter.settings.event.SettingsEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
@@ -89,12 +90,36 @@ internal class SettingsStateHolder(
     private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
     private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
     private val appInfoProvider: AppInfoProvider,
+    private val settingsEventListener: EventListener<SettingsEvent>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
     private val strings: SettingsStrings
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
+
+    init {
+        // Observed on init instead of onStart because the screen content, where onStart is
+        // called, is only composed after the Show event.
+        observeSettingsEvents()
+    }
+
+    private fun observeSettingsEvents() {
+        settingsEventListener.events.onEach { event ->
+            when (event) {
+                SettingsEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true) }
+                }
+            }
+        }.launchIn(scope)
+    }
+
+    fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false) }
+    }
 
     private fun observeEvents() {
         paywallResultListener.events.onEach { result ->
@@ -346,7 +371,8 @@ internal class SettingsStateHolder(
                 if (index == 1) {
                     originalSettingsState = newState.settingsState
                 }
-                setState { newState }
+                // Keeps the current visibility, the new state was built before the async loading
+                setState { newState.copy(isShowing = isShowing) }
             }
             .launchIn(scope)
     }
@@ -364,7 +390,7 @@ internal class SettingsStateHolder(
                 )
             }
             .onEach { state ->
-                setState { state }
+                setState { state.copy(isShowing = isShowing) }
             }
             .launchIn(scope)
     }

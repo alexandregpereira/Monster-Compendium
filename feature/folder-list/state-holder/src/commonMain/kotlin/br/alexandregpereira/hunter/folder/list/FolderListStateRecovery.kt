@@ -21,6 +21,7 @@ import br.alexandregpereira.hunter.ui.StateRecovery
 
 internal fun StateRecovery.getState(): FolderListState {
     return FolderListState(
+        isShowing = this["folderList:isShowing"] as? Boolean ?: false,
         isItemSelectionOpen = this["folderList:isItemSelectionOpen"] as? Boolean ?: false,
         itemSelectionCount = this["folderList:itemSelectionCount"] as? Int ?: 0,
         folders = (this["folderList:selectedFolders"] as? Set<*>)?.map {
@@ -33,6 +34,7 @@ internal fun StateRecovery.getState(): FolderListState {
 }
 
 internal fun FolderListState.saveState(stateRecovery: StateRecovery): FolderListState {
+    stateRecovery["folderList:isShowing"] = isShowing
     stateRecovery["folderList:isItemSelectionOpen"] = isItemSelectionOpen
     stateRecovery["folderList:itemSelectionCount"] = itemSelectionCount
     stateRecovery["folderList:selectedFolders"] = itemSelection

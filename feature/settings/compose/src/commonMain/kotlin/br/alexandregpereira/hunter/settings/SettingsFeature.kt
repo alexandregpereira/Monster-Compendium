@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
 import br.alexandregpereira.hunter.settings.ui.LocalStrings
 import br.alexandregpereira.hunter.settings.ui.MenuScreen
+import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.koinInject
 
@@ -47,14 +48,20 @@ fun SettingsFeature(
     }
 
     val state by viewModel.state.collectAsState()
-    CompositionLocalProvider(LocalStrings provides state.strings) {
-        MenuScreen(
-            menuItemsGroupBySection = state.menuItemsGroupBySection,
-            versionName = versionName,
-            showPremium = state.showPremium,
-            contentPadding = contentPadding,
-            onItemClicked = viewModel::onMenuItemClick,
-            onPremiumClick = viewModel::onSubscribePremiumClick,
-        )
+    AppFullScreen(
+        isOpen = state.isShowing,
+        level = 0,
+        onClose = viewModel::onClose,
+    ) {
+        CompositionLocalProvider(LocalStrings provides state.strings) {
+            MenuScreen(
+                menuItemsGroupBySection = state.menuItemsGroupBySection,
+                versionName = versionName,
+                showPremium = state.showPremium,
+                contentPadding = contentPadding,
+                onItemClicked = viewModel::onMenuItemClick,
+                onPremiumClick = viewModel::onSubscribePremiumClick,
+            )
+        }
     }
 }

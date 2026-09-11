@@ -19,16 +19,11 @@ package br.alexandregpereira.hunter.app
 
 import br.alexandregpereira.hunter.ads.consent.AdsConsentManager
 import br.alexandregpereira.hunter.analytics.Analytics
-import br.alexandregpereira.hunter.app.BottomBarItemIcon.COMPENDIUM
-import br.alexandregpereira.hunter.app.BottomBarItemIcon.FOLDERS
-import br.alexandregpereira.hunter.app.BottomBarItemIcon.SETTINGS
-import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
 import br.alexandregpereira.hunter.app.event.AppEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.revenue.RevenueSession
 import br.alexandregpereira.hunter.state.UiModel
-import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -37,16 +32,14 @@ import kotlinx.coroutines.flow.onEach
 
 class MainViewModel(
     private val appLocalization: AppReactiveLocalization,
-    private val stateRecovery: StateRecovery,
     private val appEventDispatcher: AppEventDispatcher,
     private val analytics: Analytics,
     private val revenueSession: RevenueSession,
     private val adsConsentManager: AdsConsentManager,
     private val isPremium: IsPremium,
-) : UiModel<MainViewState>(MainViewState()) {
+) : UiModel<Unit>(Unit) {
 
     init {
-        setState { updateState(stateRecovery) }
         observeLanguageChanges()
         appEventDispatcher.observeEvents()
     }
@@ -91,64 +84,12 @@ class MainViewModel(
     private fun observeLanguageChanges() {
         appLocalization.languageFlow.onEach { language ->
             analytics.setUserProperty(name = "appLanguage", value = language.code)
-            setState {
-                val strings = language.getStrings()
-                copy(
-                    bottomBarItems = BottomBarItemIcon.entries.map {
-                        when (it) {
-                            COMPENDIUM -> BottomBarItem(
-                                icon = it,
-                                text = strings.compendium
-                            )
-                            FOLDERS -> BottomBarItem(
-                                icon = it,
-                                text = strings.folders
-                            )
-                            SETTINGS -> BottomBarItem(
-                                icon = it,
-                                text = strings.menu
-                            )
-                        }
-                    },
-                )
-            }
         }.launchIn(scope)
     }
 
     fun onFileOpen(uri: String) {
         appEventDispatcher.onFileOpen(
             filePath = uri,
-        )
-    }
-
-    fun onEvent(event: MainViewEvent) {
-        when (event) {
-            is BottomNavigationItemClick -> {
-                analytics.track(
-                    eventName = "BottomBar - item click",
-                    params = mapOf(
-                        "item" to event.item.icon.name,
-                    )
-                )
-                setStateAndSave { copy(bottomBarItemSelectedIndex = bottomBarItems.indexOf(event.item)) }
-            }
-        }
-    }
-
-    private fun setStateAndSave(block: MainViewState.() -> MainViewState) {
-        setState { block().saveState(stateRecovery) }
-    }
-
-    private fun MainViewState.saveState(stateRecovery: StateRecovery): MainViewState {
-        stateRecovery["app:bottomBarItemSelectedIndex"] = bottomBarItemSelectedIndex
-        stateRecovery.dispatchChanges()
-        return this
-    }
-
-    private fun MainViewState.updateState(bundle: Map<String, Any?>): MainViewState {
-        return copy(
-            bottomBarItemSelectedIndex = (bundle["app:bottomBarItemSelectedIndex"] as? Int)
-                ?.takeIf { it in BottomBarItemIcon.entries.indices } ?: 0,
         )
     }
 }

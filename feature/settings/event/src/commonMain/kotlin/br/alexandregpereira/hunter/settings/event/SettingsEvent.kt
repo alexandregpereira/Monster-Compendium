@@ -15,8 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.app
+package br.alexandregpereira.hunter.settings.event
 
-sealed class MainViewEvent {
-    data class BottomNavigationItemClick(val item: BottomBarItem) : MainViewEvent()
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+
+sealed class SettingsEvent {
+
+    data object Show : SettingsEvent()
 }
+
+class SettingsEventDispatcher : EventDispatcher<SettingsEvent> by EventDispatcher(
+    extraBufferCapacity = 1,
+)

@@ -159,6 +159,7 @@ private fun MonsterCompendiumScreen(
                 sortOptionsOpened = sortOptionsOpened,
                 listState = listState,
                 contentPadding = contentPadding,
+                onBackClick = events::onClose,
                 onSearchClick = events::onSearchClick,
                 onSortClick = events::onSortClick,
                 onSortOptionsClose = events::onSortOptionsClose,

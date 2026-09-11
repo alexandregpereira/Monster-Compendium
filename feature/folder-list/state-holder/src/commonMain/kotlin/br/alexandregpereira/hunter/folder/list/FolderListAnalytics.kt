@@ -72,4 +72,12 @@ internal class FolderListAnalytics(
             eventName = "Folder List - item selection add to preview click",
         )
     }
+
+    fun trackOpened() {
+        analytics.track(eventName = "Folder List - opened")
+    }
+
+    fun trackClosed() {
+        analytics.track(eventName = "Folder List - closed")
+    }
 }

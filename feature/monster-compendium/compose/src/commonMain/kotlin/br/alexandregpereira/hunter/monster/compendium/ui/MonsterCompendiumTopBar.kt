@@ -30,6 +30,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,6 +68,7 @@ internal fun MonsterCompendiumTopBar(
     listState: LazyGridState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    onBackClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
     onSortClick: () -> Unit = {},
     onSortOptionsClose: () -> Unit = {},
@@ -89,6 +91,19 @@ internal fun MonsterCompendiumTopBar(
             .padding(top = contentPadding.calculateTopPadding())
             .padding(horizontal = 8.dp, vertical = 4.dp),
     ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(48.dp)
+                .animatePressed(onClick = onBackClick, pressedScale = .8f),
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+                tint = MaterialTheme.colors.onSurface,
+                modifier = Modifier.size(24.dp),
+            )
+        }
         AppDropdownButton(
             text = sortLabel,
             options = sortOptions,
@@ -99,7 +114,6 @@ internal fun MonsterCompendiumTopBar(
             onClick = onSortClick,
             onDismiss = onSortOptionsClose,
             onOptionSelected = onSortOptionSelected,
-            modifier = Modifier.padding(start = 8.dp),
         )
         Spacer(modifier = Modifier.weight(1f))
         Box(

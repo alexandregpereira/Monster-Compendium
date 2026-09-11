@@ -68,10 +68,7 @@ fun HunterApp(
 
         AdsBannerTop(modifier = Modifier.padding(contentPadding)) {
             when (screenSize.type) {
-                Portrait -> AppMainPortraitScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
+                Portrait -> AppMainPortraitScreen()
 
                 LandscapeCompact,
                 LandscapeExpanded -> {
@@ -79,9 +76,7 @@ fun HunterApp(
                         0.7f
                     } else 0.5f
                     AppMainLandscapeScreen(
-                        state = state,
                         leftPanelFraction = leftPanelFraction,
-                        onEvent = viewModel::onEvent
                     )
                 }
             }
