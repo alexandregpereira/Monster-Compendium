@@ -17,15 +17,26 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetAlphabetUseCase internal constructor() {
 
-    operator fun invoke(items: List<MonsterCompendiumItem>): Flow<List<String>> {
+    operator fun invoke(
+        items: List<MonsterCompendiumItem>,
+        sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
+    ): Flow<List<String>> {
         return flow {
-            emit(items.mapToFirstLetters().sorted().distinct())
+            val sectionKeys = items.mapToSectionKeys(sortType)
+            val alphabet = when (sortType) {
+                CompendiumSortType.ALPHABETICAL -> sectionKeys.sorted().distinct()
+                // Keeps the numeric order of the sections, a string sort would put "10" before "2"
+                CompendiumSortType.CHALLENGE_RATING_ASC,
+                CompendiumSortType.CHALLENGE_RATING_DESC -> sectionKeys.distinct()
+            }
+            emit(alphabet)
         }
     }
 }

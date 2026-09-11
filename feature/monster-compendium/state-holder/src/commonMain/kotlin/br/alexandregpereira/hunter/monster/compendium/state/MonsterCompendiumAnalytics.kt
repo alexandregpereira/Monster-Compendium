@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.monster.compendium.state
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
 
@@ -27,13 +28,18 @@ class MonsterCompendiumAnalytics(
 
     private var monsterCompendium: MonsterCompendium? = null
 
-    fun trackMonsterCompendium(monsterCompendium: MonsterCompendium, scrollItemPosition: Int) {
+    fun trackMonsterCompendium(
+        monsterCompendium: MonsterCompendium,
+        scrollItemPosition: Int,
+        sortType: CompendiumSortType,
+    ) {
         this.monsterCompendium = monsterCompendium
         analytics.track(
             eventName = "MonsterCompendium - monsters loaded",
             params = mapOf(
                 "itemsSize" to monsterCompendium.items.size,
                 "scrollItemPosition" to scrollItemPosition,
+                "sortType" to sortType.name,
             )
         )
     }
@@ -114,6 +120,21 @@ class MonsterCompendiumAnalytics(
     fun trackSearchClick() {
         analytics.track(
             eventName = "MonsterCompendium - search click",
+        )
+    }
+
+    fun trackSortClick() {
+        analytics.track(
+            eventName = "MonsterCompendium - sort click",
+        )
+    }
+
+    fun trackSortSelected(sortType: CompendiumSortType) {
+        analytics.track(
+            eventName = "MonsterCompendium - sort selected",
+            params = mapOf(
+                "sortType" to sortType.name,
+            )
         )
     }
 }

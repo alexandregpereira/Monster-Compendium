@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.domain.di
 
 import br.alexandregpereira.hunter.domain.usecase.ChangeMonstersMeasurementUnitUseCase
+import br.alexandregpereira.hunter.domain.usecase.GetCompendiumSortTypeUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterImagesUseCase
@@ -30,22 +31,25 @@ import br.alexandregpereira.hunter.domain.usecase.GetMonstersByStatus
 import br.alexandregpereira.hunter.domain.usecase.GetMonstersUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetRemoteMonstersBySourceUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMeasurementUnitUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import org.koin.dsl.module
 
 val monsterDomainModule = module {
     factory { ChangeMonstersMeasurementUnitUseCase(get(), get(), get()) }
+    factory { GetCompendiumSortTypeUseCase(get()) }
     factory { GetLastCompendiumScrollItemPositionUseCase(get()) }
     factory { GetMeasurementUnitUseCase(get()) }
     factory { GetMonsterImagesUseCase(get()) }
     factory { GetMonsterPreviewsCacheUseCase(get(), get()) }
     factory { GetMonsterPreviewsUseCase(get(), get()) }
     factory { GetMonstersByIdsUseCase(get()) }
-    factory { GetMonstersAroundIndexUseCase(get(), get()) }
+    factory { GetMonstersAroundIndexUseCase(get(), get(), get()) }
     factory { GetMonsterUseCase(get()) }
     factory { GetMonstersUseCase(get()) }
     factory { SaveCompendiumScrollItemPositionUseCase(get()) }
+    factory { SaveCompendiumSortTypeUseCase(get()) }
     factory { SaveMeasurementUnitUseCase(get(), get()) }
     factory { SaveMonstersUseCase(get(), get(), get()) }
     factory { GetRemoteMonstersBySourceUseCase(get(), get()) }

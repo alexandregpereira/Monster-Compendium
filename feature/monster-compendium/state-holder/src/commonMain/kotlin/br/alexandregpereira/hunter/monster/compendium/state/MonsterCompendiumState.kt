@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
@@ -35,8 +36,24 @@ data class MonsterCompendiumState(
     val tableContentInitialIndex: Int = 0,
     val tableContentOpened: Boolean = false,
     val errorState: MonsterCompendiumError? = null,
+    val sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
+    val sortOptionsOpened: Boolean = false,
     val strings: MonsterCompendiumStrings = MonsterCompendiumStrings(),
 )
+
+val MonsterCompendiumState.sortOptions: List<String>
+    get() = CompendiumSortType.entries.map { strings.getSortLabel(it) }
+
+val MonsterCompendiumState.sortSelectedLabel: String
+    get() = strings.getSortLabel(sortType)
+
+private fun MonsterCompendiumStrings.getSortLabel(sortType: CompendiumSortType): String {
+    return when (sortType) {
+        CompendiumSortType.ALPHABETICAL -> sortAlphabetical
+        CompendiumSortType.CHALLENGE_RATING_ASC -> sortChallengeRatingAsc
+        CompendiumSortType.CHALLENGE_RATING_DESC -> sortChallengeRatingDesc
+    }
+}
 
 @ObjCName(name = "MonsterCompendiumItemState", exact = true)
 sealed class MonsterCompendiumItemState {

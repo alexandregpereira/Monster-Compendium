@@ -24,18 +24,30 @@ interface MonsterCompendiumStrings {
     val noInternetConnection: String
     val tryAgain: String
     val search: String
+    val sortAlphabetical: String
+    val sortBy: String
+    val sortChallengeRatingAsc: String
+    val sortChallengeRatingDesc: String
 }
 
 internal data class MonsterCompendiumEnStrings(
     override val noInternetConnection: String = "No internet connection",
     override val tryAgain: String = "Try again",
     override val search: String = "Search",
+    override val sortAlphabetical: String = "Alphabetical",
+    override val sortBy: String = "Sort by",
+    override val sortChallengeRatingAsc: String = "Challenge rating (asc)",
+    override val sortChallengeRatingDesc: String = "Challenge rating (desc)",
 ) : MonsterCompendiumStrings
 
 internal data class MonsterCompendiumPtrStrings(
     override val noInternetConnection: String = "Sem conexão com a internet",
     override val tryAgain: String = "Tentar novamente",
     override val search: String = "Buscar",
+    override val sortAlphabetical: String = "Alfabética",
+    override val sortBy: String = "Ordenar por",
+    override val sortChallengeRatingAsc: String = "Nível de desafio (cresc.)",
+    override val sortChallengeRatingDesc: String = "Nível de desafio (decresc.)",
 ) : MonsterCompendiumStrings
 
 fun MonsterCompendiumStrings(): MonsterCompendiumStrings = MonsterCompendiumEnStrings()
@@ -44,10 +56,18 @@ internal data class MonsterCompendiumEsStrings(
     override val noInternetConnection: String = "Sin conexión a internet",
     override val tryAgain: String = "Intentar de nuevo",
     override val search: String = "Buscar",
+    override val sortAlphabetical: String = "Alfabético",
+    override val sortBy: String = "Ordenar por",
+    override val sortChallengeRatingAsc: String = "Valor de desafío (asc.)",
+    override val sortChallengeRatingDesc: String = "Valor de desafío (desc.)",
 ) : MonsterCompendiumStrings
 
 internal fun AppLocalization.getStrings(): MonsterCompendiumStrings {
-    return when (getLanguage()) {
+    return getLanguage().getStrings()
+}
+
+internal fun Language.getStrings(): MonsterCompendiumStrings {
+    return when (this) {
         Language.ENGLISH -> MonsterCompendiumEnStrings()
         Language.PORTUGUESE -> MonsterCompendiumPtrStrings()
         Language.SPANISH -> MonsterCompendiumEsStrings()

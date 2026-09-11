@@ -28,4 +28,7 @@ interface MonsterCompendiumIntent {
     fun onTableContentClosed()
     fun onErrorButtonClick()
     fun onSearchClick()
+    fun onSortClick()
+    fun onSortOptionsClose()
+    fun onSortOptionSelected(index: Int)
 }

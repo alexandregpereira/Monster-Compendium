@@ -15,15 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.domain.model.CompendiumSortType
-import kotlinx.coroutines.flow.Flow
-
-interface CompendiumRepository {
-
-    fun getLastCompendiumScrollItemPosition(): Flow<Int>
-    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
-    fun getCompendiumSortType(): Flow<CompendiumSortType>
-    fun saveCompendiumSortType(sortType: CompendiumSortType): Flow<Unit>
+enum class CompendiumSortType {
+    ALPHABETICAL,
+    CHALLENGE_RATING_ASC,
+    CHALLENGE_RATING_DESC,
 }

@@ -29,7 +29,7 @@ import org.koin.dsl.module
 
 val monsterCompendiumDomainModule = module {
     factory { GetAlphabetUseCase() }
-    factory { GetMonsterCompendiumUseCase(get(), get()) }
+    factory { GetMonsterCompendiumUseCase(get(), get(), get()) }
     factory {
         GetMonsterPreviewsBySectionUseCase(
             getMonsterPreviewsUseCase = get(),

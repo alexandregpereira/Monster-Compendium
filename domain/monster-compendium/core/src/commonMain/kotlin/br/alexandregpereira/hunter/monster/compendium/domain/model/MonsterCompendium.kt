@@ -17,8 +17,11 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain.model
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
+
 data class MonsterCompendium(
     val items: List<MonsterCompendiumItem>,
     val tableContent: List<TableContentItem>,
     val alphabet: List<String>,
+    val sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
 )

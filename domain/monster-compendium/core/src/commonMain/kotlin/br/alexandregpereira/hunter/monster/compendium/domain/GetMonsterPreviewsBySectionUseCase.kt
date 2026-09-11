@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterPreviewsUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +27,9 @@ class GetMonsterPreviewsBySectionUseCase internal constructor(
     private val getMonstersBySectionUseCase: GetMonstersBySectionUseCase,
 ) {
 
-    operator fun invoke(): Flow<List<MonsterCompendiumItem>> {
-        return getMonstersBySectionUseCase(getMonsterPreviewsUseCase())
+    operator fun invoke(
+        sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
+    ): Flow<List<MonsterCompendiumItem>> {
+        return getMonstersBySectionUseCase(getMonsterPreviewsUseCase(), sortType)
     }
 }
