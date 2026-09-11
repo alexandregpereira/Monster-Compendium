@@ -31,6 +31,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,88 +82,94 @@ internal fun HomeScreen(
             modifier = sectionModifier,
         )
 
-        HomeSearchButton(
-            placeholder = strings.searchPlaceholder,
-            onClick = onSearchClick,
-            modifier = sectionModifier.padding(top = 20.dp),
-        )
+        state.sections.forEach { section ->
+            // Keeps the remembered state, like the rows scroll, with its section when the order changes
+            key(section::class) {
+                when (section) {
+                    HomeSectionState.Search -> HomeSearchButton(
+                        placeholder = strings.searchPlaceholder,
+                        onClick = onSearchClick,
+                        modifier = sectionModifier.padding(top = 20.dp),
+                    )
 
-        HomeCategoryGrid(
-            categories = state.categories,
-            strings = strings,
-            onCategoryClick = onCategoryClick,
-            modifier = sectionModifier.padding(top = 20.dp),
-        )
+                    is HomeSectionState.Categories -> HomeCategoryGrid(
+                        categories = section.categories,
+                        strings = strings,
+                        onCategoryClick = onCategoryClick,
+                        modifier = sectionModifier.padding(top = 20.dp),
+                    )
 
-        if (state.recentMonsters.isNotEmpty()) {
-            HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = horizontalPadding),
-            ) {
-                items(state.recentMonsters, key = { it.index }) { monster ->
-                    HomeMonsterCard(
-                        monster = monster,
-                        onClick = { onMonsterClick(monster.index) },
+                    is HomeSectionState.RecentlyViewed -> {
+                        HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(horizontal = horizontalPadding),
+                        ) {
+                            items(section.monsters, key = { it.index }) { monster ->
+                                HomeMonsterCard(
+                                    monster = monster,
+                                    onClick = { onMonsterClick(monster.index) },
+                                )
+                            }
+                        }
+                    }
+
+                    is HomeSectionState.Folders -> {
+                        HomeSectionTitle(title = strings.folders, modifier = sectionModifier)
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(horizontal = horizontalPadding),
+                        ) {
+                            items(section.folders, key = { it.name }) { folder ->
+                                HomeFolderCard(
+                                    folder = folder,
+                                    onClick = { onFolderClick(folder.name) },
+                                )
+                            }
+                        }
+                        HomePillButton(
+                            text = strings.seeAllFolders,
+                            onClick = onSeeAllFoldersClick,
+                            modifier = sectionModifier.padding(top = 16.dp),
+                        )
+                    }
+
+                    HomeSectionState.Create -> {
+                        HomeSectionTitle(title = strings.create, modifier = sectionModifier)
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = sectionModifier,
+                        ) {
+                            HomePillButton(
+                                text = strings.monster,
+                                icon = Icons.Filled.Add,
+                                onClick = onCreateMonsterClick,
+                            )
+                            HomePillButton(
+                                text = strings.spell,
+                                icon = Icons.Filled.Add,
+                                onClick = onCreateSpellClick,
+                            )
+                            HomePillButton(
+                                text = strings.folder,
+                                icon = Icons.Filled.Add,
+                                onClick = onCreateFolderClick,
+                            )
+                        }
+                    }
+
+                    is HomeSectionState.ExtraContent -> HomeExtraContentCard(
+                        title = strings.extraContent,
+                        progressText = strings.extraContentProgress(section.added, section.total),
+                        buttonText = strings.manageExtraContent,
+                        added = section.added,
+                        total = section.total,
+                        onButtonClick = onManageExtraContentClick,
+                        modifier = sectionModifier.padding(top = 32.dp),
                     )
                 }
             }
         }
-
-        if (state.folders.isNotEmpty()) {
-            HomeSectionTitle(title = strings.folders, modifier = sectionModifier)
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = horizontalPadding),
-            ) {
-                items(state.folders, key = { it.name }) { folder ->
-                    HomeFolderCard(
-                        folder = folder,
-                        onClick = { onFolderClick(folder.name) },
-                    )
-                }
-            }
-            HomePillButton(
-                text = strings.seeAllFolders,
-                onClick = onSeeAllFoldersClick,
-                modifier = sectionModifier.padding(top = 16.dp),
-            )
-        }
-
-        HomeSectionTitle(title = strings.create, modifier = sectionModifier)
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = sectionModifier,
-        ) {
-            HomePillButton(
-                text = strings.monster,
-                icon = Icons.Filled.Add,
-                onClick = onCreateMonsterClick,
-            )
-            HomePillButton(
-                text = strings.spell,
-                icon = Icons.Filled.Add,
-                onClick = onCreateSpellClick,
-            )
-            HomePillButton(
-                text = strings.folder,
-                icon = Icons.Filled.Add,
-                onClick = onCreateFolderClick,
-            )
-        }
-
-        HomeExtraContentCard(
-            title = strings.extraContent,
-            progressText = strings.extraContentProgress(
-                state.extraContentAdded,
-                state.extraContentTotal,
-            ),
-            buttonText = strings.manageExtraContent,
-            added = state.extraContentAdded,
-            total = state.extraContentTotal,
-            onButtonClick = onManageExtraContentClick,
-            modifier = sectionModifier.padding(top = 32.dp),
-        )
     }
 }
 
@@ -190,6 +197,22 @@ private fun HomeScreenDarkPreview() = HunterTheme(darkTheme = true) {
 private fun HomeScreenLightPreview() = HunterTheme(darkTheme = false) {
     HomeScreen(
         state = homeMockViewState,
+        strings = HomeStrings(),
+    )
+}
+
+@Preview
+@Composable
+private fun HomeScreenReorderedSectionsPreview() = HunterTheme(darkTheme = true) {
+    val sections = homeMockViewState.sections
+    HomeScreen(
+        state = homeMockViewState.copy(
+            sections = listOfNotNull(
+                sections.filterIsInstance<HomeSectionState.ExtraContent>().firstOrNull(),
+                sections.filterIsInstance<HomeSectionState.Folders>().firstOrNull(),
+                HomeSectionState.Search,
+            ),
+        ),
         strings = HomeStrings(),
     )
 }

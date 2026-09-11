@@ -20,14 +20,38 @@ package br.alexandregpereira.hunter.home.ui
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 
+/**
+ * The Home shows the [sections] in the order of the list. A section that is not in the list is not
+ * shown.
+ */
 internal data class HomeViewState(
     val hasUnreadNotifications: Boolean = false,
-    val categories: List<HomeCategoryState> = emptyList(),
-    val recentMonsters: List<MonsterCardState> = emptyList(),
-    val folders: List<HomeFolderState> = emptyList(),
-    val extraContentAdded: Int = 0,
-    val extraContentTotal: Int = 0,
+    val sections: List<HomeSectionState> = emptyList(),
 )
+
+internal sealed interface HomeSectionState {
+
+    data object Search : HomeSectionState
+
+    data class Categories(
+        val categories: List<HomeCategoryState>,
+    ) : HomeSectionState
+
+    data class RecentlyViewed(
+        val monsters: List<MonsterCardState>,
+    ) : HomeSectionState
+
+    data class Folders(
+        val folders: List<HomeFolderState>,
+    ) : HomeSectionState
+
+    data object Create : HomeSectionState
+
+    data class ExtraContent(
+        val added: Int,
+        val total: Int,
+    ) : HomeSectionState
+}
 
 internal data class HomeCategoryState(
     val type: HomeCategoryType,
