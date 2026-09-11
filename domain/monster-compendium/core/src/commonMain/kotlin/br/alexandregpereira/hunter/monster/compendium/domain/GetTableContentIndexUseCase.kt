@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import kotlinx.coroutines.flow.Flow
@@ -71,20 +72,28 @@ fun List<TableContentItem>.getTableContentIndexFromCompendiumItemIndex(
 fun List<String>.getAlphabetIndexFromCompendiumItemIndex(
     itemIndex: Int,
     items: List<MonsterCompendiumItem>,
+    sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
 ): Int {
     if (items.isEmpty()) return -1
-    val monsterFirstLetters = items.mapToFirstLetters()
-    return indexOf(monsterFirstLetters[itemIndex])
+    val sectionKeys = items.mapToSectionKeys(sortType)
+    return indexOf(sectionKeys[itemIndex])
 }
 
-internal fun List<MonsterCompendiumItem>.mapToFirstLetters(): List<String> {
-    var lastLetter: Char? = null
+internal fun List<MonsterCompendiumItem>.mapToSectionKeys(
+    sortType: CompendiumSortType,
+): List<String> {
+    var lastSectionKey: String? = null
     return mapNotNull { item ->
         when (item) {
             is MonsterCompendiumItem.Title -> {
-                item.value.firstOrNull()?.also { lastLetter = it }?.toString()
+                val sectionKey = when (sortType) {
+                    CompendiumSortType.ALPHABETICAL -> item.value.firstOrNull()?.toString()
+                    CompendiumSortType.CHALLENGE_RATING_ASC,
+                    CompendiumSortType.CHALLENGE_RATING_DESC -> item.value.takeIf { it.isNotEmpty() }
+                }
+                sectionKey?.also { lastSectionKey = it }
             }
-            is MonsterCompendiumItem.Item -> lastLetter?.toString()
+            is MonsterCompendiumItem.Item -> lastSectionKey
         }
     }
 }

@@ -19,7 +19,9 @@ package br.alexandregpereira.hunter.monster.compendium.domain
 
 import br.alexandregpereira.hunter.domain.collections.equalsWithNoSpecialChar
 import br.alexandregpereira.hunter.domain.collections.removeSpecialCharacters
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.Monster
+import br.alexandregpereira.hunter.domain.sort.sortMonstersByChallengeRating
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -27,12 +29,47 @@ import kotlinx.coroutines.flow.onEach
 
 class GetMonstersBySectionUseCase internal constructor() {
 
-    operator fun invoke(monstersFlow: Flow<List<Monster>>): Flow<List<MonsterCompendiumItem>> {
-        return monstersFlow
+    operator fun invoke(
+        monstersFlow: Flow<List<Monster>>,
+        sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
+    ): Flow<List<MonsterCompendiumItem>> {
+        val monstersNotEmptyFlow = monstersFlow
             .onEach {
                 if (it.isEmpty()) throw MonsterCompendiumError.NoMonsterError()
             }
-            .toMonsterCompendiumItems()
+        return when (sortType) {
+            CompendiumSortType.ALPHABETICAL -> monstersNotEmptyFlow.toMonsterCompendiumItems()
+            CompendiumSortType.CHALLENGE_RATING_ASC -> monstersNotEmptyFlow.toChallengeRatingItems(
+                descending = false
+            )
+            CompendiumSortType.CHALLENGE_RATING_DESC -> monstersNotEmptyFlow.toChallengeRatingItems(
+                descending = true
+            )
+        }
+    }
+
+    private fun Flow<List<Monster>>.toChallengeRatingItems(
+        descending: Boolean,
+    ): Flow<List<MonsterCompendiumItem>> {
+        return map { monsters ->
+            val items = mutableListOf<MonsterCompendiumItem>()
+            var lastChallengeRating: Float? = null
+            monsters.sortMonstersByChallengeRating(descending).forEach { monster ->
+                val challengeRating = monster.challengeRatingData
+                if (challengeRating.value != lastChallengeRating) {
+                    lastChallengeRating = challengeRating.value
+                    items.add(
+                        MonsterCompendiumItem.Title(
+                            id = "cr-${challengeRating.valueInString}",
+                            value = challengeRating.formatted,
+                            isHeader = true
+                        )
+                    )
+                }
+                items.add(MonsterCompendiumItem.Item(monster = monster))
+            }
+            items
+        }
     }
 
     private fun String.getFirstLetter(): String {

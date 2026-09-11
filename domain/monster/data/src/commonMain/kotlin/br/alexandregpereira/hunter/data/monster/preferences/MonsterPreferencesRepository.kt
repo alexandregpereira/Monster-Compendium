@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.data.monster.preferences
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.MeasurementUnit
 import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import br.alexandregpereira.hunter.domain.repository.MeasurementUnitRepository
@@ -36,6 +37,19 @@ internal class MonsterPreferencesRepository(
 
     override fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit> {
         return settingsRepository.saveValue(COMPENDIUM_SCROLL_ITEM_POSITION_KEY, position)
+    }
+
+    override fun getCompendiumSortType(): Flow<CompendiumSortType> {
+        return settingsRepository.getValue(
+            COMPENDIUM_SORT_TYPE_KEY,
+            defaultValue = CompendiumSortType.ALPHABETICAL.name
+        ).map { value ->
+            CompendiumSortType.entries.find { it.name == value } ?: CompendiumSortType.ALPHABETICAL
+        }
+    }
+
+    override fun saveCompendiumSortType(sortType: CompendiumSortType): Flow<Unit> {
+        return settingsRepository.saveString(COMPENDIUM_SORT_TYPE_KEY, sortType.name)
     }
 
     override fun saveMeasurementUnit(measurementUnit: MeasurementUnit): Flow<Unit> {
@@ -69,5 +83,6 @@ internal class MonsterPreferencesRepository(
 }
 
 private const val COMPENDIUM_SCROLL_ITEM_POSITION_KEY = "COMPENDIUM_SCROLL_ITEM_POSITION_KEY"
+private const val COMPENDIUM_SORT_TYPE_KEY = "COMPENDIUM_SORT_TYPE_KEY"
 private const val MEASUREMENT_UNIT_KEY = "MEASUREMENT_UNIT_KEY"
 private const val PREVIOUS_MEASUREMENT_UNIT_KEY = "PREVIOUS_MEASUREMENT_UNIT_KEY"

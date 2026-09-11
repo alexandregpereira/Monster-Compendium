@@ -23,14 +23,16 @@ import br.alexandregpereira.flow.test.assertNextValue
 import br.alexandregpereira.flow.test.testFlows
 import br.alexandregpereira.hunter.analytics.EmptyAnalytics
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterType
 import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
@@ -384,22 +386,56 @@ class MonsterCompendiumStateHolderTest {
         assertEquals(expected = listOf<SearchEvent>(SearchEvent.Show), actual = searchEvents)
     }
 
+    @Test
+    fun onSortOptionSelected() = runTest {
+        // Given
+        val savedSortTypes = mutableListOf<CompendiumSortType>()
+        createStateHolder(
+            getMonsterCompendiumUseCase = {
+                flowOf(
+                    MonsterCompendium(
+                        items = emptyList(),
+                        tableContent = emptyList(),
+                        alphabet = emptyList(),
+                    )
+                )
+            },
+            saveSortTypeUseCase = { sortType ->
+                savedSortTypes.add(sortType)
+                flowOf(Unit)
+            },
+        )
+
+        // When
+        val (_, actions) = testFlows(stateHolder.state, stateHolder.action) {
+            stateHolder.apply { advanceUntilIdle() }.onSortOptionSelected(1)
+            advanceUntilIdle()
+        }
+
+        // Then
+        assertEquals(expected = listOf(CompendiumSortType.CHALLENGE_RATING_ASC), actual = savedSortTypes)
+        actions.assertFinalValue(GoToCompendiumIndex(0, shouldAnimate = false))
+    }
+
     private fun createStateHolder(
         getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
         getLastScrollPositionUseCase: GetLastCompendiumScrollItemPositionUseCase = GetLastCompendiumScrollItemPositionUseCase { flowOf(0) },
-        saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = SaveCompendiumScrollItemPositionUseCase { flowOf(Unit) }
+        saveScrollPositionUseCase: SaveCompendiumScrollItemPositionUseCase = SaveCompendiumScrollItemPositionUseCase { flowOf(Unit) },
+        saveSortTypeUseCase: SaveCompendiumSortTypeUseCase = SaveCompendiumSortTypeUseCase { flowOf(Unit) },
     ) {
         stateHolder = MonsterCompendiumStateHolder(
             getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
             getLastCompendiumScrollItemPositionUseCase = getLastScrollPositionUseCase,
             saveCompendiumScrollItemPositionUseCase = saveScrollPositionUseCase,
+            saveCompendiumSortTypeUseCase = saveSortTypeUseCase,
             folderPreviewEventDispatcher = folderPreviewEventDispatcher,
             monsterEventDispatcher = monsterDetailEventDispatcher,
             syncEventDispatcher = syncEventDispatcher,
             searchEventDispatcher = searchEventDispatcher,
             dispatcher = testCoroutineDispatcher,
             analytics = MonsterCompendiumAnalytics(analytics = EmptyAnalytics()),
-            appLocalization = object : AppLocalization {
+            appLocalization = object : AppReactiveLocalization {
+                override val languageFlow: Flow<Language> = flowOf(Language.ENGLISH)
                 override fun getLanguage(): Language = Language.ENGLISH
             },
             isFirstTime = { false },

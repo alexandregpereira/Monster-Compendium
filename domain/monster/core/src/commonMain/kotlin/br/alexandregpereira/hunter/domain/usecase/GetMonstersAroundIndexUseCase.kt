@@ -19,21 +19,25 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.isComplete
-import br.alexandregpereira.hunter.domain.sort.sortMonstersByNameAndGroup
+import br.alexandregpereira.hunter.domain.sort.sortMonstersBy
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.single
 
 class GetMonstersAroundIndexUseCase internal constructor(
     private val getMonsterPreviewsCacheUseCase: GetMonsterPreviewsCacheUseCase,
-    private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase
+    private val getMonstersByIdsUseCase: GetMonstersByIdsUseCase,
+    private val getCompendiumSortTypeUseCase: GetCompendiumSortTypeUseCase,
 ) {
 
     operator fun invoke(
         monsterIndex: String,
         invalidateCache: Boolean = false
     ): Flow<List<Monster>> = flow {
-        val monsterPreviews = getMonsterPreviewsCacheUseCase(invalidateCache).sortMonstersByNameAndGroup().single()
+        val sortType = getCompendiumSortTypeUseCase().first()
+        val monsterPreviews = getMonsterPreviewsCacheUseCase(invalidateCache).single()
+            .sortMonstersBy(sortType)
         val position = monsterPreviews.indexOfFirst { it.index == monsterIndex }
         val completeMonsters = getCompleteMonsters(
             monsterPreviews = monsterPreviews,

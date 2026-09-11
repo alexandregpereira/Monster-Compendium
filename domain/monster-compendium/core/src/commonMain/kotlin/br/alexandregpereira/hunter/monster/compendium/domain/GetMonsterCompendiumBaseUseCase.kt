@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
 import kotlinx.coroutines.async
@@ -31,12 +32,13 @@ class GetMonsterCompendiumBaseUseCase internal constructor(
 ) {
 
     operator fun invoke(
-        monstersBySectionFlow: Flow<List<MonsterCompendiumItem>>
+        monstersBySectionFlow: Flow<List<MonsterCompendiumItem>>,
+        sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
     ): Flow<MonsterCompendium> {
         return monstersBySectionFlow.map { items ->
             val (tableContent, alphabet) = coroutineScope {
                 val tableContentDeferred = async { getTableContentUseCase(items).single() }
-                val alphabetDeferred = async { getAlphabetUseCase(items).single() }
+                val alphabetDeferred = async { getAlphabetUseCase(items, sortType).single() }
 
                 tableContentDeferred.await() to alphabetDeferred.await()
             }
@@ -44,7 +46,8 @@ class GetMonsterCompendiumBaseUseCase internal constructor(
             MonsterCompendium(
                 items = items,
                 tableContent = tableContent,
-                alphabet = alphabet
+                alphabet = alphabet,
+                sortType = sortType,
             )
         }
     }

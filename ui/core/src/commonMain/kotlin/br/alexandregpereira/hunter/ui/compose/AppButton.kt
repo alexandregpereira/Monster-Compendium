@@ -21,15 +21,21 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -124,12 +130,81 @@ fun AppCircleButton(
 }
 
 @Composable
+fun AppDropdownButton(
+    text: String,
+    options: List<String>,
+    expanded: Boolean,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    size: AppButtonSize = AppButtonSize.SMALL,
+    type: AppButtonType = AppButtonType.SECONDARY,
+    backgroundAlpha: Float = 1f,
+    onClick: () -> Unit = {},
+    onDismiss: () -> Unit = {},
+    onOptionSelected: (index: Int) -> Unit = {},
+) = Box(modifier) {
+    val isVerySmall = size == AppButtonSize.VERY_SMALL
+    AppBasicButton(
+        modifier = Modifier.height(size.height.dp),
+        type = type,
+        backgroundAlpha = backgroundAlpha,
+        onClick = onClick,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(
+                start = if (isVerySmall) 12.dp else 16.dp,
+                end = if (isVerySmall) 6.dp else 8.dp,
+            ),
+        ) {
+            Text(
+                text = text,
+                fontWeight = FontWeight.Normal,
+                color = LocalContentColor.current,
+                fontSize = if (isVerySmall) 12.sp else 16.sp,
+            )
+            Icon(
+                imageVector = Icons.Filled.KeyboardArrowDown,
+                contentDescription = null,
+                tint = LocalContentColor.current,
+                modifier = Modifier
+                    .padding(start = 2.dp)
+                    .size(if (isVerySmall) 16.dp else 24.dp),
+            )
+        }
+    }
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = onDismiss,
+    ) {
+        if (title != null) {
+            Text(
+                text = title,
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+        options.forEachIndexed { index, option ->
+            DropdownMenuItem(onClick = { onOptionSelected(index) }) {
+                Text(
+                    text = option,
+                    color = MaterialTheme.colors.onSurface,
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun AppBasicButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: RoundedCornerShape = RoundedCornerShape(24.dp),
     type: AppButtonType = AppButtonType.PRIMARY,
     elevation: Int = 1,
+    backgroundAlpha: Float = 1f,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
@@ -159,7 +234,7 @@ private fun AppBasicButton(
                 onClick = onClick
             )
             .clip(shape)
-            .background(color = backgroundColor.copy(alpha = backgroundColorAlpha)),
+            .background(color = backgroundColor.copy(alpha = backgroundColorAlpha * backgroundAlpha)),
         contentAlignment = Alignment.Center
     ) {
         CompositionLocalProvider(

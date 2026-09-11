@@ -30,6 +30,7 @@ val monsterCompendiumModule = module {
             getMonsterCompendiumUseCase = get(),
             getLastCompendiumScrollItemPositionUseCase = get(),
             saveCompendiumScrollItemPositionUseCase = get(),
+            saveCompendiumSortTypeUseCase = get(),
             folderPreviewEventDispatcher = get(),
             monsterEventDispatcher = get(),
             syncEventDispatcher = get(),

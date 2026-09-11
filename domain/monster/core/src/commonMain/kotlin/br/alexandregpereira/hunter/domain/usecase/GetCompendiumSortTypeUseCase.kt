@@ -15,15 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.domain.repository
+package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.CompendiumSortType
+import br.alexandregpereira.hunter.domain.repository.CompendiumRepository
 import kotlinx.coroutines.flow.Flow
 
-interface CompendiumRepository {
+fun interface GetCompendiumSortTypeUseCase {
+    operator fun invoke(): Flow<CompendiumSortType>
+}
 
-    fun getLastCompendiumScrollItemPosition(): Flow<Int>
-    fun saveCompendiumScrollItemPosition(position: Int): Flow<Unit>
-    fun getCompendiumSortType(): Flow<CompendiumSortType>
-    fun saveCompendiumSortType(sortType: CompendiumSortType): Flow<Unit>
+fun GetCompendiumSortTypeUseCase(
+    repository: CompendiumRepository
+): GetCompendiumSortTypeUseCase = GetCompendiumSortTypeUseCase {
+    repository.getCompendiumSortType()
 }

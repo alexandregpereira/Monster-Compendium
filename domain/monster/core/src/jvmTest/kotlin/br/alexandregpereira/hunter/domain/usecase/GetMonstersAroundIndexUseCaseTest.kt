@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.domain.usecase
 
 import br.alexandregpereira.hunter.domain.model.AbilityScore
 import br.alexandregpereira.hunter.domain.model.AbilityScoreType.CHARISMA
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.model.isComplete
 import io.mockk.every
@@ -36,6 +37,7 @@ class GetMonstersAroundIndexUseCaseTest {
     private val useCase = GetMonstersAroundIndexUseCase(
         getMonsterPreviewsCacheUseCase = getMonsterPreviewsCacheUseCase,
         getMonstersByIdsUseCase = getMonstersByIdsUseCase,
+        getCompendiumSortTypeUseCase = { flowOf(CompendiumSortType.ALPHABETICAL) },
     )
 
     private val totalRange = 1..200

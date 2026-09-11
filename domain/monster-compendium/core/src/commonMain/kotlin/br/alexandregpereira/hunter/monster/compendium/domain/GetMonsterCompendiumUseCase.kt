@@ -17,8 +17,12 @@
 
 package br.alexandregpereira.hunter.monster.compendium.domain
 
+import br.alexandregpereira.hunter.domain.usecase.GetCompendiumSortTypeUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 
 fun interface GetMonsterCompendiumUseCase {
     operator fun invoke(): Flow<MonsterCompendium>
@@ -26,7 +30,16 @@ fun interface GetMonsterCompendiumUseCase {
 
 fun GetMonsterCompendiumUseCase(
     getMonsterPreviewsBySectionUseCase: GetMonsterPreviewsBySectionUseCase,
-    getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase
+    getMonsterCompendiumBaseUseCase: GetMonsterCompendiumBaseUseCase,
+    getCompendiumSortTypeUseCase: GetCompendiumSortTypeUseCase,
 ) : GetMonsterCompendiumUseCase = GetMonsterCompendiumUseCase {
-    getMonsterCompendiumBaseUseCase(getMonsterPreviewsBySectionUseCase())
+    flow {
+        val sortType = getCompendiumSortTypeUseCase().first()
+        emitAll(
+            getMonsterCompendiumBaseUseCase(
+                monstersBySectionFlow = getMonsterPreviewsBySectionUseCase(sortType),
+                sortType = sortType,
+            )
+        )
+    }
 }

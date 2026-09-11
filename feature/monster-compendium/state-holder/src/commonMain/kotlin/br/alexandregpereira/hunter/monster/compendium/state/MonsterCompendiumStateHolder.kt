@@ -17,12 +17,15 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
+import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexFromTableContentIndex
@@ -35,7 +38,6 @@ import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChange
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterPageChanges
-import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
@@ -48,6 +50,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import kotlin.native.ObjCName
@@ -57,6 +60,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val getMonsterCompendiumUseCase: GetMonsterCompendiumUseCase,
     private val getLastCompendiumScrollItemPositionUseCase: GetLastCompendiumScrollItemPositionUseCase,
     private val saveCompendiumScrollItemPositionUseCase: SaveCompendiumScrollItemPositionUseCase,
+    private val saveCompendiumSortTypeUseCase: SaveCompendiumSortTypeUseCase,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val syncEventDispatcher: SyncEventDispatcher,
@@ -64,7 +68,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: MonsterCompendiumAnalytics,
     private val isFirstTime: IsFirstTime,
-    appLocalization: AppLocalization,
+    private val appLocalization: AppReactiveLocalization,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
 ), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
@@ -75,8 +79,15 @@ class MonsterCompendiumStateHolder internal constructor(
     private var metadata: List<MonsterCompendiumItem> = emptyList()
 
     init {
+        observeLanguageChanges()
         observeEvents()
         loadMonsters()
+    }
+
+    private fun observeLanguageChanges() {
+        appLocalization.languageFlow.onEach { language ->
+            setState { copy(strings = language.getStrings()) }
+        }.launchIn(scope)
     }
 
     private fun loadMonsters() = scope.launch {
@@ -93,7 +104,7 @@ class MonsterCompendiumStateHolder internal constructor(
             .zip(
                 getLastCompendiumScrollItemPositionUseCase()
             ) { compendium, scrollItemPosition ->
-                analytics.trackMonsterCompendium(compendium, scrollItemPosition)
+                analytics.trackMonsterCompendium(compendium, scrollItemPosition, compendium.sortType)
                 val items = compendium.items
                 metadata = items
                 val alphabet = compendium.alphabet
@@ -109,8 +120,9 @@ class MonsterCompendiumStateHolder internal constructor(
                     alphabetSelectedIndex = alphabet.getAlphabetIndexFromCompendiumItemIndex(
                         scrollItemPosition,
                         items,
+                        compendium.sortType,
                     ),
-                ) to scrollItemPosition
+                ).copy(sortType = compendium.sortType) to scrollItemPosition
             }
             .onStart {
                 emit(state.value.loading(isLoading = true) to initialScrollItemPosition)
@@ -141,6 +153,30 @@ class MonsterCompendiumStateHolder internal constructor(
     override fun onSearchClick() {
         analytics.trackSearchClick()
         searchEventDispatcher.dispatchEvent(SearchEvent.Show)
+    }
+
+    override fun onSortClick() {
+        analytics.trackSortClick()
+        setState { copy(sortOptionsOpened = true) }
+    }
+
+    override fun onSortOptionsClose() {
+        setState { copy(sortOptionsOpened = false) }
+    }
+
+    override fun onSortOptionSelected(index: Int) {
+        setState { copy(sortOptionsOpened = false) }
+        val sortType = CompendiumSortType.entries.getOrNull(index) ?: return
+        if (sortType == state.value.sortType) return
+
+        analytics.trackSortSelected(sortType)
+        scope.launch {
+            saveCompendiumSortTypeUseCase(sortType).flowOn(dispatcher).single()
+            saveCompendiumScrollItemPositionUseCase(0).flowOn(dispatcher).single()
+            initialScrollItemPosition = 0
+            fetchMonsterCompendium()
+            sendAction(GoToCompendiumIndex(0, shouldAnimate = false))
+        }
     }
 
     override fun onFirstVisibleItemChange(position: Int) {
@@ -183,11 +219,12 @@ class MonsterCompendiumStateHolder internal constructor(
     private fun saveCompendiumScrollItemPosition(position: Int) {
         val alphabet = state.value.alphabet
         val tableContent = state.value.tableContent
+        val sortType = state.value.sortType
         scope.launch {
             saveCompendiumScrollItemPositionUseCase(position)
                 .map {
                     tableContent.getTableContentIndexFromCompendiumItemIndex(position, metadata) to
-                            alphabet.getAlphabetIndexFromCompendiumItemIndex(position, metadata)
+                            alphabet.getAlphabetIndexFromCompendiumItemIndex(position, metadata, sortType)
                 }
                 .flowOn(dispatcher)
                 .collect { (tableContentIndex, alphabetLetter) ->

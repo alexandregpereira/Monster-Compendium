@@ -42,6 +42,8 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAct
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIntent
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
+import br.alexandregpereira.hunter.monster.compendium.state.sortOptions
+import br.alexandregpereira.hunter.monster.compendium.state.sortSelectedLabel
 import br.alexandregpereira.hunter.state.ActionHandler
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
@@ -88,6 +90,10 @@ internal fun MonsterCompendiumScreen(
             listState = listState,
             contentPadding = contentPadding,
             searchLabel = state.strings.search,
+            sortTitle = state.strings.sortBy,
+            sortLabel = state.sortSelectedLabel,
+            sortOptions = state.sortOptions,
+            sortOptionsOpened = state.sortOptionsOpened,
             events = events
         )
 
@@ -122,6 +128,10 @@ private fun MonsterCompendiumScreen(
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     searchLabel: String,
+    sortTitle: String,
+    sortLabel: String,
+    sortOptions: List<String>,
+    sortOptionsOpened: Boolean,
     events: MonsterCompendiumIntent,
 ) {
     val density = LocalDensity.current
@@ -143,9 +153,16 @@ private fun MonsterCompendiumScreen(
             )
             MonsterCompendiumTopBar(
                 contentDescription = searchLabel,
+                sortTitle = sortTitle,
+                sortLabel = sortLabel,
+                sortOptions = sortOptions,
+                sortOptionsOpened = sortOptionsOpened,
                 listState = listState,
                 contentPadding = contentPadding,
-                onClick = events::onSearchClick,
+                onSearchClick = events::onSearchClick,
+                onSortClick = events::onSortClick,
+                onSortOptionsClose = events::onSortOptionsClose,
+                onSortOptionSelected = events::onSortOptionSelected,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .onSizeChanged { size ->
