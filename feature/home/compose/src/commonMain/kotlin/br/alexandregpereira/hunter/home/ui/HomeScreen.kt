@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -35,8 +36,10 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.home.HomeStrings
 import br.alexandregpereira.hunter.home.homeMockViewState
+import br.alexandregpereira.hunter.ui.compose.FolderCard
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -121,9 +124,14 @@ internal fun HomeScreen(
                             contentPadding = PaddingValues(horizontal = horizontalPadding),
                         ) {
                             items(section.folders, key = { it.name }) { folder ->
-                                HomeFolderCard(
-                                    folder = folder,
-                                    onClick = { onFolderClick(folder.name) },
+                                FolderCard(
+                                    folderName = folder.name,
+                                    image1 = folder.image1,
+                                    image2 = folder.image2,
+                                    image3 = folder.image3,
+                                    fontSize = 18.sp,
+                                    modifier = Modifier.width(180.dp),
+                                    onCLick = { onFolderClick(folder.name) },
                                 )
                             }
                         }

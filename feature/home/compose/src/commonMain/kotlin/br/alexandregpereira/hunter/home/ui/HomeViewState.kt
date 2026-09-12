@@ -18,7 +18,7 @@
 package br.alexandregpereira.hunter.home.ui
 
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
-import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
+import br.alexandregpereira.hunter.ui.compose.FolderImageState
 
 /**
  * The Home shows the [sections] in the order of the list. A section that is not in the list is not
@@ -66,5 +66,7 @@ internal enum class HomeCategoryType {
 
 internal data class HomeFolderState(
     val name: String,
-    val images: List<MonsterImageState>,
+    val image1: FolderImageState,
+    val image2: FolderImageState? = null,
+    val image3: FolderImageState? = null,
 )

@@ -27,6 +27,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
+import br.alexandregpereira.hunter.ui.compose.FolderImageState
 
 /**
  * Mocked content shared by [HomeStateHolder] and the Compose previews until the Home is connected to
@@ -71,26 +72,20 @@ internal val homeMockViewState = HomeViewState(
             folders = listOf(
                 HomeFolderState(
                     name = "Boss Fights",
-                    images = listOf(
-                        mockImage(MonsterTypeState.DRAGON, "#E8DCE0"),
-                        mockImage(MonsterTypeState.FIEND, "#DADBE6"),
-                        mockImage(MonsterTypeState.UNDEAD, "#DCE3E8"),
-                    ),
+                    image1 = mockFolderImage(MonsterTypeState.DRAGON, "#E8DCE0"),
+                    image2 = mockFolderImage(MonsterTypeState.FIEND, "#DADBE6"),
+                    image3 = mockFolderImage(MonsterTypeState.UNDEAD, "#DCE3E8"),
                 ),
                 HomeFolderState(
                     name = "Goblinoids",
-                    images = listOf(
-                        mockImage(MonsterTypeState.HUMANOID, "#DDE6D6"),
-                        mockImage(MonsterTypeState.HUMANOID, "#E8DCE0"),
-                        mockImage(MonsterTypeState.BEAST, "#D6E3E6"),
-                    ),
+                    image1 = mockFolderImage(MonsterTypeState.HUMANOID, "#DDE6D6"),
+                    image2 = mockFolderImage(MonsterTypeState.HUMANOID, "#E8DCE0"),
+                    image3 = mockFolderImage(MonsterTypeState.BEAST, "#D6E3E6"),
                 ),
                 HomeFolderState(
                     name = "Undead",
-                    images = listOf(
-                        mockImage(MonsterTypeState.UNDEAD, "#DADBE6"),
-                        mockImage(MonsterTypeState.UNDEAD, "#E8DCE0"),
-                    ),
+                    image1 = mockFolderImage(MonsterTypeState.UNDEAD, "#DADBE6"),
+                    image2 = mockFolderImage(MonsterTypeState.UNDEAD, "#E8DCE0"),
                 ),
             ),
         ),
@@ -106,12 +101,24 @@ private fun mockImage(
     color: String,
     challengeRating: String = "",
 ) = MonsterImageState(
-    url = "$MOCK_IMAGE_BASE_URL/default-${type.name.lowercase()}.png",
+    url = type.mockImageUrl(),
     type = type,
     backgroundColor = ColorState(light = color, dark = color),
     challengeRating = challengeRating,
     contentScale = AppImageContentScale.Fit,
 )
+
+private fun mockFolderImage(
+    type: MonsterTypeState,
+    color: String,
+) = FolderImageState(
+    url = type.mockImageUrl(),
+    backgroundColorLight = color,
+)
+
+private fun MonsterTypeState.mockImageUrl(): String {
+    return "$MOCK_IMAGE_BASE_URL/default-${name.lowercase()}.png"
+}
 
 private const val MOCK_IMAGE_BASE_URL =
     "https://raw.githubusercontent.com/alexandregpereira/hunter-api/main/images"

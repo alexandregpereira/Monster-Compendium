@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -52,9 +53,34 @@ fun MonsterCard(
     modifier: Modifier = Modifier,
     onCLick: () -> Unit = {},
     onLongCLick: (() -> Unit)? = null,
+) = MonsterCard(
+    name = name,
+    url = url,
+    icon = icon,
+    backgroundColor = backgroundColor,
+    challengeRating = challengeRating,
+    contentScale = contentScale,
+    size = isHorizontal.toMonsterCardSize(),
+    modifier = modifier,
+    onCLick = onCLick,
+    onLongCLick = onLongCLick,
+)
+
+@Composable
+fun MonsterCard(
+    name: String,
+    url: String,
+    icon: DrawableResource,
+    backgroundColor: String,
+    challengeRating: String,
+    contentScale: AppImageContentScale,
+    size: MonsterCardSize,
+    modifier: Modifier = Modifier,
+    onCLick: () -> Unit = {},
+    onLongCLick: (() -> Unit)? = null,
 ) = ImageCard(
     name = name,
-    isHorizontal = isHorizontal,
+    size = size,
     modifier = modifier,
     onCLick = onCLick,
     onLongCLick = onLongCLick
@@ -65,6 +91,7 @@ fun MonsterCard(
         backgroundColor = backgroundColor,
         challengeRating = challengeRating,
         contentScale = contentScale,
+        size = size,
     )
 }
 
@@ -74,6 +101,28 @@ fun ImageCard(
     isHorizontal: Boolean = false,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = 18.sp,
+    maxLines: Int = Int.MAX_VALUE,
+    onCLick: () -> Unit = {},
+    onLongCLick: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) = ImageCard(
+    name = name,
+    size = isHorizontal.toMonsterCardSize(),
+    modifier = modifier,
+    fontSize = fontSize,
+    maxLines = maxLines,
+    onCLick = onCLick,
+    onLongCLick = onLongCLick,
+    content = content,
+)
+
+@Composable
+fun ImageCard(
+    name: String,
+    size: MonsterCardSize,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = size.nameFontSize,
+    maxLines: Int = size.nameMaxLines,
     onCLick: () -> Unit = {},
     onLongCLick: (() -> Unit)? = null,
     content: @Composable () -> Unit,
@@ -89,7 +138,7 @@ fun ImageCard(
         modifier = modifier.animatePressed(
             onClick = onCLick,
             onLongClick = onLongCLick
-        ).monsterAspectRatio(isHorizontal)
+        ).monsterAspectRatio(size)
     ) {
         Box(Modifier.fillMaxSize()) {
             content()
@@ -112,6 +161,8 @@ fun ImageCard(
                     text = name,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = fontSize,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(horizontal = 12.dp)
                         .padding(bottom = 12.dp, top = 24.dp)
                         .align(Alignment.BottomStart)

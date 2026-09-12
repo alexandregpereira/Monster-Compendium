@@ -18,75 +18,43 @@
 package br.alexandregpereira.hunter.home.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
-import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
+import br.alexandregpereira.hunter.ui.compose.MonsterCard
+import br.alexandregpereira.hunter.ui.compose.MonsterCardSize
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
-import br.alexandregpereira.hunter.ui.compose.animatePressed
-
-internal val homeCardShape = RoundedCornerShape(12.dp)
 
 @Composable
 internal fun HomeMonsterCard(
     monster: MonsterCardState,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-) = Column(
-    modifier = modifier
-        .width(HomeMonsterCardSize)
-        .animatePressed(onClick = onClick),
 ) {
     val image = monster.imageState
-    Box(
-        modifier = Modifier
-            .size(HomeMonsterCardSize)
-            .clip(homeCardShape),
-    ) {
-        MonsterCoilImage(
-            imageUrl = image.url,
-            contentDescription = image.contentDescription,
-            backgroundColor = image.backgroundColor.getColor(isSystemInDarkTheme()),
-            contentScale = AppImageContentScale.Crop,
-        )
-        HomeChallengeRatingBadge(
-            challengeRating = image.challengeRating,
-            modifier = Modifier.align(Alignment.TopStart),
-        )
-        HomeMonsterTypeBadge(
-            icon = image.type.icon,
-            modifier = Modifier.align(Alignment.TopEnd),
-        )
-    }
-    Text(
-        text = monster.name,
-        fontSize = 13.sp,
-        fontWeight = FontWeight.SemiBold,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier.padding(top = 8.dp),
+    MonsterCard(
+        name = monster.name,
+        url = image.url,
+        icon = image.type.icon,
+        backgroundColor = image.backgroundColor.getColor(isSystemInDarkTheme()),
+        challengeRating = image.challengeRating,
+        contentScale = AppImageContentScale.Crop,
+        size = MonsterCardSize.Compact,
+        // The height comes from the compact aspect ratio
+        modifier = modifier.width(HomeMonsterCardWidth),
+        onCLick = onClick,
     )
 }
 
-private val HomeMonsterCardSize = 104.dp
+private val HomeMonsterCardWidth = 104.dp
 
 @Preview
 @Composable
