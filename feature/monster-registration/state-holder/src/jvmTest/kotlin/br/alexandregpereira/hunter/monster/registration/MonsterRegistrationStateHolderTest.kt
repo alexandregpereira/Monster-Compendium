@@ -29,6 +29,8 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
@@ -75,6 +77,7 @@ internal class MonsterRegistrationStateHolderTest {
     private val analytics: Analytics = mockk(relaxUnitFun = true)
     private val eventManager = EventManager<MonsterRegistrationEvent>()
     private val eventResultManager = EventManager<MonsterRegistrationResult>()
+    private val homeEventDispatcher = HomeEventDispatcher()
 
     @Before
     fun setUp() {
@@ -162,6 +165,21 @@ internal class MonsterRegistrationStateHolderTest {
 
         results.assertFinalValue(MonsterRegistrationResult.OnSaved(monsterIndex = "goblin"))
         assertFalse(states.last().isOpen)
+    }
+
+    @Test
+    fun `onSaved dispatches the Home content changed event`() = runTest {
+        val stateHolder = createStateHolder()
+        advanceUntilIdle()
+        eventManager.dispatchEvent(MonsterRegistrationEvent.Show("goblin"))
+        advanceUntilIdle()
+
+        val homeEvents = testFlow(homeEventDispatcher.events) {
+            stateHolder.onSaved()
+            advanceUntilIdle()
+        }
+
+        homeEvents.assertFinalValue(HomeEvent.OnContentChanged)
     }
 
     @Test
@@ -448,6 +466,7 @@ internal class MonsterRegistrationStateHolderTest {
             generateNewMonster = mockk(relaxed = true),
             monsterEventDispatcher = mockk(relaxed = true),
             stateRecovery = StateRecovery(),
+            homeEventDispatcher = homeEventDispatcher,
         )
     }
 }

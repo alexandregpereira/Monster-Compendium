@@ -53,6 +53,7 @@ multiplatform {
         implementation(project(":feature:folder-insert:compose"))
         implementation(project(":feature:folder-list:compose"))
         implementation(project(":feature:folder-preview:compose"))
+        implementation(project(":feature:home:compose"))
         implementation(project(":feature:monster-content-manager:compose"))
         implementation(project(":feature:monster-compendium:compose"))
         implementation(project(":feature:monster-detail:compose"))

@@ -35,6 +35,7 @@ import br.alexandregpereira.hunter.folder.detail.di.featureFolderDetailModule
 import br.alexandregpereira.hunter.folder.insert.di.featureFolderInsertModule
 import br.alexandregpereira.hunter.folder.list.di.featureFolderListModule
 import br.alexandregpereira.hunter.folder.preview.di.featureFolderPreviewModule
+import br.alexandregpereira.hunter.home.di.featureHomeModule
 import br.alexandregpereira.hunter.localization.di.localizationModule
 import br.alexandregpereira.hunter.monster.compendium.di.featureMonsterCompendiumModule
 import br.alexandregpereira.hunter.monster.content.di.featureMonsterContentManagerModule
@@ -71,6 +72,7 @@ fun KoinApplication.initKoinModules(
         featureFolderInsertModule,
         featureFolderListModule,
         featureFolderPreviewModule,
+        featureHomeModule,
         featureMonsterCompendiumModule,
         featureMonsterDetailModule,
         featureMonsterLoreDetailModule,
@@ -112,7 +114,6 @@ private fun appModule(
     single {
         MainViewModel(
             appLocalization = get(),
-            stateRecovery = get(named(AppStateRecoveryQualifier)),
             appEventDispatcher = get(),
             analytics = get(),
             revenueSession = get(),

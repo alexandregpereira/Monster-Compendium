@@ -28,7 +28,12 @@ class GetMonsterFoldersUseCase(
 
     operator fun invoke(): Flow<List<MonsterFolder>> {
         return repository.getMonsterFolders().map { folders ->
-            folders.filter { monsterFolder -> monsterFolder.name != TEMPORARY_FOLDER_NAME }
+            folders.filter { monsterFolder -> monsterFolder.name !in hiddenFolderNames }
         }
     }
 }
+
+/**
+ * The folders used internally by the app, which are not user folders.
+ */
+private val hiddenFolderNames = setOf(TEMPORARY_FOLDER_NAME, RECENTLY_VIEWED_FOLDER_NAME)

@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -56,6 +58,7 @@ class FolderListStateHolder internal constructor(
     private val stateRecovery: StateRecovery,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val getMonstersByFolders: GetMonstersByFolders,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<FolderListState>(stateRecovery.getState()) {
 
     private val strings: FolderListStrings
@@ -74,6 +77,12 @@ class FolderListStateHolder internal constructor(
         }
         analytics.trackFolderClick(folderName)
         folderDetailEventDispatcher.dispatchEvent(Show(folderName = folderName))
+    }
+
+    fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false).saveState(stateRecovery) }
     }
 
     fun onItemSelectionClose() {
@@ -99,6 +108,7 @@ class FolderListStateHolder internal constructor(
             .onEach {
                 onItemSelectionClose()
                 loadMonsterFolders()
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .launchIn(scope)
     }
@@ -184,10 +194,15 @@ class FolderListStateHolder internal constructor(
             loadMonsterFolders()
         }.launchIn(scope)
 
-        folderListEventListener.events.filter { event ->
-            event is FolderListEvent.OnFolderChanges
-        }.onEach {
-            loadMonsterFolders()
+        folderListEventListener.events.onEach { event ->
+            when (event) {
+                FolderListEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true).saveState(stateRecovery) }
+                }
+
+                FolderListEvent.OnFolderChanges -> loadMonsterFolders()
+            }
         }.launchIn(scope)
     }
 }

@@ -25,6 +25,8 @@ import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 import br.alexandregpereira.hunter.domain.spell.model.SpellStatus.Edited
 import br.alexandregpereira.hunter.domain.spell.model.SpellStatus.Original
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
 import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
@@ -48,6 +50,7 @@ internal class SpellRegistrationStateHolder(
     private val appLocalization: AppLocalization,
     private val analytics: Analytics,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<SpellRegistrationState>(SpellRegistrationState()) {
 
     fun observeEvents() {
@@ -126,6 +129,7 @@ internal class SpellRegistrationStateHolder(
                     SpellResult.OnAdded(spellIndex)
                 }
                 resultManager.dispatchEvent(resultEvent)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
                 if (!isEditing) {
                     spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
                 }

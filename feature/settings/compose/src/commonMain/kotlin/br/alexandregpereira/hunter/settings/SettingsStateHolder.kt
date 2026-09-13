@@ -42,12 +42,7 @@ import br.alexandregpereira.hunter.paywall.event.PaywallResult
 import br.alexandregpereira.hunter.revenue.IsPremium
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
-import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
-import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
-import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumResult
-import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
-import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEvent
+import br.alexandregpereira.hunter.settings.event.SettingsEvent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -84,17 +79,38 @@ internal class SettingsStateHolder(
     private val paywallEventDispatcher: EventDispatcher<PaywallEvent>,
     private val isPremium: IsPremium,
     private val paywallResultListener: EventListener<PaywallResult>,
-    private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
-    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
-    private val spellRegistrationEventDispatcher: EventDispatcher<SpellRegistrationEvent>,
     private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
     private val appInfoProvider: AppInfoProvider,
+    private val settingsEventListener: EventListener<SettingsEvent>,
 ) : UiModel<SettingsViewState>(SettingsViewState()), SettingsViewIntent,
     MutableActionHandler<SettingsViewAction> by MutableActionHandler() {
 
     private val strings: SettingsStrings
         get() = getSettingsStrings(appLocalization.getLanguage())
     private var originalSettingsState: SettingsState = SettingsState()
+
+    init {
+        // Observed on init instead of onStart because the screen content, where onStart is
+        // called, is only composed after the Show event.
+        observeSettingsEvents()
+    }
+
+    private fun observeSettingsEvents() {
+        settingsEventListener.events.onEach { event ->
+            when (event) {
+                SettingsEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true) }
+                }
+            }
+        }.launchIn(scope)
+    }
+
+    fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false) }
+    }
 
     private fun observeEvents() {
         paywallResultListener.events.onEach { result ->
@@ -285,27 +301,6 @@ internal class SettingsStateHolder(
         monsterRegistrationEventDispatcher.dispatchEvent(MonsterRegistrationEvent.Show())
     }
 
-    private fun onSpellsClick() {
-        analytics.trackSpellsClick()
-        spellCompendiumEventDispatcher.dispatchEventResult(event = SpellCompendiumEvent.Show())
-            .onEach { spellCompendiumResult ->
-                when (spellCompendiumResult) {
-                    is SpellCompendiumResult.OnSpellClick -> {
-                        spellDetailEventDispatcher.dispatchEvent(
-                            SpellDetailEvent.ShowSpell(spellCompendiumResult.spellIndex)
-                        )
-                    }
-
-                    is SpellCompendiumResult.OnSpellLongClick -> {
-                        spellRegistrationEventDispatcher.dispatchEvent(
-                            SpellRegistrationEvent.Show(spellCompendiumResult.spellIndex)
-                        )
-                    }
-                }
-            }
-            .launchIn(scope)
-    }
-
     private fun load() {
         val currentState = state.value
         flow {
@@ -346,7 +341,8 @@ internal class SettingsStateHolder(
                 if (index == 1) {
                     originalSettingsState = newState.settingsState
                 }
-                setState { newState }
+                // Keeps the current visibility, the new state was built before the async loading
+                setState { newState.copy(isShowing = isShowing) }
             }
             .launchIn(scope)
     }
@@ -364,7 +360,7 @@ internal class SettingsStateHolder(
                 )
             }
             .onEach { state ->
-                setState { state }
+                setState { state.copy(isShowing = isShowing) }
             }
             .launchIn(scope)
     }
@@ -376,7 +372,6 @@ internal class SettingsStateHolder(
             MenuItemIdState.ADVANCED_SETTINGS -> onAdvancedSettingsClick()
             MenuItemIdState.APPEARANCE_SETTINGS -> onAppearanceSettingsClick()
             MenuItemIdState.IMPORT_CONTENT -> onImport()
-            MenuItemIdState.SPELLS -> onSpellsClick()
             MenuItemIdState.MANAGE_MONSTER_CONTENT -> onManageMonsterContentClick()
             MenuItemIdState.ADD_MONSTER -> onAddMonsterClick()
             MenuItemIdState.CONTACT_US -> onContactUsClick()
@@ -387,7 +382,6 @@ internal class SettingsStateHolder(
         strings: SettingsStrings,
     ): ImmutableList<MenuItemState> =
         buildList {
-            add(MenuItemIdState.SPELLS.toMenuItem(strings))
             add(MenuItemIdState.MANAGE_MONSTER_CONTENT.toMenuItem(strings))
             add(MenuItemIdState.ADD_MONSTER.toMenuItem(strings))
             add(MenuItemIdState.IMPORT_CONTENT.toMenuItem(strings))
@@ -433,12 +427,6 @@ internal class SettingsStateHolder(
             MenuItemIdState.IMPORT_CONTENT -> MenuItemState(
                 id = this,
                 text = strings.importContent,
-                section = strings.content,
-            )
-
-            MenuItemIdState.SPELLS -> MenuItemState(
-                id = this,
-                text = strings.spells,
                 section = strings.content,
             )
 

@@ -24,11 +24,11 @@ import br.alexandregpereira.hunter.settings.SettingsAnalytics
 import br.alexandregpereira.hunter.settings.SettingsStateHolder
 import br.alexandregpereira.hunter.settings.domain.ApplyAppearanceSettings
 import br.alexandregpereira.hunter.settings.domain.GetAppearanceSettingsFromMonsters
-import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEventResultDispatcher
-import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEventDispatcher
+import br.alexandregpereira.hunter.settings.event.SettingsEventDispatcher
 import org.koin.dsl.module
 
 val featureSettingsModule = module {
+    single { SettingsEventDispatcher() }
     factory { GetAppearanceSettingsFromMonsters(get(), get()) }
     factory { ApplyAppearanceSettings(get(), get(), get()) }
     single {
@@ -49,11 +49,9 @@ val featureSettingsModule = module {
             paywallEventDispatcher = get<PaywallEventDispatcher>(),
             isPremium = get(),
             paywallResultListener = get<PaywallResultDispatcher>(),
-            spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
-            spellDetailEventDispatcher = get(),
-            spellRegistrationEventDispatcher = get<SpellRegistrationEventDispatcher>(),
             monsterRegistrationEventDispatcher = get<MonsterRegistrationEventDispatcher>(),
             appInfoProvider = get(),
+            settingsEventListener = get<SettingsEventDispatcher>(),
         )
     }
 }

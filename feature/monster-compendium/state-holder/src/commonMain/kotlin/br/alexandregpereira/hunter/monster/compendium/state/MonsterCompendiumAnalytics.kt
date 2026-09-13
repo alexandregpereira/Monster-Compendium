@@ -137,4 +137,12 @@ class MonsterCompendiumAnalytics(
             )
         )
     }
+
+    fun trackOpened() {
+        analytics.track(eventName = "MonsterCompendium - opened")
+    }
+
+    fun trackClosed() {
+        analytics.track(eventName = "MonsterCompendium - closed")
+    }
 }

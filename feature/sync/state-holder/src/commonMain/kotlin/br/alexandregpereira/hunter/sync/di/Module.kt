@@ -35,6 +35,7 @@ val syncModule = module {
             syncEventManager = get(),
             syncUseCase = get(),
             analytics = SyncAnalytics(get()),
+            homeEventDispatcher = get(),
         )
     }
 }

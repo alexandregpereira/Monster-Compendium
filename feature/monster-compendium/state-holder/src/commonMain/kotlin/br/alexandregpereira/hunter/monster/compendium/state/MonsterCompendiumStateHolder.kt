@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPos
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
@@ -32,6 +33,7 @@ import br.alexandregpereira.hunter.monster.compendium.domain.getCompendiumIndexF
 import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromAlphabetIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.getTableContentIndexFromCompendiumItemIndex
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem
+import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEvent
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumException.NavigateToCompendiumIndexError
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
@@ -69,6 +71,7 @@ class MonsterCompendiumStateHolder internal constructor(
     private val analytics: MonsterCompendiumAnalytics,
     private val isFirstTime: IsFirstTime,
     private val appLocalization: AppReactiveLocalization,
+    private val monsterCompendiumEventListener: EventListener<MonsterCompendiumEvent>,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
 ), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
@@ -134,7 +137,8 @@ class MonsterCompendiumStateHolder internal constructor(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                setState { state }
+                // Keeps the current visibility, the new state was built before the async loading
+                setState { state.copy(isShowing = isShowing) }
             }
     }
 
@@ -153,6 +157,12 @@ class MonsterCompendiumStateHolder internal constructor(
     override fun onSearchClick() {
         analytics.trackSearchClick()
         searchEventDispatcher.dispatchEvent(SearchEvent.Show)
+    }
+
+    override fun onClose() {
+        if (state.value.isShowing.not()) return
+        analytics.trackClosed()
+        setState { copy(isShowing = false) }
     }
 
     override fun onSortClick() {
@@ -268,6 +278,15 @@ class MonsterCompendiumStateHolder internal constructor(
     }
 
     private fun observeEvents() {
+        monsterCompendiumEventListener.events.onEach { event ->
+            when (event) {
+                MonsterCompendiumEvent.Show -> {
+                    analytics.trackOpened()
+                    setState { copy(isShowing = true) }
+                }
+            }
+        }.launchIn(scope)
+
         monsterEventDispatcher.collectOnMonsterPageChanges { event ->
             navigateToCompendiumIndexFromMonsterIndex(event.monsterIndex, shouldAnimate = true)
         }.launchIn(scope)

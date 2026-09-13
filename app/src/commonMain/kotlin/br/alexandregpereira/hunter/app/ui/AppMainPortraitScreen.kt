@@ -18,25 +18,41 @@
 package br.alexandregpereira.hunter.app.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import br.alexandregpereira.hunter.app.MainViewEvent
-import br.alexandregpereira.hunter.app.MainViewEvent.BottomNavigationItemClick
-import br.alexandregpereira.hunter.app.MainViewState
+import androidx.compose.ui.Modifier
+import br.alexandregpereira.hunter.app.AppConfig
 import br.alexandregpereira.hunter.detail.MonsterDetailBottomSheets
 import br.alexandregpereira.hunter.detail.MonsterDetailFeature
+import br.alexandregpereira.hunter.folder.detail.FolderDetailFeature
+import br.alexandregpereira.hunter.folder.list.FolderListFeature
+import br.alexandregpereira.hunter.folder.preview.FolderPreviewFeature
+import br.alexandregpereira.hunter.home.HomeFeature
+import br.alexandregpereira.hunter.monster.compendium.MonsterCompendiumFeature
 import br.alexandregpereira.hunter.monster.lore.detail.MonsterLoreDetailFeature
+import br.alexandregpereira.hunter.search.SearchScreenFeature
+import br.alexandregpereira.hunter.settings.SettingsFeature
 
 @Composable
-internal fun AppMainPortraitScreen(
-    state: MainViewState,
-    onEvent: (MainViewEvent) -> Unit,
-) = AppMainScreen {
-    AppBottomNavigationTransition(
-        bottomBarItemSelected = state.bottomBarItemSelected,
-        bottomBarItemSelectedIndex = state.bottomBarItemSelectedIndex,
-        bottomBarItems = state.bottomBarItems,
-        onClick = { onEvent(BottomNavigationItemClick(item = it)) },
-    )
+internal fun AppMainPortraitScreen() = AppMainScreen {
+    Column {
+        Box(
+            modifier = Modifier.weight(1f),
+        ) {
+            HomeFeature()
+            MonsterCompendiumFeature()
+            SearchScreenFeature()
+            FolderListFeature()
+            FolderDetailFeature()
+            SettingsFeature(
+                versionName = AppConfig.VERSION_NAME,
+            )
+        }
+        FolderPreviewFeature(
+            modifier = Modifier,
+        )
+    }
+
     Box {
         MonsterDetailFeature()
         MonsterDetailBottomSheets()

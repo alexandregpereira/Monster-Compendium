@@ -36,6 +36,7 @@ multiplatform {
         implementation(project(":core:ktx"))
         implementation(project(":core:search"))
         implementation(project(":core:state-holder:compose"))
+        implementation(project(":feature:home:event"))
         implementation(project(":feature:share-content:event"))
         implementation(project(":ui:core"))
 

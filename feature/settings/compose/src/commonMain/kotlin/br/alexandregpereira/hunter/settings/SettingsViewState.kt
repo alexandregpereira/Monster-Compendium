@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 
 internal data class SettingsViewState(
+    val isShowing: Boolean = false,
     val imageBaseUrl: String = "",
     val alternativeSourceBaseUrl: String = "",
     val saveButtonEnabled: Boolean = true,
@@ -57,7 +58,6 @@ internal enum class MenuItemIdState {
     ADVANCED_SETTINGS,
     APPEARANCE_SETTINGS,
     IMPORT_CONTENT,
-    SPELLS,
     MANAGE_MONSTER_CONTENT,
     ADD_MONSTER,
     CONTACT_US,

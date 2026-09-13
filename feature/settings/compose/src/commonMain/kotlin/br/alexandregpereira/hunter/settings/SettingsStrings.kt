@@ -38,7 +38,6 @@ interface SettingsStrings {
     val imageContentScaleCrop: String
     val openGitHubProject: String
     val subscribePremium: String
-    val spells: String
     val addMonster: String
     val about: String
     val content: String
@@ -75,7 +74,6 @@ internal data class SettingsEnStrings(
     override val imageContentScaleCrop: String = "Expand the image",
     override val openGitHubProject: String = "Open GitHub Project",
     override val subscribePremium: String = "Remove ads with Premium",
-    override val spells: String = "Spells",
     override val addMonster: String = "Add Creature",
     override val about: String = "About",
     override val content: String = "Content",
@@ -112,7 +110,6 @@ internal data class SettingsPtStrings(
     override val imageContentScaleCrop: String = "Expandir a imagem",
     override val openGitHubProject: String = "Abrir Projeto no GitHub",
     override val subscribePremium: String = "Remover anúncios com Premium",
-    override val spells: String = "Magias",
     override val addMonster: String = "Adicionar Criatura",
     override val about: String = "Sobre",
     override val content: String = "Conteúdo",
@@ -149,7 +146,6 @@ internal data class SettingsEsStrings(
     override val imageContentScaleCrop: String = "Expandir la imagen",
     override val openGitHubProject: String = "Abrir Proyecto en GitHub",
     override val subscribePremium: String = "Eliminar anuncios con Premium",
-    override val spells: String = "Magias",
     override val addMonster: String = "Agregar Criatura",
     override val about: String = "Acerca de",
     override val content: String = "Contenido",

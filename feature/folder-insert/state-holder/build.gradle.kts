@@ -26,6 +26,7 @@ multiplatform {
         api(project(":core:state-holder"))
         api(project(":domain:monster-folder:core"))
         implementation(project(":feature:folder-insert:event"))
+        implementation(project(":feature:home:event"))
         implementation(project(":feature:share-content:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)

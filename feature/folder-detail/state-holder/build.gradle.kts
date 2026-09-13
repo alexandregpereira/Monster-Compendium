@@ -30,6 +30,7 @@ multiplatform {
         implementation(project(":feature:folder-detail:event"))
         implementation(project(":feature:folder-insert:event"))
         implementation(project(":feature:folder-list:event"))
+        implementation(project(":feature:home:event"))
         implementation(project(":domain:monster:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)

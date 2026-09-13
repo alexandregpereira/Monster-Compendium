@@ -33,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.list.FolderCardImageState
 import br.alexandregpereira.hunter.folder.list.FolderCardState
+import br.alexandregpereira.hunter.ui.compose.FolderCard
+import br.alexandregpereira.hunter.ui.compose.FolderImageState
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 
@@ -81,9 +83,9 @@ internal fun FolderCardGrid(
 
             FolderCard(
                 folderName = folder.folderName,
-                image1 = folder.image1,
-                image2 = folder.image2,
-                image3 = folder.image3,
+                image1 = folder.image1.asFolderImageState(),
+                image2 = folder.image2?.asFolderImageState(),
+                image3 = folder.image3?.asFolderImageState(),
                 modifier = Modifier
                     .animateItem()
                     .graphicsLayer {
@@ -96,6 +98,14 @@ internal fun FolderCardGrid(
         }
     }
 }
+
+private fun FolderCardImageState.asFolderImageState() = FolderImageState(
+    url = url,
+    contentDescription = contentDescription,
+    isHorizontalImage = isHorizontalImage,
+    backgroundColorLight = backgroundColorLight,
+    backgroundColorDark = backgroundColorDark,
+)
 
 @Composable
 private fun OnScrollChanges(

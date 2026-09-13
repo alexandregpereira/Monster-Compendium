@@ -109,12 +109,6 @@ internal class SettingsAnalytics(
         )
     }
 
-    fun trackSpellsClick() {
-        analytics.track(
-            eventName = "Settings - spells click",
-        )
-    }
-
     fun trackAddMonsterClick() {
         analytics.track(
             eventName = "Settings - add monster click",
@@ -137,5 +131,13 @@ internal class SettingsAnalytics(
         analytics.track(
             eventName = "Settings - contact us send email click",
         )
+    }
+
+    fun trackOpened() {
+        analytics.track(eventName = "Settings - opened")
+    }
+
+    fun trackClosed() {
+        analytics.track(eventName = "Settings - closed")
     }
 }

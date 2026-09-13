@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.domain.folder.di
 
+import br.alexandregpereira.hunter.domain.folder.AddMonsterToRecentlyViewedUseCase
 import br.alexandregpereira.hunter.domain.folder.AddMonsterToTemporaryFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.AddMonstersToFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.ClearTemporaryFolderUseCase
@@ -25,6 +26,7 @@ import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByFolders
 import br.alexandregpereira.hunter.domain.folder.GetMonstersByTemporaryFolderUseCase
+import br.alexandregpereira.hunter.domain.folder.GetRecentlyViewedMonstersUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonsterFoldersUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromFolderUseCase
 import br.alexandregpereira.hunter.domain.folder.RemoveMonstersFromTemporaryFolderUseCase
@@ -42,4 +44,6 @@ val monsterFolderDomainModule = module {
     factory { RemoveMonstersFromFolderUseCase(get(), get(), get()) }
     factory { RemoveMonstersFromTemporaryFolderUseCase(get()) }
     factory { GetMonstersByFolders(get()) }
+    factory { AddMonsterToRecentlyViewedUseCase(get()) }
+    factory { GetRecentlyViewedMonstersUseCase(get()) }
 }

@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state.di
 
+import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.search.event.SearchEventDispatcher
@@ -25,6 +26,7 @@ import kotlin.native.HiddenFromObjC
 
 @HiddenFromObjC
 val monsterCompendiumModule = module {
+    single { MonsterCompendiumEventDispatcher() }
     single {
         MonsterCompendiumStateHolder(
             getMonsterCompendiumUseCase = get(),
@@ -39,6 +41,7 @@ val monsterCompendiumModule = module {
             analytics = MonsterCompendiumAnalytics(get()),
             appLocalization = get(),
             isFirstTime = get(),
+            monsterCompendiumEventListener = get<MonsterCompendiumEventDispatcher>(),
         )
     }
 }

@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.folder.list
 
 data class FolderListState(
+    val isShowing: Boolean = false,
     val folders: List<FolderCardState> = emptyList(),
     val strings: FolderListStrings = FolderListEmptyStrings(),
     val isItemSelectionOpen: Boolean = false,

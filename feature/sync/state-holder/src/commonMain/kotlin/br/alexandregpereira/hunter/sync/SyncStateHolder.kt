@@ -19,6 +19,8 @@ package br.alexandregpereira.hunter.sync
 
 import br.alexandregpereira.hunter.domain.sync.SyncUseCase
 import br.alexandregpereira.hunter.domain.sync.model.SyncStatus
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.sync.event.SyncEvent.Finished
 import br.alexandregpereira.hunter.sync.event.SyncEvent.Start
@@ -32,7 +34,8 @@ class SyncStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val syncEventManager: SyncEventManager,
     private val syncUseCase: SyncUseCase,
-    private val analytics: SyncAnalytics
+    private val analytics: SyncAnalytics,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<SyncState>(SyncState()) {
 
     init {
@@ -69,6 +72,7 @@ class SyncStateHolder internal constructor(
                     SyncStatus.SYNCED -> {
                         analytics.trackSyncStatus(status, forceSync)
                         syncEventManager.dispatchEvent(Finished)
+                        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
                         hide()
                     }
                     SyncStatus.IDLE -> {

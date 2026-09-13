@@ -24,6 +24,10 @@ multiplatform {
         implementation(libs.koin.core)
         implementation(libs.kotlin.coroutines.core)
     }
+    commonTest {
+        implementation(kotlin("test"))
+        implementation(libs.kotlin.coroutines.test)
+    }
     jvmMain()
     iosMain()
 }

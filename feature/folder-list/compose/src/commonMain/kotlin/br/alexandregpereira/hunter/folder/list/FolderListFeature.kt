@@ -20,8 +20,10 @@ package br.alexandregpereira.hunter.folder.list
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import br.alexandregpereira.hunter.folder.list.di.FolderListStateRecoveryQualifier
 import br.alexandregpereira.hunter.folder.list.ui.FolderListScreen
+import br.alexandregpereira.hunter.ui.compose.AppFullScreen
 import br.alexandregpereira.hunter.ui.compose.StateRecoveryLaunchedEffect
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -35,14 +37,22 @@ fun FolderListFeature(
         stateRecovery = koinInject(named(FolderListStateRecoveryQualifier))
     )
     val viewModel: FolderListStateHolder = koinInject()
-    FolderListScreen(
-        state = viewModel.state.collectAsState().value,
-        contentPadding = contentPadding,
-        onCLick = viewModel::onItemClick,
-        onLongCLick = viewModel::onItemSelect,
-        onItemSelectionClose = viewModel::onItemSelectionClose,
-        onItemSelectionDeleteClick = viewModel::onItemSelectionDeleteClick,
-        onItemSelectionAddToPreviewClick = viewModel::onItemSelectionAddToPreviewClick,
-        onScrollChanges = viewModel::onScrollChanges,
-    )
+    val state by viewModel.state.collectAsState()
+
+    AppFullScreen(
+        isOpen = state.isShowing,
+        level = 0,
+        onClose = viewModel::onClose,
+    ) {
+        FolderListScreen(
+            state = state,
+            contentPadding = contentPadding,
+            onCLick = viewModel::onItemClick,
+            onLongCLick = viewModel::onItemSelect,
+            onItemSelectionClose = viewModel::onItemSelectionClose,
+            onItemSelectionDeleteClick = viewModel::onItemSelectionDeleteClick,
+            onItemSelectionAddToPreviewClick = viewModel::onItemSelectionAddToPreviewClick,
+            onScrollChanges = viewModel::onScrollChanges,
+        )
+    }
 }

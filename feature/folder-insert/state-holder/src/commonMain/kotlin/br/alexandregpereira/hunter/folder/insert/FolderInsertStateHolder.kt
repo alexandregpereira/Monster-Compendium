@@ -25,6 +25,8 @@ import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.Show
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnSaved
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,6 +46,7 @@ class FolderInsertStateHolder internal constructor(
     private val analytics: FolderInsertAnalytics,
     private val appLocalization: AppLocalization,
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<FolderInsertState>(FolderInsertState()) {
 
     private val strings: FolderInsertStrings
@@ -88,6 +91,7 @@ class FolderInsertStateHolder internal constructor(
         ).flowOn(dispatcher)
             .onCompletion {
                 folderInsertEventManager.dispatchResult(OnSaved(indexes))
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .launchIn(scope)
     }

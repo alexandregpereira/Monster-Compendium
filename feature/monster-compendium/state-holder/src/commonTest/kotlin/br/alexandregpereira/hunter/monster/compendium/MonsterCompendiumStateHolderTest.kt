@@ -40,6 +40,8 @@ import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompen
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendiumItem.Title
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItem
 import br.alexandregpereira.hunter.monster.compendium.domain.model.TableContentItemType
+import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEvent
+import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAction.GoToCompendiumIndex
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumItemState
@@ -75,6 +77,7 @@ class MonsterCompendiumStateHolderTest {
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
     private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
+    private val monsterCompendiumEventDispatcher = MonsterCompendiumEventDispatcher()
     private val searchEvents = mutableListOf<SearchEvent>()
     private val searchEventDispatcher = object : EventDispatcher<SearchEvent> {
         override val events: Flow<SearchEvent> = emptyFlow()
@@ -387,6 +390,33 @@ class MonsterCompendiumStateHolderTest {
     }
 
     @Test
+    fun `Show event opens the compendium and onClose closes it`() = runTest {
+        // Given
+        createStateHolder(
+            getMonsterCompendiumUseCase = {
+                flowOf(
+                    MonsterCompendium(
+                        items = emptyList(),
+                        tableContent = emptyList(),
+                        alphabet = emptyList(),
+                    )
+                )
+            },
+        )
+        advanceUntilIdle()
+
+        // When
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        advanceUntilIdle()
+        val isShowingAfterShowEvent = stateHolder.state.value.isShowing
+        stateHolder.onClose()
+
+        // Then
+        assertEquals(expected = true, actual = isShowingAfterShowEvent)
+        assertEquals(expected = false, actual = stateHolder.state.value.isShowing)
+    }
+
+    @Test
     fun onSortOptionSelected() = runTest {
         // Given
         val savedSortTypes = mutableListOf<CompendiumSortType>()
@@ -439,6 +469,7 @@ class MonsterCompendiumStateHolderTest {
                 override fun getLanguage(): Language = Language.ENGLISH
             },
             isFirstTime = { false },
+            monsterCompendiumEventListener = monsterCompendiumEventDispatcher,
         )
     }
 

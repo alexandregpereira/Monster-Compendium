@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.alexandregpereira.hunter.folder.list.ui
+package br.alexandregpereira.hunter.ui.compose
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -31,27 +31,32 @@ import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.folder.list.FolderCardImageState
-import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
-import br.alexandregpereira.hunter.ui.compose.ImageCard
-import br.alexandregpereira.hunter.ui.compose.MonsterCoilImage
-import br.alexandregpereira.hunter.ui.compose.Window
+
+data class FolderImageState(
+    val url: String = "",
+    val contentDescription: String = "",
+    val isHorizontalImage: Boolean = false,
+    val backgroundColorLight: String = "",
+    val backgroundColorDark: String = backgroundColorLight,
+)
 
 @Composable
-internal fun FolderCard(
+fun FolderCard(
     folderName: String,
-    image1: FolderCardImageState,
+    image1: FolderImageState,
     modifier: Modifier = Modifier,
-    image2: FolderCardImageState? = null,
-    image3: FolderCardImageState? = null,
+    image2: FolderImageState? = null,
+    image3: FolderImageState? = null,
+    fontSize: TextUnit = 24.sp,
     onCLick: () -> Unit = {},
-    onLongCLick: () -> Unit = {},
+    onLongCLick: (() -> Unit)? = null,
 ) = ImageCard(
     name = folderName,
     isHorizontal = true,
-    fontSize = 24.sp,
+    fontSize = fontSize,
     modifier = modifier,
     onCLick = onCLick,
     onLongCLick = onLongCLick,
@@ -59,7 +64,7 @@ internal fun FolderCard(
     FolderCardImageLayout(
         isHorizontalImage = image1.isHorizontalImage
     ) {
-        FolderCardImage(
+        FolderCardImages(
             image1 = image1,
             image2 = image2,
             image3 = image3
@@ -68,47 +73,19 @@ internal fun FolderCard(
 }
 
 @Composable
-private fun FolderCardImage(
-    image1: FolderCardImageState,
-    image2: FolderCardImageState? = null,
-    image3: FolderCardImageState? = null,
+private fun FolderCardImages(
+    image1: FolderImageState,
+    image2: FolderImageState? = null,
+    image3: FolderImageState? = null,
 ) {
-    image1.run {
+    listOfNotNull(image1, image2, image3).forEach { image ->
         val backgroundColor = if (isSystemInDarkTheme()) {
-            backgroundColorDark
-        } else backgroundColorLight
+            image.backgroundColorDark
+        } else image.backgroundColorLight
 
         MonsterCoilImage(
-            imageUrl = url,
-            contentDescription = contentDescription,
-            backgroundColor = backgroundColor,
-            contentScale = AppImageContentScale.Crop,
-            shape = RectangleShape,
-        )
-    }
-
-    image2?.run {
-        val backgroundColor = if (isSystemInDarkTheme()) {
-            backgroundColorDark
-        } else backgroundColorLight
-
-        MonsterCoilImage(
-            imageUrl = url,
-            contentDescription = contentDescription,
-            backgroundColor = backgroundColor,
-            contentScale = AppImageContentScale.Crop,
-            shape = RectangleShape,
-        )
-    }
-
-    image3?.run {
-        val backgroundColor = if (isSystemInDarkTheme()) {
-            backgroundColorDark
-        } else backgroundColorLight
-
-        MonsterCoilImage(
-            imageUrl = url,
-            contentDescription = contentDescription,
+            imageUrl = image.url,
+            contentDescription = image.contentDescription,
             backgroundColor = backgroundColor,
             contentScale = AppImageContentScale.Crop,
             shape = RectangleShape,
@@ -221,28 +198,28 @@ private fun FolderCardPreview() = Window(Modifier.width(240.dp)) {
     Column {
         FolderCard(
             folderName = "Folder 1",
-            image1 = FolderCardImageState(
+            image1 = FolderImageState(
                 isHorizontalImage = true,
                 backgroundColorLight = "#e2e2e2"
             ),
-            image2 = FolderCardImageState(
+            image2 = FolderImageState(
                 backgroundColorLight = "#a2a2a2"
             ),
-            image3 = FolderCardImageState(
+            image3 = FolderImageState(
                 backgroundColorLight = "#b2b2b2"
             ),
         )
 
         FolderCard(
             folderName = "Folder 2",
-            image1 = FolderCardImageState(
+            image1 = FolderImageState(
                 isHorizontalImage = false,
                 backgroundColorLight = "#e2e2e2"
             ),
-            image2 = FolderCardImageState(
+            image2 = FolderImageState(
                 backgroundColorLight = "#a2a2a2"
             ),
-            image3 = FolderCardImageState(
+            image3 = FolderImageState(
                 backgroundColorLight = "#b2b2b2"
             ),
             modifier = Modifier.padding(top = 24.dp)
@@ -250,11 +227,11 @@ private fun FolderCardPreview() = Window(Modifier.width(240.dp)) {
 
         FolderCard(
             folderName = "Folder 3",
-            image1 = FolderCardImageState(
+            image1 = FolderImageState(
                 isHorizontalImage = true,
                 backgroundColorLight = "#e2e2e2"
             ),
-            image2 = FolderCardImageState(
+            image2 = FolderImageState(
                 backgroundColorLight = "#a2a2a2"
             ),
             modifier = Modifier.padding(top = 24.dp)
@@ -262,11 +239,11 @@ private fun FolderCardPreview() = Window(Modifier.width(240.dp)) {
 
         FolderCard(
             folderName = "Folder 4",
-            image1 = FolderCardImageState(
+            image1 = FolderImageState(
                 isHorizontalImage = false,
                 backgroundColorLight = "#e2e2e2"
             ),
-            image2 = FolderCardImageState(
+            image2 = FolderImageState(
                 backgroundColorLight = "#a2a2a2"
             ),
             modifier = Modifier.padding(top = 24.dp)
