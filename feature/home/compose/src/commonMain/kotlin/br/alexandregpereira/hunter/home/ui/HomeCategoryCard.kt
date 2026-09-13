@@ -29,12 +29,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +45,9 @@ import br.alexandregpereira.hunter.ui.compose.AppCard
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
 import br.alexandregpereira.hunter.ui.compose.animatePressed
 import br.alexandregpereira.hunter.ui.compose.cardShape
+import br.alexandregpereira.hunter.ui.resources.Res
+import br.alexandregpereira.hunter.ui.resources.ic_dragon
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun HomeCategoryGrid(
@@ -60,7 +63,7 @@ internal fun HomeCategoryGrid(
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             rowCategories.forEach { category ->
                 HomeCategoryCard(
-                    icon = category.type.icon,
+                    icon = category.type.iconPainter(),
                     title = category.type.title(strings),
                     subtitle = strings.total(category.total),
                     modifier = Modifier.weight(1f),
@@ -76,7 +79,7 @@ internal fun HomeCategoryGrid(
 
 @Composable
 private fun HomeCategoryCard(
-    icon: ImageVector,
+    icon: Painter,
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
@@ -88,7 +91,7 @@ private fun HomeCategoryCard(
 ) {
     Column(Modifier.fillMaxWidth().padding(16.dp)) {
         Icon(
-            imageVector = icon,
+            painter = icon,
             contentDescription = null,
             modifier = Modifier.size(22.dp),
         )
@@ -111,12 +114,15 @@ private fun HomeCategoryCard(
     }
 }
 
-private val HomeCategoryType.icon: ImageVector
-    get() = when (this) {
-        HomeCategoryType.CREATURES -> Icons.AutoMirrored.Outlined.MenuBook
-        HomeCategoryType.SPELLS -> Icons.Outlined.AutoAwesome
-        HomeCategoryType.CONDITIONS -> Icons.Outlined.Schedule
-    }
+/**
+ * The creatures use the same dragon icon of the monster type badges.
+ */
+@Composable
+private fun HomeCategoryType.iconPainter(): Painter = when (this) {
+    HomeCategoryType.CREATURES -> painterResource(Res.drawable.ic_dragon)
+    HomeCategoryType.SPELLS -> rememberVectorPainter(Icons.Outlined.AutoAwesome)
+    HomeCategoryType.CONDITIONS -> rememberVectorPainter(Icons.Outlined.Schedule)
+}
 
 private fun HomeCategoryType.title(strings: HomeStrings): String = when (this) {
     HomeCategoryType.CREATURES -> strings.creatures

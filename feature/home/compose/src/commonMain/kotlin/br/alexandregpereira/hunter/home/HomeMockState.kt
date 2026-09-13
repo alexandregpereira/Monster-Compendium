@@ -34,7 +34,6 @@ import br.alexandregpereira.hunter.ui.compose.FolderImageState
  * the domain layer.
  */
 internal val homeMockViewState = HomeViewState(
-    hasUnreadNotifications = true,
     sections = listOf(
         HomeSectionState.Search,
         HomeSectionState.Categories(

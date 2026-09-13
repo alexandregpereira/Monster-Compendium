@@ -62,7 +62,6 @@ import br.alexandregpereira.hunter.settings.ui.resources.ic_language
 import br.alexandregpereira.hunter.settings.ui.resources.ic_monster
 import br.alexandregpereira.hunter.settings.ui.resources.ic_moon
 import br.alexandregpereira.hunter.settings.ui.resources.ic_settings
-import br.alexandregpereira.hunter.settings.ui.resources.ic_spell
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import kotlinx.collections.immutable.ImmutableList
@@ -165,7 +164,6 @@ private fun MenuItemIdState.toIcon(): Painter {
         MenuItemIdState.ADVANCED_SETTINGS -> Res.drawable.ic_settings
         MenuItemIdState.APPEARANCE_SETTINGS -> Res.drawable.ic_moon
         MenuItemIdState.IMPORT_CONTENT -> Res.drawable.ic_import
-        MenuItemIdState.SPELLS -> Res.drawable.ic_spell
         MenuItemIdState.MANAGE_MONSTER_CONTENT -> Res.drawable.ic_monster
         MenuItemIdState.ADD_MONSTER -> Res.drawable.ic_add_monster
         MenuItemIdState.CONTACT_US -> Res.drawable.ic_email

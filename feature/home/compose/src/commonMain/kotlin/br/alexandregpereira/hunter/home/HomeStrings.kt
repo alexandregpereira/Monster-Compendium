@@ -22,7 +22,6 @@ import br.alexandregpereira.hunter.localization.Language
 
 internal interface HomeStrings {
     val title: String
-    val notifications: String
     val menu: String
     val searchPlaceholder: String
     val creatures: String
@@ -42,7 +41,6 @@ internal interface HomeStrings {
 
 internal data class HomeEnStrings(
     override val title: String = "Compendium",
-    override val notifications: String = "Notifications",
     override val menu: String = "Menu",
     override val searchPlaceholder: String = "Search creatures",
     override val creatures: String = "Creatures",
@@ -64,7 +62,6 @@ internal data class HomeEnStrings(
 
 internal data class HomePtStrings(
     override val title: String = "Compêndio",
-    override val notifications: String = "Notificações",
     override val menu: String = "Menu",
     override val searchPlaceholder: String = "Buscar criaturas",
     override val creatures: String = "Criaturas",
@@ -86,7 +83,6 @@ internal data class HomePtStrings(
 
 internal data class HomeEsStrings(
     override val title: String = "Compendio",
-    override val notifications: String = "Notificaciones",
     override val menu: String = "Menú",
     override val searchPlaceholder: String = "Buscar criaturas",
     override val creatures: String = "Criaturas",

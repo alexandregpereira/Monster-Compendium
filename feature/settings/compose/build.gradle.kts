@@ -39,11 +39,8 @@ multiplatform {
         implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:sync:event"))
         implementation(project(":feature:paywall:event"))
-        implementation(project(":feature:spell-compendium:event"))
-        implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:monster-registration:event"))
         implementation(project(":feature:settings:event"))
-        implementation(project(":feature:spell-registration:event"))
         implementation(project(":ui:color-picker"))
         implementation(project(":ui:core"))
 

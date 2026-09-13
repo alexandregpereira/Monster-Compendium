@@ -25,7 +25,6 @@ import br.alexandregpereira.hunter.ui.compose.FolderImageState
  * shown.
  */
 internal data class HomeViewState(
-    val hasUnreadNotifications: Boolean = false,
     val sections: List<HomeSectionState> = emptyList(),
 )
 

@@ -58,7 +58,6 @@ internal enum class MenuItemIdState {
     ADVANCED_SETTINGS,
     APPEARANCE_SETTINGS,
     IMPORT_CONTENT,
-    SPELLS,
     MANAGE_MONSTER_CONTENT,
     ADD_MONSTER,
     CONTACT_US,

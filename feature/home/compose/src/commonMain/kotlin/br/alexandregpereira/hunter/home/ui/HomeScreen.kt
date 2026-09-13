@@ -50,7 +50,6 @@ internal fun HomeScreen(
     strings: HomeStrings,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
-    onNotificationClick: () -> Unit = {},
     onMenuClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
     onCategoryClick: (HomeCategoryType) -> Unit = {},
@@ -76,10 +75,7 @@ internal fun HomeScreen(
 
         HomeHeader(
             title = strings.title,
-            notificationsContentDescription = strings.notifications,
             menuContentDescription = strings.menu,
-            hasUnreadNotifications = state.hasUnreadNotifications,
-            onNotificationClick = onNotificationClick,
             onMenuClick = onMenuClick,
             modifier = sectionModifier,
         )
