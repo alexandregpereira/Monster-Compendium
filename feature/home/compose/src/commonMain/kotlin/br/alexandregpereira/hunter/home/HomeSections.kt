@@ -17,11 +17,15 @@
 
 package br.alexandregpereira.hunter.home
 
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.home.domain.HomeContentTotals
 import br.alexandregpereira.hunter.home.domain.HomeExtraContentProgress
 import br.alexandregpereira.hunter.home.ui.HomeCategoryState
 import br.alexandregpereira.hunter.home.ui.HomeCategoryType
+import br.alexandregpereira.hunter.home.ui.HomeFolderState
 import br.alexandregpereira.hunter.home.ui.HomeSectionState
+import br.alexandregpereira.hunter.ui.compose.FolderImageState
 
 /**
  * Builds the Home sections in their display order. A null section is not shown.
@@ -40,8 +44,8 @@ internal fun buildHomeSections(
         add(HomeSectionState.Search)
         categories?.let(::add)
         if (hasExtraContentAdded.not()) extraContent?.let(::add)
-        recentlyViewed?.let(::add)
         folders?.let(::add)
+        recentlyViewed?.let(::add)
         add(HomeSectionState.Create)
         if (hasExtraContentAdded) extraContent?.let(::add)
     }
@@ -64,3 +68,36 @@ internal fun HomeExtraContentProgress.toExtraContentSection(): HomeSectionState.
     if (total == 0) return null
     return HomeSectionState.ExtraContent(added = added, total = total)
 }
+
+/**
+ * Keeps the folders in the same order of the folder list screen, limited to [HOME_FOLDERS_LIMIT].
+ * Returns null when there is no folder to show.
+ */
+internal fun List<MonsterFolder>.toFoldersSection(): HomeSectionState.Folders? {
+    val folders = filter { it.monsters.isNotEmpty() }
+        .take(HOME_FOLDERS_LIMIT)
+        .map { it.toHomeFolderState() }
+    if (folders.isEmpty()) return null
+    return HomeSectionState.Folders(folders = folders)
+}
+
+private fun MonsterFolder.toHomeFolderState(): HomeFolderState {
+    return HomeFolderState(
+        name = name,
+        image1 = monsters.first().toFolderImageState(),
+        image2 = monsters.getOrNull(1)?.toFolderImageState(),
+        image3 = monsters.getOrNull(2)?.toFolderImageState(),
+    )
+}
+
+private fun MonsterPreviewFolder.toFolderImageState(): FolderImageState {
+    return FolderImageState(
+        url = imageUrl,
+        contentDescription = name,
+        isHorizontalImage = isHorizontalImage,
+        backgroundColorLight = backgroundColorLight,
+        backgroundColorDark = backgroundColorDark,
+    )
+}
+
+internal const val HOME_FOLDERS_LIMIT = 5

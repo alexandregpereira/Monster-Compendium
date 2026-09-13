@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.home
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.home.domain.GetHomeContentTotals
 import br.alexandregpereira.hunter.home.domain.GetHomeExtraContentProgress
@@ -37,14 +38,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 /**
- * The categories and the extra content sections come from the domain. The recently viewed and the
- * folders sections are still mocked by [homeMockViewState].
+ * The categories, the folders and the extra content sections come from the domain. The recently
+ * viewed section is still mocked by [homeMockViewState].
  */
 internal class HomeStateHolder(
     private val appLocalization: AppReactiveLocalization,
     private val homeIntentHandler: HomeIntentHandler,
     private val getHomeContentTotals: GetHomeContentTotals,
     private val getHomeExtraContentProgress: GetHomeExtraContentProgress,
+    private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val homeEventListener: EventListener<HomeEvent>,
     private val analytics: Analytics,
     private val dispatcher: CoroutineDispatcher,
@@ -55,7 +57,7 @@ internal class HomeStateHolder(
                 categories = null,
                 extraContent = null,
                 recentlyViewed = homeMockRecentlyViewedSection,
-                folders = homeMockFoldersSection,
+                folders = null,
             ),
         ),
         strings = appLocalization.getHomeStrings(),
@@ -93,12 +95,15 @@ internal class HomeStateHolder(
             getHomeExtraContentProgress()
                 .map { it.toExtraContentSection() }
                 .keepCurrentSectionOnError(),
-        ) { categories, extraContent ->
+            getMonsterFolders()
+                .map { it.toFoldersSection() }
+                .keepCurrentSectionOnError(),
+        ) { categories, extraContent, folders ->
             buildHomeSections(
                 categories = categories,
                 extraContent = extraContent,
                 recentlyViewed = homeMockRecentlyViewedSection,
-                folders = homeMockFoldersSection,
+                folders = folders,
             )
         }
             .flowOn(dispatcher)

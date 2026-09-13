@@ -35,7 +35,6 @@ internal interface HomeStrings {
     val create: String
     val monster: String
     val spell: String
-    val folder: String
     val extraContent: String
     val extraContentProgress: (added: Int, total: Int) -> String
     val manageExtraContent: String
@@ -56,7 +55,6 @@ internal data class HomeEnStrings(
     override val create: String = "Create",
     override val monster: String = "Monster",
     override val spell: String = "Spell",
-    override val folder: String = "Folder",
     override val extraContent: String = "Extra content",
     override val extraContentProgress: (Int, Int) -> String = { added, total ->
         "$added of $total extra contents added"
@@ -79,7 +77,6 @@ internal data class HomePtStrings(
     override val create: String = "Criar",
     override val monster: String = "Monstro",
     override val spell: String = "Magia",
-    override val folder: String = "Pasta",
     override val extraContent: String = "Conteúdo extra",
     override val extraContentProgress: (Int, Int) -> String = { added, total ->
         "$added de $total conteúdos extras adicionados"
@@ -102,7 +99,6 @@ internal data class HomeEsStrings(
     override val create: String = "Crear",
     override val monster: String = "Monstruo",
     override val spell: String = "Hechizo",
-    override val folder: String = "Carpeta",
     override val extraContent: String = "Contenido extra",
     override val extraContentProgress: (Int, Int) -> String = { added, total ->
         "$added de $total contenidos extra añadidos"

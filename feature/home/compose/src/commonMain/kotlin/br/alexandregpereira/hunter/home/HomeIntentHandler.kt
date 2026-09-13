@@ -7,6 +7,8 @@ import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
+import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.settings.event.SettingsEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
@@ -32,6 +34,7 @@ internal class HomeIntentHandlerImpl(
     private val folderListEventDispatcher: EventDispatcher<FolderListEvent>,
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
+    private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
 ) : HomeIntentHandler {
 
     override suspend fun onIntent(intent: HomeIntent) {
@@ -50,6 +53,12 @@ internal class HomeIntentHandlerImpl(
             }
             HomeIntent.OpenExtraContentManager -> {
                 monsterContentManagerEventDispatcher.dispatchEvent(MonsterContentManagerEvent.Show)
+            }
+            HomeIntent.CreateMonster -> {
+                monsterRegistrationEventDispatcher.dispatchEvent(MonsterRegistrationEvent.Show())
+            }
+            HomeIntent.CreateSpell -> {
+                spellRegistrationEventDispatcher.dispatchEvent(SpellRegistrationEvent.Show())
             }
         }
     }

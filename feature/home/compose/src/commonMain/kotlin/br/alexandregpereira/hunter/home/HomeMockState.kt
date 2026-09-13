@@ -94,13 +94,10 @@ internal val homeMockViewState = HomeViewState(
 )
 
 /**
- * The sections that are not connected to the domain yet.
+ * The section that is not connected to the domain yet.
  */
 internal val homeMockRecentlyViewedSection: HomeSectionState.RecentlyViewed =
     homeMockViewState.sections.filterIsInstance<HomeSectionState.RecentlyViewed>().first()
-
-internal val homeMockFoldersSection: HomeSectionState.Folders =
-    homeMockViewState.sections.filterIsInstance<HomeSectionState.Folders>().first()
 
 /**
  * Uses the same default type images the app shows for monsters without a custom image.

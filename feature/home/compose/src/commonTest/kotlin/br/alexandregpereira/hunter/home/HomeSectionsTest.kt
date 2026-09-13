@@ -17,8 +17,13 @@
 
 package br.alexandregpereira.hunter.home
 
+import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.source.model.Source
+import br.alexandregpereira.hunter.home.ui.HomeFolderState
+import br.alexandregpereira.hunter.ui.compose.FolderImageState
 import br.alexandregpereira.hunter.home.domain.HomeContentTotals
 import br.alexandregpereira.hunter.home.domain.HomeExtraContentProgress
 import br.alexandregpereira.hunter.home.domain.toHomeExtraContentProgress
@@ -53,8 +58,8 @@ class HomeSectionsTest {
                 HomeSectionState.Search,
                 categories,
                 extraContent,
-                recentlyViewed,
                 folders,
+                recentlyViewed,
                 HomeSectionState.Create,
             ),
             actual = sections,
@@ -76,8 +81,8 @@ class HomeSectionsTest {
             expected = listOf(
                 HomeSectionState.Search,
                 categories,
-                recentlyViewed,
                 folders,
+                recentlyViewed,
                 HomeSectionState.Create,
                 extraContent,
             ),
@@ -137,6 +142,78 @@ class HomeSectionsTest {
             actual = sources.toHomeExtraContentProgress(),
         )
     }
+
+    @Test
+    fun `folders are not shown when there is no folder with monsters`() {
+        assertNull(emptyList<MonsterFolder>().toFoldersSection())
+        assertNull(listOf(MonsterFolder(name = "Empty", monsters = emptyList())).toFoldersSection())
+    }
+
+    @Test
+    fun `folders keep the folder list order, skip empty folders and are limited to five`() {
+        val folders = listOf(
+            monsterFolder(name = "Folder 1"),
+            MonsterFolder(name = "Empty", monsters = emptyList()),
+            monsterFolder(name = "Folder 2"),
+            monsterFolder(name = "Folder 3"),
+            monsterFolder(name = "Folder 4"),
+            monsterFolder(name = "Folder 5"),
+            monsterFolder(name = "Folder 6"),
+        )
+
+        val section = folders.toFoldersSection()
+
+        assertEquals(
+            expected = listOf("Folder 1", "Folder 2", "Folder 3", "Folder 4", "Folder 5"),
+            actual = section?.folders?.map { it.name },
+        )
+    }
+
+    @Test
+    fun `folder shows the first three monster images`() {
+        val folder = MonsterFolder(
+            name = "Boss Fights",
+            monsters = listOf("dragon", "lich", "tarrasque", "kraken").map { monsterPreview(index = it) },
+        )
+
+        val section = listOf(folder).toFoldersSection()
+
+        assertEquals(
+            expected = HomeSectionState.Folders(
+                folders = listOf(
+                    HomeFolderState(
+                        name = "Boss Fights",
+                        image1 = folderImage(index = "dragon"),
+                        image2 = folderImage(index = "lich"),
+                        image3 = folderImage(index = "tarrasque"),
+                    ),
+                ),
+            ),
+            actual = section,
+        )
+    }
+
+    private fun monsterFolder(name: String) = MonsterFolder(
+        name = name,
+        monsters = listOf(monsterPreview(index = "$name-monster")),
+    )
+
+    private fun monsterPreview(index: String) = MonsterPreviewFolder(
+        index = index,
+        name = index,
+        imageUrl = "https://images/$index.png",
+        backgroundColorLight = "#FFFFFF",
+        backgroundColorDark = "#000000",
+        imageContentScale = MonsterPreviewFolderImageContentScale.Fit,
+    )
+
+    private fun folderImage(index: String) = FolderImageState(
+        url = "https://images/$index.png",
+        contentDescription = index,
+        isHorizontalImage = false,
+        backgroundColorLight = "#FFFFFF",
+        backgroundColorDark = "#000000",
+    )
 
     private fun alternativeSource(
         acronym: String,

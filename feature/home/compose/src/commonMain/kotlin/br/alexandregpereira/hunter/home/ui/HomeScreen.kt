@@ -59,7 +59,6 @@ internal fun HomeScreen(
     onSeeAllFoldersClick: () -> Unit = {},
     onCreateMonsterClick: () -> Unit = {},
     onCreateSpellClick: () -> Unit = {},
-    onCreateFolderClick: () -> Unit = {},
     onManageExtraContentClick: () -> Unit = {},
 ) = Window(
     backgroundColor = MaterialTheme.colors.background,
@@ -157,11 +156,6 @@ internal fun HomeScreen(
                                 text = strings.spell,
                                 icon = Icons.Filled.Add,
                                 onClick = onCreateSpellClick,
-                            )
-                            HomePillButton(
-                                text = strings.folder,
-                                icon = Icons.Filled.Add,
-                                onClick = onCreateFolderClick,
                             )
                         }
                     }
