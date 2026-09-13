@@ -51,6 +51,7 @@ val featureHomeModule = module {
             getHomeContentTotals = get(),
             getHomeExtraContentProgress = get(),
             getMonsterFolders = get(),
+            getRecentlyViewedMonsters = get(),
             homeEventListener = get<HomeEventDispatcher>(),
             analytics = get(),
             dispatcher = get(),
@@ -68,6 +69,7 @@ val featureHomeModule = module {
             folderDetailEventDispatcher = get(),
             monsterContentManagerEventDispatcher = get(),
             monsterRegistrationEventDispatcher = get(),
+            monsterEventDispatcher = get(),
         )
     }
 }

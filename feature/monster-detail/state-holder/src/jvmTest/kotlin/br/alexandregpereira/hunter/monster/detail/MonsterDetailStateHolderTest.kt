@@ -100,5 +100,6 @@ internal class MonsterDetailStateHolderTest {
         spellResultListener = mockk<EventListener<SpellResult>> { every { events } returns emptyFlow() },
         getCondition = mockk<GetCondition>(relaxed = true),
         homeEventDispatcher = HomeEventDispatcher(),
+        addMonsterToRecentlyViewed = mockk(relaxed = true),
     )
 }

@@ -7,6 +7,8 @@ import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
 import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
+import br.alexandregpereira.hunter.monster.event.MonsterEvent
+import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEvent
 import br.alexandregpereira.hunter.monster.registration.event.MonsterRegistrationEventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEvent
@@ -35,6 +37,7 @@ internal class HomeIntentHandlerImpl(
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
     private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
     private val monsterRegistrationEventDispatcher: MonsterRegistrationEventDispatcher,
+    private val monsterEventDispatcher: MonsterEventDispatcher,
 ) : HomeIntentHandler {
 
     override suspend fun onIntent(intent: HomeIntent) {
@@ -59,6 +62,13 @@ internal class HomeIntentHandlerImpl(
             }
             HomeIntent.CreateSpell -> {
                 spellRegistrationEventDispatcher.dispatchEvent(SpellRegistrationEvent.Show())
+            }
+            is HomeIntent.OpenMonsterDetail -> {
+                monsterEventDispatcher.dispatchEvent(
+                    MonsterEvent.OnVisibilityChanges.Show(
+                        index = intent.index,
+                    )
+                )
             }
         }
     }

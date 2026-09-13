@@ -57,6 +57,7 @@ val monsterDetailModule = module {
             spellResultListener = get<SpellResultDispatcher>(),
             getCondition = get(),
             homeEventDispatcher = get(),
+            addMonsterToRecentlyViewed = get(),
         )
     }
     factory { CloneMonsterUseCase(get(), get(), get(), get(), get()) }

@@ -28,6 +28,7 @@ multiplatform {
         implementation(project(":core:localization"))
         api(project(":domain:monster:core"))
         implementation(project(":domain:condition:core"))
+        implementation(project(":domain:monster-folder:core"))
         implementation(project(":domain:monster-lore:core"))
         implementation(project(":domain:spell:core"))
         implementation(project(":domain:spell:event"))

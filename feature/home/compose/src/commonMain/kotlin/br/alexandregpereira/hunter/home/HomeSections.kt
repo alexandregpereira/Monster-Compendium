@@ -19,12 +19,18 @@ package br.alexandregpereira.hunter.home
 
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
 import br.alexandregpereira.hunter.home.domain.HomeContentTotals
 import br.alexandregpereira.hunter.home.domain.HomeExtraContentProgress
 import br.alexandregpereira.hunter.home.ui.HomeCategoryState
 import br.alexandregpereira.hunter.home.ui.HomeCategoryType
 import br.alexandregpereira.hunter.home.ui.HomeFolderState
 import br.alexandregpereira.hunter.home.ui.HomeSectionState
+import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.FolderImageState
 
 /**
@@ -101,3 +107,33 @@ private fun MonsterPreviewFolder.toFolderImageState(): FolderImageState {
 }
 
 internal const val HOME_FOLDERS_LIMIT = 5
+
+/**
+ * Keeps the recently viewed order, the most recent first. Returns null when no monster was viewed.
+ */
+internal fun List<MonsterPreviewFolder>.toRecentlyViewedSection(): HomeSectionState.RecentlyViewed? {
+    if (isEmpty()) return null
+    return HomeSectionState.RecentlyViewed(monsters = map { it.toMonsterCardState() })
+}
+
+private fun MonsterPreviewFolder.toMonsterCardState(): MonsterCardState {
+    return MonsterCardState(
+        index = index,
+        name = name,
+        imageState = MonsterImageState(
+            url = imageUrl,
+            type = MonsterTypeState.valueOf(type.name),
+            backgroundColor = ColorState(
+                light = backgroundColorLight,
+                dark = backgroundColorDark,
+            ),
+            challengeRating = challengeRating,
+            contentScale = when (imageContentScale) {
+                MonsterPreviewFolderImageContentScale.Fit -> AppImageContentScale.Fit
+                MonsterPreviewFolderImageContentScale.Crop -> AppImageContentScale.Crop
+            },
+            isHorizontal = isHorizontalImage,
+            contentDescription = name,
+        ),
+    )
+}

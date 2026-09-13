@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.monster.detail
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.condition.GetCondition
+import br.alexandregpereira.hunter.domain.folder.AddMonsterToRecentlyViewedUseCase
 import br.alexandregpereira.hunter.domain.model.ConditionType
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterStatus
@@ -105,6 +106,7 @@ class MonsterDetailStateHolder internal constructor(
     private val spellResultListener: EventListener<SpellResult>,
     private val getCondition: GetCondition,
     private val homeEventDispatcher: HomeEventDispatcher,
+    private val addMonsterToRecentlyViewed: AddMonsterToRecentlyViewedUseCase,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -117,6 +119,8 @@ class MonsterDetailStateHolder internal constructor(
     private var spellResultJob: Job? = null
     private var enableMonsterPageChangesEventDispatch = false
     private var metadata: List<Monster> = emptyList()
+    private var lastRecentlyViewedMonsterIndex: String? = null
+    private var hasRecentlyViewedChanges = false
     var initialMonsterListPositionIndex: Int = 0
         private set
 
@@ -151,6 +155,7 @@ class MonsterDetailStateHolder internal constructor(
                 Hide -> {
                     analytics.trackMonsterDetailHidden()
                     setState { copy(showDetail = false).saveState(stateRecovery) }
+                    dispatchRecentlyViewedChanges()
                 }
             }
         }.launchIn(scope)
@@ -206,6 +211,39 @@ class MonsterDetailStateHolder internal constructor(
             }
         }
         stateRecovery.saveMonsterIndex(monsterIndex)
+        addToRecentlyViewed(monsterIndex)
+    }
+
+    /**
+     * Records every monster shown to the user, the one opened and the ones reached by swiping. The
+     * monster changes also happen on background reloads, so the same monster isn't recorded again
+     * and nothing is recorded while the detail is closed.
+     */
+    private fun addToRecentlyViewed(monsterIndex: String) {
+        if (state.value.showDetail.not() || monsterIndex.isBlank()) return
+        if (monsterIndex == lastRecentlyViewedMonsterIndex) return
+        lastRecentlyViewedMonsterIndex = monsterIndex
+        addMonsterToRecentlyViewed(monsterIndex)
+            .flowOn(dispatcher)
+            .onEach {
+                if (state.value.showDetail) {
+                    hasRecentlyViewedChanges = true
+                } else {
+                    homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                }
+            }
+            .catch { analytics.logException(it) }
+            .launchIn(scope)
+    }
+
+    /**
+     * The Home is covered by the detail, so it's notified once when the detail closes instead of on
+     * every monster swiped.
+     */
+    private fun dispatchRecentlyViewedChanges() {
+        if (hasRecentlyViewedChanges.not()) return
+        hasRecentlyViewedChanges = false
+        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
     }
 
     fun onShowOptionsClicked() {

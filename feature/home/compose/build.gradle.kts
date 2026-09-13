@@ -31,6 +31,7 @@ multiplatform {
         implementation(project(":domain:alternative-source:core"))
         implementation(project(":domain:monster:core"))
         implementation(project(":domain:monster-folder:core"))
+        implementation(project(":domain:monster:event"))
         implementation(project(":domain:spell:core"))
         implementation(project(":feature:folder-detail:event"))
         implementation(project(":feature:folder-list:event"))

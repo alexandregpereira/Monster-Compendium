@@ -20,9 +20,15 @@ package br.alexandregpereira.hunter.home
 import br.alexandregpereira.hunter.domain.folder.model.MonsterFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolder
 import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderImageContentScale
+import br.alexandregpereira.hunter.domain.folder.model.MonsterPreviewFolderType
 import br.alexandregpereira.hunter.domain.source.model.AlternativeSource
 import br.alexandregpereira.hunter.domain.source.model.Source
 import br.alexandregpereira.hunter.home.ui.HomeFolderState
+import br.alexandregpereira.hunter.ui.compendium.monster.ColorState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
+import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
+import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.FolderImageState
 import br.alexandregpereira.hunter.home.domain.HomeContentTotals
 import br.alexandregpereira.hunter.home.domain.HomeExtraContentProgress
@@ -190,6 +196,46 @@ class HomeSectionsTest {
                 ),
             ),
             actual = section,
+        )
+    }
+
+    @Test
+    fun `recently viewed is not shown when no monster was viewed`() {
+        assertNull(emptyList<MonsterPreviewFolder>().toRecentlyViewedSection())
+    }
+
+    @Test
+    fun `recently viewed keeps the order and maps the monsters to cards`() {
+        val dragon = MonsterPreviewFolder(
+            index = "dragon",
+            name = "Ancient Red Dragon",
+            type = MonsterPreviewFolderType.DRAGON,
+            challengeRating = "24",
+            imageUrl = "https://images/dragon.png",
+            backgroundColorLight = "#FFFFFF",
+            backgroundColorDark = "#000000",
+            imageContentScale = MonsterPreviewFolderImageContentScale.Crop,
+            isHorizontalImage = true,
+        )
+
+        val section = listOf(dragon, monsterPreview(index = "goblin")).toRecentlyViewedSection()
+
+        assertEquals(expected = listOf("dragon", "goblin"), actual = section?.monsters?.map { it.index })
+        assertEquals(
+            expected = MonsterCardState(
+                index = "dragon",
+                name = "Ancient Red Dragon",
+                imageState = MonsterImageState(
+                    url = "https://images/dragon.png",
+                    type = MonsterTypeState.DRAGON,
+                    backgroundColor = ColorState(light = "#FFFFFF", dark = "#000000"),
+                    challengeRating = "24",
+                    contentScale = AppImageContentScale.Crop,
+                    isHorizontal = true,
+                    contentDescription = "Ancient Red Dragon",
+                ),
+            ),
+            actual = section?.monsters?.first(),
         )
     }
 

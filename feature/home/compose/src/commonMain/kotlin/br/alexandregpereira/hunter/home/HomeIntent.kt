@@ -10,4 +10,5 @@ internal sealed interface HomeIntent {
     data object OpenExtraContentManager : HomeIntent
     data object CreateMonster : HomeIntent
     data object CreateSpell : HomeIntent
+    data class OpenMonsterDetail(val index: String, val indexes: List<String>) : HomeIntent
 }
