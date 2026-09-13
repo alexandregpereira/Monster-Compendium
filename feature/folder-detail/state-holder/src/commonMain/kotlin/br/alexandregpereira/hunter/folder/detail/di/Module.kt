@@ -47,6 +47,7 @@ val folderDetailModule = module {
             analytics = FolderDetailAnalytics(get()),
             appLocalization = get(),
             folderListEventDispatcher = get<FolderListEventDispatcher>(),
+            homeEventDispatcher = get(),
         )
     }
 }

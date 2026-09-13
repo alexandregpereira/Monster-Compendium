@@ -5,6 +5,8 @@ import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatch
 import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEvent
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEvent
+import br.alexandregpereira.hunter.monster.content.event.MonsterContentManagerEventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.settings.event.SettingsEvent
 import br.alexandregpereira.hunter.spell.compendium.event.SpellCompendiumEvent
@@ -16,11 +18,11 @@ import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEve
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
-internal interface HomeEventDispatcher {
+internal interface HomeIntentHandler {
     suspend fun onIntent(intent: HomeIntent)
 }
 
-internal class HomeEventDispatcherImpl(
+internal class HomeIntentHandlerImpl(
     private val monsterCompendiumEventDispatcher: EventDispatcher<MonsterCompendiumEvent>,
     private val spellCompendiumEventDispatcher: SpellCompendiumEventResultDispatcher,
     private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
@@ -29,7 +31,8 @@ internal class HomeEventDispatcherImpl(
     private val settingsEventDispatcher: EventDispatcher<SettingsEvent>,
     private val folderListEventDispatcher: EventDispatcher<FolderListEvent>,
     private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
-) : HomeEventDispatcher {
+    private val monsterContentManagerEventDispatcher: MonsterContentManagerEventDispatcher,
+) : HomeIntentHandler {
 
     override suspend fun onIntent(intent: HomeIntent) {
         when (intent) {
@@ -44,6 +47,9 @@ internal class HomeEventDispatcherImpl(
                 folderDetailEventDispatcher.dispatchEvent(
                     FolderDetailEvent.Show(folderName = intent.folderName)
                 )
+            }
+            HomeIntent.OpenExtraContentManager -> {
+                monsterContentManagerEventDispatcher.dispatchEvent(MonsterContentManagerEvent.Show)
             }
         }
     }

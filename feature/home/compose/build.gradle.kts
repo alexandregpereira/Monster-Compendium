@@ -24,12 +24,18 @@ plugins {
 multiplatform {
     androidMain("br.alexandregpereira.hunter.home")
     commonMain {
+        implementation(project(":core:analytics"))
         implementation(project(":core:event"))
         implementation(project(":core:localization"))
         implementation(project(":core:state-holder"))
+        implementation(project(":domain:alternative-source:core"))
+        implementation(project(":domain:monster:core"))
+        implementation(project(":domain:spell:core"))
         implementation(project(":feature:folder-detail:event"))
         implementation(project(":feature:folder-list:event"))
+        implementation(project(":feature:home:event"))
         implementation(project(":feature:monster-compendium:event"))
+        implementation(project(":feature:monster-content-manager:event"))
         implementation(project(":feature:search:event"))
         implementation(project(":feature:settings:event"))
         implementation(project(":feature:spell-compendium:event"))
@@ -40,6 +46,9 @@ multiplatform {
 
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.compose)
+    }
+    commonTest {
+        implementation(kotlin("test"))
     }
     jvmMain()
     iosMain()

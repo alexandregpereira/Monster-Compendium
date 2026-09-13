@@ -24,6 +24,7 @@ multiplatform {
         implementation(project(":core:analytics"))
         api(project(":core:state-holder"))
         api(project(":domain:sync:core"))
+        implementation(project(":feature:home:event"))
         implementation(project(":feature:sync:event"))
         implementation(libs.kotlin.coroutines.core)
         implementation(libs.koin.core)

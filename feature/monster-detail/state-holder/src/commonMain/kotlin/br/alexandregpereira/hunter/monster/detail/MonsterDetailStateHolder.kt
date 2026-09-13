@@ -30,6 +30,8 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatch
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEvent
 import br.alexandregpereira.hunter.event.monster.lore.detail.MonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.AddToFolder
 import br.alexandregpereira.hunter.monster.detail.MonsterDetailOptionState.Companion.Clone
@@ -102,6 +104,7 @@ class MonsterDetailStateHolder internal constructor(
     private val stateRecovery: StateRecovery,
     private val spellResultListener: EventListener<SpellResult>,
     private val getCondition: GetCondition,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<MonsterDetailState>(MonsterDetailState(strings = appLocalization.getStrings())) {
 
     private val monsterIndex: String
@@ -446,6 +449,7 @@ class MonsterDetailStateHolder internal constructor(
                 if (monsterIndexes.isNotEmpty()) {
                     monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 }
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .launchIn(scope)
     }
@@ -455,6 +459,7 @@ class MonsterDetailStateHolder internal constructor(
             .onEach {
                 monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 monsterEventDispatcher.dispatchEvent(Hide)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .flowOn(dispatcher)
             .launchIn(scope)

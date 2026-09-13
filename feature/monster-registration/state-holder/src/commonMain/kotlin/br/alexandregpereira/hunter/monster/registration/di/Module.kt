@@ -102,6 +102,7 @@ val monsterRegistrationModule = module {
             generateNewMonster = get(),
             monsterEventDispatcher = get(),
             stateRecovery = get(named(MonsterRegistrationStateRecoveryQualifier)),
+            homeEventDispatcher = get(),
         )
     }
 

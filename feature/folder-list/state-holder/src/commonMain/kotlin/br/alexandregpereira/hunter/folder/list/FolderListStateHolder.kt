@@ -28,6 +28,8 @@ import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -56,6 +58,7 @@ class FolderListStateHolder internal constructor(
     private val stateRecovery: StateRecovery,
     private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher,
     private val getMonstersByFolders: GetMonstersByFolders,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<FolderListState>(stateRecovery.getState()) {
 
     private val strings: FolderListStrings
@@ -105,6 +108,7 @@ class FolderListStateHolder internal constructor(
             .onEach {
                 onItemSelectionClose()
                 loadMonsterFolders()
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .launchIn(scope)
     }

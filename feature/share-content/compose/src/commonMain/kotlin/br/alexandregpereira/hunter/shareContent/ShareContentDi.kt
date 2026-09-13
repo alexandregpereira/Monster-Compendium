@@ -78,6 +78,7 @@ val featureShareContentModule = module {
             get(),
             get(),
             get(),
+            homeEventDispatcher = get(),
         )
     }
     single<ShareContentMapper> {

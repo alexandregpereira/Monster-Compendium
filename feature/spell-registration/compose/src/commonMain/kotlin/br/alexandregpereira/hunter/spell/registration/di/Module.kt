@@ -38,6 +38,7 @@ val featureSpellRegistrationModule = module {
             appLocalization = get(),
             analytics = get(),
             spellDetailEventDispatcher = get(),
+            homeEventDispatcher = get(),
         )
     }
 }

@@ -45,6 +45,7 @@ val folderListModule = module {
             stateRecovery = get(named(FolderListStateRecoveryQualifier)),
             folderPreviewEventDispatcher = get(),
             getMonstersByFolders = get(),
+            homeEventDispatcher = get(),
         )
     }
 }

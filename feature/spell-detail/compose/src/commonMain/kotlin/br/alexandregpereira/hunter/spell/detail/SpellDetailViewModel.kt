@@ -20,6 +20,8 @@ package br.alexandregpereira.hunter.spell.detail
 import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.spell.detail.domain.CloneSpellUseCase
 import br.alexandregpereira.hunter.spell.detail.domain.ResetSpellToOriginalUseCase
@@ -54,6 +56,7 @@ internal class SpellDetailViewModel(
     private val spellResultDispatcher: EventDispatcher<SpellResult>,
     private val syncEventDispatcher: SyncEventDispatcher,
     private val syncEventListener: SyncEventListener,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<SpellDetailViewState>(SpellDetailViewState()) {
 
     private var spellResultJob: Job? = null
@@ -143,6 +146,7 @@ internal class SpellDetailViewModel(
             .flowOn(dispatcher)
             .onEach { newIndex ->
                 dispatchOnChangedResult(spellIndex = newIndex)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)
@@ -157,6 +161,7 @@ internal class SpellDetailViewModel(
             .onEach {
                 onClose()
                 dispatchOnChangedResult(spellIndex)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)

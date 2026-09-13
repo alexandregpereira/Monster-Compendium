@@ -17,30 +17,58 @@
 
 package br.alexandregpereira.hunter.home
 
+import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.home.domain.GetHomeContentTotals
+import br.alexandregpereira.hunter.home.domain.GetHomeExtraContentProgress
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.ui.HomeSectionState
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.state.UiModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 /**
- * The view state is mocked by [homeMockViewState] until the Home is connected to the domain layer.
+ * The categories and the extra content sections come from the domain. The recently viewed and the
+ * folders sections are still mocked by [homeMockViewState].
  */
 internal class HomeStateHolder(
     private val appLocalization: AppReactiveLocalization,
-    private val homeEventDispatcher: HomeEventDispatcher,
+    private val homeIntentHandler: HomeIntentHandler,
+    private val getHomeContentTotals: GetHomeContentTotals,
+    private val getHomeExtraContentProgress: GetHomeExtraContentProgress,
+    private val homeEventListener: EventListener<HomeEvent>,
+    private val analytics: Analytics,
+    private val dispatcher: CoroutineDispatcher,
 ) : UiModel<HomeState>(
     HomeState(
-        viewState = homeMockViewState,
+        viewState = homeMockViewState.copy(
+            sections = buildHomeSections(
+                categories = null,
+                extraContent = null,
+                recentlyViewed = homeMockRecentlyViewedSection,
+                folders = homeMockFoldersSection,
+            ),
+        ),
         strings = appLocalization.getHomeStrings(),
     )
 ) {
 
     private var intentJob: Job? = null
+    private var sectionsJob: Job? = null
 
     init {
         observeLanguageChanges()
+        observeEvents()
+        loadSections(invalidateCache = false)
     }
 
     fun onIntent(intent: HomeIntent) {
@@ -49,8 +77,61 @@ internal class HomeStateHolder(
         // previous screen is already closed and its collection can be cancelled.
         intentJob?.cancel()
         intentJob = featureScope.launch {
-            homeEventDispatcher.onIntent(intent)
+            homeIntentHandler.onIntent(intent)
         }
+    }
+
+    /**
+     * Loads all the sections at once, updating the state only after every section is loaded.
+     */
+    private fun loadSections(invalidateCache: Boolean) {
+        sectionsJob?.cancel()
+        sectionsJob = combine(
+            getHomeContentTotals(invalidateCache)
+                .map { it.toCategoriesSection() }
+                .keepCurrentSectionOnError(),
+            getHomeExtraContentProgress()
+                .map { it.toExtraContentSection() }
+                .keepCurrentSectionOnError(),
+        ) { categories, extraContent ->
+            buildHomeSections(
+                categories = categories,
+                extraContent = extraContent,
+                recentlyViewed = homeMockRecentlyViewedSection,
+                folders = homeMockFoldersSection,
+            )
+        }
+            .flowOn(dispatcher)
+            .onEach { sections ->
+                setState { copy(viewState = viewState.copy(sections = sections)) }
+            }
+            .launchIn(scope)
+    }
+
+    /**
+     * A section that fails to load, like the extra content without network, keeps the section
+     * currently shown, or stays hidden if it was never loaded. So one failure doesn't hide the
+     * other sections.
+     */
+    private inline fun <reified T : HomeSectionState> Flow<T?>.keepCurrentSectionOnError(): Flow<T?> {
+        return catch { error ->
+            analytics.logException(error)
+            emit(state.value.viewState.sections.filterIsInstance<T>().firstOrNull())
+        }
+    }
+
+    /**
+     * The features dispatch [HomeEvent.OnContentChanged] when the content shown on the Home
+     * changes, so the Home doesn't need to know every feature event.
+     */
+    private fun observeEvents() {
+        homeEventListener.events
+            .onEach { event ->
+                when (event) {
+                    HomeEvent.OnContentChanged -> loadSections(invalidateCache = true)
+                }
+            }
+            .launchIn(scope)
     }
 
     private fun observeLanguageChanges() {

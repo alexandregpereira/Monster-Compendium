@@ -18,9 +18,12 @@
 package br.alexandregpereira.hunter.home.di
 
 import br.alexandregpereira.hunter.event.folder.list.FolderListEventDispatcher
-import br.alexandregpereira.hunter.home.HomeEventDispatcher
-import br.alexandregpereira.hunter.home.HomeEventDispatcherImpl
+import br.alexandregpereira.hunter.home.HomeIntentHandler
+import br.alexandregpereira.hunter.home.HomeIntentHandlerImpl
 import br.alexandregpereira.hunter.home.HomeStateHolder
+import br.alexandregpereira.hunter.home.domain.GetHomeContentTotals
+import br.alexandregpereira.hunter.home.domain.GetHomeExtraContentProgress
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEventDispatcher
 import br.alexandregpereira.hunter.settings.event.SettingsEventDispatcher
@@ -29,14 +32,31 @@ import br.alexandregpereira.hunter.spell.registration.event.SpellRegistrationEve
 import org.koin.dsl.module
 
 val featureHomeModule = module {
+    single { HomeEventDispatcher() }
+    factory {
+        GetHomeContentTotals(
+            getMonsterPreviewsCacheUseCase = get(),
+            spellLocalRepository = get(),
+        )
+    }
+    factory {
+        GetHomeExtraContentProgress(
+            getAlternativeSourcesUseCase = get(),
+        )
+    }
     single {
         HomeStateHolder(
             appLocalization = get(),
-            homeEventDispatcher = get(),
+            homeIntentHandler = get(),
+            getHomeContentTotals = get(),
+            getHomeExtraContentProgress = get(),
+            homeEventListener = get<HomeEventDispatcher>(),
+            analytics = get(),
+            dispatcher = get(),
         )
     }
-    factory<HomeEventDispatcher> {
-        HomeEventDispatcherImpl(
+    factory<HomeIntentHandler> {
+        HomeIntentHandlerImpl(
             monsterCompendiumEventDispatcher = get<MonsterCompendiumEventDispatcher>(),
             spellCompendiumEventDispatcher = get<SpellCompendiumEventResultDispatcher>(),
             spellDetailEventDispatcher = get(),
@@ -45,6 +65,7 @@ val featureHomeModule = module {
             settingsEventDispatcher = get<SettingsEventDispatcher>(),
             folderListEventDispatcher = get<FolderListEventDispatcher>(),
             folderDetailEventDispatcher = get(),
+            monsterContentManagerEventDispatcher = get(),
         )
     }
 }

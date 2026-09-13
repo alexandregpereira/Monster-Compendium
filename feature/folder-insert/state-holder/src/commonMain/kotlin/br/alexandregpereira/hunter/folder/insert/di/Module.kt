@@ -39,6 +39,7 @@ val folderInsertModule = module {
             analytics = FolderInsertAnalytics(get()),
             appLocalization = get(),
             shareContentEventDispatcher = get(),
+            homeEventDispatcher = get(),
         )
     }
 }

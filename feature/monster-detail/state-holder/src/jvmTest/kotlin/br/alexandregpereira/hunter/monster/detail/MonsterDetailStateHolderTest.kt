@@ -24,6 +24,7 @@ import br.alexandregpereira.hunter.domain.usecase.ResetMonsterImage
 import br.alexandregpereira.hunter.event.folder.insert.emptyFolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.monster.lore.detail.emptyMonsterLoreDetailEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.detail.domain.CloneMonsterUseCase
 import br.alexandregpereira.hunter.monster.detail.domain.DeleteMonsterUseCase
@@ -98,5 +99,6 @@ internal class MonsterDetailStateHolderTest {
         stateRecovery = StateRecovery(),
         spellResultListener = mockk<EventListener<SpellResult>> { every { events } returns emptyFlow() },
         getCondition = mockk<GetCondition>(relaxed = true),
+        homeEventDispatcher = HomeEventDispatcher(),
     )
 }

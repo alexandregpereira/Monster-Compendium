@@ -65,6 +65,7 @@ val featureSpellDetailModule = module {
             spellResultDispatcher = get<SpellResultDispatcher>(),
             syncEventDispatcher = get(),
             syncEventListener = get(),
+            homeEventDispatcher = get(),
         )
     }
 }

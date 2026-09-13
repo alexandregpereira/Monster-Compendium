@@ -33,6 +33,8 @@ import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.domain.usecase.GetMonsterUseCase
 import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.event.v2.EventListener
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
@@ -93,6 +95,7 @@ class MonsterRegistrationStateHolder internal constructor(
     private val generateNewMonster: GenerateNewMonster,
     private val monsterEventDispatcher: MonsterEventDispatcher,
     private val stateRecovery: StateRecovery,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<MonsterRegistrationState>(MonsterRegistrationState()),
     MutableActionHandler<MonsterRegistrationAction> by MutableActionHandler(),
     MonsterRegistrationIntent {
@@ -191,6 +194,7 @@ class MonsterRegistrationStateHolder internal constructor(
                         monsterIndex = monsterIndex
                     )
                 )
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
                 if (isMonsterCreation()) {
                     monsterEventDispatcher.dispatchEvent(
                         event = MonsterEvent.OnVisibilityChanges.Show(index = monsterIndex)

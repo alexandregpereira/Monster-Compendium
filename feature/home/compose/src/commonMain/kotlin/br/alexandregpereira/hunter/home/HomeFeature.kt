@@ -52,5 +52,6 @@ fun HomeFeature(
             stateHolder.onIntent(HomeIntent.OpenFolderDetail(folderName = folderName))
         },
         onSeeAllFoldersClick = { stateHolder.onIntent(HomeIntent.OpenFolderList) },
+        onManageExtraContentClick = { stateHolder.onIntent(HomeIntent.OpenExtraContentManager) },
     )
 }

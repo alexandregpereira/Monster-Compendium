@@ -15,22 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    kotlin("multiplatform")
+package br.alexandregpereira.hunter.home.event
+
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+
+sealed class HomeEvent {
+
+    /**
+     * Dispatched by the features when the content shown on the Home changes, like monsters, spells,
+     * folders or extra contents being created, cloned, deleted or synced.
+     */
+    data object OnContentChanged : HomeEvent()
 }
 
-multiplatform {
-    commonMain {
-        implementation(project(":core:analytics"))
-        implementation(project(":core:localization"))
-        api(project(":core:state-holder"))
-        api(project(":domain:monster-folder:core"))
-        implementation(project(":feature:folder-insert:event"))
-        implementation(project(":feature:home:event"))
-        implementation(project(":feature:share-content:event"))
-        implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
-    }
-    jvmMain()
-    iosMain()
-}
+class HomeEventDispatcher : EventDispatcher<HomeEvent> by EventDispatcher(
+    extraBufferCapacity = 1,
+)

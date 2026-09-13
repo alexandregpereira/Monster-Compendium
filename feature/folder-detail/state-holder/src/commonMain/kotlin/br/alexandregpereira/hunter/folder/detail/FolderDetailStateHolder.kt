@@ -27,6 +27,8 @@ import br.alexandregpereira.hunter.event.folder.list.FolderListEvent
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
@@ -53,7 +55,8 @@ class FolderDetailStateHolder internal constructor(
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderDetailAnalytics,
     private val appLocalization: AppLocalization,
-    private val folderListEventDispatcher: EventDispatcher<FolderListEvent>
+    private val folderListEventDispatcher: EventDispatcher<FolderListEvent>,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<FolderDetailState>(stateRecovery.getState()) {
 
     private val strings: FolderDetailStrings
@@ -124,6 +127,7 @@ class FolderDetailStateHolder internal constructor(
                     setMonsters(monsters, folderName)
                 }
                 folderListEventDispatcher.dispatchEvent(FolderListEvent.OnFolderChanges)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
             }
             .catch {
                 analytics.logException(it)

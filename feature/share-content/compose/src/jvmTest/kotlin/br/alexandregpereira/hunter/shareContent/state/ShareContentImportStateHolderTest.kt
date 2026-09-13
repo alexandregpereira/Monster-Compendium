@@ -23,6 +23,7 @@ import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.flow.test.assertNextValue
 import br.alexandregpereira.flow.test.testFlow
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
@@ -161,6 +162,7 @@ internal class ShareContentImportStateHolderTest {
         importContent = { emptyList() },
         analytics = NoOpAnalytics(),
         compendiumFileManager = compendiumFileManager,
+        homeEventDispatcher = HomeEventDispatcher(),
     )
 
     private class FakeAppLocalization : AppReactiveLocalization {

@@ -32,6 +32,7 @@ multiplatform {
         implementation(project(":domain:spell:core"))
         implementation(project(":domain:spell:event"))
         implementation(project(":feature:folder-insert:event"))
+        implementation(project(":feature:home:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":core:file:core"))
         implementation(project(":feature:share-content:event"))

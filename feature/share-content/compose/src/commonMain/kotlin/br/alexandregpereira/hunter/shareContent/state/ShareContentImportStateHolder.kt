@@ -23,6 +23,8 @@ import br.alexadregpereira.hunter.shareContent.event.importEvents
 import br.alexandregpereira.file.FileEntry
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import br.alexandregpereira.hunter.home.event.HomeEvent
+import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
@@ -48,6 +50,7 @@ internal class ShareContentImportStateHolder(
     private val importContent: ImportContent,
     private val analytics: Analytics,
     private val compendiumFileManager: CompendiumFileManager,
+    private val homeEventDispatcher: HomeEventDispatcher,
 ) : UiModel<ShareContentImportState>(
     ShareContentImportState(strings = appLocalization.getLanguage().getImportStrings())
 ), MutableActionHandler<ShareContentImportUiEvent> by MutableActionHandler() {
@@ -150,6 +153,7 @@ internal class ShareContentImportStateHolder(
                     )
                 )
                 eventDispatcher.dispatchEvent(Import.OnFinish(monsterIndexes))
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
                 setState {
                     copy(
                         importExtractedState = null,

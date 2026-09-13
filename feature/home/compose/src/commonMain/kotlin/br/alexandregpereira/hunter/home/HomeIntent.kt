@@ -7,4 +7,5 @@ internal sealed interface HomeIntent {
     data object OpenSettings : HomeIntent
     data object OpenFolderList : HomeIntent
     data class OpenFolderDetail(val folderName: String) : HomeIntent
+    data object OpenExtraContentManager : HomeIntent
 }
