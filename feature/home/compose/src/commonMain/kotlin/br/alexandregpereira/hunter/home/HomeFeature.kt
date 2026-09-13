@@ -24,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import br.alexandregpereira.hunter.home.ui.HomeCategoryType
 import br.alexandregpereira.hunter.home.ui.HomeScreen
-import br.alexandregpereira.hunter.home.ui.HomeSectionState
 import org.koin.compose.koinInject
 
 @Composable
@@ -50,16 +49,7 @@ fun HomeFeature(
             }
         },
         onMonsterClick = { monsterIndex ->
-            // Opens the monster allowing to swipe through the other recently viewed monsters
-            val recentlyViewedIndexes = state.viewState.sections
-                .filterIsInstance<HomeSectionState.RecentlyViewed>()
-                .firstOrNull()
-                ?.monsters
-                ?.map { it.index }
-                .orEmpty()
-            stateHolder.onIntent(
-                HomeIntent.OpenMonsterDetail(index = monsterIndex, indexes = recentlyViewedIndexes)
-            )
+            stateHolder.onIntent(HomeIntent.OpenMonsterDetail(index = monsterIndex))
         },
         onFolderClick = { folderName ->
             stateHolder.onIntent(HomeIntent.OpenFolderDetail(folderName = folderName))
