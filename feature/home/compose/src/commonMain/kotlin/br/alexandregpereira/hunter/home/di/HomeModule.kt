@@ -18,6 +18,7 @@
 package br.alexandregpereira.hunter.home.di
 
 import br.alexandregpereira.hunter.event.folder.list.FolderListEventDispatcher
+import br.alexandregpereira.hunter.home.HomeAnalytics
 import br.alexandregpereira.hunter.home.HomeIntentHandler
 import br.alexandregpereira.hunter.home.HomeIntentHandlerImpl
 import br.alexandregpereira.hunter.home.HomeStateHolder
@@ -53,7 +54,7 @@ val featureHomeModule = module {
             getMonsterFolders = get(),
             getRecentlyViewedMonsters = get(),
             homeEventListener = get<HomeEventDispatcher>(),
-            analytics = get(),
+            analytics = HomeAnalytics(get()),
             dispatcher = get(),
         )
     }
