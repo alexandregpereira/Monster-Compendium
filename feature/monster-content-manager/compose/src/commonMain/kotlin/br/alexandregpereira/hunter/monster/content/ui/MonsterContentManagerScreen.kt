@@ -131,7 +131,7 @@ internal fun MonsterContentManagerScreen(
         AppTopBar(
             title = state.strings.title,
             listState = listState,
-            onBackClick = onClose,
+            onCloseClick = onClose,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .onSizeChanged { size ->

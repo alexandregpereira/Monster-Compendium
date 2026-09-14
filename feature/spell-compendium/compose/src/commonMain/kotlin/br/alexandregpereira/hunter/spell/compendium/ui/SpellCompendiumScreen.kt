@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -97,7 +98,13 @@ internal fun SpellCompendiumScreen(
             if (isSearchOpened) {
                 AppTopBar(
                     listState = listState,
-                    onBackClick = intent::onSearchClose,
+                    navigationIcon = {
+                        AppTopBarIconButton(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            onClick = intent::onSearchClose,
+                        )
+                    },
                     modifier = topBarModifier,
                     titleContent = {
                         SpellCompendiumSearchField(
@@ -111,7 +118,7 @@ internal fun SpellCompendiumScreen(
                 AppTopBar(
                     title = state.title,
                     listState = listState,
-                    onBackClick = intent::onClose,
+                    onCloseClick = intent::onClose,
                     modifier = topBarModifier,
                     actions = {
                         AppTopBarIconButton(

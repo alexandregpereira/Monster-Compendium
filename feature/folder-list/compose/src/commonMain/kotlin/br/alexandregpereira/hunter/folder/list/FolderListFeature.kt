@@ -48,7 +48,7 @@ fun FolderListFeature(
         FolderListScreen(
             state = state,
             contentPadding = contentPadding,
-            onBackClick = viewModel::onClose,
+            onCloseClick = viewModel::onClose,
             onCLick = viewModel::onItemClick,
             onLongCLick = viewModel::onItemSelect,
             onItemSelectionClose = viewModel::onItemSelectionClose,

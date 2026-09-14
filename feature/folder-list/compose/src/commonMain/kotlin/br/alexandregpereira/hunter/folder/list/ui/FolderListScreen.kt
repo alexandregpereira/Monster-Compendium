@@ -42,7 +42,7 @@ import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 internal fun FolderListScreen(
     state: FolderListState,
     contentPadding: PaddingValues = PaddingValues(),
-    onBackClick: () -> Unit = {},
+    onCloseClick: () -> Unit = {},
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
     onItemSelectionClose: () -> Unit = {},
@@ -85,7 +85,7 @@ internal fun FolderListScreen(
         AppTopBar(
             title = state.strings.title,
             listState = listState,
-            onBackClick = onBackClick,
+            onCloseClick = onCloseClick,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .onSizeChanged { size ->

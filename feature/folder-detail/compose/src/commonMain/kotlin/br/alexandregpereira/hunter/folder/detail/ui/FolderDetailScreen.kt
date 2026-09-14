@@ -97,7 +97,7 @@ internal fun FolderDetailScreen(
         AppTopBar(
             title = folderName,
             listState = listState,
-            onBackClick = onClose,
+            onCloseClick = onClose,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .onSizeChanged { size ->

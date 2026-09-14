@@ -159,7 +159,7 @@ internal fun MenuScreen(
         AppTopBar(
             title = strings.screenTitle,
             listState = scrollState,
-            onBackClick = onClose,
+            onCloseClick = onClose,
             backgroundColor = MaterialTheme.colors.background,
             modifier = Modifier
                 .align(Alignment.TopCenter)

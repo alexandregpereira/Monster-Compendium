@@ -101,7 +101,7 @@ internal fun MonsterRegistrationForm(
             AppTopBar(
                 title = title,
                 listState = lazyListState,
-                onBackClick = intent::onClose,
+                onCloseClick = intent::onClose,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .onSizeChanged { size ->

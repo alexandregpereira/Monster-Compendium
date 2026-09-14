@@ -37,7 +37,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -85,12 +85,12 @@ fun AppTopBar(
     title: String? = null,
     subtitle: String? = null,
     listState: ScrollableState? = null,
-    onBackClick: () -> Unit = {},
+    onCloseClick: () -> Unit = {},
     navigationIcon: (@Composable () -> Unit)? = {
         AppTopBarIconButton(
-            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Back",
-            onClick = onBackClick,
+            imageVector = Icons.Filled.Close,
+            contentDescription = "Close",
+            onClick = onCloseClick,
         )
     },
     titleContent: (@Composable () -> Unit)? = null,

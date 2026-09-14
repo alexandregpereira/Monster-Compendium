@@ -41,7 +41,7 @@ internal fun MonsterCompendiumTopBar(
     listState: LazyGridState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onBackClick: () -> Unit = {},
+    onCloseClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
     onSortClick: () -> Unit = {},
     onSortOptionsClose: () -> Unit = {},
@@ -50,7 +50,7 @@ internal fun MonsterCompendiumTopBar(
     AppTopBar(
         title = title,
         listState = listState,
-        onBackClick = onBackClick,
+        onCloseClick = onCloseClick,
         modifier = modifier.padding(top = contentPadding.calculateTopPadding()),
         actions = {
             AppTopBarIconButton(

@@ -80,7 +80,7 @@ internal fun SpellRegistrationScreen(
         AppTopBar(
             title = if (state.isEditing) state.strings.editSpell else state.strings.addSpell,
             listState = listState,
-            onBackClick = onClose,
+            onCloseClick = onClose,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .onSizeChanged { size ->
