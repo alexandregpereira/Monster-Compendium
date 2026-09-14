@@ -60,6 +60,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -141,15 +142,19 @@ class MonsterCompendiumStateHolderTest {
         )
 
         // When
-        val (states, actions) = testFlows(stateHolder.state, stateHolder.action)
+        val (states, actions) = testFlows(stateHolder.state, stateHolder.action) {
+            showCompendium()
+        }
 
         // Then
         actions.assertHasNoMoreValues()
         assertEquals(expected = 4, actual = stateHolder.initialScrollItemPosition)
 
         states.assertNextValue(MonsterCompendiumState())
+        states.assertNextValue(MonsterCompendiumState(isShowing = true))
         states.assertFinalValue(
             MonsterCompendiumState().copy(
+                isShowing = true,
                 isLoading = false,
                 items = listOf(
                     MonsterCompendiumItemState.Title(value = "Any", id = "da", isHeader = true),
@@ -228,21 +233,23 @@ class MonsterCompendiumStateHolderTest {
             getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
         )
 
+        showCompendium()
+
         // When
         val (states, actions) = testFlows(stateHolder.state, stateHolder.action) {
-            stateHolder.apply { advanceUntilIdle() }.onPopupOpened()
+            stateHolder.onPopupOpened()
             advanceUntilIdle()
             stateHolder.onTableContentIndexClicked(3)
         }
 
         // Then
         assertEquals(
-            expected = states[1].copy(popupOpened = true),
-            actual = states[2]
+            expected = states[0].copy(popupOpened = true),
+            actual = states[1]
         )
         assertEquals(
-            expected = states[2].copy(popupOpened = false),
-            actual = states[3]
+            expected = states[1].copy(popupOpened = false),
+            actual = states[2]
         )
         actions.assertFinalValue(GoToCompendiumIndex(4, shouldAnimate = false))
     }
@@ -283,10 +290,11 @@ class MonsterCompendiumStateHolderTest {
         createStateHolder(
             getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
         )
+        showCompendium()
 
         // When
         val (states, actions) = testFlows(stateHolder.state, stateHolder.action) {
-            stateHolder.apply { advanceUntilIdle() }.onFirstVisibleItemChange(5)
+            stateHolder.onFirstVisibleItemChange(5)
             advanceUntilIdle()
             stateHolder.onPopupOpened()
             advanceUntilIdle()
@@ -296,12 +304,12 @@ class MonsterCompendiumStateHolderTest {
 
         // Then
         assertEquals(
-            expected = states[3].copy(
+            expected = states[2].copy(
                 popupOpened = true,
                 tableContentOpened = true,
                 tableContentInitialIndex = 4
             ),
-            actual = states[4]
+            actual = states[3]
         )
 
         actions.assertHasNoMoreValues()
@@ -343,10 +351,11 @@ class MonsterCompendiumStateHolderTest {
         createStateHolder(
             getMonsterCompendiumUseCase = getMonsterCompendiumUseCase,
         )
+        showCompendium()
 
         // When
         val (states, actions) = testFlows(stateHolder.state, stateHolder.action) {
-            stateHolder.apply { advanceUntilIdle() }.onFirstVisibleItemChange(5)
+            stateHolder.onFirstVisibleItemChange(5)
             advanceUntilIdle()
             stateHolder.onPopupOpened()
             advanceUntilIdle()
@@ -356,12 +365,12 @@ class MonsterCompendiumStateHolderTest {
 
         // Then
         assertEquals(
-            expected = states[3].copy(
+            expected = states[2].copy(
                 popupOpened = true,
                 tableContentOpened = true,
                 tableContentInitialIndex = 0
             ),
-            actual = states[4]
+            actual = states[3]
         )
 
         actions.assertHasNoMoreValues()
@@ -445,6 +454,16 @@ class MonsterCompendiumStateHolderTest {
         // Then
         assertEquals(expected = listOf(CompendiumSortType.CHALLENGE_RATING_ASC), actual = savedSortTypes)
         actions.assertFinalValue(GoToCompendiumIndex(0, shouldAnimate = false))
+    }
+
+    /**
+     * The compendium is loaded only when it is shown. The event is dispatched after the state
+     * holder starts listening, since the event is not replayed.
+     */
+    private fun TestScope.showCompendium() {
+        advanceUntilIdle()
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        advanceUntilIdle()
     }
 
     private fun createStateHolder(
