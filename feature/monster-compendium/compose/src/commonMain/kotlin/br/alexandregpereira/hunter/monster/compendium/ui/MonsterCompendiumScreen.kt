@@ -138,7 +138,8 @@ private fun MonsterCompendiumScreen(
 ) {
     val density = LocalDensity.current
     var searchBarHeight by remember { mutableStateOf(0.dp) }
-    val topPadding = maxOf(searchBarHeight, contentPadding.calculateTopPadding())
+    val topBarPadding = maxOf(searchBarHeight, contentPadding.calculateTopPadding())
+    val topPadding = topBarPadding + MonsterCompendiumSortButtonHeight
     PopupContainer(
         isOpened = popupOpened,
         onPopupClosed = events::onPopupClosed,
@@ -153,20 +154,26 @@ private fun MonsterCompendiumScreen(
                 onItemCLick = events::onItemClick,
                 onItemLongCLick = events::onItemLongClick,
             )
-            MonsterCompendiumTopBar(
-                title = title,
-                contentDescription = searchLabel,
+            MonsterCompendiumSortButton(
                 sortTitle = sortTitle,
                 sortLabel = sortLabel,
                 sortOptions = sortOptions,
                 sortOptionsOpened = sortOptionsOpened,
                 listState = listState,
-                contentPadding = contentPadding,
-                onCloseClick = events::onClose,
-                onSearchClick = events::onSearchClick,
                 onSortClick = events::onSortClick,
                 onSortOptionsClose = events::onSortOptionsClose,
                 onSortOptionSelected = events::onSortOptionSelected,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = topBarPadding),
+            )
+            MonsterCompendiumTopBar(
+                title = title,
+                contentDescription = searchLabel,
+                listState = listState,
+                contentPadding = contentPadding,
+                onCloseClick = events::onClose,
+                onSearchClick = events::onSearchClick,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .onSizeChanged { size ->
