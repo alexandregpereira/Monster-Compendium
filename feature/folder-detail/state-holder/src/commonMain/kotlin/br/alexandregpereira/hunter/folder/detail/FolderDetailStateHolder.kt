@@ -127,7 +127,7 @@ class FolderDetailStateHolder internal constructor(
                     setMonsters(monsters, folderName)
                 }
                 folderListEventDispatcher.dispatchEvent(FolderListEvent.OnFolderChanges)
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .catch {
                 analytics.logException(it)

@@ -72,7 +72,10 @@ class SyncStateHolder internal constructor(
                     SyncStatus.SYNCED -> {
                         analytics.trackSyncStatus(status, forceSync)
                         syncEventManager.dispatchEvent(Finished)
-                        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                        // The sync replaces the monsters, deleting the ones of removed sources
+                        homeEventDispatcher.dispatchEvent(
+                            HomeEvent.OnContentChanged(wasCreatureDeleted = true)
+                        )
                         hide()
                     }
                     SyncStatus.IDLE -> {

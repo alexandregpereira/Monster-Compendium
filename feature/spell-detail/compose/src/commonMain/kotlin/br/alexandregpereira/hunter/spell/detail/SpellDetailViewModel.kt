@@ -146,7 +146,7 @@ internal class SpellDetailViewModel(
             .flowOn(dispatcher)
             .onEach { newIndex ->
                 dispatchOnChangedResult(spellIndex = newIndex)
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)
@@ -161,7 +161,7 @@ internal class SpellDetailViewModel(
             .onEach {
                 onClose()
                 dispatchOnChangedResult(spellIndex)
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .catch { analytics.logException(it) }
             .launchIn(scope)

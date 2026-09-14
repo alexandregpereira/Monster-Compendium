@@ -24,26 +24,37 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.home.HomeStrings
 import br.alexandregpereira.hunter.home.homeMockViewState
+import br.alexandregpereira.hunter.ui.compose.AppButtonSize
+import br.alexandregpereira.hunter.ui.compose.AppCircleButton
 import br.alexandregpereira.hunter.ui.compose.FolderCard
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun HomeScreen(
@@ -55,6 +66,7 @@ internal fun HomeScreen(
     onSearchClick: () -> Unit = {},
     onCategoryClick: (HomeCategoryType) -> Unit = {},
     onMonsterClick: (index: String) -> Unit = {},
+    onRefreshRecentlyViewedClick: () -> Unit = {},
     onFolderClick: (name: String) -> Unit = {},
     onSeeAllFoldersClick: () -> Unit = {},
     onCreateMonsterClick: () -> Unit = {},
@@ -109,8 +121,30 @@ internal fun HomeScreen(
                     )
 
                     is HomeSectionState.RecentlyViewed -> Column(Modifier.animateItem()) {
-                        HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
+                        // A new monsters list creates a new scroll state, so the updated list
+                        // starts at the first monster instead of keeping the previous first
+                        // visible monster in place
+                        val listState = rememberSaveable(
+                            section.monsters,
+                            saver = LazyListState.Saver,
+                        ) { LazyListState() }
+                        val coroutineScope = rememberCoroutineScope()
+                        HomeSectionTitle(
+                            title = strings.recentlyViewed,
+                            modifier = sectionModifier,
+                            action = {
+                                HomeRefreshButton(
+                                    contentDescription = strings.refresh,
+                                    onClick = {
+                                        // The list can be the same, so it's scrolled here too
+                                        coroutineScope.launch { listState.animateScrollToItem(0) }
+                                        onRefreshRecentlyViewedClick()
+                                    },
+                                )
+                            },
+                        )
                         LazyRow(
+                            state = listState,
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding),
@@ -210,11 +244,37 @@ private const val HOME_HEADER_KEY = "Header"
 private fun HomeSectionTitle(
     title: String,
     modifier: Modifier = Modifier,
-) = SectionTitle(
-    title = title,
-    isHeader = false,
-    modifier = modifier.padding(top = 32.dp, bottom = 12.dp),
-)
+    action: (@Composable () -> Unit)? = null,
+) = Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+        .fillMaxWidth()
+        .padding(top = 32.dp, bottom = 12.dp),
+) {
+    SectionTitle(
+        title = title,
+        isHeader = false,
+        modifier = Modifier.weight(1f),
+    )
+    action?.invoke()
+}
+
+@Composable
+private fun HomeRefreshButton(
+    contentDescription: String,
+    onClick: () -> Unit,
+) = AppCircleButton(
+    isPrimary = false,
+    size = AppButtonSize.SMALL,
+    onClick = onClick,
+) {
+    Icon(
+        imageVector = Icons.Filled.Refresh,
+        contentDescription = contentDescription,
+        tint = LocalContentColor.current,
+        modifier = Modifier.size(22.dp),
+    )
+}
 
 @Preview
 @Composable

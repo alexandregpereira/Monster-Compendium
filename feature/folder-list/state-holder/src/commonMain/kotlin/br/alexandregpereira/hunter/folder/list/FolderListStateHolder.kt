@@ -107,7 +107,7 @@ class FolderListStateHolder internal constructor(
             .onEach {
                 onItemSelectionClose()
                 loadMonsterFolders()
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .launchIn(scope)
     }
