@@ -59,7 +59,7 @@ internal class SearchStateHolder(
     private val analytics: SearchAnalytics,
     private val dispatcher: CoroutineDispatcher,
     private val appLocalization: AppReactiveLocalization,
-) : UiModel<SearchViewState>(SearchViewState(searchLabel = appLocalization.getStrings().search)) {
+) : UiModel<SearchViewState>(SearchViewState(title = appLocalization.getStrings().search)) {
 
     private val searchQuery = MutableSharedFlow<String>(
         extraBufferCapacity = 1,
@@ -165,7 +165,7 @@ internal class SearchStateHolder(
             val strings = language.getStrings()
             setState {
                 copy(
-                    searchLabel = strings.search,
+                    title = strings.search,
                     searchResults = strings.searchResultsSingular.formatWithPlural(
                         state.value.totalResults,
                         strings.searchResultsPlural

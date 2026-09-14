@@ -23,10 +23,10 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 
 internal data class SearchViewState(
     val isShowing: Boolean = false,
+    val title: String = "",
     val searchValue: TextFieldValue = TextFieldValue(),
     val totalResults: Int = 0,
     val monsterRows: List<MonsterCardState> = emptyList(),
-    val searchLabel: String = "",
     val searchResults: String = "",
     val isSearching: Boolean = false,
     val searchKeys: List<SearchKeyState> = emptyList(),

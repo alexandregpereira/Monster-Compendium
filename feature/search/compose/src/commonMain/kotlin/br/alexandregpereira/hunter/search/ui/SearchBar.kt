@@ -37,7 +37,6 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 @Composable
 internal fun SearchBar(
     text: TextFieldValue,
-    searchLabel: String,
     modifier: Modifier = Modifier,
     isSearching: Boolean = false,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -47,7 +46,6 @@ internal fun SearchBar(
         text = text,
         capitalize = false,
         onValueChange = onValueChange,
-        label = searchLabel,
         leadingIcon = leadingIcon,
         modifier = modifier,
     )
