@@ -22,10 +22,12 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -44,7 +46,11 @@ internal fun FolderPreviewScreen(
     onLongClick: (index: String) -> Unit = {},
     onSave: () -> Unit = {},
     onClear: () -> Unit = {},
-) = Box(modifier = modifier.fillMaxWidth().animateContentSize(animationSpec = spring())) {
+) = Box(
+    modifier = modifier.fillMaxWidth()
+        .background(color = MaterialTheme.colors.background)
+        .animateContentSize(animationSpec = spring())
+) {
     AnimatedVisibility(
         visible = state.showPreview,
         enter = fadeIn(animationSpec = spring()),

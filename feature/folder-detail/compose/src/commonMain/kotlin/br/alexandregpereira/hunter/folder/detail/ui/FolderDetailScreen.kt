@@ -61,7 +61,7 @@ internal fun FolderDetailScreen(
 ) = AppFullScreen(
     isOpen = isOpen,
     contentPaddingValues = contentPadding,
-    level = 0,
+    level = 1,
     showCloseButton = false,
     onClose = onClose
 ) {

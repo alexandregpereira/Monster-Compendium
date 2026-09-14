@@ -36,7 +36,7 @@ fun SearchScreenFeature(
 
     AppFullScreen(
         isOpen = state.isShowing,
-        level = 0,
+        level = 1,
         showCloseButton = false,
         onClose = stateHolder::onClose,
     ) {
