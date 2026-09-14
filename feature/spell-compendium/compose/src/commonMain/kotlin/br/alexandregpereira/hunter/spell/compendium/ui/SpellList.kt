@@ -17,9 +17,10 @@
 
 package br.alexandregpereira.hunter.spell.compendium.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -41,15 +42,17 @@ import br.alexandregpereira.hunter.ui.compose.SpellIconSize
 internal fun SpellList(
     spellsGroupByLevel: Map<String, List<SpellCompendiumItemState>>,
     initialItemIndex: Int,
+    listState: LazyGridState,
+    contentPadding: PaddingValues,
     intent: SpellCompendiumIntent,
 ) {
     val items = remember(spellsGroupByLevel) { spellsGroupByLevel.toCompendiumItems() }
-    val listState = rememberLazyGridState(initialFirstVisibleItemIndex = initialItemIndex)
     ClearFocusWhenScrolling(scrollableState = listState)
     Compendium(
         items = items,
         animateItems = true,
         listState = listState,
+        contentPadding = contentPadding,
         columns = CompendiumColumns.Adaptive(minSize = SpellIconSize.SMALL.value + 16),
     ) { item ->
         val spell = item.value as SpellCompendiumItemState

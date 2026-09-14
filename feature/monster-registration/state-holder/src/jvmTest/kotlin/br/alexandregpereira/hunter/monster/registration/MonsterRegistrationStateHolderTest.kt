@@ -31,6 +31,9 @@ import br.alexandregpereira.hunter.event.EventManager
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.home.event.HomeEvent
 import br.alexandregpereira.hunter.home.event.HomeEventDispatcher
+import br.alexandregpereira.hunter.localization.AppLocalization
+import br.alexandregpereira.hunter.localization.Language
+import br.alexandregpereira.hunter.monster.registration.domain.GenerateNewMonster
 import br.alexandregpereira.hunter.monster.registration.domain.MonsterRegistrationFileManager
 import br.alexandregpereira.hunter.monster.registration.domain.NormalizeMonsterUseCase
 import br.alexandregpereira.hunter.monster.registration.domain.SaveMonsterUseCase
@@ -100,6 +103,35 @@ internal class MonsterRegistrationStateHolderTest {
         assertTrue(stateHolder.state.value.isOpen)
         assertFalse(stateHolder.state.value.isLoading)
         assertEquals("goblin", stateHolder.state.value.monster.index)
+    }
+
+    @Test
+    fun `Show event with a monster index sets the edit title`() = runTest {
+        val stateHolder = createStateHolder(
+            appLocalization = mockk { every { getLanguage() } returns Language.ENGLISH },
+        )
+        advanceUntilIdle()
+
+        eventManager.dispatchEvent(MonsterRegistrationEvent.Show("goblin"))
+        advanceUntilIdle()
+
+        assertEquals(MonsterRegistrationEnStrings().editMonster, stateHolder.state.value.title)
+    }
+
+    @Test
+    fun `Show event without a monster index sets the add title`() = runTest {
+        val generateNewMonster = mockk<GenerateNewMonster>()
+        every { generateNewMonster() } returns MonsterFactory.createEmpty("new-monster")
+        val stateHolder = createStateHolder(
+            appLocalization = mockk { every { getLanguage() } returns Language.ENGLISH },
+            generateNewMonster = generateNewMonster,
+        )
+        advanceUntilIdle()
+
+        eventManager.dispatchEvent(MonsterRegistrationEvent.Show(monsterIndex = null))
+        advanceUntilIdle()
+
+        assertEquals(MonsterRegistrationEnStrings().addMonster, stateHolder.state.value.title)
     }
 
     @Test
@@ -440,6 +472,8 @@ internal class MonsterRegistrationStateHolderTest {
         spellResultListener: EventListener<SpellResult> = mockk<EventListener<SpellResult>> {
             every { events } returns emptyFlow()
         },
+        appLocalization: AppLocalization = mockk(relaxed = true),
+        generateNewMonster: GenerateNewMonster = mockk(relaxed = true),
     ): MonsterRegistrationStateHolder {
         val resolvedGetMonster = getMonster ?: mockk<GetMonsterUseCase>().also {
             every { it.invoke(any()) } returns flowOf(MonsterFactory.createEmpty(monsterIndex))
@@ -460,10 +494,10 @@ internal class MonsterRegistrationStateHolderTest {
             spellCompendiumEventDispatcher = spellCompendiumEventDispatcher,
             spellDetailEventDispatcher = spellDetailEventDispatcher,
             getSpell = getSpell,
-            appLocalization = mockk(relaxed = true),
+            appLocalization = appLocalization,
             spellResultListener = spellResultListener,
             fileManager = fileManager,
-            generateNewMonster = mockk(relaxed = true),
+            generateNewMonster = generateNewMonster,
             monsterEventDispatcher = mockk(relaxed = true),
             stateRecovery = StateRecovery(),
             homeEventDispatcher = homeEventDispatcher,

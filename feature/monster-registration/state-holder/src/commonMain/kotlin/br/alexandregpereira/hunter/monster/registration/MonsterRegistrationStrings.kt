@@ -21,6 +21,8 @@ import br.alexandregpereira.hunter.localization.AppLocalization
 import br.alexandregpereira.hunter.localization.Language
 
 interface MonsterRegistrationStrings {
+    val addMonster: String
+    val editMonster: String
     val savingThrows: String
     val strength: String
     val dexterity: String
@@ -157,6 +159,8 @@ interface MonsterRegistrationStrings {
 }
 
 internal data class MonsterRegistrationEnStrings(
+    override val addMonster: String = "Add creature",
+    override val editMonster: String = "Edit creature",
     override val savingThrows: String = "Saving Throws",
     override val strength: String = "Strength",
     override val dexterity: String = "Dexterity",
@@ -293,6 +297,8 @@ internal data class MonsterRegistrationEnStrings(
 ) : MonsterRegistrationStrings
 
 internal data class MonsterRegistrationPtStrings(
+    override val addMonster: String = "Adicionar criatura",
+    override val editMonster: String = "Editar criatura",
     override val savingThrows: String = "Salvaguardas",
     override val strength: String = "Força",
     override val dexterity: String = "Destreza",
@@ -431,6 +437,8 @@ internal data class MonsterRegistrationPtStrings(
 fun MonsterRegistrationStrings(): MonsterRegistrationStrings = MonsterRegistrationEnStrings()
 
 internal data class MonsterRegistrationEsStrings(
+    override val addMonster: String = "Añadir criatura",
+    override val editMonster: String = "Editar criatura",
     override val savingThrows: String = "Tiradas de Salvación",
     override val strength: String = "Fuerza",
     override val dexterity: String = "Destreza",

@@ -18,15 +18,14 @@
 package br.alexandregpereira.hunter.spell.registration.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.spell.model.SavingThrowType
 import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
@@ -40,28 +39,23 @@ import br.alexandregpereira.hunter.ui.compose.PickerField
 @Composable
 internal fun SpellRegistrationForm(
     spell: SpellFormState,
-    isEditing: Boolean,
     strings: SpellRegistrationStrings,
+    listState: LazyListState,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
     onSpellChanged: (SpellFormState) -> Unit = {},
 ) {
-    val title = if (isEditing) strings.editSpell else strings.addSpell
     val schoolOptions = SchoolOfMagic.entries.map { it.toLabel(strings) }
     val savingThrowOptions = listOf(strings.none) + SavingThrowType.entries.map { it.toLabel(strings) }
 
     LazyColumn(
+        state = listState,
         modifier = modifier.padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(
+            top = contentPadding.calculateTopPadding() + 8.dp,
+            bottom = contentPadding.calculateBottomPadding(),
+        ),
     ) {
-        item {
-            Spacer(Modifier.height(48.dp))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp),
-            )
-        }
-
         item {
             AppTextField(
                 text = spell.name,

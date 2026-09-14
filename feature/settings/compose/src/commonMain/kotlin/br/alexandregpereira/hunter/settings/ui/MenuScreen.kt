@@ -45,6 +45,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +64,7 @@ import br.alexandregpereira.hunter.settings.ui.resources.ic_language
 import br.alexandregpereira.hunter.settings.ui.resources.ic_monster
 import br.alexandregpereira.hunter.settings.ui.resources.ic_moon
 import br.alexandregpereira.hunter.settings.ui.resources.ic_settings
-import br.alexandregpereira.hunter.ui.compose.SectionTitle
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
@@ -77,27 +79,27 @@ internal fun MenuScreen(
     versionName: String,
     showPremium: Boolean,
     contentPadding: PaddingValues = PaddingValues(),
+    onClose: () -> Unit = {},
     onItemClicked: (id: MenuItemIdState) -> Unit = {},
     onPremiumClick: () -> Unit = {},
 ) {
+    val density = LocalDensity.current
+    val scrollState = rememberScrollState()
+    var topBarHeight by remember { mutableStateOf(0.dp) }
     Box(
         modifier = Modifier.fillMaxSize()
             .background(color = MaterialTheme.colors.background)
-            .padding(contentPadding)
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState)
+                .padding(
+                    top = topBarHeight,
+                    bottom = contentPadding.calculateBottomPadding(),
+                )
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            SectionTitle(
-                title = strings.screenTitle,
-                isHeader = true,
-                modifier = Modifier.padding(
-                    top = 16.dp
-                ),
-            )
             AnimatedContent(
                 targetState = showPremium,
                 transitionSpec = {
@@ -153,6 +155,19 @@ internal fun MenuScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
         }
+
+        AppTopBar(
+            title = strings.screenTitle,
+            listState = scrollState,
+            onBackClick = onClose,
+            backgroundColor = MaterialTheme.colors.background,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                }
+                .padding(top = contentPadding.calculateTopPadding()),
+        )
     }
 }
 

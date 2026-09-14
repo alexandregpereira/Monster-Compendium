@@ -17,17 +17,27 @@
 
 package br.alexandregpereira.hunter.spell.registration.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.spell.registration.SpellFormState
 import br.alexandregpereira.hunter.spell.registration.SpellRegistrationState
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppScreen
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 
 @Composable
 internal fun SpellRegistrationScreen(
@@ -40,24 +50,42 @@ internal fun SpellRegistrationScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
     swipeTriggerPercentage = .7f,
+    showCloseButton = false,
     onClose = onClose,
 ) {
-    Column {
-        SpellRegistrationForm(
-            spell = state.spell,
-            isEditing = state.isEditing,
-            strings = state.strings,
-            modifier = Modifier.weight(1f),
-            onSpellChanged = onSpellChanged,
-        )
+    val density = LocalDensity.current
+    val listState = rememberLazyListState()
+    var topBarHeight by remember { mutableStateOf(0.dp) }
+    Box {
+        Column {
+            SpellRegistrationForm(
+                spell = state.spell,
+                strings = state.strings,
+                listState = listState,
+                contentPadding = PaddingValues(top = topBarHeight),
+                modifier = Modifier.weight(1f),
+                onSpellChanged = onSpellChanged,
+            )
 
-        AppButton(
-            text = state.strings.save,
-            enabled = state.isSaveEnabled,
+            AppButton(
+                text = state.strings.save,
+                enabled = state.isSaveEnabled,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                onClick = onSave,
+            )
+        }
+
+        AppTopBar(
+            title = if (state.isEditing) state.strings.editSpell else state.strings.addSpell,
+            listState = listState,
+            onBackClick = onClose,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            onClick = onSave,
+                .align(Alignment.TopCenter)
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                },
         )
     }
 }

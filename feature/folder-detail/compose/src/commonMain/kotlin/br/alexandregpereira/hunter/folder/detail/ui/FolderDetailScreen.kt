@@ -20,17 +20,24 @@ package br.alexandregpereira.hunter.folder.detail.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Item
-import br.alexandregpereira.hunter.ui.compendium.CompendiumItemState.Title
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCompendium
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
-import br.alexandregpereira.hunter.ui.compose.plus
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 
 @Composable
 internal fun FolderDetailScreen(
@@ -55,14 +62,10 @@ internal fun FolderDetailScreen(
     isOpen = isOpen,
     contentPaddingValues = contentPadding,
     level = 0,
+    showCloseButton = false,
     onClose = onClose
 ) {
-    val items = listOf(
-        Title(
-            value = folderName,
-            isHeader = true
-        ),
-    ) + monsters.map {
+    val items = monsters.map {
         Item(value = it)
     }
     val listState: LazyGridState = rememberLazyGridState(
@@ -75,15 +78,32 @@ internal fun FolderDetailScreen(
         },
         onScrollChanges = onScrollChanges,
     )
+    val density = LocalDensity.current
+    var topBarHeight by remember { mutableStateOf(0.dp) }
     Box(Modifier.fillMaxSize()) {
         val extraBottomPadding = if (isItemSelectionOpen) 200.dp else 0.dp
         MonsterCompendium(
             items = items,
             listState = listState,
             animateItems = true,
-            contentPadding = contentPadding + PaddingValues(top = 24.dp, bottom = extraBottomPadding),
+            contentPadding = PaddingValues(
+                top = topBarHeight,
+                bottom = contentPadding.calculateBottomPadding() + extraBottomPadding,
+            ),
             onItemCLick = onItemCLick,
             onItemLongCLick = onItemLongCLick
+        )
+
+        AppTopBar(
+            title = folderName,
+            listState = listState,
+            onBackClick = onClose,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                }
+                .padding(top = contentPadding.calculateTopPadding()),
         )
 
         ItemSelection(

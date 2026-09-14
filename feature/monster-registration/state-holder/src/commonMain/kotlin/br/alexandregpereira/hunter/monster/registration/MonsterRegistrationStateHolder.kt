@@ -298,6 +298,7 @@ class MonsterRegistrationStateHolder internal constructor(
             val strings = appLocalization.getStrings()
             val monsterState = metadata.asState(strings)
             copy(
+                title = strings.title(),
                 monster = monsterState,
                 isSaveButtonEnabled = metadata.monster?.filterEmpties() != originalMonster
                         || metadata.monsterLoreEntries != originalMonsterLore?.entries.orEmpty(),
@@ -356,9 +357,11 @@ class MonsterRegistrationStateHolder internal constructor(
                         stateRecovery.saveParams(params.value)
                         observeSpellResultEvents()
                         setState {
+                            val strings = appLocalization.getStrings()
                             copy(
                                 isOpen = true,
-                                strings = appLocalization.getStrings(),
+                                title = strings.title(),
+                                strings = strings,
                                 isTableContentOpen = false
                             ).saveState(stateRecovery)
                         }
@@ -426,6 +429,10 @@ class MonsterRegistrationStateHolder internal constructor(
     }
 
     private fun isMonsterCreation(): Boolean = params.value.monsterIndex == null
+
+    private fun MonsterRegistrationStrings.title(): String {
+        return if (isMonsterCreation()) addMonster else editMonster
+    }
 }
 
 internal data class Metadata(

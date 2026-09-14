@@ -20,6 +20,7 @@ package br.alexandregpereira.hunter.spell.compendium
 import br.alexandregpereira.hunter.localization.Language
 
 internal class SpellCompendiumEnStrings : SpellCompendiumStrings {
+    override val title: String = "Spells"
     override val searchResults: (Int) -> String = { count -> "$count results" }
     override val cantrips: String = "Cantrips"
     override val level: (Int) -> String = { level -> "Level $level" }
@@ -27,6 +28,7 @@ internal class SpellCompendiumEnStrings : SpellCompendiumStrings {
 }
 
 internal class SpellCompendiumPtStrings : SpellCompendiumStrings {
+    override val title: String = "Magias"
     override val searchResults: (Int) -> String = { count -> "$count resultados" }
     override val cantrips: String = "Truques"
     override val level: (Int) -> String = { level -> "${level}º Círculo" }
@@ -34,6 +36,7 @@ internal class SpellCompendiumPtStrings : SpellCompendiumStrings {
 }
 
 internal interface SpellCompendiumStrings {
+    val title: String
     val searchResults: (Int) -> String
     val cantrips: String
     val level: (Int) -> String
@@ -41,6 +44,7 @@ internal interface SpellCompendiumStrings {
 }
 
 internal class SpellCompendiumEsStrings : SpellCompendiumStrings {
+    override val title: String = "Hechizos"
     override val searchResults: (Int) -> String = { count -> "$count resultados" }
     override val cantrips: String = "Trucos de magia"
     override val level: (Int) -> String = { level -> "Nivel $level" }
