@@ -65,7 +65,8 @@ fun Window(
     content = content,
     elevation = elevation,
     modifier = modifier
-        .padding((level * 4).dp)
+        .padding(horizontal = (level * 4).dp)
+        .padding(top = (level * 4).dp)
         .clip(shape = cardShape),
 )
 
