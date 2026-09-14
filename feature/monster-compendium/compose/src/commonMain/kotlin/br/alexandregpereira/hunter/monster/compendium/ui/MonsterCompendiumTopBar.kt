@@ -25,8 +25,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.alexandregpereira.hunter.ui.compose.AppButtonSize
-import br.alexandregpereira.hunter.ui.compose.AppDropdownButton
 import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.AppTopBarIconButton
 
@@ -34,18 +32,11 @@ import br.alexandregpereira.hunter.ui.compose.AppTopBarIconButton
 internal fun MonsterCompendiumTopBar(
     title: String,
     contentDescription: String,
-    sortTitle: String,
-    sortLabel: String,
-    sortOptions: List<String>,
-    sortOptionsOpened: Boolean,
     listState: LazyGridState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onCloseClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
-    onSortClick: () -> Unit = {},
-    onSortOptionsClose: () -> Unit = {},
-    onSortOptionSelected: (index: Int) -> Unit = {},
 ) {
     AppTopBar(
         title = title,
@@ -57,19 +48,6 @@ internal fun MonsterCompendiumTopBar(
                 imageVector = Icons.Filled.Search,
                 contentDescription = contentDescription,
                 onClick = onSearchClick,
-            )
-        },
-        bottomContent = { backgroundAlpha ->
-            AppDropdownButton(
-                text = sortLabel,
-                options = sortOptions,
-                expanded = sortOptionsOpened,
-                title = sortTitle,
-                size = AppButtonSize.VERY_SMALL,
-                backgroundAlpha = backgroundAlpha,
-                onClick = onSortClick,
-                onDismiss = onSortOptionsClose,
-                onOptionSelected = onSortOptionSelected,
             )
         },
     )

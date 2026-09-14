@@ -41,6 +41,11 @@ import br.alexandregpereira.hunter.ui.compose.imageCardElevation
 import br.alexandregpereira.hunter.ui.compose.imageCardShape
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
 
+/**
+ * The space above a header section title text, inside its grid item.
+ */
+val compendiumHeaderPaddingTop: Dp = 32.dp
+
 @Composable
 fun Compendium(
     items: List<CompendiumItemState>,
@@ -86,11 +91,10 @@ fun Compendium(
                         GridItemSpan(currentLineSpan = lineSpan)
                     }
                 ) {
-                    val sectionTitlePaddingTop = 32.dp
                     val sectionTitlePaddingBottom = if (isTileCard) 0.dp else 16.dp
                     val paddingTop = when {
                         isTileCard -> 0.dp
-                        item.isHeader -> sectionTitlePaddingTop
+                        item.isHeader -> compendiumHeaderPaddingTop
                         else -> 24.dp
                     }
                     val titleModifier = Modifier.monsterAspectRatio().takeIf { isTileCard }
