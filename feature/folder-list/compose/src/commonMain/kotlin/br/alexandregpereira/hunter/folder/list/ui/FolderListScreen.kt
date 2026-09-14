@@ -23,18 +23,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.folder.list.FolderListState
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
-import br.alexandregpereira.hunter.ui.compose.SectionTitle
 
 @Composable
 internal fun FolderListScreen(
     state: FolderListState,
     contentPadding: PaddingValues = PaddingValues(),
+    onCloseClick: () -> Unit = {},
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
     onItemSelectionClose: () -> Unit = {},
@@ -42,6 +50,12 @@ internal fun FolderListScreen(
     onItemSelectionAddToPreviewClick: () -> Unit = {},
     onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
 ) {
+    val density = LocalDensity.current
+    val listState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = state.firstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = state.firstVisibleItemScrollOffset,
+    )
+    var topBarHeight by remember { mutableStateOf(0.dp) }
     Box(Modifier.fillMaxSize()) {
         AnimatedContent(
             targetState = state.folders.isEmpty(),
@@ -49,23 +63,36 @@ internal fun FolderListScreen(
         ) { isFoldersEmpty ->
             if (isFoldersEmpty) {
                 FolderListEmptyScreen(
-                    pageTitle = state.strings.title,
                     emptyScreenTitle = state.strings.emptyScreenTitle,
                     emptyScreenDescription = state.strings.emptyScreenDescription,
+                    modifier = Modifier.padding(top = topBarHeight),
                 )
             } else {
                 FolderCardGrid(
                     folders = state.folders,
-                    title = state.strings.title,
-                    initialFirstVisibleItemIndex = remember { state.firstVisibleItemIndex },
-                    initialFirstVisibleItemScrollOffset = remember { state.firstVisibleItemScrollOffset },
-                    contentPadding = contentPadding,
+                    listState = listState,
+                    contentPadding = PaddingValues(
+                        top = topBarHeight,
+                        bottom = contentPadding.calculateBottomPadding(),
+                    ),
                     onCLick = onCLick,
                     onLongCLick = onLongCLick,
                     onScrollChanges = onScrollChanges,
                 )
             }
         }
+
+        AppTopBar(
+            title = state.strings.title,
+            listState = listState,
+            onCloseClick = onCloseClick,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                }
+                .padding(top = contentPadding.calculateTopPadding()),
+        )
 
         ItemSelection(
             itemSelectionText = state.strings.itemSelected(state.itemSelectionCount),
@@ -82,14 +109,12 @@ internal fun FolderListScreen(
 
 @Composable
 private fun FolderListEmptyScreen(
-    pageTitle: String,
     emptyScreenTitle: String,
     emptyScreenDescription: String,
+    modifier: Modifier = Modifier,
 ) = Column(
-    modifier = Modifier.padding(16.dp),
+    modifier = modifier.padding(16.dp),
 ) {
-    SectionTitle(title = pageTitle, isHeader = true)
-
     EmptyScreenMessage(
         title = emptyScreenTitle,
         description = emptyScreenDescription,

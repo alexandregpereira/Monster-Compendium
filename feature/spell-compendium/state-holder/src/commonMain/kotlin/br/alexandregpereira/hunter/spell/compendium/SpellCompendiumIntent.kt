@@ -20,6 +20,10 @@ package br.alexandregpereira.hunter.spell.compendium
 interface SpellCompendiumIntent {
     fun onSearchTextChange(text: String)
 
+    fun onSearchClick()
+
+    fun onSearchClose()
+
     fun onSpellClick(spellIndex: String)
 
     fun onSpellLongClick(spellIndex: String)
@@ -32,6 +36,10 @@ interface SpellCompendiumIntent {
 class EmptySpellCompendiumIntent : SpellCompendiumIntent {
 
     override fun onSearchTextChange(text: String) {}
+
+    override fun onSearchClick() {}
+
+    override fun onSearchClose() {}
 
     override fun onSpellClick(spellIndex: String) {}
 

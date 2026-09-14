@@ -89,6 +89,7 @@ internal fun MonsterCompendiumScreen(
             tableContentOpened = state.tableContentOpened,
             listState = listState,
             contentPadding = contentPadding,
+            title = state.strings.creatures,
             searchLabel = state.strings.search,
             sortTitle = state.strings.sortBy,
             sortLabel = state.sortSelectedLabel,
@@ -127,6 +128,7 @@ private fun MonsterCompendiumScreen(
     tableContentOpened: Boolean,
     listState: LazyGridState,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    title: String,
     searchLabel: String,
     sortTitle: String,
     sortLabel: String,
@@ -152,6 +154,7 @@ private fun MonsterCompendiumScreen(
                 onItemLongCLick = events::onItemLongClick,
             )
             MonsterCompendiumTopBar(
+                title = title,
                 contentDescription = searchLabel,
                 sortTitle = sortTitle,
                 sortLabel = sortLabel,
@@ -159,7 +162,7 @@ private fun MonsterCompendiumScreen(
                 sortOptionsOpened = sortOptionsOpened,
                 listState = listState,
                 contentPadding = contentPadding,
-                onBackClick = events::onClose,
+                onCloseClick = events::onClose,
                 onSearchClick = events::onSearchClick,
                 onSortClick = events::onSortClick,
                 onSortOptionsClose = events::onSortOptionsClose,

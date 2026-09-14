@@ -24,9 +24,14 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationIntent
@@ -46,6 +51,7 @@ import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStatsForm
 import br.alexandregpereira.hunter.monster.registration.ui.form.MonsterStringValueForm
 import br.alexandregpereira.hunter.ui.compose.AppButton
 import br.alexandregpereira.hunter.ui.compose.AppButtonSize
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemTypeState
@@ -53,6 +59,7 @@ import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 
 @Composable
 internal fun MonsterRegistrationForm(
+    title: String,
     monster: MonsterState,
     lazyListState: LazyListState,
     isSaveButtonEnabled: Boolean,
@@ -61,60 +68,78 @@ internal fun MonsterRegistrationForm(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     intent: MonsterRegistrationIntent = EmptyMonsterRegistrationIntent(),
-) = PopupContainer(
-    modifier = modifier,
-    isOpened = isTableContentOpen,
-    onPopupClosed = intent::onTableContentClose,
-    content = {
-        if (monster.index.isEmpty()) {
-            return@PopupContainer
-        }
-        MonsterRegistrationForm(
-            monster = monster,
-            lazyListState = lazyListState,
-            contentPadding = contentPadding,
-            intent = intent,
-        )
-
-        AppButton(
-            text = "Save",
-            enabled = isSaveButtonEnabled,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(bottom = contentPadding.calculateBottomPadding() + 16.dp)
-                .align(Alignment.BottomCenter),
-            onClick = intent::onSaved
-        )
-    },
-    popupContent = {
-        val tableContentState = remember(tableContent) {
-            tableContent.toTableContentItemStates()
-        }
-
-        TableContentPopup(
-            icon = Icons.Filled.Menu,
-            tableContent = tableContentState,
-            tableContentSelectedIndex = -1,
-            opened = isTableContentOpen,
-            tableContentOpened = true,
-            backHandlerEnabled = isTableContentOpen,
-            onOpenButtonClicked = intent::onTableContentOpen,
-            onCloseButtonClicked = intent::onTableContentClose,
-            onTableContentClicked = { i ->
-                intent.onTableContentClick(tableContentState[i].id)
-            },
-            onTableContentClosed = intent::onTableContentClose,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(
-                    top = contentPadding.calculateTopPadding() + 16.dp,
-                    bottom = contentPadding.calculateBottomPadding()
-                            + AppButtonSize.MEDIUM.height.dp
-                            + 32.dp
+) {
+    val density = LocalDensity.current
+    var topBarHeight by remember { mutableStateOf(0.dp) }
+    PopupContainer(
+        modifier = modifier,
+        isOpened = isTableContentOpen,
+        onPopupClosed = intent::onTableContentClose,
+        content = {
+            if (monster.index.isNotEmpty()) {
+                MonsterRegistrationForm(
+                    monster = monster,
+                    lazyListState = lazyListState,
+                    contentPadding = PaddingValues(
+                        top = topBarHeight,
+                        bottom = contentPadding.calculateBottomPadding(),
+                    ),
+                    intent = intent,
                 )
-        )
-    }
-)
+
+                AppButton(
+                    text = "Save",
+                    enabled = isSaveButtonEnabled,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = contentPadding.calculateBottomPadding() + 16.dp)
+                        .align(Alignment.BottomCenter),
+                    onClick = intent::onSaved
+                )
+            }
+
+            AppTopBar(
+                title = title,
+                listState = lazyListState,
+                onCloseClick = intent::onClose,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .onSizeChanged { size ->
+                        topBarHeight = with(density) { size.height.toDp() }
+                    }
+                    .padding(top = contentPadding.calculateTopPadding()),
+            )
+        },
+        popupContent = {
+            val tableContentState = remember(tableContent) {
+                tableContent.toTableContentItemStates()
+            }
+
+            TableContentPopup(
+                icon = Icons.Filled.Menu,
+                tableContent = tableContentState,
+                tableContentSelectedIndex = -1,
+                opened = isTableContentOpen,
+                tableContentOpened = true,
+                backHandlerEnabled = isTableContentOpen,
+                onOpenButtonClicked = intent::onTableContentOpen,
+                onCloseButtonClicked = intent::onTableContentClose,
+                onTableContentClicked = { i ->
+                    intent.onTableContentClick(tableContentState[i].id)
+                },
+                onTableContentClosed = intent::onTableContentClose,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        top = topBarHeight + 16.dp,
+                        bottom = contentPadding.calculateBottomPadding()
+                                + AppButtonSize.MEDIUM.height.dp
+                                + 32.dp
+                    )
+            )
+        }
+    )
+}
 
 @Composable
 private fun MonsterRegistrationForm(

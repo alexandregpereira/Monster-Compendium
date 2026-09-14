@@ -72,7 +72,14 @@ class SpellCompendiumStateHolder internal constructor(
         selectedSpellIndexes: List<String> = emptyList(),
     ) {
         strings = getSpellCompendiumStrings(appLocalization.getLanguage())
-        setState { copy(searchText = "", searchTextLabel = strings.searchLabel) }
+        setState {
+            copy(
+                title = strings.title,
+                searchText = "",
+                searchTextLabel = strings.searchLabel,
+                isSearchOpened = false,
+            )
+        }
         getSpellsUseCase()
             .onEach { spells ->
                 analytics.track(
@@ -142,6 +149,16 @@ class SpellCompendiumStateHolder internal constructor(
     override fun onSearchTextChange(text: String) {
         setState { copy(searchText = text) }
         searchQuery.value = text
+    }
+
+    override fun onSearchClick() {
+        analytics.track(eventName = "Spell Compendium - search clicked")
+        setState { copy(isSearchOpened = true) }
+    }
+
+    override fun onSearchClose() {
+        setState { copy(isSearchOpened = false) }
+        onSearchTextChange("")
     }
 
     override fun onSpellClick(spellIndex: String) {

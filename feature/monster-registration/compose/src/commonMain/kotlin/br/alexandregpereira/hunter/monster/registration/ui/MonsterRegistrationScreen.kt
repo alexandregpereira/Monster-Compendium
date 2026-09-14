@@ -27,7 +27,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import br.alexandregpereira.file.rememberImagePickerLauncher
 import br.alexandregpereira.hunter.monster.registration.EmptyMonsterRegistrationIntent
 import br.alexandregpereira.hunter.monster.registration.MonsterRegistrationAction
@@ -40,7 +39,6 @@ import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.isLandscape
 import br.alexandregpereira.hunter.ui.compose.maxBottomSheetWidth
-import br.alexandregpereira.hunter.ui.compose.plus
 
 @Composable
 internal fun MonsterRegistrationScreen(
@@ -54,6 +52,7 @@ internal fun MonsterRegistrationScreen(
         isOpen = state.isOpen,
         contentPaddingValues = contentPadding,
         swipeTriggerPercentage = .7f,
+        showCloseButton = false,
         modifier = Modifier.widthIn(
             max = maxBottomSheetWidth.takeIf { screenSize.isLandscape } ?: Dp.Unspecified
         ),
@@ -75,13 +74,14 @@ internal fun MonsterRegistrationScreen(
             ClearFocusWhenScrolling(lazyListState)
 
             MonsterRegistrationForm(
+                title = state.title,
                 monster = state.monster,
                 lazyListState = lazyListState,
                 isSaveButtonEnabled = state.isSaveButtonEnabled,
                 tableContent = state.tableContent,
                 isTableContentOpen = state.isTableContentOpen,
                 modifier = Modifier,
-                contentPadding = contentPadding + PaddingValues(top = 24.dp),
+                contentPadding = contentPadding,
                 intent = intent,
             )
         }

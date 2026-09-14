@@ -18,24 +18,32 @@
 package br.alexandregpereira.hunter.monster.content.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.content.MonsterContentManagerState
 import br.alexandregpereira.hunter.monster.content.MonsterContentState
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
-import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -51,6 +59,7 @@ internal fun MonsterContentManagerScreen(
 ) = AppFullScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
+    showCloseButton = false,
     onClose = onClose
 ) {
     val isLoading = state.isLoading
@@ -68,60 +77,67 @@ internal fun MonsterContentManagerScreen(
             else -> LoadingScreenState.Success(monsterContents)
         }
     }
-    LoadingScreen<ImmutableList<MonsterContentState>, Unit>(
-        state = loadingScreenState,
-        errorContent = {
-            EmptyScreenMessage(
-                title = strings.noInternetConnection,
-                buttonText = strings.tryAgain,
-                onButtonClick = onTryAgain,
-            )
-        }
-    ) { monsterContents ->
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Adaptive(300.dp),
-            modifier = Modifier.padding(horizontal = 8.dp),
-            contentPadding = PaddingValues(
-                top = 56.dp,
-                bottom = 24.dp
-            ),
-            verticalItemSpacing = 16.dp,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            item(
-                key = "title",
-                span = StaggeredGridItemSpan.FullLine
+    val density = LocalDensity.current
+    val listState = rememberLazyStaggeredGridState()
+    var topBarHeight by remember { mutableStateOf(0.dp) }
+    Box(Modifier.fillMaxSize()) {
+        LoadingScreen<ImmutableList<MonsterContentState>, Unit>(
+            state = loadingScreenState,
+            errorContent = {
+                Box(Modifier.padding(top = topBarHeight)) {
+                    EmptyScreenMessage(
+                        title = strings.noInternetConnection,
+                        buttonText = strings.tryAgain,
+                        onButtonClick = onTryAgain,
+                    )
+                }
+            }
+        ) { monsterContents ->
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Adaptive(300.dp),
+                state = listState,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                contentPadding = PaddingValues(
+                    top = topBarHeight + 8.dp,
+                    bottom = 24.dp
+                ),
+                verticalItemSpacing = 16.dp,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                SectionTitle(
-                    title = state.strings.title,
-                    isHeader = true,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp)
-                )
-            }
-
-            items(monsterContents, key = { it.acronym }) { monsterContent ->
-                MonsterContentCard(
-                    name = monsterContent.name,
-                    originalName = monsterContent.originalName,
-                    totalMonsters = monsterContent.totalMonsters,
-                    totalSpells = monsterContent.totalSpells,
-                    summary = monsterContent.summary,
-                    coverImageUrl = monsterContent.coverImageUrl,
-                    isAdded = monsterContent.isAdded,
-                    isDefault = monsterContent.isDefault,
-                    strings = state.strings,
-                    onAddClick = { onAddClick(monsterContent.acronym) },
-                    onRemoveClick = { onRemoveClick(monsterContent.acronym) },
-                    onPreviewClick = {
-                        onPreviewClick(
-                            monsterContent.acronym,
-                            monsterContent.name
-                        )
-                    },
-                )
+                items(monsterContents, key = { it.acronym }) { monsterContent ->
+                    MonsterContentCard(
+                        name = monsterContent.name,
+                        originalName = monsterContent.originalName,
+                        totalMonsters = monsterContent.totalMonsters,
+                        totalSpells = monsterContent.totalSpells,
+                        summary = monsterContent.summary,
+                        coverImageUrl = monsterContent.coverImageUrl,
+                        isAdded = monsterContent.isAdded,
+                        isDefault = monsterContent.isDefault,
+                        strings = state.strings,
+                        onAddClick = { onAddClick(monsterContent.acronym) },
+                        onRemoveClick = { onRemoveClick(monsterContent.acronym) },
+                        onPreviewClick = {
+                            onPreviewClick(
+                                monsterContent.acronym,
+                                monsterContent.name
+                            )
+                        },
+                    )
+                }
             }
         }
+
+        AppTopBar(
+            title = state.strings.title,
+            listState = listState,
+            onCloseClick = onClose,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                },
+        )
     }
 }
 

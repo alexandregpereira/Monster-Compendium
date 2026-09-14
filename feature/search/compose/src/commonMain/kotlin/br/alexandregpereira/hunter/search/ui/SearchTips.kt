@@ -46,7 +46,7 @@ internal fun SearchTips(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(
-                top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp + 32.dp,
+                top = contentPaddingValues.calculateTopPadding() + 32.dp,
                 bottom = contentPaddingValues.calculateBottomPadding() + 16.dp,
                 start = 16.dp,
                 end = 16.dp,

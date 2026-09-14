@@ -22,7 +22,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,19 +31,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
@@ -52,15 +53,16 @@ import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.search.SearchTip
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterCardState
 import br.alexandregpereira.hunter.ui.compose.AppCircleButton
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.ClearFocusWhenScrolling
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessageContent
 import kotlin.math.absoluteValue
 
 @Composable
 internal fun SearchScreen(
+    title: String,
     searchValue: TextFieldValue,
     monsterRows: List<MonsterCardState>,
-    searchLabel: String,
     searchResults: String,
     isSearching: Boolean,
     searchKeys: List<SearchKeyState>,
@@ -87,6 +89,10 @@ internal fun SearchScreen(
         initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
     )
     val focusManager = LocalFocusManager.current
+    val density = LocalDensity.current
+    var topBarHeight by remember { mutableStateOf(0.dp) }
+    // Leaves room for the search key buttons shown below the top bar.
+    val contentTopPadding = topBarHeight + 32.dp
 
     ClearFocusWhenScrolling(listState)
 
@@ -103,14 +109,17 @@ internal fun SearchScreen(
             SearchContentState.Tips -> SearchTips(
                 title = searchTipsTitle,
                 tips = searchTips,
-                contentPaddingValues = contentPaddingValues,
+                contentPaddingValues = PaddingValues(
+                    top = contentTopPadding,
+                    bottom = contentPaddingValues.calculateBottomPadding(),
+                ),
             )
             SearchContentState.Empty -> Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
+                        top = contentTopPadding,
                         bottom = contentPaddingValues.calculateBottomPadding(),
                     )
             ) {
@@ -125,7 +134,7 @@ internal fun SearchScreen(
                 totalResults = searchResults,
                 listState = listState,
                 contentPadding = PaddingValues(
-                    top = contentPaddingValues.calculateTopPadding() + 96.dp + 8.dp,
+                    top = contentTopPadding,
                     bottom = contentPaddingValues.calculateBottomPadding()
                 ),
                 onCardClick = {
@@ -142,36 +151,38 @@ internal fun SearchScreen(
 
     Column {
         val focusRequester = remember { FocusRequester() }
-        SearchBar(
-            text = searchValue,
-            searchLabel = searchLabel,
-            leadingIcon = {
-                IconButton(
-                    onClick = {
-                        focusManager.clearFocus()
-                        onClose()
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
-                    )
-                }
+        AppTopBar(
+            title = title,
+            listState = listState,
+            onCloseClick = {
+                focusManager.clearFocus()
+                onClose()
             },
-            onValueChange = { newValue ->
-                if (newValue.text != searchValue.text) {
-                    onSearchValueChange(newValue)
-                }
-            },
-            isSearching = isSearching,
             modifier = Modifier
-                .focusRequester(focusRequester)
-                .background(color = MaterialTheme.colors.surface)
-                .padding(horizontal = 8.dp)
-                .padding(top = 8.dp + contentPaddingValues.calculateTopPadding())
+                .onSizeChanged { size ->
+                    topBarHeight = with(density) { size.height.toDp() }
+                }
+                .padding(top = contentPaddingValues.calculateTopPadding()),
+            bottomContent = {
+                SearchBar(
+                    text = searchValue,
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = null,
+                        )
+                    },
+                    onValueChange = { newValue ->
+                        if (newValue.text != searchValue.text) {
+                            onSearchValueChange(newValue)
+                        }
+                    },
+                    isSearching = isSearching,
+                    modifier = Modifier.focusRequester(focusRequester),
+                )
+            },
         )
 
-        val density = LocalDensity.current
         val scrollTriggerInPixels = with(density) { 56.dp.toPx() }
         Spacer(modifier = Modifier.height(8.dp))
         SearchKeyButtons(

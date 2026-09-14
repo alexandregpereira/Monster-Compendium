@@ -79,7 +79,9 @@ fun AppTextField(
     OutlinedTextField(
         value = text,
         onValueChange = onValueChange,
-        label = { Text(label) },
+        label = if (label.isNotEmpty()) {
+            { Text(label) }
+        } else null,
         singleLine = !multiline,
         shape = RoundedCornerShape(20),
         maxLines = if (multiline) 6 else 1,
@@ -142,7 +144,9 @@ fun AppTextField(
         onValueChange = { newValue ->
             onValueChange(newValue)
         },
-        label = { Text(label) },
+        label = if (label.isNotEmpty()) {
+            { Text(label) }
+        } else null,
         singleLine = !multiline,
         shape = RoundedCornerShape(20),
         maxLines = if (multiline) 6 else 1,

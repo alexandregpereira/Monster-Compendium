@@ -51,6 +51,7 @@ fun SettingsFeature(
     AppFullScreen(
         isOpen = state.isShowing,
         level = 0,
+        showCloseButton = false,
         onClose = viewModel::onClose,
     ) {
         CompositionLocalProvider(LocalStrings provides state.strings) {
@@ -59,6 +60,7 @@ fun SettingsFeature(
                 versionName = versionName,
                 showPremium = state.showPremium,
                 contentPadding = contentPadding,
+                onClose = viewModel::onClose,
                 onItemClicked = viewModel::onMenuItemClick,
                 onPremiumClick = viewModel::onSubscribePremiumClick,
             )

@@ -19,8 +19,10 @@ package br.alexandregpereira.hunter.spell.compendium
 
 data class SpellCompendiumState(
     val isShowing: Boolean = false,
+    val title: String = "",
     val spellsGroupByLevel: Map<String, List<SpellCompendiumItemState>> = emptyMap(),
     val searchText: String = "",
+    val isSearchOpened: Boolean = false,
     val searchTextLabel: String = "",
     val initialItemIndex: Int = 0,
 )

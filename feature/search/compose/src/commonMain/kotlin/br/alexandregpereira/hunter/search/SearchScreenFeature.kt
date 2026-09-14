@@ -59,9 +59,9 @@ private fun SearchScreenContent(
     val initialSearchKeysScrollOffset = remember { state.searchKeysScrollOffset }
 
     SearchScreen(
+        title = state.title,
         searchValue = state.searchValue,
         monsterRows = state.monsterRows,
-        searchLabel = state.searchLabel,
         searchResults = state.searchResults,
         isSearching = state.isSearching,
         searchKeys = state.searchKeys,

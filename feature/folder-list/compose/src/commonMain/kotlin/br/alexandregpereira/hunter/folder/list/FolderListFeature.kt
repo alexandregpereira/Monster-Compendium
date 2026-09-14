@@ -42,11 +42,13 @@ fun FolderListFeature(
     AppFullScreen(
         isOpen = state.isShowing,
         level = 0,
+        showCloseButton = false,
         onClose = viewModel::onClose,
     ) {
         FolderListScreen(
             state = state,
             contentPadding = contentPadding,
+            onCloseClick = viewModel::onClose,
             onCLick = viewModel::onItemClick,
             onLongCLick = viewModel::onItemSelect,
             onItemSelectionClose = viewModel::onItemSelectionClose,

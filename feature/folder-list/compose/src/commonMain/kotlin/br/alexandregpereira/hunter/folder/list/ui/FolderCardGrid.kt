@@ -21,7 +21,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -35,32 +35,25 @@ import br.alexandregpereira.hunter.folder.list.FolderCardImageState
 import br.alexandregpereira.hunter.folder.list.FolderCardState
 import br.alexandregpereira.hunter.ui.compose.FolderCard
 import br.alexandregpereira.hunter.ui.compose.FolderImageState
-import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 
 @Composable
 internal fun FolderCardGrid(
     folders: List<FolderCardState>,
-    title: String,
     modifier: Modifier = Modifier,
-    initialFirstVisibleItemIndex: Int = 0,
-    initialFirstVisibleItemScrollOffset: Int = 0,
+    listState: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(),
     onCLick: (String) -> Unit = {},
     onLongCLick: (String) -> Unit = {},
     onScrollChanges: (Int, Int) -> Unit = { _, _ -> },
 ) {
-    val lazyListState = rememberLazyGridState(
-        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
-        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
-    )
     val getFirstVisibleItemValues = {
-        lazyListState.firstVisibleItemIndex to lazyListState.firstVisibleItemScrollOffset
+        listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
     }
     OnScrollChanges(getFirstVisibleItemValues, onScrollChanges)
     LazyVerticalGrid(
         modifier = modifier,
-        state = lazyListState,
+        state = listState,
         columns = GridCells.Adaptive(minSize = 320.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(32.dp),
@@ -71,10 +64,6 @@ internal fun FolderCardGrid(
             bottom = 16.dp + contentPadding.calculateBottomPadding()
         )
     ) {
-        item(key = "header", span = { GridItemSpan(maxLineSpan) }) {
-            SectionTitle(title = title, isHeader = true)
-        }
-
         items(folders, key = { it.folderName.lowercase() }) { folder ->
             val scale by animateFloatAsState(
                 targetValue = if (folder.selected) 0.8f else 1f,
@@ -182,6 +171,5 @@ private fun FolderCardGridPreview() = Window {
                 ),
             )
         ),
-        title = "Folders",
     )
 }

@@ -28,7 +28,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.MonsterImageContentScale
@@ -47,6 +50,7 @@ import br.alexandregpereira.hunter.ui.compendium.monster.MonsterImageState
 import br.alexandregpereira.hunter.ui.compendium.monster.MonsterTypeState
 import br.alexandregpereira.hunter.ui.compose.AppImageContentScale
 import br.alexandregpereira.hunter.ui.compose.AppScreen
+import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentItemState
@@ -66,6 +70,7 @@ internal fun MonsterContentPreviewScreen(
 ) = AppScreen(
     isOpen = state.isOpen,
     contentPaddingValues = contentPadding,
+    showCloseButton = false,
     onClose = onClose
 ) {
     LoadingScreen(
@@ -77,8 +82,9 @@ internal fun MonsterContentPreviewScreen(
         }
         MonsterContentPreviewScreenContent(
             state = state,
-            contentPadding = PaddingValues(top = 24.dp),
+            contentPadding = PaddingValues(),
             compendiumIndex = compendiumIndex,
+            onClose = onClose,
             onTableContentOpenButtonClick = onTableContentOpenButtonClick,
             onTableContentClose = onTableContentClose,
             onTableContentClick = onTableContentClick,
@@ -99,32 +105,44 @@ internal fun MonsterContentPreviewScreenContent(
     state: MonsterContentPreviewState,
     contentPadding: PaddingValues,
     compendiumIndex: Int = -1,
+    onClose: () -> Unit = {},
     onTableContentOpenButtonClick: () -> Unit = {},
     onTableContentClose: () -> Unit = {},
     onTableContentClick: (Int) -> Unit = {},
     onFirstVisibleItemChange: (Int) -> Unit = {},
 ) {
+    val density = LocalDensity.current
+    var topBarHeight by remember { mutableStateOf(0.dp) }
     PopupContainer(
         isOpened = state.tableContentOpened,
         onPopupClosed = onTableContentClose,
         content = {
-            val title = MonsterCompendiumItem.Title(
-                id = state.title,
-                value = state.title,
-                isHeader = true
-            )
             val listState = rememberLazyGridState()
             MonsterCompendium(
-                items = (listOf(title) + state.monsterCompendiumItems).asState(),
+                items = state.monsterCompendiumItems.asState(),
                 listState = listState,
-                contentPadding = contentPadding,
+                contentPadding = PaddingValues(
+                    top = contentPadding.calculateTopPadding() + topBarHeight,
+                    bottom = contentPadding.calculateBottomPadding(),
+                ),
+            )
+
+            AppTopBar(
+                title = state.title,
+                listState = listState,
+                onCloseClick = onClose,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .onSizeChanged { size ->
+                        topBarHeight = with(density) { size.height.toDp() }
+                    },
             )
 
             OnFirstVisibleItemChange(listState, onFirstVisibleItemChange)
 
             if (compendiumIndex >= 0) {
                 LaunchedEffect(compendiumIndex) {
-                    listState.scrollToItem(compendiumIndex + 1)
+                    listState.scrollToItem(compendiumIndex)
                 }
             }
         },
@@ -140,7 +158,10 @@ internal fun MonsterContentPreviewScreenContent(
                 onTableContentClicked = onTableContentClick,
                 tableContentOpened = state.tableContentOpened,
                 onTableContentClosed = onTableContentClose,
-                modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding())
+                modifier = Modifier.padding(
+                    top = topBarHeight,
+                    bottom = contentPadding.calculateBottomPadding(),
+                )
             )
         }
     )

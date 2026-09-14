@@ -31,7 +31,7 @@ internal interface SearchStrings {
 }
 
 internal data class SearchEnStrings(
-    override val search: String = "Search",
+    override val search: String = "Search Creatures",
     override val searchResultsPlural: String = "{0} results",
     override val searchResultsSingular: String = "{0} result",
     override val searchTipsTitle: String = "Search Examples",
@@ -52,7 +52,7 @@ internal data class SearchEnStrings(
 ) : SearchStrings
 
 internal data class SearchPtStrings(
-    override val search: String = "Buscar",
+    override val search: String = "Buscar Criaturas",
     override val searchResultsPlural: String = "{0} resultados",
     override val searchResultsSingular: String = "{0} resultado",
     override val searchTipsTitle: String = "Exemplos de Busca",
@@ -88,7 +88,7 @@ internal fun AppLocalization.getStrings(): SearchStrings {
 }
 
 internal data class SearchEsStrings(
-    override val search: String = "Buscar",
+    override val search: String = "Buscar Criaturas",
     override val searchResultsPlural: String = "{0} resultados",
     override val searchResultsSingular: String = "{0} resultado",
     override val searchTipsTitle: String = "Ejemplos de Búsqueda",

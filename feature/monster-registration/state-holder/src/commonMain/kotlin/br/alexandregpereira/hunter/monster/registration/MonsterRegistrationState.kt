@@ -23,6 +23,7 @@ import br.alexandregpereira.hunter.uuid.generateUUID
 data class MonsterRegistrationState(
     val isLoading: Boolean = true,
     val isOpen: Boolean = false,
+    val title: String = "",
     val monster: MonsterState = MonsterState(),
     val initialSelectedStepIndex: Int = 0,
     val isSaveButtonEnabled: Boolean = false,
