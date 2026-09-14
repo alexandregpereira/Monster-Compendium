@@ -43,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -136,6 +137,8 @@ fun AppDropdownButton(
     expanded: Boolean,
     modifier: Modifier = Modifier,
     title: String? = null,
+    leadingIcon: ImageVector? = null,
+    leadingIconContentDescription: String? = null,
     size: AppButtonSize = AppButtonSize.SMALL,
     type: AppButtonType = AppButtonType.SECONDARY,
     backgroundAlpha: Float = 1f,
@@ -150,13 +153,27 @@ fun AppDropdownButton(
         backgroundAlpha = backgroundAlpha,
         onClick = onClick,
     ) {
+        val startPadding = when {
+            leadingIcon == null -> if (isVerySmall) 12.dp else 16.dp
+            else -> if (isVerySmall) 10.dp else 12.dp
+        }
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(
-                start = if (isVerySmall) 12.dp else 16.dp,
+                start = startPadding,
                 end = if (isVerySmall) 6.dp else 8.dp,
             ),
         ) {
+            if (leadingIcon != null) {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = leadingIconContentDescription,
+                    tint = LocalContentColor.current,
+                    modifier = Modifier
+                        .padding(end = if (isVerySmall) 4.dp else 6.dp)
+                        .size(if (isVerySmall) 14.dp else 20.dp),
+                )
+            }
             Text(
                 text = text,
                 fontWeight = FontWeight.Normal,

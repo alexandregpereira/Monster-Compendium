@@ -22,6 +22,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -82,6 +84,8 @@ internal fun MonsterCompendiumSortButton(
             options = sortOptions,
             expanded = sortOptionsOpened,
             title = sortTitle,
+            leadingIcon = Icons.AutoMirrored.Filled.Sort,
+            leadingIconContentDescription = sortTitle,
             size = AppButtonSize.VERY_SMALL,
             onClick = onSortClick,
             onDismiss = onSortOptionsClose,
