@@ -84,7 +84,6 @@ class MonsterCompendiumStateHolder internal constructor(
     init {
         observeLanguageChanges()
         observeEvents()
-        loadMonsters()
     }
 
     private fun observeLanguageChanges() {
@@ -283,6 +282,7 @@ class MonsterCompendiumStateHolder internal constructor(
                 MonsterCompendiumEvent.Show -> {
                     analytics.trackOpened()
                     setState { copy(isShowing = true) }
+                    loadMonsters()
                 }
             }
         }.launchIn(scope)
@@ -292,6 +292,7 @@ class MonsterCompendiumStateHolder internal constructor(
         }.launchIn(scope)
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            if (state.value.isShowing.not()) return@collectOnMonsterCompendiumChanges
             scope.launch {
                 fetchMonsterCompendium()
                 it.monsterIndex?.let { monsterIndex ->
