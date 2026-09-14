@@ -22,17 +22,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,8 +39,10 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.home.HomeStrings
 import br.alexandregpereira.hunter.home.homeMockViewState
 import br.alexandregpereira.hunter.ui.compose.FolderCard
+import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
+import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
 
 @Composable
@@ -63,43 +64,54 @@ internal fun HomeScreen(
     backgroundColor = MaterialTheme.colors.background,
     level = 0,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(contentPadding)
-            .padding(vertical = 16.dp),
+    // Outside the scroll, so the loading and the content have the same size and only fade
+    LoadingScreen(
+        isLoading = state.isLoading,
+        showCircularLoading = false,
     ) {
         val horizontalPadding = 16.dp
         val sectionModifier = Modifier.padding(horizontal = horizontalPadding)
 
-        HomeHeader(
-            title = strings.title,
-            menuContentDescription = strings.menu,
-            onMenuClick = onMenuClick,
-            modifier = sectionModifier,
-        )
+        LazyColumn(
+            contentPadding = contentPadding + PaddingValues(vertical = 16.dp),
+            modifier = modifier.fillMaxSize(),
+        ) {
+            item(key = HOME_HEADER_KEY) {
+                HomeHeader(
+                    title = strings.title,
+                    menuContentDescription = strings.menu,
+                    onMenuClick = onMenuClick,
+                    modifier = sectionModifier,
+                )
+            }
 
-        state.sections.forEach { section ->
-            // Keeps the remembered state, like the rows scroll, with its section when the order changes
-            key(section::class) {
+            // The key keeps the remembered state, like the rows scroll, with its section and
+            // animates the section when the order changes
+            items(state.sections, key = { it.key }, contentType = { it.key }) { section ->
                 when (section) {
                     HomeSectionState.Search -> HomeSearchButton(
                         placeholder = strings.searchPlaceholder,
                         onClick = onSearchClick,
-                        modifier = sectionModifier.padding(top = 20.dp),
+                        modifier = Modifier
+                            .animateItem()
+                            .then(sectionModifier)
+                            .padding(top = 20.dp),
                     )
 
                     is HomeSectionState.Categories -> HomeCategoryGrid(
                         categories = section.categories,
                         strings = strings,
                         onCategoryClick = onCategoryClick,
-                        modifier = sectionModifier.padding(top = 20.dp),
+                        modifier = Modifier
+                            .animateItem()
+                            .then(sectionModifier)
+                            .padding(top = 20.dp),
                     )
 
-                    is HomeSectionState.RecentlyViewed -> {
+                    is HomeSectionState.RecentlyViewed -> Column(Modifier.animateItem()) {
                         HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
                         LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding),
                         ) {
@@ -107,14 +119,16 @@ internal fun HomeScreen(
                                 HomeMonsterCard(
                                     monster = monster,
                                     onClick = { onMonsterClick(monster.index) },
+                                    modifier = Modifier.animateItem(),
                                 )
                             }
                         }
                     }
 
-                    is HomeSectionState.Folders -> {
+                    is HomeSectionState.Folders -> Column(Modifier.animateItem()) {
                         HomeSectionTitle(title = strings.folders, modifier = sectionModifier)
                         LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding),
                         ) {
@@ -125,7 +139,9 @@ internal fun HomeScreen(
                                     image2 = folder.image2,
                                     image3 = folder.image3,
                                     fontSize = 18.sp,
-                                    modifier = Modifier.width(180.dp),
+                                    modifier = Modifier
+                                        .animateItem()
+                                        .width(180.dp),
                                     onCLick = { onFolderClick(folder.name) },
                                 )
                             }
@@ -137,7 +153,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    HomeSectionState.Create -> {
+                    HomeSectionState.Create -> Column(Modifier.animateItem()) {
                         HomeSectionTitle(title = strings.create, modifier = sectionModifier)
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -163,13 +179,32 @@ internal fun HomeScreen(
                         added = section.added,
                         total = section.total,
                         onButtonClick = onManageExtraContentClick,
-                        modifier = sectionModifier.padding(top = 32.dp),
+                        modifier = Modifier
+                            .animateItem()
+                            .then(sectionModifier)
+                            .padding(top = 32.dp),
                     )
                 }
             }
         }
     }
 }
+
+/**
+ * The lazy list keys must be saveable on Android, so each section has a string key instead of its
+ * class.
+ */
+private val HomeSectionState.key: String
+    get() = when (this) {
+        HomeSectionState.Search -> "Search"
+        is HomeSectionState.Categories -> "Categories"
+        is HomeSectionState.RecentlyViewed -> "RecentlyViewed"
+        is HomeSectionState.Folders -> "Folders"
+        HomeSectionState.Create -> "Create"
+        is HomeSectionState.ExtraContent -> "ExtraContent"
+    }
+
+private const val HOME_HEADER_KEY = "Header"
 
 @Composable
 private fun HomeSectionTitle(
@@ -195,6 +230,15 @@ private fun HomeScreenDarkPreview() = HunterTheme(darkTheme = true) {
 private fun HomeScreenLightPreview() = HunterTheme(darkTheme = false) {
     HomeScreen(
         state = homeMockViewState,
+        strings = HomeStrings(),
+    )
+}
+
+@Preview
+@Composable
+private fun HomeScreenLoadingPreview() = HunterTheme(darkTheme = true) {
+    HomeScreen(
+        state = homeMockViewState.copy(isLoading = true),
         strings = HomeStrings(),
     )
 }

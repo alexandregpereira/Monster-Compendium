@@ -42,7 +42,10 @@ fun SyncScreen(
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight },
     ) {
-        Window(Modifier.fillMaxSize().padding(contentPadding)) {
+        Window(
+            Modifier.fillMaxSize().padding(contentPadding),
+            level = 0,
+        ) {
             Crossfade(targetState = state.hasError) { hasError ->
                 if (hasError) {
                     EmptyScreenMessage(

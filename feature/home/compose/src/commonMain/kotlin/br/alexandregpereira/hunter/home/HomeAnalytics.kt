@@ -67,7 +67,6 @@ internal class HomeAnalytics(
     fun trackSectionsLoaded(sections: List<HomeSectionState>, isReload: Boolean) {
         val categories = sections.filterIsInstance<HomeSectionState.Categories>().firstOrNull()
             ?.categories.orEmpty()
-        val extraContent = sections.filterIsInstance<HomeSectionState.ExtraContent>().firstOrNull()
         analytics.track(
             eventName = "Home - sections loaded",
             params = mapOf(
@@ -79,6 +78,19 @@ internal class HomeAnalytics(
                     ?.folders?.size,
                 "recentlyViewed" to sections.filterIsInstance<HomeSectionState.RecentlyViewed>()
                     .firstOrNull()?.monsters?.size,
+            )
+        )
+    }
+
+    /**
+     * The extra content is loaded from the API in parallel with the other sections, so it has its
+     * own event. A null [extraContent] means there is no extra content to show.
+     */
+    fun trackExtraContentLoaded(extraContent: HomeSectionState.ExtraContent?, isReload: Boolean) {
+        analytics.track(
+            eventName = "Home - extra content loaded",
+            params = mapOf(
+                "isReload" to isReload,
                 "extraContentAdded" to extraContent?.added,
                 "extraContentTotal" to extraContent?.total,
             )

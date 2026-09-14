@@ -79,7 +79,24 @@ class HomeAnalyticsTest {
                     "spells" to 400,
                     "folders" to null,
                     "recentlyViewed" to null,
-                    "extraContentAdded" to 0,
+                )
+            ),
+            analytics.events,
+        )
+    }
+
+    @Test
+    fun `extra content loaded is tracked with the extra content progress`() {
+        homeAnalytics.trackExtraContentLoaded(
+            extraContent = HomeSectionState.ExtraContent(added = 2, total = 8),
+            isReload = false,
+        )
+
+        assertEquals(
+            listOf(
+                "Home - extra content loaded" to mapOf<String, Any?>(
+                    "isReload" to false,
+                    "extraContentAdded" to 2,
                     "extraContentTotal" to 8,
                 )
             ),
