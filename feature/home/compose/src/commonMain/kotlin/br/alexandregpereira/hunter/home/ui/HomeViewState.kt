@@ -22,10 +22,11 @@ import br.alexandregpereira.hunter.ui.compose.FolderImageState
 
 /**
  * The Home shows the [sections] in the order of the list. A section that is not in the list is not
- * shown.
+ * shown. While [isLoading], a loading indicator is shown instead of the [sections].
  */
 internal data class HomeViewState(
     val sections: List<HomeSectionState> = emptyList(),
+    val isLoading: Boolean = false,
 )
 
 internal sealed interface HomeSectionState {

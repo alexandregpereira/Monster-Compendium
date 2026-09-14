@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.home.HomeStrings
 import br.alexandregpereira.hunter.home.homeMockViewState
 import br.alexandregpereira.hunter.ui.compose.FolderCard
+import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.SectionTitle
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.theme.HunterTheme
@@ -63,108 +64,114 @@ internal fun HomeScreen(
     backgroundColor = MaterialTheme.colors.background,
     level = 0,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(contentPadding)
-            .padding(vertical = 16.dp),
+    // Outside the scroll, so the loading and the content have the same size and only fade
+    LoadingScreen(
+        isLoading = state.isLoading,
+        showCircularLoading = false,
     ) {
-        val horizontalPadding = 16.dp
-        val sectionModifier = Modifier.padding(horizontal = horizontalPadding)
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(contentPadding)
+                .padding(vertical = 16.dp),
+        ) {
+            val horizontalPadding = 16.dp
+            val sectionModifier = Modifier.padding(horizontal = horizontalPadding)
 
-        HomeHeader(
-            title = strings.title,
-            menuContentDescription = strings.menu,
-            onMenuClick = onMenuClick,
-            modifier = sectionModifier,
-        )
+            HomeHeader(
+                title = strings.title,
+                menuContentDescription = strings.menu,
+                onMenuClick = onMenuClick,
+                modifier = sectionModifier,
+            )
 
-        state.sections.forEach { section ->
-            // Keeps the remembered state, like the rows scroll, with its section when the order changes
-            key(section::class) {
-                when (section) {
-                    HomeSectionState.Search -> HomeSearchButton(
-                        placeholder = strings.searchPlaceholder,
-                        onClick = onSearchClick,
-                        modifier = sectionModifier.padding(top = 20.dp),
-                    )
+            state.sections.forEach { section ->
+                // Keeps the remembered state, like the rows scroll, with its section when the order changes
+                key(section::class) {
+                    when (section) {
+                        HomeSectionState.Search -> HomeSearchButton(
+                            placeholder = strings.searchPlaceholder,
+                            onClick = onSearchClick,
+                            modifier = sectionModifier.padding(top = 20.dp),
+                        )
 
-                    is HomeSectionState.Categories -> HomeCategoryGrid(
-                        categories = section.categories,
-                        strings = strings,
-                        onCategoryClick = onCategoryClick,
-                        modifier = sectionModifier.padding(top = 20.dp),
-                    )
+                        is HomeSectionState.Categories -> HomeCategoryGrid(
+                            categories = section.categories,
+                            strings = strings,
+                            onCategoryClick = onCategoryClick,
+                            modifier = sectionModifier.padding(top = 20.dp),
+                        )
 
-                    is HomeSectionState.RecentlyViewed -> {
-                        HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
-                        LazyRow(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            contentPadding = PaddingValues(horizontal = horizontalPadding),
-                        ) {
-                            items(section.monsters, key = { it.index }) { monster ->
-                                HomeMonsterCard(
-                                    monster = monster,
-                                    onClick = { onMonsterClick(monster.index) },
+                        is HomeSectionState.RecentlyViewed -> {
+                            HomeSectionTitle(title = strings.recentlyViewed, modifier = sectionModifier)
+                            LazyRow(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                contentPadding = PaddingValues(horizontal = horizontalPadding),
+                            ) {
+                                items(section.monsters, key = { it.index }) { monster ->
+                                    HomeMonsterCard(
+                                        monster = monster,
+                                        onClick = { onMonsterClick(monster.index) },
+                                    )
+                                }
+                            }
+                        }
+
+                        is HomeSectionState.Folders -> {
+                            HomeSectionTitle(title = strings.folders, modifier = sectionModifier)
+                            LazyRow(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                contentPadding = PaddingValues(horizontal = horizontalPadding),
+                            ) {
+                                items(section.folders, key = { it.name }) { folder ->
+                                    FolderCard(
+                                        folderName = folder.name,
+                                        image1 = folder.image1,
+                                        image2 = folder.image2,
+                                        image3 = folder.image3,
+                                        fontSize = 18.sp,
+                                        modifier = Modifier.width(180.dp),
+                                        onCLick = { onFolderClick(folder.name) },
+                                    )
+                                }
+                            }
+                            HomePillButton(
+                                text = strings.seeAllFolders,
+                                onClick = onSeeAllFoldersClick,
+                                modifier = sectionModifier.padding(top = 16.dp),
+                            )
+                        }
+
+                        HomeSectionState.Create -> {
+                            HomeSectionTitle(title = strings.create, modifier = sectionModifier)
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = sectionModifier,
+                            ) {
+                                HomePillButton(
+                                    text = strings.monster,
+                                    icon = Icons.Filled.Add,
+                                    onClick = onCreateMonsterClick,
+                                )
+                                HomePillButton(
+                                    text = strings.spell,
+                                    icon = Icons.Filled.Add,
+                                    onClick = onCreateSpellClick,
                                 )
                             }
                         }
-                    }
 
-                    is HomeSectionState.Folders -> {
-                        HomeSectionTitle(title = strings.folders, modifier = sectionModifier)
-                        LazyRow(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            contentPadding = PaddingValues(horizontal = horizontalPadding),
-                        ) {
-                            items(section.folders, key = { it.name }) { folder ->
-                                FolderCard(
-                                    folderName = folder.name,
-                                    image1 = folder.image1,
-                                    image2 = folder.image2,
-                                    image3 = folder.image3,
-                                    fontSize = 18.sp,
-                                    modifier = Modifier.width(180.dp),
-                                    onCLick = { onFolderClick(folder.name) },
-                                )
-                            }
-                        }
-                        HomePillButton(
-                            text = strings.seeAllFolders,
-                            onClick = onSeeAllFoldersClick,
-                            modifier = sectionModifier.padding(top = 16.dp),
+                        is HomeSectionState.ExtraContent -> HomeExtraContentCard(
+                            title = strings.extraContent,
+                            progressText = strings.extraContentProgress(section.added, section.total),
+                            buttonText = strings.manageExtraContent,
+                            added = section.added,
+                            total = section.total,
+                            onButtonClick = onManageExtraContentClick,
+                            modifier = sectionModifier.padding(top = 32.dp),
                         )
                     }
-
-                    HomeSectionState.Create -> {
-                        HomeSectionTitle(title = strings.create, modifier = sectionModifier)
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = sectionModifier,
-                        ) {
-                            HomePillButton(
-                                text = strings.monster,
-                                icon = Icons.Filled.Add,
-                                onClick = onCreateMonsterClick,
-                            )
-                            HomePillButton(
-                                text = strings.spell,
-                                icon = Icons.Filled.Add,
-                                onClick = onCreateSpellClick,
-                            )
-                        }
-                    }
-
-                    is HomeSectionState.ExtraContent -> HomeExtraContentCard(
-                        title = strings.extraContent,
-                        progressText = strings.extraContentProgress(section.added, section.total),
-                        buttonText = strings.manageExtraContent,
-                        added = section.added,
-                        total = section.total,
-                        onButtonClick = onManageExtraContentClick,
-                        modifier = sectionModifier.padding(top = 32.dp),
-                    )
                 }
             }
         }
@@ -195,6 +202,15 @@ private fun HomeScreenDarkPreview() = HunterTheme(darkTheme = true) {
 private fun HomeScreenLightPreview() = HunterTheme(darkTheme = false) {
     HomeScreen(
         state = homeMockViewState,
+        strings = HomeStrings(),
+    )
+}
+
+@Preview
+@Composable
+private fun HomeScreenLoadingPreview() = HunterTheme(darkTheme = true) {
+    HomeScreen(
+        state = homeMockViewState.copy(isLoading = true),
         strings = HomeStrings(),
     )
 }

@@ -56,6 +56,7 @@ internal class HomeStateHolder(
                 recentlyViewed = null,
                 folders = null,
             ),
+            isLoading = true,
         ),
         strings = appLocalization.getHomeStrings(),
     )
@@ -116,7 +117,15 @@ internal class HomeStateHolder(
                     isSectionsLoadedTracked = true
                     analytics.trackSectionsLoaded(sections, isReload = invalidateCache)
                 }
-                setState { copy(viewState = viewState.copy(sections = sections)) }
+                setState {
+                    copy(
+                        viewState = viewState.copy(
+                            sections = sections,
+                            // Without the categories there is no content yet, like before the first sync
+                            isLoading = sections.none { it is HomeSectionState.Categories },
+                        )
+                    )
+                }
             }
             .launchIn(scope)
     }
