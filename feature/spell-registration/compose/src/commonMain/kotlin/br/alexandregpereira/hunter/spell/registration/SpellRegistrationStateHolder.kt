@@ -129,7 +129,7 @@ internal class SpellRegistrationStateHolder(
                     SpellResult.OnAdded(spellIndex)
                 }
                 resultManager.dispatchEvent(resultEvent)
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
                 if (!isEditing) {
                     spellDetailEventDispatcher.dispatchEvent(SpellDetailEvent.ShowSpell(spellIndex))
                 }

@@ -54,6 +54,16 @@ class HomeAnalyticsTest {
     }
 
     @Test
+    fun `recently viewed refresh click is tracked`() {
+        homeAnalytics.trackRecentlyViewedRefresh()
+
+        assertEquals(
+            listOf("Home - recently viewed refresh click" to emptyMap()),
+            analytics.events,
+        )
+    }
+
+    @Test
     fun `sections loaded is tracked with the sections order and totals`() {
         homeAnalytics.trackSectionsLoaded(
             sections = listOf(

@@ -91,7 +91,7 @@ class FolderInsertStateHolder internal constructor(
         ).flowOn(dispatcher)
             .onCompletion {
                 folderInsertEventManager.dispatchResult(OnSaved(indexes))
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .launchIn(scope)
     }

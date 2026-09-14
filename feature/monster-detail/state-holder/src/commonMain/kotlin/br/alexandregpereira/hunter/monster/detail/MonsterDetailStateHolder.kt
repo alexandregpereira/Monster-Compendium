@@ -229,7 +229,7 @@ class MonsterDetailStateHolder internal constructor(
                 if (state.value.showDetail) {
                     hasRecentlyViewedChanges = true
                 } else {
-                    homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                    homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
                 }
             }
             .catch { analytics.logException(it) }
@@ -238,12 +238,13 @@ class MonsterDetailStateHolder internal constructor(
 
     /**
      * The Home is covered by the detail, so it's notified once when the detail closes instead of on
-     * every monster swiped.
+     * every monster swiped. The Home needs it to show the recently viewed monsters for the first
+     * time, since they are not shown before a monster is viewed.
      */
     private fun dispatchRecentlyViewedChanges() {
         if (hasRecentlyViewedChanges.not()) return
         hasRecentlyViewedChanges = false
-        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
     }
 
     fun onShowOptionsClicked() {
@@ -487,7 +488,7 @@ class MonsterDetailStateHolder internal constructor(
                 if (monsterIndexes.isNotEmpty()) {
                     monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 }
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .launchIn(scope)
     }
@@ -497,7 +498,9 @@ class MonsterDetailStateHolder internal constructor(
             .onEach {
                 monsterEventDispatcher.dispatchEvent(OnCompendiumChanges())
                 monsterEventDispatcher.dispatchEvent(Hide)
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(
+                    HomeEvent.OnContentChanged(wasCreatureDeleted = true)
+                )
             }
             .flowOn(dispatcher)
             .launchIn(scope)

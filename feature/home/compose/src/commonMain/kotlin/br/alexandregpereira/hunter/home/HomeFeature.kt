@@ -51,6 +51,7 @@ fun HomeFeature(
         onMonsterClick = { monsterIndex ->
             stateHolder.onIntent(HomeIntent.OpenMonsterDetail(index = monsterIndex))
         },
+        onRefreshRecentlyViewedClick = stateHolder::onRefreshRecentlyViewed,
         onFolderClick = { folderName ->
             stateHolder.onIntent(HomeIntent.OpenFolderDetail(folderName = folderName))
         },

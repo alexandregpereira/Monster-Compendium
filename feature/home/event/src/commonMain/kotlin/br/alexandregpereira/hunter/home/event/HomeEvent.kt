@@ -18,16 +18,24 @@
 package br.alexandregpereira.hunter.home.event
 
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
+import kotlinx.coroutines.channels.Channel
 
 sealed class HomeEvent {
 
     /**
      * Dispatched by the features when the content shown on the Home changes, like monsters, spells,
      * folders or extra contents being created, cloned, deleted or synced.
+     *
+     * @param wasCreatureDeleted true when a creature can have been deleted, like a monster deletion
+     * or a sync, so the Home also reloads the recently viewed monsters shown.
      */
-    data object OnContentChanged : HomeEvent()
+    data class OnContentChanged(val wasCreatureDeleted: Boolean = false) : HomeEvent()
 }
 
+/**
+ * The buffer is unlimited, so an event isn't dropped when events are dispatched in sequence, since
+ * each event can carry a different change.
+ */
 class HomeEventDispatcher : EventDispatcher<HomeEvent> by EventDispatcher(
-    extraBufferCapacity = 1,
+    extraBufferCapacity = Channel.UNLIMITED,
 )

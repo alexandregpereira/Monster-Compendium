@@ -31,6 +31,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -65,6 +66,13 @@ internal class HomeStateHolder(
     private var intentJob: Job? = null
     private var sectionsJob: Job? = null
     private var extraContentJob: Job? = null
+    private var recentlyViewedJob: Job? = null
+
+    /**
+     * Kept until the recently viewed monsters are reloaded, since a following event cancels the
+     * load that would reload them, like when the monster detail closes after a monster deletion.
+     */
+    private var isRecentlyViewedReloadPending = false
 
     init {
         observeLanguageChanges()
@@ -84,16 +92,33 @@ internal class HomeStateHolder(
     }
 
     /**
+     * Refreshes the recently viewed monsters. They are only updated by the user after they are
+     * shown, so viewing a monster doesn't move the monsters the user is browsing.
+     */
+    fun onRefreshRecentlyViewed() {
+        analytics.trackRecentlyViewedRefresh()
+        recentlyViewedJob?.cancel()
+        recentlyViewedJob = getRecentlyViewedSection()
+            .flowOn(dispatcher)
+            .onEach { recentlyViewed -> setSections(recentlyViewed = recentlyViewed) }
+            .launchIn(scope)
+    }
+
+    /**
      * Loads the local sections at once, updating the state only after every one of them is loaded.
      * The extra content is loaded in parallel, since it comes from the API and can take longer or
      * fail.
-     * Only the first sections of each load are tracked, since the sections flows can emit again
-     * without a new load, like when a monster is viewed.
+     * The recently viewed monsters are loaded while they are not shown, so they can appear after
+     * the first monster is viewed. Once shown, they are reloaded only after a creature is deleted,
+     * so a deleted monster isn't shown. Otherwise, only [onRefreshRecentlyViewed] updates them.
+     * Only the first sections of each load are tracked.
      */
     private fun loadSections(invalidateCache: Boolean) {
         loadExtraContent(isReload = invalidateCache)
 
         sectionsJob?.cancel()
+        val shouldLoadRecentlyViewed = isRecentlyViewedReloadPending ||
+            currentSection<HomeSectionState.RecentlyViewed>() == null
         var isSectionsLoadedTracked = false
         sectionsJob = combine(
             getHomeContentTotals(invalidateCache)
@@ -102,24 +127,34 @@ internal class HomeStateHolder(
             getMonsterFolders()
                 .map { it.toFoldersSection() }
                 .keepCurrentSectionOnError(),
-            getRecentlyViewedMonsters()
-                .map { it.toRecentlyViewedSection() }
-                .keepCurrentSectionOnError(),
+            if (shouldLoadRecentlyViewed) getRecentlyViewedSection() else flowOf(null),
             ::Triple,
         )
             .flowOn(dispatcher)
             .onEach { (categories, folders, recentlyViewed) ->
-                val sections = setSections(
-                    categories = categories,
-                    recentlyViewed = recentlyViewed,
-                    folders = folders,
-                )
+                val sections = if (shouldLoadRecentlyViewed) {
+                    isRecentlyViewedReloadPending = false
+                    setSections(
+                        categories = categories,
+                        recentlyViewed = recentlyViewed,
+                        folders = folders,
+                    )
+                } else {
+                    // Keeps the recently viewed shown now, since it can be refreshed while loading
+                    setSections(categories = categories, folders = folders)
+                }
                 if (isSectionsLoadedTracked.not()) {
                     isSectionsLoadedTracked = true
                     analytics.trackSectionsLoaded(sections, isReload = invalidateCache)
                 }
             }
             .launchIn(scope)
+    }
+
+    private fun getRecentlyViewedSection(): Flow<HomeSectionState.RecentlyViewed?> {
+        return getRecentlyViewedMonsters()
+            .map { it.toRecentlyViewedSection() }
+            .keepCurrentSectionOnError()
     }
 
     /**
@@ -188,13 +223,17 @@ internal class HomeStateHolder(
 
     /**
      * The features dispatch [HomeEvent.OnContentChanged] when the content shown on the Home
-     * changes, so the Home doesn't need to know every feature event.
+     * changes, so the Home doesn't need to know every feature event. The recently viewed monsters
+     * shown are reloaded only when a creature was deleted, see [loadSections].
      */
     private fun observeEvents() {
         homeEventListener.events
             .onEach { event ->
                 when (event) {
-                    HomeEvent.OnContentChanged -> loadSections(invalidateCache = true)
+                    is HomeEvent.OnContentChanged -> {
+                        if (event.wasCreatureDeleted) isRecentlyViewedReloadPending = true
+                        loadSections(invalidateCache = true)
+                    }
                 }
             }
             .launchIn(scope)

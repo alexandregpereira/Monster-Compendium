@@ -29,6 +29,7 @@ internal interface HomeStrings {
     val conditions: String
     val total: (Int) -> String
     val recentlyViewed: String
+    val refresh: String
     val folders: String
     val seeAllFolders: String
     val create: String
@@ -48,6 +49,7 @@ internal data class HomeEnStrings(
     override val conditions: String = "Conditions",
     override val total: (Int) -> String = { "$it total" },
     override val recentlyViewed: String = "Recently viewed",
+    override val refresh: String = "Refresh",
     override val folders: String = "Folders",
     override val seeAllFolders: String = "See all folders",
     override val create: String = "Create",
@@ -69,6 +71,7 @@ internal data class HomePtStrings(
     override val conditions: String = "Condições",
     override val total: (Int) -> String = { "$it no total" },
     override val recentlyViewed: String = "Vistos recentemente",
+    override val refresh: String = "Atualizar",
     override val folders: String = "Pastas",
     override val seeAllFolders: String = "Ver todas as pastas",
     override val create: String = "Criar",
@@ -90,6 +93,7 @@ internal data class HomeEsStrings(
     override val conditions: String = "Condiciones",
     override val total: (Int) -> String = { "$it en total" },
     override val recentlyViewed: String = "Vistos recientemente",
+    override val refresh: String = "Actualizar",
     override val folders: String = "Carpetas",
     override val seeAllFolders: String = "Ver todas las carpetas",
     override val create: String = "Crear",

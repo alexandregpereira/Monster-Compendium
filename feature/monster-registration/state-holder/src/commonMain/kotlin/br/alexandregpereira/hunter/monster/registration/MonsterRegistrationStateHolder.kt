@@ -194,7 +194,7 @@ class MonsterRegistrationStateHolder internal constructor(
                         monsterIndex = monsterIndex
                     )
                 )
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
                 if (isMonsterCreation()) {
                     monsterEventDispatcher.dispatchEvent(
                         event = MonsterEvent.OnVisibilityChanges.Show(index = monsterIndex)

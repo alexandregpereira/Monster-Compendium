@@ -211,7 +211,7 @@ internal class MonsterRegistrationStateHolderTest {
             advanceUntilIdle()
         }
 
-        homeEvents.assertFinalValue(HomeEvent.OnContentChanged)
+        homeEvents.assertFinalValue(HomeEvent.OnContentChanged())
     }
 
     @Test

@@ -64,6 +64,10 @@ internal class HomeAnalytics(
         }
     }
 
+    fun trackRecentlyViewedRefresh() {
+        analytics.track(eventName = "Home - recently viewed refresh click")
+    }
+
     fun trackSectionsLoaded(sections: List<HomeSectionState>, isReload: Boolean) {
         val categories = sections.filterIsInstance<HomeSectionState.Categories>().firstOrNull()
             ?.categories.orEmpty()

@@ -153,7 +153,7 @@ internal class ShareContentImportStateHolder(
                     )
                 )
                 eventDispatcher.dispatchEvent(Import.OnFinish(monsterIndexes))
-                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged)
+                homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
                 setState {
                     copy(
                         importExtractedState = null,
