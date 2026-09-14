@@ -44,11 +44,12 @@ class MonsterCompendiumAnalytics(
         )
     }
 
-    fun trackItemClick(monsterIndex: String) {
+    fun trackItemClick(monsterIndex: String, isFolderCreationMode: Boolean) {
         analytics.track(
             eventName = "MonsterCompendium - item click",
             params = mapOf(
                 "monsterIndex" to monsterIndex,
+                "isFolderCreationMode" to isFolderCreationMode,
             )
         )
     }
@@ -66,11 +67,12 @@ class MonsterCompendiumAnalytics(
         }
     }
 
-    fun trackItemLongClick(index: String) {
+    fun trackItemLongClick(index: String, isFolderCreationMode: Boolean) {
         analytics.track(
             eventName = "MonsterCompendium - item long click",
             params = mapOf(
                 "monsterIndex" to index,
+                "isFolderCreationMode" to isFolderCreationMode,
             )
         )
     }
@@ -136,6 +138,18 @@ class MonsterCompendiumAnalytics(
                 "sortType" to sortType.name,
             )
         )
+    }
+
+    fun trackFolderCreationClick() {
+        analytics.track(eventName = "MonsterCompendium - folder creation click")
+    }
+
+    fun trackFolderCreationClose() {
+        analytics.track(eventName = "MonsterCompendium - folder creation close")
+    }
+
+    fun trackFolderCreationConfirm() {
+        analytics.track(eventName = "MonsterCompendium - folder creation confirm")
     }
 
     fun trackOpened() {

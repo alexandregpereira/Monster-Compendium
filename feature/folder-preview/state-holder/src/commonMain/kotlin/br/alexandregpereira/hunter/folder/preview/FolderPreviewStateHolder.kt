@@ -26,6 +26,7 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.Save
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -68,8 +69,10 @@ class FolderPreviewStateHolder internal constructor(
         removeMonster(monsterIndex)
     }
 
-    fun onSave() {
-        analytics.trackSave()
+    fun onSave(shouldTrackSave: Boolean = true) {
+        if (shouldTrackSave) {
+            analytics.trackSave()
+        }
         folderInsertEventDispatcher.dispatchEvent(
             event = Show(monsterIndexes = state.value.monsters.map { it.index })
         ).onEach { result ->
@@ -102,6 +105,9 @@ class FolderPreviewStateHolder internal constructor(
                     is AddMonster -> {
                         analytics.trackAddMonster(event.indexes)
                         addMonster(event.indexes)
+                    }
+                    Save -> {
+                        if (state.value.monsters.isNotEmpty()) onSave(shouldTrackSave = false)
                     }
                 }
             }

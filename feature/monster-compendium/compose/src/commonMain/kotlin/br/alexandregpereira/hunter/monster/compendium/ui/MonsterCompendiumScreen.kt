@@ -17,6 +17,9 @@
 
 package br.alexandregpereira.hunter.monster.compendium.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -45,10 +48,12 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumSta
 import br.alexandregpereira.hunter.monster.compendium.state.sortOptions
 import br.alexandregpereira.hunter.monster.compendium.state.sortSelectedLabel
 import br.alexandregpereira.hunter.state.ActionHandler
+import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
+import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
 import kotlinx.coroutines.flow.collectLatest
 
@@ -95,6 +100,11 @@ internal fun MonsterCompendiumScreen(
             sortLabel = state.sortSelectedLabel,
             sortOptions = state.sortOptions,
             sortOptionsOpened = state.sortOptionsOpened,
+            isFolderCreationMode = state.isFolderCreationMode,
+            createFolderLabel = state.strings.createFolder,
+            selectionTitle = state.strings.selectCreatures,
+            backLabel = state.strings.back,
+            confirmLabel = state.strings.confirm,
             events = events
         )
 
@@ -134,8 +144,15 @@ private fun MonsterCompendiumScreen(
     sortLabel: String,
     sortOptions: List<String>,
     sortOptionsOpened: Boolean,
+    isFolderCreationMode: Boolean,
+    createFolderLabel: String,
+    selectionTitle: String,
+    backLabel: String,
+    confirmLabel: String,
     events: MonsterCompendiumIntent,
 ) {
+    BackHandler(enabled = isFolderCreationMode, onBack = events::onFolderCreationClose)
+
     val density = LocalDensity.current
     var searchBarHeight by remember { mutableStateOf(0.dp) }
     val topBarPadding = maxOf(searchBarHeight, contentPadding.calculateTopPadding())
@@ -170,9 +187,11 @@ private fun MonsterCompendiumScreen(
             MonsterCompendiumTopBar(
                 title = title,
                 contentDescription = searchLabel,
+                createFolderContentDescription = createFolderLabel,
                 listState = listState,
                 contentPadding = contentPadding,
                 onCloseClick = events::onClose,
+                onFolderCreationClick = events::onFolderCreationClick,
                 onSearchClick = events::onSearchClick,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -180,6 +199,23 @@ private fun MonsterCompendiumScreen(
                         searchBarHeight = with(density) { size.height.toDp() }
                     },
             )
+            AnimatedVisibility(
+                visible = isFolderCreationMode,
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier = Modifier.align(Alignment.TopCenter),
+            ) {
+                MonsterCompendiumSelectionTopBar(
+                    title = selectionTitle,
+                    backContentDescription = backLabel,
+                    confirmContentDescription = confirmLabel,
+                    contentPadding = contentPadding,
+                    onBackClick = events::onFolderCreationClose,
+                    onConfirmClick = events::onFolderCreationConfirm,
+                    // Consumes the clicks, so they do not reach the main top bar below.
+                    modifier = Modifier.noIndicationClick(),
+                )
+            }
         },
         popupContent = {
             val paddingBottom = 8.dp

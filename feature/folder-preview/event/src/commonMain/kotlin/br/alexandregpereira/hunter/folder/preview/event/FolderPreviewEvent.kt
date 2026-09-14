@@ -20,6 +20,12 @@ package br.alexandregpereira.hunter.folder.preview.event
 sealed class FolderPreviewEvent {
     data class AddMonster(val indexes: List<String>) : FolderPreviewEvent()
 
+    /**
+     * Opens the folder insert with the monsters in the folder preview. Ignored when the preview
+     * is empty.
+     */
+    data object Save : FolderPreviewEvent()
+
     companion object {
         fun AddMonster(index: String): AddMonster {
             return AddMonster(listOf(index))

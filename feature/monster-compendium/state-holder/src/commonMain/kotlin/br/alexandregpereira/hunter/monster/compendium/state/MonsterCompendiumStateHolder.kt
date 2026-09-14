@@ -142,14 +142,32 @@ class MonsterCompendiumStateHolder internal constructor(
     }
 
     override fun onItemClick(index: String) {
-        analytics.trackItemClick(index)
+        val isFolderCreationMode = state.value.isFolderCreationMode
+        analytics.trackItemClick(index, isFolderCreationMode)
+        if (isFolderCreationMode) {
+            addMonsterToFolderPreview(index)
+        } else {
+            showMonsterDetail(index)
+        }
+    }
+
+    override fun onItemLongClick(index: String) {
+        val isFolderCreationMode = state.value.isFolderCreationMode
+        analytics.trackItemLongClick(index, isFolderCreationMode)
+        if (isFolderCreationMode) {
+            showMonsterDetail(index)
+        } else {
+            addMonsterToFolderPreview(index)
+        }
+    }
+
+    private fun showMonsterDetail(index: String) {
         monsterEventDispatcher.dispatchEvent(
             Show(index, enableMonsterPageChangesEventDispatch = true)
         )
     }
 
-    override fun onItemLongClick(index: String) {
-        analytics.trackItemLongClick(index)
+    private fun addMonsterToFolderPreview(index: String) {
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
     }
 
@@ -158,10 +176,27 @@ class MonsterCompendiumStateHolder internal constructor(
         searchEventDispatcher.dispatchEvent(SearchEvent.Show)
     }
 
+    override fun onFolderCreationClick() {
+        analytics.trackFolderCreationClick()
+        setState { copy(isFolderCreationMode = true) }
+    }
+
+    override fun onFolderCreationClose() {
+        if (state.value.isFolderCreationMode.not()) return
+        analytics.trackFolderCreationClose()
+        setState { copy(isFolderCreationMode = false) }
+    }
+
+    override fun onFolderCreationConfirm() {
+        analytics.trackFolderCreationConfirm()
+        setState { copy(isFolderCreationMode = false) }
+        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.Save)
+    }
+
     override fun onClose() {
         if (state.value.isShowing.not()) return
         analytics.trackClosed()
-        setState { copy(isShowing = false) }
+        setState { copy(isShowing = false, isFolderCreationMode = false) }
     }
 
     override fun onSortClick() {
