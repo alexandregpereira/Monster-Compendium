@@ -64,6 +64,7 @@ internal class HomeStateHolder(
 
     private var intentJob: Job? = null
     private var sectionsJob: Job? = null
+    private var extraContentJob: Job? = null
 
     init {
         observeLanguageChanges()
@@ -83,19 +84,20 @@ internal class HomeStateHolder(
     }
 
     /**
-     * Loads all the sections at once, updating the state only after every section is loaded.
+     * Loads the local sections at once, updating the state only after every one of them is loaded.
+     * The extra content is loaded in parallel, since it comes from the API and can take longer or
+     * fail.
      * Only the first sections of each load are tracked, since the sections flows can emit again
      * without a new load, like when a monster is viewed.
      */
     private fun loadSections(invalidateCache: Boolean) {
+        loadExtraContent(isReload = invalidateCache)
+
         sectionsJob?.cancel()
         var isSectionsLoadedTracked = false
         sectionsJob = combine(
             getHomeContentTotals(invalidateCache)
                 .map { it.toCategoriesSection() }
-                .keepCurrentSectionOnError(),
-            getHomeExtraContentProgress()
-                .map { it.toExtraContentSection() }
                 .keepCurrentSectionOnError(),
             getMonsterFolders()
                 .map { it.toFoldersSection() }
@@ -103,42 +105,84 @@ internal class HomeStateHolder(
             getRecentlyViewedMonsters()
                 .map { it.toRecentlyViewedSection() }
                 .keepCurrentSectionOnError(),
-        ) { categories, extraContent, folders, recentlyViewed ->
-            buildHomeSections(
-                categories = categories,
-                extraContent = extraContent,
-                recentlyViewed = recentlyViewed,
-                folders = folders,
-            )
-        }
+            ::Triple,
+        )
             .flowOn(dispatcher)
-            .onEach { sections ->
+            .onEach { (categories, folders, recentlyViewed) ->
+                val sections = setSections(
+                    categories = categories,
+                    recentlyViewed = recentlyViewed,
+                    folders = folders,
+                )
                 if (isSectionsLoadedTracked.not()) {
                     isSectionsLoadedTracked = true
                     analytics.trackSectionsLoaded(sections, isReload = invalidateCache)
-                }
-                setState {
-                    copy(
-                        viewState = viewState.copy(
-                            sections = sections,
-                            // Without the categories there is no content yet, like before the first sync
-                            isLoading = sections.none { it is HomeSectionState.Categories },
-                        )
-                    )
                 }
             }
             .launchIn(scope)
     }
 
     /**
-     * A section that fails to load, like the extra content without network, keeps the section
-     * currently shown, or stays hidden if it was never loaded. So one failure doesn't hide the
-     * other sections.
+     * A failure keeps the extra content currently shown, or keeps it hidden if it was never loaded.
+     * Only the first extra content of each load is tracked, like the other sections.
+     */
+    private fun loadExtraContent(isReload: Boolean) {
+        extraContentJob?.cancel()
+        var isExtraContentLoadedTracked = false
+        extraContentJob = getHomeExtraContentProgress()
+            .map { it.toExtraContentSection() }
+            .flowOn(dispatcher)
+            .catch { error -> analytics.logException(error) }
+            .onEach { extraContent ->
+                setSections(extraContent = extraContent)
+                if (isExtraContentLoadedTracked.not()) {
+                    isExtraContentLoadedTracked = true
+                    analytics.trackExtraContentLoaded(extraContent, isReload = isReload)
+                }
+            }
+            .launchIn(scope)
+    }
+
+    /**
+     * Updates the given sections, keeping the sections currently shown for the ones not given, so
+     * the sections loaded in parallel don't override each other.
+     */
+    private fun setSections(
+        categories: HomeSectionState.Categories? = currentSection(),
+        extraContent: HomeSectionState.ExtraContent? = currentSection(),
+        recentlyViewed: HomeSectionState.RecentlyViewed? = currentSection(),
+        folders: HomeSectionState.Folders? = currentSection(),
+    ): List<HomeSectionState> {
+        val sections = buildHomeSections(
+            categories = categories,
+            extraContent = extraContent,
+            recentlyViewed = recentlyViewed,
+            folders = folders,
+        )
+        setState {
+            copy(
+                viewState = viewState.copy(
+                    sections = sections,
+                    // Without the categories there is no content yet, like before the first sync
+                    isLoading = categories == null,
+                )
+            )
+        }
+        return sections
+    }
+
+    private inline fun <reified T : HomeSectionState> currentSection(): T? {
+        return state.value.viewState.sections.filterIsInstance<T>().firstOrNull()
+    }
+
+    /**
+     * A section that fails to load keeps the section currently shown, or stays hidden if it was
+     * never loaded. So one failure doesn't hide the other sections.
      */
     private inline fun <reified T : HomeSectionState> Flow<T?>.keepCurrentSectionOnError(): Flow<T?> {
         return catch { error ->
             analytics.logException(error)
-            emit(state.value.viewState.sections.filterIsInstance<T>().firstOrNull())
+            emit(currentSection())
         }
     }
 
