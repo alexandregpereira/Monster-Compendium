@@ -202,6 +202,7 @@ class FolderDetailStateHolder internal constructor(
         }.launchIn(scope)
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            if (state.value.isOpen.not()) return@collectOnMonsterCompendiumChanges
             loadMonsters(state.value.folderName)
         }.launchIn(scope)
     }

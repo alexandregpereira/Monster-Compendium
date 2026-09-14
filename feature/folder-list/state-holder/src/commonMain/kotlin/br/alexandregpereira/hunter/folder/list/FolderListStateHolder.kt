@@ -67,7 +67,6 @@ class FolderListStateHolder internal constructor(
     init {
         observeFolderInsertResults()
         observeEvents()
-        loadMonsterFolders()
     }
 
     fun onItemClick(folderName: String) {
@@ -191,6 +190,7 @@ class FolderListStateHolder internal constructor(
 
     private fun observeEvents() {
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
+            if (state.value.isShowing.not()) return@collectOnMonsterCompendiumChanges
             loadMonsterFolders()
         }.launchIn(scope)
 
@@ -199,6 +199,7 @@ class FolderListStateHolder internal constructor(
                 FolderListEvent.Show -> {
                     analytics.trackOpened()
                     setState { copy(isShowing = true).saveState(stateRecovery) }
+                    loadMonsterFolders()
                 }
 
                 FolderListEvent.OnFolderChanges -> loadMonsterFolders()

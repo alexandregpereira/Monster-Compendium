@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.home
 
-import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.folder.GetMonsterFoldersUseCase
 import br.alexandregpereira.hunter.domain.folder.GetRecentlyViewedMonstersUseCase
 import br.alexandregpereira.hunter.event.v2.EventListener
@@ -46,7 +45,7 @@ internal class HomeStateHolder(
     private val getMonsterFolders: GetMonsterFoldersUseCase,
     private val getRecentlyViewedMonsters: GetRecentlyViewedMonstersUseCase,
     private val homeEventListener: EventListener<HomeEvent>,
-    private val analytics: Analytics,
+    private val analytics: HomeAnalytics,
     private val dispatcher: CoroutineDispatcher,
 ) : UiModel<HomeState>(
     HomeState(
@@ -72,6 +71,7 @@ internal class HomeStateHolder(
     }
 
     fun onIntent(intent: HomeIntent) {
+        analytics.trackIntent(intent)
         // An intent can keep collecting results while its screen is open, like the spell
         // compendium clicks. Those screens cover the Home, so when a new intent arrives the
         // previous screen is already closed and its collection can be cancelled.
@@ -83,9 +83,12 @@ internal class HomeStateHolder(
 
     /**
      * Loads all the sections at once, updating the state only after every section is loaded.
+     * Only the first sections of each load are tracked, since the sections flows can emit again
+     * without a new load, like when a monster is viewed.
      */
     private fun loadSections(invalidateCache: Boolean) {
         sectionsJob?.cancel()
+        var isSectionsLoadedTracked = false
         sectionsJob = combine(
             getHomeContentTotals(invalidateCache)
                 .map { it.toCategoriesSection() }
@@ -109,6 +112,10 @@ internal class HomeStateHolder(
         }
             .flowOn(dispatcher)
             .onEach { sections ->
+                if (isSectionsLoadedTracked.not()) {
+                    isSectionsLoadedTracked = true
+                    analytics.trackSectionsLoaded(sections, isReload = invalidateCache)
+                }
                 setState { copy(viewState = viewState.copy(sections = sections)) }
             }
             .launchIn(scope)
