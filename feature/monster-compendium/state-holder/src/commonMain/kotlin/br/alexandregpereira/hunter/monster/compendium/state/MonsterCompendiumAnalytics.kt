@@ -152,8 +152,13 @@ class MonsterCompendiumAnalytics(
         analytics.track(eventName = "MonsterCompendium - folder creation confirm")
     }
 
-    fun trackOpened() {
-        analytics.track(eventName = "MonsterCompendium - opened")
+    fun trackOpened(isFolderCreationMode: Boolean) {
+        analytics.track(
+            eventName = "MonsterCompendium - opened",
+            params = mapOf(
+                "isFolderCreationMode" to isFolderCreationMode,
+            )
+        )
     }
 
     fun trackClosed() {

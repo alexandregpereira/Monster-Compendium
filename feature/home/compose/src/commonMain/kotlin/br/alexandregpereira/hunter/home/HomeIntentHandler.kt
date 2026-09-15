@@ -43,7 +43,7 @@ internal class HomeIntentHandlerImpl(
     override suspend fun onIntent(intent: HomeIntent) {
         when (intent) {
             HomeIntent.OpenMonsterCompendium -> {
-                monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+                monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show())
             }
             HomeIntent.OpenSpellCompendium -> openSpellCompendium()
             HomeIntent.OpenSearch -> searchEventDispatcher.dispatchEvent(SearchEvent.Show)
@@ -52,6 +52,11 @@ internal class HomeIntentHandlerImpl(
             is HomeIntent.OpenFolderDetail -> {
                 folderDetailEventDispatcher.dispatchEvent(
                     FolderDetailEvent.Show(folderName = intent.folderName)
+                )
+            }
+            HomeIntent.CreateFolder -> {
+                monsterCompendiumEventDispatcher.dispatchEvent(
+                    MonsterCompendiumEvent.Show(showFolderCreation = true)
                 )
             }
             HomeIntent.OpenExtraContentManager -> {

@@ -32,6 +32,8 @@ internal interface HomeStrings {
     val refresh: String
     val folders: String
     val seeAllFolders: String
+    val emptyFolders: String
+    val createFolder: String
     val create: String
     val monster: String
     val spell: String
@@ -52,6 +54,9 @@ internal data class HomeEnStrings(
     override val refresh: String = "Refresh",
     override val folders: String = "Folders",
     override val seeAllFolders: String = "See all folders",
+    override val emptyFolders: String =
+        "Create folders to plan your encounters and keep your favorite creatures close at hand.",
+    override val createFolder: String = "Create a folder",
     override val create: String = "Create",
     override val monster: String = "Monster",
     override val spell: String = "Spell",
@@ -74,6 +79,9 @@ internal data class HomePtStrings(
     override val refresh: String = "Atualizar",
     override val folders: String = "Pastas",
     override val seeAllFolders: String = "Ver todas as pastas",
+    override val emptyFolders: String =
+        "Crie pastas para planejar seus encontros e manter suas criaturas favoritas sempre à mão.",
+    override val createFolder: String = "Criar uma pasta",
     override val create: String = "Criar",
     override val monster: String = "Monstro",
     override val spell: String = "Magia",
@@ -96,6 +104,9 @@ internal data class HomeEsStrings(
     override val refresh: String = "Actualizar",
     override val folders: String = "Carpetas",
     override val seeAllFolders: String = "Ver todas las carpetas",
+    override val emptyFolders: String =
+        "Crea carpetas para planear tus encuentros y tener tus criaturas favoritas siempre a mano.",
+    override val createFolder: String = "Crear una carpeta",
     override val create: String = "Crear",
     override val monster: String = "Monstruo",
     override val spell: String = "Hechizo",

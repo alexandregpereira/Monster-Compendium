@@ -439,7 +439,7 @@ class MonsterCompendiumStateHolderTest {
         advanceUntilIdle()
 
         // When
-        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show())
         advanceUntilIdle()
         val isShowingAfterShowEvent = stateHolder.state.value.isShowing
         stateHolder.onClose()
@@ -628,6 +628,24 @@ class MonsterCompendiumStateHolderTest {
         assertEquals(expected = emptyList(), actual = folderDetailEvents)
     }
 
+    @Test
+    fun `Show event with folder creation opens the compendium with the folder creation mode enabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        advanceUntilIdle()
+
+        // When
+        monsterCompendiumEventDispatcher.dispatchEvent(
+            MonsterCompendiumEvent.Show(showFolderCreation = true)
+        )
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = true, actual = stateHolder.state.value.isShowing)
+        assertEquals(expected = false, actual = stateHolder.state.value.isLoading)
+        assertEquals(expected = true, actual = stateHolder.state.value.isFolderCreationMode)
+    }
+
     private fun emptyMonsterCompendiumUseCase() = GetMonsterCompendiumUseCase {
         flowOf(
             MonsterCompendium(
@@ -644,7 +662,7 @@ class MonsterCompendiumStateHolderTest {
      */
     private fun TestScope.showCompendium() {
         advanceUntilIdle()
-        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show())
         advanceUntilIdle()
     }
 

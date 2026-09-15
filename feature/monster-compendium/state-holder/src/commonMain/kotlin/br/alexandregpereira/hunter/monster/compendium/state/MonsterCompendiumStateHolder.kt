@@ -141,8 +141,11 @@ class MonsterCompendiumStateHolder internal constructor(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                // Keeps the current visibility, the new state was built before the async loading
-                setState { state.copy(isShowing = isShowing) }
+                // Keeps the current visibility and folder creation mode, the new state was built
+                // before the async loading
+                setState {
+                    state.copy(isShowing = isShowing, isFolderCreationMode = isFolderCreationMode)
+                }
             }
     }
 
@@ -320,13 +323,8 @@ class MonsterCompendiumStateHolder internal constructor(
     private fun observeEvents() {
         monsterCompendiumEventListener.events.onEach { event ->
             when (event) {
-                MonsterCompendiumEvent.Show -> {
-                    // Avoids observing the folder save result twice
-                    if (state.value.isShowing) return@onEach
-                    analytics.trackOpened()
-                    setState { copy(isShowing = true) }
-                    loadMonsters()
-                    observeFolderSaveResult()
+                is MonsterCompendiumEvent.Show -> {
+                    show(isFolderCreationMode = event.showFolderCreation)
                 }
             }
         }.launchIn(scope)
@@ -344,6 +342,18 @@ class MonsterCompendiumStateHolder internal constructor(
                 }
             }
         }.launchIn(scope)
+    }
+
+    private fun show(isFolderCreationMode: Boolean) {
+        // Avoids observing the folder save result twice
+        if (state.value.isShowing) {
+            if (isFolderCreationMode) setState { copy(isFolderCreationMode = true) }
+            return
+        }
+        analytics.trackOpened(isFolderCreationMode)
+        setState { copy(isShowing = true, isFolderCreationMode = isFolderCreationMode) }
+        loadMonsters()
+        observeFolderSaveResult()
     }
 
     /**

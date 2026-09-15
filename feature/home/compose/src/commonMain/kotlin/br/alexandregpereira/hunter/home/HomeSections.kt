@@ -43,7 +43,7 @@ internal fun buildHomeSections(
     categories: HomeSectionState.Categories?,
     extraContent: HomeSectionState.ExtraContent?,
     recentlyViewed: HomeSectionState.RecentlyViewed?,
-    folders: HomeSectionState.Folders?,
+    folders: HomeSectionState.FoldersSection?,
 ): List<HomeSectionState> {
     val hasExtraContentAdded = extraContent != null && extraContent.added > 0
     return buildList {
@@ -77,13 +77,13 @@ internal fun HomeExtraContentProgress.toExtraContentSection(): HomeSectionState.
 
 /**
  * Keeps the folders in the same order of the folder list screen, limited to [HOME_FOLDERS_LIMIT].
- * Returns null when there is no folder to show.
+ * Returns [HomeSectionState.EmptyFolders] when there is no folder to show.
  */
-internal fun List<MonsterFolder>.toFoldersSection(): HomeSectionState.Folders? {
+internal fun List<MonsterFolder>.toFoldersSection(): HomeSectionState.FoldersSection {
     val folders = filter { it.monsters.isNotEmpty() }
         .take(HOME_FOLDERS_LIMIT)
         .map { it.toHomeFolderState() }
-    if (folders.isEmpty()) return null
+    if (folders.isEmpty()) return HomeSectionState.EmptyFolders
     return HomeSectionState.Folders(folders = folders)
 }
 

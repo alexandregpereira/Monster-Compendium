@@ -41,9 +41,17 @@ internal sealed interface HomeSectionState {
         val monsters: List<MonsterCardState>,
     ) : HomeSectionState
 
+    /**
+     * Shown in the same place of the Home: the [Folders] or, when there is no folder, the
+     * [EmptyFolders] inviting the user to create one.
+     */
+    sealed interface FoldersSection : HomeSectionState
+
     data class Folders(
         val folders: List<HomeFolderState>,
-    ) : HomeSectionState
+    ) : FoldersSection
+
+    data object EmptyFolders : FoldersSection
 
     data object Create : HomeSectionState
 

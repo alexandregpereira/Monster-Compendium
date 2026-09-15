@@ -21,7 +21,12 @@ import br.alexandregpereira.hunter.event.v2.EventDispatcher
 
 sealed class MonsterCompendiumEvent {
 
-    data object Show : MonsterCompendiumEvent()
+    /**
+     * @param showFolderCreation shows the compendium with the folder creation mode enabled.
+     */
+    data class Show(
+        val showFolderCreation: Boolean = false,
+    ) : MonsterCompendiumEvent()
 }
 
 class MonsterCompendiumEventDispatcher : EventDispatcher<MonsterCompendiumEvent> by EventDispatcher(

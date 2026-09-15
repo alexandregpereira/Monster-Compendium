@@ -186,7 +186,7 @@ internal class HomeStateHolder(
         categories: HomeSectionState.Categories? = currentSection(),
         extraContent: HomeSectionState.ExtraContent? = currentSection(),
         recentlyViewed: HomeSectionState.RecentlyViewed? = currentSection(),
-        folders: HomeSectionState.Folders? = currentSection(),
+        folders: HomeSectionState.FoldersSection? = currentSection(),
     ): List<HomeSectionState> {
         val sections = buildHomeSections(
             categories = categories,

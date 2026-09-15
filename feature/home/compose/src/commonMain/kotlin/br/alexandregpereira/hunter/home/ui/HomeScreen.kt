@@ -69,6 +69,7 @@ internal fun HomeScreen(
     onRefreshRecentlyViewedClick: () -> Unit = {},
     onFolderClick: (name: String) -> Unit = {},
     onSeeAllFoldersClick: () -> Unit = {},
+    onCreateFolderClick: () -> Unit = {},
     onCreateMonsterClick: () -> Unit = {},
     onCreateSpellClick: () -> Unit = {},
     onManageExtraContentClick: () -> Unit = {},
@@ -117,7 +118,7 @@ internal fun HomeScreen(
                         modifier = Modifier
                             .animateItem()
                             .then(sectionModifier)
-                            .padding(top = 20.dp),
+                            .padding(top = 16.dp),
                     )
 
                     is HomeSectionState.RecentlyViewed -> Column(Modifier.animateItem()) {
@@ -187,6 +188,18 @@ internal fun HomeScreen(
                         )
                     }
 
+                    HomeSectionState.EmptyFolders -> HomeCard(
+                        title = strings.folders,
+                        buttonText = strings.createFolder,
+                        onButtonClick = onCreateFolderClick,
+                        modifier = Modifier
+                            .animateItem()
+                            .then(sectionModifier)
+                            .padding(top = 16.dp),
+                    ) {
+                        HomeCardDescription(text = strings.emptyFolders)
+                    }
+
                     HomeSectionState.Create -> Column(Modifier.animateItem()) {
                         HomeSectionTitle(title = strings.create, modifier = sectionModifier)
                         Row(
@@ -216,7 +229,7 @@ internal fun HomeScreen(
                         modifier = Modifier
                             .animateItem()
                             .then(sectionModifier)
-                            .padding(top = 32.dp),
+                            .padding(top = 16.dp),
                     )
                 }
             }
@@ -234,6 +247,7 @@ private val HomeSectionState.key: String
         is HomeSectionState.Categories -> "Categories"
         is HomeSectionState.RecentlyViewed -> "RecentlyViewed"
         is HomeSectionState.Folders -> "Folders"
+        HomeSectionState.EmptyFolders -> "EmptyFolders"
         HomeSectionState.Create -> "Create"
         is HomeSectionState.ExtraContent -> "ExtraContent"
     }
@@ -299,6 +313,19 @@ private fun HomeScreenLightPreview() = HunterTheme(darkTheme = false) {
 private fun HomeScreenLoadingPreview() = HunterTheme(darkTheme = true) {
     HomeScreen(
         state = homeMockViewState.copy(isLoading = true),
+        strings = HomeStrings(),
+    )
+}
+
+@Preview
+@Composable
+private fun HomeScreenEmptyFoldersPreview() = HunterTheme(darkTheme = true) {
+    HomeScreen(
+        state = homeMockViewState.copy(
+            sections = homeMockViewState.sections.map { section ->
+                if (section is HomeSectionState.Folders) HomeSectionState.EmptyFolders else section
+            },
+        ),
         strings = HomeStrings(),
     )
 }
