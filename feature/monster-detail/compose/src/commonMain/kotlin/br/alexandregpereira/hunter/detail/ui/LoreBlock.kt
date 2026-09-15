@@ -21,8 +21,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.alexandregpereira.hunter.ui.compose.animatePressed
@@ -33,8 +36,20 @@ internal fun LoreBlock(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
+    val readMore = strings.readMore
     Text(
-        text = text,
+        text = buildAnnotatedString {
+            append(text)
+            append(" ")
+            withStyle(
+                SpanStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Normal,
+                )
+            ) {
+                append(readMore)
+            }
+        },
         fontWeight = FontWeight.Light,
         fontStyle = FontStyle.Italic,
         fontSize = 14.sp,

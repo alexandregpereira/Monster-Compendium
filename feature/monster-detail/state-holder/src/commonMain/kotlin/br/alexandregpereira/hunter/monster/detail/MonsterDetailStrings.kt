@@ -73,6 +73,7 @@ interface MonsterDetailStrings {
     val iGotIt: String
     val dc: String
     val initiative: String
+    val readMore: String
 }
 
 internal data class MonsterDetailEnStrings(
@@ -126,6 +127,7 @@ internal data class MonsterDetailEnStrings(
     override val iGotIt: String = "I Got It!",
     override val dc: String = "DC",
     override val initiative: String = "Initiative",
+    override val readMore: String = "Read more",
 ) : MonsterDetailStrings
 
 internal data class MonsterDetailPtStrings(
@@ -179,6 +181,7 @@ internal data class MonsterDetailPtStrings(
     override val iGotIt: String = "Entendi!",
     override val dc: String = "CD",
     override val initiative: String = "Iniciativa",
+    override val readMore: String = "Ler mais",
 ) : MonsterDetailStrings
 
 fun MonsterDetailStrings(): MonsterDetailStrings = MonsterDetailEnStrings()
@@ -234,6 +237,7 @@ internal data class MonsterDetailEsStrings(
     override val iGotIt: String = "Entendido!",
     override val dc: String = "CD",
     override val initiative: String = "Iniciativa",
+    override val readMore: String = "Leer más",
 ) : MonsterDetailStrings
 
 internal fun AppLocalization.getStrings(): MonsterDetailStrings {
