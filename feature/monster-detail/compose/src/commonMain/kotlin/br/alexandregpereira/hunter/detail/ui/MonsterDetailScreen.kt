@@ -23,6 +23,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -46,8 +47,10 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -58,9 +61,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
@@ -77,7 +83,6 @@ import br.alexandregpereira.hunter.ui.compose.AppSurface
 import br.alexandregpereira.hunter.ui.compose.BoxCloseButton
 import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.LocalIsSwipeVerticalInProgress
-import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
 import br.alexandregpereira.hunter.ui.compose.PageIndicator
 import br.alexandregpereira.hunter.ui.compose.PageIndicatorHeight
@@ -143,42 +148,55 @@ internal fun MonsterDetailScreen(
         contentPadding + PaddingValues(bottom = PageIndicatorHeight)
     } else contentPadding
 
-    LazyColumn(
-        state = scrollState,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        item(key = "MonsterImageCompose") {
-            Box(
-                modifier = Modifier
-                    .monsterAspectRatio(maxHeight = getImageHeightInDp())
-                    .transitionHorizontalScrollable(pagerState)
-                    .animateItem()
-            )
-        }
+    var titleHeightPx by remember { mutableIntStateOf(0) }
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        // The image takes most of the screen, but never pushes the monster title below the
+        // page indicator or the bottom edge on short screens
+        val titleHeight = with(LocalDensity.current) { titleHeightPx.toDp() }
+        val imageMaxHeight = minOf(
+            maxHeight * IMAGE_HEIGHT_FRACTION,
+            maxHeight - titleHeight - 16.dp,
+        ).coerceAtLeast(0.dp)
 
-        item(key = MONSTER_TITLE_ITEM_KEY) {
-            MonsterTitleCompose(
-                monsterTitleStates = monsters.map {
-                    MonsterTitleState(
-                        title = it.name,
-                        subTitle = it.subtitle
-                    )
-                },
+        LazyColumn(
+            state = scrollState,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            item(key = "MonsterImageCompose") {
+                Box(
+                    modifier = Modifier
+                        .monsterAspectRatio(maxHeight = imageMaxHeight)
+                        .transitionHorizontalScrollable(pagerState)
+                        .animateItem()
+                )
+            }
+
+            item(key = MONSTER_TITLE_ITEM_KEY) {
+                MonsterTitleCompose(
+                    monsterTitleStates = monsters.map {
+                        MonsterTitleState(
+                            title = it.name,
+                            subTitle = it.subtitle
+                        )
+                    },
+                    pagerState = pagerState,
+                    onOptionsClicked = onOptionsClicked,
+                    modifier = Modifier
+                        .animateItem()
+                        .onSizeChanged { titleHeightPx = it.height }
+                )
+            }
+
+            monsterInfo(
+                monsters = monsters,
                 pagerState = pagerState,
-                onOptionsClicked = onOptionsClicked,
-                modifier = Modifier.animateItem()
+                contentPadding = monsterInfoContentPadding,
+                getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
+                onSpellClicked = onSpellClicked,
+                onLoreClick = onLoreClicked,
+                onConditionClicked = onConditionClicked,
             )
         }
-
-        monsterInfo(
-            monsters = monsters,
-            pagerState = pagerState,
-            contentPadding = monsterInfoContentPadding,
-            getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
-            onSpellClicked = onSpellClicked,
-            onLoreClick = onLoreClicked,
-            onConditionClicked = onConditionClicked,
-        )
     }
 
     BoxCloseButton(onClick = onClose)
@@ -194,7 +212,7 @@ internal fun MonsterDetailScreen(
                     val fraction = getImageScrollFraction(getImagesScrollOffset())
                     val color = lerp(start = backgroundColor, stop = surfaceColor, fraction = fraction)
                     val topColor = color.copy(alpha = lerp(start = .2f, stop = 1f, fraction = fraction))
-                    val bottomColor = color.copy(alpha = lerp(start = .9f, stop = 1f, fraction = fraction))
+                    val bottomColor = color.copy(alpha = lerp(start = .95f, stop = 1f, fraction = fraction))
                     drawRect(
                         brush = Brush.verticalGradient(
                             .0f to topColor,
@@ -454,17 +472,12 @@ private fun MonsterTypeIcon(
     }
 }
 
-@Composable
-private fun getImageHeightInDp(): Dp {
-    val screenSizeInfo = LocalScreenSize.current
-    return (screenSizeInfo.heightInDp.value * 0.84).dp
-}
-
 private fun getImageScrollFraction(imageScrollOffset: Int): Float {
     return imageScrollOffset.absoluteValue.coerceAtMost(200) / 200f
 }
 
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
+private const val IMAGE_HEIGHT_FRACTION = 0.84f
 
 @Preview
 @Composable
