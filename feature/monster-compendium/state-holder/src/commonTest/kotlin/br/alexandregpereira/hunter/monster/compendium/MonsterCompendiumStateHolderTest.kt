@@ -612,6 +612,27 @@ class MonsterCompendiumStateHolderTest {
     }
 
     @Test
+    fun `When the folder preview is saved after the state holder is cleared while open Then the folder is opened`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        // Like the screen leaving the composition on a rotation while the compendium is open
+        stateHolder.onCleared()
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
     fun `When the folder preview is saved after the compendium is closed Then the folder is not opened`() = runTest {
         // Given
         createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())

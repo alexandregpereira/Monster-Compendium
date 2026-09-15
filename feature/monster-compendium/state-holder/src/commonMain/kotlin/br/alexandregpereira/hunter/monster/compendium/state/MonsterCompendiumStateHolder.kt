@@ -89,6 +89,7 @@ class MonsterCompendiumStateHolder internal constructor(
     init {
         observeLanguageChanges()
         observeEvents()
+        observeFolderSaveResult()
     }
 
     private fun observeLanguageChanges() {
@@ -345,7 +346,7 @@ class MonsterCompendiumStateHolder internal constructor(
     }
 
     private fun show(isFolderCreationMode: Boolean) {
-        // Avoids observing the folder save result twice
+        // Avoids tracking and loading the compendium twice when it is already open
         if (state.value.isShowing) {
             if (isFolderCreationMode) setState { copy(isFolderCreationMode = true) }
             return
@@ -353,14 +354,16 @@ class MonsterCompendiumStateHolder internal constructor(
         analytics.trackOpened(isFolderCreationMode)
         setState { copy(isShowing = true, isFolderCreationMode = isFolderCreationMode) }
         loadMonsters()
-        observeFolderSaveResult()
     }
 
     /**
-     * Observes while the compendium is open, [onClose] cancels it by clearing the feature scope.
+     * Observes on the state holder [scope] instead of the feature scope, since the feature scope is
+     * cleared when the screen leaves the composition, like on a rotation, while the compendium is
+     * still open. So the result is only handled while the compendium is open.
      */
     private fun observeFolderSaveResult() {
         folderPreviewResultListener.events.onEach { result ->
+            if (state.value.isShowing.not()) return@onEach
             when (result) {
                 is FolderPreviewResult.OnSaved -> {
                     setState { copy(isFolderCreationMode = false) }
@@ -369,7 +372,7 @@ class MonsterCompendiumStateHolder internal constructor(
                     )
                 }
             }
-        }.launchIn(featureScope)
+        }.launchIn(scope)
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {

@@ -81,6 +81,7 @@ internal class SearchStateHolder(
 
         observeLanguageChanges()
         observeEvents()
+        observeFolderSaveResult()
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             search(clearCache = true)
@@ -188,18 +189,23 @@ internal class SearchStateHolder(
         eventListener.events.onEach { event ->
             when (event) {
                 SearchEvent.Show -> {
-                    // Avoids observing the folder save result twice
+                    // Avoids tracking the opening twice when the search is already open
                     if (state.value.isShowing) return@onEach
                     analytics.trackOpened()
                     setState { copy(isShowing = true) }
-                    observeFolderSaveResult()
                 }
             }
         }.launchIn(scope)
     }
 
+    /**
+     * Observes on the state holder [scope] instead of the feature scope, since the feature scope is
+     * cleared when the screen leaves the composition, like on a rotation, while the search is still
+     * open. So the result is only handled while the search is open.
+     */
     private fun observeFolderSaveResult() {
         folderPreviewResultListener.events.onEach { result ->
+            if (state.value.isShowing.not()) return@onEach
             when (result) {
                 is FolderPreviewResult.OnSaved -> {
                     folderDetailEventDispatcher.dispatchEvent(
@@ -207,7 +213,7 @@ internal class SearchStateHolder(
                     )
                 }
             }
-        }.launchIn(featureScope)
+        }.launchIn(scope)
     }
 
     fun onClose() {
