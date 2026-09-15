@@ -51,6 +51,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -78,9 +79,12 @@ import br.alexandregpereira.hunter.ui.compose.ChallengeRatingCircle
 import br.alexandregpereira.hunter.ui.compose.LocalIsSwipeVerticalInProgress
 import br.alexandregpereira.hunter.ui.compose.LocalScreenSize
 import br.alexandregpereira.hunter.ui.compose.MonsterTypeIcon
+import br.alexandregpereira.hunter.ui.compose.PageIndicator
+import br.alexandregpereira.hunter.ui.compose.PageIndicatorHeight
 import br.alexandregpereira.hunter.ui.compose.Window
 import br.alexandregpereira.hunter.ui.compose.cardShape
 import br.alexandregpereira.hunter.ui.compose.monsterAspectRatio
+import br.alexandregpereira.hunter.ui.compose.plus
 import br.alexandregpereira.hunter.ui.transition.AlphaTransition
 import br.alexandregpereira.hunter.ui.transition.getPageOffset
 import br.alexandregpereira.hunter.ui.transition.getTransitionData
@@ -134,6 +138,11 @@ internal fun MonsterDetailScreen(
         getImageScrollOffset = getImagesScrollOffset,
     )
 
+    val hasMultiplePages = monsters.size > 1
+    val monsterInfoContentPadding = if (hasMultiplePages) {
+        contentPadding + PaddingValues(bottom = PageIndicatorHeight)
+    } else contentPadding
+
     LazyColumn(
         state = scrollState,
         modifier = Modifier.fillMaxSize()
@@ -164,7 +173,7 @@ internal fun MonsterDetailScreen(
         monsterInfo(
             monsters = monsters,
             pagerState = pagerState,
-            contentPadding = contentPadding,
+            contentPadding = monsterInfoContentPadding,
             getItemsKeys = { scrollState.layoutInfo.visibleItemsInfo.map { it.key } },
             onSpellClicked = onSpellClicked,
             onLoreClick = onLoreClicked,
@@ -173,6 +182,30 @@ internal fun MonsterDetailScreen(
     }
 
     BoxCloseButton(onClick = onClose)
+
+    if (hasMultiplePages) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+            val backgroundColor = MaterialTheme.colors.background
+            val surfaceColor = MaterialTheme.colors.surface
+            PageIndicator(
+                pagerState = pagerState,
+                modifier = Modifier.drawBehind {
+                    // Same translucency as the ScrollableBackground, read in the draw phase
+                    val fraction = getImageScrollFraction(getImagesScrollOffset())
+                    val color = lerp(start = backgroundColor, stop = surfaceColor, fraction = fraction)
+                    val topColor = color.copy(alpha = lerp(start = .2f, stop = 1f, fraction = fraction))
+                    val bottomColor = color.copy(alpha = lerp(start = .9f, stop = 1f, fraction = fraction))
+                    drawRect(
+                        brush = Brush.verticalGradient(
+                            .0f to topColor,
+                            .4f to bottomColor,
+                            1f to bottomColor,
+                        ),
+                    )
+                },
+            )
+        }
+    }
 
     MonsterTopBar(
         monsters,
@@ -210,8 +243,7 @@ private fun ScrollableBackground(
     getImageScrollOffset: () -> Int,
 ) = Layout(
     content = {
-        val offset = getImageScrollOffset().absoluteValue
-        val fraction = offset.coerceAtMost(200) / 200f
+        val fraction = getImageScrollFraction(getImageScrollOffset())
         val backgroundColor = lerp(
             start = MaterialTheme.colors.background,
             stop = MaterialTheme.colors.surface,
@@ -426,6 +458,10 @@ private fun MonsterTypeIcon(
 private fun getImageHeightInDp(): Dp {
     val screenSizeInfo = LocalScreenSize.current
     return (screenSizeInfo.heightInDp.value * 0.84).dp
+}
+
+private fun getImageScrollFraction(imageScrollOffset: Int): Float {
+    return imageScrollOffset.absoluteValue.coerceAtMost(200) / 200f
 }
 
 private const val MONSTER_TITLE_ITEM_KEY = "MonsterTitleCompose"
