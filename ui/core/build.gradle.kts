@@ -47,6 +47,9 @@ multiplatform {
     jvmMain {
         implementation(libs.ktor.jvm)
     }
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain {
         implementation(libs.ktor.darwin)
     }
