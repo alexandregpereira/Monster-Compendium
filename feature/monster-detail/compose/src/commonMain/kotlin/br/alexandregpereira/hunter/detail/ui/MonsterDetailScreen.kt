@@ -192,12 +192,15 @@ internal fun MonsterDetailScreen(
                 modifier = Modifier.drawBehind {
                     // Same translucency as the ScrollableBackground, read in the draw phase
                     val fraction = getImageScrollFraction(getImagesScrollOffset())
+                    val color = lerp(start = backgroundColor, stop = surfaceColor, fraction = fraction)
+                    val topColor = color.copy(alpha = lerp(start = .2f, stop = 1f, fraction = fraction))
+                    val bottomColor = color.copy(alpha = lerp(start = .9f, stop = 1f, fraction = fraction))
                     drawRect(
-                        color = lerp(
-                            start = backgroundColor,
-                            stop = surfaceColor,
-                            fraction = fraction
-                        ).copy(alpha = lerp(start = .9f, stop = 1f, fraction = fraction)),
+                        brush = Brush.verticalGradient(
+                            .0f to topColor,
+                            .4f to bottomColor,
+                            1f to bottomColor,
+                        ),
                     )
                 },
             )
