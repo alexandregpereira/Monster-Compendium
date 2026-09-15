@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    kotlin("multiplatform")
+package br.alexandregpereira.hunter.folder.preview.event
+
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
+
+sealed class FolderPreviewResult {
+    data class OnSaved(val folderName: String) : FolderPreviewResult()
 }
 
-multiplatform {
-    commonMain {
-        implementation(project(":core:analytics"))
-        implementation(project(":core:event"))
-        api(project(":core:state-holder"))
-        api(project(":domain:monster-folder:core"))
-        implementation(project(":feature:folder-preview:event"))
-        implementation(project(":feature:folder-insert:event"))
-        implementation(project(":domain:monster:event"))
-        implementation(libs.kotlin.coroutines.core)
-        implementation(libs.koin.core)
-    }
-    jvmMain()
-    iosMain()
-}
+class FolderPreviewResultDispatcher : EventDispatcher<FolderPreviewResult> by EventDispatcher()

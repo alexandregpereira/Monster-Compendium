@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.search.di
 
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultDispatcher
 import br.alexandregpereira.hunter.search.SearchAnalytics
 import br.alexandregpereira.hunter.search.SearchStateHolder
 import br.alexandregpereira.hunter.search.domain.SearchMonstersByUseCase
@@ -35,6 +36,8 @@ val featureSearchModule = module {
             analytics = SearchAnalytics(get()),
             dispatcher = get(),
             appLocalization = get(),
+            folderPreviewResultListener = get<FolderPreviewResultDispatcher>(),
+            folderDetailEventDispatcher = get(),
         )
     }
 }

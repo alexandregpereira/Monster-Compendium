@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state.di
 
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultDispatcher
 import br.alexandregpereira.hunter.monster.compendium.event.MonsterCompendiumEventDispatcher
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumAnalytics
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
@@ -42,6 +43,8 @@ val monsterCompendiumModule = module {
             appLocalization = get(),
             isFirstTime = get(),
             monsterCompendiumEventListener = get<MonsterCompendiumEventDispatcher>(),
+            folderPreviewResultListener = get<FolderPreviewResultDispatcher>(),
+            folderDetailEventDispatcher = get(),
         )
     }
 }

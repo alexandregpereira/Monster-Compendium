@@ -22,10 +22,13 @@ import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
@@ -72,6 +75,8 @@ class MonsterCompendiumStateHolder internal constructor(
     private val isFirstTime: IsFirstTime,
     private val appLocalization: AppReactiveLocalization,
     private val monsterCompendiumEventListener: EventListener<MonsterCompendiumEvent>,
+    private val folderPreviewResultListener: EventListener<FolderPreviewResult>,
+    private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
 ), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
@@ -189,7 +194,7 @@ class MonsterCompendiumStateHolder internal constructor(
 
     override fun onFolderCreationConfirm() {
         analytics.trackFolderCreationConfirm()
-        setState { copy(isFolderCreationMode = false) }
+        // The folder creation mode is disabled when the folder is saved, see observeFolderSaveResult
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.Save)
     }
 
@@ -197,6 +202,7 @@ class MonsterCompendiumStateHolder internal constructor(
         if (state.value.isShowing.not()) return
         analytics.trackClosed()
         setState { copy(isShowing = false, isFolderCreationMode = false) }
+        onCleared()
     }
 
     override fun onSortClick() {
@@ -315,9 +321,12 @@ class MonsterCompendiumStateHolder internal constructor(
         monsterCompendiumEventListener.events.onEach { event ->
             when (event) {
                 MonsterCompendiumEvent.Show -> {
+                    // Avoids observing the folder save result twice
+                    if (state.value.isShowing) return@onEach
                     analytics.trackOpened()
                     setState { copy(isShowing = true) }
                     loadMonsters()
+                    observeFolderSaveResult()
                 }
             }
         }.launchIn(scope)
@@ -335,6 +344,22 @@ class MonsterCompendiumStateHolder internal constructor(
                 }
             }
         }.launchIn(scope)
+    }
+
+    /**
+     * Observes while the compendium is open, [onClose] cancels it by clearing the feature scope.
+     */
+    private fun observeFolderSaveResult() {
+        folderPreviewResultListener.events.onEach { result ->
+            when (result) {
+                is FolderPreviewResult.OnSaved -> {
+                    setState { copy(isFolderCreationMode = false) }
+                    folderDetailEventDispatcher.dispatchEvent(
+                        FolderDetailEvent.Show(result.folderName)
+                    )
+                }
+            }
+        }.launchIn(featureScope)
     }
 
     private fun navigateToTableContentFromAlphabetIndex(alphabetIndex: Int) {

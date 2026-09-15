@@ -30,8 +30,12 @@ import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
@@ -82,6 +86,13 @@ class MonsterCompendiumStateHolderTest {
             folderPreviewEvents.add(event)
         }
     }
+    private val folderDetailEvents = mutableListOf<FolderDetailEvent>()
+    private val folderDetailEventDispatcher = object : FolderDetailEventDispatcher {
+        override fun dispatchEvent(event: FolderDetailEvent) {
+            folderDetailEvents.add(event)
+        }
+    }
+    private val folderPreviewResultDispatcher = FolderPreviewResultDispatcher()
     private val monsterEvents = mutableListOf<MonsterEvent>()
     private val monsterDetailEventDispatcher = object : MonsterEventDispatcher {
         override val events: Flow<MonsterEvent> = emptyFlow()
@@ -544,20 +555,77 @@ class MonsterCompendiumStateHolderTest {
     }
 
     @Test
-    fun `onFolderCreationConfirm saves the folder preview and disables the folder creation mode`() = runTest {
+    fun `onFolderCreationConfirm saves the folder preview and keeps the folder creation mode until the folder is saved`() = runTest {
         // Given
         createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
         stateHolder.onFolderCreationClick()
 
         // When
         stateHolder.onFolderCreationConfirm()
+        advanceUntilIdle()
 
         // Then
         assertEquals(
             expected = listOf<FolderPreviewEvent>(FolderPreviewEvent.Save),
             actual = folderPreviewEvents,
         )
+        assertEquals(expected = true, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(expected = emptyList(), actual = folderDetailEvents)
+    }
+
+    @Test
+    fun `When the folder preview is saved Then the folder is opened and the folder creation mode is disabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
         assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
+    fun `When the folder preview is saved after the compendium is shown twice Then the folder is opened once`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        showCompendium()
+
+        // When
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
+    fun `When the folder preview is saved after the compendium is closed Then the folder is not opened`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        stateHolder.onClose()
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(expected = emptyList(), actual = folderDetailEvents)
     }
 
     private fun emptyMonsterCompendiumUseCase() = GetMonsterCompendiumUseCase {
@@ -603,6 +671,8 @@ class MonsterCompendiumStateHolderTest {
             },
             isFirstTime = { false },
             monsterCompendiumEventListener = monsterCompendiumEventDispatcher,
+            folderPreviewResultListener = folderPreviewResultDispatcher,
+            folderDetailEventDispatcher = folderDetailEventDispatcher,
         )
     }
 

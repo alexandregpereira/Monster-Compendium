@@ -85,12 +85,13 @@ class FolderInsertStateHolder internal constructor(
 
         onClose()
         val indexes = state.value.monsterIndexes
+        val folderName = state.value.folderName.trim()
         addMonstersToFolder(
-            folderName = state.value.folderName.trim(),
+            folderName = folderName,
             indexes = indexes
         ).flowOn(dispatcher)
             .onCompletion {
-                folderInsertEventManager.dispatchResult(OnSaved(indexes))
+                folderInsertEventManager.dispatchResult(OnSaved(indexes, folderName))
                 homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
             }
             .launchIn(scope)

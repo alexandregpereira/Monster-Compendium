@@ -24,14 +24,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import br.alexandregpereira.hunter.search.ui.SearchScreen
 import br.alexandregpereira.hunter.search.ui.SearchViewState
+import br.alexandregpereira.hunter.state.compose.rememberStateHolder
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
-import org.koin.compose.koinInject
 
 @Composable
 fun SearchScreenFeature(
     contentPadding: PaddingValues = PaddingValues(),
 ) {
-    val stateHolder: SearchStateHolder = koinInject()
+    val stateHolder: SearchStateHolder = rememberStateHolder()
     val state by stateHolder.state.collectAsState()
 
     AppFullScreen(

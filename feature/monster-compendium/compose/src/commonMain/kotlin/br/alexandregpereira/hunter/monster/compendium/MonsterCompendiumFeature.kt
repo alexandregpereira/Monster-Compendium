@@ -24,14 +24,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.ui.MonsterCompendiumScreen
+import br.alexandregpereira.hunter.state.compose.rememberStateHolder
 import br.alexandregpereira.hunter.ui.compose.AppFullScreen
-import org.koin.compose.koinInject
 
 @Composable
 fun MonsterCompendiumFeature(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    val stateHolder: MonsterCompendiumStateHolder = koinInject()
+    val stateHolder: MonsterCompendiumStateHolder = rememberStateHolder()
     val state by stateHolder.state.collectAsState()
 
     AppFullScreen(

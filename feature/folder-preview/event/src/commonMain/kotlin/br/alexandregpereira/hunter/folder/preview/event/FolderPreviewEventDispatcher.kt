@@ -21,9 +21,3 @@ interface FolderPreviewEventDispatcher {
 
     fun dispatchEvent(event: FolderPreviewEvent)
 }
-
-fun emptyFolderPreviewEventDispatcher(): FolderPreviewEventDispatcher {
-    return object : FolderPreviewEventDispatcher {
-        override fun dispatchEvent(event: FolderPreviewEvent) {}
-    }
-}

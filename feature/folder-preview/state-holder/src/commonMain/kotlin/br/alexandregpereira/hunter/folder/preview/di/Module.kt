@@ -25,11 +25,13 @@ import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCa
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultDispatcher
 import org.koin.dsl.module
 
 val folderPreviewModule = module {
     single { FolderPreviewEventManager() }
     single<FolderPreviewEventDispatcher> { get<FolderPreviewEventManager>() }
+    single { FolderPreviewResultDispatcher() }
     factory { GetMonstersFromFolderPreviewUseCase(get()) }
     factory { AddMonsterToFolderPreviewUseCase(get(), get()) }
     factory { ClearFolderPreviewUseCase(get()) }
@@ -46,6 +48,7 @@ val folderPreviewModule = module {
             folderInsertEventDispatcher = get(),
             dispatcher = get(),
             analytics = FolderPreviewAnalytics(get()),
+            folderPreviewResultDispatcher = get<FolderPreviewResultDispatcher>(),
         )
     }
 }

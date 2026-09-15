@@ -21,12 +21,14 @@ import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEvent.*
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertEventDispatcher
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult
 import br.alexandregpereira.hunter.event.folder.insert.FolderInsertResult.OnMonsterRemoved
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.folder.preview.domain.AddMonsterToFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.ClearFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.GetMonstersFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.domain.RemoveMonsterFromFolderPreviewUseCase
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.Save
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
 import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChanges
@@ -51,6 +53,7 @@ class FolderPreviewStateHolder internal constructor(
     private val folderInsertEventDispatcher: FolderInsertEventDispatcher,
     private val dispatcher: CoroutineDispatcher,
     private val analytics: FolderPreviewAnalytics,
+    private val folderPreviewResultDispatcher: EventDispatcher<FolderPreviewResult>,
 ) : UiModel<FolderPreviewState>(FolderPreviewState()),
     MutableActionHandler<FolderPreviewAction> by MutableActionHandler() {
 
@@ -78,7 +81,12 @@ class FolderPreviewStateHolder internal constructor(
         ).onEach { result ->
             when (result) {
                 is FolderInsertResult.OnSaved -> {
-                    analytics.trackSaveSuccess()
+                    if (shouldTrackSave) {
+                        analytics.trackSaveSuccess()
+                    }
+                    folderPreviewResultDispatcher.dispatchEvent(
+                        FolderPreviewResult.OnSaved(result.folderName)
+                    )
                     clear()
                 }
                 is OnMonsterRemoved -> {
@@ -86,7 +94,7 @@ class FolderPreviewStateHolder internal constructor(
                     removeMonster(result.monsterIndex)
                 }
             }
-        }.launchIn(scope)
+        }.launchIn(featureScope)
     }
 
     fun onClear() {
