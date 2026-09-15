@@ -22,6 +22,40 @@ Monsters Compendium is an open-source Kotlin Multiplatform application for Andro
     <img src="https://media.githubusercontent.com/media/alexandregpereira/Monster-Compendium/refs/heads/main/media/monster-detail-2.gif" width ="30%" />
 </p>
 
+## Setup
+
+### Prerequisites
+- JDK 21
+- [Android Studio](https://developer.android.com/studio) for Android, or [Xcode](https://developer.apple.com/xcode/) with [CocoaPods](https://cocoapods.org) for iOS (run `pod install` inside the `iosApp` directory)
+
+### Environment variables
+
+Every key is read first from an environment variable and then from the `local.properties` file at the project root, for example:
+
+```properties
+AMPLITUDE_SANDBOX_API_KEY=your-key
+REVENUE_CAT_SANDBOX_API_KEY=your-key
+```
+
+Which key is read depends on the build type. Debug builds read the sandbox key, release builds read the production key, and dev builds (`-Pdev`) read the sandbox key, except for RevenueCat, which uses the production key. When a key is missing, the build logs `Warning: Missing environment variable <KEY>` and keeps going with an empty value or a fallback.
+
+| Variable (release) | Variable (debug) | Platform | Description | Default when missing |
+|--------------------|------------------|----------|-------------|----------------------|
+| `AMPLITUDE_API_KEY` | `AMPLITUDE_SANDBOX_API_KEY` | All | Amplitude Analytics on every platform, and Amplitude Experiment (feature flags) on Android and iOS. | Empty |
+| `REVENUE_CAT_ANDROID_API_KEY` | `REVENUE_CAT_SANDBOX_API_KEY` | Android | RevenueCat in-app purchases. Desktop does not use RevenueCat. | Empty |
+| `REVENUE_CAT_IOS_API_KEY` | `REVENUE_CAT_SANDBOX_API_KEY` | iOS | RevenueCat in-app purchases. | Empty |
+| `ADMOB_APP_ID` | `ADMOB_SANDBOX_APP_ID` | Android | Google Mobile Ads (AdMob) application ID. | Google's sample test app ID |
+| `ADMOB_IOS_APP_ID` | `ADMOB_SANDBOX_IOS_APP_ID` | iOS | Google Mobile Ads (AdMob) application ID, written to the CocoaPods xcconfig as `GAD_APPLICATION_IDENTIFIER`. | Google's sample test app ID |
+
+You can also pass these Gradle properties:
+
+| Property | Description |
+|----------|-------------|
+| `-Pdev` | Builds the dev flavor (`.dev` application ID suffix and `-dev` version name suffix). |
+| `-PeeaDeviceId=<hash>` | Test device hash that forces the EEA ads consent form while debugging. It can also go in `gradle.properties`. |
+
+Firebase Analytics and Crashlytics are configured by `app-android/google-services.json` and `iosApp/MonsterCompendium/GoogleService-Info.plist`, which are already in the repository.
+
 ## Runnning
 ### Desktop
 Run the following command on the root project directory.
