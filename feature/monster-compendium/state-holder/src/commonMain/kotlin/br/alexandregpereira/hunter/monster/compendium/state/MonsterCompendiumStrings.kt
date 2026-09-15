@@ -29,6 +29,10 @@ interface MonsterCompendiumStrings {
     val sortBy: String
     val sortChallengeRatingAsc: String
     val sortChallengeRatingDesc: String
+    val selectCreatures: String
+    val createFolder: String
+    val confirm: String
+    val back: String
 }
 
 internal data class MonsterCompendiumEnStrings(
@@ -40,6 +44,10 @@ internal data class MonsterCompendiumEnStrings(
     override val sortBy: String = "Sort by",
     override val sortChallengeRatingAsc: String = "Challenge rating (asc)",
     override val sortChallengeRatingDesc: String = "Challenge rating (desc)",
+    override val selectCreatures: String = "Select the creatures",
+    override val createFolder: String = "Create folder",
+    override val confirm: String = "Confirm",
+    override val back: String = "Back",
 ) : MonsterCompendiumStrings
 
 internal data class MonsterCompendiumPtrStrings(
@@ -51,6 +59,10 @@ internal data class MonsterCompendiumPtrStrings(
     override val sortBy: String = "Ordenar por",
     override val sortChallengeRatingAsc: String = "Nível de desafio (cresc.)",
     override val sortChallengeRatingDesc: String = "Nível de desafio (decresc.)",
+    override val selectCreatures: String = "Selecione as criaturas",
+    override val createFolder: String = "Criar pasta",
+    override val confirm: String = "Confirmar",
+    override val back: String = "Voltar",
 ) : MonsterCompendiumStrings
 
 fun MonsterCompendiumStrings(): MonsterCompendiumStrings = MonsterCompendiumEnStrings()
@@ -64,6 +76,10 @@ internal data class MonsterCompendiumEsStrings(
     override val sortBy: String = "Ordenar por",
     override val sortChallengeRatingAsc: String = "Valor de desafío (asc.)",
     override val sortChallengeRatingDesc: String = "Valor de desafío (desc.)",
+    override val selectCreatures: String = "Selecciona las criaturas",
+    override val createFolder: String = "Crear carpeta",
+    override val confirm: String = "Confirmar",
+    override val back: String = "Volver",
 ) : MonsterCompendiumStrings
 
 internal fun AppLocalization.getStrings(): MonsterCompendiumStrings {

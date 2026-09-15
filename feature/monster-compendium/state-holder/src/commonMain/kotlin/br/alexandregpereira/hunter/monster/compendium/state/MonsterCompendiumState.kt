@@ -39,6 +39,7 @@ data class MonsterCompendiumState(
     val errorState: MonsterCompendiumError? = null,
     val sortType: CompendiumSortType = CompendiumSortType.ALPHABETICAL,
     val sortOptionsOpened: Boolean = false,
+    val isFolderCreationMode: Boolean = false,
     val strings: MonsterCompendiumStrings = MonsterCompendiumStrings(),
 )
 

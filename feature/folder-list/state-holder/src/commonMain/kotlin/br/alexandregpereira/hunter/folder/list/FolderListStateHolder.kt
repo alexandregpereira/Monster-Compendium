@@ -180,7 +180,7 @@ class FolderListStateHolder internal constructor(
     private fun observeFolderInsertResults() {
         folderInsertResultListener.result
             .filter { result ->
-                result is OnSaved
+                result is OnSaved && state.value.isShowing
             }
             .onEach {
                 loadMonsterFolders()

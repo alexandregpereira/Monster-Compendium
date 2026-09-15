@@ -36,6 +36,7 @@ import br.alexandregpereira.hunter.monster.event.collectOnMonsterCompendiumChang
 import br.alexandregpereira.hunter.state.UiModel
 import br.alexandregpereira.hunter.ui.StateRecovery
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
@@ -61,6 +62,8 @@ class FolderDetailStateHolder internal constructor(
 
     private val strings: FolderDetailStrings
         get() = getFolderDetailStrings(appLocalization.getLanguage())
+
+    private var loadMonstersJob: Job? = null
 
     init {
         observeEvents()
@@ -157,7 +160,10 @@ class FolderDetailStateHolder internal constructor(
     }
 
     private fun loadMonsters(folderName: String) {
-        getMonstersByFolder(folderName)
+        // The show event and the folder insert result can request a load at the same time.
+        // The latest request wins, so the monsters are not loaded twice.
+        loadMonstersJob?.cancel()
+        loadMonstersJob = getMonstersByFolder(folderName)
             .flowOn(dispatcher)
             .catch {
                 analytics.logException(it)
@@ -187,10 +193,16 @@ class FolderDetailStateHolder internal constructor(
         folderDetailEventManager.events.onEach { event ->
             when (event) {
                 is FolderDetailEvent.Show -> {
+                    // More than one open feature may open the same folder, e.g. search on top of
+                    // the compendium after a folder preview save
+                    if (state.value.isOpen && state.value.folderName == event.folderName) {
+                        return@onEach
+                    }
                     analytics.trackShow()
                     setState {
                         copy(
                             isOpen = true,
+                            folderName = event.folderName,
                             selectedMonsterIndexes = emptySet(),
                             isItemSelectionOpen = false,
                             itemSelectionCount = 0,

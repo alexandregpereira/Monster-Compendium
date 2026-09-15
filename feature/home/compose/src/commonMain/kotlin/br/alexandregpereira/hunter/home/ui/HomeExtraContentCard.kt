@@ -20,25 +20,17 @@ package br.alexandregpereira.hunter.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import br.alexandregpereira.hunter.ui.compose.AppButton
-import br.alexandregpereira.hunter.ui.compose.AppButtonType
-import br.alexandregpereira.hunter.ui.compose.AppCard
 import br.alexandregpereira.hunter.ui.compose.PreviewWindow
-import br.alexandregpereira.hunter.ui.compose.cardShape
 
 @Composable
 internal fun HomeExtraContentCard(
@@ -49,35 +41,18 @@ internal fun HomeExtraContentCard(
     total: Int,
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit = {},
-) = AppCard(
-    shape = cardShape,
-    elevation = 0.dp,
-    modifier = modifier.fillMaxWidth(),
+) = HomeCard(
+    title = title,
+    buttonText = buttonText,
+    onButtonClick = onButtonClick,
+    modifier = modifier,
 ) {
-    Column(Modifier.padding(16.dp)) {
-        Text(
-            text = title,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            text = progressText,
-            fontSize = 13.sp,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-            modifier = Modifier.padding(top = 4.dp),
-        )
-        HomeSegmentedProgressBar(
-            filled = added,
-            total = total,
-            modifier = Modifier.padding(top = 16.dp),
-        )
-        AppButton(
-            text = buttonText,
-            type = AppButtonType.PRIMARY,
-            onClick = onButtonClick,
-            modifier = Modifier.padding(top = 20.dp),
-        )
-    }
+    HomeCardDescription(text = progressText)
+    HomeSegmentedProgressBar(
+        filled = added,
+        total = total,
+        modifier = Modifier.padding(top = 16.dp),
+    )
 }
 
 @Composable

@@ -48,7 +48,9 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeStateHolderTest {
@@ -139,6 +141,21 @@ class HomeStateHolderTest {
         advanceUntilIdle()
 
         assertEquals(expected = listOf("goblin"), actual = stateHolder.recentlyViewedIndexes())
+    }
+
+    @Test
+    fun `empty folders are shown until the first folder is created`() = runTest {
+        val stateHolder = createStateHolder()
+        advanceUntilIdle()
+        val sectionsWithoutFolders = stateHolder.state.value.viewState.sections
+
+        repository.addMonsters(folderName = "Boss Fights", indexes = listOf("dragon")).single()
+        homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
+        advanceUntilIdle()
+
+        assertTrue(HomeSectionState.EmptyFolders in sectionsWithoutFolders)
+        assertFalse(HomeSectionState.EmptyFolders in stateHolder.state.value.viewState.sections)
+        assertEquals(expected = listOf("Boss Fights"), actual = stateHolder.folderNames())
     }
 
     private suspend fun viewMonsters(vararg indexes: String) {

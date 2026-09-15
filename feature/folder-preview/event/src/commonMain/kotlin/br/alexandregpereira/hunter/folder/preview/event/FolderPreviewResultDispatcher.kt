@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Alexandre Gomes Pereira
+ * Copyright (C) 2026 Alexandre Gomes Pereira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,10 @@
 
 package br.alexandregpereira.hunter.folder.preview.event
 
-sealed class FolderPreviewEvent {
-    data class AddMonster(val indexes: List<String>) : FolderPreviewEvent()
+import br.alexandregpereira.hunter.event.v2.EventDispatcher
 
-    /**
-     * Opens the folder insert with the monsters in the folder preview. Ignored when the preview
-     * is empty.
-     */
-    data object Save : FolderPreviewEvent()
-
-    companion object {
-        fun AddMonster(index: String): AddMonster {
-            return AddMonster(listOf(index))
-        }
-    }
+sealed class FolderPreviewResult {
+    data class OnSaved(val folderName: String) : FolderPreviewResult()
 }
+
+class FolderPreviewResultDispatcher : EventDispatcher<FolderPreviewResult> by EventDispatcher()

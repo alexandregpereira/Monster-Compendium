@@ -19,10 +19,13 @@ package br.alexandregpereira.hunter.search
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent.AddMonster
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
@@ -59,6 +62,8 @@ internal class SearchStateHolder(
     private val analytics: SearchAnalytics,
     private val dispatcher: CoroutineDispatcher,
     private val appLocalization: AppReactiveLocalization,
+    private val folderPreviewResultListener: EventListener<FolderPreviewResult>,
+    private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
 ) : UiModel<SearchViewState>(SearchViewState(title = appLocalization.getStrings().search)) {
 
     private val searchQuery = MutableSharedFlow<String>(
@@ -76,6 +81,7 @@ internal class SearchStateHolder(
 
         observeLanguageChanges()
         observeEvents()
+        observeFolderSaveResult()
 
         monsterEventDispatcher.collectOnMonsterCompendiumChanges {
             search(clearCache = true)
@@ -183,8 +189,28 @@ internal class SearchStateHolder(
         eventListener.events.onEach { event ->
             when (event) {
                 SearchEvent.Show -> {
+                    // Avoids tracking the opening twice when the search is already open
+                    if (state.value.isShowing) return@onEach
                     analytics.trackOpened()
                     setState { copy(isShowing = true) }
+                }
+            }
+        }.launchIn(scope)
+    }
+
+    /**
+     * Observes on the state holder [scope] instead of the feature scope, since the feature scope is
+     * cleared when the screen leaves the composition, like on a rotation, while the search is still
+     * open. So the result is only handled while the search is open.
+     */
+    private fun observeFolderSaveResult() {
+        folderPreviewResultListener.events.onEach { result ->
+            if (state.value.isShowing.not()) return@onEach
+            when (result) {
+                is FolderPreviewResult.OnSaved -> {
+                    folderDetailEventDispatcher.dispatchEvent(
+                        FolderDetailEvent.Show(result.folderName)
+                    )
                 }
             }
         }.launchIn(scope)
@@ -194,6 +220,7 @@ internal class SearchStateHolder(
         if (state.value.isShowing.not()) return
         analytics.trackClosed()
         setState { copy(isShowing = false) }
+        onCleared()
     }
 
     fun onSearchValueChange(value: TextFieldValue) {

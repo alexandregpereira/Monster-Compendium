@@ -48,6 +48,7 @@ internal class HomeAnalytics(
                     )
                 )
             }
+            HomeIntent.CreateFolder -> analytics.track(eventName = "Home - create folder click")
             HomeIntent.OpenExtraContentManager -> {
                 analytics.track(eventName = "Home - manage extra content click")
             }
@@ -107,6 +108,7 @@ internal class HomeAnalytics(
             is HomeSectionState.Categories -> "Categories"
             is HomeSectionState.RecentlyViewed -> "RecentlyViewed"
             is HomeSectionState.Folders -> "Folders"
+            HomeSectionState.EmptyFolders -> "EmptyFolders"
             HomeSectionState.Create -> "Create"
             is HomeSectionState.ExtraContent -> "ExtraContent"
         }

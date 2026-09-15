@@ -150,9 +150,36 @@ class HomeSectionsTest {
     }
 
     @Test
-    fun `folders are not shown when there is no folder with monsters`() {
-        assertNull(emptyList<MonsterFolder>().toFoldersSection())
-        assertNull(listOf(MonsterFolder(name = "Empty", monsters = emptyList())).toFoldersSection())
+    fun `empty folders are placed where the folders are`() {
+        val sections = buildHomeSections(
+            categories = categories,
+            extraContent = null,
+            recentlyViewed = recentlyViewed,
+            folders = HomeSectionState.EmptyFolders,
+        )
+
+        assertEquals(
+            expected = listOf(
+                HomeSectionState.Search,
+                categories,
+                HomeSectionState.EmptyFolders,
+                recentlyViewed,
+                HomeSectionState.Create,
+            ),
+            actual = sections,
+        )
+    }
+
+    @Test
+    fun `empty folders are shown when there is no folder with monsters`() {
+        assertEquals(
+            expected = HomeSectionState.EmptyFolders,
+            actual = emptyList<MonsterFolder>().toFoldersSection(),
+        )
+        assertEquals(
+            expected = HomeSectionState.EmptyFolders,
+            actual = listOf(MonsterFolder(name = "Empty", monsters = emptyList())).toFoldersSection(),
+        )
     }
 
     @Test
@@ -171,7 +198,7 @@ class HomeSectionsTest {
 
         assertEquals(
             expected = listOf("Folder 1", "Folder 2", "Folder 3", "Folder 4", "Folder 5"),
-            actual = section?.folders?.map { it.name },
+            actual = (section as? HomeSectionState.Folders)?.folders?.map { it.name },
         )
     }
 

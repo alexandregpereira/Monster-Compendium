@@ -40,6 +40,16 @@ class HomeAnalyticsTest {
     }
 
     @Test
+    fun `create folder click is tracked`() {
+        homeAnalytics.trackIntent(HomeIntent.CreateFolder)
+
+        assertEquals(
+            listOf("Home - create folder click" to emptyMap()),
+            analytics.events,
+        )
+    }
+
+    @Test
     fun `recently viewed monster click is tracked with the monster index`() {
         homeAnalytics.trackIntent(HomeIntent.OpenMonsterDetail(index = "aboleth"))
 

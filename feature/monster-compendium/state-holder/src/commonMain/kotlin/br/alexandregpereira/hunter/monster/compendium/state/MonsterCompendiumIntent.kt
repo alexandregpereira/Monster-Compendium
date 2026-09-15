@@ -31,5 +31,8 @@ interface MonsterCompendiumIntent {
     fun onSortClick()
     fun onSortOptionsClose()
     fun onSortOptionSelected(index: Int)
+    fun onFolderCreationClick()
+    fun onFolderCreationClose()
+    fun onFolderCreationConfirm()
     fun onClose()
 }

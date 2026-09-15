@@ -22,6 +22,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:state-holder:compose"))
         implementation(project(":feature:monster-compendium:state-holder"))
         implementation(project(":ui:core"))
         implementation(project(":ui:monster-compendium"))

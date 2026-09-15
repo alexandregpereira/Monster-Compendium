@@ -21,6 +21,7 @@ plugins {
 
 multiplatform {
     commonMain {
+        implementation(project(":core:event"))
         implementation(libs.kotlin.coroutines.core)
     }
     jvmMain()

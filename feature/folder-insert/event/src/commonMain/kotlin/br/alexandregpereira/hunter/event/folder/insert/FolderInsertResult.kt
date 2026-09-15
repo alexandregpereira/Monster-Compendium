@@ -19,7 +19,8 @@ package br.alexandregpereira.hunter.event.folder.insert
 
 sealed class FolderInsertResult {
     data class OnSaved(
-        val monsterIndexes: List<String>
+        val monsterIndexes: List<String>,
+        val folderName: String,
     ) : FolderInsertResult()
 
     data class OnMonsterRemoved(val monsterIndex: String) : FolderInsertResult()

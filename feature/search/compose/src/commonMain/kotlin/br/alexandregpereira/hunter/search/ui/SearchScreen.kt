@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CreateNewFolder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -213,7 +213,7 @@ internal fun SearchScreen(
             onClick = onAddClick
         ) {
             Icon(
-                imageVector = Icons.Filled.Add,
+                imageVector = Icons.Filled.CreateNewFolder,
                 contentDescription = null,
             )
         }

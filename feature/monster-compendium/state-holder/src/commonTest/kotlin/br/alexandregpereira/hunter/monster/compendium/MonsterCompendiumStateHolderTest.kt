@@ -30,8 +30,12 @@ import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
-import br.alexandregpereira.hunter.folder.preview.event.emptyFolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResultDispatcher
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
@@ -48,8 +52,9 @@ import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumIte
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumState
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterCompendiumStateHolder
 import br.alexandregpereira.hunter.monster.compendium.state.MonsterPreviewState
+import br.alexandregpereira.hunter.monster.event.MonsterEvent
+import br.alexandregpereira.hunter.monster.event.MonsterEvent.OnVisibilityChanges.Show
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
-import br.alexandregpereira.hunter.monster.event.emptyMonsterEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.search.event.SearchEvent
 import br.alexandregpereira.hunter.sync.event.SyncEventDispatcher
@@ -75,8 +80,27 @@ class MonsterCompendiumStateHolderTest {
 
     private val testCoroutineDispatcher = StandardTestDispatcher()
 
-    private val folderPreviewEventDispatcher: FolderPreviewEventDispatcher = emptyFolderPreviewEventDispatcher()
-    private val monsterDetailEventDispatcher: MonsterEventDispatcher = emptyMonsterEventDispatcher()
+    private val folderPreviewEvents = mutableListOf<FolderPreviewEvent>()
+    private val folderPreviewEventDispatcher = object : FolderPreviewEventDispatcher {
+        override fun dispatchEvent(event: FolderPreviewEvent) {
+            folderPreviewEvents.add(event)
+        }
+    }
+    private val folderDetailEvents = mutableListOf<FolderDetailEvent>()
+    private val folderDetailEventDispatcher = object : FolderDetailEventDispatcher {
+        override fun dispatchEvent(event: FolderDetailEvent) {
+            folderDetailEvents.add(event)
+        }
+    }
+    private val folderPreviewResultDispatcher = FolderPreviewResultDispatcher()
+    private val monsterEvents = mutableListOf<MonsterEvent>()
+    private val monsterDetailEventDispatcher = object : MonsterEventDispatcher {
+        override val events: Flow<MonsterEvent> = emptyFlow()
+
+        override fun dispatchEvent(event: MonsterEvent) {
+            monsterEvents.add(event)
+        }
+    }
     private val syncEventDispatcher: SyncEventDispatcher = emptySyncEventDispatcher()
     private val monsterCompendiumEventDispatcher = MonsterCompendiumEventDispatcher()
     private val searchEvents = mutableListOf<SearchEvent>()
@@ -415,7 +439,7 @@ class MonsterCompendiumStateHolderTest {
         advanceUntilIdle()
 
         // When
-        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show())
         advanceUntilIdle()
         val isShowingAfterShowEvent = stateHolder.state.value.isShowing
         stateHolder.onClose()
@@ -456,13 +480,210 @@ class MonsterCompendiumStateHolderTest {
         actions.assertFinalValue(GoToCompendiumIndex(0, shouldAnimate = false))
     }
 
+    @Test
+    fun `onFolderCreationClick enables the folder creation mode and onFolderCreationClose disables it`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+
+        // When
+        stateHolder.onFolderCreationClick()
+        val isFolderCreationModeAfterClick = stateHolder.state.value.isFolderCreationMode
+        stateHolder.onFolderCreationClose()
+
+        // Then
+        assertEquals(expected = true, actual = isFolderCreationModeAfterClick)
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(expected = emptyList(), actual = folderPreviewEvents)
+    }
+
+    @Test
+    fun `onItemClick adds the monster to the folder preview When the folder creation mode is enabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        stateHolder.onFolderCreationClick()
+
+        // When
+        stateHolder.onItemClick("zariel")
+
+        // Then
+        assertEquals(
+            expected = listOf<FolderPreviewEvent>(FolderPreviewEvent.AddMonster("zariel")),
+            actual = folderPreviewEvents,
+        )
+        assertEquals(expected = emptyList(), actual = monsterEvents)
+    }
+
+    @Test
+    fun `onItemLongClick shows the monster detail When the folder creation mode is enabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        stateHolder.onFolderCreationClick()
+
+        // When
+        stateHolder.onItemLongClick("zariel")
+
+        // Then
+        assertEquals(
+            expected = listOf<MonsterEvent>(
+                Show("zariel", enableMonsterPageChangesEventDispatch = true)
+            ),
+            actual = monsterEvents,
+        )
+        assertEquals(expected = emptyList(), actual = folderPreviewEvents)
+    }
+
+    @Test
+    fun `onItemClick shows the monster detail and onItemLongClick adds it to the folder preview When the folder creation mode is disabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+
+        // When
+        stateHolder.onItemClick("zariel1")
+        stateHolder.onItemLongClick("zariel2")
+
+        // Then
+        assertEquals(
+            expected = listOf<MonsterEvent>(
+                Show("zariel1", enableMonsterPageChangesEventDispatch = true)
+            ),
+            actual = monsterEvents,
+        )
+        assertEquals(
+            expected = listOf<FolderPreviewEvent>(FolderPreviewEvent.AddMonster("zariel2")),
+            actual = folderPreviewEvents,
+        )
+    }
+
+    @Test
+    fun `onFolderCreationConfirm saves the folder preview and keeps the folder creation mode until the folder is saved`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        stateHolder.onFolderCreationConfirm()
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf<FolderPreviewEvent>(FolderPreviewEvent.Save),
+            actual = folderPreviewEvents,
+        )
+        assertEquals(expected = true, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(expected = emptyList(), actual = folderDetailEvents)
+    }
+
+    @Test
+    fun `When the folder preview is saved Then the folder is opened and the folder creation mode is disabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
+    fun `When the folder preview is saved after the compendium is shown twice Then the folder is opened once`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        showCompendium()
+
+        // When
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
+    fun `When the folder preview is saved after the state holder is cleared while open Then the folder is opened`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        // Like the screen leaving the composition on a rotation while the compendium is open
+        stateHolder.onCleared()
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(
+            expected = listOf<FolderDetailEvent>(FolderDetailEvent.Show("Dragons")),
+            actual = folderDetailEvents,
+        )
+    }
+
+    @Test
+    fun `When the folder preview is saved after the compendium is closed Then the folder is not opened`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        showCompendium()
+        stateHolder.onFolderCreationClick()
+
+        // When
+        stateHolder.onClose()
+        folderPreviewResultDispatcher.dispatchEvent(FolderPreviewResult.OnSaved(folderName = "Dragons"))
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = false, actual = stateHolder.state.value.isFolderCreationMode)
+        assertEquals(expected = emptyList(), actual = folderDetailEvents)
+    }
+
+    @Test
+    fun `Show event with folder creation opens the compendium with the folder creation mode enabled`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = emptyMonsterCompendiumUseCase())
+        advanceUntilIdle()
+
+        // When
+        monsterCompendiumEventDispatcher.dispatchEvent(
+            MonsterCompendiumEvent.Show(showFolderCreation = true)
+        )
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = true, actual = stateHolder.state.value.isShowing)
+        assertEquals(expected = false, actual = stateHolder.state.value.isLoading)
+        assertEquals(expected = true, actual = stateHolder.state.value.isFolderCreationMode)
+    }
+
+    private fun emptyMonsterCompendiumUseCase() = GetMonsterCompendiumUseCase {
+        flowOf(
+            MonsterCompendium(
+                items = emptyList(),
+                tableContent = emptyList(),
+                alphabet = emptyList(),
+            )
+        )
+    }
+
     /**
      * The compendium is loaded only when it is shown. The event is dispatched after the state
      * holder starts listening, since the event is not replayed.
      */
     private fun TestScope.showCompendium() {
         advanceUntilIdle()
-        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show)
+        monsterCompendiumEventDispatcher.dispatchEvent(MonsterCompendiumEvent.Show())
         advanceUntilIdle()
     }
 
@@ -489,6 +710,8 @@ class MonsterCompendiumStateHolderTest {
             },
             isFirstTime = { false },
             monsterCompendiumEventListener = monsterCompendiumEventDispatcher,
+            folderPreviewResultListener = folderPreviewResultDispatcher,
+            folderDetailEventDispatcher = folderDetailEventDispatcher,
         )
     }
 

@@ -22,10 +22,13 @@ import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumScrollItemPositionUseCase
 import br.alexandregpereira.hunter.domain.usecase.SaveCompendiumSortTypeUseCase
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEvent
+import br.alexandregpereira.hunter.event.folder.detail.FolderDetailEventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
 import br.alexandregpereira.hunter.event.v2.EventListener
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEvent
 import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewEventDispatcher
+import br.alexandregpereira.hunter.folder.preview.event.FolderPreviewResult
 import br.alexandregpereira.hunter.localization.AppReactiveLocalization
 import br.alexandregpereira.hunter.monster.compendium.domain.GetMonsterCompendiumUseCase
 import br.alexandregpereira.hunter.monster.compendium.domain.getAlphabetIndexFromCompendiumItemIndex
@@ -72,6 +75,8 @@ class MonsterCompendiumStateHolder internal constructor(
     private val isFirstTime: IsFirstTime,
     private val appLocalization: AppReactiveLocalization,
     private val monsterCompendiumEventListener: EventListener<MonsterCompendiumEvent>,
+    private val folderPreviewResultListener: EventListener<FolderPreviewResult>,
+    private val folderDetailEventDispatcher: FolderDetailEventDispatcher,
 ) : UiModel<MonsterCompendiumState>(
     initialState = MonsterCompendiumState(strings = appLocalization.getStrings()),
 ), MutableActionHandler<MonsterCompendiumAction> by MutableActionHandler(),
@@ -84,6 +89,7 @@ class MonsterCompendiumStateHolder internal constructor(
     init {
         observeLanguageChanges()
         observeEvents()
+        observeFolderSaveResult()
     }
 
     private fun observeLanguageChanges() {
@@ -136,20 +142,41 @@ class MonsterCompendiumStateHolder internal constructor(
             }
             .collect { (state, scrollItemPosition) ->
                 initialScrollItemPosition = scrollItemPosition
-                // Keeps the current visibility, the new state was built before the async loading
-                setState { state.copy(isShowing = isShowing) }
+                // Keeps the current visibility and folder creation mode, the new state was built
+                // before the async loading
+                setState {
+                    state.copy(isShowing = isShowing, isFolderCreationMode = isFolderCreationMode)
+                }
             }
     }
 
     override fun onItemClick(index: String) {
-        analytics.trackItemClick(index)
+        val isFolderCreationMode = state.value.isFolderCreationMode
+        analytics.trackItemClick(index, isFolderCreationMode)
+        if (isFolderCreationMode) {
+            addMonsterToFolderPreview(index)
+        } else {
+            showMonsterDetail(index)
+        }
+    }
+
+    override fun onItemLongClick(index: String) {
+        val isFolderCreationMode = state.value.isFolderCreationMode
+        analytics.trackItemLongClick(index, isFolderCreationMode)
+        if (isFolderCreationMode) {
+            showMonsterDetail(index)
+        } else {
+            addMonsterToFolderPreview(index)
+        }
+    }
+
+    private fun showMonsterDetail(index: String) {
         monsterEventDispatcher.dispatchEvent(
             Show(index, enableMonsterPageChangesEventDispatch = true)
         )
     }
 
-    override fun onItemLongClick(index: String) {
-        analytics.trackItemLongClick(index)
+    private fun addMonsterToFolderPreview(index: String) {
         folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.AddMonster(index))
     }
 
@@ -158,10 +185,28 @@ class MonsterCompendiumStateHolder internal constructor(
         searchEventDispatcher.dispatchEvent(SearchEvent.Show)
     }
 
+    override fun onFolderCreationClick() {
+        analytics.trackFolderCreationClick()
+        setState { copy(isFolderCreationMode = true) }
+    }
+
+    override fun onFolderCreationClose() {
+        if (state.value.isFolderCreationMode.not()) return
+        analytics.trackFolderCreationClose()
+        setState { copy(isFolderCreationMode = false) }
+    }
+
+    override fun onFolderCreationConfirm() {
+        analytics.trackFolderCreationConfirm()
+        // The folder creation mode is disabled when the folder is saved, see observeFolderSaveResult
+        folderPreviewEventDispatcher.dispatchEvent(FolderPreviewEvent.Save)
+    }
+
     override fun onClose() {
         if (state.value.isShowing.not()) return
         analytics.trackClosed()
-        setState { copy(isShowing = false) }
+        setState { copy(isShowing = false, isFolderCreationMode = false) }
+        onCleared()
     }
 
     override fun onSortClick() {
@@ -279,10 +324,8 @@ class MonsterCompendiumStateHolder internal constructor(
     private fun observeEvents() {
         monsterCompendiumEventListener.events.onEach { event ->
             when (event) {
-                MonsterCompendiumEvent.Show -> {
-                    analytics.trackOpened()
-                    setState { copy(isShowing = true) }
-                    loadMonsters()
+                is MonsterCompendiumEvent.Show -> {
+                    show(isFolderCreationMode = event.showFolderCreation)
                 }
             }
         }.launchIn(scope)
@@ -297,6 +340,36 @@ class MonsterCompendiumStateHolder internal constructor(
                 fetchMonsterCompendium()
                 it.monsterIndex?.let { monsterIndex ->
                     navigateToCompendiumIndexFromMonsterIndex(monsterIndex, shouldAnimate = false)
+                }
+            }
+        }.launchIn(scope)
+    }
+
+    private fun show(isFolderCreationMode: Boolean) {
+        // Avoids tracking and loading the compendium twice when it is already open
+        if (state.value.isShowing) {
+            if (isFolderCreationMode) setState { copy(isFolderCreationMode = true) }
+            return
+        }
+        analytics.trackOpened(isFolderCreationMode)
+        setState { copy(isShowing = true, isFolderCreationMode = isFolderCreationMode) }
+        loadMonsters()
+    }
+
+    /**
+     * Observes on the state holder [scope] instead of the feature scope, since the feature scope is
+     * cleared when the screen leaves the composition, like on a rotation, while the compendium is
+     * still open. So the result is only handled while the compendium is open.
+     */
+    private fun observeFolderSaveResult() {
+        folderPreviewResultListener.events.onEach { result ->
+            if (state.value.isShowing.not()) return@onEach
+            when (result) {
+                is FolderPreviewResult.OnSaved -> {
+                    setState { copy(isFolderCreationMode = false) }
+                    folderDetailEventDispatcher.dispatchEvent(
+                        FolderDetailEvent.Show(result.folderName)
+                    )
                 }
             }
         }.launchIn(scope)
