@@ -19,6 +19,7 @@ package br.alexandregpereira.hunter.monster.detail
 
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
+import br.alexandregpereira.hunter.analytics.SectionViewTracker
 import br.alexandregpereira.hunter.condition.GetCondition
 import br.alexandregpereira.hunter.domain.folder.AddMonsterToRecentlyViewedUseCase
 import br.alexandregpereira.hunter.domain.model.ConditionType
@@ -121,6 +122,9 @@ class MonsterDetailStateHolder internal constructor(
     private var metadata: List<Monster> = emptyList()
     private var lastRecentlyViewedMonsterIndex: String? = null
     private var hasRecentlyViewedChanges = false
+    private val sectionViewTracker = SectionViewTracker()
+    private var sectionsViewedCount = 0
+    private val monstersViewed = mutableSetOf<String>()
     var initialMonsterListPositionIndex: Int = 0
         private set
 
@@ -140,6 +144,7 @@ class MonsterDetailStateHolder internal constructor(
             when (event) {
                 is Show -> {
                     analytics.trackMonsterDetailShown(event)
+                    resetSectionTracking()
                     observeSpellResultEvents()
                     enableMonsterPageChangesEventDispatch =
                         event.enableMonsterPageChangesEventDispatch
@@ -153,7 +158,10 @@ class MonsterDetailStateHolder internal constructor(
                 }
 
                 Hide -> {
-                    analytics.trackMonsterDetailHidden()
+                    analytics.trackMonsterDetailHidden(
+                        sectionsViewedCount = sectionsViewedCount,
+                        monstersViewedCount = monstersViewed.size,
+                    )
                     setState { copy(showDetail = false).saveState(stateRecovery) }
                     dispatchRecentlyViewedChanges()
                 }
@@ -245,6 +253,38 @@ class MonsterDetailStateHolder internal constructor(
         if (hasRecentlyViewedChanges.not()) return
         hasRecentlyViewedChanges = false
         homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
+    }
+
+    /**
+     * Reports the sections the user reached while scrolling. The monster detail is a pager of
+     * vertically scrollable monsters sharing one list, so a section is reported once per monster,
+     * and only the sections the current monster has content for are considered.
+     */
+    fun onVisibleItemKeysChange(visibleItemKeys: List<String>) {
+        if (state.value.showDetail.not()) return
+        val monsterIndex = this.monsterIndex.takeIf { it.isNotBlank() } ?: return
+        val monster = state.value.monsters.find { it.index == monsterIndex } ?: return
+        val sections = monster.contentSections()
+        val visibleSections = visibleItemKeys.map { it.toSectionId() }
+            .distinct()
+            .filter { it in sections }
+
+        visibleSections.filter { sectionViewTracker.isFirstView("$monsterIndex/$it") }
+            .forEach { section ->
+                sectionsViewedCount++
+                monstersViewed.add(monsterIndex)
+                analytics.trackSectionViewed(
+                    section = section,
+                    monsterIndex = monsterIndex,
+                    sectionsSize = sections.size,
+                )
+            }
+    }
+
+    private fun resetSectionTracking() {
+        sectionViewTracker.reset()
+        sectionsViewedCount = 0
+        monstersViewed.clear()
     }
 
     fun onShowOptionsClicked() {

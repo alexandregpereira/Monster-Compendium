@@ -21,7 +21,7 @@ import br.alexandregpereira.flow.test.assertFinalValue
 import br.alexandregpereira.flow.test.assertHasNoMoreValues
 import br.alexandregpereira.flow.test.assertNextValue
 import br.alexandregpereira.flow.test.testFlows
-import br.alexandregpereira.hunter.analytics.EmptyAnalytics
+import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.ChallengeRating
 import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.model.Monster
@@ -112,6 +112,7 @@ class MonsterCompendiumStateHolderTest {
         }
     }
 
+    private val analytics = FakeAnalytics()
     private lateinit var stateHolder: MonsterCompendiumStateHolder
 
     @BeforeTest
@@ -667,6 +668,217 @@ class MonsterCompendiumStateHolderTest {
         assertEquals(expected = true, actual = stateHolder.state.value.isFolderCreationMode)
     }
 
+    @Test
+    fun `scrolling down tracks one event per depth threshold reached`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100))
+        showCompendium()
+        analytics.events.clear()
+
+        // When
+        listOf(0, 10, 20, 45, 70, 90).forEach { scrollTo(it) }
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf(
+                "MonsterCompendium - scroll started" to null,
+                "MonsterCompendium - scroll depth reached" to 25,
+                "MonsterCompendium - scroll depth reached" to 50,
+                "MonsterCompendium - scroll depth reached" to 75,
+                "MonsterCompendium - scroll depth reached" to 100,
+            ),
+            actual = analytics.scrollEvents(),
+        )
+        assertEquals(
+            expected = mapOf(
+                "direction" to "DOWN",
+                "depthPercent" to 100,
+                "itemIndex" to 99,
+                "itemsSize" to 100,
+                "baselineDepthPercent" to 10,
+                "thresholdPercent" to 100,
+                "sortType" to CompendiumSortType.ALPHABETICAL.name,
+            ),
+            actual = analytics.events.last().second,
+        )
+    }
+
+    @Test
+    fun `scrolling up tracks one event per depth threshold reached`() = runTest {
+        // Given
+        createStateHolder(
+            getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100),
+            getLastScrollPositionUseCase = GetLastCompendiumScrollItemPositionUseCase { flowOf(90) },
+        )
+        showCompendium()
+        analytics.events.clear()
+
+        // When
+        listOf(90, 85, 70, 45, 20, 0).forEach { scrollTo(it) }
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf(
+                "MonsterCompendium - scroll started" to null,
+                "MonsterCompendium - scroll depth reached" to 75,
+                "MonsterCompendium - scroll depth reached" to 50,
+                "MonsterCompendium - scroll depth reached" to 25,
+                "MonsterCompendium - scroll depth reached" to 0,
+            ),
+            actual = analytics.scrollEvents(),
+        )
+        assertEquals(
+            expected = "UP",
+            actual = analytics.events.last().second["direction"],
+        )
+    }
+
+    @Test
+    fun `browsing back over what was already seen is not tracked again`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100))
+        showCompendium()
+        listOf(45, 70, 20).forEach { scrollTo(it) }
+        advanceUntilIdle()
+        analytics.events.clear()
+
+        // When
+        listOf(70, 45, 20, 40, 65).forEach { scrollTo(it) }
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = emptyList(), actual = analytics.eventNames())
+    }
+
+    @Test
+    fun `closing tracks how far the visit browsed in both directions`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100))
+        showCompendium()
+        listOf(45, 70, 20).forEach { scrollTo(it) }
+        advanceUntilIdle()
+        analytics.events.clear()
+
+        // When
+        stateHolder.onClose()
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf(
+                "MonsterCompendium - closed" to mapOf<String, Any?>(
+                    "didScroll" to true,
+                    "didScrollDown" to true,
+                    "didScrollUp" to true,
+                    "maxDepthPercent" to 80,
+                    "minTopPercent" to 20,
+                    "maxItemIndex" to 79,
+                    "minItemIndex" to 20,
+                    "itemsSize" to 100,
+                    "baselineDepthPercent" to 55,
+                    "baselineTopPercent" to 45,
+                )
+            ),
+            actual = analytics.events,
+        )
+    }
+
+    /**
+     * A restored scroll position is not somewhere the user scrolled to, so the thresholds it
+     * already passed must not be tracked when the compendium opens on it.
+     */
+    @Test
+    fun `a restored scroll position is not tracked as scrolling`() = runTest {
+        // Given
+        createStateHolder(
+            getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100),
+            getLastScrollPositionUseCase = GetLastCompendiumScrollItemPositionUseCase { flowOf(50) },
+        )
+        showCompendium()
+        analytics.events.clear()
+
+        // When
+        scrollTo(50)
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(expected = emptyList(), actual = analytics.eventNames())
+
+        // And the thresholds it already passed are still to be reached, in both directions
+        scrollTo(70)
+        scrollTo(20)
+        advanceUntilIdle()
+        assertEquals(
+            expected = listOf(
+                "MonsterCompendium - scroll started" to null,
+                "MonsterCompendium - scroll depth reached" to 75,
+                "MonsterCompendium - scroll depth reached" to 25,
+            ),
+            actual = analytics.scrollEvents(),
+        )
+    }
+
+    @Test
+    fun `reopening the compendium tracks the depth thresholds again`() = runTest {
+        // Given
+        createStateHolder(getMonsterCompendiumUseCase = monsterCompendiumUseCaseOf(itemsSize = 100))
+        showCompendium()
+        listOf(0, 90).forEach { scrollTo(it) }
+        advanceUntilIdle()
+        stateHolder.onClose()
+        advanceUntilIdle()
+        analytics.events.clear()
+
+        // When
+        showCompendium()
+        listOf(0, 90).forEach { scrollTo(it) }
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(
+            expected = listOf(
+                "MonsterCompendium - scroll started" to null,
+                "MonsterCompendium - scroll depth reached" to 100,
+            ),
+            actual = analytics.scrollEvents(),
+        )
+    }
+
+    /**
+     * Scrolls so [firstVisibleItemIndex] is at the top of a screen showing [VIEWPORT_ITEMS] items,
+     * like a real viewport with a frontier at each end.
+     */
+    private fun scrollTo(firstVisibleItemIndex: Int) {
+        val itemsSize = stateHolder.state.value.items.size
+        stateHolder.onVisibleItemsChange(
+            firstVisibleItemIndex = firstVisibleItemIndex,
+            lastVisibleItemIndex = (firstVisibleItemIndex + VIEWPORT_ITEMS - 1)
+                .coerceAtMost(itemsSize - 1),
+            itemsSize = itemsSize,
+        )
+    }
+
+    /**
+     * A compendium of [itemsSize] items: a section title followed by monsters. The title is
+     * required, since the alphabet index of an item is resolved from the title above it.
+     */
+    private fun monsterCompendiumUseCaseOf(itemsSize: Int) = GetMonsterCompendiumUseCase {
+        flowOf(
+            MonsterCompendium(
+                items = listOf(Title(id = "a", value = "A", isHeader = true)) +
+                        (1 until itemsSize).map { index ->
+                            MonsterFactory.createEmpty(index = "monster$index").asItem()
+                        },
+                tableContent = listOf(
+                    TableContentItem(text = "A", type = TableContentItemType.HEADER1, id = "a"),
+                ),
+                alphabet = listOf("A"),
+            )
+        )
+    }
+
     private fun emptyMonsterCompendiumUseCase() = GetMonsterCompendiumUseCase {
         flowOf(
             MonsterCompendium(
@@ -703,7 +915,7 @@ class MonsterCompendiumStateHolderTest {
             syncEventDispatcher = syncEventDispatcher,
             searchEventDispatcher = searchEventDispatcher,
             dispatcher = testCoroutineDispatcher,
-            analytics = MonsterCompendiumAnalytics(analytics = EmptyAnalytics()),
+            analytics = MonsterCompendiumAnalytics(analytics = analytics),
             appLocalization = object : AppReactiveLocalization {
                 override val languageFlow: Flow<Language> = flowOf(Language.ENGLISH)
                 override fun getLanguage(): Language = Language.ENGLISH
@@ -716,4 +928,29 @@ class MonsterCompendiumStateHolderTest {
     }
 
     private fun Monster.asItem(): Item = Item(this)
+
+    private companion object {
+        const val VIEWPORT_ITEMS = 10
+    }
+
+    private class FakeAnalytics : Analytics {
+
+        val events = mutableListOf<Pair<String, Map<String, Any?>>>()
+
+        fun eventNames(): List<String> = events.map { it.first }
+
+        /** The scroll events with the threshold each one reached, null when it started one. */
+        fun scrollEvents(): List<Pair<String, Int?>> = events.filter { it.first.contains("scroll") }
+            .map { (name, params) -> name to params["thresholdPercent"] as Int? }
+
+        override fun track(eventName: String, params: Map<String, Any?>) {
+            events.add(eventName to params)
+        }
+
+        override fun setUserProperty(name: String, value: Any) {}
+
+        override fun getDeviceId(): String? = null
+
+        override fun logException(throwable: Throwable) {}
+    }
 }

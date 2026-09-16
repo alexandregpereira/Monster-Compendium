@@ -53,9 +53,28 @@ class MonsterDetailAnalytics(
         )
     }
 
-    fun trackMonsterDetailHidden() {
+    fun trackMonsterDetailHidden(sectionsViewedCount: Int, monstersViewedCount: Int) {
         analytics.track(
             eventName = "MonsterDetail - monster detail hidden",
+            params = mapOf(
+                "sectionsViewedCount" to sectionsViewedCount,
+                "monstersViewedCount" to monstersViewedCount,
+            )
+        )
+    }
+
+    /**
+     * Tracked once per monster per visit, the first time the section appears, instead of on every
+     * item that appears while scrolling.
+     */
+    fun trackSectionViewed(section: String, monsterIndex: String, sectionsSize: Int) {
+        analytics.track(
+            eventName = "MonsterDetail - section viewed",
+            params = mapOf(
+                "section" to section,
+                "monsterIndex" to monsterIndex,
+                "sectionsSize" to sectionsSize,
+            )
         )
     }
 

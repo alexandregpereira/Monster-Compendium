@@ -45,12 +45,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -111,6 +114,7 @@ internal fun MonsterDetailScreen(
     onSpellClicked: (String) -> Unit = {},
     onLoreClicked: (String) -> Unit = {},
     onConditionClicked: (String) -> Unit = {},
+    onVisibleItemKeysChange: (List<String>) -> Unit = {},
     onClose: () -> Unit = {},
 ) = AppSurface(color = Color.Transparent) {
     HorizontalPagerTransitionController(pagerState)
@@ -199,6 +203,8 @@ internal fun MonsterDetailScreen(
         }
     }
 
+    OnVisibleItemKeysChange(scrollState, onVisibleItemKeysChange)
+
     BoxCloseButton(onClick = onClose)
 
     if (hasMultiplePages) {
@@ -240,6 +246,23 @@ internal fun MonsterDetailScreen(
             scrollState.animateScrollToItem(0)
         }
     )
+}
+
+/**
+ * Reports the keys of the items on screen, so how far the monster was read can be tracked without
+ * an event for every item that appears.
+ */
+@Composable
+private fun OnVisibleItemKeysChange(
+    scrollState: LazyListState,
+    onVisibleItemKeysChange: (List<String>) -> Unit,
+) {
+    val currentOnChange by rememberUpdatedState(onVisibleItemKeysChange)
+    LaunchedEffect(scrollState) {
+        snapshotFlow {
+            scrollState.layoutInfo.visibleItemsInfo.mapNotNull { it.key as? String }
+        }.collect { keys -> currentOnChange(keys) }
+    }
 }
 
 @Composable

@@ -18,6 +18,8 @@
 package br.alexandregpereira.hunter.monster.compendium.state
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.analytics.ScrollDepthSummary
+import br.alexandregpereira.hunter.analytics.ScrollEvent
 import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.monster.compendium.domain.MonsterCompendiumError
 import br.alexandregpereira.hunter.monster.compendium.domain.model.MonsterCompendium
@@ -161,7 +163,21 @@ class MonsterCompendiumAnalytics(
         )
     }
 
-    fun trackClosed() {
-        analytics.track(eventName = "MonsterCompendium - closed")
+    fun trackClosed(scrollDepth: ScrollDepthSummary) {
+        analytics.track(
+            eventName = "MonsterCompendium - closed",
+            params = scrollDepth.params,
+        )
+    }
+
+    fun trackScroll(scrollEvent: ScrollEvent, sortType: CompendiumSortType) {
+        val eventName = when (scrollEvent) {
+            is ScrollEvent.Started -> "MonsterCompendium - scroll started"
+            is ScrollEvent.DepthReached -> "MonsterCompendium - scroll depth reached"
+        }
+        analytics.track(
+            eventName = eventName,
+            params = scrollEvent.params + mapOf("sortType" to sortType.name),
+        )
     }
 }

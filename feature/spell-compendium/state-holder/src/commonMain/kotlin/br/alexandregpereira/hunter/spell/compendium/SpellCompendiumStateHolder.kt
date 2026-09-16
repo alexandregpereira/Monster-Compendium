@@ -18,6 +18,8 @@
 package br.alexandregpereira.hunter.spell.compendium
 
 import br.alexandregpereira.hunter.analytics.Analytics
+import br.alexandregpereira.hunter.analytics.ScrollDepthTracker
+import br.alexandregpereira.hunter.analytics.ScrollEvent
 import br.alexandregpereira.hunter.domain.spell.model.Spell
 import br.alexandregpereira.hunter.event.EventDispatcher
 import br.alexandregpereira.hunter.event.EventListener
@@ -58,6 +60,7 @@ class SpellCompendiumStateHolder internal constructor(
     private val originalSpellsGroupByLevel = mutableMapOf<String, List<SpellCompendiumItemState>>()
     private var strings: SpellCompendiumStrings = getSpellCompendiumStrings(appLocalization.getLanguage())
     private var spellResultJob: Job? = null
+    private val scrollDepthTracker = ScrollDepthTracker()
 
     init {
         debounceSearch()
@@ -72,6 +75,7 @@ class SpellCompendiumStateHolder internal constructor(
         selectedSpellIndexes: List<String> = emptyList(),
     ) {
         strings = getSpellCompendiumStrings(appLocalization.getLanguage())
+        scrollDepthTracker.reset()
         setState {
             copy(
                 title = strings.title,
@@ -147,6 +151,9 @@ class SpellCompendiumStateHolder internal constructor(
     }
 
     override fun onSearchTextChange(text: String) {
+        // Filtering replaces the whole list, so the depth reached over the previous one no longer
+        // applies.
+        scrollDepthTracker.reset()
         setState { copy(searchText = text) }
         searchQuery.value = text
     }
@@ -159,6 +166,28 @@ class SpellCompendiumStateHolder internal constructor(
     override fun onSearchClose() {
         setState { copy(isSearchOpened = false) }
         onSearchTextChange("")
+    }
+
+    /**
+     * The item count comes from the list itself instead of the state, so it cannot disagree with
+     * the indexes measured against it while a search is rebuilding the list.
+     */
+    override fun onVisibleItemsChange(
+        firstVisibleItemIndex: Int,
+        lastVisibleItemIndex: Int,
+        itemsSize: Int,
+    ) {
+        scrollDepthTracker.onScroll(
+            firstVisibleItemIndex = firstVisibleItemIndex,
+            lastVisibleItemIndex = lastVisibleItemIndex,
+            itemsSize = itemsSize,
+        ).forEach { scrollEvent ->
+            val eventName = when (scrollEvent) {
+                is ScrollEvent.Started -> "Spell Compendium - scroll started"
+                is ScrollEvent.DepthReached -> "Spell Compendium - scroll depth reached"
+            }
+            analytics.track(eventName = eventName, params = scrollEvent.params)
+        }
     }
 
     override fun onSpellClick(spellIndex: String) {
@@ -183,7 +212,10 @@ class SpellCompendiumStateHolder internal constructor(
     }
 
     override fun onClose() {
-        analytics.track(eventName = "Spell Compendium - closed")
+        analytics.track(
+            eventName = "Spell Compendium - closed",
+            params = scrollDepthTracker.summary().params,
+        )
         spellResultJob?.cancel()
         setState { copy(isShowing = false) }
     }
