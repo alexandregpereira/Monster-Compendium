@@ -24,6 +24,12 @@ interface SpellCompendiumIntent {
 
     fun onSearchClose()
 
+    fun onVisibleItemsChange(
+        firstVisibleItemIndex: Int,
+        lastVisibleItemIndex: Int,
+        itemsSize: Int,
+    )
+
     fun onSpellClick(spellIndex: String)
 
     fun onSpellLongClick(spellIndex: String)
@@ -40,6 +46,12 @@ class EmptySpellCompendiumIntent : SpellCompendiumIntent {
     override fun onSearchClick() {}
 
     override fun onSearchClose() {}
+
+    override fun onVisibleItemsChange(
+        firstVisibleItemIndex: Int,
+        lastVisibleItemIndex: Int,
+        itemsSize: Int,
+    ) {}
 
     override fun onSpellClick(spellIndex: String) {}
 

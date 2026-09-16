@@ -53,6 +53,7 @@ import br.alexandregpereira.hunter.ui.compose.AppTextField
 import br.alexandregpereira.hunter.ui.compose.AppTopBar
 import br.alexandregpereira.hunter.ui.compose.AppTopBarIconButton
 import br.alexandregpereira.hunter.ui.compose.BackHandler
+import br.alexandregpereira.hunter.ui.compose.OnVisibleItemsChange
 
 @Composable
 internal fun SpellCompendiumScreen(
@@ -70,6 +71,9 @@ internal fun SpellCompendiumScreen(
     val density = LocalDensity.current
     val listState = rememberLazyGridState(initialFirstVisibleItemIndex = state.initialItemIndex)
     var topBarHeight by remember { mutableStateOf(0.dp) }
+
+    OnVisibleItemsChange(listState, intent::onVisibleItemsChange)
+
     Box(Modifier.fillMaxSize()) {
         Box(modifier = Modifier.padding(horizontal = 16.dp)) {
             SpellList(

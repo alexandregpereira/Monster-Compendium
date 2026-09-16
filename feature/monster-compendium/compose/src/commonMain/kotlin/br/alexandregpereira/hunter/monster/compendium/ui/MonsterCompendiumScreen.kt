@@ -52,6 +52,7 @@ import br.alexandregpereira.hunter.ui.compose.BackHandler
 import br.alexandregpereira.hunter.ui.compose.EmptyScreenMessage
 import br.alexandregpereira.hunter.ui.compose.LoadingScreen
 import br.alexandregpereira.hunter.ui.compose.LoadingScreenState
+import br.alexandregpereira.hunter.ui.compose.OnVisibleItemsChange
 import br.alexandregpereira.hunter.ui.compose.PopupContainer
 import br.alexandregpereira.hunter.ui.compose.noIndicationClick
 import br.alexandregpereira.hunter.ui.compose.tablecontent.TableContentPopup
@@ -109,6 +110,8 @@ internal fun MonsterCompendiumScreen(
         )
 
         OnFirstVisibleItemChange(listState, events::onFirstVisibleItemChange)
+
+        OnVisibleItemsChange(listState, events::onVisibleItemsChange)
 
         LaunchedEffect(actionHandler.action) {
             actionHandler.action.collectLatest { action ->

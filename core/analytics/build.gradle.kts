@@ -37,6 +37,9 @@ multiplatform {
         implementation(libs.amplitude.jvm)
         implementation(libs.json.jvm)
     }
+    jvmTest {
+        implementation(libs.bundles.unittest)
+    }
     iosMain()
 }
 

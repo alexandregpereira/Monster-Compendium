@@ -19,6 +19,11 @@ package br.alexandregpereira.hunter.monster.compendium.state
 
 interface MonsterCompendiumIntent {
     fun onFirstVisibleItemChange(position: Int)
+    fun onVisibleItemsChange(
+        firstVisibleItemIndex: Int,
+        lastVisibleItemIndex: Int,
+        itemsSize: Int,
+    )
     fun onItemClick(index: String)
     fun onItemLongClick(index: String)
     fun onAlphabetIndexClicked(position: Int)

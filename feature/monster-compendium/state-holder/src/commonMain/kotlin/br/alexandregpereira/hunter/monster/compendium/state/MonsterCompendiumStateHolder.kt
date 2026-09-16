@@ -17,6 +17,7 @@
 
 package br.alexandregpereira.hunter.monster.compendium.state
 
+import br.alexandregpereira.hunter.analytics.ScrollDepthTracker
 import br.alexandregpereira.hunter.domain.model.CompendiumSortType
 import br.alexandregpereira.hunter.domain.sync.IsFirstTime
 import br.alexandregpereira.hunter.domain.usecase.GetLastCompendiumScrollItemPositionUseCase
@@ -85,6 +86,7 @@ class MonsterCompendiumStateHolder internal constructor(
     var initialScrollItemPosition: Int = 0
         private set
     private var metadata: List<MonsterCompendiumItem> = emptyList()
+    private val scrollDepthTracker = ScrollDepthTracker()
 
     init {
         observeLanguageChanges()
@@ -204,7 +206,7 @@ class MonsterCompendiumStateHolder internal constructor(
 
     override fun onClose() {
         if (state.value.isShowing.not()) return
-        analytics.trackClosed()
+        analytics.trackClosed(scrollDepthTracker.summary())
         setState { copy(isShowing = false, isFolderCreationMode = false) }
         onCleared()
     }
@@ -228,6 +230,7 @@ class MonsterCompendiumStateHolder internal constructor(
             saveCompendiumSortTypeUseCase(sortType).flowOn(dispatcher).single()
             saveCompendiumScrollItemPositionUseCase(0).flowOn(dispatcher).single()
             initialScrollItemPosition = 0
+            scrollDepthTracker.reset()
             fetchMonsterCompendium()
             sendAction(GoToCompendiumIndex(0, shouldAnimate = false))
         }
@@ -235,6 +238,22 @@ class MonsterCompendiumStateHolder internal constructor(
 
     override fun onFirstVisibleItemChange(position: Int) {
         saveCompendiumScrollItemPosition(position)
+    }
+
+    /**
+     * The item count comes from the list itself instead of the state, so it cannot disagree with
+     * the indexes measured against it while the list is being rebuilt.
+     */
+    override fun onVisibleItemsChange(
+        firstVisibleItemIndex: Int,
+        lastVisibleItemIndex: Int,
+        itemsSize: Int,
+    ) {
+        scrollDepthTracker.onScroll(
+            firstVisibleItemIndex = firstVisibleItemIndex,
+            lastVisibleItemIndex = lastVisibleItemIndex,
+            itemsSize = itemsSize,
+        ).forEach { analytics.trackScroll(it, state.value.sortType) }
     }
 
     override fun onPopupOpened() {
@@ -352,6 +371,7 @@ class MonsterCompendiumStateHolder internal constructor(
             return
         }
         analytics.trackOpened(isFolderCreationMode)
+        scrollDepthTracker.reset()
         setState { copy(isShowing = true, isFolderCreationMode = isFolderCreationMode) }
         loadMonsters()
     }
