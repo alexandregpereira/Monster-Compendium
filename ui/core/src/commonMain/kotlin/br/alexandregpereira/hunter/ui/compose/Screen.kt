@@ -72,6 +72,7 @@ fun AppScreen(
     ) {
         Closeable(
             isOpen = isOpen,
+            backgroundShadow = BackgroundShadow.STRONG,
             onClosed = onClose,
             getScrollOffset = { swipeVerticalState.offset.toInt() }
         )

@@ -34,6 +34,7 @@ import kotlin.math.absoluteValue
 fun Closeable(
     isOpen: Boolean,
     modifier: Modifier = Modifier,
+    backgroundShadow: BackgroundShadow = BackgroundShadow.LIGHT,
     getScrollOffset: () -> Int = { 0 },
     onClosed: () -> Unit,
 ) {
@@ -50,7 +51,7 @@ fun Closeable(
         val offset = getScrollOffset().absoluteValue
         val fraction = offset.coerceAtMost(300) / 300f
         val alpha = lerp(
-            start = .7f,
+            start = backgroundShadow.alpha,
             stop = .3f,
             fraction = fraction
         )
@@ -61,4 +62,8 @@ fun Closeable(
                 .noIndicationClick(onClick = onClosed)
         )
     }
+}
+
+enum class BackgroundShadow(val alpha: Float) {
+    LIGHT(.7f), STRONG(.9f)
 }
