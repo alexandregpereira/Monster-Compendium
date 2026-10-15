@@ -33,8 +33,13 @@ import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.single
 
 internal fun interface ImportContent {
-    suspend operator fun invoke(compendiumFileContent: CompendiumFileContent): List<String>
+    suspend operator fun invoke(compendiumFileContent: CompendiumFileContent): ImportContentResult
 }
+
+internal data class ImportContentResult(
+    val monsterIndexes: List<String>,
+    val spellIndexes: List<String>,
+)
 
 internal class ImportContentUseCase(
     private val saveMonsters: SaveMonstersUseCase,
@@ -45,12 +50,15 @@ internal class ImportContentUseCase(
     private val analytics: Analytics,
 ) : ImportContent {
 
-    override suspend fun invoke(compendiumFileContent: CompendiumFileContent): List<String> {
+    override suspend fun invoke(compendiumFileContent: CompendiumFileContent): ImportContentResult {
         val content = compendiumFileContent.shareContent
         compendiumFileContent.saveMonsters()
         compendiumFileContent.shareContent.saveMonstersLore()
         compendiumFileContent.shareContent.saveSpells()
-        return content.monsters?.map { it.index }.orEmpty()
+        return ImportContentResult(
+            monsterIndexes = content.monsters?.map { it.index }.orEmpty(),
+            spellIndexes = content.spells?.map { it.index }.orEmpty(),
+        )
     }
 
     private suspend fun ShareContent.saveMonstersLore() {

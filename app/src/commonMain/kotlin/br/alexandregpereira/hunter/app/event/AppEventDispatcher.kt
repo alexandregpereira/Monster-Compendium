@@ -21,6 +21,8 @@ import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
 import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.monster.event.MonsterEvent
 import br.alexandregpereira.hunter.monster.event.MonsterEventDispatcher
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEvent
+import br.alexandregpereira.hunter.spell.detail.event.SpellDetailEventDispatcher
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
@@ -34,6 +36,7 @@ interface AppEventDispatcher {
 internal class AppEventDispatcherImpl(
     private val shareContentEventDispatcher: ShareContentEventDispatcher,
     private val monsterEventDispatcher: MonsterEventDispatcher,
+    private val spellDetailEventDispatcher: SpellDetailEventDispatcher,
 ) : AppEventDispatcher {
 
     private val scope = MainScope()
@@ -61,6 +64,10 @@ internal class AppEventDispatcherImpl(
                         enableMonsterPageChangesEventDispatch = true,
                     )
                     monsterEventDispatcher.dispatchEvent(showEvent)
+                } else if (event.spellIndexes.isNotEmpty()) {
+                    spellDetailEventDispatcher.dispatchEvent(
+                        SpellDetailEvent.ShowSpell(event.spellIndexes.first())
+                    )
                 }
             }.launchIn(scope)
     }

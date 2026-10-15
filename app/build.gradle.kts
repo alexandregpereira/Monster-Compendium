@@ -45,6 +45,7 @@ multiplatform {
         implementation(project(":domain:sync:core"))
 
         implementation(project(":feature:share-content:event"))
+        implementation(project(":feature:spell-detail:event"))
         implementation(project(":domain:monster:event"))
         implementation(project(":domain:spell:event"))
 

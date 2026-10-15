@@ -33,7 +33,10 @@ sealed class ShareContentEvent {
         class OnStart(
             val compendiumFilePath: String? = null,
         ) : Import()
-        data class OnFinish(val monsterIndexes: List<String>) : Import()
+        data class OnFinish(
+            val monsterIndexes: List<String>,
+            val spellIndexes: List<String> = emptyList(),
+        ) : Import()
     }
     sealed class Export : ShareContentEvent() {
         data class OnStart(

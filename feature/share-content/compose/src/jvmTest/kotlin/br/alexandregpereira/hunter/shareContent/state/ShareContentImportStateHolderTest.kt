@@ -29,6 +29,7 @@ import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContentInfo
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
+import br.alexandregpereira.hunter.shareContent.domain.ImportContentResult
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -159,7 +160,7 @@ internal class ShareContentImportStateHolderTest {
         dispatcher = testDispatcher,
         appLocalization = FakeAppLocalization(),
         eventDispatcher = eventDispatcher,
-        importContent = { emptyList() },
+        importContent = { ImportContentResult(emptyList(), emptyList()) },
         analytics = NoOpAnalytics(),
         compendiumFileManager = compendiumFileManager,
         homeEventDispatcher = HomeEventDispatcher(),
