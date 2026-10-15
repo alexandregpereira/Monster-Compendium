@@ -40,7 +40,11 @@ internal fun List<SpellDto>.toDomain(): List<Spell> {
             school = SchoolOfMagic.valueOf(it.school.name),
             description = it.description,
             higherLevel = it.higherLevel,
-            status = SpellStatus.Original,
+            status = it.status?.let { status ->
+                runCatching {
+                    SpellStatus.valueOf(status)
+                }.getOrNull() ?: SpellStatus.Imported
+            } ?: SpellStatus.Original,
         )
     }
 }

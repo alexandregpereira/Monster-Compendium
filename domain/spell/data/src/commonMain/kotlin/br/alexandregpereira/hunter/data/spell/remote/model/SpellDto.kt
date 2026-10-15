@@ -49,5 +49,7 @@ data class SpellDto(
     @SerialName("description")
     val description: String,
     @SerialName("higher_level")
-    val higherLevel: String?
+    val higherLevel: String?,
+    @SerialName("status")
+    val status: String? = null,
 )

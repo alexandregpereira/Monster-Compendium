@@ -25,5 +25,6 @@ internal fun Spell.toDto(): SpellDto {
         school = SchoolOfMagicDto.valueOf(school.name),
         description = description,
         higherLevel = higherLevel,
+        status = status.name,
     )
 }
