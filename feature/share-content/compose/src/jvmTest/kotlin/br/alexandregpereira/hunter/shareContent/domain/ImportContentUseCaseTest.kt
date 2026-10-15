@@ -23,6 +23,9 @@ import br.alexandregpereira.file.FileType
 import br.alexandregpereira.hunter.analytics.Analytics
 import br.alexandregpereira.hunter.domain.model.Monster
 import br.alexandregpereira.hunter.domain.model.factory.MonsterFactory
+import br.alexandregpereira.hunter.domain.spell.model.SchoolOfMagic
+import br.alexandregpereira.hunter.domain.spell.model.Spell
+import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 import br.alexandregpereira.hunter.domain.usecase.SaveMonstersUseCase
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.flow.Flow
@@ -34,6 +37,7 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -108,6 +112,67 @@ class ImportContentUseCaseTest {
         assertFalse(goblinFile.exists(), "Expected goblin.png source file to be deleted")
         assertFalse(orcFile.exists(), "Expected orc.png source file to be deleted")
     }
+
+    @Test
+    fun `import with only spells returns spell indexes and no monster indexes`() = runTest {
+        val content = CompendiumFileContent(
+            name = "test.compendium",
+            shareContent = ShareContent(
+                monsters = null,
+                monstersLore = null,
+                spells = listOf(createSpell("fireball"), createSpell("shield")),
+                monsterImages = null
+            ),
+            monsterImages = emptyList(),
+            contentInfo = CompendiumFileContentInfo(
+                contentTitle = null,
+                contentDescription = null,
+                fileSizeFormatted = "1 KB"
+            ),
+        )
+        val savedSpells = mutableListOf<Spell>()
+
+        val useCase = ImportContentUseCase(
+            saveMonsters = FailingSaveMonstersUseCase(),
+            saveSpells = { spells ->
+                savedSpells.addAll(spells)
+                flowOf(Unit)
+            },
+            saveMonstersLore = { _, _ -> flowOf(Unit) },
+            saveMonsterImages = { },
+            fileManager = TrackingFileManager(),
+            analytics = NoOpAnalytics(),
+        )
+
+        val result = useCase(content)
+
+        assertEquals(
+            ImportContentResult(
+                monsterIndexes = emptyList(),
+                spellIndexes = listOf("fireball", "shield"),
+            ),
+            result,
+        )
+        assertEquals(listOf("fireball", "shield"), savedSpells.map { it.index })
+    }
+
+    private fun createSpell(index: String) = Spell(
+        index = index,
+        name = index,
+        level = 1,
+        castingTime = "",
+        components = "",
+        duration = "",
+        range = "",
+        ritual = false,
+        concentration = false,
+        savingThrowType = null,
+        damageType = null,
+        school = SchoolOfMagic.EVOCATION,
+        description = "",
+        higherLevel = null,
+        status = SpellStatus.Created,
+    )
 
     private class FailingSaveMonstersUseCase : SaveMonstersUseCase {
         override fun invoke(monsters: List<Monster>, isSync: Boolean): Flow<Unit> {

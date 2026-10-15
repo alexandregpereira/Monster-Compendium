@@ -30,6 +30,7 @@ multiplatform {
         implementation(project(":domain:spell:core"))
         implementation(project(":domain:spell:event"))
         implementation(project(":feature:home:event"))
+        implementation(project(":feature:share-content:event"))
         implementation(project(":feature:spell-detail:event"))
         implementation(project(":feature:spell-registration:event"))
         implementation(project(":feature:sync:event"))

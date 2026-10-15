@@ -145,14 +145,20 @@ internal class ShareContentImportStateHolder(
                     setState { copy(importError = importError) }
                 } else throw cause
             }
-            .onEach { monsterIndexes ->
+            .onEach { result ->
                 analytics.track(
                     eventName = "Import content - import finished",
                     params = mapOf(
-                        "monstersQuantity" to monsterIndexes.size,
+                        "monstersQuantity" to result.monsterIndexes.size,
+                        "spellsQuantity" to result.spellIndexes.size,
                     )
                 )
-                eventDispatcher.dispatchEvent(Import.OnFinish(monsterIndexes))
+                eventDispatcher.dispatchEvent(
+                    Import.OnFinish(
+                        monsterIndexes = result.monsterIndexes,
+                        spellIndexes = result.spellIndexes,
+                    )
+                )
                 homeEventDispatcher.dispatchEvent(HomeEvent.OnContentChanged())
                 setState {
                     copy(
