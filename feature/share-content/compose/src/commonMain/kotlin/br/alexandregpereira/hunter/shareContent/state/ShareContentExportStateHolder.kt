@@ -28,6 +28,7 @@ import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContentInfo
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetSpellsShareContent
 import br.alexandregpereira.hunter.state.MutableActionHandler
 import br.alexandregpereira.hunter.state.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -47,6 +48,7 @@ internal class ShareContentExportStateHolder(
     private val appLocalization: AppLocalization,
     private val compendiumFileManager: CompendiumFileManager,
     private val getMonstersShareContent: GetMonstersShareContent,
+    private val getSpellsShareContent: GetSpellsShareContent,
     private val clock: Clock = Clock.System,
     eventDispatcher: EventDispatcher<ShareContentEvent>,
 ) : UiModel<ShareContentExportState>(
@@ -61,7 +63,10 @@ internal class ShareContentExportStateHolder(
                 is Export.OnStart -> {
                     analytics.track(
                         eventName = "Export content - opened",
-                        params = mapOf("monsterQuantity" to event.monsterIndexes.size),
+                        params = mapOf(
+                            "monsterQuantity" to event.monsterIndexes.size,
+                            "spellQuantity" to event.spellIndexes.size,
+                        ),
                     )
                     setState {
                         copy(
@@ -71,7 +76,7 @@ internal class ShareContentExportStateHolder(
                             strings = appLocalization.getLanguage().getExportStrings(),
                         )
                     }
-                    fetchMonsterContentToExport(event.monsterIndexes)
+                    fetchContentToExport(event)
                 }
             }
         }.launchIn(scope)
@@ -156,11 +161,16 @@ internal class ShareContentExportStateHolder(
         }
     }
 
-    private fun fetchMonsterContentToExport(
-        monsterIndexes: List<String>,
+    private fun fetchContentToExport(
+        event: Export.OnStart,
     ) {
         flow {
-            emit(getMonstersShareContent(monsterIndexes))
+            val shareContent = if (event.spellIndexes.isNotEmpty()) {
+                getSpellsShareContent(event.spellIndexes)
+            } else {
+                getMonstersShareContent(event.monsterIndexes)
+            }
+            emit(shareContent)
         }.map { shareContent ->
             compendiumFileManager.getCompendiumFileContent(
                 fileName = createFileName(),

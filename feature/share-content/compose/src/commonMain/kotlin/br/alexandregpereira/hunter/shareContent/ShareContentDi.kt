@@ -22,6 +22,8 @@ import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManagerImpl
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
 import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContentUseCase
+import br.alexandregpereira.hunter.shareContent.domain.GetSpellsShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetSpellsShareContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.ImportContent
 import br.alexandregpereira.hunter.shareContent.domain.ImportContentUseCase
 import br.alexandregpereira.hunter.shareContent.domain.mapper.ContentInfoMapper
@@ -52,6 +54,11 @@ val featureShareContentModule = module {
             get(),
         )
     }
+    factory<GetSpellsShareContent> {
+        GetSpellsShareContentUseCase(
+            get(),
+        )
+    }
     single<CompendiumFileManager> {
         CompendiumFileManagerImpl(
             get(),
@@ -67,6 +74,7 @@ val featureShareContentModule = module {
             get(),
             get(),
             get(),
+            getSpellsShareContent = get(),
             eventDispatcher = get<ShareContentEventDispatcher>(),
         )
     }

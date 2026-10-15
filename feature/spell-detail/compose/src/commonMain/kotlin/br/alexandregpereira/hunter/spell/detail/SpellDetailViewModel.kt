@@ -17,6 +17,8 @@
 
 package br.alexandregpereira.hunter.spell.detail
 
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEvent
+import br.alexadregpereira.hunter.shareContent.event.ShareContentEventDispatcher
 import br.alexandregpereira.hunter.domain.spell.DeleteSpell
 import br.alexandregpereira.hunter.domain.spell.GetSpellUseCase
 import br.alexandregpereira.hunter.event.v2.EventDispatcher
@@ -57,6 +59,7 @@ internal class SpellDetailViewModel(
     private val syncEventDispatcher: SyncEventDispatcher,
     private val syncEventListener: SyncEventListener,
     private val homeEventDispatcher: HomeEventDispatcher,
+    private val shareContentEventDispatcher: ShareContentEventDispatcher,
 ) : UiModel<SpellDetailViewState>(SpellDetailViewState()) {
 
     private var spellResultJob: Job? = null
@@ -121,6 +124,9 @@ internal class SpellDetailViewModel(
         analytics.trackSpellOptionClicked(option)
         when (option) {
             SpellDetailOption.CLONE -> setState { copy(showCloneForm = true, spellCloneName = spell.name) }
+            SpellDetailOption.EXPORT -> shareContentEventDispatcher.dispatchEvent(
+                ShareContentEvent.Export.OnStart(spellIndexes = listOf(state.value.spell.index))
+            )
             SpellDetailOption.EDIT -> spellRegistrationEventDispatcher.dispatchEvent(
                 SpellRegistrationEvent.Show(state.value.spell.index)
             )

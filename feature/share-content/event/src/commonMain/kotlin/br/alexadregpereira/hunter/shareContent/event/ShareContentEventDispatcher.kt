@@ -36,7 +36,10 @@ sealed class ShareContentEvent {
         data class OnFinish(val monsterIndexes: List<String>) : Import()
     }
     sealed class Export : ShareContentEvent() {
-        data class OnStart(val monsterIndexes: List<String> = emptyList()) : Export()
+        data class OnStart(
+            val monsterIndexes: List<String> = emptyList(),
+            val spellIndexes: List<String> = emptyList(),
+        ) : Export()
     }
 }
 

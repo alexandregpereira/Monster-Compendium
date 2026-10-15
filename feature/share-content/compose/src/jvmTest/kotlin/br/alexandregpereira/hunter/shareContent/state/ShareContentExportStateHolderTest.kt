@@ -11,6 +11,8 @@ import br.alexandregpereira.hunter.localization.Language
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContent
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileContentInfo
 import br.alexandregpereira.hunter.shareContent.domain.CompendiumFileManager
+import br.alexandregpereira.hunter.shareContent.domain.GetMonstersShareContent
+import br.alexandregpereira.hunter.shareContent.domain.GetSpellsShareContent
 import br.alexandregpereira.hunter.shareContent.domain.model.ShareContent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -160,15 +162,74 @@ internal class ShareContentExportStateHolderTest {
         assertFalse(fileName.contains(".."))
     }
 
+    @Test
+    fun `Export OnStart with spellIndexes fetches spells share content`() = runTest {
+        val requestedMonsterIndexes = mutableListOf<List<String>>()
+        val requestedSpellIndexes = mutableListOf<List<String>>()
+        val stateHolder = createStateHolder(
+            compendiumFileManager = fakeCompendiumFileManager(),
+            getMonstersShareContent = {
+                requestedMonsterIndexes.add(it)
+                ShareContent(null, null, null, null)
+            },
+            getSpellsShareContent = {
+                requestedSpellIndexes.add(it)
+                ShareContent(null, null, null, null)
+            },
+        )
+
+        advanceUntilIdle()
+        eventDispatcher.dispatchEvent(
+            ShareContentEvent.Export.OnStart(spellIndexes = listOf("fireball"))
+        )
+        advanceUntilIdle()
+
+        assertEquals(listOf(listOf("fireball")), requestedSpellIndexes)
+        assertTrue(requestedMonsterIndexes.isEmpty())
+        val state = stateHolder.state.value
+        assertTrue(state.isOpen)
+        assertFalse(state.isLoading)
+        assertNotNull(state.exportExtractedState)
+    }
+
+    @Test
+    fun `Export OnStart with monsterIndexes fetches monsters share content`() = runTest {
+        val requestedMonsterIndexes = mutableListOf<List<String>>()
+        val requestedSpellIndexes = mutableListOf<List<String>>()
+        createStateHolder(
+            compendiumFileManager = fakeCompendiumFileManager(),
+            getMonstersShareContent = {
+                requestedMonsterIndexes.add(it)
+                ShareContent(null, null, null, null)
+            },
+            getSpellsShareContent = {
+                requestedSpellIndexes.add(it)
+                ShareContent(null, null, null, null)
+            },
+        )
+
+        advanceUntilIdle()
+        eventDispatcher.dispatchEvent(
+            ShareContentEvent.Export.OnStart(monsterIndexes = listOf("goblin"))
+        )
+        advanceUntilIdle()
+
+        assertEquals(listOf(listOf("goblin")), requestedMonsterIndexes)
+        assertTrue(requestedSpellIndexes.isEmpty())
+    }
+
     private fun createStateHolder(
         compendiumFileManager: CompendiumFileManager = NoOpCompendiumFileManager(),
         analytics: Analytics = NoOpAnalytics(),
+        getMonstersShareContent: GetMonstersShareContent = { ShareContent(null, null, null, null) },
+        getSpellsShareContent: GetSpellsShareContent = { ShareContent(null, null, null, null) },
     ) = ShareContentExportStateHolder(
         dispatcher = testDispatcher,
         analytics = analytics,
         appLocalization = FakeAppLocalization(),
         compendiumFileManager = compendiumFileManager,
-        getMonstersShareContent = { ShareContent(null, null, null, null) },
+        getMonstersShareContent = getMonstersShareContent,
+        getSpellsShareContent = getSpellsShareContent,
         eventDispatcher = eventDispatcher,
     )
 

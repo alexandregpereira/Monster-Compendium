@@ -66,6 +66,7 @@ val featureSpellDetailModule = module {
             syncEventDispatcher = get(),
             syncEventListener = get(),
             homeEventDispatcher = get(),
+            shareContentEventDispatcher = get(),
         )
     }
 }

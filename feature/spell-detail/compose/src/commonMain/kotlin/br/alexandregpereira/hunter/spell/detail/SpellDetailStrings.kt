@@ -50,6 +50,7 @@ internal interface SpellDetailStrings {
     val cantrip: String
     val options: String
     val clone: String
+    val export: String
     val edit: String
     val delete: String
     val resetToOriginal: String
@@ -88,6 +89,7 @@ internal data class SpellDetailEnStrings(
     override val cantrip: String = "Cantrip",
     override val options: String = "Options",
     override val clone: String = "Clone",
+    override val export: String = "Share",
     override val edit: String = "Edit",
     override val delete: String = "Delete",
     override val resetToOriginal: String = "Restore to original spell",
@@ -126,6 +128,7 @@ internal data class SpellDetailPtStrings(
     override val cantrip: String = "Truque",
     override val options: String = "Opções",
     override val clone: String = "Clonar",
+    override val export: String = "Compartilhar",
     override val edit: String = "Editar",
     override val delete: String = "Excluir",
     override val resetToOriginal: String = "Restaurar para a magia original",
@@ -172,6 +175,7 @@ internal data class SpellDetailEsStrings(
     override val cantrip: String = "Truco de magia",
     override val options: String = "Opciones",
     override val clone: String = "Clonar",
+    override val export: String = "Compartir",
     override val edit: String = "Editar",
     override val delete: String = "Eliminar",
     override val resetToOriginal: String = "Restaurador a magia original",

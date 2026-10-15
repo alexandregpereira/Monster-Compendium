@@ -19,7 +19,7 @@ package br.alexandregpereira.hunter.spell.detail
 
 import br.alexandregpereira.hunter.domain.spell.model.SpellStatus
 
-internal enum class SpellDetailOption { CLONE, EDIT, DELETE, RESET_TO_ORIGINAL }
+internal enum class SpellDetailOption { CLONE, EXPORT, EDIT, DELETE, RESET_TO_ORIGINAL }
 
 internal data class SpellDetailOptionState(
     val option: SpellDetailOption,
@@ -28,16 +28,17 @@ internal data class SpellDetailOptionState(
 
 internal fun SpellStatus.toOptions(strings: SpellDetailStrings): List<SpellDetailOptionState> {
     val options = when (this) {
-        SpellStatus.Original -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EDIT)
-        SpellStatus.Imported -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EDIT, SpellDetailOption.DELETE)
-        SpellStatus.Edited -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EDIT, SpellDetailOption.RESET_TO_ORIGINAL)
-        SpellStatus.Cloned, SpellStatus.Created -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EDIT, SpellDetailOption.DELETE)
+        SpellStatus.Original -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EXPORT, SpellDetailOption.EDIT)
+        SpellStatus.Imported -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EXPORT, SpellDetailOption.EDIT, SpellDetailOption.DELETE)
+        SpellStatus.Edited -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EXPORT, SpellDetailOption.EDIT, SpellDetailOption.RESET_TO_ORIGINAL)
+        SpellStatus.Cloned, SpellStatus.Created -> listOf(SpellDetailOption.CLONE, SpellDetailOption.EXPORT, SpellDetailOption.EDIT, SpellDetailOption.DELETE)
     }
     return options.map { SpellDetailOptionState(it, it.toLabel(strings)) }
 }
 
 private fun SpellDetailOption.toLabel(strings: SpellDetailStrings): String = when (this) {
     SpellDetailOption.CLONE -> strings.clone
+    SpellDetailOption.EXPORT -> strings.export
     SpellDetailOption.EDIT -> strings.edit
     SpellDetailOption.DELETE -> strings.delete
     SpellDetailOption.RESET_TO_ORIGINAL -> strings.resetToOriginal
