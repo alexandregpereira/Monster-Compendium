@@ -16,9 +16,29 @@ env:
   REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
 
 jobs:
+  # Computes the version once so both platforms and the GitHub release share it.
+  # Same formula as getVersionCodeAndVersionName() in buildSrc.
+  version:
+    name: Version
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.version.outputs.code }}
+      name: ${{ steps.version.outputs.name }}
+    steps:
+      - name: Compute version
+        id: version
+        run: |
+          CODE=$(( ($(date -u +%s) - 1467504000) / 1200 ))
+          NAME="$(date -u -d "@$(( 1467504000 + CODE * 1200 ))" +%y.%m.%d)${CODE: -3}"
+          echo "code=$CODE" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+
   android-build:
     name: Android Build
+    needs: [version]
     runs-on: ubuntu-latest
+    env:
+      APP_VERSION_CODE: ${{ needs.version.outputs.code }}
     steps:
       - uses: actions/checkout@v2.5.0
 
@@ -51,7 +71,10 @@ jobs:
 
   ios-build:
     name: iOS Build
+    needs: [version]
     runs-on: macos-latest
+    env:
+      APP_VERSION_CODE: ${{ needs.version.outputs.code }}
     steps:
       - uses: actions/checkout@v2.5.0
 
@@ -207,6 +230,24 @@ jobs:
           packageName: br.alexandregpereira.hunter.app
           releaseFiles: ${{ runner.temp }}/app-android-release.aab
           tracks: internal
+
+  github-release:
+    name: GitHub Release
+    needs: [version, android-publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ needs.version.outputs.name }}" \
+            --repo ${{ github.repository }} \
+            --target ${{ github.sha }} \
+            --title "v${{ needs.version.outputs.name }}" \
+            --generate-notes \
+            --latest
 
   cleanup-artifacts:
     name: Delete Release Artifacts

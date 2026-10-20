@@ -70,17 +70,26 @@ abstract class GenerateAppConfigTask : DefaultTask() {
     }
 }
 
+/**
+ * The version code is the number of 20-minute windows since the base timestamp and the
+ * version name is derived from it. CI sets `APP_VERSION_CODE` so that every platform built
+ * in the same release run gets the same version.
+ */
 @Suppress("NewApi")
 fun getVersionCodeAndVersionName(): Pair<Int, String> {
-    val localDateTime = Instant.now().atOffset(ZoneOffset.UTC).toLocalDateTime()
     val baseTimestampInSeconds = 1467504000L // Base value for the timestamp of 2013-07-03 00:00:00
-    val currentTimestampInSeconds = localDateTime.toEpochSecond(ZoneOffset.UTC)
-    val timestampDiff = currentTimestampInSeconds - baseTimestampInSeconds
-    if (timestampDiff <= 0) {
-        throw RuntimeException("Adjust your machine datetime! timestampDiff")
-    }
     val versionCodePerSeconds = 60 * 20 // Seconds to increment the version code
-    val versionCode = (timestampDiff / versionCodePerSeconds).toInt()
+    val versionCode = System.getenv("APP_VERSION_CODE")?.takeIf { it.isNotBlank() }?.toInt()
+        ?: run {
+            val currentTimestampInSeconds = Instant.now().epochSecond
+            val timestampDiff = currentTimestampInSeconds - baseTimestampInSeconds
+            if (timestampDiff <= 0) {
+                throw RuntimeException("Adjust your machine datetime! timestampDiff")
+            }
+            (timestampDiff / versionCodePerSeconds).toInt()
+        }
+    val versionTimestampInSeconds = baseTimestampInSeconds + versionCode.toLong() * versionCodePerSeconds
+    val localDateTime = Instant.ofEpochSecond(versionTimestampInSeconds).atOffset(ZoneOffset.UTC).toLocalDateTime()
     val dateFormat = localDateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
     val versionCodeSuffix = versionCode.toString().takeLast(3)
     val versionName = (dateFormat + versionCodeSuffix).take(11)
