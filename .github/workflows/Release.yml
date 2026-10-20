@@ -16,9 +16,29 @@ env:
   REVENUE_CAT_SANDBOX_API_KEY: ${{ secrets.REVENUE_CAT_SANDBOX_API_KEY }}
 
 jobs:
-  android-distribution:
-    name: Android Distribution
+  # Computes the version once so both platforms and the GitHub release share it.
+  # Same formula as getVersionCodeAndVersionName() in buildSrc.
+  version:
+    name: Version
     runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.version.outputs.code }}
+      name: ${{ steps.version.outputs.name }}
+    steps:
+      - name: Compute version
+        id: version
+        run: |
+          CODE=$(( ($(date -u +%s) - 1467504000) / 1200 ))
+          NAME="$(date -u -d "@$(( 1467504000 + CODE * 1200 ))" +%y.%m.%d)${CODE: -3}"
+          echo "code=$CODE" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+
+  android-build:
+    name: Android Build
+    needs: [version]
+    runs-on: ubuntu-latest
+    env:
+      APP_VERSION_CODE: ${{ needs.version.outputs.code }}
     steps:
       - uses: actions/checkout@v2.5.0
 
@@ -32,17 +52,29 @@ jobs:
 
       - uses: ./.github/actions/upload-test-report
 
-      - name: Upload to Google Play Internal Testing
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: br.alexandregpereira.hunter.app
-          releaseFiles: app-android/build/outputs/bundle/release/app-android-release.aab
-          tracks: internal
+      - name: Encrypt AAB
+        env:
+          RELEASE_ARTIFACT_PASSPHRASE: ${{ secrets.RELEASE_ARTIFACT_PASSPHRASE }}
+        run: |
+          openssl enc -aes-256-cbc -pbkdf2 -salt \
+            -in app-android/build/outputs/bundle/release/app-android-release.aab \
+            -out $RUNNER_TEMP/app-android-release.aab.enc \
+            -pass env:RELEASE_ARTIFACT_PASSPHRASE
 
-  ios-distribution:
-    name: iOS Distribution
+      - name: Upload encrypted AAB
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: android-release
+          path: ${{ runner.temp }}/app-android-release.aab.enc
+          retention-days: 1
+          if-no-files-found: error
+
+  ios-build:
+    name: iOS Build
+    needs: [version]
     runs-on: macos-latest
+    env:
+      APP_VERSION_CODE: ${{ needs.version.outputs.code }}
     steps:
       - uses: actions/checkout@v2.5.0
 
@@ -117,6 +149,46 @@ jobs:
             -exportPath ${{ github.workspace }}/export \
             -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist
 
+      - name: Encrypt IPA
+        env:
+          RELEASE_ARTIFACT_PASSPHRASE: ${{ secrets.RELEASE_ARTIFACT_PASSPHRASE }}
+        run: |
+          openssl enc -aes-256-cbc -pbkdf2 -salt \
+            -in ${{ github.workspace }}/export/MonsterCompendium.ipa \
+            -out $RUNNER_TEMP/MonsterCompendium.ipa.enc \
+            -pass env:RELEASE_ARTIFACT_PASSPHRASE
+
+      - name: Upload encrypted IPA
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: ios-release
+          path: ${{ runner.temp }}/MonsterCompendium.ipa.enc
+          retention-days: 1
+          if-no-files-found: error
+
+  # Publishing only starts once both builds succeed, so a failing build never leaves
+  # one store with a version the other does not have. iOS goes first because its
+  # upload is the one more likely to be rejected.
+  ios-publish:
+    name: iOS Publish
+    needs: [android-build, ios-build]
+    runs-on: macos-latest
+    steps:
+      - name: Download encrypted IPA
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: ios-release
+          path: ${{ runner.temp }}
+
+      - name: Decrypt IPA
+        env:
+          RELEASE_ARTIFACT_PASSPHRASE: ${{ secrets.RELEASE_ARTIFACT_PASSPHRASE }}
+        run: |
+          openssl enc -d -aes-256-cbc -pbkdf2 \
+            -in $RUNNER_TEMP/MonsterCompendium.ipa.enc \
+            -out $RUNNER_TEMP/MonsterCompendium.ipa \
+            -pass env:RELEASE_ARTIFACT_PASSPHRASE
+
       - name: Upload to TestFlight
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
@@ -127,6 +199,68 @@ jobs:
           echo -n "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode -o ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
           xcrun altool --upload-app \
             --type ios \
-            --file ${{ github.workspace }}/export/MonsterCompendium.ipa \
+            --file $RUNNER_TEMP/MonsterCompendium.ipa \
             --apiKey $APP_STORE_CONNECT_API_KEY_ID \
             --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID
+
+  android-publish:
+    name: Android Publish
+    needs: [ios-publish]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download encrypted AAB
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: android-release
+          path: ${{ runner.temp }}
+
+      - name: Decrypt AAB
+        env:
+          RELEASE_ARTIFACT_PASSPHRASE: ${{ secrets.RELEASE_ARTIFACT_PASSPHRASE }}
+        run: |
+          openssl enc -d -aes-256-cbc -pbkdf2 \
+            -in $RUNNER_TEMP/app-android-release.aab.enc \
+            -out $RUNNER_TEMP/app-android-release.aab \
+            -pass env:RELEASE_ARTIFACT_PASSPHRASE
+
+      - name: Upload to Google Play Internal Testing
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: br.alexandregpereira.hunter.app
+          releaseFiles: ${{ runner.temp }}/app-android-release.aab
+          tracks: internal
+
+  github-release:
+    name: GitHub Release
+    needs: [version, android-publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ needs.version.outputs.name }}" \
+            --repo ${{ github.repository }} \
+            --target ${{ github.sha }} \
+            --title "v${{ needs.version.outputs.name }}" \
+            --generate-notes \
+            --latest
+
+  cleanup-artifacts:
+    name: Delete Release Artifacts
+    needs: [android-publish]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Delete encrypted builds
+        uses: geekyeggo/delete-artifact@v5.1.0
+        with:
+          name: |
+            android-release
+            ios-release
+          failOnError: false
