@@ -46,7 +46,7 @@ data class ScreenSizeInfo(
     }
 
     val type: ScreenSizeType = when {
-        widthSizeType == Expanded -> ScreenSizeType.LandscapeExpanded
+        widthSizeType == Expanded && widthInDp > heightInDp -> ScreenSizeType.LandscapeExpanded
         widthSizeType == Medium && heightSizeType == Compact -> ScreenSizeType.LandscapeCompact
         else -> ScreenSizeType.Portrait
     }
