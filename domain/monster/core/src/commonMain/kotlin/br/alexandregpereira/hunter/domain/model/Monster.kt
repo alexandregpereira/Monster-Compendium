@@ -17,7 +17,6 @@
 
 package br.alexandregpereira.hunter.domain.model
 
-import br.alexandregpereira.hunter.domain.locale.formatToNumber
 import br.alexandregpereira.hunter.domain.monster.spell.model.Spellcasting
 
 data class Monster(
@@ -176,10 +175,9 @@ fun Monster.xpFormatted(): String {
     val xpString = when {
         xp < 1000 -> xp.toString()
         else -> {
-            val xpFormatted = xp.formatToNumber()
-                .dropLastWhile { it == '0' }
-                .let { if (it.last().isDigit().not()) it.dropLast(1) else it }
-            "${xpFormatted}k"
+            val thousands = xp / 1000
+            val hundreds = xp % 1000 / 100
+            if (hundreds == 0) "${thousands}k" else "$thousands.${hundreds}k"
         }
     }
 
